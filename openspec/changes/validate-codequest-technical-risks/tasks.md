@@ -1,11 +1,11 @@
-This checklist is for a later, explicitly authorized Apply workflow. All tasks remain unchecked during proposal creation. See [design](design.md) for E01–E06, budget hypotheses, coverage, ownership and failure handling; [spec](specs/technical-risk-validation/spec.md) defines acceptance. Delivering a no-go investigation report does not satisfy the successful Phase 1 progression gate or authorize Phase 2.
+Apply was explicitly authorized by the user on 2026-09-13 after merging the approved proposal into main. See [design](design.md) for E01–E06, budget hypotheses, coverage, ownership and failure handling; [spec](specs/technical-risk-validation/spec.md) defines acceptance. Delivering a no-go investigation report does not satisfy the successful Phase 1 progression gate or authorize Phase 2.
 
 ## 1. Declare execution scope and criteria
 
-- [ ] 1.1 Record named experiment owners and technical/security/product reviewers in `docs/technical-risk-validation/charter.md`, with E01–E06 hypotheses, fixtures, procedures, policy links and outcomes; verify every experiment has expected/failure behavior and an accountable owner before execution.
+- [x] 1.1 Record named experiment owners and technical/security/product reviewers in `docs/technical-risk-validation/charter.md`, with E01–E06 hypotheses, fixtures, procedures, policy links and outcomes; verify every experiment has expected/failure behavior and an accountable owner before execution.
 - [ ] 1.2 Inventory exact physical devices, OS/browser versions, install modes, lower-powered hardware and accessibility configurations; verify the charter covers the required matrix and explicitly marks unavailable equipment as untested/inconclusive.
-- [ ] 1.3 Freeze numerical budgets, measurement boundaries/sample counts and any measurable retained-memory tolerance before trials; verify the charter distinguishes proposal hypotheses, selected criteria and hard limits that cannot be established, and defines revision/retest recording.
-- [ ] 1.4 Record prototype topology, trusted bootstrap resource allowlist, local HTTPS/device access and teardown procedure; verify no production services/accounts/secrets or real learner data are required, and update roadmap stage to Apply without claiming completed evidence.
+- [x] 1.3 Freeze numerical budgets, measurement boundaries/sample counts and any measurable retained-memory tolerance before trials; verify the charter distinguishes proposal hypotheses, selected criteria and hard limits that cannot be established, and defines revision/retest recording.
+- [x] 1.4 Record prototype topology, trusted bootstrap resource allowlist, local HTTPS/device access and teardown procedure; verify no production services/accounts/secrets or real learner data are required, and update roadmap stage to Apply without claiming completed evidence.
 
 ## 2. Create the disposable harness after authorization
 
