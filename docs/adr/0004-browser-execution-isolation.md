@@ -43,3 +43,7 @@ The explicit redesign instruction authorizes continuation, not new production ap
 Core automated useful-output/inert-markup, ten verified loop deadlines and 100 executed reset cycles passed in Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6. Separate owned watchdogs recovered without emergency termination. WebKit simulated-offline new-page/reload gates still fail; public cache/controlled-origin-outage diagnostics do not waive them. See the [current report and raw evidence](../technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13).
 
 F01 is a candidate recommendation pending review and required integration/physical evidence; F02 remains inconclusive. AP02 approves only the earlier no-go. No hard browser memory quota, independent security audit, production framework integration, P11 exception or Phase 2 selection is established.
+
+## Offline-path diagnostic evidence - 2026-09-14
+
+The [fixed-response service-worker control and cold-origin trials](../technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) separate WebKit offline emulation from application behavior. All three engines passed a single headless cold-origin functional check, with WebKit requiring a shorter task profile after its original CacheStorage filesystem failure. Original emulation failures remain failed; physical/Safari/accessibility/native quota evidence and new recommendation review remain incomplete. No production mechanism or F02 promise is selected, and AP01/AP02 scope is unchanged.

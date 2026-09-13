@@ -169,3 +169,7 @@ Performed during documentation apply on 2026-09-13:
 - The repository also has no root `package.json`, frontend or backend workspace. No workspace or dependencies were created to make unrelated application checks runnable.
 
 Documentation validation is not application test coverage or proof of isolation/learning efficacy. All F01–F09 retain the owners/triggers above. Policy decisions and Phase 1 evidence are needed before later implementation promises; beta data collection additionally requires F06. No automatic sync/archive/merge is performed.
+
+## Offline-path diagnostic evidence - 2026-09-14
+
+The [fixed-response service-worker control and cold-origin trials](technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) separate WebKit offline emulation from application behavior. All three engines passed a single headless cold-origin functional check, with WebKit requiring a shorter task profile after its original CacheStorage filesystem failure. Original emulation failures remain failed; physical/Safari/accessibility/native quota evidence and new recommendation review remain incomplete. No production mechanism or F02 promise is selected, and AP01/AP02 scope is unchanged.

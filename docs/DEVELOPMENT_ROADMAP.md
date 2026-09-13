@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-14. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
@@ -10,9 +10,9 @@ Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stag
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
 | Current OpenSpec stage | Apply continuation - 21/34 tasks complete; usable Worker preview implemented; review of new recommendation and 12 other acceptance gates remain incomplete |
-| Next execution step | Resolve retained WebKit simulated-offline failure with actual Safari/device evidence; execute confirmed Windows [manual checklist](technical-risk-validation/manual-checklist.md), obtain remaining access and review the new recommendation |
+| Next execution step | Execute confirmed Windows [manual checklist](technical-risk-validation/manual-checklist.md); obtain native Safari/device/accessibility evidence and review the [offline-path diagnostics](technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) and new recommendation |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Worker-preview core passed in automated Chromium/Firefox/WebKit: 10 loops and 100 executed resets per engine; original iframe no-go retained as AP02. WebKit simulated-offline integration failed; physical/accessibility/native quota gates untested |
+| Validation evidence | Worker-preview core passed in Chromium/Firefox/WebKit: 10 loops and 100 resets per engine; single headless cold-origin checks passed (WebKit requires shorter profile). WebKit offline emulation still fails even with a fixed-response worker. Physical/accessibility/native quota gates untested; legacy no-go retained as AP02 |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
 
