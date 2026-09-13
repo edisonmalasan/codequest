@@ -1,0 +1,86 @@
+{
+  "recordedAt": "2026-09-13T21:16:05.735Z",
+  "experiment": "E05/E06 cold origin-unreachable diagnostic",
+  "engine": "webkit",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\cold-origin-probe.mjs",
+    "webkit",
+    "--short-profile"
+  ],
+  "node": "v24.21.0",
+  "physical": false,
+  "networkOffline": false,
+  "offlineEmulation": false,
+  "trials": 1,
+  "b07PhysicalTiming": "untested",
+  "profileLocation": "task-only repository temp/phase1-profiles",
+  "commit": "fd02666a01d9ddab071e9cd16c8f37e04ef0eb47",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M prototypes/technical-risk-validation/scripts/serve.mjs",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T21-08-50.997Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-11-24.407Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-11-49.132Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-12-43.599Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-13-56.326Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-15-01.656Z.json",
+    "?? prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    "?? prototypes/technical-risk-validation/scripts/fixtures/",
+    "?? prototypes/technical-risk-validation/tests/offline-control.spec.ts"
+  ],
+  "buildHashesFrozenBeforeTrial": {
+    ".vite/manifest.json": "afb291e568135c54495890c56c55074923f3f2d2f62633c3955c24cb99e6f5a9",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CTcQfg3o.js": "7380a4d06df30c558309573ac871034822ab8f4950e18bd089e0c357ebae26bb",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f236978a1946645ebe5cb754dc4697d5e55bf61e4fa70e35fa9c0a1b3092aa3c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "c0b544ee56a96c5a5a1beab552e69fc13c9e11a9f064f6d0805a965cc5bba15f",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "ea2e6ae97736a1545a7a2fb72df793df8db346c56b45f3d82b793dd5cd7fa1ae",
+  "serverHash": "9f81f22f3db48aec45768f27e47a269957877a057617d77878a9ff1b2e26e6bb",
+  "sourceHash": "5ddad786095dafaec558f1b9e74b8095a6751bc8291f4ae6f50a41e50a3478c6",
+  "skipHostDependencyPreflight": true,
+  "launchOptions": {
+    "headless": true,
+    "args": [],
+    "timeout": 15000
+  },
+  "stage": "completed functional diagnostic",
+  "ownedServerPid": 1572,
+  "browserVersion": "26.6",
+  "preparedController": "http://127.0.0.1:4310/sw.js",
+  "preparedBrowserClosedBeforeRelaunch": true,
+  "originTransportControls": [
+    {
+      "host": "127.0.0.1",
+      "port": 4310,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.2",
+      "port": 4311,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 4312,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    }
+  ],
+  "exactSourceRetained": true,
+  "localCheckProvisional": true,
+  "functionalReadyMs": 1991.5538999999999,
+  "suppliedPreviewAndTextPassed": true,
+  "verdict": "passed single headless cold-process origin-unreachable diagnostic; physical/offline-emulation gates not replaced",
+  "taskProfileRemoved": true
+}
