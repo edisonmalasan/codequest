@@ -12,7 +12,7 @@ Educational material must be reviewable/versioned and delivered without client c
 
 Author curriculum in Git under `backend/content/`. Backend owns published availability/content versions and delivers curriculum through REST/OpenAPI. Frontend renders/caches delivered content; it cannot import raw backend curriculum or query curriculum application tables directly. Preserve stable IDs/versioned assessment direction and explicit review before publication.
 
-Backend publication may use validated projections/metadata as needed later; Git remains authored source, not a second competing editable database source. Exact compiler, format, projection and activation mechanism are F03 decisions. Proposed compatibility/history rules are in ADR 0007, not accepted by this ownership ADR.
+Backend publication may use validated projections/metadata as needed later; Git remains authored source, not a second competing editable database source. Exact compiler, format, projection and activation mechanism are F03 decisions. Compatibility/history rules are accepted in ADR 0007 with AP01 evidence; this ownership ADR does not select publication mechanisms.
 
 ## Alternatives
 
