@@ -22,6 +22,7 @@ declare global {
       stop: () => void;
       pending: () => Promise<Snapshot[]>;
       saveFailure: (kind: string | null) => void;
+      source: () => string;
     };
   }
 }
@@ -31,6 +32,7 @@ window.__risk = {
   stop: () => { runtime.stop(); probeRuntime.stop(); previewRuntime.stop(); },
   pending: () => store.pending.toArray(),
   saveFailure: (kind) => { if (kind) sessionStorage.setItem('prototype-save-failure', kind); else sessionStorage.removeItem('prototype-save-failure'); },
+  source: () => '',
 };
 
 function receiptFrom(raw: unknown): Receipt {
@@ -108,7 +110,8 @@ function App() {
       ],
     }) });
     editor.current = view;
-    return () => view.destroy();
+    window.__risk.source = () => view.state.doc.toString();
+    return () => { window.__risk.source = () => ''; view.destroy(); };
   }, []);
   useEffect(() => {
     const view = editor.current;

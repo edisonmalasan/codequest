@@ -90,3 +90,72 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
   }
   await info.attach('B09-cycle-mix', { body: JSON.stringify({ rows, physical: false, contentAssessmentRevision: 'identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger', browserMode: 'headless same process; physical gate untested' }), contentType: 'application/json' });
 });
+
+test('E05 incompatible downloaded assessment is rejected without replacing a saved draft', async ({ page, context }, info) => {
+  await page.goto('/');
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
+  const source = 'console.log("version rejection retains source")';
+  await page.getByRole('textbox', { name: 'JavaScript source' }).fill(source);
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  await page.evaluate(async () => {
+    await new Promise<void>((resolve, reject) => {
+      const open = indexedDB.open('codequest-risk-prototype');
+      open.onerror = () => reject(open.error);
+      open.onsuccess = () => {
+        const transaction = open.result.transaction('lessons', 'readwrite');
+        transaction.objectStore('lessons').delete('Q01/1/1');
+        transaction.oncomplete = () => { open.result.close(); resolve(); }; transaction.onerror = () => reject(transaction.error);
+      };
+    });
+  });
+  await context.route('**/__lesson/Q01', route => route.fulfill({ json: { id: 'Q01', contentVersion: '1', assessmentVersion: '2', objective: 'Incompatible synthetic check', starter: 'throw Error("replacement must not load")' } }));
+  await page.reload();
+  await expect(page.getByText(/Public lesson identity mismatch/)).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText(source);
+  await info.attach('downloaded-version-rejection', { body: JSON.stringify({ expectedIdentity: 'Q01/1/1', receivedIdentity: 'Q01/1/2', rejected: true, savedSourceRetained: source, physical: false }), contentType: 'application/json' });
+});
+
+test('E05 bounded task-origin quota experiment records enforcement and recovery', async ({ page, context, browserName }, info) => {
+  test.skip(browserName !== 'chromium', 'Chromium CDP quota instrumentation; not a substitute for other-browser/device storage coverage');
+  await page.goto('/');
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  const session = await context.newCDPSession(page);
+  const origin = 'http://127.0.0.1:4310';
+  try {
+    expect(await page.evaluate(() => sessionStorage.getItem('prototype-save-failure'))).toBeNull();
+    await session.send('Storage.overrideQuotaForOrigin', { origin, quotaSize: 1 });
+    const pressure = await page.evaluate(async () => {
+      const database = await new Promise<IDBDatabase>((resolve, reject) => {
+        const open = indexedDB.open('codequest-risk-prototype'); open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error);
+      });
+      let committed = 0;
+      let errorName = '';
+      try {
+        for (let index = 0; index < 128; index++) {
+          try {
+            await new Promise<void>((resolve, reject) => {
+              const transaction = database.transaction('drafts', 'readwrite');
+              transaction.objectStore('drafts').put({ key: 'quota-probe-' + index, owner: 'quota-probe', source: 'x'.repeat(65536) });
+              transaction.oncomplete = () => resolve(); transaction.onabort = () => reject(transaction.error); transaction.onerror = () => reject(transaction.error);
+            });
+            committed++;
+          } catch (error: unknown) { errorName = error instanceof DOMException ? error.name : String(error); break; }
+        }
+      } finally { database.close(); }
+      return { committed, errorName, maximumAttemptedSourceBytes: 128 * 65536 };
+    });
+    const source = `console.log("${'x'.repeat(65510)}")`;
+    await page.getByRole('textbox', { name: 'JavaScript source' }).fill(source);
+    await expect.poll(() => page.getByTestId('save-state').textContent()).toMatch(/Save failed|Saved on this device/);
+    const failure = await page.getByTestId('save-state').textContent();
+    const usage = await session.send('Storage.getUsageAndQuota', { origin });
+    expect(await page.evaluate(expected => window.__risk.source() === expected, source)).toBe(true);
+    await session.send('Storage.overrideQuotaForOrigin', { origin });
+    await page.getByRole('textbox', { name: 'JavaScript source' }).fill('console.log("quota recovered")');
+    await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+    await page.reload();
+    await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText('console.log("quota recovered")');
+    await info.attach('browser-quota', { body: JSON.stringify({ origin, quotaBytes: 1, pressure, usage, failure, quotaFailureObserved: pressure.errorName === 'QuotaExceededError' && Boolean(failure?.includes('Save failed')), diagnosticOnly: true, sourceRetainedInMemory: true, recoveredAfterOverrideReset: true, injectionDisabled: true, physicalDiskExhaustion: 'not performed', physical: false }), contentType: 'application/json' });
+  } finally { await session.send('Storage.overrideQuotaForOrigin', { origin }); await session.detach(); }
+});

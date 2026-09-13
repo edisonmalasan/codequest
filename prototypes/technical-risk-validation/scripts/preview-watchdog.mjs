@@ -14,7 +14,8 @@ if (process.argv.includes('--child')) {
       try { if ((await fetch('http://127.0.0.1:4310')).ok) break; } catch { /* bounded startup polling */ }
       await new Promise(resolve => setTimeout(resolve, 100));
     }
-    browser = await chromium.launch({ args: ['--disable-gpu', '--renderer-process-limit=2'], timeout: 15000 });
+    const chromiumArgs = process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'];
+    browser = await chromium.launch({ args: chromiumArgs, timeout: 15000 });
     const page = await browser.newPage();
     const dedicated = process.argv.includes('--dedicated');
     await page.goto('http://127.0.0.1:4310/?framePolicy=' + (dedicated ? 'isolated' : 'none'));
@@ -62,7 +63,7 @@ if (process.argv.includes('--child')) {
   child.stderr.on('data', bytes => { errors = (errors + bytes).slice(-2000); });
   const code = await new Promise(resolve => child.on('exit', resolve));
   clearTimeout(timer);
-  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', commit, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 ? 'passed automated case only' : 'inconclusive: environment failure' };
+  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', chromiumArgs: process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'], commit, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 ? 'passed automated case only' : 'inconclusive: environment failure' };
   await writeFile(new URL('../../../docs/technical-risk-validation/evidence/preview-loop-' + record.recordedAt.replaceAll(':', '-') + '.json', import.meta.url), JSON.stringify(record, null, 2));
   process.stdout.write(JSON.stringify(record));
 }
