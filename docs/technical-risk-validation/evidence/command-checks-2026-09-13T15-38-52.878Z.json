@@ -1,0 +1,142 @@
+{
+  "recordedAt": "2026-09-13T15:38:52.878Z",
+  "sourceCommit": "06b4037f707a7dbc3a8d1c8399f07faeb28e7bf2",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-06-49.013Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-09-21.282Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-12-03.524Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-14-44.830Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-17-55.911Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-18-12.614Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-21-16.301Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-21-55.110Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-22-20.142Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-23-15.129Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-27-01.699Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-34-48.252Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-35-39.039Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-22-41.917Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-25-52.793Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-26-04.502Z.json"
+  ],
+  "scope": "documentation and disposable Phase 1 prototype only",
+  "node": "v24.21.0",
+  "checks": [
+    {
+      "command": "corepack pnpm@10.30.3 test",
+      "cwd": "prototype",
+      "status": "passed",
+      "tests": 18
+    },
+    {
+      "command": "corepack pnpm@10.30.3 lint",
+      "cwd": "prototype",
+      "status": "passed",
+      "provenance": "same final fixture source before commit 06b4037"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 typecheck",
+      "cwd": "prototype",
+      "status": "passed",
+      "provenance": "same final fixture source before commit 06b4037; application and service-worker strict checks"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 build",
+      "cwd": "prototype",
+      "status": "passed",
+      "warning": "main JS 836.13 kB / 273.84 kB gzip; 10 precache entries 823.50 KiB; not physical startup evidence",
+      "buildComparison": "all 12 rebuilt asset hashes match final cross-engine tested manifest"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test",
+      "cwd": "prototype",
+      "status": "failed",
+      "passed": 95,
+      "failed": 5,
+      "skipped": 2,
+      "evidence": "automated-2026-09-13T15-34-48.252Z.json",
+      "remaining": "three WebKit simulated-offline policy failures; two shared-ledger test fixture failures retested separately"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test tests/workspace.spec.ts tests/reconciliation.spec.ts tests/offline-diagnostic.spec.ts --grep \"immutable pending|lost response|diagnostic separates\"",
+      "cwd": "prototype",
+      "status": "passed",
+      "passed": 9,
+      "evidence": "automated-2026-09-13T15-35-39.039Z.json",
+      "limitation": "diagnostic collection does not pass failed WebKit offline policy"
+    },
+    {
+      "command": "pnpm test",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "pnpm lint",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "pnpm typecheck",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 test",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND; no root package manifest; no production scaffolding introduced"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 lint",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND; no root package manifest; no production scaffolding introduced"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 typecheck",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND; no root package manifest; no production scaffolding introduced"
+    },
+    {
+      "command": "openspec validate validate-codequest-technical-risks --strict",
+      "cwd": "repository root",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "cwd": "repository root",
+      "status": "passed"
+    },
+    {
+      "command": "relative documentation link inspection",
+      "cwd": "repository root",
+      "status": "passed",
+      "links": 117,
+      "failures": 0
+    },
+    {
+      "command": "Get-NetTCPConnection -LocalPort 4310,4311,4312 -State Listen",
+      "cwd": "repository root",
+      "status": "passed teardown observation",
+      "listeners": 0
+    }
+  ],
+  "physicalEvidence": "untested",
+  "review": "AP02 legacy no-go retained; new recommendation pending explicit review",
+  "phase1": "incomplete; no Phase 2, Sync or Archive"
+}

@@ -1,0 +1,356 @@
+{
+  "recordedAt": "2026-09-13T15:35:39.039Z",
+  "commit": "8b48c5882fd394b24270096ea2f81c14fe5c06ea",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/preview-watchdog.mjs",
+    " M prototypes/technical-risk-validation/scripts/serve.mjs",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    " M prototypes/technical-risk-validation/tests/reconciliation.spec.ts",
+    " M prototypes/technical-risk-validation/tests/workspace.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-06-49.013Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-09-21.282Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-12-03.524Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-14-44.830Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-17-55.911Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-18-12.614Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-21-16.301Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-21-55.110Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-22-20.142Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-23-15.129Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-27-01.699Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-34-48.252Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-22-41.917Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-25-52.793Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T15-26-04.502Z.json",
+    "?? prototypes/technical-risk-validation/tests/offline-diagnostic.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/workspace.spec.ts",
+    "tests/reconciliation.spec.ts",
+    "tests/offline-diagnostic.spec.ts",
+    "--grep",
+    "immutable pending|lost response|diagnostic separates"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T15:35:19.947Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "afb291e568135c54495890c56c55074923f3f2d2f62633c3955c24cb99e6f5a9",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CTcQfg3o.js": "7380a4d06df30c558309573ac871034822ab8f4950e18bd089e0c357ebae26bb",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f236978a1946645ebe5cb754dc4697d5e55bf61e4fa70e35fa9c0a1b3092aa3c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "c0b544ee56a96c5a5a1beab552e69fc13c9e11a9f064f6d0805a965cc5bba15f",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 19838.415999999997,
+  "cases": [
+    {
+      "title": " / chromium / offline-diagnostic.spec.ts / E05 diagnostic separates prepared cache from offline-flag navigation behavior",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 941,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "prepared-cache-offline-diagnostic",
+          "data": {
+            "browser": "153.0.8010.12",
+            "prepared": {
+              "controller": "http://127.0.0.1:4310/sw.js",
+              "active": "activated",
+              "scope": "http://127.0.0.1:4310/",
+              "urls": [
+                "http://127.0.0.1:4310/assets/index-9dBvS5KA.css",
+                "http://127.0.0.1:4310/bootstrap.html?__WB_REVISION__=0f4ad31e984c608c186ba2d33762e5df",
+                "http://127.0.0.1:4310/bootstrap.js?__WB_REVISION__=cef80b0a63a2c134e6a71cd45082572d",
+                "http://127.0.0.1:4310/assets/index-CTcQfg3o.js",
+                "http://127.0.0.1:4310/icon.svg?__WB_REVISION__=4549021edad28bd2eb01a39e31d86fb1",
+                "http://127.0.0.1:4310/index.html?__WB_REVISION__=3e9ba47580db428e2b38bc97888e35a0",
+                "http://127.0.0.1:4310/manifest.json?__WB_REVISION__=9650e368aebad2b441fec3cafe5ac479",
+                "http://127.0.0.1:4310/preview.html?__WB_REVISION__=b618921ef23adce94fcd5d4e2c70ad05",
+                "http://127.0.0.1:4310/preview.js?__WB_REVISION__=5982f1cedf6b3a397b341b5ef8e01093",
+                "http://127.0.0.1:4310/worker.js?__WB_REVISION__=2c4e7df90bacad6fac658c52c6043277"
+              ],
+              "cachedIndexStatus": 200
+            },
+            "offlineFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "physicalColdLaunch": "untested",
+            "policyPassed": true
+          }
+        },
+        {
+          "name": "controlled-origin-outage",
+          "data": {
+            "browser": "153.0.8010.12",
+            "directOriginStatus": 503,
+            "outageFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "networkOffline": false,
+            "policyPassed": true
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 47,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1399,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / firefox / offline-diagnostic.spec.ts / E05 diagnostic separates prepared cache from offline-flag navigation behavior",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3524,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "prepared-cache-offline-diagnostic",
+          "data": {
+            "browser": "155.0",
+            "prepared": {
+              "controller": "http://127.0.0.1:4310/sw.js",
+              "active": "activated",
+              "scope": "http://127.0.0.1:4310/",
+              "urls": [
+                "http://127.0.0.1:4310/assets/index-9dBvS5KA.css",
+                "http://127.0.0.1:4310/assets/index-CTcQfg3o.js",
+                "http://127.0.0.1:4310/bootstrap.html?__WB_REVISION__=0f4ad31e984c608c186ba2d33762e5df",
+                "http://127.0.0.1:4310/icon.svg?__WB_REVISION__=4549021edad28bd2eb01a39e31d86fb1",
+                "http://127.0.0.1:4310/index.html?__WB_REVISION__=3e9ba47580db428e2b38bc97888e35a0",
+                "http://127.0.0.1:4310/manifest.json?__WB_REVISION__=9650e368aebad2b441fec3cafe5ac479",
+                "http://127.0.0.1:4310/preview.html?__WB_REVISION__=b618921ef23adce94fcd5d4e2c70ad05",
+                "http://127.0.0.1:4310/preview.js?__WB_REVISION__=5982f1cedf6b3a397b341b5ef8e01093",
+                "http://127.0.0.1:4310/worker.js?__WB_REVISION__=2c4e7df90bacad6fac658c52c6043277",
+                "http://127.0.0.1:4310/bootstrap.js?__WB_REVISION__=cef80b0a63a2c134e6a71cd45082572d"
+              ],
+              "cachedIndexStatus": 200
+            },
+            "offlineFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "physicalColdLaunch": "untested",
+            "policyPassed": true
+          }
+        },
+        {
+          "name": "controlled-origin-outage",
+          "data": {
+            "browser": "155.0",
+            "directOriginStatus": 503,
+            "outageFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "networkOffline": false,
+            "policyPassed": true
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 34,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2460,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / webkit / offline-diagnostic.spec.ts / E05 diagnostic separates prepared cache from offline-flag navigation behavior",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2275,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "prepared-cache-offline-diagnostic",
+          "data": {
+            "browser": "26.6",
+            "prepared": {
+              "controller": "http://127.0.0.1:4310/sw.js",
+              "active": "activated",
+              "scope": "http://127.0.0.1:4310/",
+              "urls": [
+                "http://127.0.0.1:4310/bootstrap.js?__WB_REVISION__=cef80b0a63a2c134e6a71cd45082572d",
+                "http://127.0.0.1:4310/assets/index-9dBvS5KA.css",
+                "http://127.0.0.1:4310/assets/index-CTcQfg3o.js",
+                "http://127.0.0.1:4310/bootstrap.html?__WB_REVISION__=0f4ad31e984c608c186ba2d33762e5df",
+                "http://127.0.0.1:4310/icon.svg?__WB_REVISION__=4549021edad28bd2eb01a39e31d86fb1",
+                "http://127.0.0.1:4310/index.html?__WB_REVISION__=3e9ba47580db428e2b38bc97888e35a0",
+                "http://127.0.0.1:4310/manifest.json?__WB_REVISION__=9650e368aebad2b441fec3cafe5ac479",
+                "http://127.0.0.1:4310/preview.html?__WB_REVISION__=b618921ef23adce94fcd5d4e2c70ad05",
+                "http://127.0.0.1:4310/preview.js?__WB_REVISION__=5982f1cedf6b3a397b341b5ef8e01093",
+                "http://127.0.0.1:4310/worker.js?__WB_REVISION__=2c4e7df90bacad6fac658c52c6043277"
+              ],
+              "cachedIndexStatus": 200
+            },
+            "offlineFetch": {
+              "status": 0,
+              "error": "Load failed"
+            },
+            "diagnosticOnly": true,
+            "physicalColdLaunch": "untested",
+            "policyPassed": false
+          }
+        },
+        {
+          "name": "controlled-origin-outage",
+          "data": {
+            "browser": "26.6",
+            "directOriginStatus": 503,
+            "outageFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "networkOffline": false,
+            "policyPassed": true
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 36,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3495,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}
