@@ -1,0 +1,187 @@
+{
+  "recordedAt": "2026-09-13T06:41:55.830Z",
+  "commit": "8bef387eb87f5d6daf5a4d08a589af55486a53e3",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/tests/security.spec.ts",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? docs/technical-risk-validation/manual-checklist.md",
+    "?? docs/technical-risk-validation/report.md"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--grep",
+    "cross-origin channel|finite message"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T06:41:50.484Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "6dd0a1435e96953916985cd3c7ae7aeb4692b1ef47e7037bca15e59f665247ff",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-BRaA4DtV.js": "273d82904d4fc73fe6bed0705846d7928bfd64b5c8fbc9bd04f0d50962485675",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "icon.svg": "2f487935ad8e88e0a7d99be67bcec7f4487ab81b4fccc347def442f47eaca199",
+    "index.html": "ed1535b46549bbc57ef898544e7634c36fff8c3611c470992f3b95783e7ca2f6",
+    "manifest.json": "eaf762d779eb131aae0021c5b254514bb4f597d2603e905efbb1fe72efd19d39",
+    "sw.js": "c056e1e47a4f3be1122b95b9761424a625f518f97e29a2527c1bbe27ea975576",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718"
+  },
+  "status": "passed",
+  "durationMs": 6570.603,
+  "cases": [
+    {
+      "title": " / chromium / security.spec.ts / E03 cross-origin channel, cookie canary and oversized raw messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1371,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "channel-cookie-message",
+          "data": {
+            "observations": [
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "6fb50bb8-1aff-445f-a991-d96c93b16c24",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 279.1000000089407
+                },
+                "appReceivedLearnerChannel": false
+              },
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "dd54454c-3065-43a4-9b27-1be80db0e5ef",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 301.59999999403954
+                },
+                "appReceivedLearnerChannel": false
+              }
+            ],
+            "oversized": {
+              "source": "self.postMessage(\"x\".repeat(17000));await new Promise(r=>setTimeout(r,100))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "7c61dc46-a943-4d0c-856d-205ae7bdf6e0",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 14.600000008940697
+            },
+            "allocationQuota": "unverified; raw clone precedes validation"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 finite message flood and repeated explicit preview reset preserve the host",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2713,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "finite-preview-flood-reset",
+          "data": {
+            "flood": {
+              "status": "preview-reset",
+              "elapsed": 2016
+            },
+            "resets": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 1.7999999970197678
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 1.3999999910593033
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 1.5
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 2.2000000029802322
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 1.4000000059604645
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 1.5
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 2.9000000059604645
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 1.7999999970197678
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 1.5
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 1.4000000059604645
+              }
+            ],
+            "tightLoop": "separate watchdog evidence failed; this is not a recovery gate pass"
+          }
+        }
+      ]
+    }
+  ]
+}

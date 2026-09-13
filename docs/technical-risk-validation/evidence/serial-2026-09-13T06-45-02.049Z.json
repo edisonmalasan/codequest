@@ -1,0 +1,1620 @@
+{
+  "startedAt": "2026-09-13T06:45:02.049Z",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\serial-probes.mjs"
+  ],
+  "node": "v24.21.0",
+  "buildHashesFrozenBeforeThisRun": {
+    "index.html": "ed1535b46549bbc57ef898544e7634c36fff8c3611c470992f3b95783e7ca2f6",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "sw.js": "c056e1e47a4f3be1122b95b9761424a625f518f97e29a2527c1bbe27ea975576",
+    ".vite/manifest.json": "6dd0a1435e96953916985cd3c7ae7aeb4692b1ef47e7037bca15e59f665247ff"
+  },
+  "physical": false,
+  "rows": [
+    {
+      "id": "chromium/availability",
+      "status": "passed",
+      "version": "153.0.8010.12",
+      "physical": false
+    },
+    {
+      "id": "chromium/corrected-message-regression",
+      "status": "passed",
+      "durationMs": 42,
+      "evidence": {
+        "source": "console.log(\"<script>parent.document.body.innerHTML=\\\"bad\\\"</script>\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "f5b9cf02-e067-4519-a208-0e3ce89756b5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "status": "success",
+        "output": [
+          "<script>parent.document.body.innerHTML=\"bad\"</script>"
+        ],
+        "value": "[undefined]",
+        "elapsed": 23.900000005960464
+      }
+    },
+    {
+      "id": "chromium/owner-switch-regression",
+      "status": "passed",
+      "durationMs": 637,
+      "evidence": {
+        "immutable": true,
+        "ownerDraftPreserved": true,
+        "explicitImport": true
+      }
+    },
+    {
+      "id": "chromium/record-fixture",
+      "status": "passed",
+      "durationMs": 22,
+      "evidence": {
+        "source": "function summarize(records){return records.reduce((sum,record)=>sum+record.quantity,0)}",
+        "candidate": "opaque",
+        "task": "RECORDS",
+        "run": "c0ee66eb-d7ee-48ff-a288-36f45b941a92",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "status": "success",
+        "output": [],
+        "value": "5",
+        "elapsed": 18.399999991059303
+      }
+    },
+    {
+      "id": "chromium/parent-frame-policy",
+      "status": "passed",
+      "durationMs": 2149,
+      "evidence": {
+        "worker": {
+          "source": "console.log(\"ready\")",
+          "candidate": "opaque",
+          "task": "Q01",
+          "run": "4902cd67-fb4d-4d6c-bf26-154805188494",
+          "contentVersion": "1",
+          "assessmentVersion": "1",
+          "status": "success",
+          "output": [
+            "ready"
+          ],
+          "value": "[undefined]",
+          "elapsed": 20
+        },
+        "preview": {
+          "status": "preview-reset",
+          "elapsed": 2015.2999999970198
+        },
+        "requests": [],
+        "policyPassed": true,
+        "diagnosticOnly": true
+      }
+    },
+    {
+      "id": "chromium/100-worker-cycles",
+      "status": "passed",
+      "durationMs": 1938,
+      "evidence": {
+        "timings": [
+          {
+            "cycle": 0,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "63837597-c095-4749-a432-22df1ce1d5ef",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 22.700000002980232
+          },
+          {
+            "cycle": 1,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "ba1b8f8f-e7d9-4e6d-be5b-6116ad274e7c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.400000005960464
+          },
+          {
+            "cycle": 2,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "8098657c-159c-41b4-97f4-1671b9d652c3",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.400000005960464
+          },
+          {
+            "cycle": 3,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "450072ba-9321-463a-b1a9-41d8cb8c743c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19.099999994039536
+          },
+          {
+            "cycle": 4,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "ad3b5010-0f7b-4fe0-b3bd-83457c2ca945",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.100000008940697
+          },
+          {
+            "cycle": 5,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "e3c8db04-2e50-4140-b877-d9aae7994929",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 27.799999997019768
+          },
+          {
+            "cycle": 6,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "67c82e8f-b22a-427a-95e9-df4c022d58dc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.700000002980232
+          },
+          {
+            "cycle": 7,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "fde4f609-391b-4bf6-9523-06cce9aef4c1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 25.200000002980232
+          },
+          {
+            "cycle": 8,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "31cae274-5a92-4bec-b865-cc452dce06c1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.799999997019768
+          },
+          {
+            "cycle": 9,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "559733dc-6428-4369-8e44-cd7cdd8da5c4",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 22
+          },
+          {
+            "cycle": 10,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "a92aa140-817f-460a-a3a8-ee9da219f6b6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19.700000002980232
+          },
+          {
+            "cycle": 11,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "3ba0cf43-b7ac-4b14-8f41-5fad97ee6666",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 22.899999991059303
+          },
+          {
+            "cycle": 12,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "74c12177-4233-4c84-a673-039f8bb7fea3",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 34.79999999701977
+          },
+          {
+            "cycle": 13,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "7c61a9e6-a569-4697-8ec1-4f3855eccd9d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 23.5
+          },
+          {
+            "cycle": 14,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b004bd32-0031-4e17-bad6-fbd406cbc281",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 28.900000005960464
+          },
+          {
+            "cycle": 15,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "03e47bdb-15e1-4b81-892a-0d7d8bd21a66",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19.900000005960464
+          },
+          {
+            "cycle": 16,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b4957759-ebdd-446f-9bf1-1255354f5d93",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 20.80000001192093
+          },
+          {
+            "cycle": 17,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "96d8b403-1c60-4e94-9ef5-5f637a090fc8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 32.099999994039536
+          },
+          {
+            "cycle": 18,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "fc8c4f84-299d-431e-b70f-55950a936471",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 33.80000001192093
+          },
+          {
+            "cycle": 19,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "15ce2ab9-9268-45eb-9908-51fec249c3d1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16
+          },
+          {
+            "cycle": 20,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "7700bd73-17df-46c8-a86e-179f99157430",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.400000005960464
+          },
+          {
+            "cycle": 21,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "6beae7e8-13e6-4556-9424-9b64f7511eb6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16
+          },
+          {
+            "cycle": 22,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "ad87da98-180b-4196-a1e3-49e11a4b2733",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.099999994039536
+          },
+          {
+            "cycle": 23,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "aac2568f-c8d6-46ac-a222-65dc90c7d3e1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.599999994039536
+          },
+          {
+            "cycle": 24,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1af8e59e-f4af-4cab-9a4c-6d97318ee09c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16
+          },
+          {
+            "cycle": 25,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "5a0efefe-54fd-4000-8832-5da5dd1debe7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.599999994039536
+          },
+          {
+            "cycle": 26,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "4a18c1ab-9f09-4542-a8e6-e052cb6477af",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 21.299999997019768
+          },
+          {
+            "cycle": 27,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "ff81602b-2fe4-462b-b753-1e35b895c1d1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.099999994039536
+          },
+          {
+            "cycle": 28,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "070c88c1-ebbf-4dae-a70a-69874e187fbc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.700000002980232
+          },
+          {
+            "cycle": 29,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "4a165cb3-975f-4d87-80a2-af930c31e47f",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.599999994039536
+          },
+          {
+            "cycle": 30,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "11b0a89c-e5d1-4397-9949-e751c5e42cbb",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.100000008940697
+          },
+          {
+            "cycle": 31,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "3d471469-9ae4-4234-81a7-e25307f00f48",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.299999997019768
+          },
+          {
+            "cycle": 32,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "0b84a293-f59f-4a8c-8fd3-905e108ce4d5",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19.700000002980232
+          },
+          {
+            "cycle": 33,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d4745a67-f1a7-478b-8a65-a30d3e9cf6f0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.899999991059303
+          },
+          {
+            "cycle": 34,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1bc95833-d39e-4360-962f-294fdda985a7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.80000001192093
+          },
+          {
+            "cycle": 35,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b90bc2e4-5613-4702-b571-f0a99e34a796",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.299999997019768
+          },
+          {
+            "cycle": 36,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d7a1cb28-ab45-44e1-b554-db46063a9b11",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.700000002980232
+          },
+          {
+            "cycle": 37,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d78d17d5-7a60-44a9-a6f9-e8988d0d0781",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.700000002980232
+          },
+          {
+            "cycle": 38,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d9ff7643-6ce4-4cce-9d53-e4f4c12f83e6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16
+          },
+          {
+            "cycle": 39,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "9e2a3a9f-a4fd-4d4c-8edc-ab749e8ac10f",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15
+          },
+          {
+            "cycle": 40,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "4392c160-a642-41a3-9569-375e782e395e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.100000008940697
+          },
+          {
+            "cycle": 41,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "9af11216-90da-4d6c-af53-3ca95a65717b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16
+          },
+          {
+            "cycle": 42,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "3d3d7c3e-8de6-4bff-8e79-6f8a3e79ddef",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.699999988079071
+          },
+          {
+            "cycle": 43,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d73adc63-3452-4882-a12f-a11f81c8d6c8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 29.700000002980232
+          },
+          {
+            "cycle": 44,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "d72f2894-10bf-495f-bac6-89fe2e4016a0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.399999991059303
+          },
+          {
+            "cycle": 45,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "414cce02-029d-4973-81c1-f93bf13a64ab",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.900000005960464
+          },
+          {
+            "cycle": 46,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "38b57f67-5327-4fe8-a80c-7042c2c0d76c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.299999997019768
+          },
+          {
+            "cycle": 47,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1cd77200-d468-4294-a0d0-c9cc3080a0df",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.299999997019768
+          },
+          {
+            "cycle": 48,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "71d4bf94-6010-474d-bc01-e5ac2eac4fac",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.599999994039536
+          },
+          {
+            "cycle": 49,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "4787bbf9-f333-4da0-8f5f-253ae7c0b503",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.200000002980232
+          },
+          {
+            "cycle": 50,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "fa1e0e47-3060-48f7-9bfc-b3555d9e9ac6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18
+          },
+          {
+            "cycle": 51,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "da4c21a6-bea3-4053-b55a-868ece60d909",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.299999997019768
+          },
+          {
+            "cycle": 52,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "c701fee5-8fc2-4508-a0c5-e7d926633d3d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.599999994039536
+          },
+          {
+            "cycle": 53,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "12fb2f9d-a394-4a59-b15c-5e195f0e3bec",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.5
+          },
+          {
+            "cycle": 54,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "749abaf4-6ff8-4c0c-b1d4-338187ef56f5",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.700000002980232
+          },
+          {
+            "cycle": 55,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "f9754f06-cdf3-4796-8692-57e8c8ed7737",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.5
+          },
+          {
+            "cycle": 56,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b2c1f8d5-2ea3-44fd-b676-d4ecd79c8a01",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.700000002980232
+          },
+          {
+            "cycle": 57,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1a93f251-80f6-498d-8960-232033ae947c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.200000002980232
+          },
+          {
+            "cycle": 58,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "e203f0f0-30c3-4027-a080-72c72e1d03f0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.699999988079071
+          },
+          {
+            "cycle": 59,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "23498e35-21d9-4ccd-8e39-12a074601c55",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.099999994039536
+          },
+          {
+            "cycle": 60,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "ce95db46-b08c-4e5b-981c-a27fdedf4f72",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.200000002980232
+          },
+          {
+            "cycle": 61,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "634b5c4c-75f9-4306-a76a-820ff572e01a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.400000005960464
+          },
+          {
+            "cycle": 62,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "c1246dfe-7510-442c-9ebf-a13aa434f455",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.099999994039536
+          },
+          {
+            "cycle": 63,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "3dec59ae-6531-4921-ab97-611483964292",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.5
+          },
+          {
+            "cycle": 64,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b3014303-45ec-4055-99de-54c4dc99ab3b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.200000002980232
+          },
+          {
+            "cycle": 65,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "6de7f63b-2932-486f-8995-9f58841646e0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.799999997019768
+          },
+          {
+            "cycle": 66,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "0714eda4-5069-44fc-92e8-e4051dd9a818",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19.100000008940697
+          },
+          {
+            "cycle": 67,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "0658dda7-843d-4b75-925a-0a574df190d6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18
+          },
+          {
+            "cycle": 68,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "2e638f4f-93ec-4205-b4bf-07a2f12df65d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.700000002980232
+          },
+          {
+            "cycle": 69,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "cb69a7d0-2f5c-419c-a059-a2e7424629cc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.299999997019768
+          },
+          {
+            "cycle": 70,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "fc0f0258-9b22-47a0-876f-517201918804",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.5
+          },
+          {
+            "cycle": 71,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "eb63eb7c-dce7-43a4-a2c4-22d4b7ae3cac",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.5
+          },
+          {
+            "cycle": 72,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1aab2b08-df2e-4b51-bc0a-c6dc005d3c4b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.699999988079071
+          },
+          {
+            "cycle": 73,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "36aa2204-4328-4faf-9d8e-505778e082c4",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.100000008940697
+          },
+          {
+            "cycle": 74,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "79df426a-07fa-4ee5-930c-f22d2b6ed724",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 19
+          },
+          {
+            "cycle": 75,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "56167b14-a1b1-472b-b667-3fbc15792bce",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 25.100000008940697
+          },
+          {
+            "cycle": 76,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "18a999b1-c0f3-4a89-be55-4576a1c5e9e2",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 27.299999997019768
+          },
+          {
+            "cycle": 77,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "f441a858-e364-4cd4-ba7b-473cfb4ed458",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.299999997019768
+          },
+          {
+            "cycle": 78,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "b576c962-bfde-481d-ba99-c7edeac3dbdb",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.900000005960464
+          },
+          {
+            "cycle": 79,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "77dfdd0c-2e6d-4111-9946-413752e8b2ae",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.900000005960464
+          },
+          {
+            "cycle": 80,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "c7e21250-11fb-42d4-a101-3e8076fdc1a8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.299999997019768
+          },
+          {
+            "cycle": 81,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "710e96e8-f96e-44e5-8430-fed92be0d7a7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.599999994039536
+          },
+          {
+            "cycle": 82,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "c9b463ae-b186-43b7-842e-5ca9c10f211c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.899999991059303
+          },
+          {
+            "cycle": 83,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "7523e68b-b994-4376-aa35-ea0ec29a2549",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.599999994039536
+          },
+          {
+            "cycle": 84,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "5a1c9846-0fa5-43cb-8aa8-9f3184aa4c88",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.799999997019768
+          },
+          {
+            "cycle": 85,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "bb9f9b37-c2c8-4496-a5e8-9356742a83e9",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 25.700000002980232
+          },
+          {
+            "cycle": 86,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1a8e14c1-f1d2-42d0-b327-032da7480bcc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.5
+          },
+          {
+            "cycle": 87,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "6a2ea13c-4111-42dc-9556-13b0bb591e9b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.200000002980232
+          },
+          {
+            "cycle": 88,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "cd4a0738-5565-4822-adfe-e107652a472e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.299999997019768
+          },
+          {
+            "cycle": 89,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "febfe582-fa47-4d1b-ab41-16314b889a02",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14
+          },
+          {
+            "cycle": 90,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "7b061dac-44b3-431c-90b3-92731de2a526",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.099999994039536
+          },
+          {
+            "cycle": 91,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "28484029-b018-4639-931b-f2ee647eb238",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 14.600000008940697
+          },
+          {
+            "cycle": 92,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "913ff386-39b8-4f1b-ac83-d2800f0b84cd",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 40.3999999910593
+          },
+          {
+            "cycle": 93,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "41e88cc5-eb92-4947-b863-1bf13fa9ca51",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.299999997019768
+          },
+          {
+            "cycle": 94,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "1f3d56a6-7647-41a3-a920-d4afc4cd9fb0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 17.799999997019768
+          },
+          {
+            "cycle": 95,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "a3aea783-7a93-4a2e-a51d-0f09ec58e71c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 12.700000002980232
+          },
+          {
+            "cycle": 96,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "57ba8221-6d82-4363-bcc1-e911860b91b2",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.400000005960464
+          },
+          {
+            "cycle": 97,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "badce2ff-bae1-4e79-b171-66e41f55150e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 15.599999994039536
+          },
+          {
+            "cycle": 98,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "2c9ab9d7-8538-43cc-a70c-469e6889fba8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 18.600000008940697
+          },
+          {
+            "cycle": 99,
+            "source": "console.log(\"cycle\")",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "a5dc67bc-3ca6-4c54-99f7-4ce7573c2eed",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "cycle"
+            ],
+            "value": "[undefined]",
+            "elapsed": 16.5
+          }
+        ],
+        "hardMemoryQuota": "unverified",
+        "physical": false
+      }
+    },
+    {
+      "id": "firefox/availability",
+      "status": "untested",
+      "error": "Error: browserType.launch: Host system is missing dependencies!\n\nFull list of missing libraries:\n    msvcp140_1.dll\n"
+    },
+    {
+      "id": "webkit/environment",
+      "status": "failed",
+      "error": "Error: browserContext.newPage: Target page, context or browser has been closed"
+    }
+  ]
+}

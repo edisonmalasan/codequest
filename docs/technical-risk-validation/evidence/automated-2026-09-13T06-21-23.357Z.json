@@ -1,0 +1,826 @@
+{
+  "recordedAt": "2026-09-13T06:21:23.357Z",
+  "commit": "287e6a1773df52f493ac14c29543233059680dcb",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/"
+  ],
+  "command": "corepack pnpm@10.30.3 test:browser",
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "mode": "headless automated browser; no physical/manual claim"
+  },
+  "status": "failed",
+  "durationMs": 51763.183,
+  "cases": [
+    {
+      "title": " / chromium / offline.spec.ts / E05 prepared offline new page retains source and local JS",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2017,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "offline",
+          "data": {
+            "elapsedMs": 409,
+            "mode": "new page, same browser process; physical cold process/install untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 positive and permissive negative controls observe real requests",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 637,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "sink-control",
+          "data": [
+            {
+              "method": "GET",
+              "path": "/positive",
+              "query": "?fixture=CONTROL",
+              "at": 1789280435859
+            },
+            {
+              "method": "GET",
+              "path": "/negative",
+              "query": "?fixture=CONTROL",
+              "at": 1789280435877
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1161,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "opaque",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "8696fad9-f7ad-4b8b-9622-60e76c8b0963",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 22.799999997019768
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "a462846e-5eb7-4bdf-ab3c-b3b75dfa2949",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 138
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "14e9f8c7-ddc8-477e-bcec-c4e0eaf62a09",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 124.29999999701977
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "ad8364ed-9487-46e6-a000-12ef04110efb",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 32.79999999701977
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "e79c0e6b-b912-4052-869a-e1619caaacee",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 17.799999997019768
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "3821d2dd-ce5b-482e-b2d3-c331946867db",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 22.700000002980232
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "fac24212-746d-413e-9713-d3628a7b4371",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 37.8999999910593
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "8c330cb8-fde6-434a-8516-b6303d9cf64a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 17.799999997019768
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1060,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "f1f9d45a-556d-48a8-838c-8ac7f300840d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "storage blocked",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 44.79999999701977
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2303,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "dedicated",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "f9ad146a-99c1-4f71-b5cc-f3b570d3b2a9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 94.3999999910593
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "bb8f3f41-2197-452e-b96b-dd74465f0216",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 218.09999999403954
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "3541901c-19fd-46e2-99ea-a599424d9097",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 266.5
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "1be31c28-4b23-4113-9e92-d71314dfc0da",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 97.20000000298023
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "ebc34c55-3b6f-4e95-9a60-7ac5f268784e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 72.20000000298023
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e2dcb887-fba4-4c66-bfa5-e456582b2c26",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 89
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "5f8311ea-8676-49f3-9e8e-4820f3def325",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 67.29999999701977
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "65d2004f-2d52-4764-9e86-e3e2b49e261d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 86.5
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated cannot read application IndexedDB or session canary",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 6569,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('save-state')\nExpected: \u001b[32m\"S\u001b[7maved on this device\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"S\u001b[7mtarter loaded; not yet saved\u001b[27m\"\u001b[39m\nTimeout:  6000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('save-state') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('save-state')\u001b[22m\n\u001b[2m    3 × locator resolved to <p role=\"status\" data-testid=\"save-state\">Starter loaded; not yet saved</p>\u001b[22m\n\u001b[2m      - unexpected value \"Starter loaded; not yet saved\"\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 malformed messages cannot become trusted output or privileged host actions",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 914,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"s\u001b[7muccess\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"s\u001b[7myntax-error\u001b[27m\"\u001b[39m"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview resource/parent/navigation/form probes are denied",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2738,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "preview",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2014.300000011921
+            },
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview self-navigation capability is explicitly measured",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2652,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "self-navigation-risk",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2015
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/self-navigation",
+                "query": "?fixture=SELF_NAV",
+                "at": 1789280454454
+              }
+            ],
+            "policyPassed": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E01/E06 read, run, failed check, hint, correction, provisional save and reload",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1604,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "environment",
+          "data": {
+            "browser": "153.0.8010.12",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E02 syntax/runtime errors, limits, termination, restart and stale output",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 5181,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "fixtures",
+          "data": [
+            {
+              "id": "syntax",
+              "source": "const = ;",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "b25e8e2f-153a-447b-b0e6-49827a5c4cab",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "syntax-error",
+              "output": [],
+              "value": "Unexpected token '='",
+              "elapsed": 45.20000000298023
+            },
+            {
+              "id": "error",
+              "source": "throw new Error(\"fixture error\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "0de87203-8f87-48c5-993d-93aa6d2a71d8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "runtime-error",
+              "output": [],
+              "value": "fixture error",
+              "elapsed": 43.79999999701977
+            },
+            {
+              "id": "loop",
+              "source": "while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "87ade908-06df-4488-838a-abaa267c3980",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2013.1000000089407
+            },
+            {
+              "id": "flood",
+              "source": "for(let i=0;i<201;i++) console.log(i)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "a85892e4-5f94-4c33-a9ed-5cbf21bd0230",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: console",
+              "elapsed": 27.200000002980232
+            },
+            {
+              "id": "large",
+              "source": "console.log(\"x\".repeat(17000))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "19822af5-bef8-40cc-b759-790e367cad7b",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: single value",
+              "elapsed": 19.900000005960464
+            },
+            {
+              "id": "cycle",
+              "source": "const a={};a.self=a;console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "5c3a9f06-f0a5-4b48-abf7-efb9466a5d79",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: cyclic output",
+              "elapsed": 15
+            },
+            {
+              "id": "getter",
+              "source": "console.log({get danger(){while(true){}}})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "405db376-4efe-44c3-a29b-400c1e9cc1f8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{danger:[accessor]}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 16.200000002980232
+            },
+            {
+              "id": "proxy",
+              "source": "console.log(new Proxy({}, {ownKeys(){while(true){}}}))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "029c42b9-8931-4bb8-9f47-b72da0b95295",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2015.1000000089407
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 storage failure is explicit and preserves in-memory source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1462,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 7606,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('textbox', { name: 'JavaScript source' })\nExpected substring: \u001b[32m\"later draft\"\u001b[39m\nReceived string:    \u001b[31m\"console.log(\\\"Ready for CodeQuest\\\");\"\u001b[39m\nTimeout: 6000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('textbox', { name: 'JavaScript source' }) with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'JavaScript source' })\u001b[22m\n\u001b[2m    15 × locator resolved to <div translate=\"no\" role=\"textbox\" autocorrect=\"off\" spellcheck=\"false\" class=\"cm-content\" autocapitalize=\"off\" aria-multiline=\"true\" contenteditable=\"true\" aria-autocomplete=\"list\" writingsuggestions=\"false\" data-language=\"javascript\" aria-label=\"JavaScript source\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"console.log(\"Ready for CodeQuest\");\"\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 saved source survives twenty reload cycles and protected response is not cached",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 7710,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-09-13T06:23:04.198Z",
+  "commit": "287e6a1773df52f493ac14c29543233059680dcb",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/"
+  ],
+  "command": "corepack pnpm@10.30.3 test:browser",
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "mode": "headless automated browser; no physical/manual claim"
+  },
+  "status": "failed",
+  "durationMs": 833.3910000000003,
+  "cases": []
+}

@@ -1,0 +1,121 @@
+{
+  "recordedAt": "2026-09-13T06:33:50.789Z",
+  "commit": "287e6a1773df52f493ac14c29543233059680dcb",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--grep",
+    "update waits|editor undo|restricted cache"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "status": "passed",
+  "durationMs": 9408.018999999998,
+  "cases": [
+    {
+      "title": " / chromium / offline.spec.ts / E05 update waits, save failure blocks activation, and two clients retain drafts",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 4141,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "update",
+          "data": {
+            "waitingObserved": true,
+            "failedSaveBlockedUpdate": true,
+            "clients": 2,
+            "physical": false,
+            "contentAssessmentChange": "mock separately; production lifecycle unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 restricted cache/channel API inventory and wrong-source messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 808,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "api-inventory",
+          "data": {
+            "results": [
+              {
+                "source": "console.log(typeof fetch,typeof indexedDB,typeof caches,typeof BroadcastChannel,typeof WebSocket,typeof Worker,typeof document,typeof localStorage);try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "f5313065-170d-45b0-a83a-76c8a14885cc",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "function object undefined function function function undefined undefined",
+                  "cache blocked"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19.700000002980232
+              },
+              {
+                "source": "console.log(typeof fetch,typeof indexedDB,typeof caches,typeof BroadcastChannel,typeof WebSocket,typeof Worker,typeof document,typeof localStorage);try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "b324bb22-dd47-4f5f-9e88-9915330c82df",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "function object object function function function undefined undefined",
+                  "APP_NOT_FOUND"
+                ],
+                "value": "[undefined]",
+                "elapsed": 41.400000005960464
+              }
+            ],
+            "correlated": {
+              "source": "await new Promise(r=>setTimeout(r,100));console.log(\"current\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "29d5763e-e80d-4211-a79c-807cca05e132",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "current"
+              ],
+              "value": "[undefined]",
+              "elapsed": 145.29999999701977
+            },
+            "channelCrossOriginBehavior": "not established by API availability; separate cross-origin probe required"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E01 editor undo, indentation, resize, task preservation and explicit reset",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2239,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}
