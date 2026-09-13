@@ -2,13 +2,13 @@
 
 ## Status and evidence
 
-**Proposed** compatibility/history/reward policy. Stable identity/version direction is documented in roadmap; detailed approval evidence is **none**. Register: [C05/P09/P15/F03](../decisions.md); design D5/D7. Owners: curriculum/technical owners; named assignees unassigned.
+**Accepted** compatibility/history/reward policy. Stable identity/version direction is documented in roadmap; detailed approval evidence is [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C05/P09/P15/F03](../decisions.md); design D5/D7. Owners: curriculum/technical owners; named assignees unassigned.
 
 ## Context
 
 Learners may submit cached/guest source after authored material changes. Identity based only on slug/title or treating each version as a new XP source risks lost history/duplicate rewards. No implementation exists.
 
-## Proposed decision
+## Decision
 
 Use stable quest ID separate from title/slug, with submitted content and assessment version. Backend explicitly publishes supported assessments/compatibility mapping. Editorial-only equivalent versions can remain compatible; changed assessments/objectives require CO/TO decision. Pending incompatible/retired work receives reason/current-version retry guidance without source loss or silent relabeling.
 
@@ -27,4 +27,4 @@ Curriculum review includes compatibility/reward/progress impact before publicati
 
 ## Related records and revisit trigger
 
-[Curriculum](../curriculum.md), [backend](../backend.md), [ADR 0003](0003-curriculum-source-and-publication.md), [ADR 0006](0006-local-guest-and-cloud-state.md). Review in Phase 0, choose mechanisms before content capability implementation. Revisit on objective/prerequisite change, retirement, invalid published assessment, or unsupported-version replay evidence.
+[Curriculum](../curriculum.md), [backend](../backend.md), [ADR 0003](0003-curriculum-source-and-publication.md), [ADR 0006](0006-local-guest-and-cloud-state.md). Policy accepted by AP01; choose mechanisms before content capability implementation. Revisit on objective/prerequisite change, retirement, invalid published assessment, or unsupported-version replay evidence.

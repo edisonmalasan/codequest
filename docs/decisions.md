@@ -1,18 +1,29 @@
 # CodeQuest decision register
 
-This is the approval record for Phase 0. Documentation execution was authorized by the user's request to apply `define-codequest-product-and-architecture`. That request did not select every proposed product policy. No pending policy below has approval evidence yet.
+This is the approval record for Phase 0. The user explicitly clarified that the instruction to archive `define-codequest-product-and-architecture` also approved its proposed product and architecture decisions. P01–P15 and the applicable U01 baseline are confirmed by AP01 below. This consistency correction does not reopen the archived change or authorize Phase 1 implementation.
 
 ## Sources and statuses
 
 - **A:** [AGENTS.md](../AGENTS.md), current engineering commitments and architecture boundaries.
-- **R:** development roadmap, `temp/DEVELOPMENT_ROADMAP.md`: Product Goal, Architectural Principles, Priority Tiers, Phases 0–40, Explicitly Postpone, and Core Roadmap Rule. The file is ignored; substantive commitments are captured here and in the linked documents so this definition does not depend on that file being present in a fresh checkout.
+- **R:** [development roadmap](DEVELOPMENT_ROADMAP.md): Product Goal, Architectural Principles, Priority Tiers, Phases 0–40, Explicitly Postpone, and Core Roadmap Rule. It now lives under `docs/` outside the ignored temporary directory; its contents were preserved during relocation. Historical directory trees and terminology examples remain subject to the explicit conflict resolutions and approved definitions below.
 - **E:** Phase 0 exploration in the conversation: ambiguities, contradictions, and recommendations; not product approval.
 - **D:** [archived change design](../openspec/changes/archive/2026-09-13-define-codequest-product-and-architecture/design.md), D1–D10.
 - **U:** user's proposal/apply requests: documentation-only execution scope; technical branch naming; no production infrastructure.
+- **AP01:** [explicit Phase 0 approval](#ap01-explicit-phase-0-approval), this user's clarification of the archive instruction.
+
+### AP01: Explicit Phase 0 approval
+
+Recorded on 2026-09-13. Approval evidence is the user's instruction:
+
+> My instruction to archive the completed Phase 0 change was also my explicit approval of the proposed Phase 0 product and architecture decisions.
+
+The same instruction directs P01–P15/U01 and affected document/ADR statuses to reflect that approval. It limits this work to documentation consistency, requests roadmap relocation/reference updates, prohibits reopening the archived change or creating a new proposal, and prohibits Phase 1 implementation.
+
+AP01 confirms the documented defaults, including personal-learning completion fraud acceptance P06 and limited offline/streak trade-offs. It does not establish empirical runtime containment, mobile parity, learning efficacy, legal compliance, or values/details not defined in Phase 0. U01 is resolved to the adult/desktop-first baseline in P01 and the Chrome/Firefox/WebKit testing direction; exact supported versions/devices/performance budgets remain F02. F01–F09 retain their deferred status and triggers. Archived planning decisions remain a historical record; this register and the accepted ADRs record their approval, with only the archived proposal's roadmap source pointer corrected.
 
 `confirmed` means established by an explicit source, not implemented or empirically verified. `proposed` means a concrete recommendation awaiting review. `unresolved` means a choice still needs a selection. `deferred` means a bounded later decision with a trigger, not an implicitly approved feature.
 
-Each row has a stable ID, topic/decision, status, source, rationale/alternatives, affected documents, owner, blocking stage, and revisit trigger. For **confirmed** rows, the cited source is the approval evidence. For all **proposed**, **unresolved**, and **deferred** rows, approval evidence is **none** unless an explicit dated user decision is later appended. Owners are roles, not invented people: PO = product owner/user; TO = technical owner; CO = curriculum owner; SO = security/privacy owner. Named assignees remain unassigned. A decision owner must record the choice and approval evidence before changing status.
+Each row has a stable ID, topic/decision, status, source, rationale/alternatives, affected documents, owner, remaining evidence stage, and revisit trigger. For **confirmed** rows, the cited source is the approval evidence. Future **proposed** or **unresolved** rows need explicit evidence before confirmation; for **deferred** rows, approval to defer does not select unspecified details. Owners are roles, not invented people: PO = product owner/user; TO = technical owner; CO = curriculum owner; SO = security/privacy owner. Named assignees remain unassigned. A decision owner must record the choice and approval evidence before changing status.
 
 ## Confirmed commitments
 
@@ -24,39 +35,39 @@ Each row has a stable ID, topic/decision, status, source, rationale/alternatives
 | C04 | REST/OpenAPI; generated client under `frontend/src/lib/api/generated/` | confirmed, A | Roadmap's `packages/api-client` conflicts; A takes precedence, no independent second consumer | architecture, frontend, backend, ADR 0002 | TO | API foundation; revisit when two independent consumers justify extraction |
 | C05 | Curriculum belongs under `backend/content/`, Git-first, delivered through API | confirmed, A/R | Roadmap root `content/` trees are superseded by A; client raw-content imports are excluded | curriculum, architecture, backend, ADR 0003 | TO/CO | Content foundation; revisit if an approved authoring requirement changes source |
 | C06 | Browser JavaScript Worker and sandboxed web-preview direction; never learner execution inside NestJS | confirmed, A/R | Remote execution deferred; feasibility/isolation not yet proved | architecture, frontend, security, ADR 0004 | TO/SO | Runtime design; Phase 1 evidence required |
-| C07 | One Foundations journey, 5–7 chapters, 20–30 quests, one capstone | confirmed, R Phase 0/P0 | One polished course; count interpretation and project promise still P04 | product, curriculum | PO/CO | Curriculum scope; explicit outcomes/scope revision |
+| C07 | One Foundations journey, 5–7 chapters, 20–30 quests, one capstone | confirmed, R Phase 0/P0 | One polished course; count interpretation approved in P04/P05 | product, curriculum | PO/CO | Curriculum scope; explicit outcomes/scope revision |
 | C08 | Deterministic assessment without LLM correctness grading; AI optional/post-MVP | confirmed, R | Curriculum must stand alone; AI cannot substitute for manual learning | product, curriculum, backend, security, ADR 0005 | PO/CO | Assessment design; separately approved future AI capability |
-| C09 | Meaningful-learning rewards, no repeat XP farming, derived levels, meaningful streaks | confirmed, R Phases 19–22 | App opens are not learning; balance/qualifying rules remain proposals | gamification, backend, ADR 0006 | PO/TO | Reward design; content balancing/approved new reward source |
+| C09 | Meaningful-learning rewards, no repeat XP farming, derived levels, meaningful streaks | confirmed, R Phases 19–22 | App opens are not learning; qualifying rules approved in P09/P10; numeric balance deferred F04 | gamification, backend, ADR 0006 | PO/TO | Reward design; content balancing/approved new reward source |
 | C10 | Limited offline/PWA/local draft support | confirmed, R P0/Phases 23–28 | Preserve usable learning/code; does not promise fully offline account authority | product, frontend, backend, ADR 0006 | PO/TO | PWA scope; explicit offline promise review |
 | C11 | Security/testing/accessibility/monitoring are release requirements | confirmed, A/R | Late hardening/testing phases do not excuse unsafe early design | product, frontend, security | TO/SO | From first prototype; beta/public release evidence |
-| C12 | This change produces docs/ADRs only; no sync/archive/application/infrastructure execution | confirmed, U/D1 | Planning/apply authorization is limited to Phase 0 | All deliverables | PO/TO | This change; new explicit user request required for later work |
+| C12 | Phase 0 execution produced docs/ADRs only; archive was separately authorized; no application/infrastructure implementation | confirmed, U/D1/AP01 | Phase 0 closure and this correction do not authorize Phase 1 | All deliverables | PO/TO | New explicit user request required for later implementation |
 
-## Proposed policies and unresolved approval gates
+## Approved Phase 0 policies
 
-All policies in this table are draft defaults for coherent documentation, not accepted release promises. Each gate must be approved, revised, or explicitly excluded by an approved scope decision before Phase 0 readiness. Detailed alternatives are in the linked documents/ADRs.
+All policies in this table are confirmed by AP01. Stable IDs retain their P/U prefixes for traceability; the prefixes no longer indicate pending approval. Alternatives are retained as decision rationale, not open approval gates. Exact implementation and feasibility evidence remain subject to the separate deferred decisions.
 
-| ID | Topic and proposed decision / unresolved selection | Status / source | Rationale / alternatives | Affected documents | Owner | Blocking stage / revisit trigger |
+| ID | Approved decision | Status / source and approval evidence | Rationale / alternatives | Affected documents | Owner | Remaining evidence stage / revisit trigger |
 | --- | --- | --- | --- | --- | --- | --- |
-| P01 | Primary audience: self-directed adult beginners, English-reading, desktop-first coding and usable mobile reading/short exercises | proposed, E/D2 | Limits curriculum/context; alternatives: minors/classrooms, experienced practice, mobile-only. Age/language/device promises need approval | product, frontend, curriculum, security | PO | Phase 0; recruitment/device evidence or changed audience |
-| P02 | Positioning: guided writing/debugging/application with deterministic feedback; no job-readiness/full JS mastery/agent proficiency claim | proposed, E/D2 | Theme supports motivation but is not sufficient differentiation; alternative: developer-tool/entertainment platform | product, curriculum | PO | Phase 0; learner interviews/product validation |
-| P03 | Required guest entry/import, cloud progress/reconnect sync, web preview, and email/password+Google+GitHub; no cloud draft merge | proposed, R/E/D3 | Follow pre-launch details/public list; reducing scope is valid only explicitly, not by omissions in P0 list | product, frontend, backend, ADRs 0006/0008 | PO | Phase 0; cumulative scope/beta feasibility review |
-| P04 | `Journey > Chapter > Quest`; Course a display synonym; 24 instructional quests plus one capstone | proposed, E/D4/D5 | Avoid duplicate entities; alternative: Journey>Course>Chapter>Quest or capstone included in 20–30 | product, curriculum, architecture, backend | PO/CO | Phase 0; changes to hierarchy or count |
-| P05 | Seven chapters and observable logic/debug/test/transfer outcomes; inventory-manager capstone with supplied shell, no assessed DOM/events | proposed, E/D5 | Coherent with Foundations; alternative: teach DOM/events with revised allocation or worker-only capstone | curriculum, product, frontend, backend | PO/CO | Phase 0; approval of what counts as meaningful project |
-| P06 | Browser-reported deterministic results; backend owns acceptance/persistence, not independent proof of correctness | proposed, E/D6 | Fits browser-only execution; forged completions possible. Alternative: independent isolated grading, outside this scope | architecture, backend, security, product, ADR 0005 | PO/SO | Phase 0; reject if high-stakes/verified claims are required |
-| P07 | Guest access to Q01–Q04; device-local provisional progress, explicit signup import to authenticated account | proposed, E/D7 | Concrete small entry subset; alternative: different subset, guest full course, or account-first entry | product, frontend, backend, curriculum, ADR 0006 | PO | Phase 0; onboarding evidence/change to guest promise |
-| P08 | Cached lessons/drafts/local JS; offline progress provisional; versioned idempotent outbox; account-separated local state | proposed, R/E/D7 | Avoid authority/merge ambiguity; alternatives: draft-only offline or wider offline progression | frontend, backend, security, ADR 0006 | PO/TO | Phase 0; offline scope/prototype failure |
-| P09 | First accepted completion gives XP once per stable quest; hints/failures have no XP penalty; unlock by completion prerequisite | proposed, E/D8 | Encourages experimentation; alternatives: repeat rewards, hint penalties, mastery gating | gamification, curriculum, backend, ADRs 0006/0007 | PO/CO | Phase 0; balance/reward source revision |
-| P10 | Streak on accepted first completion, backend acceptance date in learner timezone; no backdated guest/offline credit | proposed, E/D7/D8 | Simple acceptance semantics but delayed-sync fairness cost; alternative: trusted capture-date replay/grace policy | gamification, backend, frontend, ADR 0006 | PO | Phase 0; offline/timezone fairness evidence |
-| P11 | Learner compartment has no authenticated origin/session access, network access, or application storage access; isolated messaging and resource limits | proposed, E/D9 | Concrete least-capability promise; exact mechanism unverified; alternative capabilities need explicit scoped review | security, frontend, architecture, ADR 0004 | TO/SO/PO | Phase 0 policy, then Phase 1 feasibility; failed isolation evidence |
-| P12 | Direct Supabase Auth identity flows allowed; no learner uploads/direct Storage in MVP; private submissions, minimized telemetry | proposed, E/D9 | Avoid upload scope/data leakage; alternative: approved scoped upload paths | security, frontend, backend, ADR 0008 | PO/SO | Phase 0; upload/privacy/audience changes |
-| P13 | Runtime receives no tokens; authenticated API uses verified bearer identity; protected requests never enter learner runtime/cache | proposed, E/D9 | Matches token-verification direction; alternate cookie/session transport requires boundary review; storage/refresh detail deferred | security, frontend, backend, ADR 0008 | TO/SO | Phase 0 transport boundary; auth implementation proposal |
-| P14 | Accepted/account versus provisional states are explicit; attempts are submission occurrences; reset never deletes accepted progress | proposed, E/D4/D7 | Prevent state ambiguity; alternate semantics need full glossary/state review | product, frontend, backend, gamification | PO/TO | Phase 0; UX/state contract proposal |
-| P15 | Stable IDs, compatible old versions accepted during explicit compatibility window; incompatible/retired pending work requires retry without losing draft; accepted history preserved | proposed, E/D5 | Avoid silent invalidation/duplicate XP; alternative: all old versions rejected or indefinite old assessment support | curriculum, backend, frontend, ADR 0007 | TO/CO | Phase 0; content lifecycle policy revision |
-| U01 | Exact mobile coding guarantee, supported device/browser matrix and adult/minor policy need explicit selection | unresolved, E/D2/D9 | P01 gives recommendation, not feasibility/legal evidence; cannot market full mobile parity yet | product, frontend, security | PO/SO | Phase 0 policy and Phase 1 proof; recruitment/browser evidence |
+| P01 | Primary audience: self-directed adult beginners, English-reading, desktop-first coding and usable mobile reading/short exercises | confirmed, E/D2/AP01 | Limits curriculum/context; alternatives: minors/classrooms, experienced practice, mobile-only. Age/language/device baseline approved by AP01 | product, frontend, curriculum, security | PO | Approved Phase 0; recruitment/device evidence or changed audience |
+| P02 | Positioning: guided writing/debugging/application with deterministic feedback; no job-readiness/full JS mastery/agent proficiency claim | confirmed, E/D2/AP01 | Theme supports motivation but is not sufficient differentiation; alternative: developer-tool/entertainment platform | product, curriculum | PO | Approved Phase 0; learner interviews/product validation |
+| P03 | Required guest entry/import, cloud progress/reconnect sync, web preview, and email/password+Google+GitHub; no cloud draft merge | confirmed, R/E/D3/AP01 | Follow pre-launch details/public list; reducing scope is valid only explicitly, not by omissions in P0 list | product, frontend, backend, ADRs 0006/0008 | PO | Approved Phase 0; cumulative scope/beta feasibility review |
+| P04 | `Journey > Chapter > Quest`; Course a display synonym; 24 instructional quests plus one capstone | confirmed, E/D4/D5/AP01 | Avoid duplicate entities; alternative: Journey>Course>Chapter>Quest or capstone included in 20–30 | product, curriculum, architecture, backend | PO/CO | Approved Phase 0; changes to hierarchy or count |
+| P05 | Seven chapters and observable logic/debug/test/transfer outcomes; inventory-manager capstone with supplied shell, no assessed DOM/events | confirmed, E/D5/AP01 | Coherent with Foundations; alternative: teach DOM/events with revised allocation or worker-only capstone | curriculum, product, frontend, backend | PO/CO | Approved Phase 0; approved project promise; revisit on outcome changes |
+| P06 | Browser-reported deterministic results; backend owns acceptance/persistence, not independent proof of correctness | confirmed, E/D6/AP01 | Fits browser-only execution; forged completions possible. Alternative: independent isolated grading, outside this scope | architecture, backend, security, product, ADR 0005 | PO/SO | Approved Phase 0; reject if high-stakes/verified claims are required |
+| P07 | Guest access to Q01–Q04; device-local provisional progress, explicit signup import to authenticated account | confirmed, E/D7/AP01 | Concrete small entry subset; alternative: different subset, guest full course, or account-first entry | product, frontend, backend, curriculum, ADR 0006 | PO | Approved Phase 0; onboarding evidence/change to guest promise |
+| P08 | Cached lessons/drafts/local JS; offline progress provisional; versioned idempotent outbox; account-separated local state | confirmed, R/E/D7/AP01 | Avoid authority/merge ambiguity; alternatives: draft-only offline or wider offline progression | frontend, backend, security, ADR 0006 | PO/TO | Approved Phase 0; offline scope/prototype failure |
+| P09 | First accepted completion gives XP once per stable quest; hints/failures have no XP penalty; unlock by completion prerequisite | confirmed, E/D8/AP01 | Encourages experimentation; alternatives: repeat rewards, hint penalties, mastery gating | gamification, curriculum, backend, ADRs 0006/0007 | PO/CO | Approved Phase 0; balance/reward source revision |
+| P10 | Streak on accepted first completion, backend acceptance date in learner timezone; no backdated guest/offline credit | confirmed, E/D7/D8/AP01 | Simple acceptance semantics but delayed-sync fairness cost; alternative: trusted capture-date replay/grace policy | gamification, backend, frontend, ADR 0006 | PO | Approved Phase 0; offline/timezone fairness evidence |
+| P11 | Learner compartment has no authenticated origin/session access, network access, or application storage access; isolated messaging and resource limits | confirmed, E/D9/AP01 | Concrete least-capability promise; exact mechanism unverified; alternative capabilities need explicit scoped review | security, frontend, architecture, ADR 0004 | TO/SO/PO | Approved policy; Phase 1 feasibility; failed isolation evidence |
+| P12 | Direct Supabase Auth identity flows allowed; no learner uploads/direct Storage in MVP; private submissions, minimized telemetry | confirmed, E/D9/AP01 | Avoid upload scope/data leakage; alternative: approved scoped upload paths | security, frontend, backend, ADR 0008 | PO/SO | Approved Phase 0; upload/privacy/audience changes |
+| P13 | Runtime receives no tokens; authenticated API uses verified bearer identity; protected requests never enter learner runtime/cache | confirmed, E/D9/AP01 | Matches token-verification direction; alternate cookie/session transport requires boundary review; storage/refresh detail deferred | security, frontend, backend, ADR 0008 | TO/SO | Approved transport boundary; auth implementation proposal |
+| P14 | Accepted/account versus provisional states are explicit; attempts are submission occurrences; reset never deletes accepted progress | confirmed, E/D4/D7/AP01 | Prevent state ambiguity; alternate semantics need full glossary/state review | product, frontend, backend, gamification | PO/TO | Approved Phase 0; UX/state contract proposal |
+| P15 | Stable IDs, compatible old versions accepted during explicit compatibility window; incompatible/retired pending work requires retry without losing draft; accepted history preserved | confirmed, E/D5/AP01 | Avoid silent invalidation/duplicate XP; alternative: all old versions rejected or indefinite old assessment support | curriculum, backend, frontend, ADR 0007 | TO/CO | Approved Phase 0; content lifecycle policy revision |
+| U01 | Adult beginners; desktop-first coding and usable mobile reading/short exercises; Chrome/Firefox/WebKit testing direction, exact supported versions/devices deferred F02 | confirmed, E/D2/D9/AP01 | Approved P01 baseline; no full mobile parity or legal/feasibility evidence claimed | product, frontend, security | PO/SO | F02/Phase 1 evidence before exact support promises; recruitment/browser evidence |
 
 ## Deferred decisions
 
-Approval evidence is none; owners/triggers below are requirements for later planning, not authorization to build features.
+AP01 approves retaining these deferrals and their owners/triggers. It does not select their unspecified implementation details, numeric values or operational policies, nor authorize building features.
 
 | ID | Topic | Status/source | Rationale / alternatives | Affected documents | Owner | Blocking stage / revisit trigger |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -72,35 +83,35 @@ Approval evidence is none; owners/triggers below are requirements for later plan
 
 ## Conflict resolutions
 
-| Exploration conflict | Resolution / remaining gate |
+| Exploration conflict | Resolution / remaining evidence |
 | --- | --- |
-| Root content and root API-client package in roadmap | C04/C05 follow A; capture corrected intended paths without editing ignored roadmap |
-| Backend authority versus local grading | P06 distinguishes policy acceptance from proof; risk unapproved, ADR 0005 proposed |
-| Limited offline versus guest/multi-device/outbox scope | P03/P07/P08 specify bounded proposed scope; cumulative release promise still unapproved |
+| Root content and root API-client package in roadmap | C04/C05 follow A; approved intended paths supersede historical roadmap trees |
+| Backend authority versus local grading | P06 distinguishes policy acceptance from proof; personal-learning fraud limitation accepted by AP01, ADR 0005 accepted |
+| Limited offline versus guest/multi-device/outbox scope | P03/P07/P08 define the approved bounded scope; technical feasibility remains separate |
 | MVP mastery unlocks versus later mastery tracking | P09/F08 defer mastery gating; XP and completion do not measure mastery |
-| DOM/events capstone versus untaught concepts | P05 uses supplied shell; assessed DOM/events excluded pending explicit curriculum expansion |
+| DOM/events capstone versus untaught concepts | Approved P05 uses supplied shell; assessed DOM/events excluded unless a later curriculum expansion is approved |
 | Entity/module examples versus priority tiers | Canonical product matrix controls features, not conceptual entity lists |
 | Phase 0 versus P0 versus exact development order | Distinct labels; prototypes and production foundations remain later work |
 | Late security/testing/accessibility phases | C11 defines baseline from first design; later phases verify/harden |
 | Abstract future systems early | F09 records constraints; no adapters/storage/AI layers built here |
-| Roadmap ignored by Git | Durable commitments captured in these docs; source file unchanged |
+| Roadmap formerly ignored by Git | Relocated unchanged to docs/DEVELOPMENT_ROADMAP.md; current source references updated and approved docs control conflict resolutions |
 
 ## Phase 0 completion assessment
 
-Documentation drafting and author consistency review are complete: eight documents and eight ADRs are delivered. Approval readiness is **blocked** on P01–P15/U01; applying the change is not approval evidence. No Phase 1 prototype or production work is authorized by this register. A future explicit policy decision updates the affected register rows/documents/ADR statuses; no approval is inferred from silence.
+Phase 0 product and architecture definition is **complete and approved**: eight documents and eight ADRs are delivered; P01–P15/U01 are confirmed by AP01. The completed change remains archived. Technical feasibility and operational details in F01–F09 remain deferred; approval is not implementation or validation evidence. No Phase 1 prototype or production work is authorized by this correction.
 
 ### Four roadmap completion questions
 
-| Question | Defined answer / remaining gate |
+| Question | Approved answer |
 | --- | --- |
-| What are we building? | A pixel-themed, guided JavaScript Foundations learning environment with deterministic feedback and one meaningful capstone; exact persona/project promise P01/P02/P05 pending |
+| What are we building? | A pixel-themed, guided JavaScript Foundations learning environment for adult English-reading beginners with deterministic feedback and the approved capstone/outcomes in P01/P02/P05 |
 | What are we not building? | No broad IDE/deployment/community/AI/agent/multi-language/high-stakes credential platform in MVP; canonical exclusions in product.md |
-| Who owns each system? | Client owns presentation/editor/runtime/local state; NestJS owns authorization/application tables/curriculum and accepted account transitions; client grading is not independent proof (P06 pending) |
-| What is required for MVP? | Canonical product inventory captures confirmed baseline and proposed guest/sync/preview/provider boundaries; cumulative scope P03/P07/P08 pending |
+| Who owns each system? | Client owns presentation/editor/runtime/local state; NestJS owns authorization/application tables/curriculum and accepted account transitions; approved P06 client grading is not independent proof |
+| What is required for MVP? | Canonical product inventory includes approved guest/sync/preview/provider boundaries in P03/P07/P08 alongside confirmed roadmap commitments |
 
-### Policy review packet
+### Approved policy summary
 
-| Review group | Concrete recommendation to approve or revise | Register IDs |
+| Policy group | Approved definition (AP01) | Register IDs |
 | --- | --- | --- |
 | Audience/positioning | Adult English-reading beginners; desktop-first, usable mobile reading/short exercises; practical guided learning, no job-readiness claim | P01/P02/U01 |
 | Release scope | Include guest Q01–Q04/import, account progress/reconnect sync, sandboxed preview, three listed auth methods; source drafts local only | P03/P07/P08 |
@@ -111,22 +122,22 @@ Documentation drafting and author consistency review are complete: eight documen
 | Execution/auth/data | No learner session/network/application storage/authenticated access; bearer identity to backend; private snapshots, minimized telemetry, no uploads | P11/P12/P13 |
 | Content compatibility | Explicit supported-version mapping, preserve accepted history/XP, retain incompatible pending source for retry | P15 |
 
-These are decision selections, not requests for permission to write the already-authorized documentation. They must be explicitly reviewed before claiming Phase 0 ready or using them as approved behavior in later capability changes.
+AP01 approves these definitions as the Phase 0 source for later capability planning. It does not authorize implementing those capabilities in this correction.
 
 ### Requirements coverage and review outcome
 
 | Requirement | Evidence / outcome |
 | --- | --- |
-| R1 product | product.md covers persona, canonical release matrix, exclusions, glossary, loop, metrics; PO selection gates remain pending, no claims of validated efficacy |
+| R1 product | product.md covers persona, canonical release matrix, exclusions, glossary, loop, metrics; PO selections confirmed by AP01, no claims of validated efficacy |
 | R2 architecture | architecture.md maps intended versus current state, owners/trust and corrected paths; no applications/infrastructure scaffolded |
 | R3 frontend | frontend.md covers editor/device/accessibility, draft/outbox/cache separation, provisional state and recovery; no cloud draft guarantee |
 | R4 backend | backend.md covers identity, acceptance, versions, consistent progress/reward/unlocks, capstone and telemetry; no arbitrary execution/independent grading claim |
-| R5 security | security.md maps assets/actors/threats, data/capability requirements, explicit residual risk and Phase 1/beta gates; policy approval/evidence pending |
+| R5 security | security.md maps assets/actors/threats, data/capability requirements, explicit residual risk and Phase 1/beta gates; policy approved by AP01; feasibility evidence deferred |
 | R6 curriculum | curriculum.md has Q01–Q24 exactly once in order, O1–O8 outcome mapping, seven chapters, prerequisites, capstone scaffold/rubric, review/version policy; not executable content |
 | R7 gamification | gamification.md defines sources, uniqueness, hint/failure/replay, derived levels, timezone/acceptance dates, completion unlocks and deferred mechanics |
-| R8 register | C01–C12, P01–P15/U01, F01–F09 capture sources/status/owners/alternatives/affected outputs/blocking stages/triggers; pending approval evidence explicitly none |
-| R9 ADRs | All eight ADRs have context, status/evidence, alternatives, consequences, register links and triggers; 0001–0003 accepted source commitments, 0004–0008 proposed detailed policies |
-| R10 consistency | Author review reconciled hierarchy/count/guest subset, assessment vs mastery, active/history version semantics, local vs accepted effects, token/cache boundaries, replay/XP/streak dates. Product approvals remain pending rather than hidden inconsistencies. |
+| R8 register | C01–C12, P01–P15/U01, F01–F09 capture sources/status/owners/alternatives/affected outputs/blocking stages/triggers; P01–P15/U01 approval evidence AP01; deferred detail approvals not invented |
+| R9 ADRs | All eight ADRs have context, status/evidence, alternatives, consequences, register links and triggers; 0001–0003 accepted source commitments, 0004–0008 accepted by AP01, with feasibility evidence still unverified |
+| R10 consistency | Author review reconciled hierarchy/count/guest subset, assessment vs mastery, active/history version semantics, local vs accepted effects, token/cache boundaries, replay/XP/streak dates. Product approvals are recorded in AP01; remaining technical deferrals are explicit. |
 | R11 scope/checks | Change-authored files are only docs and OpenSpec planning/task tracking; existing AGENTS.md branch-cleanup edit was observed and preserved, not authored here. No code/config/migration/generated skill/infrastructure changes. |
 
 ### Verification record
