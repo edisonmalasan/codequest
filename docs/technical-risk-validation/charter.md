@@ -2,7 +2,7 @@
 
 Change: [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/proposal.md). Baseline: approved [decision register](../decisions.md), ADRs 0001–0008 and [experiment design](../../openspec/changes/validate-codequest-technical-risks/design.md). Recorded 2026-09-13. Active remote branch: `spike/browser-runtime-containment`, created from updated main at proposal merge `8c4f5c5f063bf41ffd94ca8f150ade92ea922dc7`. The project owner's existing AGENTS.md commit `bb037ff` was preserved unchanged on this branch.
 
-The user approved merging the proposal and beginning Apply, then explicitly assigned review roles and confirmed only the Windows development machine. The latest instruction is to continue proposal/charter preparation without inventing reviewer or device information. No executable prototype or experiment measurements exist yet. Review-role assignment is not review of results or Phase 2 authorization; exact test-environment inventory must be recorded when testing.
+The user approved merging the proposal and beginning Apply, then explicitly assigned review roles and confirmed only the Windows development machine. Their subsequent instruction authorizes all scoped implementation and automated verification available in the development environment on the existing branch/PR. Review-role assignment is not review of results or Phase 2 authorization; exact test-environment inventory must be recorded when testing. Physical and assistive-technology coverage is not inferred from automation.
 
 ## Ownership and execution readiness
 
@@ -38,7 +38,7 @@ For every actual Windows test run refresh exact hardware and Windows version and
 
 ## Frozen numerical criteria: revision 1
 
-Selected before measurements on 2026-09-13 from the user-approved proposal design D7. These are experiment acceptance hypotheses, not established production guarantees or new Phase 0 policy. No results have been collected. Any revision must preserve the original result, rationale and affected rerun links.
+Selected before measurements on 2026-09-13 from the user-approved proposal design D7. These are experiment acceptance hypotheses, not established production guarantees or new Phase 0 policy. No results existed at criterion selection; current measurements and retained failures are in the [preliminary report](report.md). Budgets remain unchanged. Any revision must preserve the original result, rationale and affected rerun links.
 
 | ID | Measurement / predeclared criterion | Clock, workload and sample plan |
 | --- | --- | --- |
@@ -75,7 +75,7 @@ Q01-OUTPUT will ask the operator to produce the exact declared text `Ready for C
 
 ## Planned local topology and bootstrap allowlist
 
-No server, DNS/certificate change, browser profile or dependency installation has been performed. These are planned local endpoints, not configured infrastructure:
+Physical-device HTTPS endpoints below remain planned. For development automation, the implementation uses app `http://127.0.0.1:4310`, runner `http://127.0.0.2:4311` and sink `http://127.0.0.1:4312`, with loopback-only binding and no system DNS/certificate changes. Distinct loopback hosts isolate application origin/storage; port isolation alone is not the argument. This recorded development variant preserves the containment hypotheses and makes no claim of physical-device HTTPS evidence. Pin exact public asset hashes from each build manifest before collecting candidate measurements.
 
 | Endpoint / candidate | Planned use |
 | --- | --- |
@@ -94,7 +94,7 @@ Instrumentation controls: trusted harness request reaches sink; permissive synth
 
 ## Evidence, revision and exit rules
 
-Verdicts are passed, failed, unsupported or untested per capability/environment. Overall recommendation is Proceed, Redesign/no-go or Inconclusive/awaiting review. Each evidence record must carry E/fixture ID, expected/actual behavior, environment/candidate, monotonic timestamps/raw samples, prototype commit and commands, dependency/browser versions, topology/effective policy, sink/canary observations and failure/retest links. No measurements exist as of revision 1.
+Verdicts are passed, failed, unsupported or untested per capability/environment. Overall recommendation is Proceed, Redesign/no-go or Inconclusive/awaiting review. Each evidence record must carry E/fixture ID, expected/actual behavior, environment/candidate, monotonic timestamps/raw samples, prototype commit and commands, dependency/browser versions, topology/effective policy, sink/canary observations and failure/retest links. No measurements existed at revision 1 selection. Current evidence is in the [preliminary report](report.md), including failed preview containment/recovery and required untested coverage. Initial dirty-build trials did not freeze complete asset fingerprints; later prospective freezing does not certify earlier builds.
 
 Record numerical revisions as B-ID/revision, original selected criterion/result, reason, approver where applicable and new trial IDs. Do not retrospectively convert original failures. Policy changes or reduced required scope require explicit scoped approval and revised active artifacts; no automatic remote-runner fallback.
 

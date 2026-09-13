@@ -6,14 +6,14 @@ Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); Apply authorized, charter preparation started |
+| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); Apply in progress, available automated evidence collected |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply — proposal approved and merged; charter preparation in progress, project-owner review roles assigned |
-| Next execution step | Prepare the [experiment charter](technical-risk-validation/charter.md); Windows hardware confirmed, exact browser builds to record when testing; other device/assistive configurations unconfirmed and untested |
+| Current OpenSpec stage | Apply — disposable prototypes implemented; PR #5 remains draft, required validation and owner review incomplete |
+| Next execution step | Review [preview failures](technical-risk-validation/report.md) and decide scoped redesign/no-go; supply physical/browser/assistive access for remaining [coverage](technical-risk-validation/coverage.md) |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | No Phase 1 experiments or browser/device measurements completed; runtime containment remains unverified |
-| Current repository | Documentation and OpenSpec artifacts only; no production application workspace or infrastructure |
+| Validation evidence | Focused Chromium/unit/prototype checks passed; preview navigation and tight-loop recovery failed; required Firefox/WebKit/physical/accessibility coverage and owner review incomplete |
+| Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01/F02 await Phase 1 evidence |
 
 ## 1. Product Goal
