@@ -6,11 +6,11 @@ Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); planning only |
+| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); Apply authorized, charter preparation started |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Propose — planning artifacts prepared for review; Apply has not begun |
-| Next execution step | Review Phase 1 proposal; explicitly authorize Apply before implementing experiments |
+| Current OpenSpec stage | Apply — proposal approved and merged; charter preparation in progress, project-owner review roles assigned |
+| Next execution step | Prepare the [experiment charter](technical-risk-validation/charter.md); Windows hardware confirmed, exact browser builds to record when testing; other device/assistive configurations unconfirmed and untested |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
 | Validation evidence | No Phase 1 experiments or browser/device measurements completed; runtime containment remains unverified |
 | Current repository | Documentation and OpenSpec artifacts only; no production application workspace or infrastructure |
