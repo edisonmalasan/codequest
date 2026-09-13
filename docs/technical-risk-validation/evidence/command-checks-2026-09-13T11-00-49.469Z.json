@@ -1,0 +1,89 @@
+{
+  "recordedAt": "2026-09-13T11:00:49.469Z",
+  "sourceCommit": "7c08a6a71b2c960425fbd20620565f17b7e0c5b4",
+  "scope": "disposable prototype only",
+  "checks": [
+    {
+      "command": "corepack pnpm@10.30.3 build",
+      "status": "passed",
+      "warning": "large main bundle; 834.52 kB / 273.44 kB gzip; ten precache entries 821.77 KiB; not physical startup evidence"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 typecheck",
+      "nodeOptions": "--max-old-space-size=384",
+      "status": "passed",
+      "retainedFailure": "earlier concurrent verification exhausted system committed memory; successful serial rerun does not establish hard memory isolation"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 lint",
+      "nodeOptions": "--max-old-space-size=192",
+      "status": "passed"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 test",
+      "nodeOptions": "--max-old-space-size=192",
+      "status": "passed",
+      "tests": 18
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test --project=chromium",
+      "status": "passed",
+      "passed": 29,
+      "evidence": "automated-2026-09-13T10-58-20.432Z.json"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test --project=firefox",
+      "preflightOption": "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1",
+      "status": "passed",
+      "passed": 28,
+      "skipped": 1,
+      "skipReason": "Chromium CDP quota instrumentation diagnostic",
+      "evidence": "automated-2026-09-13T07-37-11.652Z.json"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test --project=firefox --grep \"explicit reset\"",
+      "preflightOption": "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1",
+      "status": "passed",
+      "passed": 1,
+      "evidence": "automated-2026-09-13T10-55-32.546Z.json"
+    },
+    {
+      "command": "pnpm test",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH; no root application manifest exists"
+    },
+    {
+      "command": "pnpm lint",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH; no root application manifest exists"
+    },
+    {
+      "command": "pnpm typecheck",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH; no root application manifest exists"
+    },
+    {
+      "command": "openspec validate validate-codequest-technical-risks --strict",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "teardown": {
+    "listenersOnPrototypePorts": [],
+    "ports": [
+      4310,
+      4311,
+      4312
+    ],
+    "ordinaryProfilesModified": false,
+    "systemCertificatesModified": false
+  },
+  "physicalCoverage": "untested",
+  "overallOutcome": "preview recovery failed; native quota inconclusive; required physical/assistive coverage and owner review pending"
+}

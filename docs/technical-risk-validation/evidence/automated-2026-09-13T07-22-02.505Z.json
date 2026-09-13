@@ -1,0 +1,166 @@
+{
+  "recordedAt": "2026-09-13T07:22:02.505Z",
+  "commit": "750a455b74ca8f6350c27e06c1d8e9ab542c54f6",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/tests/security.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-57-08.733Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-58-40.358Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-59-29.138Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-00-33.676Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-03-28.948Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-04-26.858Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-05-57.711Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-07-16.999Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-08-36.738Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-12-52.437Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-17-03.373Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-19-50.075Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-54-25.996Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-55-24.730Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T07-03-49.450Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T07-13-58.048Z.json"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=firefox",
+    "--grep",
+    "read, run|restricted cache"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "skipHostDependencyPreflight": true,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T07:21:52.779Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "69510f1739ef39b099b3743e4fdacf1f7895f28f136e9795dfdfe0be6c27f209",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CCyPba24.js": "01aa200beae9254a15ff09cf24c39a2f520c8e38968569e95287f1dc1cf01e9a",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "icon.svg": "2f487935ad8e88e0a7d99be67bcec7f4487ab81b4fccc347def442f47eaca199",
+    "index.html": "a993943ea8da69bb3e1881998bddcb164208434d393666f2ee0004a70e95022d",
+    "manifest.json": "eaf762d779eb131aae0021c5b254514bb4f597d2603e905efbb1fe72efd19d39",
+    "preview.html": "7c987f50c74770a03f8ef79c0e05f4227c8a723386875c07f445d73cee6615f7",
+    "preview.js": "65700f1331018c6cec060d5a93c240fe020ce31205e96eb5a860df5ae8209b7b",
+    "sw.js": "3958d92c558d66d19538f53eb18c5f4de787d08002759d18c54c3244533ba379",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718"
+  },
+  "status": "passed",
+  "durationMs": 10610.348,
+  "cases": [
+    {
+      "title": " / firefox / security.spec.ts / E03 restricted cache/channel API inventory and wrong-source messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 4288,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "api-inventory",
+          "data": {
+            "results": [
+              {
+                "source": "for(const name of ['fetch','indexedDB','caches','BroadcastChannel','WebSocket','Worker','document','localStorage']){try{console.log(name+':'+typeof self[name])}catch(e){console.log(name+':denied')}}try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "ba7f1c80-74a1-4dfd-8fa9-43ac55c4f65a",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "fetch:function",
+                  "indexedDB:object",
+                  "caches:denied",
+                  "BroadcastChannel:function",
+                  "WebSocket:function",
+                  "Worker:function",
+                  "document:undefined",
+                  "localStorage:undefined",
+                  "cache blocked"
+                ],
+                "value": "[undefined]",
+                "elapsed": 52
+              },
+              {
+                "source": "for(const name of ['fetch','indexedDB','caches','BroadcastChannel','WebSocket','Worker','document','localStorage']){try{console.log(name+':'+typeof self[name])}catch(e){console.log(name+':denied')}}try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "87d56c54-4868-4a94-a4de-dda18caa50d7",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "fetch:function",
+                  "indexedDB:object",
+                  "caches:object",
+                  "BroadcastChannel:function",
+                  "WebSocket:function",
+                  "Worker:function",
+                  "document:undefined",
+                  "localStorage:undefined",
+                  "APP_NOT_FOUND"
+                ],
+                "value": "[undefined]",
+                "elapsed": 158
+              }
+            ],
+            "correlated": {
+              "source": "await new Promise(r=>setTimeout(r,100));console.log(\"current\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "e18616ec-330e-41e0-8154-b68d513d0e93",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "current"
+              ],
+              "value": "[undefined]",
+              "elapsed": 151
+            },
+            "channelCrossOriginBehavior": "not established by API availability; separate cross-origin probe required"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / workspace.spec.ts / E01/E06 read, run, failed check, hint, correction, provisional save and reload",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2600,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "environment",
+          "data": {
+            "browser": "155.0",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "physical": false
+          }
+        }
+      ]
+    }
+  ]
+}

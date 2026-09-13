@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-09-13T07:05:57.711Z",
+  "commit": "2d58e8eb4cac3348287080f834878b38b8cd171d",
+  "dirtyPaths": [
+    "M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/preview-watchdog.mjs",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-57-08.733Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-58-40.358Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-59-29.138Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-00-33.676Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-03-28.948Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-04-26.858Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-54-25.996Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-55-24.730Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T07-03-49.450Z.json"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--grep",
+    "browser-enforced"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T07:05:47.567Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "3dc3ca4a0a09a5f1f1e7904fdc16a50a778c411b4c1e21721611ad4385693c2c",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CBgHNxGh.js": "a5e644e88902a2a6b21a73164bc0e401f08d0b72a784d54379ed42baf5b87760",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "icon.svg": "2f487935ad8e88e0a7d99be67bcec7f4487ab81b4fccc347def442f47eaca199",
+    "index.html": "32139aa302f6f1221ad69b401ed9f314b4f1af7957db1e142b66f7e9dade8e12",
+    "manifest.json": "eaf762d779eb131aae0021c5b254514bb4f597d2603e905efbb1fe72efd19d39",
+    "preview.html": "7c987f50c74770a03f8ef79c0e05f4227c8a723386875c07f445d73cee6615f7",
+    "preview.js": "65700f1331018c6cec060d5a93c240fe020ce31205e96eb5a860df5ae8209b7b",
+    "sw.js": "08889b3a4d987950cbcada29cf4679d7be6b8e5b30455372c5a2176dbdb527d7",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718"
+  },
+  "status": "failed",
+  "durationMs": 11516.984,
+  "cases": [
+    {
+      "title": " / chromium / persistence.spec.ts / E05 browser-enforced task-origin quota failure retains source and recovers",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 7291,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('save-state')\nExpected substring: \u001b[32m\"Save\u001b[7m failed\u001b[27m\"\u001b[39m\nReceived string:    \u001b[31m\"Save\u001b[7md on this device\u001b[27m\"\u001b[39m\nTimeout: 6000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('save-state') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('save-state')\u001b[22m\n\u001b[2m    3 × locator resolved to <p role=\"status\" data-testid=\"save-state\">Unsaved edits</p>\u001b[22m\n\u001b[2m      - unexpected value \"Unsaved edits\"\u001b[22m\n\u001b[2m    12 × locator resolved to <p role=\"status\" data-testid=\"save-state\">Saved on this device</p>\u001b[22m\n\u001b[2m       - unexpected value \"Saved on this device\"\u001b[22m\n"
+      ],
+      "evidence": []
+    }
+  ]
+}

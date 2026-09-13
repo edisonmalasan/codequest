@@ -1,0 +1,2429 @@
+{
+  "recordedAt": "2026-09-13T07:12:52.437Z",
+  "commit": "ba58c73a028ca2a419a715dc12dd402b6fea69a8",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/preview-watchdog.mjs",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-57-08.733Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-58-40.358Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T06-59-29.138Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-00-33.676Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-03-28.948Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-04-26.858Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-05-57.711Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-07-16.999Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T07-08-36.738Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-54-25.996Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T06-55-24.730Z.json",
+    "?? docs/technical-risk-validation/evidence/preview-loop-2026-09-13T07-03-49.450Z.json"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T07:11:19.005Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "dac020e090f352c877b722fb411700f1c03c3661a353f989b0569bfe1623938b",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-DqjcTc8a.js": "1b07105e2213ca32986695b97806192b33bd1a0a0bcb4aa575fca79e98f43cda",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "icon.svg": "2f487935ad8e88e0a7d99be67bcec7f4487ab81b4fccc347def442f47eaca199",
+    "index.html": "62edb18ca50ad6999d1f2e34cd9d4ad8a04b41c37f9420bd1cab6dd10d657e57",
+    "manifest.json": "eaf762d779eb131aae0021c5b254514bb4f597d2603e905efbb1fe72efd19d39",
+    "preview.html": "7c987f50c74770a03f8ef79c0e05f4227c8a723386875c07f445d73cee6615f7",
+    "preview.js": "65700f1331018c6cec060d5a93c240fe020ce31205e96eb5a860df5ae8209b7b",
+    "sw.js": "8c476f519918bf4c5afec8f0068d455a93475e02529eafbb3093e57ccbeb2dff",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718"
+  },
+  "status": "passed",
+  "durationMs": 94044.60399999999,
+  "cases": [
+    {
+      "title": " / chromium / offline.spec.ts / E05 prepared offline new page retains source and local JS",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2076,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "offline",
+          "data": {
+            "elapsedMs": 535,
+            "mode": "new page, same browser process; physical cold process/install untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / offline.spec.ts / E05 update waits, save failure blocks activation, and two clients retain drafts",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3693,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "update",
+          "data": {
+            "waitingObserved": true,
+            "failedSaveBlockedUpdate": true,
+            "clients": 2,
+            "physical": false,
+            "contentAssessmentChange": "mock separately; production lifecycle unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 versioned lesson identity, missing resources and cleared task storage are truthful",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1318,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "task-storage-clearing",
+          "data": {
+            "inventory": [
+              {
+                "key": "Q01/1/1",
+                "task": "Q01",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Print exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.",
+                "starter": "console.log(\"Not ready\");",
+                "hash": "0292c0f0a6169f5cec14085efa2a09b7f5163ed4ca66e111a7b0145625053d65"
+              },
+              {
+                "key": "RECORDS/1/1",
+                "task": "RECORDS",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Return the total quantity from summarize(records). The display plumbing is supplied.",
+                "starter": "function summarize(records) {\n  let total = 0;\n  for (const record of records) total += record.quantity;\n  return total;\n}",
+                "hash": "26f1811235ead3d53b98e2483bd494dd4da7b8742ae62e44b5d2c677ade8c03a"
+              }
+            ],
+            "confirmedSourceLostAfterExplicitTaskDatabaseClear": true,
+            "missingLessonDisclosed": true,
+            "realQuotaExhaustion": "not simulated by clearing; separately untested",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 interrupted unconfirmed edit does not replace the last confirmed draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1443,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "interrupted-save",
+          "data": {
+            "previousConfirmedSourceRecovered": true,
+            "failedUnconfirmedEditLostOnReload": true,
+            "physicalBackgroundLifecycle": "untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 31624,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "B09-cycle-mix",
+          "data": {
+            "rows": [
+              {
+                "mode": "reload",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 6,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 7,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "d7498d2a-3eaf-40c6-95e4-6aa058f4c421",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              }
+            ],
+            "physical": false,
+            "contentAssessmentRevision": "identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger",
+            "browserMode": "headless same process; physical gate untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 incompatible downloaded assessment is rejected without replacing a saved draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 986,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "downloaded-version-rejection",
+          "data": {
+            "expectedIdentity": "Q01/1/1",
+            "receivedIdentity": "Q01/1/2",
+            "rejected": true,
+            "savedSourceRetained": "console.log(\"version rejection retains source\")",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 bounded task-origin quota experiment records enforcement and recovery",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1582,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "browser-quota",
+          "data": {
+            "origin": "http://127.0.0.1:4310",
+            "quotaBytes": 1,
+            "pressure": {
+              "committed": 128,
+              "errorName": "",
+              "maximumAttemptedSourceBytes": 8388608
+            },
+            "usage": {
+              "usage": 2787402,
+              "quota": 1,
+              "overrideActive": true,
+              "usageBreakdown": [
+                {
+                  "storageType": "file_systems",
+                  "usage": 0
+                },
+                {
+                  "storageType": "indexeddb",
+                  "usage": 106496
+                },
+                {
+                  "storageType": "cache_storage",
+                  "usage": 2649301
+                },
+                {
+                  "storageType": "service_workers",
+                  "usage": 31605
+                }
+              ]
+            },
+            "failure": "Saved on this device",
+            "quotaFailureObserved": false,
+            "diagnosticOnly": true,
+            "sourceRetainedInMemory": true,
+            "recoveredAfterOverrideReset": true,
+            "injectionDisabled": true,
+            "physicalDiskExhaustion": "not performed",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 26,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 positive and permissive negative controls observe real requests",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 960,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "sink-control",
+          "data": [
+            {
+              "method": "GET",
+              "path": "/positive",
+              "query": "?fixture=CONTROL",
+              "at": 1789283523914
+            },
+            {
+              "method": "GET",
+              "path": "/negative",
+              "query": "?fixture=CONTROL",
+              "at": 1789283524034
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1996,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "opaque",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "3935a467-bde6-4b77-951c-a70794381edc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 60.900000005960464
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "9e04ff52-4ccd-497e-bf88-5689b2ee6386",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 193.1000000089407
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "42500899-9038-48fd-8b38-054e4349cb71",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 181.20000000298023
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "2f450ddd-450a-4728-80c3-1f659888f561",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 92.29999999701977
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "868bc2bf-38a0-408a-a374-aa2ad926c7da",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 47.5
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "4e1fa724-2a10-4a8c-9d56-5480f2e662c6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 42.1000000089407
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "2243b908-7c31-4f9c-b3b4-951c91141086",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 90.59999999403954
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "62cadc03-8c0f-4e93-a855-6834b8d4b2de",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 105.1000000089407
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1065,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "53ba0010-560f-4c7a-911a-03e8e7e2da3a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "storage blocked",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 96.29999999701977
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1993,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "dedicated",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "ce24a358-1831-4ddb-8cc1-0daa8dcdf83d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 56.400000005960464
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e7b1d994-72e6-43f9-92c0-e69bbcf02bc5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 211.79999999701977
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "57f84cde-0aa0-4f6e-9dc9-0ccd47564a80",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 212
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "20e35656-0c31-4f91-b78f-85edc8fbc5de",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 86
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "bf36ed42-637b-46a6-8887-f75213210738",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 75.30000001192093
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "90cd7156-be56-437f-b01f-d725f58ed159",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 87.79999999701977
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "8e8eccfb-6b93-4041-916c-f5c601330be2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 55.20000000298023
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "7312f478-9843-47e4-b8c9-bdac1e3d094d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 115.40000000596046
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 962,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "dedicated",
+            "task": "Q01",
+            "run": "8f0b5fcf-21dc-4408-b6f6-adacad05a0bf",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "APP_NOT_FOUND",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 81.1000000089407
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 malformed messages cannot become trusted output or privileged host actions",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1267,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview resource/parent/navigation/form probes are denied",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2939,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "preview",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2010.5
+            },
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview self-navigation capability is explicitly measured",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2711,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "self-navigation-risk",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2010.300000011921
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/self-navigation",
+                "query": "?fixture=SELF_NAV",
+                "at": 1789283535261
+              }
+            ],
+            "policyPassed": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 parent frame policy comparison retains original navigation failure",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2924,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "parent-frame-policy",
+          "data": {
+            "worker": {
+              "source": "console.log(\"ready\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "bb3e76f4-d1da-4a5d-9200-373f6019e817",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "ready"
+              ],
+              "value": "[undefined]",
+              "elapsed": 21.299999997019768
+            },
+            "preview": {
+              "status": "preview-reset",
+              "elapsed": 2004.8999999910593
+            },
+            "records": [],
+            "policyPassed": true,
+            "parentPolicy": "frame-src 'none'",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E02 lifecycle one hundred runs retain usability and leave no runtime frames",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3165,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "lifecycle",
+          "data": {
+            "timings": [
+              {
+                "cycle": 0,
+                "status": "success",
+                "elapsed": 54.70000000298023
+              },
+              {
+                "cycle": 1,
+                "status": "success",
+                "elapsed": 16
+              },
+              {
+                "cycle": 2,
+                "status": "success",
+                "elapsed": 15.5
+              },
+              {
+                "cycle": 3,
+                "status": "success",
+                "elapsed": 18.599999994039536
+              },
+              {
+                "cycle": 4,
+                "status": "success",
+                "elapsed": 16.899999991059303
+              },
+              {
+                "cycle": 5,
+                "status": "success",
+                "elapsed": 21.400000005960464
+              },
+              {
+                "cycle": 6,
+                "status": "success",
+                "elapsed": 16.200000002980232
+              },
+              {
+                "cycle": 7,
+                "status": "success",
+                "elapsed": 17.200000002980232
+              },
+              {
+                "cycle": 8,
+                "status": "success",
+                "elapsed": 22.5
+              },
+              {
+                "cycle": 9,
+                "status": "success",
+                "elapsed": 16.200000002980232
+              },
+              {
+                "cycle": 10,
+                "status": "success",
+                "elapsed": 24.799999997019768
+              },
+              {
+                "cycle": 11,
+                "status": "success",
+                "elapsed": 20.900000005960464
+              },
+              {
+                "cycle": 12,
+                "status": "success",
+                "elapsed": 23.599999994039536
+              },
+              {
+                "cycle": 13,
+                "status": "success",
+                "elapsed": 25.100000008940697
+              },
+              {
+                "cycle": 14,
+                "status": "success",
+                "elapsed": 27.399999991059303
+              },
+              {
+                "cycle": 15,
+                "status": "success",
+                "elapsed": 17.399999991059303
+              },
+              {
+                "cycle": 16,
+                "status": "success",
+                "elapsed": 15
+              },
+              {
+                "cycle": 17,
+                "status": "success",
+                "elapsed": 17.700000002980232
+              },
+              {
+                "cycle": 18,
+                "status": "success",
+                "elapsed": 16.299999997019768
+              },
+              {
+                "cycle": 19,
+                "status": "success",
+                "elapsed": 17.700000002980232
+              },
+              {
+                "cycle": 20,
+                "status": "success",
+                "elapsed": 22
+              },
+              {
+                "cycle": 21,
+                "status": "success",
+                "elapsed": 17.899999991059303
+              },
+              {
+                "cycle": 22,
+                "status": "success",
+                "elapsed": 18.700000002980232
+              },
+              {
+                "cycle": 23,
+                "status": "success",
+                "elapsed": 17.69999998807907
+              },
+              {
+                "cycle": 24,
+                "status": "success",
+                "elapsed": 19.100000008940697
+              },
+              {
+                "cycle": 25,
+                "status": "success",
+                "elapsed": 18.600000008940697
+              },
+              {
+                "cycle": 26,
+                "status": "success",
+                "elapsed": 23.700000002980232
+              },
+              {
+                "cycle": 27,
+                "status": "success",
+                "elapsed": 15.799999997019768
+              },
+              {
+                "cycle": 28,
+                "status": "success",
+                "elapsed": 18.900000005960464
+              },
+              {
+                "cycle": 29,
+                "status": "success",
+                "elapsed": 21.099999994039536
+              },
+              {
+                "cycle": 30,
+                "status": "success",
+                "elapsed": 19
+              },
+              {
+                "cycle": 31,
+                "status": "success",
+                "elapsed": 21.099999994039536
+              },
+              {
+                "cycle": 32,
+                "status": "success",
+                "elapsed": 17.700000002980232
+              },
+              {
+                "cycle": 33,
+                "status": "success",
+                "elapsed": 49
+              },
+              {
+                "cycle": 34,
+                "status": "success",
+                "elapsed": 45.20000000298023
+              },
+              {
+                "cycle": 35,
+                "status": "success",
+                "elapsed": 66.20000000298023
+              },
+              {
+                "cycle": 36,
+                "status": "success",
+                "elapsed": 18.200000002980232
+              },
+              {
+                "cycle": 37,
+                "status": "success",
+                "elapsed": 15.5
+              },
+              {
+                "cycle": 38,
+                "status": "success",
+                "elapsed": 16.5
+              },
+              {
+                "cycle": 39,
+                "status": "success",
+                "elapsed": 15.400000005960464
+              },
+              {
+                "cycle": 40,
+                "status": "success",
+                "elapsed": 22.400000005960464
+              },
+              {
+                "cycle": 41,
+                "status": "success",
+                "elapsed": 38.20000000298023
+              },
+              {
+                "cycle": 42,
+                "status": "success",
+                "elapsed": 38.79999999701977
+              },
+              {
+                "cycle": 43,
+                "status": "success",
+                "elapsed": 22.599999994039536
+              },
+              {
+                "cycle": 44,
+                "status": "success",
+                "elapsed": 15.799999997019768
+              },
+              {
+                "cycle": 45,
+                "status": "success",
+                "elapsed": 23
+              },
+              {
+                "cycle": 46,
+                "status": "success",
+                "elapsed": 27.299999997019768
+              },
+              {
+                "cycle": 47,
+                "status": "success",
+                "elapsed": 20
+              },
+              {
+                "cycle": 48,
+                "status": "success",
+                "elapsed": 16.200000002980232
+              },
+              {
+                "cycle": 49,
+                "status": "success",
+                "elapsed": 18.200000002980232
+              },
+              {
+                "cycle": 50,
+                "status": "success",
+                "elapsed": 17.700000002980232
+              },
+              {
+                "cycle": 51,
+                "status": "success",
+                "elapsed": 16
+              },
+              {
+                "cycle": 52,
+                "status": "success",
+                "elapsed": 25.399999991059303
+              },
+              {
+                "cycle": 53,
+                "status": "success",
+                "elapsed": 33.80000001192093
+              },
+              {
+                "cycle": 54,
+                "status": "success",
+                "elapsed": 138.69999998807907
+              },
+              {
+                "cycle": 55,
+                "status": "success",
+                "elapsed": 54.5
+              },
+              {
+                "cycle": 56,
+                "status": "success",
+                "elapsed": 26.299999997019768
+              },
+              {
+                "cycle": 57,
+                "status": "success",
+                "elapsed": 71.40000000596046
+              },
+              {
+                "cycle": 58,
+                "status": "success",
+                "elapsed": 36.20000000298023
+              },
+              {
+                "cycle": 59,
+                "status": "success",
+                "elapsed": 25.5
+              },
+              {
+                "cycle": 60,
+                "status": "success",
+                "elapsed": 16
+              },
+              {
+                "cycle": 61,
+                "status": "success",
+                "elapsed": 29.599999994039536
+              },
+              {
+                "cycle": 62,
+                "status": "success",
+                "elapsed": 21.30000001192093
+              },
+              {
+                "cycle": 63,
+                "status": "success",
+                "elapsed": 34.29999999701977
+              },
+              {
+                "cycle": 64,
+                "status": "success",
+                "elapsed": 19.5
+              },
+              {
+                "cycle": 65,
+                "status": "success",
+                "elapsed": 16.299999997019768
+              },
+              {
+                "cycle": 66,
+                "status": "success",
+                "elapsed": 23.299999997019768
+              },
+              {
+                "cycle": 67,
+                "status": "success",
+                "elapsed": 16.30000001192093
+              },
+              {
+                "cycle": 68,
+                "status": "success",
+                "elapsed": 16.599999994039536
+              },
+              {
+                "cycle": 69,
+                "status": "success",
+                "elapsed": 14.900000005960464
+              },
+              {
+                "cycle": 70,
+                "status": "success",
+                "elapsed": 16.5
+              },
+              {
+                "cycle": 71,
+                "status": "success",
+                "elapsed": 20
+              },
+              {
+                "cycle": 72,
+                "status": "success",
+                "elapsed": 22.200000002980232
+              },
+              {
+                "cycle": 73,
+                "status": "success",
+                "elapsed": 15.600000008940697
+              },
+              {
+                "cycle": 74,
+                "status": "success",
+                "elapsed": 16.5
+              },
+              {
+                "cycle": 75,
+                "status": "success",
+                "elapsed": 15.900000005960464
+              },
+              {
+                "cycle": 76,
+                "status": "success",
+                "elapsed": 20.599999994039536
+              },
+              {
+                "cycle": 77,
+                "status": "success",
+                "elapsed": 45.70000000298023
+              },
+              {
+                "cycle": 78,
+                "status": "success",
+                "elapsed": 23.100000008940697
+              },
+              {
+                "cycle": 79,
+                "status": "success",
+                "elapsed": 17.5
+              },
+              {
+                "cycle": 80,
+                "status": "success",
+                "elapsed": 24.099999994039536
+              },
+              {
+                "cycle": 81,
+                "status": "success",
+                "elapsed": 19.099999994039536
+              },
+              {
+                "cycle": 82,
+                "status": "success",
+                "elapsed": 22.299999997019768
+              },
+              {
+                "cycle": 83,
+                "status": "success",
+                "elapsed": 18.899999991059303
+              },
+              {
+                "cycle": 84,
+                "status": "success",
+                "elapsed": 20
+              },
+              {
+                "cycle": 85,
+                "status": "success",
+                "elapsed": 19.200000002980232
+              },
+              {
+                "cycle": 86,
+                "status": "success",
+                "elapsed": 32
+              },
+              {
+                "cycle": 87,
+                "status": "success",
+                "elapsed": 18.099999994039536
+              },
+              {
+                "cycle": 88,
+                "status": "success",
+                "elapsed": 17.80000001192093
+              },
+              {
+                "cycle": 89,
+                "status": "success",
+                "elapsed": 23.099999994039536
+              },
+              {
+                "cycle": 90,
+                "status": "success",
+                "elapsed": 15.799999997019768
+              },
+              {
+                "cycle": 91,
+                "status": "success",
+                "elapsed": 17.799999997019768
+              },
+              {
+                "cycle": 92,
+                "status": "success",
+                "elapsed": 16.099999994039536
+              },
+              {
+                "cycle": 93,
+                "status": "success",
+                "elapsed": 23.400000005960464
+              },
+              {
+                "cycle": 94,
+                "status": "success",
+                "elapsed": 17.200000002980232
+              },
+              {
+                "cycle": 95,
+                "status": "success",
+                "elapsed": 26
+              },
+              {
+                "cycle": 96,
+                "status": "success",
+                "elapsed": 24.200000002980232
+              },
+              {
+                "cycle": 97,
+                "status": "success",
+                "elapsed": 16.899999991059303
+              },
+              {
+                "cycle": 98,
+                "status": "success",
+                "elapsed": 22.200000002980232
+              },
+              {
+                "cycle": 99,
+                "status": "success",
+                "elapsed": 16.599999994039536
+              }
+            ],
+            "hardMemoryQuota": "unverified",
+            "manualPhysicalCoverage": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 restricted cache/channel API inventory and wrong-source messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 929,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "api-inventory",
+          "data": {
+            "results": [
+              {
+                "source": "console.log(typeof fetch,typeof indexedDB,typeof caches,typeof BroadcastChannel,typeof WebSocket,typeof Worker,typeof document,typeof localStorage);try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "99f8ced0-1a01-445f-a5b9-9e998379e2e4",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "function object undefined function function function undefined undefined",
+                  "cache blocked"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22.200000002980232
+              },
+              {
+                "source": "console.log(typeof fetch,typeof indexedDB,typeof caches,typeof BroadcastChannel,typeof WebSocket,typeof Worker,typeof document,typeof localStorage);try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "5c888efd-7fbd-430a-9b87-c9e93331b245",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "function object object function function function undefined undefined",
+                  "APP_NOT_FOUND"
+                ],
+                "value": "[undefined]",
+                "elapsed": 31.099999994039536
+              }
+            ],
+            "correlated": {
+              "source": "await new Promise(r=>setTimeout(r,100));console.log(\"current\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "e7b6a8d6-2250-453d-ade5-dfd1d98e2f8e",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "current"
+              ],
+              "value": "[undefined]",
+              "elapsed": 131.70000000298023
+            },
+            "channelCrossOriginBehavior": "not established by API availability; separate cross-origin probe required"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 cross-origin channel, cookie canary and oversized raw messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1325,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "channel-cookie-message",
+          "data": {
+            "observations": [
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "efb85ad2-5d73-49ed-8868-15ef19de8ad4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 281.70000000298023
+                },
+                "appReceivedLearnerChannel": false
+              },
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "d79addcb-6f5a-486a-a2e1-aeae3192941c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 334.5
+                },
+                "appReceivedLearnerChannel": false
+              }
+            ],
+            "oversized": {
+              "source": "self.postMessage(\"x\".repeat(17000));await new Promise(r=>setTimeout(r,100))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "c00ad148-503c-4a67-99f9-94152143e9df",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 17.099999994039536
+            },
+            "allocationQuota": "unverified; raw clone precedes validation"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 finite message flood and repeated explicit preview reset preserve the host",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2705,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "finite-preview-flood-reset",
+          "data": {
+            "flood": {
+              "status": "preview-reset",
+              "elapsed": 2012.7000000029802
+            },
+            "resets": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 2.1000000089406967
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 2.7999999970197678
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 1.2999999970197678
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 2.300000011920929
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 1.2999999970197678
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 1.5
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 1.2999999970197678
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 1.7000000029802322
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 1.4000000059604645
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 1.2999999970197678
+              }
+            ],
+            "tightLoop": "separate watchdog evidence failed; this is not a recovery gate pass"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 isolated preview executes useful inline JS while denying resource and self-navigation probes",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2932,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "isolated-preview",
+          "data": {
+            "inlineJavaScriptExecuted": true,
+            "usefulTotal": "5",
+            "navigation": {
+              "status": "preview-reset",
+              "elapsed": 2016.5999999940395
+            },
+            "records": [],
+            "physical": false,
+            "cpuRecovery": "separate tight-loop probe failed; no production selection"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E01/E06 read, run, failed check, hint, correction, provisional save and reload",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1340,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "environment",
+          "data": {
+            "browser": "153.0.8010.12",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E02 syntax/runtime errors, limits, termination, restart and stale output",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 5054,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "fixtures",
+          "data": [
+            {
+              "id": "syntax",
+              "source": "const = ;",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "d46592f6-3deb-43fb-af14-18310d39d624",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "syntax-error",
+              "output": [],
+              "value": "Unexpected token '='",
+              "elapsed": 19.5
+            },
+            {
+              "id": "error",
+              "source": "throw new Error(\"fixture error\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "44ec6f82-cedc-4793-a467-e744a28fd565",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "runtime-error",
+              "output": [],
+              "value": "fixture error",
+              "elapsed": 15.299999997019768
+            },
+            {
+              "id": "loop",
+              "source": "while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "a32a651d-6160-4037-9ada-35b2d1a23541",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2002.7000000029802
+            },
+            {
+              "id": "flood",
+              "source": "for(let i=0;i<201;i++) console.log(i)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "db3be42c-5bff-465f-9efd-453ccf64ebba",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: console",
+              "elapsed": 27.5
+            },
+            {
+              "id": "large",
+              "source": "console.log(\"x\".repeat(17000))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "b3100b5a-0748-4859-8dd3-778b4e4ae298",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: single value",
+              "elapsed": 16.80000001192093
+            },
+            {
+              "id": "cycle",
+              "source": "const a={};a.self=a;console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "8fd864fa-8ad9-4f82-a40b-2543f140dfd8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: cyclic output",
+              "elapsed": 16.30000001192093
+            },
+            {
+              "id": "getter",
+              "source": "console.log({get danger(){while(true){}}})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "a049e642-4d1e-4e2a-9aee-58ff73559926",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{danger:[accessor]}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 23
+            },
+            {
+              "id": "deep",
+              "source": "const a={};let c=a;for(let i=0;i<20;i++){c.n={};c=c.n}console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "65803529-00d0-46f2-9467-ac8210beadf8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: nested output",
+              "elapsed": 18.599999994039536
+            },
+            {
+              "id": "toJSON",
+              "source": "console.log({toJSON(){throw Error(\"must not be called\")},value:1})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "82635178-9dbe-4481-8f8b-d6b6fae6a843",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{toJSON:[function],value:1}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 16.100000008940697
+            },
+            {
+              "id": "swallowed-limit",
+              "source": "try{for(let i=0;i<201;i++)console.log(i)}catch(e){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "78d078a0-37f7-412d-a752-ed5c992d8520",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: swallowed console error",
+              "elapsed": 17.200000002980232
+            },
+            {
+              "id": "source-limit",
+              "source": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "333d4677-716e-4607-868e-31722406e718",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "Source exceeds 64 KiB; draft retained",
+              "elapsed": 0.4000000059604645
+            },
+            {
+              "id": "proxy",
+              "source": "console.log(new Proxy({}, {ownKeys(){while(true){}}}))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "47c1bb76-a4e0-46a3-bace-a706e3c92000",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2008.6000000089407
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 storage failure is explicit and preserves in-memory source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1603,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1484,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 saved source survives twenty reload cycles and protected response is not cached",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 8730,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E01 editor undo, indentation, resize, task preservation and explicit reset",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1330,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}
