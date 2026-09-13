@@ -92,6 +92,7 @@ if (!quest) throw new QuestNotFoundError(questId);
 - Branches: `feat/<change-id-or-short-name>`, `fix/<change-id-or-short-name>`, `chore/<short-name>`.
 - Use one branch per coherent feature/change; merge only after required checks pass.
 - Prefer squash merge unless the task/repository explicitly requires another strategy.
+- Always close/delete the branch after PR merge
 
 ### Git safety
 - Check `git status` before significant work and `git diff` before finishing.
