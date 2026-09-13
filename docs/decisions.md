@@ -7,7 +7,7 @@ This is the approval record for Phase 0. Documentation execution was authorized 
 - **A:** [AGENTS.md](../AGENTS.md), current engineering commitments and architecture boundaries.
 - **R:** development roadmap, `temp/DEVELOPMENT_ROADMAP.md`: Product Goal, Architectural Principles, Priority Tiers, Phases 0–40, Explicitly Postpone, and Core Roadmap Rule. The file is ignored; substantive commitments are captured here and in the linked documents so this definition does not depend on that file being present in a fresh checkout.
 - **E:** Phase 0 exploration in the conversation: ambiguities, contradictions, and recommendations; not product approval.
-- **D:** [change design](../openspec/changes/define-codequest-product-and-architecture/design.md), D1–D10.
+- **D:** [archived change design](../openspec/changes/archive/2026-09-13-define-codequest-product-and-architecture/design.md), D1–D10.
 - **U:** user's proposal/apply requests: documentation-only execution scope; technical branch naming; no production infrastructure.
 
 `confirmed` means established by an explicit source, not implemented or empirically verified. `proposed` means a concrete recommendation awaiting review. `unresolved` means a choice still needs a selection. `deferred` means a bounded later decision with a trigger, not an implicitly approved feature.
