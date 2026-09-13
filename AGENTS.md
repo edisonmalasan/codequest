@@ -87,17 +87,160 @@ if (!quest) throw new QuestNotFoundError(questId);
 - Preserve existing behavior unless the active requirement changes it.
 - Prefer adding to an existing module over inventing a new architectural layer.
 
-## Git / PR conventions
-- Commits use Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`.
-- Branches: `feat/<change-id-or-short-name>`, `fix/<change-id-or-short-name>`, `chore/<short-name>`.
-- Use one branch per coherent feature/change; merge only after required checks pass.
-- Prefer squash merge unless the task/repository explicitly requires another strategy.
-- Always close/delete the branch after PR merge
+## Git / PR workflow
+
+`main` is the integration branch. Never perform planned work directly on `main`.
+
+Every repository-mutating OpenSpec stage must use a remote branch and PR. Local-only working branches are not allowed.
+
+### Branch naming
+
+Branch names describe the technical work, not the raw OpenSpec change name.
+
+- Proposal/docs: `docs/<technical-scope>-proposal`
+- Feature: `feat/<technical-scope>`
+- Fix: `fix/<technical-scope>`
+- Refactor: `refactor/<technical-scope>`
+- Tests/validation: `test/<technical-scope>`
+- Technical spike: `spike/<technical-scope>`
+- Spec sync: `docs/<technical-scope>-spec-sync`
+- Archive: `chore/archive-<technical-scope>`
+
+Examples:
+
+- `docs/browser-runtime-validation-proposal`
+- `spike/browser-runtime-containment`
+- `feat/quest-progress-api`
+- `fix/duplicate-xp-award`
+- `docs/browser-runtime-spec-sync`
+- `chore/archive-browser-runtime-validation`
+
+Do not use the OpenSpec change ID as the branch name unless it is also the clearest technical description.
+
+### Branch lifecycle
+
+Before starting a repository-mutating stage:
+
+1. Check `git status`.
+2. Switch to `main`.
+3. Pull the latest `origin/main`.
+4. Create a new branch from the updated `main`.
+5. Immediately push the new branch to `origin` and set upstream tracking.
+6. Only then begin modifying files.
+
+Never leave active repository work only on a local branch.
+
+### OpenSpec Git lifecycle
+
+#### Explore
+
+`/openspec-explore` is normally read-only.
+
+If no repository files change, no branch or PR is required.
+
+#### Propose
+
+For `/openspec-propose`:
+
+1. Start from updated `main`.
+2. Create a technical proposal branch such as `docs/<scope>-proposal`.
+3. Immediately push the branch to `origin`.
+4. Create/update the OpenSpec proposal, design, specs, tasks, and roadmap status.
+5. Commit using Conventional Commits.
+6. Push all proposal commits to the remote branch.
+7. Open a PR into `main`.
+8. Stop for user review.
+9. After explicit user approval and required checks, merge the PR.
+10. Delete the merged local and remote branch.
+
+Approval controls **merge**, not whether proposal work is committed. Proposal artifacts should be committed and pushed before approval so they can be reviewed remotely.
+
+#### Apply
+
+For `/openspec-apply-change`:
+
+1. Ensure the approved proposal PR is already merged.
+2. Return to `main` and pull latest `origin/main`.
+3. Create a new implementation branch from `main`.
+4. Immediately push it to `origin`.
+5. Apply only the approved OpenSpec tasks.
+6. Commit coherent implementation steps using Conventional Commits.
+7. Push commits regularly to the remote branch.
+8. Run required verification.
+9. Open/update the PR into `main`.
+10. Stop for user review when implementation and verification are complete.
+11. Merge only after approval and required checks pass.
+12. Delete the merged branch locally and remotely.
+
+Do not reuse the proposal branch for Apply.
+
+#### Sync
+
+If `/openspec-sync` modifies repository files:
+
+1. Start from updated `main` after the Apply PR is merged.
+2. Create and immediately push `docs/<scope>-spec-sync`.
+3. Run the approved sync.
+4. Commit and push.
+5. Open a PR.
+6. Merge after review/checks.
+7. Delete the branch.
+
+Skip this stage when no spec synchronization is required.
+
+#### Archive
+
+For `/openspec-archive`:
+
+1. Archive only after Apply and any required Sync are merged.
+2. Start from updated `main`.
+3. Create `chore/archive-<technical-scope>`.
+4. Immediately push it to `origin`.
+5. Run the OpenSpec archive workflow.
+6. Update Project Status/roadmap references where required.
+7. Commit and push the archive result.
+8. Open a PR into `main`.
+9. Merge after review/checks.
+10. Delete the branch locally and remotely.
+11. Return to updated `main` before beginning the next roadmap phase.
+
+### Commit conventions
+
+Use Conventional Commits:
+
+- `feat:` new product capability
+- `fix:` bug fix
+- `refactor:` behavior-preserving restructuring
+- `test:` tests or technical validation
+- `docs:` documentation/specification
+- `chore:` repository/tooling/archive maintenance
+
+Examples:
+
+- `docs: propose browser runtime validation`
+- `test: add worker containment probes`
+- `feat: add quest progress endpoint`
+- `fix: prevent duplicate xp awards`
+- `docs: sync runtime validation requirements`
+- `chore: archive browser runtime validation`
+
+### PR / merge conventions
+
+- Every Propose, Apply, Sync, and Archive branch that changes repository files must go through a PR into `main`.
+- Never silently commit completed stage work directly to `main`.
+- Keep one coherent OpenSpec stage per branch.
+- Use **merge commits**, not squash merges, for OpenSpec workflow PRs so branch topology and stage history remain visible in Git history.
+- Delete local and remote branches after successful merge; the PR and merge commit remain the permanent historical record.
+- Never begin the next stage from an unmerged branch.
+- After every merge, update local `main` from `origin/main` before branching again.
 
 ### Git safety
-- Check `git status` before significant work and `git diff` before finishing.
+
+- Check `git status` before significant work.
+- Inspect `git diff` before every commit and before finishing.
 - Never discard existing user changes.
-- Never use destructive Git operations or rewrite history without explicit authorization.
+- Never force-push unless explicitly authorized.
+- Never use destructive Git operations or rewrite history unless explicitly authorized.
 
 ## Source of truth
 
