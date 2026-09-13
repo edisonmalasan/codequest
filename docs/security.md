@@ -1,6 +1,8 @@
 # Security and privacy boundaries
 
-Status: Phase 0 threat/policy draft, not a security certification or configured infrastructure. Backend ownership and no NestJS learner execution are confirmed C03/C06/C11. Trust, capabilities, transport, data and age policies P01/P06/P08/P11–P13/U01 need review in the [register](decisions.md). No prototype evidence exists. Exact containment/configuration/limits are F01/F03; operational retention/legal decisions are F06.
+Status: approved Phase 0 threat/policy definition, not a security certification or configured infrastructure. Backend ownership and no NestJS learner execution are confirmed C03/C06/C11. Trust, capabilities, transport, data and age policies P01/P06/P08/P11–P13/U01 are approved by AP01 in the [register](decisions.md). No prototype evidence exists. Exact containment/configuration/limits are F01/F03; operational retention/legal decisions are F06.
+
+Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
 ## Assets, actors and boundaries
 
@@ -16,7 +18,7 @@ Trust crossings: Auth provider → trusted client session boundary; client → v
 | --- | --- | --- |
 | Forged or expired token, client-chosen user ID/role | Verify identity and authorize each protected resource/action in NestJS; derive principal, reject spoofed identity | Later auth/ownership integration tests; no acceptance of this risk |
 | Cross-account profile/submission/sync access | Ownership checks independent of payload IDs; least privilege; bounded privileged access | Later cross-account tests/audit; not a client UI check |
-| Forged passing result/source | Explicit personal-learning client-report trust P06; enforce policy/uniqueness but do not claim regrading | PO/SO must accept residual completion fraud; high-stakes/verified claims excluded |
+| Forged passing result/source | Explicit personal-learning client-report trust P06; enforce policy/uniqueness but do not claim regrading | AP01 accepts residual personal-learning completion fraud; high-stakes/verified claims excluded |
 | Learner compartment reaches session/API/storage/network | No secrets/authenticated origin/session/application storage/network; separate untrusted capability boundary | Phase 1 evidence required; mechanism unverified, escape risk not accepted for launch |
 | Infinite loop/huge output/payload abuse | Time/output/input limits, independent termination/reset, bounded result rendering and API requests | Phase 1 limit/termination probes then focused tests; numeric limits F01 |
 | Spoofed/stale preview or runtime messages | Validate sender/channel/run correlation and bounded message shape; treat output as data, not HTML/code | Phase 1 safe message/escape tests; no implicit trusted `postMessage` payload |
@@ -28,7 +30,7 @@ Trust crossings: Auth provider → trusted client session boundary; client → v
 | Unauthorized uploads/public code | No MVP learner uploads/public publishing; private snapshots, authorized access only | Capability/security review before any future Storage/public sharing |
 | Excessive API use or secret/operator compromise | Request bounds/rate limits, environment-separated backend secrets, least privilege, recovery/backups process | Before beta operational/security review; no credentials created here |
 
-## Proposed learner execution policy
+## Approved learner execution policy
 
 P11 recommends no learner network access, application storage access, authenticated API access, session/cookie/token access, or cross-compartment application authority. Provide only learner source, public instructional fixtures/contracts, and bounded output/result channel. Worker and iframe are execution directions, not proof that their default privileges satisfy this policy. Exact capability/origin isolation must be demonstrated in Phase 1 before production runtime approval.
 
@@ -38,15 +40,15 @@ Phase 1 must test benign output, syntax/runtime errors, infinite loops, huge out
 
 ## Authentication, transport and data access
 
-P13 proposes Supabase Auth identity flows on the trusted client and bearer identity on protected REST requests to NestJS. Tokens only reach Auth handling and authorized API request transport; no runtime/preview/lesson messages, source fixtures, telemetry, URLs, service-worker protected-response cache or learner-controlled code. Session refresh/storage specifics require separate auth design; alternate cookie/session transport must preserve the same boundary and receive review.
+P13 establishes Supabase Auth identity flows on the trusted client and bearer identity on protected REST requests to NestJS. Tokens only reach Auth handling and authorized API request transport; no runtime/preview/lesson messages, source fixtures, telemetry, URLs, service-worker protected-response cache or learner-controlled code. Session refresh/storage specifics require separate auth design; alternate cookie/session transport must preserve the same boundary and receive review.
 
 NestJS verifies token signature/issuer/audience/expiry and derives user identity/permissions. HTTPS/session expiration/CORS/request validation/rate limits are requirements for later production configuration, not configured by this definition. No frontend user ID/role is trusted; no learner code executes in NestJS. Backend table access uses least privilege; author/operator operations need explicit authorization and audit boundaries. Secrets/service-role keys stay backend-only and out of source, generated clients and logs.
 
-Direct Supabase Auth is the proposed permitted client integration; CodeQuest table reads/writes always go through NestJS. P12 excludes direct learner Storage/uploads from MVP. Future uploads would require explicit ownership/file validation/signed scope decisions before implementation, not broad service-role access. Public learner source/profiles/hosting are deferred.
+Direct Supabase Auth is the approved permitted client integration; CodeQuest table reads/writes always go through NestJS. P12 excludes direct learner Storage/uploads from MVP. Future uploads would require explicit ownership/file validation/signed scope decisions before implementation, not broad service-role access. Public learner source/profiles/hosting are deferred.
 
 ## Source, cache and telemetry handling
 
-P12 proposes private learner code/submissions: accessible to their owner and only authorized bounded operators for an explicit support/content-review purpose, with access traceability. No public sharing, model-provider transfer, or raw-source analytics by default. Snapshot storage supports learning records; it is not an indefinite code-archive promise.
+P12 establishes private learner code/submissions: accessible to their owner and only authorized bounded operators for an explicit support/content-review purpose, with access traceability. No public sharing, model-provider transfer, or raw-source analytics by default. Snapshot storage supports learning records; it is not an indefinite code-archive promise.
 
 | Data | Purpose / minimization | Local/cloud and deletion principle |
 | --- | --- | --- |
@@ -60,10 +62,10 @@ P12 proposes private learner code/submissions: accessible to their owner and onl
 
 Logout removes session/protected in-memory/cache state; owner-isolated local drafts/pending work may remain only under disclosed local-retention policy and cannot sync as another account. Account deletion must address cloud learning data, local retained data, telemetry and backup-retention limitations with a defined user-facing process before real data collection. Exact numeric periods, legal text, consent and operator access implementation are deferred F06, not permission to gather data indefinitely. Do not begin learner beta data collection before those policies are settled.
 
-P01/U01 recommend adults; whether minors are included remains an explicit gate. The product owner/security owner must determine age/audience/data handling and applicable legal review before launch/recruitment. This document does not assert legal compliance or invent jurisdiction-specific obligations.
+P01/U01 approve an adult primary audience; minors/classrooms are outside this MVP baseline. Applicable privacy/consent/legal operational decisions remain F06 before real learner data collection, including recruitment/beta. Adult positioning does not itself prove legal compliance; this document does not invent jurisdiction-specific obligations.
 
 ## Quality, evidence and accepted limitations
 
 Security/tests/accessibility start with first executable design; late roadmap phases harden/verify. Later tests cover authorization, submission/progress/reward consistency, version/sync duplicates, guest account migration and runtime/cache separation. Keyboard/focus/screen-reader/contrast/reduced motion/zoom/touch/editor and low-end behavior require evidence, not theme exceptions. Backups, migration/recovery, monitoring, account recovery and security review are beta gates.
 
-Only **proposed** residual limitation is client completion fraud P06 and explicit local-data loss/unsupported offline capabilities under the disclosed product promise. No security-risk acceptance evidence has been recorded. Session leakage, cross-account authorization failure, unsafe execution or unbounded resource use are not acceptable residuals for launch. ADRs [0004](adr/0004-browser-execution-isolation.md), [0005](adr/0005-assessment-trust-and-completion.md), and [0008](adr/0008-authentication-and-data-access.md) retain proposed status where approval/evidence is missing.
+Approved residual limitations are personal-learning client completion fraud P06 and disclosed local-data loss/unsupported offline capabilities; approval evidence is AP01. Session leakage, cross-account authorization failure, unsafe execution or unbounded resource use are not acceptable residuals for launch. ADRs [0004](adr/0004-browser-execution-isolation.md), [0005](adr/0005-assessment-trust-and-completion.md), and [0008](adr/0008-authentication-and-data-access.md) are accepted policies; isolation/operational feasibility evidence remains unverified/deferred.
