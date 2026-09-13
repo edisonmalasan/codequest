@@ -4,6 +4,8 @@
 
 CodeQuest is a pixel-themed, game-like coding education platform for learning, practicing, building, and eventually using modern AI-assisted development workflows. The repository contains two applications: `frontend/` is the Next.js Web/PWA client and `backend/` is the NestJS authoritative application API. Keep the backend as a modular monolith until a concrete scaling or security requirement justifies extraction.
 
+--
+
 ## Stack
 
 - Language: TypeScript
@@ -13,6 +15,8 @@ CodeQuest is a pixel-themed, game-like coding education platform for learning, p
 - Testing: Vitest, Testing Library, Playwright
 - Ops: pnpm workspace, Turborepo, GitHub Actions, PostHog, Sentry
 - Execution: JavaScript Web Workers; sandboxed iframe for web previews; Pyodide later; isolated remote runners later
+
+--
 
 ## Setup & commands
 These are the repository command contract. Keep the root `package.json` scripts aligned with them and remove/update any command that no longer works.
@@ -38,6 +42,8 @@ pnpm --dir backend typecheck
 
 Add a verified single-test command here after the first real test exists; do not invent a path.
 
+--
+
 ## Architecture boundaries
 - `frontend/` owns UI, routing, PWA behavior, IndexedDB, CodeMirror, browser-safe execution, local drafts, and API consumption.
 - `backend/` owns business rules, authorization, database access, curriculum, submissions, progress, gamification, AI orchestration, remote execution orchestration, and integrations.
@@ -48,6 +54,8 @@ Add a verified single-test command here after the first real test exists; do not
 - Generated API client code lives under `frontend/src/lib/api/generated/`.
 - Do not create root shared packages unless at least two real independent consumers justify extraction.
 - Never execute arbitrary learner code inside the NestJS process.
+
+--
 
 ## Code style
 - TypeScript strict mode; do not add `any`, `@ts-ignore`, or unchecked casts to bypass type errors.
@@ -62,6 +70,8 @@ if (!quest) throw new QuestNotFoundError(questId);
 
 - Remove dead code, unused imports, debug logs, commented-out implementations, and temporary compatibility shims before finishing.
 
+--
+
 ## Testing
 - Bug fixes require a regression test when practical.
 - New backend rules/endpoints require unit or integration coverage.
@@ -71,6 +81,8 @@ if (!quest) throw new QuestNotFoundError(questId);
 - Do not claim a check passed unless it was actually run.
 - If a required check cannot run, report the exact command and reason.
 
+--
+
 ## Boundaries — do not touch
 - Never commit `.env`, `.env.*`, secrets, credentials, tokens, or service-role keys.
 - Never hand-edit `frontend/src/lib/api/generated/`; regenerate it from backend OpenAPI.
@@ -79,6 +91,8 @@ if (!quest) throw new QuestNotFoundError(questId);
 - Do not move backend business logic into Next.js Route Handlers or Server Actions.
 - Do not add microservices, Redis, queues, GraphQL, tRPC, WebContainers, or remote runners unless the active spec explicitly requires them.
 
+--
+
 ## Change scope
 - Make the smallest coherent change that satisfies the task/spec.
 - Do not perform unrelated refactors or modify unrelated files.
@@ -86,6 +100,8 @@ if (!quest) throw new QuestNotFoundError(questId);
 - Do not rename/reorganize code unless required.
 - Preserve existing behavior unless the active requirement changes it.
 - Prefer adding to an existing module over inventing a new architectural layer.
+
+--
 
 ## Git / PR workflow
 
@@ -119,7 +135,7 @@ Do not use the OpenSpec change ID as the branch name unless it is also the clear
 
 ### Branch lifecycle
 
-Before starting a repository-mutating stage:
+Before starting any repository-mutating stage:
 
 1. Check `git status`.
 2. Switch to `main`.
@@ -130,6 +146,13 @@ Before starting a repository-mutating stage:
 
 Never leave active repository work only on a local branch.
 
+Recommended pattern:
+
+    git switch main
+    git pull --ff-only origin main
+    git switch -c <branch-name>
+    git push -u origin <branch-name>
+
 ### OpenSpec Git lifecycle
 
 #### Explore
@@ -137,6 +160,8 @@ Never leave active repository work only on a local branch.
 `/openspec-explore` is normally read-only.
 
 If no repository files change, no branch or PR is required.
+
+If exploration intentionally modifies tracked documentation, treat it as a normal repository-mutating stage and use a branch + PR.
 
 #### Propose
 
@@ -146,45 +171,63 @@ For `/openspec-propose`:
 2. Create a technical proposal branch such as `docs/<scope>-proposal`.
 3. Immediately push the branch to `origin`.
 4. Create/update the OpenSpec proposal, design, specs, tasks, and roadmap status.
-5. Commit using Conventional Commits.
-6. Push all proposal commits to the remote branch.
-7. Open a PR into `main`.
-8. Stop for user review.
-9. After explicit user approval and required checks, merge the PR.
-10. Delete the merged local and remote branch.
+5. Review the diff.
+6. Commit using Conventional Commits.
+7. Push all proposal commits to the remote branch.
+8. Open a PR into `main`.
+9. Stop for explicit user review.
+10. After user approval and required checks, merge the PR using a **merge commit**.
+11. Delete the merged local and remote branch.
+12. Return to `main` and pull the merged result before starting Apply.
 
-Approval controls **merge**, not whether proposal work is committed. Proposal artifacts should be committed and pushed before approval so they can be reviewed remotely.
+Approval controls **merge**, not whether proposal work is committed.
+
+Proposal artifacts should be committed and pushed before approval so the exact remote PR diff can be reviewed.
+
+Do not reuse the proposal branch for Apply.
 
 #### Apply
 
 For `/openspec-apply-change`:
 
-1. Ensure the approved proposal PR is already merged.
-2. Return to `main` and pull latest `origin/main`.
-3. Create a new implementation branch from `main`.
-4. Immediately push it to `origin`.
-5. Apply only the approved OpenSpec tasks.
-6. Commit coherent implementation steps using Conventional Commits.
-7. Push commits regularly to the remote branch.
-8. Run required verification.
-9. Open/update the PR into `main`.
-10. Stop for user review when implementation and verification are complete.
-11. Merge only after approval and required checks pass.
-12. Delete the merged branch locally and remotely.
+1. Ensure the approved proposal PR has already been merged.
+2. Return to `main`.
+3. Pull the latest `origin/main`.
+4. Create a new implementation branch from `main`.
+5. Immediately push the new branch to `origin`.
+6. Apply only the approved OpenSpec tasks.
+7. Commit coherent implementation steps using Conventional Commits.
+8. Push commits regularly to the remote branch.
+9. Run all required verification.
+10. Review the final diff and test results.
+11. Open or update the PR into `main`.
+12. Stop for explicit user review when implementation and verification are complete.
+13. Merge only after approval and required checks pass.
+14. Merge using a **merge commit**.
+15. Delete the merged local and remote branch.
+16. Return to updated `main`.
 
 Do not reuse the proposal branch for Apply.
+
+Do not begin Sync or Archive from an unmerged Apply branch.
 
 #### Sync
 
 If `/openspec-sync` modifies repository files:
 
-1. Start from updated `main` after the Apply PR is merged.
-2. Create and immediately push `docs/<scope>-spec-sync`.
-3. Run the approved sync.
-4. Commit and push.
-5. Open a PR.
-6. Merge after review/checks.
-7. Delete the branch.
+1. Ensure the Apply PR has already been merged.
+2. Return to `main` and pull latest `origin/main`.
+3. Create `docs/<scope>-spec-sync`.
+4. Immediately push it to `origin`.
+5. Run the approved OpenSpec sync.
+6. Review the diff.
+7. Commit using Conventional Commits.
+8. Push the commit(s).
+9. Open a PR into `main`.
+10. Stop for review if the sync changes meaningful specification content.
+11. Merge using a **merge commit** after approval/checks.
+12. Delete the local and remote branch.
+13. Return to updated `main`.
 
 Skip this stage when no spec synchronization is required.
 
@@ -193,16 +236,20 @@ Skip this stage when no spec synchronization is required.
 For `/openspec-archive`:
 
 1. Archive only after Apply and any required Sync are merged.
-2. Start from updated `main`.
-3. Create `chore/archive-<technical-scope>`.
-4. Immediately push it to `origin`.
-5. Run the OpenSpec archive workflow.
-6. Update Project Status/roadmap references where required.
-7. Commit and push the archive result.
-8. Open a PR into `main`.
-9. Merge after review/checks.
-10. Delete the branch locally and remotely.
-11. Return to updated `main` before beginning the next roadmap phase.
+2. Return to `main`.
+3. Pull latest `origin/main`.
+4. Create `chore/archive-<technical-scope>`.
+5. Immediately push the branch to `origin`.
+6. Run the OpenSpec archive workflow.
+7. Update Project Status, roadmap references, and archive links where required.
+8. Review the diff.
+9. Commit using Conventional Commits.
+10. Push the archive commit(s).
+11. Open a PR into `main`.
+12. Merge only after review/checks pass.
+13. Merge using a **merge commit**.
+14. Delete the local and remote branch.
+15. Return to `main` and pull latest `origin/main` before beginning the next roadmap phase.
 
 ### Commit conventions
 
@@ -224,23 +271,94 @@ Examples:
 - `docs: sync runtime validation requirements`
 - `chore: archive browser runtime validation`
 
+Keep commits coherent and scoped.
+
+Do not bundle unrelated changes into one commit.
+
 ### PR / merge conventions
 
-- Every Propose, Apply, Sync, and Archive branch that changes repository files must go through a PR into `main`.
+- Every Propose, Apply, Sync, and Archive stage that changes repository files must go through a PR into `main`.
 - Never silently commit completed stage work directly to `main`.
 - Keep one coherent OpenSpec stage per branch.
-- Use **merge commits**, not squash merges, for OpenSpec workflow PRs so branch topology and stage history remain visible in Git history.
-- Delete local and remote branches after successful merge; the PR and merge commit remain the permanent historical record.
-- Never begin the next stage from an unmerged branch.
-- After every merge, update local `main` from `origin/main` before branching again.
+- Open the PR from the remote branch, not from local-only work.
+- User approval is required before merging a Propose or completed Apply PR.
+- Use **merge commits only** for OpenSpec and development PRs.
+- Do **not** squash merge.
+- Do **not** rebase merge.
+- Preserve branch topology and individual branch commits in Git history.
+- When using GitHub CLI, merge with:
+
+    gh pr merge <PR_NUMBER> --merge --delete-branch
+
+- Do not use:
+
+    gh pr merge <PR_NUMBER> --squash
+
+or:
+
+    gh pr merge <PR_NUMBER> --rebase
+
+- Do not replace the default GitHub merge-commit title unless there is a specific reason.
+- Prefer preserving the normal GitHub merge message, for example:
+
+    Merge pull request #123 from owner/feat/quest-progress-api
+
+- Delete local and remote branches only after the PR has successfully merged.
+- The PR and merge commit are the permanent historical record after branch deletion.
+- Never begin the next OpenSpec stage from an unmerged branch.
+- After every merge, switch back to `main` and update it from `origin/main` before creating the next branch.
+
+### Expected OpenSpec branch flow
+
+For one OpenSpec change, the normal flow is:
+
+    main
+      │
+      ├── docs/<scope>-proposal
+      │      ↓ push remote immediately
+      │      ↓ /openspec-propose
+      │      ↓ commit + push
+      │      ↓ PR
+      │      ↓ user approval
+      │      ↓ merge commit
+      │
+      ├── feat|spike|test/<scope>
+      │      ↓ push remote immediately
+      │      ↓ /openspec-apply-change
+      │      ↓ implementation
+      │      ↓ verification
+      │      ↓ commit + push
+      │      ↓ PR
+      │      ↓ user approval
+      │      ↓ merge commit
+      │
+      ├── docs/<scope>-spec-sync
+      │      ↓ only if sync is required
+      │      ↓ /openspec-sync
+      │      ↓ PR
+      │      ↓ merge commit
+      │
+      └── chore/archive-<scope>
+             ↓ /openspec-archive
+             ↓ update roadmap/status
+             ↓ PR
+             ↓ merge commit
+             ↓ delete branch
+             ↓ return to updated main
 
 ### Git safety
 
 - Check `git status` before significant work.
-- Inspect `git diff` before every commit and before finishing.
+- Inspect `git diff` before every commit.
+- Inspect the final diff before opening a PR.
 - Never discard existing user changes.
 - Never force-push unless explicitly authorized.
-- Never use destructive Git operations or rewrite history unless explicitly authorized.
+- Never use destructive Git operations unless explicitly authorized.
+- Never rewrite history unless explicitly authorized.
+- Never merge a PR with failing required checks unless explicitly authorized.
+- Never claim a branch was pushed, a PR was opened, or a merge occurred unless it actually happened.
+
+--
 
 ## Source of truth
 
@@ -255,6 +373,8 @@ When deciding behavior, use this order:
 
 When sources conflict, do not silently invent a resolution.
 
+--
+
 ## Existing / brownfield work
 - Inspect the relevant implementation before changing it.
 - Read the relevant OpenSpec spec and check `openspec/changes/` for an active change.
@@ -262,16 +382,16 @@ When sources conflict, do not silently invent a resolution.
 - Understand current behavior before redesigning it.
 - Do not rewrite working systems merely because they are unfamiliar.
 
+--
+
 ## Spec-driven development (OpenSpec)
 
 This project uses OpenSpec for nontrivial changes.
 
-```text
 openspec/
 ├── config.yaml
 ├── specs/
 └── changes/
-```
 
 - `openspec/specs/` defines current agreed behavior; read the relevant spec before changing a capability.
 - `openspec/changes/` holds in-flight changes; implementation must follow the active change.
@@ -284,6 +404,8 @@ openspec/
 - Use the OpenSpec archive workflow rather than manually moving files.
 - Regenerate OpenSpec AI instructions with `openspec update`; never hand-edit generated `.agents/skills/`.
 - Durable project engineering rules belong here; OpenSpec capability behavior belongs in OpenSpec.
+
+--
 
 ## Multi-agent development
 - Determine file/module ownership before editing.
