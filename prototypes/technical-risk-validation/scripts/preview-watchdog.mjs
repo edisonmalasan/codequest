@@ -20,13 +20,17 @@ if (process.argv.includes('--child')) {
     process.stdout.write(JSON.stringify({ browserName: useFirefox ? 'firefox' : 'chromium', browserVersion: browser.version(), chromiumArgs, skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', physical: false }) + '\n');
     const page = await browser.newPage();
     const dedicated = process.argv.includes('--dedicated');
+    const workerShell = process.argv.includes('--worker-shell');
     await page.goto('http://127.0.0.1:4310/?framePolicy=' + (dedicated ? 'isolated' : 'none'));
     await page.waitForFunction(() => Boolean(window.__risk));
-    await page.evaluate(dedicated => {
-      window.__previewTrial = window.__risk.preview('<p id="execution-marker">Loop fixture loaded</p><script>document.body.dataset.executing="yes";setTimeout(()=>{while(true){}},500)</script>', dedicated ? 'dedicated' : 'opaque');
-    }, dedicated);
-    const learner = dedicated ? page.frameLocator('iframe[title="Sandboxed learner preview"]').frameLocator('iframe[title="Synthetic learner document"]') : page.frameLocator('iframe[title="Sandboxed learner preview"]');
-    await learner.locator('body[data-executing="yes"]').waitFor({ timeout: 1500 });
+    await page.evaluate(({ dedicated, workerShell }) => {
+      window.__previewTrial = workerShell ? window.__risk.previewSource('while(true){}') : window.__risk.preview('<p id="execution-marker">Loop fixture loaded</p><script>document.body.dataset.executing="yes";setTimeout(()=>{while(true){}},500)</script>', dedicated ? 'dedicated' : 'opaque');
+    }, { dedicated, workerShell });
+    if (workerShell) await page.locator('iframe[data-preview-started="yes"]').waitFor({ state: 'attached', timeout: 1500 });
+    else {
+      const learner = dedicated ? page.frameLocator('iframe[title="Sandboxed learner preview"]').frameLocator('iframe[title="Synthetic learner document"]') : page.frameLocator('iframe[title="Sandboxed learner preview"]');
+      await learner.locator('body[data-executing="yes"]').waitFor({ timeout: 1500 });
+    }
     process.stdout.write('PROBE_STARTED\n');
     const result = await page.evaluate(() => window.__previewTrial);
     const usable = await page.getByRole('heading', { name: 'CodeQuest validation workspace' }).isVisible();
@@ -66,7 +70,7 @@ if (process.argv.includes('--child')) {
   child.stderr.on('data', bytes => { errors = (errors + bytes).slice(-2000); });
   const code = await new Promise(resolve => child.on('exit', resolve));
   clearTimeout(timer);
-  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', browserName: process.argv.includes('--firefox') ? 'firefox' : 'chromium', skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', chromiumArgs: process.argv.includes('--firefox') || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'], commit, dirtyPaths, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 && output.includes('"policyPassed":true') ? 'passed automated case only' : started ? 'failed: trusted recovery budget not met' : 'inconclusive: environment failure' };
+  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--worker-shell') ? 'worker-shell' : process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', browserName: process.argv.includes('--firefox') ? 'firefox' : 'chromium', skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', chromiumArgs: process.argv.includes('--firefox') || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'], commit, dirtyPaths, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 && output.includes('"policyPassed":true') ? 'passed automated case only' : started ? 'failed: trusted recovery budget not met' : 'inconclusive: environment failure' };
   await writeFile(new URL('../../../docs/technical-risk-validation/evidence/preview-loop-' + record.recordedAt.replaceAll(':', '-') + '.json', import.meta.url), JSON.stringify(record, null, 2));
   process.stdout.write(JSON.stringify(record));
 }

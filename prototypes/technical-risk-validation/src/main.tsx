@@ -20,6 +20,7 @@ declare global {
     __risk: {
       run: (source: string, candidate: Candidate, task?: string) => Promise<RunResult>;
       preview: (html: string, candidate?: 'opaque' | 'dedicated') => Promise<{ status: string; elapsed: number }>;
+      previewSource: (source: string, task?: string) => ReturnType<PreviewRuntime["runSource"]>;
       stop: () => void;
       pending: () => Promise<Snapshot[]>;
       saveFailure: (kind: string | null) => void;
@@ -30,6 +31,7 @@ declare global {
 window.__risk = {
   run: (source, candidate, task = 'Q01') => probeRuntime.run({ source, candidate, task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1' }),
   preview: (html, candidate) => previewRuntime.run(html, document.getElementById('preview') ?? document.body, candidate),
+  previewSource: (source, task) => previewRuntime.runSource(source, document.getElementById("preview") ?? document.body, task),
   stop: () => { runtime.stop(); probeRuntime.stop(); previewRuntime.stop(); },
   pending: () => store.pending.toArray(),
   saveFailure: (kind) => { if (kind) sessionStorage.setItem('prototype-save-failure', kind); else sessionStorage.removeItem('prototype-save-failure'); },
@@ -54,6 +56,7 @@ function App() {
   const [pending, setPending] = useState<Snapshot>();
   const [online, setOnline] = useState(navigator.onLine);
   const [hint, setHint] = useState(false);
+  const [previewText, setPreviewText] = useState('No preview result');
   const [waiting, setWaiting] = useState<ServiceWorker>();
   const [pwa, setPwa] = useState('Offline preparation pending');
   const [loseResponse, setLoseResponse] = useState(false);
@@ -93,7 +96,7 @@ function App() {
 
   useEffect(() => {
     let active = true;
-    runtime.stop(); requestId.current = ''; setResult(undefined); setPending(undefined); setProvisional(false); setLoadedKey(''); setSaveState('Loading draft');
+    runtime.stop(); requestId.current = ''; setResult(undefined); setPending(undefined); setProvisional(false); setPreviewText('No preview result'); setLoadedKey(''); setSaveState('Loading draft');
     const load = async () => {
       if (sessionStorage.getItem('prototype-load-delay') === '500') await new Promise(resolve => setTimeout(resolve, 500));
       return Promise.all([store.drafts.get(key), store.pending.where('owner').equals(owner).toArray()]);
@@ -117,6 +120,7 @@ function App() {
     }) });
     editor.current = view;
     window.__risk.source = () => view.state.doc.toString();
+    window.__risk.previewSource = (source, task) => previewRuntime.runSource(source, document.getElementById("preview") ?? document.body, task, setPreviewText);
     return () => { window.__risk.source = () => ''; view.destroy(); };
   }, [editorReadiness]);
   useEffect(() => {
@@ -203,7 +207,7 @@ function App() {
     </section>
     <section aria-label="Feedback"><h2>Output and results</h2><p role="status" data-testid="feedback">{feedback}</p><pre data-testid="output">{result?.output.join('\n') ?? ''}</pre><p>{result?.value}</p><p>{provisional ? 'Local provisional completion; not accepted account progress' : 'No local completion'}</p></section>
     <section aria-label="Synthetic reconciliation"><h2>Mock acceptance only</h2><button disabled={loadedKey !== key} onClick={() => void submit()}>Save pending snapshot</button><button onClick={() => void reconcile()}>Replay pending snapshot</button><button onClick={() => void reconcile(true)}>Explicitly import guest snapshot</button><label><input type="checkbox" checked={loseResponse} onChange={(event) => setLoseResponse(event.target.checked)} />Lose synthetic response after acceptance</label><p>{pending ? `Pending for ${pending.owner}, ${pending.quest}, ${pending.event}` : 'No pending snapshot for this owner'}</p></section>
-    <section><h2>Supplied preview</h2><p>Text equivalent: {task === 'RECORDS' ? result?.value ?? 'Run the records fixture for its total' : result?.output.join('\n') ?? 'No output'}</p><button onClick={() => { const value = result?.value ?? 'No result'; const safe = value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); void previewRuntime.run(`<h1>Inventory total</h1><p>${safe}</p>`, document.getElementById('preview') ?? document.body).then((outcome) => setFeedback(outcome.status)); }}>Open bounded preview</button><div id="preview" /></section>
+    <section><h2>Supplied preview</h2><p>Text equivalent: {previewText}</p><button disabled={loadedKey !== key} onClick={() => { void previewRuntime.runSource(source, document.getElementById("preview") ?? document.body, task, setPreviewText).then(outcome => setFeedback(outcome.status)); }}>Open bounded preview</button><div id="preview" /></section>
   </main>;
 }
 

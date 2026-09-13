@@ -3,7 +3,7 @@ import { byteLength, decodeResult, limits, type Candidate, type RunIdentity, typ
 
 export const runnerOrigin = 'http://127.0.0.2:4311';
 const opaquePolicy = "default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' blob:; worker-src blob:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
-export type RunRequest = RunIdentity & { source: string; candidate: Candidate };
+export type RunRequest = RunIdentity & { source: string; candidate: Candidate; previewMarker?: boolean };
 
 export class BrowserRuntime {
   private cancel: (() => void) | undefined;
@@ -17,6 +17,7 @@ export class BrowserRuntime {
       let worker: Worker | undefined;
       let finished = false;
       let messages = 0;
+      let executionStarted = false;
       const finish = (result: { status: RunResult['status']; output: string[]; value: string }) => {
         if (finished) return;
         finished = true;
@@ -30,6 +31,12 @@ export class BrowserRuntime {
       const onResult = (raw: unknown) => {
         messages++;
         if (messages > limits.entries) { finish({ status: 'protocol-error', output: [], value: 'Message flood rejected' }); return; }
+        if (request.previewMarker && raw === request.run + ':preview-started') {
+          if (executionStarted) { finish({ status: 'protocol-error', output: [], value: 'Repeated start marker rejected' }); return; }
+          executionStarted = true;
+          if (frame) frame.dataset.previewStarted = 'yes';
+          return;
+        }
         const result = decodeResult(raw, request);
         if (result) finish(result);
         else finish({ status: 'protocol-error', output: [], value: 'Malformed or stale result rejected' });
@@ -73,7 +80,43 @@ export class BrowserRuntime {
 
 export class PreviewRuntime {
   private cancel: (() => void) | undefined;
+  private computation = new BrowserRuntime();
   stop(): void { this.cancel?.(); }
+  runSource(source: string, target: HTMLElement, task = 'RECORDS', onOutput?: (text: string) => void): Promise<{ status: string; elapsed: number; execution?: RunResult }> {
+    this.stop();
+    const start = performance.now();
+    return new Promise(resolve => {
+      let frame: HTMLIFrameElement | undefined;
+      let execution: RunResult | undefined;
+      let finished = false;
+      const finish = (status: string) => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        this.computation.stop();
+        frame?.remove();
+        this.cancel = undefined;
+        resolve({ status, elapsed: performance.now() - start, execution });
+      };
+      const timer = setTimeout(() => finish(frame ? 'preview-reset' : 'preview-timeout'), limits.deadline);
+      this.cancel = () => finish('preview-stopped');
+      void this.computation.run({ source, candidate: 'opaque', task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1', previewMarker: true }).then(result => {
+        if (finished) return;
+        execution = result;
+        if (result.status !== 'success') { finish(result.status); return; }
+        const text = task === 'RECORDS' ? result.value : result.output.join('\n');
+        onOutput?.(text);
+        const safe = text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+        frame = document.createElement('iframe');
+        frame.title = 'Supplied Worker result preview';
+        // Empty sandbox: no scripts, same-origin authority, forms, navigation or popups.
+        frame.setAttribute('sandbox', '');
+        const policy = "default-src 'none'; script-src 'none'; style-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
+        frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}"><h1>Inventory result</h1><pre>${safe}</pre>`;
+        target.append(frame);
+      });
+    });
+  }
   run(html: string, target: HTMLElement, candidate: 'opaque' | 'dedicated' = 'opaque'): Promise<{ status: string; elapsed: number }> {
     this.stop();
     const start = performance.now();

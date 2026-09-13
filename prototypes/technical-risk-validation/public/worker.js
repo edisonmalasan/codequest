@@ -49,6 +49,7 @@ self.onmessage = async (event) => {
     let execute;
     try { execute = new AsyncFunction('console', input.source + suffix); }
     catch (error) { status = 'syntax-error'; throw error; }
+    if (input.previewMarker === true) send(input.run + ':preview-started');
     value = printable(await execute(consoleCapture));
     if (limitHit) throw new Error('output-limit: swallowed console error');
   } catch (error) {
