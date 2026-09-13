@@ -1,10 +1,25 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readdirSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { join, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 
 export default class EvidenceReporter {
   cases = [];
+  buildHashes = {};
+  onBegin() {
+    const root = fileURLToPath(new URL('../dist/', import.meta.url));
+    const walk = directory => {
+      for (const item of readdirSync(directory, { withFileTypes: true })) {
+        const path = join(directory, item.name);
+        if (item.isDirectory()) walk(path);
+        else this.buildHashes[relative(root, path).replaceAll('\\', '/')] = createHash('sha256').update(readFileSync(path)).digest('hex');
+      }
+    };
+    walk(root);
+    this.buildFrozenAt = new Date().toISOString();
+  }
   onTestEnd(test, result) {
     this.cases.push({
       title: test.titlePath().join(' / '), status: result.status, expectedStatus: test.expectedStatus,
@@ -20,6 +35,7 @@ export default class EvidenceReporter {
       recordedAt, commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
       dirtyPaths: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim().split('\n'),
       command: process.argv.slice(1), environment: { platform: os.platform(), release: os.release(), cpu: os.cpus()[0]?.model, node: process.version, nodeOptions: process.env.NODE_OPTIONS ?? '', mode: 'headless automated browser; no physical/manual claim', chromiumArgs: ['--disable-gpu', '--renderer-process-limit=2'], traces: 'off; bounded JSON evidence instead' },
+      buildFrozenAt: this.buildFrozenAt, buildHashesFrozenBeforeTrials: this.buildHashes,
       status: result.status, durationMs: result.duration, cases: this.cases,
     }, null, 2) + '\n');
   }

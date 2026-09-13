@@ -6,7 +6,7 @@ describe('synthetic acceptance semantics only', () => {
   it('deduplicates stable quest reward even with a fresh event/version', () => {
     const ledger = new SimulationLedger();
     expect(ledger.accept('account-A', snapshot).simulatedReward).toBe(true);
-    expect(ledger.accept('account-A', { ...snapshot, event: 'two', assessmentVersion: 'editorial-1' })).toMatchObject({ status: 'duplicate', simulatedReward: false });
+    expect(ledger.accept('account-A', { ...snapshot, event: 'two', contentVersion: 'editorial-1' })).toMatchObject({ status: 'duplicate', simulatedReward: false });
   });
   it('rejects cross-owner, guest and expired requests', () => {
     const ledger = new SimulationLedger();
@@ -19,6 +19,7 @@ describe('synthetic acceptance semantics only', () => {
     expect(new SimulationLedger().accept('account-A', input).status).toBe('retry-required');
     expect(input.source).toBe(snapshot.source);
     expect(input.assessmentVersion).toBe('retired');
+    expect(new SimulationLedger().accept('account-A', { ...snapshot, contentVersion: 'unknown' }).status).toBe('retry-required');
   });
   it('permits explicit guest import without mutating the original snapshot', () => {
     const guest = { ...snapshot, owner: 'guest' };
@@ -31,5 +32,6 @@ describe('synthetic acceptance semantics only', () => {
   it('rejects malformed snapshot input', () => {
     expect(snapshotFrom({ ...snapshot, source: null })).toBeNull();
     expect(snapshotFrom({ ...snapshot, event: 'x'.repeat(101) })).toBeNull();
+    expect(snapshotFrom({ ...snapshot, source: '界'.repeat(22000) })).toBeNull();
   });
 });
