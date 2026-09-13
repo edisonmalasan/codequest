@@ -29,7 +29,7 @@ None. The current OpenSpec capability inventory is empty. Future implementation 
 
 ## Impact
 
-Affected outputs are the listed documentation and ADR files only, plus this change's planning artifacts. Sources are `AGENTS.md`, `temp/DEVELOPMENT_ROADMAP.md`, and the preceding Phase 0 exploration. The roadmap is ignored by Git; durable decisions must be captured in the new documents without moving or editing that source in this change.
+Affected outputs are the listed documentation and ADR files only, plus this change's planning artifacts. Sources are `AGENTS.md`, `docs/DEVELOPMENT_ROADMAP.md`, and the preceding Phase 0 exploration. The roadmap was ignored by Git when this proposal was created and was relocated unchanged into `docs/` in a later documentation consistency correction. That relocation is not part of this archived change's execution scope.
 
 There are no application, API, dependency, database, deployment, or runtime changes. Creating these planning artifacts does not approve proposed product policies or authorize execution. Stop after proposal/design/tasks creation for user review.
 
