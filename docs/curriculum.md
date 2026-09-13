@@ -1,10 +1,12 @@
 # JavaScript Foundations curriculum definition
 
-Status: Phase 0 instructional draft, not executable curriculum. Journey size/direction and AI independence are confirmed C01/C05/C07/C08. Exact hierarchy, quest allocation, capstone, feedback and version policies are proposed P04/P05/P09/P15 in the [register](decisions.md). [Product](product.md) owns scope/terminology; [backend](backend.md) owns accepted progress.
+Status: approved Phase 0 instructional definition, not executable curriculum. Journey size/direction and AI independence are confirmed C01/C05/C07/C08. Exact hierarchy, quest allocation, capstone, feedback and version policies are approved P04/P05/P09/P15 in the [register](decisions.md). [Product](product.md) owns scope/terminology; [backend](backend.md) owns accepted progress.
+
+Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
 ## Entry requirements and assessed exit outcomes
 
-Proposed learner: beginner able to read English, navigate a browser and edit text; no JavaScript, terminal, Git, package installation, or prior programming required. Adult/desktop-first audience and mobile guarantees remain P01/U01 review gates. Teach editor/run/error basics in the first quests rather than assume them.
+Approved learner: adult beginner able to read English, navigate a browser and edit text; no JavaScript, terminal, Git, package installation, or prior programming required. P01/U01 approve desktop-first coding and usable mobile reading/short exercises; exact support and feasibility remain F02. Teach editor/run/error basics in the first quests rather than assume them.
 
 | Outcome | Learner can demonstrate | Assessment evidence |
 | --- | --- | --- |
@@ -19,9 +21,9 @@ Proposed learner: beginner able to read English, navigate a browser and edit tex
 
 DOM/HTML/CSS/event APIs, asynchronous JavaScript, classes, npm, filesystem/network, terminal/Git, deployment, AI assistance, and interview algorithms are not assessed Foundations outcomes. A supplied preview interface does not imply DOM mastery. Adding those outcomes requires an explicit scope/prerequisite/allocation revision, not an unexplained capstone dependency.
 
-## Proposed journey outline and quest briefs
+## Approved journey outline and quest briefs
 
-Seven chapters, **24 instructional quests plus one capstone** (P04/P05). The capstone is a final integration quest in navigation, counted separately in the instructional total. Exact duration/difficulty labels remain balancing F04. Ordering is completion-prerequisite based (P09); Q01 is open, each numbered quest below requires the prior quest, with additional conceptual references listed for review. Q01–Q04 form the proposed guest subset P07.
+Seven chapters, **24 instructional quests plus one capstone** (P04/P05). The capstone is a final integration quest in navigation, counted separately in the instructional total. Exact duration/difficulty labels remain balancing F04. Ordering is completion-prerequisite based (P09); Q01 is open, each numbered quest below requires the prior quest, with additional conceptual references listed for review. Q01–Q04 form the approved guest subset P07.
 
 Each future quest must contain a clear objective, explanation/example, task, starter material, concepts/prerequisites, stable ID/version, deterministic criteria, graduated hints, and reward/unlock metadata. The briefs below describe that content without writing starter/test code.
 
@@ -56,7 +58,7 @@ Each quest exposes enough examples to understand the contract. Test descriptions
 
 ## Capstone brief: Quest inventory manager
 
-Proposed final project (P05), available after Q24 and its prerequisites. A learner implements JavaScript logic to manage/report a small collection of quest or inventory records. Supplied examples and optional preview shell provide inputs/displays; learner chooses record theme/data, decomposes helpers, writes conditions/iteration, diagnoses an injected defect, and explains decisions. Completion is assessed under [declared personal-learning trust](adr/0005-assessment-trust-and-completion.md), not independent certification.
+Approved final project (P05), available after Q24 and its prerequisites. A learner implements JavaScript logic to manage/report a small collection of quest or inventory records. Supplied examples and optional preview shell provide inputs/displays; learner chooses record theme/data, decomposes helpers, writes conditions/iteration, diagnoses an injected defect, and explains decisions. Completion is assessed under [declared personal-learning trust](adr/0005-assessment-trust-and-completion.md), not independent certification.
 
 ### Deliverables and scaffold limits
 
@@ -67,7 +69,7 @@ Proposed final project (P05), available after Q24 and its prerequisites. A learn
 
 Supply record-contract examples, function signatures/contracts, editor starter comments, and console or read-only preview plumbing. Do not supply the graded algorithms/functions. DOM/event handlers in a shell are scaffold owned by the platform, not assessed learner work. No network/files/packages/authenticated previews or project deployment. Accessibility must include textual output equivalent to any visual shell.
 
-### Proposed rubric
+### Approved rubric
 
 | Criterion | Required evidence | Assessment description |
 | --- | --- | --- |
@@ -79,13 +81,13 @@ Supply record-contract examples, function signatures/contracts, editor starter c
 | Debug/test reasoning (O7) | Revealing input, corrected defect, explanation | Task-specific test/inspection plus short reviewed rationale |
 | Transfer (O8) | Apply same concepts to unfamiliar requirement | New sample records and changed selection/summary criterion without a supplied solution |
 
-Proposed completion requires all stated functional criteria, debug explanation and transfer response to be present; no numerical pass threshold is invented. Browser checks report functional results. Recording a response is not automatic proof that reasoning is sound; CO review/observed beta assessment separately evaluates transfer quality for learning evidence. Deterministic criteria cannot grade free-form reasoning by themselves. If PO requires reviewed reasoning for every account completion, define a manual review workflow in a separate capability proposal before claiming that guarantee.
+Approved completion requires all stated functional criteria, debug explanation and transfer response to be present; no numerical pass threshold is invented. Browser checks report functional results. Recording a response is not automatic proof that reasoning is sound; CO review/observed beta assessment separately evaluates transfer quality for learning evidence. Deterministic criteria cannot grade free-form reasoning by themselves. If PO requires reviewed reasoning for every account completion, define a manual review workflow in a separate capability proposal before claiming that guarantee.
 
-PO/CO must approve that this amount of learner agency plus supplied shell constitutes a meaningful project. Alternative worker-only output project reduces web coupling; adding DOM/events instead expands teaching/assessment scope and must revise this plan.
+AP01 approves this learner agency plus supplied shell as the meaningful-project baseline. Alternative worker-only output would reduce web coupling; adding DOM/events would expand teaching/assessment scope and require a later explicit revision.
 
 ## Instructional, hint and assessment principles
 
-Proposed P05/P09: one primary objective with explicit prerequisite concepts; short examples followed by purposeful application; scaffold fades; failure is information. Every quest needs normal and boundary cases, actionable feedback distinguishing syntax/runtime/time/output/check failure, and review for valid alternative implementations. Do not grade by one textual code shape when behavior meets the objective. Function tests should vary inputs to discourage hardcoded example answers; they still do not make client results trustworthy.
+Approved P05/P09: one primary objective with explicit prerequisite concepts; short examples followed by purposeful application; scaffold fades; failure is information. Every quest needs normal and boundary cases, actionable feedback distinguishing syntax/runtime/time/output/check failure, and review for valid alternative implementations. Do not grade by one textual code shape when behavior meets the objective. Function tests should vary inputs to discourage hardcoded example answers; they still do not make client results trustworthy.
 
 Hints progress from a question about the requirement → a relevant concept/example → a localized next step. No automatic complete solution or AI dependency; hint usage and failed experiments do not reduce XP. Replays are practice, not new XP. Debugging/checking starts in chapter one. Illustrations require text alternatives; instructions/output must remain readable by keyboard/screen-reader users and at zoom/reduced motion, independent of pixel art.
 
@@ -93,7 +95,7 @@ CO reviews pedagogical sequence, clarity, cognitive load and hint quality. TO re
 
 ## Identity, publication and version lifecycle
 
-Confirmed C05: Git-first content under `backend/content/`; backend owns available versions and API delivery. Frontend does not bundle/import raw authored curriculum or query application tables. Database projections, content format/compiler and deployment publication mechanism are deferred F03. Proposed P15/ADR 0007:
+Confirmed C05: Git-first content under `backend/content/`; backend owns available versions and API delivery. Frontend does not bundle/import raw authored curriculum or query application tables. Database projections, content format/compiler and deployment publication mechanism are deferred F03. Approved P15/ADR 0007:
 
 | Change category | Acceptance/history policy |
 | --- | --- |
@@ -106,6 +108,6 @@ Use stable quest IDs separate from slug/title; record content and assessment ver
 
 Current journey progress derives from active requirements, with obsolete/history completion shown separately; map any accepted historical equivalent deliberately. No silent percentage denominator changes. Pending guest/offline work can be accepted only against a supported compatible assessment/version and prerequisite policy; otherwise explain rejection and preserve draft for current-version retry. Compatibility-window duration and exact data schema are later F03 decisions.
 
-## Review gates and deferrals
+## Approved baseline and deferrals
 
-P01/P04/P05/P07/P09/P15 remain Phase 0 approval gates. F04 covers XP/timing/difficulty balancing; F03 covers executable formats/tests/tooling; F01/F02 cover runtime/device evidence. [Register assessment](decisions.md#phase-0-completion-assessment) determines readiness. These briefs are not a fully authored course or implemented assessment engine.
+P01/P04/P05/P07/P09/P15 are approved by AP01. F04 covers XP/timing/difficulty balancing; F03 covers executable formats/tests/tooling; F01/F02 cover runtime/device evidence. [Register assessment](decisions.md#phase-0-completion-assessment) records complete and approved Phase 0 definition. These briefs are not a fully authored course or implemented assessment engine.
