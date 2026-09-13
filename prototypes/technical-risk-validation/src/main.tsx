@@ -6,7 +6,7 @@ import { basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { quest, recordFixture } from './fixtures';
 import { BrowserRuntime, PreviewRuntime } from './runtime';
-import { draftKey, saveDraft, store } from './storage';
+import { draftKey, saveDraft, store, downloadLesson, lessonKey } from './storage';
 import { isRecord, type Candidate, type RunResult } from './protocol';
 import { type Snapshot, type Receipt } from './mock';
 import './style.css';
@@ -18,7 +18,7 @@ declare global {
   interface Window {
     __risk: {
       run: (source: string, candidate: Candidate, task?: string) => Promise<RunResult>;
-      preview: (html: string) => Promise<{ status: string; elapsed: number }>;
+      preview: (html: string, candidate?: 'opaque' | 'dedicated') => Promise<{ status: string; elapsed: number }>;
       stop: () => void;
       pending: () => Promise<Snapshot[]>;
       saveFailure: (kind: string | null) => void;
@@ -27,7 +27,7 @@ declare global {
 }
 window.__risk = {
   run: (source, candidate, task = 'Q01') => probeRuntime.run({ source, candidate, task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1' }),
-  preview: (html) => previewRuntime.run(html, document.getElementById('preview') ?? document.body),
+  preview: (html, candidate) => previewRuntime.run(html, document.getElementById('preview') ?? document.body, candidate),
   stop: () => { runtime.stop(); probeRuntime.stop(); previewRuntime.stop(); },
   pending: () => store.pending.toArray(),
   saveFailure: (kind) => { if (kind) sessionStorage.setItem('prototype-save-failure', kind); else sessionStorage.removeItem('prototype-save-failure'); },
@@ -74,7 +74,14 @@ function App() {
           const installing = registration.installing;
           installing?.addEventListener('statechange', () => { if (installing.state === 'installed' && registration.waiting && active) setWaiting(registration.waiting); });
         });
-        void navigator.serviceWorker.ready.then(() => { if (active) setPwa('Public lesson and runtime assets prepared offline'); });
+        void navigator.serviceWorker.ready.then(async () => {
+          try {
+            for (const task of ['Q01', 'RECORDS']) {
+              if (!await store.lessons.get(lessonKey(task, '1', '1'))) await downloadLesson(task, '1', '1');
+            }
+            if (active) setPwa('Public lesson and runtime assets prepared offline');
+          } catch (error: unknown) { if (active) setPwa('Offline lesson missing; any existing draft remains local: ' + (error instanceof Error ? error.message : 'unknown error')); }
+        });
       }).catch((error: unknown) => { if (active) setPwa('Offline preparation failed: ' + (error instanceof Error ? error.message : 'unknown error')); });
     }
     return () => { active = false; window.removeEventListener('online', changeNetwork); window.removeEventListener('offline', changeNetwork); };

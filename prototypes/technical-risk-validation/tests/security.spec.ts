@@ -164,3 +164,17 @@ test('E04 finite message flood and repeated explicit preview reset preserve the 
   await expect(page.getByRole('heading', { name: 'CodeQuest validation workspace' })).toBeVisible();
   await info.attach('finite-preview-flood-reset', { body: JSON.stringify({ flood, resets, tightLoop: 'separate watchdog evidence failed; this is not a recovery gate pass' }), contentType: 'application/json' });
 });
+
+test('E04 isolated preview executes useful inline JS while denying resource and self-navigation probes', async ({ page, request }, info) => {
+  await page.goto('/?framePolicy=isolated');
+  const html = `<h1>Inventory total</h1><p id="total">5</p><img src="${sink}/isolated-image"><script>document.body.dataset.executing='yes';try{parent.document.body.dataset.escaped='yes'}catch(e){}fetch('${sink}/isolated-fetch').catch(()=>{})</script>`;
+  await page.evaluate(html => { void window.__risk.preview(html, 'dedicated'); }, html);
+  const learner = page.frameLocator('iframe[title="Sandboxed learner preview"]').frameLocator('iframe[title="Synthetic learner document"]');
+  await expect(learner.locator('body[data-executing="yes"]')).toBeVisible();
+  await expect(learner.locator('#total')).toHaveText('5');
+  const navigation = await page.evaluate(url => window.__risk.preview(`<script>location.href='${url}/isolated-navigation'</script>`, 'dedicated'), sink);
+  const records: unknown = await (await request.get(sink + '/records')).json();
+  expect(records).toEqual([]);
+  expect(await page.locator('body').getAttribute('data-escaped')).toBeNull();
+  await info.attach('isolated-preview', { body: JSON.stringify({ inlineJavaScriptExecuted: true, usefulTotal: '5', navigation, records, physical: false, cpuRecovery: 'separate tight-loop probe failed; no production selection' }), contentType: 'application/json' });
+});

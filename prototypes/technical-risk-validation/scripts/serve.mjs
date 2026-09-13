@@ -3,6 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { resolve, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SimulationLedger, snapshotFrom } from '../src/mock.ts';
+import { quest, recordFixture } from '../src/fixtures.ts';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const ledger = new SimulationLedger();
@@ -27,6 +28,12 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
         res.end('{}'); return;
       }
       if (url.pathname === '/__revision' && req.method === 'POST') { revision++; res.end(String(revision)); return; }
+      if (url.pathname.startsWith('/__lesson/')) {
+        const fixture = url.pathname === '/__lesson/Q01' ? quest : url.pathname === '/__lesson/RECORDS' ? recordFixture : undefined;
+        res.setHeader('Content-Type', 'application/json');
+        if (!fixture) { res.writeHead(404); res.end('{}'); return; }
+        res.end(JSON.stringify({ ...fixture, contentVersion: '1', assessmentVersion: '1' })); return;
+      }
       if (url.pathname === '/__protected') { res.setHeader('Content-Type', 'application/json'); res.end('{"canary":"SYNTHETIC_SESSION_ONLY"}'); return; }
       if (url.pathname === '/__mock' && req.method === 'POST') {
         let body = '';
@@ -41,8 +48,9 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
       }
       const path = resolve(root, '.' + decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname));
       if (!path.startsWith(root.endsWith(sep) ? root : root + sep)) { res.writeHead(403); res.end(); return; }
-      if (role === 'runner') res.setHeader('Content-Security-Policy', url.pathname === '/worker.js' ? workerPolicy : bootstrapPolicy);
+      if (role === 'runner') res.setHeader('Content-Security-Policy', url.pathname === '/worker.js' ? workerPolicy : url.pathname === '/preview.html' ? "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; worker-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'" : bootstrapPolicy);
       if (role === 'app' && url.searchParams.get('framePolicy') === 'none') res.setHeader('Content-Security-Policy', "frame-src 'none'");
+      if (role === 'app' && url.searchParams.get('framePolicy') === 'isolated') res.setHeader('Content-Security-Policy', "frame-src http://127.0.0.2:4311/bootstrap.html http://127.0.0.2:4311/preview.html");
       res.setHeader('Content-Type', mime[extname(path)] ?? 'application/octet-stream');
       if (!(await stat(path)).isFile()) { res.writeHead(404); res.end(); return; }
       const bytes = await readFile(path);

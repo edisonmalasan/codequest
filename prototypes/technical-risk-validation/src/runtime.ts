@@ -74,16 +74,20 @@ export class BrowserRuntime {
 export class PreviewRuntime {
   private cancel: (() => void) | undefined;
   stop(): void { this.cancel?.(); }
-  run(html: string, target: HTMLElement): Promise<{ status: string; elapsed: number }> {
+  run(html: string, target: HTMLElement, candidate: 'opaque' | 'dedicated' = 'opaque'): Promise<{ status: string; elapsed: number }> {
     this.stop();
     const start = performance.now();
     return new Promise((resolve) => {
       const frame = document.createElement('iframe');
       frame.title = 'Sandboxed learner preview';
-      frame.setAttribute('sandbox', 'allow-scripts');
+      frame.setAttribute('sandbox', candidate === 'dedicated' ? 'allow-scripts allow-same-origin' : 'allow-scripts');
       const policy = "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
-      frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}">${html}`;
-      const finish = (status: string) => { clearTimeout(timer); frame.remove(); this.cancel = undefined; resolve({ status, elapsed: performance.now() - start }); };
+      const receive = (event: MessageEvent<unknown>) => {
+        if (event.source === frame.contentWindow && event.origin === runnerOrigin && event.data === 'preview-ready') frame.contentWindow?.postMessage(html, runnerOrigin);
+      };
+      if (candidate === 'dedicated') { frame.src = runnerOrigin + '/preview.html'; window.addEventListener('message', receive); }
+      else frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}">${html}`;
+      const finish = (status: string) => { clearTimeout(timer); window.removeEventListener('message', receive); frame.remove(); this.cancel = undefined; resolve({ status, elapsed: performance.now() - start }); };
       const timer = setTimeout(() => finish('preview-reset'), limits.deadline);
       this.cancel = () => finish('preview-stopped');
       if (byteLength(html) > limits.source) { finish('output-limit'); return; }

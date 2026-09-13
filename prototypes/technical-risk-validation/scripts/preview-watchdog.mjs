@@ -1,8 +1,12 @@
 import { spawn, execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
-import { chromium } from '@playwright/test';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 if (process.argv.includes('--child')) {
+  const { chromium } = await import('@playwright/test');
   const server = spawn(process.execPath, ['--max-old-space-size=96', 'scripts/serve.mjs'], { windowsHide: true, stdio: 'ignore' });
   let browser;
   try {
@@ -12,10 +16,16 @@ if (process.argv.includes('--child')) {
     }
     browser = await chromium.launch({ args: ['--disable-gpu', '--renderer-process-limit=2'], timeout: 15000 });
     const page = await browser.newPage();
-    await page.goto('http://127.0.0.1:4310/?framePolicy=none');
+    const dedicated = process.argv.includes('--dedicated');
+    await page.goto('http://127.0.0.1:4310/?framePolicy=' + (dedicated ? 'isolated' : 'none'));
     await page.waitForFunction(() => Boolean(window.__risk));
+    await page.evaluate(dedicated => {
+      window.__previewTrial = window.__risk.preview('<p id="execution-marker">Loop fixture loaded</p><script>document.body.dataset.executing="yes";setTimeout(()=>{while(true){}},500)</script>', dedicated ? 'dedicated' : 'opaque');
+    }, dedicated);
+    const learner = dedicated ? page.frameLocator('iframe[title="Sandboxed learner preview"]').frameLocator('iframe[title="Synthetic learner document"]') : page.frameLocator('iframe[title="Sandboxed learner preview"]');
+    await learner.locator('body[data-executing="yes"]').waitFor({ timeout: 1500 });
     process.stdout.write('PROBE_STARTED\n');
-    const result = await page.evaluate(() => window.__risk.preview('<script>while(true){}</script>'));
+    const result = await page.evaluate(() => window.__previewTrial);
     const usable = await page.getByRole('heading', { name: 'CodeQuest validation workspace' }).isVisible();
     process.stdout.write(JSON.stringify({ result, hostUsable: usable, policyPassed: usable && result.elapsed < 3000 }) + '\n');
   } finally {
@@ -24,7 +34,19 @@ if (process.argv.includes('--child')) {
     else server.kill('SIGTERM');
   }
 } else {
-  const child = spawn(process.execPath, ['--max-old-space-size=128', 'scripts/preview-watchdog.mjs', '--child'], { windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
+  const buildRoot = fileURLToPath(new URL('../dist/', import.meta.url));
+  const hashes = {};
+  const walk = directory => {
+    for (const item of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, item.name);
+      if (item.isDirectory()) walk(path);
+      else hashes[relative(buildRoot, path).replaceAll('\\', '/')] = createHash('sha256').update(readFileSync(path)).digest('hex');
+    }
+  };
+  walk(buildRoot);
+  const buildFrozenAt = new Date().toISOString();
+  const commit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  const child = spawn(process.execPath, ['--max-old-space-size=128', 'scripts/preview-watchdog.mjs', '--child', ...process.argv.slice(2)], { windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
   let output = '', errors = '', expired = false, started = false;
   let timer;
   const kill = () => {
@@ -40,7 +62,7 @@ if (process.argv.includes('--child')) {
   child.stderr.on('data', bytes => { errors = (errors + bytes).slice(-2000); });
   const code = await new Promise(resolve => child.on('exit', resolve));
   clearTimeout(timer);
-  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 ? 'passed automated case only' : 'inconclusive: environment failure' };
+  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', commit, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 ? 'passed automated case only' : 'inconclusive: environment failure' };
   await writeFile(new URL('../../../docs/technical-risk-validation/evidence/preview-loop-' + record.recordedAt.replaceAll(':', '-') + '.json', import.meta.url), JSON.stringify(record, null, 2));
   process.stdout.write(JSON.stringify(record));
 }
