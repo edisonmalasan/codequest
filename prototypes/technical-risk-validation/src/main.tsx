@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Annotation, Compartment, EditorState } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
+import { Annotation, Compartment, EditorState, Prec } from '@codemirror/state';
+import { EditorView } from '@codemirror/view';
 import { basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { quest, recordFixture } from './fixtures';
@@ -114,7 +114,12 @@ function App() {
   useEffect(() => {
     if (!mount.current) return;
     const view = new EditorView({ parent: mount.current, state: EditorState.create({
-      doc: '', extensions: [basicSetup, javascript(), editorReadiness.of([EditorView.editable.of(false), EditorState.readOnly.of(true)]), EditorView.contentAttributes.of({ 'aria-label': 'JavaScript source' }), keymap.of([{ key: 'Escape', run: () => { document.getElementById('run')?.focus(); return true; } }]),
+      doc: '', extensions: [basicSetup, javascript(), editorReadiness.of([EditorView.editable.of(false), EditorState.readOnly.of(true)]), EditorView.contentAttributes.of({ 'aria-label': 'JavaScript source' }), Prec.highest(EditorView.domEventHandlers({ keydown: event => {
+        if (event.key !== 'Escape') return false;
+        event.preventDefault();
+        document.getElementById('run')?.focus();
+        return true;
+      } })),
         EditorView.updateListener.of((update) => { if (update.docChanged && !update.transactions.every(transaction => transaction.annotation(sourceReplacement))) { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); } }),
       ],
     }) });
