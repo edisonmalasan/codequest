@@ -6,6 +6,10 @@ import { SimulationLedger, snapshotFrom } from '../src/mock.ts';
 import { quest, recordFixture } from '../src/fixtures.ts';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
+const offlineControls = new Map([
+  ['/__offline-control/', new URL('./fixtures/offline-control.html', import.meta.url)],
+  ['/__offline-control/sw.js', new URL('./fixtures/offline-control-worker.js', import.meta.url)],
+]);
 let ledger = new SimulationLedger();
 const records = [];
 let revision = 1;
@@ -35,6 +39,12 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
         res.end('{}'); return;
       }
       if (role === 'app' && appOutage) { res.writeHead(503); res.end('Synthetic public origin outage'); return; }
+      const offlineControl = role === 'app' ? offlineControls.get(url.pathname) : undefined;
+      if (offlineControl) {
+        res.setHeader('Content-Type', url.pathname.endsWith('.js') ? 'text/javascript' : 'text/html');
+        res.setHeader('Content-Security-Policy', "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'");
+        res.end(await readFile(offlineControl)); return;
+      }
       if (role === 'app' && url.pathname === '/__mock-reset' && req.method === 'POST') {
         ledger = new SimulationLedger();
         res.end('{}'); return;
