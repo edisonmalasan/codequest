@@ -1,0 +1,107 @@
+# Phase 1 experiment charter
+
+Change: [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/proposal.md). Baseline: approved [decision register](../decisions.md), ADRs 0001–0008 and [experiment design](../../openspec/changes/validate-codequest-technical-risks/design.md). Recorded 2026-09-13. Active remote branch: `spike/browser-runtime-containment`, created from updated main at proposal merge `8c4f5c5f063bf41ffd94ca8f150ade92ea922dc7`. The project owner's existing AGENTS.md commit `bb037ff` was preserved unchanged on this branch.
+
+The user approved merging the proposal and beginning Apply, then explicitly assigned review roles and confirmed only the Windows development machine. The latest instruction is to continue proposal/charter preparation without inventing reviewer or device information. No executable prototype or experiment measurements exist yet. Review-role assignment is not review of results or Phase 2 authorization; exact test-environment inventory must be recorded when testing.
+
+## Ownership and execution readiness
+
+| Responsibility | Named owner / current state |
+| --- | --- |
+| Charter preparation and scoped implementation | Codex, the assistant in this repository session |
+| Automated experiment operator, E01–E06 | Codex, once the required charter prerequisites are recorded |
+| Physical device and assistive-technology operator | Manual operator/access arrangements not yet declared; no manual interaction evidence is available |
+| Technical reviewer | Project owner, the user in this session; explicitly self-assigned on 2026-09-13 |
+| Security reviewer | Project owner, the user in this session; project-owner self-review, not an independent security audit |
+| Product reviewer | Project owner, the user in this session; explicitly self-assigned on 2026-09-13 |
+| Curriculum fixture reviewer | Awaiting user assignment or explicit allocation to the product reviewer |
+
+Assignment evidence is the user's explicit instruction: they will act as product, technical and security reviewer as project owner, and security review is a project-owner self-review. This identifies the accountable reviewer without inventing a separate reviewer or personal identity. Curriculum review has not been assigned by that instruction. Retain actual review-of-results evidence separately in the final report; do not infer it from role assignment, proposal approval or merge.
+
+## Environment inventory
+
+The current local machine was inspected using `Get-CimInstance` and executable version metadata, without collecting serial numbers or credentials. This is inventory evidence only, not an experiment result.
+
+| Required environment | Inventory / availability | Experiment state |
+| --- | --- | --- |
+| Windows desktop Chrome and Firefox | The project owner explicitly confirms this Windows development machine. Preliminary inspection: Windows 10 Pro 10.0.19045, Intel Core i5-6500, 7.9 GiB RAM. Refresh exact hardware/Windows details and record installed Chrome/Firefox versions when testing; browser builds currently unconfirmed | Untested |
+| Installed Edge, supplemental only | Edge 153.0.4234.32 found locally; cannot substitute for the declared Chrome/Firefox matrix | Untested |
+| macOS Safari | Availability unconfirmed; use only after the project owner explicitly provides access | Untested |
+| Android phone Chrome | Availability unconfirmed; use only after the project owner explicitly provides access | Untested |
+| iPhone Safari, browser and home-screen modes | Availability unconfirmed; use only after the project owner explicitly provides access | Untested |
+| Lower-powered physical device | Local desktop hardware recorded; suitability as the declared lower-powered test device not yet selected | Untested |
+| Automated Chromium/Firefox/WebKit | Node 24.21.0 / npm 12.0.2 available; prototype dependencies and browser builds not installed or pinned | Untested |
+| Keyboard-only, NVDA desktop | Keyboard/input configuration not yet recorded. NVDA availability explicitly unconfirmed; use only after the project owner provides access | Untested |
+| VoiceOver Safari/iOS | Availability explicitly unconfirmed; use only after the project owner provides access | Untested |
+
+For every actual Windows test run refresh exact hardware and Windows version and record installed Chrome and Firefox product versions; record unknown/missing builds honestly rather than substituting automated browser builds. For every run also record viewport, input method, install mode, power/thermal conditions, network state and assistive-technology configuration. Standard-path absence is not proof an application is absent from the entire machine. Do not install browsers, claim manual use, or replace physical coverage with emulation based on this inventory. Unconfirmed/unavailable configurations stay untested until the owner explicitly provides access. They do not remove the approved coverage requirements: the overall progression gate stays inconclusive while required evidence is missing. Genuine unsupported installation is separate from missing equipment or failed required learning capability. See [coverage inventory](coverage.md).
+
+## Frozen numerical criteria: revision 1
+
+Selected before measurements on 2026-09-13 from the user-approved proposal design D7. These are experiment acceptance hypotheses, not established production guarantees or new Phase 0 policy. No results have been collected. Any revision must preserve the original result, rationale and affected rerun links.
+
+| ID | Measurement / predeclared criterion | Clock, workload and sample plan |
+| --- | --- | --- |
+| B01 | Short-exercise input-to-visible-update p95 ≤100 ms | 100 actual edit interactions after 10 warmup edits; monotonic timestamps from input receipt to next rendered source update; list every sample and nearest-rank p95; lower-powered physical device |
+| B02 | Worker and hostile-preview run deadline 2 s; feedback/recovery within a further 1 s | Clock starts on trusted dispatch; independent trusted watchdog; host heartbeat/interaction must remain usable; 10 abusive-run trials per applicable environment; browser/process killing fails |
+| B03 | Fresh run ready within 1 s after stop/termination | Trusted stop action or termination receipt to fresh compartment readiness; 10 trials per environment |
+| B04 | Output maximum 200 entries and 64 KiB total, whichever first | UTF-8 encoded serialized output including per-entry data; test below/exactly/above each bound; exceeding either bound is explicit failure, not successful truncation |
+| B05 | Single output/message maximum 16 KiB | UTF-8 encoded serialized bounded shape; below/exactly/above cases and malformed/deep/cyclic payloads; receiver and rendering bounds tested independently of sender cooperation |
+| B06 | Submitted source maximum 64 KiB | UTF-8 source bytes; below/exactly/above input; rejection preserves editable source |
+| B07 | Prepared cold offline lesson/editor/runtime usable ≤5 s | Browser/home-screen process closed and relaunched after preparation; no existing live page/runtime; start at navigation/launch and end when lesson, exact source and local execution are usable; 10 trials on lower-powered physical device |
+| B08 | No crashes, draft loss or continuing retained-resource growth | 100 cycles per desktop browser and 30 per physical-mobile mode; first 10 cycles are warmup within those totals; source/version hashes and lifecycle cleanup recorded each cycle |
+| B09 | Exact confirmed source/task/assessment retained | 20 controlled persistence cycles per required browser/mode: 8 save/reload, 6 update with active editing/pending work, 6 multiple-client update cycles; version compatibility/retry guidance verified |
+
+Output bounds include errors/check results, not just console logs. Do not invoke learner-controlled getters or custom serialization inside the trusted host to measure size. The prototype must document what can be rejected only after browser structured-clone allocation; no hard memory quota is inferred from sender limits.
+
+Memory: no reliable browser-specific retained-memory instrumentation is installed yet, so revision 1 selects the design's observational branch: track crashes, responsiveness and lifecycle cleanup, and label hard memory bounds unverified. If reliable instrumentation becomes available, freeze a separate device-specific tolerance before its measured trials and retain this revision. A result without memory measurements must not claim a memory ceiling.
+
+## Fixture and experiment procedures
+
+Fixture IDs are planned reproducibility identifiers; files are not implemented yet. Each run must retain prototype commit, pinned dependencies/browser builds, exact command, candidate/environment, expected/actual result, raw samples, canary/sink records and failure/retest IDs. Mandatory boundary failures cannot be averaged away.
+
+| Experiment | Hypothesis / approved policies | Fixtures and procedure | Expected behavior / failure |
+| --- | --- | --- | --- |
+| E01 | Editor supports desktop coding and mobile short exercises; P01/U01/P14, C11 | Q01-OUTPUT: read objective, type/replace/select/indent/paste/undo, inspect highlights, resize panels, reset explicitly, rotate with virtual keyboard open; repeat keyboard/focus/screen-reader/zoom/reduced-motion paths | Source retained, all essential actions/feedback reachable, editor escapable; unusable selection, trapped focus, inaccessible feedback or recurring edit loss fails; B01 |
+| E02 | Execution is bounded and recoverable; C06/P06/P11/P14 | RUN-OK, RUN-SYNTAX, RUN-ERROR, CHECK-WRONG, RUN-LOOP, RUN-FLOOD, RUN-LARGE, RUN-CYCLIC, RUN-SERIALIZE, RUN-STALE: run/check, stop/restart, cross thresholds, supersede runs and run B08 cycles | Distinct correct result/error categories, explicit limit failures, usable host, draft retained and stale messages rejected; uncontrolled lifecycle or successful truncation fails; B02–B06/B08 |
+| E03 | Restricted candidate meets P11/P13 and ADR 0004 | CAP-REQUEST, CAP-IMPORT, CAP-NESTED, CAP-STORAGE, CAP-CHANNEL, CAP-SESSION: establish positive/negative controls, execute online available API probes against both restricted candidates and inspect sinks/app canaries; MSG-SPOOF/SHAPE/VERSION/REPLAY/FLOOD and CHECK-FORGE | Zero learner requests/application authority, bounded receiver behavior; a CORS error alone is not proof. Forged local pass demonstrates P06 only, not an escape or grading guarantee |
+| E04 | Preview is useful, contained and recoverable; P03/P05/P11/P13 | PREVIEW-RECORDS, PREVIEW-PARENT/OPENER/SANDBOX/NAV/FORM/POPUP/RESOURCE/INJECT/LOOP/FLOOD: exercise supplied shell and adversarial HTML/CSS/JS, observe sinks/host and trusted reset | Textual equivalent, no outbound request/application access/executable host injection; tight-loop host starvation or recovery needing browser termination fails; B02/B03/B05/B08 |
+| E05 | Offline source/lesson/local JS and updates are truthful; P08/P13/P14/P15, ADRs 0006/0007 | SAVE-RELOAD, SAVE-FULL/UNAVAILABLE/CLEARED/INTERRUPTED, OFFLINE-PREPARED/MISSING, UPDATE-WAIT/ACTIVATE/MULTITAB, BACKGROUND-RESTART: prepare, install where supported, close/relaunch offline, inject save failures, update with edits/pending work | Confirmed exact source survives; failed save never claims saved; missing/cleared resources explicit; version coherence preserved; protected/session-bearing cache entries fail; B07/B09 |
+| E06 | Components compose into the tiny learning loop; P04–P09/P14/P15 | Q01-OUTPUT: read, edit, successful Run but failed Check, hint/debug/correct, local Check, provisional completion, save/reload/offline/recovery. PREVIEW-RECORDS plus MOCK-LOSS/EXPIRY/OWNER/IMPORT/DUPLICATE/COMPATIBLE/INCOMPATIBLE/RETIRED | Full desktop/mobile flow works with truthful state labels, immutable snapshots and preserved source. Mock acceptance never proves production authorization/sync/XP, and DOM/events stay supplied plumbing |
+
+E01/E02 establish baselines, then E03 compares authority. E04 uses those findings, E05 checks candidate offline/update behavior, E06 integrates only a safely evaluated arrangement. Failures remain in the report even if another candidate later passes. Every manual case needs a named operator and observations; no automatic manual-pass labels.
+
+Q01-OUTPUT will ask the operator to produce the exact declared text `Ready for CodeQuest` from starter code initially logging `Not ready`. The hint points to the string literal and Run versus Check. A separate records fixture declares a function input/return contract and supplied read-only display; no full curriculum or capstone is authored. Browser fixtures/checks remain tamperable under P06.
+
+## Planned local topology and bootstrap allowlist
+
+No server, DNS/certificate change, browser profile or dependency installation has been performed. These are planned local endpoints, not configured infrastructure:
+
+| Endpoint / candidate | Planned use |
+| --- | --- |
+| `https://app.codequest.test:4310` | Trusted synthetic harness, editor/source persistence, fake session/application canaries; negative-control Worker isolated to synthetic data |
+| `https://runner.codequest.test:4311` | Dedicated-origin candidate bootstrap/Worker/preview; no app cookies/session/storage; independent effective policy measured |
+| `https://sink.codequest.test:4312` | Controlled request recorder and safe fixtures for permitted positive-control / attempted denied requests |
+| Opaque-origin candidate | Sandboxed bootstrap frame with no same-origin application privilege; measure Worker creation, inherited/effective policy and offline compatibility |
+
+Distinct hostnames are deliberate: ports alone do not isolate host-scoped cookies. Resolve these test names to loopback for desktop. For physical devices, declare a reachable LAN address/local name mapping and locally trusted certificate plan only after the operator/device inventory is available. Bind LAN services only for that controlled session. No public tunnel/deployment or new persistent DNS/service is authorized. Localhost-only runs cannot prove physical coverage.
+
+Trusted bootstrap allowlist, before learner execution: harness document; pinned built editor/React/CSS assets and their build manifest; public Q01/record lesson fixtures; candidate bootstrap document and Worker entry bytes; service-worker script and versioned public offline assets. Exact generated asset names/hashes must be recorded before running a candidate. No Auth/analytics/storage-provider assets. No learner-selected URL/import/resource appears in this allowlist. Use separate recorded bootstrap and execution phases; the latter must produce zero learner-initiated requests while network is online.
+
+The candidate experiment selects effective Worker CSP and iframe permissions; this charter does not assert untested flags solve isolation. Same-origin scripted authenticated previews and globals-only confinement are not passing candidates. Bind sender/channel plus run/task/version; `origin: null`, nonces and CORS alone do not establish authority. Raw messages never request arbitrary privileged host operations.
+
+Instrumentation controls: trusted harness request reaches sink; permissive synthetic negative control can reach sink/discover its own app canaries. Restricted candidate must deny the same probes. Keep actual session/credentials out of source/messages/sinks/evidence. Local servers only serve fixtures or record bounded requests; never execute learner source.
+
+## Evidence, revision and exit rules
+
+Verdicts are passed, failed, unsupported or untested per capability/environment. Overall recommendation is Proceed, Redesign/no-go or Inconclusive/awaiting review. Each evidence record must carry E/fixture ID, expected/actual behavior, environment/candidate, monotonic timestamps/raw samples, prototype commit and commands, dependency/browser versions, topology/effective policy, sink/canary observations and failure/retest links. No measurements exist as of revision 1.
+
+Record numerical revisions as B-ID/revision, original selected criterion/result, reason, approver where applicable and new trial IDs. Do not retrospectively convert original failures. Policy changes or reduced required scope require explicit scoped approval and revised active artifacts; no automatic remote-runner fallback.
+
+Proceed requires passing all required integrated/device/accessibility, runtime/preview containment/recovery and offline/update/persistence gates, reviewed F01/F02 recommendations and dated named technical/security/product reviewer evidence. Missing physical coverage or reviewer assignment is inconclusive. Approved P06 fraud/local data-clearing loss does not permit session leakage, cross-account authority, unsafe execution or unbounded host abuse. F03–F09 remain deferred, ADR 0004's policy stays Accepted and feasibility remains unverified until applicable evidence is reviewed. Phase 2 requires separate authorization.
+
+## Teardown and data handling
+
+Use only synthetic source/profiles/session canaries and bounded local artifacts; no analytics SDKs or real learner recruitment. Preserve reproducible source/evidence, not transient secrets or unbounded logs. F06 remains a prerequisite before real learner data collection.
+
+When executable work exists, stop only documented prototype server processes; close only task-created browser profiles; clear only task-created origin caches/IndexedDB; remove only temporary task certificate/name mappings actually added, recording what changed. Verify every resolved target is within the task-owned directory or explicitly recorded setup before removal; preserve ordinary user browser data. No certificate/hosts setup has been added yet, so no teardown action is currently needed. Never commit private certificate keys, `.env` files, tokens or credentials. Do not promote prototype source into production automatically.
