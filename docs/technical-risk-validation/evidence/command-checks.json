@@ -1,0 +1,29 @@
+{
+    "recordedAt":  "2026-09-13T06:44:51.2695275Z",
+    "note":  "Commands were actually executed in this session; this is a recorded check summary, not a timestamped transcript of each invocation.",
+    "prototypeDirectory":  "prototypes/technical-risk-validation",
+    "passed":  [
+                   "corepack pnpm@10.30.3 install --frozen-lockfile",
+                   "corepack pnpm@10.30.3 test (18 tests)",
+                   "node --max-old-space-size=384 node_modules/typescript/bin/tsc --noEmit",
+                   "node --max-old-space-size=128 node_modules/typescript/bin/tsc -p tsconfig.sw.json",
+                   "node --max-old-space-size=192 node_modules/eslint/bin/eslint.js .",
+                   "corepack pnpm@10.30.3 build",
+                   "corepack pnpm@10.30.3 exec vitest run src/mock.test.ts (6 tests)"
+               ],
+    "rootUnavailable":  {
+                            "commands":  [
+                                             "pnpm test",
+                                             "pnpm lint",
+                                             "pnpm typecheck"
+                                         ],
+                            "reason":  "pnpm not on PATH",
+                            "corepackRootTest":  "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND: no root package.json"
+                        },
+    "earlierFailures":  [
+                            "Windows committed-memory exhaustion in browser/check processes; retained JSON and report describe failures/retests",
+                            "Initial TypeScript 7 was unsupported by typescript-eslint; pinned TypeScript 5.9.3 was subsequently checked successfully",
+                            "An initial 192-MiB full TypeScript heap cap was insufficient; later standalone 384-MiB application and 128-MiB Worker checks passed"
+                        ],
+    "rootProductionManifestCreated":  false
+}

@@ -1,0 +1,1416 @@
+{
+  "recordedAt": "2026-09-13T06:33:30.959Z",
+  "commit": "287e6a1773df52f493ac14c29543233059680dcb",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--max-failures=6"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "status": "failed",
+  "durationMs": 77279.698,
+  "cases": [
+    {
+      "title": " / chromium / offline.spec.ts / E05 prepared offline new page retains source and local JS",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2245,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "offline",
+          "data": {
+            "elapsedMs": 445,
+            "mode": "new page, same browser process; physical cold process/install untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / offline.spec.ts / E05 update waits, save failure blocks activation, and two clients retain drafts",
+      "status": "timedOut",
+      "expectedStatus": "passed",
+      "durationMs": 30045,
+      "errors": [
+        "\u001b[31mTest timeout of 25000ms exceeded.\u001b[39m",
+        "Error: page.reload: net::ERR_ABORTED; maybe frame was detached?\nCall log:\n\u001b[2m  - waiting for navigation until \"load\"\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 positive and permissive negative controls observe real requests",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 900,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "sink-control",
+          "data": [
+            {
+              "method": "GET",
+              "path": "/positive",
+              "query": "?fixture=CONTROL",
+              "at": 1789281170700
+            },
+            {
+              "method": "GET",
+              "path": "/negative",
+              "query": "?fixture=CONTROL",
+              "at": 1789281170751
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1236,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "opaque",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "3354757a-cae1-42a9-896b-8a53abb50359",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 32.79999999701977
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "f7feccbf-9224-42ef-b91a-f0712d528a28",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 138.09999999403954
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "2ada4e95-3ba9-4a37-86b0-b8d578c6baa5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 118.40000000596046
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "1248ea08-2acf-4821-abe8-5a1f439f7008",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 44.29999999701977
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "cdc41b36-afdc-4b0c-8c38-6586bfa1dc21",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 15.5
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "79863f05-2658-4ae2-b58f-d9e540d924a4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 17.099999994039536
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "d01bdd62-f50b-42f6-abcc-d7b62ec23e7e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 17.19999998807907
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "1378ca26-15ed-4072-8fed-bf6e5c8cef86",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 17.099999994039536
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 opaque cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 723,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "55a4752f-d187-4691-81ed-b5701049e71e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "storage blocked",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 55.1000000089407
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2201,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "dedicated",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "f375ced8-7108-4404-a3d8-654c06f2d44c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 112.1000000089407
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "665e7bed-77b3-4f92-a167-c50b3b2190b2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 199
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "6e373efb-106c-4ab3-be3e-7d4edc959a60",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 183.40000000596046
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "ad894cc2-2a73-43ae-8ba7-48f65c92beb8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 70
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "0921cdd5-c9dd-42bd-854f-f9bdb20758c6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 67
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "c8c515af-fd3f-4a89-b0d7-7ff173cb0b60",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 58.900000005960464
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "33ee7e83-2ac9-438d-8aea-d580ac72eee4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 92.29999999701977
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "dcf5d8b4-75dd-4c52-b76e-222e9d7308d7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 84.90000000596046
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1475,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "dedicated",
+            "task": "Q01",
+            "run": "934a3ea2-b118-403a-9d5d-db623f74973b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "APP_NOT_FOUND",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 110.8999999910593
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 malformed messages cannot become trusted output or privileged host actions",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1540,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview resource/parent/navigation/form probes are denied",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3038,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "preview",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2010.5999999940395
+            },
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 preview self-navigation capability is explicitly measured",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2706,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "self-navigation-risk",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2015
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/self-navigation",
+                "query": "?fixture=SELF_NAV",
+                "at": 1789281181947
+              }
+            ],
+            "policyPassed": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 parent frame policy comparison retains original navigation failure",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2790,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "parent-frame-policy",
+          "data": {
+            "worker": {
+              "source": "console.log(\"ready\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "d38b8e75-e486-46e1-8fb6-bd0ec4ee14b4",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "ready"
+              ],
+              "value": "[undefined]",
+              "elapsed": 17.099999994039536
+            },
+            "preview": {
+              "status": "preview-reset",
+              "elapsed": 2012.3999999910593
+            },
+            "records": [],
+            "policyPassed": true,
+            "parentPolicy": "frame-src 'none'",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / security.spec.ts / E02 lifecycle one hundred runs retain usability and leave no runtime frames",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2442,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "lifecycle",
+          "data": {
+            "timings": [
+              {
+                "cycle": 0,
+                "status": "success",
+                "elapsed": 21.5
+              },
+              {
+                "cycle": 1,
+                "status": "success",
+                "elapsed": 17.599999994039536
+              },
+              {
+                "cycle": 2,
+                "status": "success",
+                "elapsed": 14.900000005960464
+              },
+              {
+                "cycle": 3,
+                "status": "success",
+                "elapsed": 15.099999994039536
+              },
+              {
+                "cycle": 4,
+                "status": "success",
+                "elapsed": 14.599999994039536
+              },
+              {
+                "cycle": 5,
+                "status": "success",
+                "elapsed": 14.599999994039536
+              },
+              {
+                "cycle": 6,
+                "status": "success",
+                "elapsed": 19.5
+              },
+              {
+                "cycle": 7,
+                "status": "success",
+                "elapsed": 17.200000002980232
+              },
+              {
+                "cycle": 8,
+                "status": "success",
+                "elapsed": 12.800000011920929
+              },
+              {
+                "cycle": 9,
+                "status": "success",
+                "elapsed": 21.5
+              },
+              {
+                "cycle": 10,
+                "status": "success",
+                "elapsed": 15.599999994039536
+              },
+              {
+                "cycle": 11,
+                "status": "success",
+                "elapsed": 15.599999994039536
+              },
+              {
+                "cycle": 12,
+                "status": "success",
+                "elapsed": 17.799999997019768
+              },
+              {
+                "cycle": 13,
+                "status": "success",
+                "elapsed": 17.099999994039536
+              },
+              {
+                "cycle": 14,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 15,
+                "status": "success",
+                "elapsed": 16.099999994039536
+              },
+              {
+                "cycle": 16,
+                "status": "success",
+                "elapsed": 17
+              },
+              {
+                "cycle": 17,
+                "status": "success",
+                "elapsed": 17.80000001192093
+              },
+              {
+                "cycle": 18,
+                "status": "success",
+                "elapsed": 15.399999991059303
+              },
+              {
+                "cycle": 19,
+                "status": "success",
+                "elapsed": 16
+              },
+              {
+                "cycle": 20,
+                "status": "success",
+                "elapsed": 14.700000002980232
+              },
+              {
+                "cycle": 21,
+                "status": "success",
+                "elapsed": 15.200000002980232
+              },
+              {
+                "cycle": 22,
+                "status": "success",
+                "elapsed": 16.099999994039536
+              },
+              {
+                "cycle": 23,
+                "status": "success",
+                "elapsed": 14.299999997019768
+              },
+              {
+                "cycle": 24,
+                "status": "success",
+                "elapsed": 13.200000002980232
+              },
+              {
+                "cycle": 25,
+                "status": "success",
+                "elapsed": 14.799999997019768
+              },
+              {
+                "cycle": 26,
+                "status": "success",
+                "elapsed": 14
+              },
+              {
+                "cycle": 27,
+                "status": "success",
+                "elapsed": 13.599999994039536
+              },
+              {
+                "cycle": 28,
+                "status": "success",
+                "elapsed": 15.100000008940697
+              },
+              {
+                "cycle": 29,
+                "status": "success",
+                "elapsed": 12.399999991059303
+              },
+              {
+                "cycle": 30,
+                "status": "success",
+                "elapsed": 15.100000008940697
+              },
+              {
+                "cycle": 31,
+                "status": "success",
+                "elapsed": 16.700000002980232
+              },
+              {
+                "cycle": 32,
+                "status": "success",
+                "elapsed": 16.399999991059303
+              },
+              {
+                "cycle": 33,
+                "status": "success",
+                "elapsed": 15.100000008940697
+              },
+              {
+                "cycle": 34,
+                "status": "success",
+                "elapsed": 16.799999997019768
+              },
+              {
+                "cycle": 35,
+                "status": "success",
+                "elapsed": 17.700000002980232
+              },
+              {
+                "cycle": 36,
+                "status": "success",
+                "elapsed": 17
+              },
+              {
+                "cycle": 37,
+                "status": "success",
+                "elapsed": 17.299999997019768
+              },
+              {
+                "cycle": 38,
+                "status": "success",
+                "elapsed": 17.600000008940697
+              },
+              {
+                "cycle": 39,
+                "status": "success",
+                "elapsed": 18.600000008940697
+              },
+              {
+                "cycle": 40,
+                "status": "success",
+                "elapsed": 16.799999997019768
+              },
+              {
+                "cycle": 41,
+                "status": "success",
+                "elapsed": 15.199999988079071
+              },
+              {
+                "cycle": 42,
+                "status": "success",
+                "elapsed": 23.200000002980232
+              },
+              {
+                "cycle": 43,
+                "status": "success",
+                "elapsed": 16.69999998807907
+              },
+              {
+                "cycle": 44,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 45,
+                "status": "success",
+                "elapsed": 14.599999994039536
+              },
+              {
+                "cycle": 46,
+                "status": "success",
+                "elapsed": 14.599999994039536
+              },
+              {
+                "cycle": 47,
+                "status": "success",
+                "elapsed": 15.299999997019768
+              },
+              {
+                "cycle": 48,
+                "status": "success",
+                "elapsed": 14.900000005960464
+              },
+              {
+                "cycle": 49,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 50,
+                "status": "success",
+                "elapsed": 16.600000008940697
+              },
+              {
+                "cycle": 51,
+                "status": "success",
+                "elapsed": 17.400000005960464
+              },
+              {
+                "cycle": 52,
+                "status": "success",
+                "elapsed": 17.5
+              },
+              {
+                "cycle": 53,
+                "status": "success",
+                "elapsed": 15.600000008940697
+              },
+              {
+                "cycle": 54,
+                "status": "success",
+                "elapsed": 19.5
+              },
+              {
+                "cycle": 55,
+                "status": "success",
+                "elapsed": 18.099999994039536
+              },
+              {
+                "cycle": 56,
+                "status": "success",
+                "elapsed": 15.5
+              },
+              {
+                "cycle": 57,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 58,
+                "status": "success",
+                "elapsed": 17.400000005960464
+              },
+              {
+                "cycle": 59,
+                "status": "success",
+                "elapsed": 15.099999994039536
+              },
+              {
+                "cycle": 60,
+                "status": "success",
+                "elapsed": 16.900000005960464
+              },
+              {
+                "cycle": 61,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 62,
+                "status": "success",
+                "elapsed": 14.399999991059303
+              },
+              {
+                "cycle": 63,
+                "status": "success",
+                "elapsed": 38.1000000089407
+              },
+              {
+                "cycle": 64,
+                "status": "success",
+                "elapsed": 24.200000002980232
+              },
+              {
+                "cycle": 65,
+                "status": "success",
+                "elapsed": 14.399999991059303
+              },
+              {
+                "cycle": 66,
+                "status": "success",
+                "elapsed": 16.799999997019768
+              },
+              {
+                "cycle": 67,
+                "status": "success",
+                "elapsed": 15.700000002980232
+              },
+              {
+                "cycle": 68,
+                "status": "success",
+                "elapsed": 11.699999988079071
+              },
+              {
+                "cycle": 69,
+                "status": "success",
+                "elapsed": 15.099999994039536
+              },
+              {
+                "cycle": 70,
+                "status": "success",
+                "elapsed": 13.600000008940697
+              },
+              {
+                "cycle": 71,
+                "status": "success",
+                "elapsed": 12.799999997019768
+              },
+              {
+                "cycle": 72,
+                "status": "success",
+                "elapsed": 13
+              },
+              {
+                "cycle": 73,
+                "status": "success",
+                "elapsed": 16.899999991059303
+              },
+              {
+                "cycle": 74,
+                "status": "success",
+                "elapsed": 18.799999997019768
+              },
+              {
+                "cycle": 75,
+                "status": "success",
+                "elapsed": 15.900000005960464
+              },
+              {
+                "cycle": 76,
+                "status": "success",
+                "elapsed": 15.099999994039536
+              },
+              {
+                "cycle": 77,
+                "status": "success",
+                "elapsed": 13.5
+              },
+              {
+                "cycle": 78,
+                "status": "success",
+                "elapsed": 14.899999991059303
+              },
+              {
+                "cycle": 79,
+                "status": "success",
+                "elapsed": 20.80000001192093
+              },
+              {
+                "cycle": 80,
+                "status": "success",
+                "elapsed": 16.19999998807907
+              },
+              {
+                "cycle": 81,
+                "status": "success",
+                "elapsed": 16.80000001192093
+              },
+              {
+                "cycle": 82,
+                "status": "success",
+                "elapsed": 14.799999997019768
+              },
+              {
+                "cycle": 83,
+                "status": "success",
+                "elapsed": 15.799999997019768
+              },
+              {
+                "cycle": 84,
+                "status": "success",
+                "elapsed": 18.5
+              },
+              {
+                "cycle": 85,
+                "status": "success",
+                "elapsed": 18.600000008940697
+              },
+              {
+                "cycle": 86,
+                "status": "success",
+                "elapsed": 18.599999994039536
+              },
+              {
+                "cycle": 87,
+                "status": "success",
+                "elapsed": 18.899999991059303
+              },
+              {
+                "cycle": 88,
+                "status": "success",
+                "elapsed": 22
+              },
+              {
+                "cycle": 89,
+                "status": "success",
+                "elapsed": 31.69999998807907
+              },
+              {
+                "cycle": 90,
+                "status": "success",
+                "elapsed": 20
+              },
+              {
+                "cycle": 91,
+                "status": "success",
+                "elapsed": 17.799999997019768
+              },
+              {
+                "cycle": 92,
+                "status": "success",
+                "elapsed": 28.900000005960464
+              },
+              {
+                "cycle": 93,
+                "status": "success",
+                "elapsed": 22.700000002980232
+              },
+              {
+                "cycle": 94,
+                "status": "success",
+                "elapsed": 27.799999997019768
+              },
+              {
+                "cycle": 95,
+                "status": "success",
+                "elapsed": 29.30000001192093
+              },
+              {
+                "cycle": 96,
+                "status": "success",
+                "elapsed": 20.599999994039536
+              },
+              {
+                "cycle": 97,
+                "status": "success",
+                "elapsed": 17.099999994039536
+              },
+              {
+                "cycle": 98,
+                "status": "success",
+                "elapsed": 27.700000002980232
+              },
+              {
+                "cycle": 99,
+                "status": "success",
+                "elapsed": 17.399999991059303
+              }
+            ],
+            "hardMemoryQuota": "unverified",
+            "manualPhysicalCoverage": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E01/E06 read, run, failed check, hint, correction, provisional save and reload",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1359,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "environment",
+          "data": {
+            "browser": "153.0.8010.12",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E02 syntax/runtime errors, limits, termination, restart and stale output",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 5286,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "fixtures",
+          "data": [
+            {
+              "id": "syntax",
+              "source": "const = ;",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "1946dccd-c98a-4e74-8109-263f7ff89321",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "syntax-error",
+              "output": [],
+              "value": "Unexpected token '='",
+              "elapsed": 20.5
+            },
+            {
+              "id": "error",
+              "source": "throw new Error(\"fixture error\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "0d57abdc-a8e7-4f05-af3b-28dbf9e59c43",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "runtime-error",
+              "output": [],
+              "value": "fixture error",
+              "elapsed": 15.700000002980232
+            },
+            {
+              "id": "loop",
+              "source": "while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "2164c57b-0221-4bce-bebb-de0310c359bc",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2002.7999999970198
+            },
+            {
+              "id": "flood",
+              "source": "for(let i=0;i<201;i++) console.log(i)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "f8f0cdfa-d0ee-4731-b977-f01c60ad92e0",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: console",
+              "elapsed": 86.1000000089407
+            },
+            {
+              "id": "large",
+              "source": "console.log(\"x\".repeat(17000))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "b3153232-293f-415d-a15c-907aa2d28f01",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: single value",
+              "elapsed": 71
+            },
+            {
+              "id": "cycle",
+              "source": "const a={};a.self=a;console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "16783b3e-1c2e-47c2-a8a9-378259f703e6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: cyclic output",
+              "elapsed": 41.3999999910593
+            },
+            {
+              "id": "getter",
+              "source": "console.log({get danger(){while(true){}}})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "c5fe4064-a221-4659-8002-a110a130284e",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{danger:[accessor]}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 95.79999999701977
+            },
+            {
+              "id": "proxy",
+              "source": "console.log(new Proxy({}, {ownKeys(){while(true){}}}))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "7978610f-54cc-4c47-afb1-7df11b7b7bad",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2010.9000000059605
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 storage failure is explicit and preserves in-memory source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1931,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1693,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E05 saved source survives twenty reload cycles and protected response is not cached",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 10753,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}

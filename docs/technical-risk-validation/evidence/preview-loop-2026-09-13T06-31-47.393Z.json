@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-09-13T06:31:47.393Z",
+  "fixture": "E04-tight-loop",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\preview-watchdog.mjs"
+  ],
+  "physical": false,
+  "probeStarted": true,
+  "watchdogExpired": true,
+  "code": 1,
+  "output": "PROBE_STARTED\n",
+  "errors": "",
+  "verdict": "failed: owned process termination required"
+}

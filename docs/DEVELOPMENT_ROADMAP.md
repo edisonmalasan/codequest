@@ -6,15 +6,15 @@ Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); planning only |
+| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); reviewed no-go for evaluated preview mechanisms; remaining validation blocked |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Propose — planning artifacts prepared for review; Apply has not begun |
-| Next execution step | Review Phase 1 proposal; explicitly authorize Apply before implementing experiments |
+| Current OpenSpec stage | Apply - 21/34 tasks complete; owner-reviewed no-go (AP02); 13 acceptance gates remain incomplete |
+| Next execution step | Define scoped redesign/retest for [approved preview no-go](technical-risk-validation/report.md); supply physical/browser/assistive access for remaining [coverage](technical-risk-validation/coverage.md) |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | No Phase 1 experiments or browser/device measurements completed; runtime containment remains unverified |
-| Current repository | Documentation and OpenSpec artifacts only; no production application workspace or infrastructure |
-| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01/F02 await Phase 1 evidence |
+| Validation evidence | Focused Chromium/Firefox/unit/prototype checks passed; preview navigation and tight-loop recovery failed; actual WebKit page creation unavailable, required physical/accessibility coverage incomplete; no-go review approved by AP02 |
+| Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
+| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 reviewed no-go; F02 inconclusive; evidence/retest required |
 
 ## 1. Product Goal
 

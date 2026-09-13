@@ -1,0 +1,13 @@
+{
+    "recordedAt":  "2026-09-13T06:33:32.1077743Z",
+    "os":  "Microsoft Windows 10 Pro",
+    "version":  "10.0.19045",
+    "build":  "19045",
+    "cpu":  "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "logicalProcessors":  4,
+    "ramGiB":  7.9,
+    "installedBrowsersFound":  [
+
+                               ],
+    "note":  "Inspected standard machine/user paths only. Missing entries are unconfirmed, not a proof of absence. No manual device or accessibility test inferred."
+}

@@ -1,0 +1,65 @@
+{
+  "recordedAt": "2026-09-13T06:36:29.784Z",
+  "commit": "408eec54073cf03ecc5f350e6d37bf167df569d2",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M prototypes/technical-risk-validation/src/mock.test.ts",
+    " M prototypes/technical-risk-validation/src/mock.ts",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/technical-risk-validation/tests/reconciliation.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--grep",
+    "lost response"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "status": "passed",
+  "durationMs": 2168.714,
+  "cases": [
+    {
+      "title": " / chromium / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 55,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    }
+  ]
+}

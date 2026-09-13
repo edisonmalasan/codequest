@@ -1,0 +1,74 @@
+{
+  "recordedAt": "2026-09-13T06:24:18.097Z",
+  "commit": "287e6a1773df52f493ac14c29543233059680dcb",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    "?? docs/technical-risk-validation/evidence/",
+    "?? prototypes/"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "--project=chromium",
+    "--grep",
+    "parent frame policy|malformed|immutable|dedicated cannot",
+    "--max-failures=4"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "--max-old-space-size=128",
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "status": "failed",
+  "durationMs": 19142.119,
+  "cases": [
+    {
+      "title": " / chromium / security.spec.ts / E03 dedicated cannot read application IndexedDB or session canary",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 0,
+      "errors": [
+        "Error: worker process exited unexpectedly (code=134, signal=null)"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E03 malformed messages cannot become trusted output or privileged host actions",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 294,
+      "errors": [
+        "Error: browserContext.newPage: Target crashed "
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / security.spec.ts / E04 parent frame policy comparison retains original navigation failure",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 1640,
+      "errors": [
+        "Error: browserContext.newPage: Target crashed "
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / chromium / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 7339,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('save-state')\nExpected: \u001b[32m\"Saved on this device\"\u001b[39m\nTimeout: 6000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('save-state') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('save-state')\u001b[22m\n"
+      ],
+      "evidence": []
+    }
+  ]
+}

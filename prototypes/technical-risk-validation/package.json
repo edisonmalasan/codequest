@@ -1,0 +1,41 @@
+{
+  "name": "codequest-technical-risk-validation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4310",
+    "build": "vite build",
+    "serve": "node scripts/serve.mjs",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.sw.json",
+    "inventory": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/inventory.ps1"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "6.2.5",
+    "@codemirror/state": "6.7.4",
+    "@codemirror/view": "6.43.11",
+    "codemirror": "6.0.2",
+    "dexie": "4.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "serwist": "9.5.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@serwist/vite": "9.5.12",
+    "@types/node": "24.10.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "eslint": "9.39.4",
+    "globals": "17.4.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
+    "vite": "8.3.0",
+    "vitest": "5.0.0"
+  }
+}

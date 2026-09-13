@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-09-13T06:54:25.996Z",
+  "fixture": "E04-tight-loop",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\preview-watchdog.mjs",
+    "--dedicated"
+  ],
+  "physical": false,
+  "probeStarted": false,
+  "watchdogExpired": false,
+  "code": 2147483651,
+  "output": "",
+  "errors": "\r\n\r\n#\r\n# Fatal error in , line 0\r\n# Out of memory: HashMap::Initialize\r\n#\r\n#\r\n#\r\n#FailureMessage Object: 0000006790DF8680\r\n----- Native stack trace -----\r\n\r\n 1: 00007FF75D7DEABD \r\n 2: 00007FF75CC3391F \r\n 3: 00007FF75C4A16B6 \r\n 4: 00007FF75C4A0DA2 \r\n 5: 00007FF75C4A0E9D \r\n 6: 00007FF75BF26E16 \r\n 7: 00007FF75BF47A06 \r\n 8: 00007FF75BF5E0FB \r\n 9: 00007FF75BF5D2CE \r\n10: 00007FF75BF5CF89 \r\n11: 00007FF75BF65750 \r\n12: 00007FF75BF5C9F6 \r\n13: 00007FF75BF5E0FB \r\n14: 00007FF75BF5D2CE \r\n15: 00007FF75BF6F1A2 \r\n16: 00007FF75BF4EC75 \r\n17: 00007FF75BF5787B \r\n18: 00007FF75BF4D2BA \r\n19: 00007FF75BF5DFF0 \r\n20: 00007FF75BF5D314 \r\n21: 00007FF75BF6F1A2 \r\n22: 00007FF75BF4EC75 \r\n23: 00007FF75BF5787B \r\n24: 00007FF75BF56D7A \r\n25: 00007FF75BF4A477 \r\n26: 00007FF75BF49644 \r\n27: 00007FF75BF48932 \r\n28: 00007FF75BF485DA \r\n29: 00007FF75BF43C09 \r\n30: 00007FF75C42105F \r\n31: 00007FF75C423E61 \r\n32: 00007FF75C4ACAD3 \r\n33: 00007FF75D8B6F3F \r\n34: 00007FF75D8B5493 \r\n35: 00007FF75D9CCC8D \r\n36: 00007FF75D9CB214 \r\n37: 00007FF75D9CB214 \r\n38: 00007FF75D9CB214 \r\n39: 00007FF75D9CB214 \r\n40: 00007FF75D9CB214 \r\n41: 00007FF75D9CB214 \r\n42: 00007FF75D9CB214 \r\n43: 00007FF75D9CB214 \r\n44: 00007FF75D9CB214 \r\n45: 0000020B40D9C20F \r\n",
+  "verdict": "inconclusive: environment failure"
+}

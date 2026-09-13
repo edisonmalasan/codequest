@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-13T07:03:49.450Z",
+  "fixture": "E04-tight-loop",
+  "candidate": "dedicated",
+  "chromiumArgs": [],
+  "commit": "2d58e8eb4cac3348287080f834878b38b8cd171d",
+  "buildFrozenAt": "2026-09-13T07:03:38.779Z",
+  "buildHashesFrozenBeforeTrial": {
+    ".vite/manifest.json": "3dc3ca4a0a09a5f1f1e7904fdc16a50a778c411b4c1e21721611ad4385693c2c",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CBgHNxGh.js": "a5e644e88902a2a6b21a73164bc0e401f08d0b72a784d54379ed42baf5b87760",
+    "bootstrap.html": "c2099718929c04ddcc65b6d85dd68c053dd8629fa39b55324a4f477477f02d81",
+    "bootstrap.js": "99f7123ef3e32b3478e7e8bb2367e5c1b8b906fb2bb6f4672a5c1344f26b08dc",
+    "icon.svg": "2f487935ad8e88e0a7d99be67bcec7f4487ab81b4fccc347def442f47eaca199",
+    "index.html": "32139aa302f6f1221ad69b401ed9f314b4f1af7957db1e142b66f7e9dade8e12",
+    "manifest.json": "eaf762d779eb131aae0021c5b254514bb4f597d2603e905efbb1fe72efd19d39",
+    "preview.html": "7c987f50c74770a03f8ef79c0e05f4227c8a723386875c07f445d73cee6615f7",
+    "preview.js": "65700f1331018c6cec060d5a93c240fe020ce31205e96eb5a860df5ae8209b7b",
+    "sw.js": "08889b3a4d987950cbcada29cf4679d7be6b8e5b30455372c5a2176dbdb527d7",
+    "worker.js": "fe9a89af2a3a10135f04554123c9d7a46e0d6b66c5fff336d81f595eb1f3f718"
+  },
+  "node": "v24.21.0",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\preview-watchdog.mjs",
+    "--dedicated",
+    "--default-browser"
+  ],
+  "physical": false,
+  "probeStarted": true,
+  "watchdogExpired": true,
+  "code": 1,
+  "output": "PROBE_STARTED\n",
+  "errors": "",
+  "verdict": "failed: owned process termination required"
+}
