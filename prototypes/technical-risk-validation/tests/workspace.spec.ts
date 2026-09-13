@@ -31,6 +31,10 @@ test('E02 syntax/runtime errors, limits, termination, restart and stale output',
     ['loop', 'while(true){}', 'timeout'], ['flood', 'for(let i=0;i<201;i++) console.log(i)', 'output-limit'],
     ['large', 'console.log("x".repeat(17000))', 'output-limit'], ['cycle', 'const a={};a.self=a;console.log(a)', 'output-limit'],
     ['getter', 'console.log({get danger(){while(true){}}})', 'success'],
+    ['deep', 'const a={};let c=a;for(let i=0;i<20;i++){c.n={};c=c.n}console.log(a)', 'output-limit'],
+    ['toJSON', 'console.log({toJSON(){throw Error("must not be called")},value:1})', 'success'],
+    ['swallowed-limit', 'try{for(let i=0;i<201;i++)console.log(i)}catch(e){}', 'output-limit'],
+    ['source-limit', ' '.repeat(65537), 'output-limit'],
     ['proxy', 'console.log(new Proxy({}, {ownKeys(){while(true){}}}))', 'timeout'],
   ];
   const evidence = [];

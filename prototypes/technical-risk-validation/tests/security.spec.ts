@@ -123,3 +123,44 @@ test('E03 restricted cache/channel API inventory and wrong-source messages', asy
   expect(correlated.output).toEqual(['current']);
   await info.attach('api-inventory', { body: JSON.stringify({ results, correlated, channelCrossOriginBehavior: 'not established by API availability; separate cross-origin probe required' }), contentType: 'application/json' });
 });
+
+test('E03 cross-origin channel, cookie canary and oversized raw messages', async ({ page }, info) => {
+  const observations = [];
+  for (const candidate of ['opaque', 'dedicated'] as const) {
+    const result = await page.evaluate(async candidate => {
+      document.cookie = 'prototype_canary=SYNTHETIC_SESSION_ONLY; SameSite=Strict; path=/';
+      const channel = new BroadcastChannel('codequest-synthetic-channel');
+      let received = false;
+      channel.onmessage = () => { received = true; };
+      const run = window.__risk.run(`let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}`, candidate);
+      await new Promise(resolve => setTimeout(resolve, 100)); channel.postMessage('APP_SYNTHETIC');
+      const result = await run; channel.close();
+      return { result, appReceivedLearnerChannel: received };
+    }, candidate);
+    expect(result.result.status).toBe('success');
+    expect(result.result.output.join('\n')).not.toContain('APP_CHANNEL_FOUND');
+    expect(result.result.output.join('\n')).not.toContain('SYNTHETIC_SESSION_ONLY');
+    expect(result.appReceivedLearnerChannel).toBe(false);
+    observations.push(result);
+  }
+  const oversized = await page.evaluate(() => window.__risk.run('self.postMessage("x".repeat(17000));await new Promise(r=>setTimeout(r,100))', 'opaque'));
+  expect(oversized.status).toBe('protocol-error');
+  await info.attach('channel-cookie-message', { body: JSON.stringify({ observations, oversized, allocationQuota: 'unverified; raw clone precedes validation' }), contentType: 'application/json' });
+});
+
+test('E04 finite message flood and repeated explicit preview reset preserve the host', async ({ page }, info) => {
+  const flood = await page.evaluate(() => window.__risk.preview('<p>Text equivalent remains in host</p><script>for(let i=0;i<1000;i++)parent.postMessage({status:"accepted",reward:999},"*")</script>'));
+  expect(flood.elapsed).toBeLessThan(3000);
+  const resets = await page.evaluate(async () => {
+    const rows = [];
+    for (let cycle = 0; cycle < 10; cycle++) {
+      const preview = window.__risk.preview('<p>Supplied shell</p>');
+      window.__risk.stop(); rows.push({ cycle, ...await preview });
+    }
+    return rows;
+  });
+  expect(resets.every(row => row.status === 'preview-stopped')).toBe(true);
+  await expect(page.locator('iframe[title="Sandboxed learner preview"]')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'CodeQuest validation workspace' })).toBeVisible();
+  await info.attach('finite-preview-flood-reset', { body: JSON.stringify({ flood, resets, tightLoop: 'separate watchdog evidence failed; this is not a recovery gate pass' }), contentType: 'application/json' });
+});
