@@ -134,7 +134,7 @@ function App() {
     setResult(outcome);
     const passed = outcome.status === 'success' && (task === 'Q01' ? outcome.output.join('\n') === quest.expected : outcome.value === '5');
     setFeedback(check ? (passed ? 'Local check passed — provisional only' : outcome.status === 'success' ? 'Check failed — compare with the objective' : outcome.status) : outcome.status);
-    if (check && passed) setProvisional(true);
+    if (check && passed && !provisional) { setSaveState('Unsaved local completion'); setProvisional(true); }
   }
 
   async function submit() {
