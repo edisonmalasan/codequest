@@ -2,13 +2,13 @@
 
 ## Status and evidence
 
-**Proposed**, pending product/security risk acceptance. Evidence of approval: **none**. Sources: roadmap local execution/authoritative submission flow/no LLM grading/no NestJS arbitrary execution; exploration identified unresolved verification. Register: [C06/C08/P06/P14](../decisions.md); design D6. Owners: product/security owners; technical owner recommends mechanism. Named assignees unassigned.
+**Accepted**, product/security risk acceptance recorded. Evidence of approval: [AP01 — explicit user instruction](../decisions.md#ap01-explicit-phase-0-approval). Sources: roadmap local execution/authoritative submission flow/no LLM grading/no NestJS arbitrary execution; exploration identified unresolved verification. Register: [C06/C08/P06/P14](../decisions.md); design D6. Owners: product/security owners; technical owner recommends mechanism. Named assignees unassigned.
 
 ## Context
 
 Code runs and is checked in an untrusted browser. NestJS owns account progress but cannot run arbitrary learner code. Remote runners are deferred. The roadmap does not define an independent grading mechanism.
 
-## Proposed decision
+## Decision
 
 Use deterministic local assessment for learning feedback. NestJS accepts authenticated client reports under explicit personal-learning trust after identity/ownership, supported-version, prerequisite, bounds and uniqueness checks. Backend authority concerns acceptance/persistence/consistent rewards, not proof that source passed tests.
 
@@ -27,4 +27,4 @@ Personal-learning fraud is a product limitation only after explicit acceptance; 
 
 ## Related records and revisit trigger
 
-[Product](../product.md), [backend](../backend.md), [curriculum](../curriculum.md), [security](../security.md). Phase 0 readiness is blocked until PO/SO selects this policy or explicitly revises scope. Revisit before any high-stakes/verified competition claim, unacceptable fraud evidence, or approved independent execution requirement. Do not add runners implicitly.
+[Product](../product.md), [backend](../backend.md), [curriculum](../curriculum.md), [security](../security.md). AP01 confirms this Phase 0 trust policy; it does not authorize implementation. Revisit before any high-stakes/verified competition claim, unacceptable fraud evidence, or approved independent execution requirement. Do not add runners implicitly.
