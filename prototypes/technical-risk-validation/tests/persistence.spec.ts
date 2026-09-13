@@ -80,12 +80,24 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
   for (const [mode, count] of [['reload', 8], ['update', 6], ['multiclient', 6]] as const) {
     for (let cycle = 0; cycle < count; cycle++) {
       let other;
+      let confirmedSource = source + `\n// ${mode} ${cycle}`;
+      const otherSource = source + `\n// account-B ${cycle}`;
+      await page.getByRole('textbox', { name: 'JavaScript source' }).fill(confirmedSource);
+      await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
       if (mode !== 'reload') {
-        if (mode === 'multiclient') { other = await context.newPage(); await other.goto('/'); }
+        if (mode === 'multiclient') {
+          other = await context.newPage(); await other.goto('/');
+          await other.getByLabel('Owner').selectOption('account-B');
+          await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
+          await other.getByRole('textbox', { name: 'JavaScript source' }).fill(otherSource);
+          await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
+        }
         await request.post('/__revision');
         await page.evaluate(async () => { await (await navigator.serviceWorker.getRegistration())?.update(); });
         const update = page.getByRole('button', { name: 'Save draft and apply available update' });
         await expect(update).toBeVisible();
+        confirmedSource += '\n// edit while update waits';
+        await page.getByRole('textbox', { name: 'JavaScript source' }).fill(confirmedSource);
         await update.click();
         await expect.poll(() => page.evaluate(async () => {
           const registration = await navigator.serviceWorker.getRegistration();
@@ -93,18 +105,20 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
         })).toBe(true);
       }
       await page.reload();
-      await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText(source);
+      await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+      expect(await page.evaluate(() => window.__risk.source())).toBe(confirmedSource);
       const pending = await page.evaluate(() => window.__risk.pending());
       expect(pending).toEqual(initial);
       if (other) {
         await other.reload();
-        await expect(other.getByRole('textbox', { name: 'JavaScript source' })).toHaveText(source);
+        await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
+        expect(await other.evaluate(() => window.__risk.source())).toBe(otherSource);
         await other.close();
       }
-      rows.push({ mode, cycle, exactSourceRetained: true, pending });
+      rows.push({ mode, cycle, confirmedSource, otherSource: mode === 'multiclient' ? otherSource : null, exactSourceRetained: true, pending });
     }
   }
-  await info.attach('B09-cycle-mix', { body: JSON.stringify({ rows, physical: false, contentAssessmentRevision: 'identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger', browserMode: 'headless same process; physical gate untested' }), contentType: 'application/json' });
+  await info.attach('B09-cycle-mix', { body: JSON.stringify({ rows, physical: false, contentAssessmentRevision: 'identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger', browserMode: info.project.name === 'installed-chrome' ? 'headed installed Windows Chrome; automated interaction' : 'headless same process; physical gate untested' }), contentType: 'application/json' });
 });
 
 test('E05 incompatible downloaded assessment is rejected without replacing a saved draft', async ({ page, request }, info) => {

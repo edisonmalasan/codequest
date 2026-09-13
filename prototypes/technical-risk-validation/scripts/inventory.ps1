@@ -20,8 +20,12 @@ $validationBrowsers = foreach ($validationCandidate in $validationCandidates) {
   version = $validationOs.Version
   build = $validationOs.BuildNumber
   cpu = $validationCpu.Name
+  manufacturer = $validationSystem.Manufacturer
+  model = $validationSystem.Model
   logicalProcessors = $validationSystem.NumberOfLogicalProcessors
   ramGiB = [math]::Round($validationSystem.TotalPhysicalMemory / 1GB, 1)
+  display = @(Get-CimInstance Win32_VideoController | Select-Object Name,DriverVersion,CurrentHorizontalResolution,CurrentVerticalResolution)
   installedBrowsersFound = @($validationBrowsers)
+  interaction = 'Codex Playwright/CDP automation; physical typing and assistive technology not established by inventory'
   note = 'Inspected standard machine/user paths only. Missing entries are unconfirmed, not a proof of absence. No manual device or accessibility test inferred.'
 } | ConvertTo-Json -Depth 4

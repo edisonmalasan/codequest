@@ -6,10 +6,11 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, join, relative, sep } from 'node:path';
 
-// Single functional cold-process diagnostic. This is not physical B07 timing.
+// Functional cold-process diagnostic. This is not physical-input B07 evidence.
 const engine = process.argv[2] ?? 'chromium';
-const browserType = { chromium, firefox, webkit }[engine];
-if (!browserType) throw new Error('Expected chromium, firefox or webkit');
+const browserType = { chromium, firefox, webkit, chrome: chromium }[engine];
+if (!browserType) throw new Error('Expected chromium, firefox, webkit or chrome');
+const trials = engine === 'chrome' ? 10 : 1;
 const endpoints = [['127.0.0.1', 4310], ['127.0.0.2', 4311], ['127.0.0.1', 4312]];
 const shortProfile = process.argv.includes('--short-profile');
 const profileRoot = resolve(shortProfile ? '../../temp/phase1-profiles' : '.profiles');
@@ -29,7 +30,8 @@ freeze(buildRoot);
 const record = {
   recordedAt: new Date().toISOString(), experiment: 'E05/E06 cold origin-unreachable diagnostic', engine,
   command: process.argv, node: process.version, physical: false, networkOffline: false,
-  offlineEmulation: false, trials: 1, b07PhysicalTiming: 'untested',
+  offlineEmulation: false, trials, b07PhysicalTiming: 'untested; no physical network disconnect or lower-powered designation',
+  installedChrome: engine === 'chrome', interaction: engine === 'chrome' ? 'headed native Windows Chrome, automated interaction' : 'headless bundled browser',
   profileLocation: shortProfile ? 'task-only repository temp/phase1-profiles' : 'prototype .profiles',
   commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   dirtyPaths: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean),
@@ -59,7 +61,7 @@ async function stopServer() {
     child.kill('SIGTERM');
   });
 }
-const launchOptions = { headless: true, args: engine === 'chromium' ? ['--disable-gpu', '--renderer-process-limit=2'] : [], timeout: 15000 };
+const launchOptions = { headless: engine !== 'chrome', ...(engine === 'chrome' ? { channel: 'chrome' } : {}), args: engine === 'chromium' ? ['--disable-gpu', '--renderer-process-limit=2'] : [], timeout: 15000 };
 record.launchOptions = launchOptions;
 try {
   record.stage = 'task-port preflight';
@@ -89,6 +91,8 @@ try {
   record.originTransportControls = await Promise.all(endpoints.map(([host, port]) => portState(host, port)));
   if (record.originTransportControls.some(row => row.reachable || row.error !== 'ECONNREFUSED')) throw new Error('Required origin refusal controls not established');
   record.stage = 'cold browser relaunch';
+  record.coldTrials = [];
+  for (let trial = 0; trial < trials; trial++) {
   const start = performance.now();
   context = await browserType.launchPersistentContext(profile, launchOptions);
   page = context.pages()[0] ?? await context.newPage();
@@ -107,8 +111,11 @@ try {
   await expect(page.getByText('Text equivalent: 5', { exact: true })).toBeVisible();
   await page.evaluate(() => window.__risk.stop());
   record.suppliedPreviewAndTextPassed = true;
+  record.coldTrials.push({ trial, exactSourceRetained: record.exactSourceRetained, localCheckProvisional: true, functionalReadyMs: record.functionalReadyMs, suppliedPreviewAndTextPassed: true, controller: await page.evaluate(() => navigator.serviceWorker.controller?.scriptURL) });
+  await context.close(); context = undefined;
+  }
   record.stage = 'completed functional diagnostic';
-  record.verdict = 'passed single headless cold-process origin-unreachable diagnostic; physical/offline-emulation gates not replaced';
+  record.verdict = `passed ${trials} ${engine === 'chrome' ? 'headed installed Chrome' : 'headless'} cold-process origin-unreachable diagnostics; physical/offline-emulation gates not replaced`;
 } catch (error) {
   record.verdict = 'failed or inconclusive diagnostic; physical gate remains untested';
   record.error = error instanceof Error ? error.message : String(error);
