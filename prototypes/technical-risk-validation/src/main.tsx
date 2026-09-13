@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Compartment, EditorState } from '@codemirror/state';
+import { Annotation, Compartment, EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
@@ -14,6 +14,7 @@ import './style.css';
 const runtime = new BrowserRuntime();
 const previewRuntime = new PreviewRuntime();
 const probeRuntime = new BrowserRuntime();
+const sourceReplacement = Annotation.define<boolean>();
 declare global {
   interface Window {
     __risk: {
@@ -111,7 +112,7 @@ function App() {
     if (!mount.current) return;
     const view = new EditorView({ parent: mount.current, state: EditorState.create({
       doc: '', extensions: [basicSetup, javascript(), editorReadiness.of([EditorView.editable.of(false), EditorState.readOnly.of(true)]), EditorView.contentAttributes.of({ 'aria-label': 'JavaScript source' }), keymap.of([{ key: 'Escape', run: () => { document.getElementById('run')?.focus(); return true; } }]),
-        EditorView.updateListener.of((update) => { if (update.docChanged) { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); } }),
+        EditorView.updateListener.of((update) => { if (update.docChanged && !update.transactions.every(transaction => transaction.annotation(sourceReplacement))) { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); } }),
       ],
     }) });
     editor.current = view;
@@ -123,7 +124,7 @@ function App() {
   }, [editorReadiness, loadedKey, key]);
   useEffect(() => {
     const view = editor.current;
-    if (view && view.state.doc.toString() !== source) view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: source } });
+    if (view && view.state.doc.toString() !== source) view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: source }, annotations: sourceReplacement.of(true) });
   }, [source]);
 
   useEffect(() => {
