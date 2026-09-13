@@ -40,7 +40,7 @@ pnpm --dir backend lint
 pnpm --dir backend typecheck
 ```
 
-Add a verified single-test command here after the first real test exists; do not invent a path.
+Verified Phase 1 prototype single-test command (run from prototypes/technical-risk-validation/): corepack pnpm@10.30.3 exec vitest run src/mock.test.ts. The disposable prototype has its own manifest; root application commands remain unavailable until separately authorized repository foundation work.
 
 --
 

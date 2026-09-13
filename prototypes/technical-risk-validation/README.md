@@ -25,4 +25,12 @@ The evidence reporter writes timestamped synthetic JSON under `docs/technical-ri
 
 The serial runner avoids a separate test-worker process; it supplements the full suite. Chromium uses `--disable-gpu --renderer-process-limit=2`, with traces disabled: these measurements do not establish normal-browser performance. The preview watchdog has a separate owning process, 30-second startup allowance and an 8-second emergency cutoff after the tight loop starts. Emergency browser/process termination is a policy failure, not compliant recovery. Run each check separately on this 8-GiB machine; concurrent checks exhausted Windows committed memory.
 
+Verified memory-constrained equivalents, run separately from this directory:
+
+```powershell
+node --max-old-space-size=384 node_modules/typescript/bin/tsc --noEmit
+node --max-old-space-size=128 node_modules/typescript/bin/tsc -p tsconfig.sw.json
+node --max-old-space-size=192 node_modules/eslint/bin/eslint.js .
+```
+
 `/?framePolicy=none` is a comparison variant adding the parent header `frame-src 'none'`. Preserve baseline navigation evidence; a passing Chromium comparison does not select the mechanism or prove Firefox/WebKit/physical coverage. The default preview remains an experimental failing candidate. Never use real session data in the permissive control.
