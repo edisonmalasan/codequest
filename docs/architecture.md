@@ -1,6 +1,8 @@
 # CodeQuest architecture definition
 
-Status: intended architecture, not implemented infrastructure. C02–C06 are confirmed engineering commitments. P06/P08/P11/P13/P15 are proposed policies in the [decision register](decisions.md). [Product](product.md) owns release scope/glossary; specialist documents own detailed policy.
+Status: intended architecture, not implemented infrastructure. C02–C06 are confirmed engineering commitments. P06/P08/P11/P13/P15 are approved policies in the [decision register](decisions.md). [Product](product.md) owns release scope/glossary; specialist documents own detailed policy.
+
+Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
 ## Current and intended state
 
@@ -45,7 +47,7 @@ Worker/iframe isolation feasibility remains unverified. The diagram's restrictio
 | Analytics/monitoring | Minimized interaction/runtime events | Accepted-transition events and request/error records | Avoid duplicate authoritative completion events |
 | PWA/local persistence | IndexedDB, service-worker cache, installation/update state | Version/reconciliation policy and current account state | Local cache never authority for protected operations |
 
-Business rules stay in the owning NestJS domain; Next.js Route Handlers/Server Actions do not become an alternate backend. Backend does not import frontend source and frontend does not import backend DTOs. Application-table reads **and** writes are backend-only. Auth identity flows are a bounded exception, not database access permission. Direct learner Storage/upload scope is proposed excluded P12.
+Business rules stay in the owning NestJS domain; Next.js Route Handlers/Server Actions do not become an alternate backend. Backend does not import frontend source and frontend does not import backend DTOs. Application-table reads **and** writes are backend-only. Auth identity flows are a bounded exception, not database access permission. Direct learner Storage/upload scope is approved excluded P12.
 
 ## Contracts and paths
 
@@ -54,13 +56,13 @@ Business rules stay in the owning NestJS domain; Next.js Route Handlers/Server A
 - `backend/content/`: authored curriculum; backend delivers its documented contract to frontend.
 - `frontend/src/lib/api/generated/`: regenerated from backend OpenAPI; never hand-edited or replaced with backend-source imports.
 
-Roadmap root `content/` and `packages/api-client` conflict with AGENTS.md. Corrected paths above follow C04/C05; no root shared packages absent two independent consumers. REST/OpenAPI is confirmed; exact DTOs/versioning/errors/generator tooling await the API capability change (F03). Domain vocabulary is the proposed product glossary, not a prematurely fixed database entity list.
+Roadmap root `content/` and `packages/api-client` conflict with AGENTS.md. Corrected paths above follow C04/C05; no root shared packages absent two independent consumers. REST/OpenAPI is confirmed; exact DTOs/versioning/errors/generator tooling await the API capability change (F03). Domain vocabulary is the approved product glossary, not a prematurely fixed database entity list.
 
 ## Trust crossings and completion acceptance
 
-P06 proposes personal-learning trust: local deterministic assessment gives feedback; NestJS accepts authenticated browser reports after checking identity, known version, prerequisites, bounds and uniqueness. Backend persistence is authoritative but assessment is not independently verified. Neither a signature nor a repeated browser assertion proves code behavior. Fraud risk needs explicit PO/SO acceptance before submission implementation. See [backend policy](backend.md) and [ADR 0005](adr/0005-assessment-trust-and-completion.md).
+P06 establishes approved personal-learning trust: local deterministic assessment gives feedback; NestJS accepts authenticated browser reports after checking identity, known version, prerequisites, bounds and uniqueness. Backend persistence is authoritative but assessment is not independently verified. Neither a signature nor a repeated browser assertion proves code behavior. AP01 accepts the declared personal-learning fraud limitation. See [backend policy](backend.md) and [ADR 0005](adr/0005-assessment-trust-and-completion.md).
 
-The untrusted compartment receives source/public task fixtures and sends bounded structured output/results. It receives no tokens/secrets and must not access application sessions, authenticated APIs, application storage or network (proposed P11). Auth/API handling stays in the trusted client boundary. Message identity/version/run correlation and limits are validated by its receiver. The exact origin/capability mechanism needs Phase 1 evidence, not Phase 0 implementation.
+The untrusted compartment receives source/public task fixtures and sends bounded structured output/results. It receives no tokens/secrets and must not access application sessions, authenticated APIs, application storage or network (approved P11). Auth/API handling stays in the trusted client boundary. Message identity/version/run correlation and limits are validated by its receiver. The exact origin/capability mechanism needs Phase 1 evidence, not Phase 0 implementation.
 
 P08/P15: guest/offline state is provisional. Authenticated reconnect/import reconciles known version/identity/prerequisites and deduplicates effects; rejection preserves editable source. Account switching isolates outboxes and drafts. Accepted historical completion remains distinct from active-curriculum availability/percentages. See [frontend](frontend.md), [curriculum](curriculum.md), and [ADR 0006](adr/0006-local-guest-and-cloud-state.md).
 
@@ -71,10 +73,10 @@ P08/P15: guest/offline state is provisional. Authenticated reconnect/import reco
 | [0001](adr/0001-frontend-backend-separation.md) | Separation/modular monolith — accepted documented commitment |
 | [0002](adr/0002-api-contract-and-client-ownership.md) | REST/OpenAPI/client ownership — accepted documented commitment |
 | [0003](adr/0003-curriculum-source-and-publication.md) | Curriculum source/publication — accepted ownership; publication mechanism deferred |
-| [0004](adr/0004-browser-execution-isolation.md) | Browser execution — proposed isolation policy; feasibility unverified |
-| [0005](adr/0005-assessment-trust-and-completion.md) | Assessment trust — proposed risk policy |
-| [0006](adr/0006-local-guest-and-cloud-state.md) | Local/guest/cloud — proposed authority/replay/date policy |
-| [0007](adr/0007-curriculum-identity-and-versioning.md) | Identity/version compatibility — proposed policy |
-| [0008](adr/0008-authentication-and-data-access.md) | Auth/data — proposed transport/Storage/data policy; backend table boundary confirmed |
+| [0004](adr/0004-browser-execution-isolation.md) | Browser execution — approved isolation policy; feasibility unverified |
+| [0005](adr/0005-assessment-trust-and-completion.md) | Assessment trust — approved risk policy |
+| [0006](adr/0006-local-guest-and-cloud-state.md) | Local/guest/cloud — approved authority/replay/date policy |
+| [0007](adr/0007-curriculum-identity-and-versioning.md) | Identity/version compatibility — approved policy |
+| [0008](adr/0008-authentication-and-data-access.md) | Auth/data — approved transport/Storage/data policy; backend table boundary confirmed |
 
 F01–F03 defer actual sandbox/config/schema/compiler/sync mechanisms. F09 defers future execution/AI/storage adapters, root extraction and service splits until a consumer/scaling/security need exists. Security/testing/accessibility apply from first prototypes; later roadmap phases verify and harden. Phase 0 does not create any of this infrastructure or establish runtime feasibility.
