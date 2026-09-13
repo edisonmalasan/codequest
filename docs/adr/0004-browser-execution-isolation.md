@@ -2,11 +2,11 @@
 
 ## Status and evidence
 
-**Accepted** isolation policy, feasibility **unverified**. Browser Worker/iframe direction and no NestJS execution are confirmed C06 from AGENTS.md/roadmap. Approval evidence for P11 capabilities: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C06/P11/F01/F02](../decisions.md); design D6/D9. Owners: technical/security owners, product owner for experience promise; named assignees unassigned.
+**Accepted** isolation policy, evaluated preview feasibility **reviewed no-go**; overall mechanism selection **blocked**. Browser Worker/iframe direction and no NestJS execution are confirmed C06 from AGENTS.md/roadmap. Approval evidence for P11 capabilities: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C06/P11/F01/F02](../decisions.md); design D6/D9. Owners: technical/security owners, product owner for experience promise; Phase 1 named reviewer: Edison, project owner (technical/product/security self-review).
 
 ## Context
 
-Beginner JavaScript runs locally; web previews use a sandboxed iframe. Those technology choices alone do not demonstrate isolation from the authenticated application. No Phase 1 prototype or adversarial evidence exists.
+Beginner JavaScript runs locally; web previews use a sandboxed iframe. Those technology choices alone do not demonstrate isolation from the authenticated application. Phase 1 now has disposable prototypes and adversarial evidence; see the feasibility addendum below.
 
 ## Decision
 
@@ -26,4 +26,12 @@ Phase 1 must test successful/error code, loops/output abuse, restart, fake messa
 
 ## Related records and revisit trigger
 
-[Security](../security.md), [frontend](../frontend.md), [ADR 0005](0005-assessment-trust-and-completion.md). Revisit on prototype evidence, runtime capabilities requested by curriculum, or failed containment. Policy approval is AP01; feasibility evidence remains unverified and must be recorded separately.
+[Security](../security.md), [frontend](../frontend.md), [ADR 0005](0005-assessment-trust-and-completion.md). Revisit on prototype evidence, runtime capabilities requested by curriculum, or failed containment. Policy approval is AP01; the separate AP02 feasibility addendum records the evaluated previews as reviewed no-go.
+
+## Phase 1 feasibility addendum - 2026-09-13
+
+Approval evidence: [AP02](../decisions.md#ap02-reviewed-phase-1-no-go). The project owner approved the [report's no-go conclusion](../technical-risk-validation/report.md) in response to the explicit no-go review question. Policy remains Accepted; approval does not establish feasibility.
+
+Focused Chromium 153.0.8010.12 and Firefox 155.0 Worker/network/storage/message cases passed. Baseline preview self-navigation reached the controlled sink. Restricted parent/dedicated comparisons denied tested navigation, but opaque and dedicated preview tight loops required emergency owned-process termination after learner execution was observed, missing the 2-second deadline plus 1-second recovery criterion. See the report's timestamped original/retest evidence and prospective build hashes.
+
+No evaluated preview mechanism is approved for production. F01 remains blocked pending a scoped containment/recovery redesign and retest. Required physical/assistive coverage and native quota/background evidence remain incomplete; F02 is inconclusive. No hard browser memory quota, production framework integration or independent security audit is established. Phase 2 remains blocked; no remote runner, reduced preview scope or weakened P11 is introduced. P06 fraud and disclosed local-data-loss limitations remain the approved residuals.

@@ -10,6 +10,7 @@ This is the approval record for Phase 0. The user explicitly clarified that the 
 - **D:** [archived change design](../openspec/changes/archive/2026-09-13-define-codequest-product-and-architecture/design.md), D1–D10.
 - **U:** user's proposal/apply requests: documentation-only execution scope; technical branch naming; no production infrastructure.
 - **AP01:** [explicit Phase 0 approval](#ap01-explicit-phase-0-approval), this user's clarification of the archive instruction.
+- **AP02:** [reviewed Phase 1 no-go](#ap02-reviewed-phase-1-no-go), explicit approval of the measured preview failure outcome.
 
 ### AP01: Explicit Phase 0 approval
 
@@ -65,14 +66,24 @@ All policies in this table are confirmed by AP01. Stable IDs retain their P/U pr
 | P15 | Stable IDs, compatible old versions accepted during explicit compatibility window; incompatible/retired pending work requires retry without losing draft; accepted history preserved | confirmed, E/D5/AP01 | Avoid silent invalidation/duplicate XP; alternative: all old versions rejected or indefinite old assessment support | curriculum, backend, frontend, ADR 0007 | TO/CO | Approved Phase 0; content lifecycle policy revision |
 | U01 | Adult beginners; desktop-first coding and usable mobile reading/short exercises; Chrome/Firefox/WebKit testing direction, exact supported versions/devices deferred F02 | confirmed, E/D2/D9/AP01 | Approved P01 baseline; no full mobile parity or legal/feasibility evidence claimed | product, frontend, security | PO/SO | F02/Phase 1 evidence before exact support promises; recruitment/browser evidence |
 
+## AP02: Reviewed Phase 1 no-go
+
+Recorded 2026-09-13. The project owner answered the explicit question approving the report's no-go conclusion for the current preview mechanisms, pending a scoped redesign:
+
+> Yes i approve proceed completing all the tasks in Phase 1.
+
+The owner is the assigned technical, product and security reviewer. This is a project-owner security self-review, not an independent audit. AP02 approves the measured no-go conclusion in the [Phase 1 report](technical-risk-validation/report.md), not a passing feasibility claim, missing physical tests, a policy exception or Phase 2 execution. The request to complete tasks authorizes remaining work; tests requiring unavailable hardware and failed acceptance gates cannot be marked passed from this instruction.
+
+F01 is **reviewed no-go for the evaluated preview mechanisms; production selection blocked pending scoped redesign**. Worker focused results do not compensate for preview recovery failure. F02 is **inconclusive for required physical/device/accessibility coverage**; no production support matrix or performance promise is selected. The charter's numeric limits remain experimental criteria, not measured production guarantees. P01-P15/U01/AP01 and F03-F09 remain unchanged.
+
 ## Deferred decisions
 
 AP01 approves retaining these deferrals and their owners/triggers. It does not select their unspecified implementation details, numeric values or operational policies, nor authorize building features.
 
 | ID | Topic | Status/source | Rationale / alternatives | Affected documents | Owner | Blocking stage / revisit trigger |
 | --- | --- | --- | --- | --- | --- | --- |
-| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | deferred, E/D9 | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
-| F02 | Editor layout, exact supported device/browser versions and performance budgets | deferred, R/D2/D9 | Needs real keyboard/touch/low-end tests; no assumed mobile parity | frontend, product | PO/TO | Phase 1 before supported coding promises |
+| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | reviewed no-go, AP02; production selection blocked | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
+| F02 | Editor layout, exact supported device/browser versions and performance budgets | inconclusive required coverage, AP02; selection deferred | Needs real keyboard/touch/low-end tests; no assumed mobile parity | frontend, product | PO/TO | Phase 1 before supported coding promises |
 | F03 | DTOs, schemas, content compiler/publication projection, sync conflict algorithm/cache implementation | deferred, D5–D7 | Policies before mechanisms; no root packages extracted speculatively | backend, architecture, curriculum, frontend | TO | Relevant capability proposal after Phase 0 |
 | F04 | XP values, level curve, content timing/difficulty balance | deferred, R/D8 | Needs final curriculum and learner feedback | gamification, curriculum | PO/CO | Before beta balancing |
 | F05 | Numerical metric thresholds and beta sample/recruitment plan | deferred, D8 | No baseline/validated targets; choose hypotheses before evaluating results | product | PO | Before beta evaluation approval |

@@ -1,6 +1,6 @@
-# Phase 1 preliminary evidence report
+# Phase 1 evidence report
 
-Recorded 2026-09-13 for [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/tasks.md). This is an Apply investigation packet, **not a reviewed successful Phase 1 outcome**. Recommendation: **Redesign/no-go for the evaluated preview; required coverage also remains inconclusive**. Phase 2, Sync and Archive are not authorized.
+Recorded 2026-09-13 for [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/tasks.md). This is an Apply investigation packet, **an owner-reviewed no-go outcome, not a successful Phase 1 progression gate**. Recommendation: **Redesign/no-go for the evaluated preview; required coverage also remains inconclusive**. Phase 2, Sync and Archive are not authorized.
 
 ## Environment and reproduction
 
@@ -49,11 +49,11 @@ Process/evidence capture deviation: the charter required exact asset hashes befo
 
 ## Review and remaining gate
 
-Project owner is the assigned technical/product/security reviewer. Security review is a **project-owner self-review**, not an independent audit. No dated review of these results has been obtained. F01/F02 remain unresolved; ADR 0004's accepted policy and unverified feasibility remain unchanged. P01–P15, U01/AP01 and F03–F09 deferrals are preserved.
+Project owner is the assigned technical/product/security reviewer. Security review is a **project-owner self-review**, not an independent audit. The project owner approved the no-go conclusion on 2026-09-13; see [AP02](../decisions.md#ap02-reviewed-phase-1-no-go). F01 is reviewed no-go for the evaluated previews, pending scoped redesign; F02 is inconclusive. ADR 0004 retains its accepted policy and records the measured failed feasibility. P01–P15, U01/AP01 and F03–F09 deferrals are preserved.
 
 Required next decision: review the preview failures and authorize a scoped containment/recovery redesign or an explicit no-go conclusion. Do not weaken P11, remove required preview behavior, add remote runners, or treat the comparison CSP as an accepted solution without that decision. Required device/accessibility/consumer-browser information remains unavailable or unconfirmed as recorded in [coverage](coverage.md). Use the [manual evidence checklist](manual-checklist.md) when access is explicitly supplied.
 
-Apply remains active and PR #5 remains draft. Only fully completed tasks are checked. Approval-dependent decision/ADR selections and roadmap success updates are pending; these preliminary observations do not approve a new architecture.
+The active Apply task list retains incomplete acceptance gates. PR #5 integrates the verified investigation under the current Git workflow. Only fully completed tasks are checked; no production architecture is selected.
 
 Teardown checkpoint: no listeners remained on prototype ports 4310/4311/4312 after the final automated and serial runs. Task browser contexts/services were closed or terminated by their owning harness; no certificate, hosts, DNS or ordinary browser-profile changes were made. Dependency/build outputs remain ignored and are not production artifacts.
 
@@ -69,7 +69,7 @@ CPU recovery still failed after learner execution was verified. The default-brow
 
 The quota experiment is diagnostic only. The initial assumption that a one-byte CDP quota override alone would produce a native error was rejected by actual successful writes. A bounded 8-MiB logical-source-pressure trial reported an active override but did not observe a native QuotaExceededError. That does not satisfy real-full-storage coverage. Injected failure handling, actual task-data clearing and last-confirmed-source recovery remain separate passing focused checks. A long-source assertion was corrected to read canonical CodeMirror state rather than virtualized DOM text; it preserves the full editable-source requirement. Original failures are retained, and no physical drive is filled.
 
-Review-dependent tasks 9.3–9.5 remain pending. Continuing Apply is authorization for these experiments, not owner approval of the measured outcome. Required physical/assistive coverage remains untested; continued automated Firefox findings are recorded below. PR #5 stays draft; Phase 2, Sync and Archive remain unstarted.
+Earlier checkpoint (superseded by AP02): Review-dependent tasks 9.3–9.5 remain pending. Continuing Apply is authorization for these experiments, not owner approval of the measured outcome. Required physical/assistive coverage remains untested; continued automated Firefox findings are recorded below. PR #5 stays draft; Phase 2, Sync and Archive remain unstarted.
 Final continuation verification: [28/28 Chromium cases](evidence/automated-2026-09-13T07-12-52.437Z.json) passed against source commit ba58c73 with completed-build asset hashes frozen before trials. The separate [default-flags isolated-preview loop](evidence/preview-loop-2026-09-13T07-13-58.048Z.json), recorded against 750a455 with browser version, dirty paths and prospective hashes, failed trusted recovery and required owned-process termination. Diagnostic successes do not satisfy failed or inconclusive policy gates. Application/WebWorker strict TypeScript, ESLint, 18 unit tests and the Vite/Serwist build passed again; root pnpm test/lint/typecheck were retried and remain unavailable because pnpm is not on PATH. Built main JS is now approximately 834 kB / 273 kB gzip; ten precache entries total approximately 821 KiB. No listeners remained on ports 4310/4311/4312 after final teardown.
 
 ## Firefox availability and persistence corrections
@@ -87,3 +87,11 @@ Both Firefox preview loop candidates failed B02 after learner execution was inde
 Latest Chromium verification: [29/29 cases passed](evidence/automated-2026-09-13T10-58-20.432Z.json) against source commit 7c08a6a, including the delayed-load and reset/save-failure regressions. The completed asset manifest was frozen before trials. This does not convert the diagnostic baseline navigation test, preview CPU failures or unenforced native quota diagnostic into passing gates.
 
 Final available-check checkpoint: build, strict application/WebWorker TypeScript, ESLint and all 18 unit tests passed on the corrected source. Root `pnpm test`, `pnpm lint` and `pnpm typecheck` were attempted again and each remained unavailable because pnpm is not on PATH; no root application manifest was introduced. Strict OpenSpec validation, whitespace checks and 39 relative documentation links passed. Final teardown found no listeners on ports 4310/4311/4312. Timestamped command-check evidence records these results; source, synthetic failures and retests remain retained for owner review.
+
+## Approved review disposition - 2026-09-13
+
+[AP02](../decisions.md#ap02-reviewed-phase-1-no-go) is the approval evidence for Edison acting as technical, product and security reviewer. The review outcome is **Redesign/no-go for the evaluated preview mechanisms**, with **inconclusive required physical/accessibility coverage**. This is a project-owner self-review, not an independent security audit. The decision register, ADR 0004, architecture/frontend/security notes and roadmap now agree.
+
+Tasks 9.3-9.5 are complete for the approved no-go outcome; 21/34 tasks are fully complete. The remaining 13 tasks retain their acceptance criteria and are not waived or marked passed: 1.2 physical inventory; 3.2 physical editing; 3.3 accessibility; 4.3 required runtime/resource trials; 5.2 required-environment security coverage; 6.1-6.3 usable contained/recoverable preview; 7.2 physical cold/offline/install; 7.3 native storage/background recovery; 7.4 required-environment persistence cycles; 8.2 required physical integrated loop; 8.3 selected-candidate preview/offline/update integration. Automated subsets remain linked above.
+
+Next work requires physical/browser/assistive access and a scoped preview redesign with explicit design/acceptance artifacts before implementation. General task-completion authorization is not an unspecified policy revision or permission to invent evidence. The approved investigation can be merged; the change remains active with these incomplete gates. Do not begin Phase 2, Sync or Archive.
