@@ -34,7 +34,7 @@ if (process.argv.includes('--child')) {
     process.stdout.write('PROBE_STARTED\n');
     const result = await page.evaluate(() => window.__previewTrial);
     const usable = await page.getByRole('heading', { name: 'CodeQuest validation workspace' }).isVisible();
-    process.stdout.write(JSON.stringify({ result, hostUsable: usable, policyPassed: usable && result.elapsed < 3000 }) + '\n');
+    process.stdout.write(JSON.stringify({ result, hostUsable: usable, policyPassed: usable && result.elapsed < 3000 && (!workerShell || result.status === 'preview-timeout') }) + '\n');
   } finally {
     await browser?.close();
     if (process.platform === 'win32') execFileSync('taskkill', ['/PID', String(server.pid), '/T', '/F'], { windowsHide: true, stdio: 'ignore' });

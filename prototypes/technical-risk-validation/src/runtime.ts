@@ -109,12 +109,13 @@ export class PreviewRuntime {
         const safe = text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
         frame = document.createElement('iframe');
         frame.title = 'Supplied Worker result preview';
-        // Empty sandbox: no scripts, same-origin authority, forms, navigation or popups.
+        // Empty sandbox denies scripts, origin authority, forms and popups.
+        // Fixed escaped text supplies no learner navigation elements.
         frame.setAttribute('sandbox', '');
         const policy = "default-src 'none'; script-src 'none'; style-src 'none'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
         frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}"><h1>Inventory result</h1><pre>${safe}</pre>`;
         target.append(frame);
-      });
+      }).catch(() => finish('runtime-error'));
     });
   }
   run(html: string, target: HTMLElement, candidate: 'opaque' | 'dedicated' = 'opaque'): Promise<{ status: string; elapsed: number }> {
