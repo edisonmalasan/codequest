@@ -107,7 +107,7 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
   await info.attach('B09-cycle-mix', { body: JSON.stringify({ rows, physical: false, contentAssessmentRevision: 'identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger', browserMode: 'headless same process; physical gate untested' }), contentType: 'application/json' });
 });
 
-test('E05 incompatible downloaded assessment is rejected without replacing a saved draft', async ({ page, context }, info) => {
+test('E05 incompatible downloaded assessment is rejected without replacing a saved draft', async ({ page, request }, info) => {
   await page.goto('/');
   await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
   const source = 'console.log("version rejection retains source")';
@@ -124,11 +124,14 @@ test('E05 incompatible downloaded assessment is rejected without replacing a sav
       };
     });
   });
-  await context.route('**/__lesson/Q01', route => route.fulfill({ json: { id: 'Q01', contentVersion: '1', assessmentVersion: '2', objective: 'Incompatible synthetic check', starter: 'throw Error("replacement must not load")' } }));
-  await page.reload();
-  await expect(page.getByText(/Public lesson identity mismatch/)).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText(source);
-  await info.attach('downloaded-version-rejection', { body: JSON.stringify({ expectedIdentity: 'Q01/1/1', receivedIdentity: 'Q01/1/2', rejected: true, savedSourceRetained: source, physical: false }), contentType: 'application/json' });
+  await request.post('/__lesson-mode?incompatible=true');
+  try {
+    expect((await (await request.get('/__lesson/Q01')).json()).assessmentVersion).toBe('2');
+    await page.reload();
+    await expect(page.getByText(/Public lesson identity mismatch/)).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText(source);
+    await info.attach('downloaded-version-rejection', { body: JSON.stringify({ expectedIdentity: 'Q01/1/1', receivedIdentity: 'Q01/1/2', rejected: true, savedSourceRetained: source, fixture: 'controlled server response, not route interception', physical: false }), contentType: 'application/json' });
+  } finally { await request.post('/__lesson-mode?incompatible=false'); }
 });
 
 test('E05 bounded task-origin quota experiment records enforcement and recovery', async ({ page, context, browserName }, info) => {

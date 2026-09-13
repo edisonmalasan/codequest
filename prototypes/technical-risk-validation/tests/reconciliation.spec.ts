@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ request }) => { await request.post('/__mock-reset'); });
+
 test('E06 lost response retries without duplicate reward and version rejection preserves immutable input', async ({ request }, info) => {
   const snapshot = { event: 'retry-fixture', owner: 'account-B', quest: 'Q01', source: 'console.log("Ready for CodeQuest")', contentVersion: '1', assessmentVersion: '1', passed: true };
   let responseLost = false;

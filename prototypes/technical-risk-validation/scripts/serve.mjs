@@ -6,9 +6,11 @@ import { SimulationLedger, snapshotFrom } from '../src/mock.ts';
 import { quest, recordFixture } from '../src/fixtures.ts';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
-const ledger = new SimulationLedger();
+let ledger = new SimulationLedger();
 const records = [];
 let revision = 1;
+let incompatibleLesson = false;
+let appOutage = false;
 const workerPolicy = "default-src 'none'; script-src 'unsafe-eval'; connect-src 'none'; worker-src 'none'";
 const bootstrapPolicy = "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' };
@@ -28,11 +30,24 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
         res.end('{}'); return;
       }
       if (url.pathname === '/__revision' && req.method === 'POST') { revision++; res.end(String(revision)); return; }
+      if (role === 'app' && url.pathname === '/__app-outage' && req.method === 'POST') {
+        appOutage = url.searchParams.get('enabled') === 'true';
+        res.end('{}'); return;
+      }
+      if (role === 'app' && appOutage) { res.writeHead(503); res.end('Synthetic public origin outage'); return; }
+      if (role === 'app' && url.pathname === '/__mock-reset' && req.method === 'POST') {
+        ledger = new SimulationLedger();
+        res.end('{}'); return;
+      }
+      if (url.pathname === '/__lesson-mode' && req.method === 'POST') {
+        incompatibleLesson = url.searchParams.get('incompatible') === 'true';
+        res.end('{}'); return;
+      }
       if (url.pathname.startsWith('/__lesson/')) {
         const fixture = url.pathname === '/__lesson/Q01' ? quest : url.pathname === '/__lesson/RECORDS' ? recordFixture : undefined;
         res.setHeader('Content-Type', 'application/json');
         if (!fixture) { res.writeHead(404); res.end('{}'); return; }
-        res.end(JSON.stringify({ ...fixture, contentVersion: '1', assessmentVersion: '1' })); return;
+        res.end(JSON.stringify({ ...fixture, contentVersion: '1', assessmentVersion: incompatibleLesson && fixture.id === 'Q01' ? '2' : '1' })); return;
       }
       if (url.pathname === '/__protected') { res.setHeader('Content-Type', 'application/json'); res.end('{"canary":"SYNTHETIC_SESSION_ONLY"}'); return; }
       if (url.pathname === '/__mock' && req.method === 'POST') {

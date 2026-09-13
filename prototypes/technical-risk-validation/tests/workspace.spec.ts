@@ -4,7 +4,11 @@ async function edit(page: Page, source: string) {
   const editor = page.getByRole('textbox', { name: 'JavaScript source' });
   await editor.fill(source);
 }
-test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.getByTestId('save-state')).toHaveText('Saved on this device'); });
+test.beforeEach(async ({ page, request }) => {
+  await request.post('/__mock-reset');
+  await page.goto('/');
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+});
 
 test('E01/E06 read, run, failed check, hint, correction, provisional save and reload', async ({ page, browser }, info) => {
   await page.getByRole('button', { name: 'Run', exact: true }).click();

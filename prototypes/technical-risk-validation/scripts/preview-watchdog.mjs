@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
 if (process.argv.includes('--child')) {
-  const { chromium, firefox } = await import('@playwright/test');
+  const { chromium, firefox, webkit } = await import('@playwright/test');
   const server = spawn(process.execPath, ['--max-old-space-size=96', 'scripts/serve.mjs'], { windowsHide: true, stdio: 'ignore' });
   let browser;
   try {
@@ -15,9 +15,10 @@ if (process.argv.includes('--child')) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     const useFirefox = process.argv.includes('--firefox');
-    const chromiumArgs = useFirefox || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'];
-    browser = await (useFirefox ? firefox : chromium).launch({ args: chromiumArgs, timeout: 15000 });
-    process.stdout.write(JSON.stringify({ browserName: useFirefox ? 'firefox' : 'chromium', browserVersion: browser.version(), chromiumArgs, skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', physical: false }) + '\n');
+    const useWebkit = process.argv.includes('--webkit');
+    const chromiumArgs = useFirefox || useWebkit || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'];
+    browser = await (useWebkit ? webkit : useFirefox ? firefox : chromium).launch({ args: chromiumArgs, timeout: 15000 });
+    process.stdout.write(JSON.stringify({ browserName: useWebkit ? 'webkit' : useFirefox ? 'firefox' : 'chromium', browserVersion: browser.version(), chromiumArgs, skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', physical: false }) + '\n');
     const page = await browser.newPage();
     const dedicated = process.argv.includes('--dedicated');
     const workerShell = process.argv.includes('--worker-shell');
@@ -70,7 +71,7 @@ if (process.argv.includes('--child')) {
   child.stderr.on('data', bytes => { errors = (errors + bytes).slice(-2000); });
   const code = await new Promise(resolve => child.on('exit', resolve));
   clearTimeout(timer);
-  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--worker-shell') ? 'worker-shell' : process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', browserName: process.argv.includes('--firefox') ? 'firefox' : 'chromium', skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', chromiumArgs: process.argv.includes('--firefox') || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'], commit, dirtyPaths, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 && output.includes('"policyPassed":true') ? 'passed automated case only' : started ? 'failed: trusted recovery budget not met' : 'inconclusive: environment failure' };
+  const record = { recordedAt: new Date().toISOString(), fixture: 'E04-tight-loop', candidate: process.argv.includes('--worker-shell') ? 'worker-shell' : process.argv.includes('--dedicated') ? 'dedicated' : 'opaque', browserName: process.argv.includes('--webkit') ? 'webkit' : process.argv.includes('--firefox') ? 'firefox' : 'chromium', skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', chromiumArgs: process.argv.includes('--webkit') || process.argv.includes('--firefox') || process.argv.includes('--default-browser') ? [] : ['--disable-gpu', '--renderer-process-limit=2'], commit, dirtyPaths, buildFrozenAt, buildHashesFrozenBeforeTrial: hashes, node: process.version, command: process.argv, physical: false, probeStarted: started, watchdogExpired: expired, code, output, errors, verdict: expired && started ? 'failed: owned process termination required' : code === 0 && output.includes('"policyPassed":true') ? 'passed automated case only' : started ? 'failed: trusted recovery budget not met' : 'inconclusive: environment failure' };
   await writeFile(new URL('../../../docs/technical-risk-validation/evidence/preview-loop-' + record.recordedAt.replaceAll(':', '-') + '.json', import.meta.url), JSON.stringify(record, null, 2));
   process.stdout.write(JSON.stringify(record));
 }
