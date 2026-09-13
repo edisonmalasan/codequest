@@ -2,13 +2,13 @@
 
 ## Status and evidence
 
-**Proposed** detailed authority/import/replay/date policy. Limited offline/draft direction is confirmed C10; policy approval evidence is **none**. Register: [P03/P07/P08/P09/P10/P14/F03/F07](../decisions.md); design D7/D8. Owners: product/technical owners; named assignees unassigned.
+**Accepted** detailed authority/import/replay/date policy. Limited offline/draft direction is confirmed C10; policy approval evidence is [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [P03/P07/P08/P09/P10/P14/F03/F07](../decisions.md); design D7/D8. Owners: product/technical owners; named assignees unassigned.
 
 ## Context
 
 Roadmap includes guest migration, cloud progress, local persistence and offline outbox before launch, but abbreviated MVP inventories omit some of them. Client passing reports and timestamps are untrusted; account switching and retries can create duplication/leakage unless policy is explicit.
 
-## Proposed decision
+## Decision
 
 Guest Q01–Q04 and offline local checks create device-local provisional progress. Drafts remain device-local. Authenticated NestJS owns accepted account records/rewards/unlocks. Signup import is explicit, uses verified target identity and applies normal version/prerequisite/acceptance policy. Existing accepted completion merges by stable identity, not blind overwrite.
 
@@ -25,8 +25,8 @@ First accepted completion counts streak on backend acceptance day in learner tim
 
 ## Consequences
 
-Offline streak fairness is a visible trade-off requiring PO review. Local storage clearing can lose drafts/provisional work; disclose lack of cloud source backup. Protected cache is cleared on logout/switch while disclosed owner-isolated drafts/pending work may remain. Focused later tests cover duplicates/import/auth expiry/version rejection/account separation/timezones.
+Offline streak fairness is a visible trade-off accepted by AP01. Local storage clearing can lose drafts/provisional work; disclose lack of cloud source backup. Protected cache is cleared on logout/switch while disclosed owner-isolated drafts/pending work may remain. Focused later tests cover duplicates/import/auth expiry/version rejection/account separation/timezones.
 
 ## Related records and revisit trigger
 
-[Frontend](../frontend.md), [backend](../backend.md), [gamification](../gamification.md), [ADR 0007](0007-curriculum-identity-and-versioning.md). Phase 0 review must select guest subset/release scope/date policy. Revisit on offline fairness failures, multi-device draft requirement, or different guest promise; no sync mechanism implemented here.
+[Frontend](../frontend.md), [backend](../backend.md), [gamification](../gamification.md), [ADR 0007](0007-curriculum-identity-and-versioning.md). AP01 approves the guest subset/release scope/date policy. Revisit on offline fairness failures, multi-device draft requirement, or different guest promise; no sync mechanism implemented here.
