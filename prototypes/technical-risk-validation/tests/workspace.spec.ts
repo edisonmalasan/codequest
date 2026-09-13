@@ -119,7 +119,9 @@ test('E01 editor undo, indentation, resize, task preservation and explicit reset
   page.once('dialog', dialog => void dialog.dismiss());
   await page.getByRole('button', { name: 'Reset source' }).click();
   await expect(editor).toContainText('kept draft');
+  await page.evaluate(() => window.__risk.saveFailure('quota'));
   page.once('dialog', dialog => void dialog.accept());
   await page.getByRole('button', { name: 'Reset source' }).click();
   await expect(editor).toContainText('Not ready');
+  await expect(page.getByTestId('save-state')).toContainText('Save failed; keep a copy');
 });
