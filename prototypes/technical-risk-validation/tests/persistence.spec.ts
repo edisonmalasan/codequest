@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test('E05 delayed draft load blocks early edits and preserves a confirmed replacement', async ({ page, context }, info) => {
+  await context.addInitScript(() => { if (location.origin === 'http://127.0.0.1:4310') sessionStorage.setItem('prototype-load-delay', '500'); });
+  await page.goto('/');
+  const editor = page.locator('.cm-content');
+  await expect(editor).toHaveAttribute('contenteditable', 'false');
+  await expect(page.getByRole('button', { name: 'Run', exact: true })).toBeDisabled();
+  await editor.click(); await page.keyboard.type('ignored during load');
+  await expect(editor).toHaveAttribute('contenteditable', 'true');
+  expect(await page.evaluate(() => window.__risk.source())).not.toContain('ignored during load');
+  await page.getByRole('textbox', { name: 'JavaScript source' }).fill('console.log("ready edit preserved")');
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  await page.reload();
+  await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText('console.log("ready edit preserved")');
+  await info.attach('delayed-load', { body: JSON.stringify({ artificialDelayMs: 500, earlyEditsBlocked: true, confirmedReplacementRetained: true, physical: false }), contentType: 'application/json' });
+});
+
 test('E05 versioned lesson identity, missing resources and cleared task storage are truthful', async ({ page, context }, info) => {
   await page.goto('/');
   await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();

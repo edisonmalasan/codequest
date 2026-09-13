@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { EditorState } from '@codemirror/state';
+import { Compartment, EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
@@ -59,6 +59,7 @@ function App() {
   const mount = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView>(null);
   const requestId = useRef('');
+  const [editorReadiness] = useState(() => new Compartment());
   const key = draftKey(owner, task);
   const fixture = task === 'Q01' ? quest : recordFixture;
 
@@ -91,8 +92,12 @@ function App() {
 
   useEffect(() => {
     let active = true;
-    runtime.stop(); requestId.current = ''; setResult(undefined); setPending(undefined); setProvisional(false); setLoadedKey('');
-    void Promise.all([store.drafts.get(key), store.pending.where('owner').equals(owner).toArray()]).then(([draft, actions]) => {
+    runtime.stop(); requestId.current = ''; setResult(undefined); setPending(undefined); setProvisional(false); setLoadedKey(''); setSaveState('Loading draft');
+    const load = async () => {
+      if (sessionStorage.getItem('prototype-load-delay') === '500') await new Promise(resolve => setTimeout(resolve, 500));
+      return Promise.all([store.drafts.get(key), store.pending.where('owner').equals(owner).toArray()]);
+    };
+    void load().then(([draft, actions]) => {
       if (!active) return;
       setSource(draft?.source ?? fixture.starter);
       setProvisional(draft?.provisional ?? false);
@@ -105,14 +110,17 @@ function App() {
   useEffect(() => {
     if (!mount.current) return;
     const view = new EditorView({ parent: mount.current, state: EditorState.create({
-      doc: '', extensions: [basicSetup, javascript(), EditorView.contentAttributes.of({ 'aria-label': 'JavaScript source' }), keymap.of([{ key: 'Escape', run: () => { document.getElementById('run')?.focus(); return true; } }]),
+      doc: '', extensions: [basicSetup, javascript(), editorReadiness.of([EditorView.editable.of(false), EditorState.readOnly.of(true)]), EditorView.contentAttributes.of({ 'aria-label': 'JavaScript source' }), keymap.of([{ key: 'Escape', run: () => { document.getElementById('run')?.focus(); return true; } }]),
         EditorView.updateListener.of((update) => { if (update.docChanged) { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); } }),
       ],
     }) });
     editor.current = view;
     window.__risk.source = () => view.state.doc.toString();
     return () => { window.__risk.source = () => ''; view.destroy(); };
-  }, []);
+  }, [editorReadiness]);
+  useEffect(() => {
+    editor.current?.dispatch({ effects: editorReadiness.reconfigure([EditorView.editable.of(loadedKey === key), EditorState.readOnly.of(loadedKey !== key)]) });
+  }, [editorReadiness, loadedKey, key]);
   useEffect(() => {
     const view = editor.current;
     if (view && view.state.doc.toString() !== source) view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: source } });
@@ -189,11 +197,11 @@ function App() {
     <section className="workspace">
       <article><h2>{fixture.title}</h2><p>{fixture.objective}</p><button onClick={() => setHint(!hint)}>Show hint</button>{hint && <p>{quest.hint}</p>}<p>Escape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit.</p></article>
       <section className="editor-panel" aria-label="Coding workspace"><div ref={mount} /><p role="status" data-testid="save-state">{saveState}</p>
-        <div className="actions"><button id="run" onClick={() => void run(false)}>Run</button><button onClick={() => void run(true)}>Check</button><button onClick={() => runtime.stop()}>Stop</button><button onClick={() => { if (window.confirm('Replace the current draft with starter code? Account progress is not reset.')) { setSource(fixture.starter); setResult(undefined); } }}>Reset source</button><button onClick={() => void navigator.clipboard.writeText(source).then(() => setFeedback('Source copied')).catch(() => setFeedback('Copy unavailable; select source and copy manually'))}>Copy source</button></div>
+        <div className="actions"><button id="run" disabled={loadedKey !== key} onClick={() => void run(false)}>Run</button><button disabled={loadedKey !== key} onClick={() => void run(true)}>Check</button><button onClick={() => runtime.stop()}>Stop</button><button disabled={loadedKey !== key} onClick={() => { if (window.confirm('Replace the current draft with starter code? Account progress is not reset.')) { setSource(fixture.starter); setResult(undefined); } }}>Reset source</button><button disabled={loadedKey !== key} onClick={() => void navigator.clipboard.writeText(source).then(() => setFeedback('Source copied')).catch(() => setFeedback('Copy unavailable; select source and copy manually'))}>Copy source</button></div>
       </section>
     </section>
     <section aria-label="Feedback"><h2>Output and results</h2><p role="status" data-testid="feedback">{feedback}</p><pre data-testid="output">{result?.output.join('\n') ?? ''}</pre><p>{result?.value}</p><p>{provisional ? 'Local provisional completion; not accepted account progress' : 'No local completion'}</p></section>
-    <section aria-label="Synthetic reconciliation"><h2>Mock acceptance only</h2><button onClick={() => void submit()}>Save pending snapshot</button><button onClick={() => void reconcile()}>Replay pending snapshot</button><button onClick={() => void reconcile(true)}>Explicitly import guest snapshot</button><label><input type="checkbox" checked={loseResponse} onChange={(event) => setLoseResponse(event.target.checked)} />Lose synthetic response after acceptance</label><p>{pending ? `Pending for ${pending.owner}, ${pending.quest}, ${pending.event}` : 'No pending snapshot for this owner'}</p></section>
+    <section aria-label="Synthetic reconciliation"><h2>Mock acceptance only</h2><button disabled={loadedKey !== key} onClick={() => void submit()}>Save pending snapshot</button><button onClick={() => void reconcile()}>Replay pending snapshot</button><button onClick={() => void reconcile(true)}>Explicitly import guest snapshot</button><label><input type="checkbox" checked={loseResponse} onChange={(event) => setLoseResponse(event.target.checked)} />Lose synthetic response after acceptance</label><p>{pending ? `Pending for ${pending.owner}, ${pending.quest}, ${pending.event}` : 'No pending snapshot for this owner'}</p></section>
     <section><h2>Supplied preview</h2><p>Text equivalent: {task === 'RECORDS' ? result?.value ?? 'Run the records fixture for its total' : result?.output.join('\n') ?? 'No output'}</p><button onClick={() => { const value = result?.value ?? 'No result'; const safe = value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); void previewRuntime.run(`<h1>Inventory total</h1><p>${safe}</p>`, document.getElementById('preview') ?? document.body).then((outcome) => setFeedback(outcome.status)); }}>Open bounded preview</button><div id="preview" /></section>
   </main>;
 }
