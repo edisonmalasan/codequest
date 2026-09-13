@@ -111,7 +111,7 @@ test('E03 restricted cache/channel API inventory and wrong-source messages', asy
   await page.evaluate(async () => { await (await caches.open('APP_SYNTHETIC_ONLY')).put('/canary', new Response('SYNTHETIC_SESSION_ONLY')); });
   const results = [];
   for (const candidate of ['opaque', 'dedicated'] as const) {
-    const result = await page.evaluate(candidate => window.__risk.run(`console.log(typeof fetch,typeof indexedDB,typeof caches,typeof BroadcastChannel,typeof WebSocket,typeof Worker,typeof document,typeof localStorage);try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}`, candidate), candidate);
+    const result = await page.evaluate(candidate => window.__risk.run(`for(const name of ['fetch','indexedDB','caches','BroadcastChannel','WebSocket','Worker','document','localStorage']){try{console.log(name+':'+typeof self[name])}catch(e){console.log(name+':denied')}}try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}`, candidate), candidate);
     expect(result.status).toBe('success'); expect(result.output.join('\n')).not.toContain('APP_FOUND');
     results.push(result);
   }

@@ -34,7 +34,7 @@ export default class EvidenceReporter {
     writeFileSync(directory + `automated-${recordedAt.replaceAll(':', '-')}.json`, JSON.stringify({
       recordedAt, commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
       dirtyPaths: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim().split('\n'),
-      command: process.argv.slice(1), environment: { platform: os.platform(), release: os.release(), cpu: os.cpus()[0]?.model, node: process.version, nodeOptions: process.env.NODE_OPTIONS ?? '', mode: 'headless automated browser; no physical/manual claim', chromiumArgs: ['--disable-gpu', '--renderer-process-limit=2'], traces: 'off; bounded JSON evidence instead' },
+      command: process.argv.slice(1), environment: { platform: os.platform(), release: os.release(), cpu: os.cpus()[0]?.model, node: process.version, nodeOptions: process.env.NODE_OPTIONS ?? '', skipHostDependencyPreflight: process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS === '1', mode: 'headless automated browser; no physical/manual claim', chromiumArgs: ['--disable-gpu', '--renderer-process-limit=2'], traces: 'off; bounded JSON evidence instead' },
       buildFrozenAt: this.buildFrozenAt, buildHashesFrozenBeforeTrials: this.buildHashes,
       status: result.status, durationMs: result.duration, cases: this.cases,
     }, null, 2) + '\n');
