@@ -2,7 +2,7 @@
 
 ## Status and evidence
 
-**Accepted** isolation policy, evaluated preview feasibility **reviewed no-go**; overall mechanism selection **blocked**. Browser Worker/iframe direction and no NestJS execution are confirmed C06 from AGENTS.md/roadmap. Approval evidence for P11 capabilities: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C06/P11/F01/F02](../decisions.md); design D6/D9. Owners: technical/security owners, product owner for experience promise; Phase 1 named reviewer: Edison, project owner (technical/product/security self-review).
+**Accepted** isolation policy. Legacy executable-HTML preview feasibility is **reviewed no-go** (AP02); Worker-backed supplied-shell core automation passes, but its recommendation is **pending review** and overall production selection remains **blocked**. Browser Worker/iframe direction and no NestJS execution are confirmed C06 from AGENTS.md/roadmap. Approval evidence for P11 capabilities: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C06/P11/F01/F02](../decisions.md); design D6/D9. Owners: technical/security owners, product owner for experience promise; Phase 1 named reviewer: Edison, project owner (technical/product/security self-review).
 
 ## Context
 
@@ -35,3 +35,11 @@ Approval evidence: [AP02](../decisions.md#ap02-reviewed-phase-1-no-go). The proj
 Focused Chromium 153.0.8010.12 and Firefox 155.0 Worker/network/storage/message cases passed. Baseline preview self-navigation reached the controlled sink. Restricted parent/dedicated comparisons denied tested navigation, but opaque and dedicated preview tight loops required emergency owned-process termination after learner execution was observed, missing the 2-second deadline plus 1-second recovery criterion. See the report's timestamped original/retest evidence and prospective build hashes.
 
 No evaluated preview mechanism is approved for production. F01 remains blocked pending a scoped containment/recovery redesign and retest. Required physical/assistive coverage and native quota/background evidence remain incomplete; F02 is inconclusive. No hard browser memory quota, production framework integration or independent security audit is established. Phase 2 remains blocked; no remote runner, reduced preview scope or weakened P11 is introduced. P06 fraud and disclosed local-data-loss limitations remain the approved residuals.
+
+## Worker-backed preview continuation - 2026-09-13
+
+The explicit redesign instruction authorizes continuation, not new production approval. Learner functions/records now execute only in the restricted opaque Worker. Bounded results are escaped into a fixed script-disabled, opaque supplied-shell iframe and the same text is shown in the trusted UI. Learner HTML/CSS is data; no general DOM-programming capability is promised. Existing function/record curriculum and P11 remain unchanged.
+
+Core automated useful-output/inert-markup, ten verified loop deadlines and 100 executed reset cycles passed in Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6. Separate owned watchdogs recovered without emergency termination. WebKit simulated-offline new-page/reload gates still fail; public cache/controlled-origin-outage diagnostics do not waive them. See the [current report and raw evidence](../technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13).
+
+F01 is a candidate recommendation pending review and required integration/physical evidence; F02 remains inconclusive. AP02 approves only the earlier no-go. No hard browser memory quota, independent security audit, production framework integration, P11 exception or Phase 2 selection is established.

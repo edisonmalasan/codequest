@@ -1,6 +1,6 @@
 # Phase 1 evidence report
 
-Recorded 2026-09-13 for [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/tasks.md). This is an Apply investigation packet, **an owner-reviewed no-go outcome, not a successful Phase 1 progression gate**. Recommendation: **Redesign/no-go for the evaluated preview; required coverage also remains inconclusive**. Phase 2, Sync and Archive are not authorized.
+Recorded 2026-09-13 for [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/tasks.md). Current Apply continuation: the Worker-backed supplied-shell preview passes core automated containment/recovery cases in Chromium, Firefox and WebKit. Required WebKit simulated-offline gates fail; physical/accessibility evidence and review of the new recommendation remain incomplete. Phase 1 has not passed. AP02 remains the reviewed no-go for the earlier executable-HTML candidates, not approval of this new mechanism. Phase 2, Sync and Archive are not authorized.
 
 ## Environment and reproduction
 
@@ -10,7 +10,9 @@ The [disposable harness](../../prototypes/technical-risk-validation/README.md) c
 
 App `http://127.0.0.1:4310`, runner `http://127.0.0.2:4311`, and request sink `http://127.0.0.1:4312` are loopback-only. Different hosts isolate application origin/storage; no production services, credentials, database, workspace or infrastructure were created. Servers serve public assets and simulate receipts; they never execute learner JavaScript. Physical-device HTTPS remains unconfigured.
 
-## Experiment verdicts
+## Reviewed legacy investigation verdicts (AP02)
+
+These are historical executable-HTML candidate results. See the Worker-preview continuation below for current measured results; original failures remain evidence.
 
 | Experiment | Available evidence | Verdict / missing evidence |
 | --- | --- | --- |
@@ -47,11 +49,11 @@ The initial Firefox dependency preflight reported missing `msvcp140_1.dll`, leav
 
 Process/evidence capture deviation: the charter required exact asset hashes before the first candidate measurement, but those first dirty-build runs did not freeze a complete manifest. The serial runner freezes the listed asset SHA-256 values before its trials. Those later hashes do not retrospectively certify earlier builds; the final 22-case Chromium run freezes the complete built asset manifest before trials. Required physical/other-engine trials still need the same prospective capture. B01/B07/B08/B09 physical criteria are unchanged.
 
-## Review and remaining gate
+## AP02 legacy review and remaining gate (historical)
 
 Project owner is the assigned technical/product/security reviewer. Security review is a **project-owner self-review**, not an independent audit. The project owner approved the no-go conclusion on 2026-09-13; see [AP02](../decisions.md#ap02-reviewed-phase-1-no-go). F01 is reviewed no-go for the evaluated previews, pending scoped redesign; F02 is inconclusive. ADR 0004 retains its accepted policy and records the measured failed feasibility. P01–P15, U01/AP01 and F03–F09 deferrals are preserved.
 
-Required next decision: review the preview failures and authorize a scoped containment/recovery redesign or an explicit no-go conclusion. Do not weaken P11, remove required preview behavior, add remote runners, or treat the comparison CSP as an accepted solution without that decision. Required device/accessibility/consumer-browser information remains unavailable or unconfirmed as recorded in [coverage](coverage.md). Use the [manual evidence checklist](manual-checklist.md) when access is explicitly supplied.
+Earlier next decision, subsequently resolved by the explicit redesign instruction: review the preview failures and authorize a scoped containment/recovery redesign or an explicit no-go conclusion. Do not weaken P11, remove required preview behavior, add remote runners, or treat the comparison CSP as an accepted solution without that decision. Required device/accessibility/consumer-browser information remains unavailable or unconfirmed as recorded in [coverage](coverage.md). Use the [manual evidence checklist](manual-checklist.md) when access is explicitly supplied.
 
 The active Apply task list retains incomplete acceptance gates. PR #5 integrates the verified investigation under the current Git workflow. Only fully completed tasks are checked; no production architecture is selected.
 
@@ -95,3 +97,47 @@ Final available-check checkpoint: build, strict application/WebWorker TypeScript
 Tasks 9.3-9.5 are complete for the approved no-go outcome; 21/34 tasks are fully complete. The remaining 13 tasks retain their acceptance criteria and are not waived or marked passed: 1.2 physical inventory; 3.2 physical editing; 3.3 accessibility; 4.3 required runtime/resource trials; 5.2 required-environment security coverage; 6.1-6.3 usable contained/recoverable preview; 7.2 physical cold/offline/install; 7.3 native storage/background recovery; 7.4 required-environment persistence cycles; 8.2 required physical integrated loop; 8.3 selected-candidate preview/offline/update integration. Automated subsets remain linked above.
 
 Next work requires physical/browser/assistive access and a scoped preview redesign with explicit design/acceptance artifacts before implementation. General task-completion authorization is not an unspecified policy revision or permission to invent evidence. The approved investigation can be merged; the change remains active with these incomplete gates. Do not begin Phase 2, Sync or Archive.
+
+## Worker-preview redesign continuation - 2026-09-13
+
+The owner explicitly requested a new Apply-continuation branch from updated main and a preview redesign preserving P11 and the approved limits. `spike/worker-preview-recovery` was created from merged Apply PR #5 (`cc27317`), immediately pushed, and represented by draft [PR #6](https://github.com/edisonmalasan/codequest/pull/6). Implementation commits `934fe53` and `8b48c58` are pushed. This authorization is not approval of a new production mechanism or evidence of missing physical tests.
+
+### Mechanism and unchanged contract
+
+`PreviewRuntime.runSource` executes current learner functions/records only in the existing restricted opaque Worker. Trusted host code starts the two-second deadline before bootstrap, terminates computation and removes presentation independently, bounds and validates results, escapes HTML metacharacters, and supplies a fixed script-disabled opaque iframe. The identical bounded result appears as a trusted-UI text equivalent. Learner-returned HTML/CSS is inert data; no learner DOM/event-plumbing curriculum or general HTML/JS IDE is introduced. Legacy executable-HTML candidates remain diagnostic comparisons and retain their AP02 no-go history.
+
+P11's zero learner network/application/session/storage authority and independent timeout are unchanged. B02 remains two seconds plus at most one second recovery, B03 fresh readiness at most one second, and source/output/message/sample/cycle criteria remain B01-B09. Source preservation is checked against canonical CodeMirror state. A trusted run-bound dispatch marker immediately before Worker execution distinguishes actual loop trials from setup failures; it is not independent grading or a privileged learner message.
+
+### Core automated preview results
+
+| Engine | Ten loop trials: maximum recovery | Maximum fresh preview readiness | Executed reset cycles | Verdict |
+| --- | --- | --- | --- | --- |
+| Chromium 153.0.8010.12 | 2019.2 ms | 186 ms | 100 | Passed core automated gates |
+| Firefox 155.0 | 2127 ms | 258 ms | 100 | Passed core automated gates |
+| WebKit 26.6 | 2028 ms | 285 ms | 100 | Passed core automated gates |
+
+These values come from the [final 102-case cross-engine run](evidence/automated-2026-09-13T15-34-48.252Z.json). Earlier completed runs include [Chromium 33/33](evidence/automated-2026-09-13T15-14-44.830Z.json), [Firefox 32 passed / one CDP-only diagnostic skipped](evidence/automated-2026-09-13T15-17-55.911Z.json), and [WebKit 28 passed / four failed / one diagnostic skipped](evidence/automated-2026-09-13T15-21-16.301Z.json). Each engine passed useful result 5 with matching textual output, hostile markup remaining inert with no active resource/navigation elements or sink requests, ten observed loop timeouts with host interaction and exact source retained, 100 actually executed preview starts/resets with no surviving iframe, and explicit protocol-flood rejection. These are headless results, not physical typing, Safari, cold-launch or assistive evidence. No hard memory/allocation quota is proven.
+
+Separate owned watchdog trials also passed without emergency browser/process termination: [default-flags Chromium](evidence/preview-loop-2026-09-13T15-22-41.917Z.json), [Firefox](evidence/preview-loop-2026-09-13T15-25-52.793Z.json), and [WebKit](evidence/preview-loop-2026-09-13T15-26-04.502Z.json). Host use and `preview-timeout` within 3000 ms are explicit checks. Source commits, dirty paths, commands, browser builds, preflight setting and complete prospective build hashes are retained. Earlier dirty-build trials and failed diagnostic-query offline navigation remain original evidence; canonical prepared `/` offline/update retesting passed in Firefox.
+
+### WebKit offline and version-fixture findings
+
+WebKit now actually launches; its earlier page-creation failure no longer justifies an untested engine row. Its original full run failed three simulated-offline navigation/reload cases and a version-injection fixture. The original version fixture used intercepted network fulfillment behind a service worker; the controlled local server now returns assessment version 2 with a direct-request positive control. The [WebKit retest](evidence/automated-2026-09-13T15-21-55.110Z.json) verifies identity rejection and exact saved-source retention without skipping or weakening the requirement. Chromium and Firefox also passed the corrected server fixture.
+
+The [WebKit offline diagnostic](evidence/automated-2026-09-13T15-23-15.129Z.json) records an activated controlling service worker, ten public precache entries and cached index status 200, while `context.setOffline(true)` makes both canonical navigation and a root fetch fail (`Load failed`). With networking enabled and the synthetic origin returning 503, the controlled-origin-outage fetch is served with status 200. This suggests the offline-emulation path differs from the reachable-service-worker path; it does not establish the cause or physical Safari offline success. Diagnostic collection passing is not the offline gate passing. The three offline policy failures remain blocking and are not skipped, relabeled or replaced with the weaker origin-outage diagnostic.
+
+### Manual participation, review and progression
+
+Only the physical Windows development machine is confirmed. Installed Chrome/Firefox availability/builds must be recorded during testing; no Playwright version is substituted. The [step-by-step manual checklist](manual-checklist.md) covers each installed Windows browser separately: physical edits and 10-warmup/100-sample latency; keyboard escape, feedback, 200%/400% zoom, 320-CSS-pixel reflow and reduced motion; ten Worker/preview loops and fresh starts, 100 executed cycles and resource observations; actual process-cold prepared offline/browser/install modes; native storage/background/restart recovery; exact eight reload/six update/six multiclient cycles; and the integrated quest and post-update containment loop. Physical-browser instrumentation is separate from physical typing. External disconnection alone leaves loopback reachable, so source-origin outage must be recorded too; reachable server assets cannot count as offline success.
+
+macOS Safari, Android Chrome, iPhone Safari/home-screen, NVDA and VoiceOver remain **untested**, not passed or unsupported. Lower-powered hardware is not designated without an explicit declaration. Native full-storage failure and physical cold-launch timings remain unmeasured; injected failures and a non-enforcing CDP override do not replace them.
+
+Task 6.1 is now implemented and verified. Task 9.3 is reopened for explicit review of this new recommendation; AP02 remains historical approval of the legacy no-go. Overall **21/34 tasks are complete; 13 remain incomplete**. Tasks 9.4/9.5 retain historical approved updates while the current register/ADR/roadmap explicitly show the unreviewed continuation. F01 remains a candidate recommendation pending review and required integration/physical evidence, F02 inconclusive, and production scaffolding blocked. The project owner's security review remains a self-review, not an independent audit. P01-P15/U01/AP01 and F03-F09 are unchanged. No Phase 2, Sync or Archive has begun.
+
+### Final verification and fixture retest
+
+The [final full cross-engine run](evidence/automated-2026-09-13T15-34-48.252Z.json) recorded **95 passed, five failed, two CDP-only diagnostics skipped**: Chromium 34 passed; Firefox 32 passed/one failed/one skipped; WebKit 29 passed/four failed/one skipped. All three engines passed the new core preview trials, and WebKit passed the corrected incompatible-assessment fixture. Two failures were first-acceptance tests sharing the synthetic server ledger across browser projects; their duplicate outcome was correct for the polluted fixture. The server now resets only the synthetic ledger between independent test cases. Acceptance/deduplication behavior and assertions are unchanged.
+
+The [nine-case cross-engine retest](evidence/automated-2026-09-13T15-35-39.039Z.json) passed the affected first-acceptance and lost-response cases in every engine, plus the prepared-cache/origin-outage diagnostics. Each diagnostic now positively verifies a direct origin request receives 503 while the controlled page root fetch is served from cache with 200. WebKit still records `policyPassed: false` under the offline flag. The remaining three WebKit simulated-offline failures remain unresolved; the full suite is not reported as green by adding retest counts.
+
+All 18 unit tests, prototype ESLint and strict application/WebWorker type checks passed. Root `pnpm test`, `pnpm lint`, and `pnpm typecheck` were actually attempted and fail because pnpm is not on PATH; Corepack equivalents were also attempted at root and fail with `ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND` because no root application manifest exists. No production command scaffolding was added. The [retained command-check evidence](evidence/command-checks-2026-09-13T15-38-52.878Z.json) and build manifest record final checks and teardown. Draft PR #6 remains unmerged while required available offline checks fail and physical/review gates are incomplete.

@@ -35,7 +35,7 @@ Apply was explicitly authorized by the user on 2026-09-13 after merging the appr
 
 ## 6. E04 — Preview containment and recovery
 
-- [ ] 6.1 Implement the supplied-shell preview behind the evaluated restricted boundary and bounded communication; verify function/record output is useful and textually equivalent without authenticated parent authority or learner network capability.
+- [x] 6.1 Implement the supplied-shell preview behind the evaluated restricted boundary and bounded communication; verify function/record output is useful and textually equivalent without authenticated parent authority or learner network capability.
 - [ ] 6.2 Execute hostile HTML/CSS/JS parent/opener/sandbox/navigation/popup/form/resource-loading and injection probes; verify sink records, host state and effective sandbox/policy evidence demonstrate denial on each required environment.
 - [ ] 6.3 Execute tight-loop, flood and repeated-preview-reset probes; verify trusted recovery and source preservation meet the frozen deadline, explicitly recording browser/process termination or host starvation as failures.
 
@@ -56,7 +56,7 @@ Apply was explicitly authorized by the user on 2026-09-13 after merging the appr
 
 - [x] 9.1 Assemble coverage and final report with reproduction commands/commit/dependencies, raw results, topology/policy/sink evidence, manual accessibility observations, limitations and failure/retest history; verify every required experiment/environment has an explicit verdict and no missing case is inferred to pass.
 - [x] 9.2 Run documented prototype test/lint/typecheck and appropriate automated integration/probe checks; attempt `pnpm test`, `pnpm lint`, and `pnpm typecheck` under the repository command contract and report exact unavailable-command/package reasons, verifying no check is claimed passed unless run and no production scripts are invented for this spike.
-- [x] 9.3 Obtain explicit technical/security/product review of the report, F01/F02 recommendations and unresolved limitations; verify dated reviewer evidence supports Proceed, Redesign/no-go or Inconclusive, and leave review-dependent completion pending if approval is absent.
+- [ ] 9.3 Obtain explicit technical/security/product review of the report, F01/F02 recommendations and unresolved limitations; verify dated reviewer evidence supports Proceed, Redesign/no-go or Inconclusive, and leave review-dependent completion pending if approval is absent.
 - [x] 9.4 After applicable approval, update the decision register, ADR 0004 feasibility addendum and affected frontend/security/architecture notes with measured selections and evidence; verify accepted policies/AP01 and F03–F09 deferrals remain intact, and no failed mechanism is marked verified.
 - [x] 9.5 Update the roadmap status to the observed reviewed outcome and next gate; verify Phase 0 remains archived, Phase 1 success is claimed only for reviewed passing gates, and Phase 2 still requires separate authorization. For no-go/inconclusive, retain the blocked status and explicit next action.
 - [x] 9.6 Teardown temporary services/profiles/certificate setup according to the charter and inspect the final diff; verify retained artifacts contain only reproducible synthetic evidence/prototype work and authorized documentation, with no secrets, production scaffolding, infrastructure, generated-skill edits or reopened Phase 0 change.
@@ -74,3 +74,9 @@ Latest available verification: 29/29 Chromium cases passed against 7c08a6a, plus
 ## Owner-approved no-go checkpoint - 2026-09-13
 
 [AP02](../../../docs/decisions.md#ap02-reviewed-phase-1-no-go) explicitly approves the report's no-go conclusion. Tasks 9.3-9.5 are now complete: dated technical/product/security owner self-review, evidence-backed register/ADR/document updates, and truthful reviewed no-go roadmap status. **21/34 tasks complete; 13 remain incomplete.** Earlier pending-review checkpoints above are retained history. Approval neither supplies missing physical evidence nor converts failed recovery to passing behavior. Remaining acceptance criteria are unchanged; no Phase 2, Sync or Archive is authorized.
+
+## Worker-preview redesign checkpoint - 2026-09-13
+
+The owner explicitly authorized the scoped continuation from updated main on remote `spike/worker-preview-recovery`, draft PR #6. Task 6.1 is now fully implemented: restricted Worker function/record execution, bounded decoded output, fixed script-disabled inert result iframe and matching text equivalent. Core automation passes in Chromium/Firefox/WebKit, including ten verified infinite loops and 100 executed reset cycles per engine; no emergency process termination is needed. P11 and B01-B09 are unchanged.
+
+Task 9.3 is reopened for review of the new recommendation; AP02 remains approval of the historical executable-HTML no-go only. Tasks 9.4/9.5 retain their completed historical approved no-go updates, with current documents explicitly recording pending new selection. **21/34 complete; 13 incomplete.** Tasks 6.2/6.3 still require full physical/environment coverage, and WebKit simulated-offline failures keep 8.3 incomplete. Missing physical inventory/input/accessibility, native quota/background/cold-launch/update/integrated evidence is not inferred from headless runs. See the [current report](../../../docs/technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13) and [Windows step-by-step checklist](../../../docs/technical-risk-validation/manual-checklist.md). No Phase 2, Sync or Archive was started.

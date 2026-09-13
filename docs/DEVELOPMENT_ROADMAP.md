@@ -6,15 +6,15 @@ Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); reviewed no-go for evaluated preview mechanisms; remaining validation blocked |
+| Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); Apply continuation, not complete |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply - 21/34 tasks complete; owner-reviewed no-go (AP02); 13 acceptance gates remain incomplete |
-| Next execution step | Define scoped redesign/retest for [approved preview no-go](technical-risk-validation/report.md); supply physical/browser/assistive access for remaining [coverage](technical-risk-validation/coverage.md) |
+| Current OpenSpec stage | Apply continuation - 21/34 tasks complete; usable Worker preview implemented; review of new recommendation and 12 other acceptance gates remain incomplete |
+| Next execution step | Resolve retained WebKit simulated-offline failure with actual Safari/device evidence; execute confirmed Windows [manual checklist](technical-risk-validation/manual-checklist.md), obtain remaining access and review the new recommendation |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Focused Chromium/Firefox/unit/prototype checks passed; preview navigation and tight-loop recovery failed; actual WebKit page creation unavailable, required physical/accessibility coverage incomplete; no-go review approved by AP02 |
+| Validation evidence | Worker-preview core passed in automated Chromium/Firefox/WebKit: 10 loops and 100 executed resets per engine; original iframe no-go retained as AP02. WebKit simulated-offline integration failed; physical/accessibility/native quota gates untested |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
-| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 reviewed no-go; F02 inconclusive; evidence/retest required |
+| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
 
 ## 1. Product Goal
 

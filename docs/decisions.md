@@ -76,13 +76,17 @@ The owner is the assigned technical, product and security reviewer. This is a pr
 
 F01 is **reviewed no-go for the evaluated preview mechanisms; production selection blocked pending scoped redesign**. Worker focused results do not compensate for preview recovery failure. F02 is **inconclusive for required physical/device/accessibility coverage**; no production support matrix or performance promise is selected. The charter's numeric limits remain experimental criteria, not measured production guarantees. P01-P15/U01/AP01 and F03-F09 remain unchanged.
 
+## Phase 1 Worker-preview continuation - 2026-09-13
+
+The owner explicitly instructed a scoped preview containment/recovery redesign preserving P11 and the approved limits. Core Worker-backed supplied-shell automation now passes in Chromium, Firefox and WebKit; WebKit simulated-offline integration fails and required physical/accessibility evidence remains untested. See the [current report](technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13) and [ADR 0004 addendum](adr/0004-browser-execution-isolation.md). F01 remains unselected for production; review of the new recommendation is pending. AP02 remains historical approval of the failed executable-HTML candidates, not approval of this new result. F02 stays inconclusive; P01-P15/U01/AP01 and F03-F09 are unchanged.
+
 ## Deferred decisions
 
 AP01 approves retaining these deferrals and their owners/triggers. It does not select their unspecified implementation details, numeric values or operational policies, nor authorize building features.
 
 | ID | Topic | Status/source | Rationale / alternatives | Affected documents | Owner | Blocking stage / revisit trigger |
 | --- | --- | --- | --- | --- | --- | --- |
-| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | reviewed no-go, AP02; production selection blocked | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
+| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | legacy preview reviewed no-go AP02; Worker-preview recommendation pending review; production selection blocked | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
 | F02 | Editor layout, exact supported device/browser versions and performance budgets | inconclusive required coverage, AP02; selection deferred | Needs real keyboard/touch/low-end tests; no assumed mobile parity | frontend, product | PO/TO | Phase 1 before supported coding promises |
 | F03 | DTOs, schemas, content compiler/publication projection, sync conflict algorithm/cache implementation | deferred, D5–D7 | Policies before mechanisms; no root packages extracted speculatively | backend, architecture, curriculum, frontend | TO | Relevant capability proposal after Phase 0 |
 | F04 | XP values, level curve, content timing/difficulty balance | deferred, R/D8 | Needs final curriculum and learner feedback | gamification, curriculum | PO/CO | Before beta balancing |
