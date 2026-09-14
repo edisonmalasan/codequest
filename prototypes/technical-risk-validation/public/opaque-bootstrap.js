@@ -45,6 +45,9 @@ addEventListener('message', event => {
             deliver('bootstrap-protocol-error');
             return;
           }
+          // Only the single execution-start marker is nonterminal in the host protocol.
+          // Release finished execution before result delivery and the cleanup round trip.
+          if (!input.previewMarker || raw !== input.run + ':preview-started') terminateCurrent();
           deliver(raw);
         };
         worker.onerror = () => {
