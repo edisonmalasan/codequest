@@ -50,6 +50,27 @@ test('D3 dedicated denies child construction and terminates forged output before
   await info.attach('dedicated-child-denial', { body: JSON.stringify({ child, forged, fresh, childExecution: 'denied, not a witnessed child-loop recovery' }), contentType: 'application/json' });
 });
 
+test('D3 prepared offline cache deletion and bootstrap poisoning preserve trusted recovery', async ({ page, context }, info) => {
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
+  const initial = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
+  expect(initial.status).toBe('success');
+  const original = await page.evaluate(() => window.__risk.source());
+  await context.setOffline(true);
+  const mutation = await page.evaluate(() => window.__risk.run('await caches.delete("codequest-runner-public-v1");console.log("cache deleted");', 'dedicated'));
+  expect(mutation.status).toBe('success');
+  const fresh = await page.evaluate(() => window.__risk.run('console.log("offline fresh")', 'dedicated'));
+  expect(fresh.status).toBe('success'); expect(fresh.elapsed).toBeLessThanOrEqual(1000);
+  const source = `const cache=await caches.open("codequest-runner-public-v1");await cache.put("/bootstrap.js",new Response("parent.postMessage('POISON_BOOTSTRAP_EXECUTED','*')",{headers:{"Content-Security-Policy":"default-src *"}}));console.log("bootstrap cache poisoned");`;
+  const poisoned = await page.evaluate(source => window.__risk.run(source, 'dedicated'), source);
+  expect(poisoned.status).toBe('success');
+  await page.evaluate(() => window.__risk.dispose());
+  const recreated = await page.evaluate(() => window.__risk.run('console.log("safe recreated bootstrap")', 'dedicated'));
+  await info.attach('offline-public-cache-recovery', { body: JSON.stringify({ initial, mutation, fresh, poisoned, recreated, offlineMode: 'Playwright network emulation; not physical network disconnection' }), contentType: 'application/json' });
+  expect(recreated.status).toBe('success'); expect(recreated.elapsed).toBeLessThanOrEqual(1000);
+  expect(recreated.output).toEqual(['safe recreated bootstrap']);
+  expect(await page.evaluate(() => window.__risk.source())).toBe(original);
+});
+
 test('D3 dedicated ten witnessed loops and 100 fresh Worker cycles meet original budgets', async ({ page }, info) => {
   test.setTimeout(45000);
   const source = await page.evaluate(() => window.__risk.source());
