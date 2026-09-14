@@ -31,6 +31,6 @@ Validate online and prepared-offline fixed resource loading and response CSP, co
 
 Any unchanged-budget miss, permitted learner network/application authority, cached sensitive data, lost source or unbounded cleanup remains no-go. Failed initialization must return a truthful bounded error and retain source. Do not select this mechanism or claim supported environments without dated owner technical/product/security self-review; security review is not an independent audit.
 
-## Decision requested
+## Approval recorded
 
-The project owner must explicitly approve revising D3/charter for this persistent dedicated-origin/public-offline-bootstrap experiment and implementing/retesting it. Approval authorizes an experiment only, not F01 production selection, F02 support scope, S01-S06, Proceed, PR merge with failed checks, Phase 2, Sync or Archive.
+The project owner explicitly approved this experiment on 2026-09-15 as recorded above. The implementation adds the charter's pinned-byte/CSP cache validation and immutable public-byte repair, so mutable learner-origin caches cannot become trusted code. Approval authorizes an experiment only, not F01 production selection, F02 support scope, S01-S06, Proceed, PR merge with failed checks, Phase 2, Sync or Archive.
