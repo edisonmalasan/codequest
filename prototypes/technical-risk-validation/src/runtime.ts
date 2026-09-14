@@ -1,20 +1,27 @@
-import workerSource from '../public/worker.js?raw';
+import { OpaqueCompartment } from './opaque-compartment';
 import { byteLength, decodeResult, limits, type Candidate, type RunIdentity, type RunResult } from './protocol';
 
 export const runnerOrigin = 'http://127.0.0.2:4311';
-const opaquePolicy = "default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' blob:; worker-src blob:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
 export type RunRequest = RunIdentity & { source: string; candidate: Candidate; previewMarker?: boolean };
 
 export class BrowserRuntime {
   private cancel: (() => void) | undefined;
-  stop(): void { this.cancel?.(); }
+  private compartment: OpaqueCompartment | undefined;
+  private cleanup: Promise<void> = Promise.resolve();
+  stop(): Promise<void> { this.cancel?.(); return this.cleanup; }
+  async dispose(): Promise<void> {
+    await this.stop();
+    await this.compartment?.stop(true);
+    this.compartment = undefined;
+  }
 
   run(request: RunRequest): Promise<RunResult> {
-    this.stop();
+    void this.stop();
     const start = performance.now();
     return new Promise((resolve) => {
       let frame: HTMLIFrameElement | undefined;
       let worker: Worker | undefined;
+      let compartment: OpaqueCompartment | undefined;
       let finished = false;
       let messages = 0;
       let executionStarted = false;
@@ -24,9 +31,10 @@ export class BrowserRuntime {
         clearTimeout(timer);
         window.removeEventListener('message', receive);
         worker?.terminate();
-        frame?.remove();
+        if (!compartment) frame?.remove();
         this.cancel = undefined;
-        resolve({ ...request, ...result, elapsed: performance.now() - start });
+        this.cleanup = this.cleanup.then(() => compartment?.stop());
+        void this.cleanup.then(() => resolve({ ...request, ...result, elapsed: performance.now() - start, cleanup: compartment ? { ...compartment.lastCleanup } : undefined }));
       };
       const onResult = (raw: unknown) => {
         messages++;
@@ -43,8 +51,9 @@ export class BrowserRuntime {
       };
       const receive = (event: MessageEvent<unknown>) => {
         if (!frame || event.source !== frame.contentWindow) return;
+        if (request.candidate === 'opaque' && event.data === 'opaque-bootstrap-ready' && frame.dataset.activeWorkers === '0') return;
         if (request.candidate === 'dedicated' && event.origin !== runnerOrigin) return;
-        if (event.data === 'ready') {
+        if (request.candidate === 'dedicated' && event.data === 'ready') {
           frame.contentWindow?.postMessage({ type: 'start', input: request }, request.candidate === 'dedicated' ? runnerOrigin : '*');
         } else onResult(event.data);
       };
@@ -57,18 +66,22 @@ export class BrowserRuntime {
           worker.onmessage = (event: MessageEvent<unknown>) => onResult(event.data);
           worker.onerror = () => finish({ status: 'runtime-error', output: [], value: 'Worker bootstrap failed' });
           worker.postMessage(request);
+        } else if (request.candidate === 'opaque') {
+          void this.cleanup.then(async () => {
+            if (finished) return;
+            if (!this.compartment?.available) this.compartment = new OpaqueCompartment();
+            compartment = this.compartment;
+            frame = compartment.frame;
+            window.addEventListener('message', receive);
+            if (!await compartment.start(request) && !finished) finish({ status: 'runtime-error', output: [], value: 'Opaque bootstrap unavailable' });
+          }).catch(() => finish({ status: 'runtime-error', output: [], value: 'Opaque bootstrap failed' }));
         } else {
           frame = document.createElement('iframe');
           frame.hidden = true;
           frame.title = 'Learner execution compartment';
-          frame.setAttribute('sandbox', request.candidate === 'opaque' ? 'allow-scripts' : 'allow-scripts allow-same-origin');
+          frame.setAttribute('sandbox', 'allow-scripts allow-same-origin');
           window.addEventListener('message', receive);
-          if (request.candidate === 'dedicated') frame.src = runnerOrigin + '/bootstrap.html';
-          else {
-            // Inline data carries only public worker bytes, never source/session tokens.
-            const script = `let w;const p=parent;addEventListener('message',e=>{if(e.source!==p||!e.data||e.data.type!=='start'||w)return;w=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(workerSource)}],{type:'text/javascript'})));w.onmessage=e=>p.postMessage(e.data,'*');w.onerror=()=>p.postMessage('bootstrap-error','*');w.postMessage(e.data.input)});p.postMessage('ready','*');`;
-            frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${opaquePolicy}"><script>${script.replaceAll('</script', '<\\/script')}</script>`;
-          }
+          frame.src = runnerOrigin + '/bootstrap.html';
           document.body.append(frame);
         }
       } catch {
@@ -82,6 +95,7 @@ export class PreviewRuntime {
   private cancel: (() => void) | undefined;
   private computation = new BrowserRuntime();
   stop(): void { this.cancel?.(); }
+  async dispose(): Promise<void> { this.stop(); await this.computation.dispose(); }
   runSource(source: string, target: HTMLElement, task = 'RECORDS', onOutput?: (text: string) => void): Promise<{ status: string; elapsed: number; execution?: RunResult }> {
     this.stop();
     const start = performance.now();
@@ -93,10 +107,10 @@ export class PreviewRuntime {
         if (finished) return;
         finished = true;
         clearTimeout(timer);
-        this.computation.stop();
+        const cleanup = this.computation.stop();
         frame?.remove();
         this.cancel = undefined;
-        resolve({ status, elapsed: performance.now() - start, execution });
+        void cleanup.then(() => resolve({ status, elapsed: performance.now() - start, execution }));
       };
       const timer = setTimeout(() => finish(frame ? 'preview-reset' : 'preview-timeout'), limits.deadline);
       this.cancel = () => finish('preview-stopped');

@@ -65,6 +65,10 @@ test('E04 Worker preview hundred starts and resets reject flooding without leake
   });
   expect(rows.rows.every(row => row.status === 'preview-stopped')).toBe(true);
   expect(rows.flood.status).toBe('protocol-error');
+  await expect(page.locator('iframe[title="Learner execution compartment"], iframe[title="Supplied Worker result preview"]')).toHaveCount(0);
+  await expect(page.locator('iframe[data-trusted-bootstrap="yes"]')).toHaveCount(1);
+  await expect(page.locator('iframe[data-active-workers="1"]')).toHaveCount(0);
+  await page.evaluate(() => window.__risk.dispose());
   await expect(page.locator('iframe')).toHaveCount(0);
   await info.attach('worker-preview-resets', { body: JSON.stringify({ browser: browser.version(), ...rows, physical: false, retainedMemoryQuota: 'unverified' }), contentType: 'application/json' });
 });

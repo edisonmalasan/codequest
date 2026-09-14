@@ -2,7 +2,7 @@ export const limits = { source: 65536, message: 16384, output: 65536, entries: 2
 export type Candidate = 'opaque' | 'dedicated' | 'control';
 export type RunStatus = 'success' | 'syntax-error' | 'runtime-error' | 'output-limit' | 'timeout' | 'stopped' | 'protocol-error';
 export type RunIdentity = { run: string; task: string; contentVersion: string; assessmentVersion: string };
-export type RunResult = RunIdentity & { status: RunStatus; output: string[]; value: string; elapsed: number; candidate: Candidate };
+export type RunResult = RunIdentity & { status: RunStatus; output: string[]; value: string; elapsed: number; candidate: Candidate; cleanup?: { acknowledged: boolean; fallback: boolean; retainedTrustedBootstrap: boolean } };
 
 export function byteLength(value: string): number { return new TextEncoder().encode(value).byteLength; }
 export function isRecord(value: unknown): value is Record<string, unknown> { return typeof value === 'object' && value !== null && !Array.isArray(value); }

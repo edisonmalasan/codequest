@@ -158,7 +158,7 @@ try {
     const rows = [];
     for (let cycle = 0; cycle < 100; cycle++) {
       const result = await window.__risk.run('console.log("native cycle")', 'opaque');
-      rows.push({ cycle, status: result.status, elapsed: result.elapsed, sourcePreserved: window.__risk.source() === 'console.log("Ready for CodeQuest");', remainingCompartments: document.querySelectorAll('iframe[title="Learner execution compartment"]').length });
+      rows.push({ cycle, status: result.status, elapsed: result.elapsed, sourcePreserved: window.__risk.source() === 'console.log("Ready for CodeQuest");', remainingCompartments: document.querySelectorAll('iframe[title="Learner execution compartment"]').length, trustedBootstrapFrames: document.querySelectorAll('iframe[data-trusted-bootstrap="yes"]').length, acknowledgedActiveWorkers: document.querySelectorAll('iframe[data-active-workers="1"]').length, cleanup: result.cleanup });
     }
     const previews = [];
     for (let cycle = 0; cycle < 100; cycle++) {
@@ -169,7 +169,7 @@ try {
       const readinessMs = performance.now() - start;
       const bootstrapPresentAtBoundary = Boolean(document.querySelector('iframe[title="Learner execution compartment"]'));
       window.__risk.stop();
-      previews.push({ cycle, ready, readinessMs, bootstrapPresentAtBoundary, result: await pending, sourcePreserved: window.__risk.source() === 'console.log("Ready for CodeQuest");', remainingFrames: document.querySelectorAll('iframe').length });
+      previews.push({ cycle, ready, readinessMs, bootstrapPresentAtBoundary, result: await pending, sourcePreserved: window.__risk.source() === 'console.log("Ready for CodeQuest");', remainingFrames: document.querySelectorAll('iframe').length, trustedBootstrapFrames: document.querySelectorAll('iframe[data-trusted-bootstrap="yes"]').length, acknowledgedActiveWorkers: document.querySelectorAll('iframe[data-active-workers="1"]').length });
     }
     return { rows, previews, warmupWithinEachTotal: 10, hardMemoryQuota: 'unverified', visibility: document.visibilityState, clock: 'monotonic browser clocks; no added GPU/renderer restrictions', physicalTyping: false };
   });

@@ -23,6 +23,7 @@ declare global {
       preview: (html: string, candidate?: 'opaque' | 'dedicated') => Promise<{ status: string; elapsed: number }>;
       previewSource: (source: string, task?: string) => ReturnType<PreviewRuntime["runSource"]>;
       stop: () => void;
+      dispose: () => Promise<void>;
       pending: () => Promise<Snapshot[]>;
       saveFailure: (kind: string | null) => void;
       source: () => string;
@@ -34,6 +35,7 @@ window.__risk = {
   preview: (html, candidate) => previewRuntime.run(html, document.getElementById('preview') ?? document.body, candidate),
   previewSource: (source, task) => previewRuntime.runSource(source, document.getElementById("preview") ?? document.body, task),
   stop: () => { runtime.stop(); probeRuntime.stop(); previewRuntime.stop(); },
+  dispose: async () => { await Promise.all([runtime.dispose(), probeRuntime.dispose(), previewRuntime.dispose()]); },
   pending: () => store.pending.toArray(),
   saveFailure: (kind) => { if (kind) sessionStorage.setItem('prototype-save-failure', kind); else sessionStorage.removeItem('prototype-save-failure'); },
   source: () => '',
