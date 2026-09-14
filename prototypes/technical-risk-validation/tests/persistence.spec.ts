@@ -4,18 +4,27 @@ test('E05 delayed draft load blocks early edits and preserves a confirmed replac
   await context.addInitScript(() => { if (location.origin === 'http://127.0.0.1:4310') sessionStorage.setItem('prototype-load-delay', '500'); });
   await page.goto('/');
   const editor = page.locator('.cm-content');
-  await expect(editor).toHaveAttribute('contenteditable', 'false');
-  await expect(page.getByLabel('Owner')).toBeDisabled();
-  await expect(page.getByLabel('Task')).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Run', exact: true })).toBeDisabled();
-  await editor.click(); await page.keyboard.type('ignored during load');
+  // Capture the gate and attempt browser editing in one event-loop turn.
+  // Remote click actionability can otherwise wait until the 500ms load finishes.
+  const attempted = await editor.evaluate(element => {
+    if (!(element instanceof HTMLElement)) throw new Error('Editor element unavailable');
+    const selects = Array.from(document.querySelectorAll<HTMLSelectElement>('select'));
+    const run = document.getElementById('run');
+    const gate = { editable: element.getAttribute('contenteditable'), ownerDisabled: selects.find(select => select.closest('label')?.textContent?.startsWith('Owner'))?.disabled, taskDisabled: selects.find(select => select.closest('label')?.textContent?.startsWith('Task'))?.disabled, runDisabled: run instanceof HTMLButtonElement && run.disabled };
+    element.focus();
+    document.execCommand('insertText', false, 'ignored during load');
+    return { ...gate, source: window.__risk.source() };
+  });
+  expect(attempted.editable).toBe('false');
+  expect(attempted.ownerDisabled).toBe(true); expect(attempted.taskDisabled).toBe(true); expect(attempted.runDisabled).toBe(true);
+  expect(attempted.source).not.toContain('ignored during load');
   await expect(editor).toHaveAttribute('contenteditable', 'true');
   expect(await page.evaluate(() => window.__risk.source())).not.toContain('ignored during load');
   await page.getByRole('textbox', { name: 'JavaScript source' }).fill('console.log("ready edit preserved")');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
   await page.reload();
   await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toHaveText('console.log("ready edit preserved")');
-  await info.attach('delayed-load', { body: JSON.stringify({ artificialDelayMs: 500, earlyEditsBlocked: true, confirmedReplacementRetained: true, physical: false }), contentType: 'application/json' });
+  await info.attach('delayed-load', { body: JSON.stringify({ artificialDelayMs: 500, attempted, inputMode: 'synchronous browser editing command during captured disabled state', earlyEditsBlocked: true, confirmedReplacementRetained: true, physical: false }), contentType: 'application/json' });
 });
 
 test('E05 versioned lesson identity, missing resources and cleared task storage are truthful', async ({ page, context }, info) => {
