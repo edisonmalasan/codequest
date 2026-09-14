@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-14. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-15. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
@@ -10,9 +10,9 @@ Status snapshot: 2026-09-14. Update this section when the phase or OpenSpec stag
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
 | Current OpenSpec stage | Apply continuation - 22/34 tasks complete; inventory and native Chrome diagnostics recorded; 12 required experiment/review gates incomplete |
-| Next execution step | Review persistent-bootstrap experiment failures and the [proposed scope adjustment](technical-risk-validation/proposed-scope-adjustment.md); Codex executes available tooling without manual user validation requests. Explicit progression decision remains unresolved |
+| Next execution step | Review the [dedicated-bootstrap experiment contract](technical-risk-validation/proposed-bootstrap-revision.md), current failures and [scope adjustment](technical-risk-validation/proposed-scope-adjustment.md). Available verification recorded; explicit architecture/scope/progression decisions unresolved |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Approved persistent-bootstrap experiment implemented/retested: native suite 45 passed/4 failed; independent Worker cycles retain four timeouts and 1101.9ms fresh-run miss. Native zoom/PWA/persistence passed; ten cold-process probe fails. Bundled target-lifetime and WebKit offline failures retained. Inaccessible device/AT and native quota limits remain untested/inconclusive; AP02 historical no-go retained |
+| Validation evidence | Approved persistent-bootstrap experiment implemented/retested: native full suite 34 passed/15 failed; independent post-loop fresh runs retain four timeouts. Native PWA/persistence and zoom geometry/source pass; 400% local Check times out; ten cold-process probe fails. Bundled target-lifetime and WebKit offline failures retained. Inaccessible device/AT and native quota limits remain untested/inconclusive; AP02 historical no-go retained |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
 
