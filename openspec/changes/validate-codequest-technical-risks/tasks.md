@@ -97,3 +97,8 @@ Final available-environment checkpoint: installed Chrome full suite 42/42 passed
 
 
 Persistent-bootstrap revision authorized 2026-09-14 by the project owner's explicit "Yes i approve" response to the D3/charter revision and experimental implementation/retest question. Apply now carries that bounded lifecycle/control-channel revision under existing E02/E03/E04/E05 tasks. No gate is marked passed before its retest; S01-S06, F01/F02 selection and progression remain pending. See the authorized contract in design/charter.
+
+
+## Authorized bootstrap experiment retest - 2026-09-14
+
+Explicit owner approval authorizes revised D3/charter experiment only. Private cleanup control and captured run-identity output implemented/retested through `e9e8436`. Final native suite **45 passed / 4 failed**; independent valid Worker runs **96/100 success**, four timeouts and next fresh run **1101.9ms**. Parent loop/independent preview/PWA/source/security subsets pass; native reliability, bundled target-lifetime and retained WebKit offline failures prevent Proceed. Chrome cold-process substitute fails before 0/10 completed trials. Passing isolated WebKit focus retest does not erase prior failure. [Report](../../../docs/technical-risk-validation/report.md#authorized-persistent-bootstrap-checkpoint---2026-09-14) retains actual commands, hashes and all failed results. **22/34 complete, 12 incomplete**; no task is checked off from unavailable equipment, proposed S01-S06 or experiment authorization. New result selection/self-review is pending. PR #6 remains draft; no Phase 2, Sync or Archive.
