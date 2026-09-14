@@ -1,0 +1,1997 @@
+{
+  "recordedAt": "2026-09-13T22:01:15.809Z",
+  "commit": "f65f13848517ee67091be1d1e9b712cfbf07ed6b",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/playwright.config.ts",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    "?? prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": true,
+    "mode": "headed installed Windows Chrome; automated interaction, not physical typing or assistive technology",
+    "chromiumArgs": [],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T21:57:43.910Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "afb291e568135c54495890c56c55074923f3f2d2f62633c3955c24cb99e6f5a9",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CTcQfg3o.js": "7380a4d06df30c558309573ac871034822ab8f4950e18bd089e0c357ebae26bb",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f236978a1946645ebe5cb754dc4697d5e55bf61e4fa70e35fa9c0a1b3092aa3c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "c0b544ee56a96c5a5a1beab552e69fc13c9e11a9f064f6d0805a965cc5bba15f",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 213630.80299999999,
+  "cases": [
+    {
+      "title": " / installed-chrome / offline-control.spec.ts / E05 diagnostic isolates offline emulation from the application and cache library",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1161,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "minimal-worker-offline-control",
+          "data": {
+            "browser": "153.0.8010.37",
+            "fixtureHashes": {
+              "offline-control.html": "e3429427a8d8c8bef307a9f6c1c0311590525d4983c2bec6997cbe5804e42df3",
+              "offline-control-worker.js": "6985aaae3b4566ce990aaf36ad8f09e05f1a4a4d424c3a971f444f85b2256bdb"
+            },
+            "online": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "before": {
+              "fetchCount": 1,
+              "workerOnline": true
+            },
+            "pageOnline": false,
+            "offline": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "after": {
+              "fetchCount": 2,
+              "workerOnline": false
+            },
+            "navigationError": "",
+            "offlinePolicyPassed": true,
+            "diagnosticOnly": true,
+            "physical": false,
+            "scope": "fixed in-memory service-worker Response; no Serwist/React/IndexedDB/learner execution"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / offline-diagnostic.spec.ts / E05 diagnostic separates prepared cache from offline-flag navigation behavior",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1483,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "prepared-cache-offline-diagnostic",
+          "data": {
+            "browser": "153.0.8010.37",
+            "prepared": {
+              "controller": "http://127.0.0.1:4310/sw.js",
+              "active": "activated",
+              "scope": "http://127.0.0.1:4310/",
+              "urls": [
+                "http://127.0.0.1:4310/assets/index-9dBvS5KA.css",
+                "http://127.0.0.1:4310/bootstrap.html?__WB_REVISION__=0f4ad31e984c608c186ba2d33762e5df",
+                "http://127.0.0.1:4310/bootstrap.js?__WB_REVISION__=cef80b0a63a2c134e6a71cd45082572d",
+                "http://127.0.0.1:4310/icon.svg?__WB_REVISION__=4549021edad28bd2eb01a39e31d86fb1",
+                "http://127.0.0.1:4310/index.html?__WB_REVISION__=3e9ba47580db428e2b38bc97888e35a0",
+                "http://127.0.0.1:4310/assets/index-CTcQfg3o.js",
+                "http://127.0.0.1:4310/manifest.json?__WB_REVISION__=9650e368aebad2b441fec3cafe5ac479",
+                "http://127.0.0.1:4310/preview.html?__WB_REVISION__=b618921ef23adce94fcd5d4e2c70ad05",
+                "http://127.0.0.1:4310/preview.js?__WB_REVISION__=5982f1cedf6b3a397b341b5ef8e01093",
+                "http://127.0.0.1:4310/worker.js?__WB_REVISION__=2c4e7df90bacad6fac658c52c6043277"
+              ],
+              "cachedIndexStatus": 200
+            },
+            "offlineFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "physicalColdLaunch": "untested",
+            "policyPassed": true
+          }
+        },
+        {
+          "name": "controlled-origin-outage",
+          "data": {
+            "browser": "153.0.8010.37",
+            "directOriginStatus": 503,
+            "outageFetch": {
+              "status": 200,
+              "error": ""
+            },
+            "diagnosticOnly": true,
+            "networkOffline": false,
+            "policyPassed": true
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / offline.spec.ts / E05 prepared offline new page retains source and local JS",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 4085,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "offline",
+          "data": {
+            "elapsedMs": 1695,
+            "mode": "new page, same browser process; physical cold process/install untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / offline.spec.ts / E05 update waits, save failure blocks activation, and two clients retain drafts",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 5929,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "update",
+          "data": {
+            "waitingObserved": true,
+            "failedSaveBlockedUpdate": true,
+            "clients": 2,
+            "physical": false,
+            "contentAssessmentChange": "mock separately; production lifecycle unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 delayed draft load blocks early edits and preserves a confirmed replacement",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2768,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "delayed-load",
+          "data": {
+            "artificialDelayMs": 500,
+            "earlyEditsBlocked": true,
+            "confirmedReplacementRetained": true,
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 versioned lesson identity, missing resources and cleared task storage are truthful",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1812,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "task-storage-clearing",
+          "data": {
+            "inventory": [
+              {
+                "key": "Q01/1/1",
+                "task": "Q01",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Print exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.",
+                "starter": "console.log(\"Not ready\");",
+                "hash": "0292c0f0a6169f5cec14085efa2a09b7f5163ed4ca66e111a7b0145625053d65"
+              },
+              {
+                "key": "RECORDS/1/1",
+                "task": "RECORDS",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Return the total quantity from summarize(records). The display plumbing is supplied.",
+                "starter": "function summarize(records) {\n  let total = 0;\n  for (const record of records) total += record.quantity;\n  return total;\n}",
+                "hash": "26f1811235ead3d53b98e2483bd494dd4da7b8742ae62e44b5d2c677ade8c03a"
+              }
+            ],
+            "confirmedSourceLostAfterExplicitTaskDatabaseClear": true,
+            "missingLessonDisclosed": true,
+            "realQuotaExhaustion": "not simulated by clearing; separately untested",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 interrupted unconfirmed edit does not replace the last confirmed draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1469,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "interrupted-save",
+          "data": {
+            "previousConfirmedSourceRecovered": true,
+            "failedUnconfirmedEditLostOnReload": true,
+            "physicalBackgroundLifecycle": "untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 35478,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "B09-cycle-mix",
+          "data": {
+            "rows": [
+              {
+                "mode": "reload",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 6,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 7,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 0,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 1,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 2,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 3,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 4,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 5,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "3ad6926d-db1c-4595-b7bb-7b3b488eb2cb",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              }
+            ],
+            "physical": false,
+            "contentAssessmentRevision": "identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger",
+            "browserMode": "headless same process; physical gate untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 incompatible downloaded assessment is rejected without replacing a saved draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1537,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "downloaded-version-rejection",
+          "data": {
+            "expectedIdentity": "Q01/1/1",
+            "receivedIdentity": "Q01/1/2",
+            "rejected": true,
+            "savedSourceRetained": "console.log(\"version rejection retains source\")",
+            "fixture": "controlled server response, not route interception",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 bounded task-origin quota experiment records enforcement and recovery",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1934,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "browser-quota",
+          "data": {
+            "origin": "http://127.0.0.1:4310",
+            "quotaBytes": 1,
+            "pressure": {
+              "committed": 128,
+              "errorName": "",
+              "maximumAttemptedSourceBytes": 8388608
+            },
+            "usage": {
+              "usage": 2795579,
+              "quota": 1,
+              "overrideActive": true,
+              "usageBreakdown": [
+                {
+                  "storageType": "file_systems",
+                  "usage": 0
+                },
+                {
+                  "storageType": "indexeddb",
+                  "usage": 106496
+                },
+                {
+                  "storageType": "cache_storage",
+                  "usage": 2657478
+                },
+                {
+                  "storageType": "service_workers",
+                  "usage": 31605
+                }
+              ]
+            },
+            "failure": "Saved on this device",
+            "quotaFailureObserved": false,
+            "diagnosticOnly": true,
+            "sourceRetainedInMemory": true,
+            "recoveredAfterOverrideReset": true,
+            "injectionDisabled": true,
+            "physicalDiskExhaustion": "not performed",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04 Worker supplied shell renders useful results and hostile markup as inert text",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 7156,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('iframe[title=\"Supplied Worker result preview\"]').contentFrame().locator('pre')\nExpected: \u001b[32m\"5\"\u001b[39m\nTimeout: 6000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('iframe[title=\"Supplied Worker result preview\"]').contentFrame().locator('pre') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for locator('iframe[title=\"Supplied Worker result preview\"]').contentFrame().locator('pre')\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04 Worker preview ten verified infinite loops recover with usable host and exact source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 24225,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-recovery",
+          "data": {
+            "browser": "153.0.8010.37",
+            "rows": [
+              {
+                "trial": 0,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2008.8999999985099
+                },
+                "freshRunMs": 177,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 1,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2008.6000000014901
+                },
+                "freshRunMs": 179,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 2,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2013.0999999977648
+                },
+                "freshRunMs": 227,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 3,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2007.199999999255
+                },
+                "freshRunMs": 408,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 4,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2001.0999999977648
+                },
+                "freshRunMs": 418,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 5,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2013.699999999255
+                },
+                "freshRunMs": 245,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 6,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2012.199999999255
+                },
+                "freshRunMs": 302,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 7,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2014.5
+                },
+                "freshRunMs": 457,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 8,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2002.5
+                },
+                "freshRunMs": 232,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 9,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2002.699999999255
+                },
+                "freshRunMs": 222,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              }
+            ],
+            "physical": false,
+            "marker": "trusted Worker dispatch immediately before executing source",
+            "emergencyTermination": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04 Worker preview hundred starts and resets reject flooding without leaked compartments",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 15123,
+      "errors": [
+        "Error: page.evaluate: Error: Fresh preview exceeded one-second budget\n    at eval (eval at evaluate (:311:30), <anonymous>:7:50)\n    at async <anonymous>:337:30"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04/E05 Worker preview retains containment after offline preparation and public asset update",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 9197,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-offline-update",
+          "data": {
+            "browser": "153.0.8010.37",
+            "sameProcessOfflineReload": true,
+            "publicAssetUpdate": true,
+            "onlineLearnerRequests": [],
+            "physicalColdLaunch": "untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / reconciliation.spec.ts / E06 lost response retries without duplicate reward and version rejection preserves immutable input",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 36,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "mock-reconciliation",
+          "data": {
+            "responseLost": true,
+            "receipt": {
+              "status": "duplicate",
+              "simulatedReward": false,
+              "message": "Already simulated accepted; no additional reward"
+            },
+            "retiredInputPreserved": {
+              "event": "retry-fixture",
+              "owner": "account-B",
+              "quest": "Q01",
+              "source": "console.log(\"Ready for CodeQuest\")",
+              "contentVersion": "1",
+              "assessmentVersion": "retired",
+              "passed": true
+            },
+            "productionAuthorization": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 positive and permissive negative controls observe real requests",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1229,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "sink-control",
+          "data": [
+            {
+              "method": "GET",
+              "path": "/positive",
+              "query": "?fixture=CONTROL",
+              "at": 1789336789880
+            },
+            {
+              "method": "GET",
+              "path": "/negative",
+              "query": "?fixture=CONTROL",
+              "at": 1789336789917
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 opaque network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2167,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.37",
+            "candidate": "opaque",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "0ecfdefc-529e-4b2d-885c-f3644f72ccc4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 310.1000000014901
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "f57eaa1a-25e4-4f03-9584-e5f26e188421",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 208.90000000223517
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "e6e69cde-a33e-4bf0-a3b3-e15312967de7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 212.80000000074506
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "50b5bd18-0ba7-4cae-b2aa-90452dccc147",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 101.30000000074506
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "1383104a-1de3-46fa-93c9-6f44b7ce1235",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 94
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "bff9a55a-d7cb-464f-be67-cbd5741ef5de",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 91
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "06b0cb5d-1e4f-445b-9b49-7230c425c4c3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 96.70000000298023
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "406e3ee9-1140-4bbb-8e9b-c7cceecd86f4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 93
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 opaque cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2800,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "opaque",
+            "task": "Q01",
+            "run": "85aefd7b-c3a6-4346-ad04-ea71cf4b07cb",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "storage blocked",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 1875.7999999970198
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 dedicated network/import/nested requests are denied online",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 3865,
+      "errors": [
+        "Error: xhr\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"success\"\u001b[39m\nReceived: \u001b[31m\"timeout\"\u001b[39m"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 dedicated cannot read application IndexedDB or session canary",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1152,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "storage",
+          "data": {
+            "source": "try{const databases=await indexedDB.databases();console.log(databases.some(d=>d.name==='application-canary')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('storage blocked')}console.log(typeof localStorage);console.log(typeof document);",
+            "candidate": "dedicated",
+            "task": "Q01",
+            "run": "4b960d53-7552-4648-b236-532fab80b3ed",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "status": "success",
+            "output": [
+              "APP_NOT_FOUND",
+              "undefined",
+              "undefined"
+            ],
+            "value": "[undefined]",
+            "elapsed": 158.39999999850988
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 malformed messages cannot become trusted output or privileged host actions",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1270,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E04 preview resource/parent/navigation/form probes are denied",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2973,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "preview",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2006
+            },
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E04 preview self-navigation capability is explicitly measured",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3002,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "self-navigation-risk",
+          "data": {
+            "result": {
+              "status": "preview-reset",
+              "elapsed": 2005.8999999985099
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/self-navigation",
+                "query": "?fixture=SELF_NAV",
+                "at": 1789336809926
+              }
+            ],
+            "policyPassed": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E04 parent frame policy comparison retains original navigation failure",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3177,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "parent-frame-policy",
+          "data": {
+            "worker": {
+              "source": "console.log(\"ready\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "87f5d19c-c160-4ed1-838a-077a400ac3de",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "ready"
+              ],
+              "value": "[undefined]",
+              "elapsed": 154.90000000223517
+            },
+            "preview": {
+              "status": "preview-reset",
+              "elapsed": 2010.1000000014901
+            },
+            "records": [],
+            "policyPassed": true,
+            "parentPolicy": "frame-src 'none'",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E02 lifecycle one hundred runs retain usability and leave no runtime frames",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 15810,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "lifecycle",
+          "data": {
+            "timings": [
+              {
+                "cycle": 0,
+                "status": "success",
+                "elapsed": 530.3999999985099
+              },
+              {
+                "cycle": 1,
+                "status": "success",
+                "elapsed": 170.89999999850988
+              },
+              {
+                "cycle": 2,
+                "status": "success",
+                "elapsed": 140.60000000149012
+              },
+              {
+                "cycle": 3,
+                "status": "success",
+                "elapsed": 137.19999999925494
+              },
+              {
+                "cycle": 4,
+                "status": "success",
+                "elapsed": 118.89999999850988
+              },
+              {
+                "cycle": 5,
+                "status": "success",
+                "elapsed": 174.10000000149012
+              },
+              {
+                "cycle": 6,
+                "status": "success",
+                "elapsed": 171.60000000149012
+              },
+              {
+                "cycle": 7,
+                "status": "success",
+                "elapsed": 93.80000000074506
+              },
+              {
+                "cycle": 8,
+                "status": "success",
+                "elapsed": 98.60000000149012
+              },
+              {
+                "cycle": 9,
+                "status": "success",
+                "elapsed": 92.39999999850988
+              },
+              {
+                "cycle": 10,
+                "status": "success",
+                "elapsed": 110.89999999850988
+              },
+              {
+                "cycle": 11,
+                "status": "success",
+                "elapsed": 203.39999999850988
+              },
+              {
+                "cycle": 12,
+                "status": "success",
+                "elapsed": 106.5
+              },
+              {
+                "cycle": 13,
+                "status": "success",
+                "elapsed": 93.5
+              },
+              {
+                "cycle": 14,
+                "status": "success",
+                "elapsed": 97.19999999925494
+              },
+              {
+                "cycle": 15,
+                "status": "success",
+                "elapsed": 193.39999999850988
+              },
+              {
+                "cycle": 16,
+                "status": "success",
+                "elapsed": 198.80000000074506
+              },
+              {
+                "cycle": 17,
+                "status": "success",
+                "elapsed": 152.5
+              },
+              {
+                "cycle": 18,
+                "status": "success",
+                "elapsed": 101.19999999925494
+              },
+              {
+                "cycle": 19,
+                "status": "success",
+                "elapsed": 107.80000000074506
+              },
+              {
+                "cycle": 20,
+                "status": "success",
+                "elapsed": 140
+              },
+              {
+                "cycle": 21,
+                "status": "success",
+                "elapsed": 113.69999999925494
+              },
+              {
+                "cycle": 22,
+                "status": "success",
+                "elapsed": 92.90000000223517
+              },
+              {
+                "cycle": 23,
+                "status": "success",
+                "elapsed": 93.09999999776483
+              },
+              {
+                "cycle": 24,
+                "status": "success",
+                "elapsed": 89.20000000298023
+              },
+              {
+                "cycle": 25,
+                "status": "success",
+                "elapsed": 89.5
+              },
+              {
+                "cycle": 26,
+                "status": "success",
+                "elapsed": 98.30000000074506
+              },
+              {
+                "cycle": 27,
+                "status": "success",
+                "elapsed": 106.19999999925494
+              },
+              {
+                "cycle": 28,
+                "status": "success",
+                "elapsed": 95.5
+              },
+              {
+                "cycle": 29,
+                "status": "success",
+                "elapsed": 104
+              },
+              {
+                "cycle": 30,
+                "status": "success",
+                "elapsed": 87.09999999776483
+              },
+              {
+                "cycle": 31,
+                "status": "success",
+                "elapsed": 89.5
+              },
+              {
+                "cycle": 32,
+                "status": "success",
+                "elapsed": 84.90000000223517
+              },
+              {
+                "cycle": 33,
+                "status": "success",
+                "elapsed": 88.5
+              },
+              {
+                "cycle": 34,
+                "status": "success",
+                "elapsed": 88.80000000074506
+              },
+              {
+                "cycle": 35,
+                "status": "success",
+                "elapsed": 87.30000000074506
+              },
+              {
+                "cycle": 36,
+                "status": "success",
+                "elapsed": 85.59999999776483
+              },
+              {
+                "cycle": 37,
+                "status": "success",
+                "elapsed": 83
+              },
+              {
+                "cycle": 38,
+                "status": "success",
+                "elapsed": 87
+              },
+              {
+                "cycle": 39,
+                "status": "success",
+                "elapsed": 92
+              },
+              {
+                "cycle": 40,
+                "status": "success",
+                "elapsed": 92.5
+              },
+              {
+                "cycle": 41,
+                "status": "success",
+                "elapsed": 88.39999999850988
+              },
+              {
+                "cycle": 42,
+                "status": "success",
+                "elapsed": 111
+              },
+              {
+                "cycle": 43,
+                "status": "success",
+                "elapsed": 86.60000000149012
+              },
+              {
+                "cycle": 44,
+                "status": "success",
+                "elapsed": 86.39999999850988
+              },
+              {
+                "cycle": 45,
+                "status": "success",
+                "elapsed": 90.40000000223517
+              },
+              {
+                "cycle": 46,
+                "status": "success",
+                "elapsed": 90.90000000223517
+              },
+              {
+                "cycle": 47,
+                "status": "success",
+                "elapsed": 86.89999999850988
+              },
+              {
+                "cycle": 48,
+                "status": "success",
+                "elapsed": 105.10000000149012
+              },
+              {
+                "cycle": 49,
+                "status": "success",
+                "elapsed": 130.5
+              },
+              {
+                "cycle": 50,
+                "status": "success",
+                "elapsed": 92.39999999850988
+              },
+              {
+                "cycle": 51,
+                "status": "success",
+                "elapsed": 105.39999999850988
+              },
+              {
+                "cycle": 52,
+                "status": "success",
+                "elapsed": 97.19999999925494
+              },
+              {
+                "cycle": 53,
+                "status": "success",
+                "elapsed": 97.80000000074506
+              },
+              {
+                "cycle": 54,
+                "status": "success",
+                "elapsed": 376.6000000014901
+              },
+              {
+                "cycle": 55,
+                "status": "success",
+                "elapsed": 624.3000000007451
+              },
+              {
+                "cycle": 56,
+                "status": "success",
+                "elapsed": 290
+              },
+              {
+                "cycle": 57,
+                "status": "success",
+                "elapsed": 342.69999999925494
+              },
+              {
+                "cycle": 58,
+                "status": "success",
+                "elapsed": 108.80000000074506
+              },
+              {
+                "cycle": 59,
+                "status": "success",
+                "elapsed": 125.69999999925494
+              },
+              {
+                "cycle": 60,
+                "status": "success",
+                "elapsed": 90.59999999776483
+              },
+              {
+                "cycle": 61,
+                "status": "success",
+                "elapsed": 97.59999999776483
+              },
+              {
+                "cycle": 62,
+                "status": "success",
+                "elapsed": 95.10000000149012
+              },
+              {
+                "cycle": 63,
+                "status": "success",
+                "elapsed": 97.60000000149012
+              },
+              {
+                "cycle": 64,
+                "status": "success",
+                "elapsed": 169.89999999850988
+              },
+              {
+                "cycle": 65,
+                "status": "success",
+                "elapsed": 99.10000000149012
+              },
+              {
+                "cycle": 66,
+                "status": "success",
+                "elapsed": 283.80000000074506
+              },
+              {
+                "cycle": 67,
+                "status": "success",
+                "elapsed": 314.5
+              },
+              {
+                "cycle": 68,
+                "status": "success",
+                "elapsed": 1541.199999999255
+              },
+              {
+                "cycle": 69,
+                "status": "success",
+                "elapsed": 181
+              },
+              {
+                "cycle": 70,
+                "status": "success",
+                "elapsed": 166.40000000223517
+              },
+              {
+                "cycle": 71,
+                "status": "success",
+                "elapsed": 108.20000000298023
+              },
+              {
+                "cycle": 72,
+                "status": "success",
+                "elapsed": 111.5
+              },
+              {
+                "cycle": 73,
+                "status": "success",
+                "elapsed": 123.19999999925494
+              },
+              {
+                "cycle": 74,
+                "status": "success",
+                "elapsed": 103.89999999850988
+              },
+              {
+                "cycle": 75,
+                "status": "success",
+                "elapsed": 98.80000000074506
+              },
+              {
+                "cycle": 76,
+                "status": "success",
+                "elapsed": 109.60000000149012
+              },
+              {
+                "cycle": 77,
+                "status": "success",
+                "elapsed": 264.8999999985099
+              },
+              {
+                "cycle": 78,
+                "status": "success",
+                "elapsed": 104.19999999925494
+              },
+              {
+                "cycle": 79,
+                "status": "success",
+                "elapsed": 187.10000000149012
+              },
+              {
+                "cycle": 80,
+                "status": "success",
+                "elapsed": 116
+              },
+              {
+                "cycle": 81,
+                "status": "success",
+                "elapsed": 486.1000000014901
+              },
+              {
+                "cycle": 82,
+                "status": "success",
+                "elapsed": 128.5
+              },
+              {
+                "cycle": 83,
+                "status": "success",
+                "elapsed": 87.30000000074506
+              },
+              {
+                "cycle": 84,
+                "status": "success",
+                "elapsed": 77.69999999925494
+              },
+              {
+                "cycle": 85,
+                "status": "success",
+                "elapsed": 85.39999999850988
+              },
+              {
+                "cycle": 86,
+                "status": "success",
+                "elapsed": 75.20000000298023
+              },
+              {
+                "cycle": 87,
+                "status": "success",
+                "elapsed": 85.39999999850988
+              },
+              {
+                "cycle": 88,
+                "status": "success",
+                "elapsed": 66.89999999850988
+              },
+              {
+                "cycle": 89,
+                "status": "success",
+                "elapsed": 100
+              },
+              {
+                "cycle": 90,
+                "status": "success",
+                "elapsed": 83.89999999850988
+              },
+              {
+                "cycle": 91,
+                "status": "success",
+                "elapsed": 229.80000000074506
+              },
+              {
+                "cycle": 92,
+                "status": "success",
+                "elapsed": 152.19999999925494
+              },
+              {
+                "cycle": 93,
+                "status": "success",
+                "elapsed": 118.69999999925494
+              },
+              {
+                "cycle": 94,
+                "status": "success",
+                "elapsed": 64.60000000149012
+              },
+              {
+                "cycle": 95,
+                "status": "success",
+                "elapsed": 125.19999999925494
+              },
+              {
+                "cycle": 96,
+                "status": "success",
+                "elapsed": 66.59999999776483
+              },
+              {
+                "cycle": 97,
+                "status": "success",
+                "elapsed": 73.40000000223517
+              },
+              {
+                "cycle": 98,
+                "status": "success",
+                "elapsed": 57.20000000298023
+              },
+              {
+                "cycle": 99,
+                "status": "success",
+                "elapsed": 77.29999999701977
+              }
+            ],
+            "hardMemoryQuota": "unverified",
+            "manualPhysicalCoverage": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 restricted cache/channel API inventory and wrong-source messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2684,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "api-inventory",
+          "data": {
+            "results": [
+              {
+                "source": "for(const name of ['fetch','indexedDB','caches','BroadcastChannel','WebSocket','Worker','document','localStorage']){try{console.log(name+':'+typeof self[name])}catch(e){console.log(name+':denied')}}try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "37af4d57-960f-4755-92e5-f492754b6e0d",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "fetch:function",
+                  "indexedDB:object",
+                  "caches:undefined",
+                  "BroadcastChannel:function",
+                  "WebSocket:function",
+                  "Worker:function",
+                  "document:undefined",
+                  "localStorage:undefined",
+                  "cache blocked"
+                ],
+                "value": "[undefined]",
+                "elapsed": 1112.1000000014901
+              },
+              {
+                "source": "for(const name of ['fetch','indexedDB','caches','BroadcastChannel','WebSocket','Worker','document','localStorage']){try{console.log(name+':'+typeof self[name])}catch(e){console.log(name+':denied')}}try{console.log((await caches.keys()).includes('APP_SYNTHETIC_ONLY')?'APP_FOUND':'APP_NOT_FOUND')}catch(e){console.log('cache blocked')}",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "d42e0ddb-a5e4-47c0-887c-302f14fbac06",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "status": "success",
+                "output": [
+                  "fetch:function",
+                  "indexedDB:object",
+                  "caches:object",
+                  "BroadcastChannel:function",
+                  "WebSocket:function",
+                  "Worker:function",
+                  "document:undefined",
+                  "localStorage:undefined",
+                  "APP_NOT_FOUND"
+                ],
+                "value": "[undefined]",
+                "elapsed": 423.79999999701977
+              }
+            ],
+            "correlated": {
+              "source": "await new Promise(r=>setTimeout(r,100));console.log(\"current\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "d249072d-0d5c-4973-9615-e45bc3ecd312",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "current"
+              ],
+              "value": "[undefined]",
+              "elapsed": 217.09999999776483
+            },
+            "channelCrossOriginBehavior": "not established by API availability; separate cross-origin probe required"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 cross-origin channel, cookie canary and oversized raw messages",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2542,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "channel-cookie-message",
+          "data": {
+            "observations": [
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "14c8349c-fe91-4f06-96fb-b8addc3ad7f2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 560.6999999992549
+                },
+                "appReceivedLearnerChannel": false
+              },
+              {
+                "result": {
+                  "source": "let seen=false;try{const c=new BroadcastChannel('codequest-synthetic-channel');c.onmessage=()=>{seen=true};c.postMessage('LEARNER_SYNTHETIC');await new Promise(r=>setTimeout(r,250));c.close()}catch(e){}console.log(seen?'APP_CHANNEL_FOUND':'APP_CHANNEL_NOT_FOUND');console.log(typeof cookieStore);if(typeof cookieStore!=='undefined'){try{console.log(JSON.stringify(await cookieStore.get('prototype_canary')))}catch(e){console.log('cookie denied')}}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e5bf9ff7-3009-4f79-8b0e-47a39f137de5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "APP_CHANNEL_NOT_FOUND",
+                    "undefined"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 502.0999999977648
+                },
+                "appReceivedLearnerChannel": false
+              }
+            ],
+            "oversized": {
+              "source": "self.postMessage(\"x\".repeat(17000));await new Promise(r=>setTimeout(r,100))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "8d065541-3e13-49b7-bd3a-ab42b72cab8e",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 100.19999999925494
+            },
+            "allocationQuota": "unverified; raw clone precedes validation"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E04 finite message flood and repeated explicit preview reset preserve the host",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2957,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "finite-preview-flood-reset",
+          "data": {
+            "flood": {
+              "status": "preview-reset",
+              "elapsed": 2008.1000000014901
+            },
+            "resets": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 2.199999999254942
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 2.600000001490116
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 1.5
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 3
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 1.6000000014901161
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 1.3999999985098839
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 1.699999999254942
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 2.100000001490116
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 2
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 1.800000000745058
+              }
+            ],
+            "tightLoop": "separate watchdog evidence failed; this is not a recovery gate pass"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E04 isolated preview executes useful inline JS while denying resource and self-navigation probes",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3253,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "isolated-preview",
+          "data": {
+            "inlineJavaScriptExecuted": true,
+            "usefulTotal": "5",
+            "navigation": {
+              "status": "preview-reset",
+              "elapsed": 2000.199999999255
+            },
+            "records": [],
+            "physical": false,
+            "cpuRecovery": "separate tight-loop probe failed; no production selection"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E01/E06 read, run, failed check, hint, correction, provisional save and reload",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2229,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "environment",
+          "data": {
+            "browser": "153.0.8010.37",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E02 syntax/runtime errors, limits, termination, restart and stale output",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 8905,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[32m- Array [\u001b[39m\n\u001b[32m-   \"fresh\",\u001b[39m\n\u001b[32m- ]\u001b[39m\n\u001b[31m+ Array []\u001b[39m"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E05 storage failure is explicit and preserves in-memory source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1934,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E06 immutable pending source, owner isolation and explicit import",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2264,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E05 saved source survives twenty reload cycles and protected response is not cached",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 7652,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E01 editor undo, indentation, resize, task preservation and explicit reset",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2197,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}

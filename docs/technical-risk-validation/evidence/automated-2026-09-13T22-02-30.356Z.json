@@ -1,0 +1,3460 @@
+{
+  "recordedAt": "2026-09-13T22:02:30.356Z",
+  "commit": "f65f13848517ee67091be1d1e9b712cfbf07ed6b",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/playwright.config.ts",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/desktop-interaction.spec.ts",
+    "tests/preview-recovery.spec.ts",
+    "tests/security.spec.ts",
+    "tests/workspace.spec.ts",
+    "--grep",
+    "keyboard editing|zoom shortcuts|reduced-motion|instrumented input|renders useful results|hundred starts|dedicated network|syntax/runtime errors"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": true,
+    "mode": "headed installed Windows Chrome; automated interaction, not physical typing or assistive technology",
+    "chromiumArgs": [],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T22:01:42.891Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "afb291e568135c54495890c56c55074923f3f2d2f62633c3955c24cb99e6f5a9",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CTcQfg3o.js": "7380a4d06df30c558309573ac871034822ab8f4950e18bd089e0c357ebae26bb",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f236978a1946645ebe5cb754dc4697d5e55bf61e4fa70e35fa9c0a1b3092aa3c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "c0b544ee56a96c5a5a1beab552e69fc13c9e11a9f064f6d0805a965cc5bba15f",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 48374.668,
+  "cases": [
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01/E06 keyboard editing, selection, undo redo, focus escape and distinct feedback",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 8687,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: 'Run', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  6000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: 'Run', exact: true }) with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Run', exact: true })\u001b[22m\n\u001b[2m    15 × locator resolved to <button id=\"run\">Run</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 zoom shortcuts and narrow reflow preserve essential actions and source",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 1453,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m322\u001b[39m\nReceived:    \u001b[31m324\u001b[39m"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 reduced-motion preference and accessibility tree expose essential text",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2054,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "desktop-motion-ax",
+          "data": {
+            "motion": {
+              "preference": true,
+              "activeAnimations": 0,
+              "scrollBehavior": "auto"
+            },
+            "tree": [
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "button",
+                "name": "Save draft and apply available update"
+              },
+              {
+                "role": "heading",
+                "name": "CodeQuest validation workspace"
+              },
+              {
+                "role": "StaticText",
+                "name": "Online"
+              },
+              {
+                "role": "StaticText",
+                "name": " · "
+              },
+              {
+                "role": "StaticText",
+                "name": "Public lesson and runtime assets prepared offline"
+              },
+              {
+                "role": "StaticText",
+                "name": "Save draft and apply available update"
+              },
+              {
+                "role": "heading",
+                "name": "Output and results"
+              },
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "heading",
+                "name": "Mock acceptance only"
+              },
+              {
+                "role": "button",
+                "name": "Save pending snapshot"
+              },
+              {
+                "role": "button",
+                "name": "Replay pending snapshot"
+              },
+              {
+                "role": "button",
+                "name": "Explicitly import guest snapshot"
+              },
+              {
+                "role": "heading",
+                "name": "Supplied preview"
+              },
+              {
+                "role": "button",
+                "name": "Open bounded preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Phase 1 · disposable technical prototype"
+              },
+              {
+                "role": "StaticText",
+                "name": "CodeQuest validation workspace"
+              },
+              {
+                "role": "StaticText",
+                "name": "No real accounts, authoritative rewards, telemetry or independent grading."
+              },
+              {
+                "role": "StaticText",
+                "name": "Owner "
+              },
+              {
+                "role": "StaticText",
+                "name": "Task "
+              },
+              {
+                "role": "StaticText",
+                "name": "Compartment "
+              },
+              {
+                "role": "heading",
+                "name": "Supplied inventory preview"
+              },
+              {
+                "role": "button",
+                "name": "Show hint"
+              },
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "button",
+                "name": "Run"
+              },
+              {
+                "role": "button",
+                "name": "Check"
+              },
+              {
+                "role": "button",
+                "name": "Stop"
+              },
+              {
+                "role": "button",
+                "name": "Reset source"
+              },
+              {
+                "role": "button",
+                "name": "Copy source"
+              },
+              {
+                "role": "StaticText",
+                "name": "Output and results"
+              },
+              {
+                "role": "StaticText",
+                "name": "Ready"
+              },
+              {
+                "role": "StaticText",
+                "name": "No local completion"
+              },
+              {
+                "role": "StaticText",
+                "name": "Mock acceptance only"
+              },
+              {
+                "role": "StaticText",
+                "name": "Save pending snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "Replay pending snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "Explicitly import guest snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "No pending snapshot for this owner"
+              },
+              {
+                "role": "StaticText",
+                "name": "Supplied preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Text equivalent: "
+              },
+              {
+                "role": "StaticText",
+                "name": "5"
+              },
+              {
+                "role": "StaticText",
+                "name": "Open bounded preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Supplied inventory preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Return the total quantity from summarize(records). The display plumbing is supplied."
+              },
+              {
+                "role": "StaticText",
+                "name": "Show hint"
+              },
+              {
+                "role": "StaticText",
+                "name": "Change the text between the quotes, then compare the output with the objective."
+              },
+              {
+                "role": "StaticText",
+                "name": "Escape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit."
+              },
+              {
+                "role": "StaticText",
+                "name": "Saved on this device"
+              },
+              {
+                "role": "StaticText",
+                "name": "Run"
+              },
+              {
+                "role": "StaticText",
+                "name": "Check"
+              },
+              {
+                "role": "StaticText",
+                "name": "Stop"
+              },
+              {
+                "role": "StaticText",
+                "name": "Reset source"
+              },
+              {
+                "role": "StaticText",
+                "name": "Copy source"
+              },
+              {
+                "role": "textbox",
+                "name": "JavaScript source"
+              },
+              {
+                "role": "StaticText",
+                "name": "function"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "summarize"
+              },
+              {
+                "role": "StaticText",
+                "name": "("
+              },
+              {
+                "role": "StaticText",
+                "name": "records"
+              },
+              {
+                "role": "StaticText",
+                "name": ") {"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "let"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "total"
+              },
+              {
+                "role": "StaticText",
+                "name": " = "
+              },
+              {
+                "role": "StaticText",
+                "name": "0"
+              },
+              {
+                "role": "StaticText",
+                "name": ";"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "for"
+              },
+              {
+                "role": "StaticText",
+                "name": " ("
+              },
+              {
+                "role": "StaticText",
+                "name": "const"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "record"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "of"
+              },
+              {
+                "role": "StaticText",
+                "name": " records) total += record.quantity;"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "return"
+              },
+              {
+                "role": "StaticText",
+                "name": " total;"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              }
+            ],
+            "preferenceMethod": "browser media emulation; global Windows preference unchanged",
+            "screenReaderComprehension": "untested; accessibility tree does not establish NVDA or VoiceOver speech"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 instrumented input-to-next-rendered-frame latency records ten warmup and hundred samples",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3008,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "desktop-input-latency",
+          "data": {
+            "browser": "153.0.8010.37",
+            "samples": [
+              {
+                "elapsed": 5.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 16.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 2.7999999970197678,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 3.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 3.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 5.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 7.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.799999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.299999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.799999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 5.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 5.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.299999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 7.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 3.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 3.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 5.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.200000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 5.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 6.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 16.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 8.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.799999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.299999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              }
+            ],
+            "warmup": 10,
+            "measured": 100,
+            "p95": 13.700000002980232,
+            "diagnosticThresholdMs": 100,
+            "diagnosticWithinThreshold": true,
+            "boundary": "beforeinput receipt to next animation-frame callback with exact current source; frame proxy, not actual pixel presentation or physical input",
+            "physicalTyping": false,
+            "lowerPoweredDeviceDeclared": false,
+            "b01PhysicalVerdict": "untested; scope adjustment required to use this automated diagnostic as progression evidence"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04 Worker supplied shell renders useful results and hostile markup as inert text",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1759,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-shell-denial",
+          "data": {
+            "browser": "153.0.8010.37",
+            "usefulTotal": "5",
+            "hostileMarkup": "inert text, not executable DOM",
+            "sinkRequests": [],
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / preview-recovery.spec.ts / E04 Worker preview hundred starts and resets reject flooding without leaked compartments",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 13687,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-resets",
+          "data": {
+            "browser": "153.0.8010.37",
+            "rows": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 169.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "8c83a5b8-3db8-4928-a900-48072e1e583b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 158.90000000223517
+                }
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 145.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6362d518-084d-4e70-b65e-db1f9272f7e9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 136
+                }
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 146.10000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5cbe63da-be8c-4971-b56a-d201e4115c05",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 139.39999999850988
+                }
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 124.40000000223517,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ad42060e-e7fd-43ee-8d60-b85d93788469",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 121.39999999850988
+                }
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 124.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "bf05b42d-acf2-47fe-9a1c-a5cf39759f68",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 113.30000000074506
+                }
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 126.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "724d1d48-0e86-4c2f-9548-b71a18ec00e3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 123.69999999925494
+                }
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 113.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "04985655-3939-42fb-a4e1-980d17e7a863",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.69999999925494
+                }
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 113.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c4d1ed68-f8b9-417e-82d2-a5c9a5aebae4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 110.5
+                }
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 124.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9615db8c-f278-4c6d-8802-a1ca453509fa",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 112.5
+                }
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 112.39999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "60512407-3ea6-433d-b3ea-f1651f4b2fee",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 103.69999999925494
+                }
+              },
+              {
+                "cycle": 10,
+                "status": "preview-stopped",
+                "elapsed": 112.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "fee53cb6-f118-400e-8d61-648b711e66ec",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 103.60000000149012
+                }
+              },
+              {
+                "cycle": 11,
+                "status": "preview-stopped",
+                "elapsed": 136.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c444f48c-7ff0-478b-8d1f-b13d7f3452c8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 129.10000000149012
+                }
+              },
+              {
+                "cycle": 12,
+                "status": "preview-stopped",
+                "elapsed": 123.89999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9f69c1c9-2e93-40c5-9dca-9b313a670322",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 122.30000000074506
+                }
+              },
+              {
+                "cycle": 13,
+                "status": "preview-stopped",
+                "elapsed": 102.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1a261b32-ef3a-430e-be6b-71112ec42318",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 98.80000000074506
+                }
+              },
+              {
+                "cycle": 14,
+                "status": "preview-stopped",
+                "elapsed": 128.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ed45657d-cff6-48ce-b308-b0b215190a25",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 122.19999999925494
+                }
+              },
+              {
+                "cycle": 15,
+                "status": "preview-stopped",
+                "elapsed": 111.79999999701977,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "805127be-1611-4606-94b0-5b1fb866b4c9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 109.09999999776483
+                }
+              },
+              {
+                "cycle": 16,
+                "status": "preview-stopped",
+                "elapsed": 369.1000000014901,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "94e032ee-a668-42c5-8eb7-30043a2d613f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 357.30000000074506
+                }
+              },
+              {
+                "cycle": 17,
+                "status": "preview-stopped",
+                "elapsed": 279.0999999977648,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "16d58f67-4665-4d40-bd8e-0b09c192cef0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 273.19999999925494
+                }
+              },
+              {
+                "cycle": 18,
+                "status": "preview-stopped",
+                "elapsed": 123.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "7d019fe8-74d1-410e-a556-ec30b8f5e974",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 118.60000000149012
+                }
+              },
+              {
+                "cycle": 19,
+                "status": "preview-stopped",
+                "elapsed": 113.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d7e4f40a-1359-4abf-abce-8c3b1398c346",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 110.19999999925494
+                }
+              },
+              {
+                "cycle": 20,
+                "status": "preview-stopped",
+                "elapsed": 102.89999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "b630b893-e8e8-4f8e-8a88-b5063199e7b6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 101
+                }
+              },
+              {
+                "cycle": 21,
+                "status": "preview-stopped",
+                "elapsed": 111.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5e4e1fbd-e73f-408b-8f61-7da808e2583c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 106.80000000074506
+                }
+              },
+              {
+                "cycle": 22,
+                "status": "preview-stopped",
+                "elapsed": 102.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "baa9a721-0b04-4436-b533-4e546c26d17e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.60000000149012
+                }
+              },
+              {
+                "cycle": 23,
+                "status": "preview-stopped",
+                "elapsed": 111,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c72168f2-8afc-4c9b-999e-0b431a6ad31f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.70000000298023
+                }
+              },
+              {
+                "cycle": 24,
+                "status": "preview-stopped",
+                "elapsed": 101,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9d565c2f-3096-47e1-8489-0059a0554e79",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 99.09999999776483
+                }
+              },
+              {
+                "cycle": 25,
+                "status": "preview-stopped",
+                "elapsed": 110.89999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0be56f4b-168a-4074-a325-18f3330bd63b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.20000000298023
+                }
+              },
+              {
+                "cycle": 26,
+                "status": "preview-stopped",
+                "elapsed": 101.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d6bcaf95-e935-4296-a799-e328a2f76cdb",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 99.5
+                }
+              },
+              {
+                "cycle": 27,
+                "status": "preview-stopped",
+                "elapsed": 115,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "97269992-3132-42c2-91ce-bce4aa3cb161",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 102.60000000149012
+                }
+              },
+              {
+                "cycle": 28,
+                "status": "preview-stopped",
+                "elapsed": 102.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c4a50489-86a1-41c1-b6e3-9863b66890e3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.69999999925494
+                }
+              },
+              {
+                "cycle": 29,
+                "status": "preview-stopped",
+                "elapsed": 102.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c68cc773-141a-4118-a88c-3f2c06ff9ae8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.29999999701977
+                }
+              },
+              {
+                "cycle": 30,
+                "status": "preview-stopped",
+                "elapsed": 102,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "b2686a85-4084-458a-81c1-8e585c9ed1f4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.09999999776483
+                }
+              },
+              {
+                "cycle": 31,
+                "status": "preview-stopped",
+                "elapsed": 111.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "3f3826a8-6704-4c0d-876a-02d9680f6288",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 103.40000000223517
+                }
+              },
+              {
+                "cycle": 32,
+                "status": "preview-stopped",
+                "elapsed": 110,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d9f4262a-a753-4d7d-a0b2-31c15a947a64",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 102.59999999776483
+                }
+              },
+              {
+                "cycle": 33,
+                "status": "preview-stopped",
+                "elapsed": 101.39999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "479b9413-0f1e-446c-a7b4-b1b21d0e582f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 93.40000000223517
+                }
+              },
+              {
+                "cycle": 34,
+                "status": "preview-stopped",
+                "elapsed": 103.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d3a32ee3-2eea-4b7f-84cc-b056d3ff7de6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 96.19999999925494
+                }
+              },
+              {
+                "cycle": 35,
+                "status": "preview-stopped",
+                "elapsed": 103,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "f8c009eb-36b5-45eb-a4af-350a6b88d08a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 95.39999999850988
+                }
+              },
+              {
+                "cycle": 36,
+                "status": "preview-stopped",
+                "elapsed": 91.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d37d6bde-8069-4acc-bcd2-40d4870fa952",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 87.90000000223517
+                }
+              },
+              {
+                "cycle": 37,
+                "status": "preview-stopped",
+                "elapsed": 103.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2d38bf5a-5a45-430f-a866-cf03ace11c3f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 91.90000000223517
+                }
+              },
+              {
+                "cycle": 38,
+                "status": "preview-stopped",
+                "elapsed": 89.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "b340a85c-885b-449a-bc7d-85baee151c7f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 87.69999999925494
+                }
+              },
+              {
+                "cycle": 39,
+                "status": "preview-stopped",
+                "elapsed": 99.59999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "20b4b142-ed28-40ea-b339-a0fe34ac0ea1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 88.10000000149012
+                }
+              },
+              {
+                "cycle": 40,
+                "status": "preview-stopped",
+                "elapsed": 101.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "47854bc0-3cdc-4f8e-a638-8b345ca3d824",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.09999999776483
+                }
+              },
+              {
+                "cycle": 41,
+                "status": "preview-stopped",
+                "elapsed": 180.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "aafcc006-4c58-41ff-88f9-6af8ca2e0b92",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 170.60000000149012
+                }
+              },
+              {
+                "cycle": 42,
+                "status": "preview-stopped",
+                "elapsed": 124.10000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9d31bef1-8285-4318-8e2a-c08f469b1df4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 111.90000000223517
+                }
+              },
+              {
+                "cycle": 43,
+                "status": "preview-stopped",
+                "elapsed": 113.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "cce88c6f-8748-4c6e-8e29-db3badc3815d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 110.59999999776483
+                }
+              },
+              {
+                "cycle": 44,
+                "status": "preview-stopped",
+                "elapsed": 111.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "75cdaa67-8cd3-446b-ad10-d7686cb16d8f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 103.5
+                }
+              },
+              {
+                "cycle": 45,
+                "status": "preview-stopped",
+                "elapsed": 111.90000000223517,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0283d8ff-e667-4bcb-95b2-29c9adc7893b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.60000000149012
+                }
+              },
+              {
+                "cycle": 46,
+                "status": "preview-stopped",
+                "elapsed": 191.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "64a7133c-766e-4430-a0d7-21832caebb03",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 181.30000000074506
+                }
+              },
+              {
+                "cycle": 47,
+                "status": "preview-stopped",
+                "elapsed": 123.09999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1d3bdbe4-fdca-4149-b581-95244c73a14b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 118.10000000149012
+                }
+              },
+              {
+                "cycle": 48,
+                "status": "preview-stopped",
+                "elapsed": 132.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "dd37362c-bd93-4c09-bfc0-c4da5679af86",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 124.89999999850988
+                }
+              },
+              {
+                "cycle": 49,
+                "status": "preview-stopped",
+                "elapsed": 110.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "421bc4f0-ca4a-4874-92a3-cac98a9174f1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 107.80000000074506
+                }
+              },
+              {
+                "cycle": 50,
+                "status": "preview-stopped",
+                "elapsed": 113.10000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "bd91dc99-f6b0-4067-8bee-6fceb34e188a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 106.80000000074506
+                }
+              },
+              {
+                "cycle": 51,
+                "status": "preview-stopped",
+                "elapsed": 114.39999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5e859948-623d-41a0-b1e4-729cd2262790",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 110.80000000074506
+                }
+              },
+              {
+                "cycle": 52,
+                "status": "preview-stopped",
+                "elapsed": 114.20000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5dd5b176-3c62-4dd1-afc5-4b537a2f7324",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 106.69999999925494
+                }
+              },
+              {
+                "cycle": 53,
+                "status": "preview-stopped",
+                "elapsed": 112.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a9ee833e-7236-44bc-8d48-2cc4361fc129",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 105.30000000074506
+                }
+              },
+              {
+                "cycle": 54,
+                "status": "preview-stopped",
+                "elapsed": 100.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "abdc72b9-5e19-48a1-96cf-650ca95a3f87",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 98.69999999925494
+                }
+              },
+              {
+                "cycle": 55,
+                "status": "preview-stopped",
+                "elapsed": 110.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "7e1ffd79-671c-45ed-897f-1e167808b5cf",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 102.90000000223517
+                }
+              },
+              {
+                "cycle": 56,
+                "status": "preview-stopped",
+                "elapsed": 103.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "b3dd2940-3c56-489e-af35-fdd77d634c29",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100
+                }
+              },
+              {
+                "cycle": 57,
+                "status": "preview-stopped",
+                "elapsed": 123.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "08876a39-62cc-4363-a8fc-67bcda5cab91",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 115.80000000074506
+                }
+              },
+              {
+                "cycle": 58,
+                "status": "preview-stopped",
+                "elapsed": 111.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5f15f275-fdaf-48c0-82ff-8166cd9de6d0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 109.79999999701977
+                }
+              },
+              {
+                "cycle": 59,
+                "status": "preview-stopped",
+                "elapsed": 125.09999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "4d5e10ae-e77b-4484-aea3-6097e8ea860b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 113.80000000074506
+                }
+              },
+              {
+                "cycle": 60,
+                "status": "preview-stopped",
+                "elapsed": 112.90000000223517,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a49937c1-0a4d-47d7-b66e-a47257d515b4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 101.69999999925494
+                }
+              },
+              {
+                "cycle": 61,
+                "status": "preview-stopped",
+                "elapsed": 89.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ac578262-59bf-4501-88f2-73d46de6dc79",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 84.5
+                }
+              },
+              {
+                "cycle": 62,
+                "status": "preview-stopped",
+                "elapsed": 113.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e6dd10c0-e809-4f9b-a551-5941b0c20629",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 107.10000000149012
+                }
+              },
+              {
+                "cycle": 63,
+                "status": "preview-stopped",
+                "elapsed": 110.10000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "08b9cbb7-2a56-4a63-904e-1f609dd37f9d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 103.30000000074506
+                }
+              },
+              {
+                "cycle": 64,
+                "status": "preview-stopped",
+                "elapsed": 101,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2f65f5c7-628f-45d1-8464-b723fb8b946b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 90.69999999925494
+                }
+              },
+              {
+                "cycle": 65,
+                "status": "preview-stopped",
+                "elapsed": 89.70000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2dc5d263-06bf-4b80-9b2f-52aeb3bcf9e5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 80.5
+                }
+              },
+              {
+                "cycle": 66,
+                "status": "preview-stopped",
+                "elapsed": 102.29999999701977,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "740b0517-84f3-4059-835b-643b7738045a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 90.5
+                }
+              },
+              {
+                "cycle": 67,
+                "status": "preview-stopped",
+                "elapsed": 101.20000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6ea8e872-4df3-47dd-a063-1cb4126f8e07",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 96.70000000298023
+                }
+              },
+              {
+                "cycle": 68,
+                "status": "preview-stopped",
+                "elapsed": 166.09999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ee8dd76c-e0b6-44bb-b4df-c5b3a50fac53",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 155.09999999776483
+                }
+              },
+              {
+                "cycle": 69,
+                "status": "preview-stopped",
+                "elapsed": 121.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "15e3f587-31dd-49db-88ee-52dd6be4d904",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 117.89999999850988
+                }
+              },
+              {
+                "cycle": 70,
+                "status": "preview-stopped",
+                "elapsed": 121.70000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "88b2d9b2-b395-4bdd-8765-b33f780a1c4d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 116.30000000074506
+                }
+              },
+              {
+                "cycle": 71,
+                "status": "preview-stopped",
+                "elapsed": 135.29999999701977,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e2abb996-13de-4e4e-b602-f170ee418c4f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 123.39999999850988
+                }
+              },
+              {
+                "cycle": 72,
+                "status": "preview-stopped",
+                "elapsed": 269.9000000022352,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "42a511c2-7202-42f4-b5fb-ff388730f6f9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 263.80000000074506
+                }
+              },
+              {
+                "cycle": 73,
+                "status": "preview-stopped",
+                "elapsed": 157.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "eadec942-18aa-45d9-89ac-36c286c33374",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 148.60000000149012
+                }
+              },
+              {
+                "cycle": 74,
+                "status": "preview-stopped",
+                "elapsed": 134.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "3da0b5e7-548a-4996-aef1-2958099faa60",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 128.89999999850988
+                }
+              },
+              {
+                "cycle": 75,
+                "status": "preview-stopped",
+                "elapsed": 122.90000000223517,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1f414653-f574-4e2b-b212-698c256f6f4f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 118.5
+                }
+              },
+              {
+                "cycle": 76,
+                "status": "preview-stopped",
+                "elapsed": 123.79999999701977,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a7947368-ed72-4b39-8dae-768861514485",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 120.29999999701977
+                }
+              },
+              {
+                "cycle": 77,
+                "status": "preview-stopped",
+                "elapsed": 112.20000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "8b9bc1f2-a07e-45b7-8dd9-bd2d24cbfe7d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 109.39999999850988
+                }
+              },
+              {
+                "cycle": 78,
+                "status": "preview-stopped",
+                "elapsed": 110.19999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "529f752e-4ea4-4e19-951f-db458f744c9a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 104.80000000074506
+                }
+              },
+              {
+                "cycle": 79,
+                "status": "preview-stopped",
+                "elapsed": 124.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "8976f925-a88e-4f7c-b629-5022702b39b2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 114.40000000223517
+                }
+              },
+              {
+                "cycle": 80,
+                "status": "preview-stopped",
+                "elapsed": 124.59999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e2b159d4-468f-4fb9-9058-8d85d1c15992",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 118.79999999701977
+                }
+              },
+              {
+                "cycle": 81,
+                "status": "preview-stopped",
+                "elapsed": 111,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "75ace3fc-3427-4a4f-8d92-ab28af5ed1b6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100
+                }
+              },
+              {
+                "cycle": 82,
+                "status": "preview-stopped",
+                "elapsed": 122.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6a0b462d-20f1-4efe-8d27-e68798531e7d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 119.80000000074506
+                }
+              },
+              {
+                "cycle": 83,
+                "status": "preview-stopped",
+                "elapsed": 122.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "7fbeb0c0-33a4-48d9-b4ed-017d07015055",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 118.29999999701977
+                }
+              },
+              {
+                "cycle": 84,
+                "status": "preview-stopped",
+                "elapsed": 126.39999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "030c9a8c-d11d-4c05-abee-c6a1a0ed1740",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 122.59999999776483
+                }
+              },
+              {
+                "cycle": 85,
+                "status": "preview-stopped",
+                "elapsed": 145.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "975735c2-826a-459d-a18e-7bfdec6fa7e2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 139.5
+                }
+              },
+              {
+                "cycle": 86,
+                "status": "preview-stopped",
+                "elapsed": 122.40000000223517,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "66ede9ba-03ac-4149-902c-eeb2e00b7297",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 115.59999999776483
+                }
+              },
+              {
+                "cycle": 87,
+                "status": "preview-stopped",
+                "elapsed": 102,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "867477c1-c6e2-40b5-a5e6-0d86590ba724",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 97.89999999850988
+                }
+              },
+              {
+                "cycle": 88,
+                "status": "preview-stopped",
+                "elapsed": 101.29999999701977,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6af9700f-301c-42bc-86c2-a448fd2f3752",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 95.5
+                }
+              },
+              {
+                "cycle": 89,
+                "status": "preview-stopped",
+                "elapsed": 111.80000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "633fa404-a15d-423a-8de4-003d03406b97",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 104
+                }
+              },
+              {
+                "cycle": 90,
+                "status": "preview-stopped",
+                "elapsed": 103.70000000298023,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0929cb4e-f816-4b4a-952f-8c5d7cc8c1c1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 99.10000000149012
+                }
+              },
+              {
+                "cycle": 91,
+                "status": "preview-stopped",
+                "elapsed": 111.5,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c42b5679-691e-4e5c-ae48-f6cac771bfd5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 104.69999999925494
+                }
+              },
+              {
+                "cycle": 92,
+                "status": "preview-stopped",
+                "elapsed": 102.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9d1012bf-f1d8-4b98-9f68-341f8f3a8d69",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.19999999925494
+                }
+              },
+              {
+                "cycle": 93,
+                "status": "preview-stopped",
+                "elapsed": 158.10000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "164dbb65-518e-4165-8e5a-372bc96d23a8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 151.39999999850988
+                }
+              },
+              {
+                "cycle": 94,
+                "status": "preview-stopped",
+                "elapsed": 112.09999999776483,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0e9d64e3-dfe5-490a-b275-ee4d11a791e4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 100.10000000149012
+                }
+              },
+              {
+                "cycle": 95,
+                "status": "preview-stopped",
+                "elapsed": 100.69999999925494,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0b56b09d-cc32-4613-b499-a4c0c2f54679",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 98.69999999925494
+                }
+              },
+              {
+                "cycle": 96,
+                "status": "preview-stopped",
+                "elapsed": 110.89999999850988,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e527b6db-76ba-4f4b-80dc-e13cc4a0ea07",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 106.30000000074506
+                }
+              },
+              {
+                "cycle": 97,
+                "status": "preview-stopped",
+                "elapsed": 111.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "de1c4ce7-677b-4eee-b2ad-52e3b3732c3f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 102
+                }
+              },
+              {
+                "cycle": 98,
+                "status": "preview-stopped",
+                "elapsed": 202.30000000074506,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "386cc182-777b-4ecd-9cc6-5d129d01cfed",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 195.89999999850988
+                }
+              },
+              {
+                "cycle": 99,
+                "status": "preview-stopped",
+                "elapsed": 126.60000000149012,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "450802ee-d8e1-4801-8ee2-e0afbd071af8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 122.80000000074506
+                }
+              }
+            ],
+            "flood": {
+              "status": "protocol-error",
+              "elapsed": 143.19999999925494,
+              "execution": {
+                "source": "for(let i=0;i<1000;i++)self.postMessage(\"spoof\")",
+                "candidate": "opaque",
+                "task": "RECORDS",
+                "run": "964c0850-a25a-4793-a8e0-d1feedcdfc07",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": true,
+                "status": "protocol-error",
+                "output": [],
+                "value": "Malformed or stale result rejected",
+                "elapsed": 143
+              }
+            },
+            "physical": false,
+            "retainedMemoryQuota": "unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / security.spec.ts / E03 dedicated network/import/nested requests are denied online",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2249,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "requests",
+          "data": {
+            "browser": "153.0.8010.37",
+            "candidate": "dedicated",
+            "fixtures": [
+              {
+                "id": "fetch",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4312/fetch?fixture=FETCH')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "5c5406d1-585b-4177-b1ea-679916912a83",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 254.89999999850988
+                }
+              },
+              {
+                "id": "xhr",
+                "result": {
+                  "source": "try{const x=new XMLHttpRequest();x.open('GET','http://127.0.0.1:4312/xhr?fixture=XHR');x.send();await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "d20b98b5-e49b-4f38-a2ac-2ca3b84c560f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 296.8999999985099
+                }
+              },
+              {
+                "id": "socket",
+                "result": {
+                  "source": "try{new WebSocket('ws://127.0.0.1:4312/socket?fixture=WS');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "4ac54b42-c284-40fc-bd4a-9d04e5437457",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [],
+                  "value": "[undefined]",
+                  "elapsed": 208.89999999850988
+                }
+              },
+              {
+                "id": "import",
+                "result": {
+                  "source": "try{await import('http://127.0.0.1:4312/import?fixture=IMPORT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e1d88b02-c219-45b2-b6ec-fdb66aced0f2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 103.79999999701977
+                }
+              },
+              {
+                "id": "importScripts",
+                "result": {
+                  "source": "try{importScripts('http://127.0.0.1:4312/script?fixture=SCRIPT')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "f7af8380-1b53-4d74-b808-3e602c532782",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 95.59999999776483
+                }
+              },
+              {
+                "id": "nested",
+                "result": {
+                  "source": "try{new Worker('http://127.0.0.1:4312/worker?fixture=NESTED');await new Promise(r=>setTimeout(r,100));}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "ad3337b0-3840-4641-923c-4c9177427c3e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 93.80000000074506
+                }
+              },
+              {
+                "id": "beacon",
+                "result": {
+                  "source": "try{navigator.sendBeacon('http://127.0.0.1:4312/beacon?fixture=BEACON','x')}catch(e){console.log('unavailable')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "60480a53-4341-465b-9424-984d112a53f5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "unavailable"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 94.39999999850988
+                }
+              },
+              {
+                "id": "protected",
+                "result": {
+                  "source": "try{await fetch('http://127.0.0.1:4310/__protected');console.log('unexpected access')}catch(e){console.log('blocked')}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "3c906ee8-c24f-480f-9551-ee5bdaedf76b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "status": "success",
+                  "output": [
+                    "blocked"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 84.80000000074506
+                }
+              }
+            ],
+            "records": []
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E02 syntax/runtime errors, limits, termination, restart and stale output",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 7399,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "fixtures",
+          "data": [
+            {
+              "id": "syntax",
+              "source": "const = ;",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "adebee50-cbbb-4e07-97c6-c921366987c6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "syntax-error",
+              "output": [],
+              "value": "Unexpected token '='",
+              "elapsed": 183.89999999850988
+            },
+            {
+              "id": "error",
+              "source": "throw new Error(\"fixture error\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "4ce9e573-4aad-45c1-a1fe-50aa7fc5d5e8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "runtime-error",
+              "output": [],
+              "value": "fixture error",
+              "elapsed": 119.5
+            },
+            {
+              "id": "loop",
+              "source": "while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "8d951319-8e0e-4e3c-b4f3-86be992df605",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2009.300000000745
+            },
+            {
+              "id": "flood",
+              "source": "for(let i=0;i<201;i++) console.log(i)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "0e0429b0-9db4-4dfa-9308-4805217f7dff",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: console",
+              "elapsed": 343.5
+            },
+            {
+              "id": "large",
+              "source": "console.log(\"x\".repeat(17000))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "2d57bd7c-9f1a-416b-9a09-a268bd65e101",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: single value",
+              "elapsed": 93.80000000074506
+            },
+            {
+              "id": "cycle",
+              "source": "const a={};a.self=a;console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "4e23f608-32a0-4e28-be69-e298bef48d13",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: cyclic output",
+              "elapsed": 107.10000000149012
+            },
+            {
+              "id": "getter",
+              "source": "console.log({get danger(){while(true){}}})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "23eb60d7-ad8e-4c5b-b694-2d45bdeefd83",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{danger:[accessor]}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 201.89999999850988
+            },
+            {
+              "id": "deep",
+              "source": "const a={};let c=a;for(let i=0;i<20;i++){c.n={};c=c.n}console.log(a)",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "ef09e266-ed63-4446-838c-1eed37a3ab5c",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "output-limit: nested output",
+              "elapsed": 357.19999999925494
+            },
+            {
+              "id": "toJSON",
+              "source": "console.log({toJSON(){throw Error(\"must not be called\")},value:1})",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "93736de7-cf02-4ff8-b041-931854ce6393",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "success",
+              "output": [
+                "{toJSON:[function],value:1}"
+              ],
+              "value": "[undefined]",
+              "elapsed": 185.5
+            },
+            {
+              "id": "swallowed-limit",
+              "source": "try{for(let i=0;i<201;i++)console.log(i)}catch(e){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "5a7ae230-8426-40fc-9112-8453c52613ef",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "48",
+                "49",
+                "50",
+                "51",
+                "52",
+                "53",
+                "54",
+                "55",
+                "56",
+                "57",
+                "58",
+                "59",
+                "60",
+                "61",
+                "62",
+                "63",
+                "64",
+                "65",
+                "66",
+                "67",
+                "68",
+                "69",
+                "70",
+                "71",
+                "72",
+                "73",
+                "74",
+                "75",
+                "76",
+                "77",
+                "78",
+                "79",
+                "80",
+                "81",
+                "82",
+                "83",
+                "84",
+                "85",
+                "86",
+                "87",
+                "88",
+                "89",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "98",
+                "99",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107",
+                "108",
+                "109",
+                "110",
+                "111",
+                "112",
+                "113",
+                "114",
+                "115",
+                "116",
+                "117",
+                "118",
+                "119",
+                "120",
+                "121",
+                "122",
+                "123",
+                "124",
+                "125",
+                "126",
+                "127",
+                "128",
+                "129",
+                "130",
+                "131",
+                "132",
+                "133",
+                "134",
+                "135",
+                "136",
+                "137",
+                "138",
+                "139",
+                "140",
+                "141",
+                "142",
+                "143",
+                "144",
+                "145",
+                "146",
+                "147",
+                "148",
+                "149",
+                "150",
+                "151",
+                "152",
+                "153",
+                "154",
+                "155",
+                "156",
+                "157",
+                "158",
+                "159",
+                "160",
+                "161",
+                "162",
+                "163",
+                "164",
+                "165",
+                "166",
+                "167",
+                "168",
+                "169",
+                "170",
+                "171",
+                "172",
+                "173",
+                "174",
+                "175",
+                "176",
+                "177",
+                "178",
+                "179",
+                "180",
+                "181",
+                "182",
+                "183",
+                "184",
+                "185",
+                "186",
+                "187",
+                "188",
+                "189",
+                "190",
+                "191",
+                "192",
+                "193",
+                "194",
+                "195",
+                "196",
+                "197",
+                "198",
+                "199"
+              ],
+              "value": "output-limit: swallowed console error",
+              "elapsed": 633
+            },
+            {
+              "id": "source-limit",
+              "source": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "e08372d9-d66c-4cd0-8eb3-fff370ec8898",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "output-limit",
+              "output": [],
+              "value": "Source exceeds 64 KiB; draft retained",
+              "elapsed": 0.5
+            },
+            {
+              "id": "proxy",
+              "source": "console.log(new Proxy({}, {ownKeys(){while(true){}}}))",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "779afe76-f23b-4ab7-af64-d7cb850aa1a1",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2007
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

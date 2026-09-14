@@ -1,0 +1,1585 @@
+{
+  "recordedAt": "2026-09-14T02:42:51.823Z",
+  "commit": "555434d047bc709b535b11441803df886a1231e6",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    "MM prototypes/technical-risk-validation/src/main.tsx",
+    "M  prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts",
+    "MM prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-10-51.844Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-07.933Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-46.420Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-13-09.545Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-18-28.884Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-33-57.415Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-31-08.710Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-35-25.784Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-36-13.622Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-39-46.463Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-08-37.339Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-20-59.934Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-24-02.800Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-20-30.170Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-21-44.817Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-13T22-15-11.801Z.json",
+    "?? docs/technical-risk-validation/proposed-scope-adjustment.md",
+    "?? prototypes/technical-risk-validation/tests/renderer-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/persistence.spec.ts",
+    "--grep",
+    "B09|delayed draft"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T02:40:44.499Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "9d244fd31a04192536ac0466401fad6b549779d40d58b600d91a094470f5776a",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-VZMd8kAk.js": "67bc4623deeb0c75b0a3c6eae67c7927071cf4eb58b6f1a02642a4dc4acf5d1a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "9cc94f44cd25d5d5305aaddd1f9703267ab2b1e3e030a993a1c25a280a8de60b",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "88693153d973c04fc8cdd2ebe95342d0dff01d6528ed8b8898ec2dfce850417d",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 128043.514,
+  "cases": [
+    {
+      "title": " / chromium / persistence.spec.ts / E05 delayed draft load blocks early edits and preserves a confirmed replacement",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2215,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "delayed-load",
+          "data": {
+            "artificialDelayMs": 500,
+            "earlyEditsBlocked": true,
+            "confirmedReplacementRetained": true,
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 40539,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "B09-owner-transition-0",
+          "data": {
+            "cycle": 0,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 0"
+          }
+        },
+        {
+          "name": "B09-owner-transition-1",
+          "data": {
+            "cycle": 1,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 1"
+          }
+        },
+        {
+          "name": "B09-owner-transition-2",
+          "data": {
+            "cycle": 2,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 2"
+          }
+        },
+        {
+          "name": "B09-owner-transition-3",
+          "data": {
+            "cycle": 3,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 3"
+          }
+        },
+        {
+          "name": "B09-owner-transition-4",
+          "data": {
+            "cycle": 4,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 4"
+          }
+        },
+        {
+          "name": "B09-owner-transition-5",
+          "data": {
+            "cycle": 5,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 5"
+          }
+        },
+        {
+          "name": "B09-cycle-mix",
+          "data": {
+            "rows": [
+              {
+                "mode": "reload",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 0",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 1",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 2",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 3",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 4",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 5",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 6,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 6",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 7,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 7",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 0\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 1\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 2\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 3\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 4\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 5\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 0\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 1\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 2\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 3\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 4\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 5\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "6d931301-97ed-4e73-acde-987f9db9aa1e",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              }
+            ],
+            "physical": false,
+            "contentAssessmentRevision": "identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger",
+            "browserMode": "headless same process; physical gate untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / persistence.spec.ts / E05 delayed draft load blocks early edits and preserves a confirmed replacement",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 7675,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "delayed-load",
+          "data": {
+            "artificialDelayMs": 500,
+            "earlyEditsBlocked": true,
+            "confirmedReplacementRetained": true,
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 37313,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "B09-owner-transition-0",
+          "data": {
+            "cycle": 0,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 0"
+          }
+        },
+        {
+          "name": "B09-owner-transition-1",
+          "data": {
+            "cycle": 1,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 1"
+          }
+        },
+        {
+          "name": "B09-owner-transition-2",
+          "data": {
+            "cycle": 2,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 2"
+          }
+        },
+        {
+          "name": "B09-owner-transition-3",
+          "data": {
+            "cycle": 3,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 3"
+          }
+        },
+        {
+          "name": "B09-owner-transition-4",
+          "data": {
+            "cycle": 4,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 4"
+          }
+        },
+        {
+          "name": "B09-owner-transition-5",
+          "data": {
+            "cycle": 5,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 5"
+          }
+        },
+        {
+          "name": "B09-cycle-mix",
+          "data": {
+            "rows": [
+              {
+                "mode": "reload",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 0",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 1",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 2",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 3",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 4",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 5",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 6,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 6",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 7,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 7",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 0\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 1\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 2\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 3\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 4\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 5\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 0\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 1\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 2\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 3\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 4\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 5\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "33e903bd-f34f-458d-9235-2bc8bf78f6d8",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              }
+            ],
+            "physical": false,
+            "contentAssessmentRevision": "identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger",
+            "browserMode": "headless same process; physical gate untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / persistence.spec.ts / E05 delayed draft load blocks early edits and preserves a confirmed replacement",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2463,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "delayed-load",
+          "data": {
+            "artificialDelayMs": 500,
+            "earlyEditsBlocked": true,
+            "confirmedReplacementRetained": true,
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 30474,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "B09-owner-transition-0",
+          "data": {
+            "cycle": 0,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 0"
+          }
+        },
+        {
+          "name": "B09-owner-transition-1",
+          "data": {
+            "cycle": 1,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 1"
+          }
+        },
+        {
+          "name": "B09-owner-transition-2",
+          "data": {
+            "cycle": 2,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 2"
+          }
+        },
+        {
+          "name": "B09-owner-transition-3",
+          "data": {
+            "cycle": 3,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 3"
+          }
+        },
+        {
+          "name": "B09-owner-transition-4",
+          "data": {
+            "cycle": 4,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 4"
+          }
+        },
+        {
+          "name": "B09-owner-transition-5",
+          "data": {
+            "cycle": 5,
+            "beforeReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "afterReload": {
+              "owner": "account-B",
+              "source": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+              "selectedOwner": "account-B"
+            },
+            "expected": "console.log(\"Ready for CodeQuest\");\n// account-B 5"
+          }
+        },
+        {
+          "name": "B09-cycle-mix",
+          "data": {
+            "rows": [
+              {
+                "mode": "reload",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 0",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 1",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 2",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 3",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 4",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 5",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 6,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 6",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "reload",
+                "cycle": 7,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// reload 7",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 0\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 1\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 2\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 3\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 4\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "update",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// update 5\n// edit while update waits",
+                "otherSource": null,
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 0,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 0\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 0",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 1,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 1\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 1",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 2,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 2\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 2",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 3,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 3\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 3",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 4,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 4\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 4",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              },
+              {
+                "mode": "multiclient",
+                "cycle": 5,
+                "confirmedSource": "console.log(\"Ready for CodeQuest\");\n// multiclient 5\n// edit while update waits",
+                "otherSource": "console.log(\"Ready for CodeQuest\");\n// account-B 5",
+                "exactSourceRetained": true,
+                "pending": [
+                  {
+                    "event": "cda656fc-3003-4533-832f-39e948e12d57",
+                    "owner": "guest",
+                    "quest": "Q01",
+                    "source": "console.log(\"Ready for CodeQuest\");",
+                    "contentVersion": "1",
+                    "assessmentVersion": "1",
+                    "passed": true
+                  }
+                ]
+              }
+            ],
+            "physical": false,
+            "contentAssessmentRevision": "identity remains 1/1; incompatible-version rejection tested separately in synthetic ledger",
+            "browserMode": "headless same process; physical gate untested"
+          }
+        }
+      ]
+    }
+  ]
+}
