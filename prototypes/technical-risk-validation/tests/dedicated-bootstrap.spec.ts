@@ -72,18 +72,20 @@ test('D3 prepared offline cache deletion and bootstrap poisoning preserve truste
 });
 
 test('D3 dedicated ten witnessed loops and 100 fresh Worker cycles meet original budgets', async ({ page }, info) => {
-  test.setTimeout(45000);
+  // Collector allowance covers 110 original bounded runs, not a runtime grace period.
+  test.setTimeout(300000);
   const source = await page.evaluate(() => window.__risk.source());
   const loops = [];
   for (let trial = 0; trial < 10; trial++) {
     await page.evaluate(() => { window.__bootstrapLoop = window.__risk.run('while(true){}', 'dedicated', 'Q01', true); });
-    await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')));
+    let witnessed = false;
+    let markerError = '';
+    try { await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')), undefined, { timeout: 1900 }); witnessed = true; }
+    catch (error: unknown) { markerError = error instanceof Error ? error.message : 'Marker unavailable'; }
     const loop = await page.evaluate(() => window.__bootstrapLoop);
     const fresh = await page.evaluate(() => window.__risk.run('console.log("recovered")', 'dedicated'));
-    loops.push({ trial, loop, fresh });
-    await info.attach('dedicated-loop-' + trial, { body: JSON.stringify({ trial, witnessed: true, loop, fresh }), contentType: 'application/json' });
-    expect(loop.status).toBe('timeout'); expect(loop.elapsed).toBeLessThanOrEqual(3000);
-    expect(fresh.status).toBe('success'); expect(fresh.elapsed).toBeLessThanOrEqual(1000);
+    loops.push({ trial, witnessed, markerError, loop, fresh });
+    await info.attach('dedicated-loop-' + trial, { body: JSON.stringify({ trial, witnessed, markerError, loop, fresh }), contentType: 'application/json' });
   }
   const cycles = await page.evaluate(async () => {
     const results = [];
@@ -91,6 +93,7 @@ test('D3 dedicated ten witnessed loops and 100 fresh Worker cycles meet original
     return results;
   });
   await info.attach('dedicated-frozen-lifecycle', { body: JSON.stringify({ loops, cycles }), contentType: 'application/json' });
+  expect(loops.every(row => row.witnessed && row.loop.status === 'timeout' && row.loop.elapsed <= 3000 && row.fresh.status === 'success' && row.fresh.elapsed <= 1000)).toBe(true);
   expect(cycles.every(result => result.status === 'success' && result.elapsed <= 1000)).toBe(true);
   expect(await page.evaluate(() => window.__risk.source())).toBe(source);
   await page.evaluate(() => window.__risk.dispose()); await expect(page.locator('iframe')).toHaveCount(0);

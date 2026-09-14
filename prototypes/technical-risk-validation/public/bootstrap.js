@@ -72,11 +72,4 @@ addEventListener('message', event => {
   };
   control.postMessage('private-control-ready');
 });
-async function preparePublicResources() {
-  try {
-    await navigator.serviceWorker.register('/runner-sw.js');
-    await navigator.serviceWorker.ready;
-    owner.postMessage({ type: 'dedicated-bootstrap-ready', bootstrapId }, '*');
-  } catch { owner.postMessage({ type: 'dedicated-bootstrap-unavailable', bootstrapId }, '*'); }
-}
-void preparePublicResources();
+owner.postMessage({ type: 'dedicated-bootstrap-ready', bootstrapId }, '*');
