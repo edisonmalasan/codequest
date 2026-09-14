@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-09-14T16:18:35.4467946Z",
+  "os": "Microsoft Windows 10 Pro",
+  "version": "10.0.19045",
+  "build": "19045",
+  "displayVersion": "22H2",
+  "buildRevision": 6466,
+  "fullBuild": "19045.6466",
+  "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+  "manufacturer": "HP",
+  "model": "HP ProDesk 600 G2 SFF",
+  "logicalProcessors": 4,
+  "ramGiB": 7.9,
+  "ramBytes": 8464728064,
+  "display": [
+    {
+      "Name": "Intel(R) HD Graphics 530",
+      "DriverVersion": "31.0.101.2111",
+      "CurrentHorizontalResolution": 1920,
+      "CurrentVerticalResolution": 1080
+    }
+  ],
+  "installedBrowsersFound": [
+    {
+      "application": "chrome.exe",
+      "version": "153.0.8010.37"
+    }
+  ],
+  "firefoxAppPathRegistry": [
+    {
+      "key": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\firefox.exe",
+      "keyPresent": false,
+      "executable": null
+    },
+    {
+      "key": "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\App Paths\\firefox.exe",
+      "keyPresent": false,
+      "executable": null
+    },
+    {
+      "key": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\firefox.exe",
+      "keyPresent": false,
+      "executable": null
+    },
+    {
+      "key": "HKCU:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\App Paths\\firefox.exe",
+      "keyPresent": false,
+      "executable": null
+    }
+  ],
+  "interaction": "Codex Playwright/CDP automation; physical typing and assistive technology not established by inventory",
+  "note": "Inspected standard machine/user browser paths and four Firefox App Paths registry keys only. Missing entries are unconfirmed, not a proof of absence. No ordinary profile contents or manual device/accessibility evidence collected."
+}
