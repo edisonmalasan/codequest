@@ -4,7 +4,7 @@ import { expect, test } from 'vitest';
 
 type Packet = { data: unknown };
 
-function bootstrapFixture() {
+function bootstrapFixture(candidate: 'opaque' | 'dedicated') {
   const events: string[] = [];
   const workers: FixtureWorker[] = [];
   const owner = { postMessage: () => { events.push('deliver'); } };
@@ -17,10 +17,10 @@ function bootstrapFixture() {
     postMessage() { events.push('start'); }
     terminate() { events.push('terminate'); }
   }
-  runInNewContext(readFileSync(new URL('../public/opaque-bootstrap.js', import.meta.url), 'utf8'), {
+  runInNewContext(readFileSync(new URL(candidate === 'dedicated' ? '../public/bootstrap.js' : '../public/opaque-bootstrap.js', import.meta.url), 'utf8'), {
     parent: owner, TextEncoder, Blob, Worker: FixtureWorker,
     URL: { createObjectURL: () => 'blob:public-fixture', revokeObjectURL: () => { events.push('revoke'); } },
-    bootstrapId: 'public-fixture', publicWorkerSource: 'public-fixture',
+    bootstrapId: 'public-fixture', publicWorkerSource: 'public-fixture', location: { hash: '#public-fixture' },
     addEventListener: (_type: string, handler: typeof receive) => { receive = handler; },
   });
   receive?.({ source: owner, data: 'connect-private-control', ports: [control] });
@@ -32,8 +32,8 @@ function bootstrapFixture() {
   return { events, worker, control, identity };
 }
 
-test('trusted bootstrap terminates terminal output before delivery and still privately acknowledges cleanup', () => {
-  const fixture = bootstrapFixture();
+test.each(['opaque', 'dedicated'] as const)('%s trusted bootstrap terminates terminal output before delivery and still privately acknowledges cleanup', candidate => {
+  const fixture = bootstrapFixture(candidate);
   fixture.worker.onmessage?.({ data: JSON.stringify({ ...fixture.identity, status: 'success', output: [], value: 'done' }) });
   expect(fixture.events).toEqual(['terminate', 'deliver']);
   expect(fixture.worker.onmessage).toBeNull();
@@ -41,8 +41,8 @@ test('trusted bootstrap terminates terminal output before delivery and still pri
   expect(fixture.events).toEqual(['terminate', 'deliver', 'ack']);
 });
 
-test('execution start marker keeps Worker active; subsequent malformed output terminates it', () => {
-  const fixture = bootstrapFixture();
+test.each(['opaque', 'dedicated'] as const)('%s execution start marker keeps Worker active; subsequent malformed output terminates it', candidate => {
+  const fixture = bootstrapFixture(candidate);
   fixture.worker.onmessage?.({ data: fixture.identity.run + ':preview-started' });
   expect(fixture.events).toEqual(['deliver']);
   fixture.worker.onmessage?.({ data: 'malformed-untrusted-output' });
