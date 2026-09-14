@@ -37,7 +37,7 @@ test('D3 learner cache poisoning cannot replace trusted public code or CSP', asy
 });
 
 test('D3 dedicated denies child construction and terminates forged output before reuse', async ({ page }, info) => {
-  const source = `try { const child = new Worker(URL.createObjectURL(new Blob([${JSON.stringify("self.postMessage('CHILD_EXECUTED');while(true){}") }],{type:"text/javascript"}))); const outcome = await new Promise(resolve=>{child.onmessage=()=>resolve("CHILD_EXECUTED");child.onerror=()=>resolve("CHILD_DENIED");setTimeout(()=>resolve("CHILD_INCONCLUSIVE"),500);}); child.terminate(); console.log(outcome); } catch(error) {console.log("CHILD_DENIED");}`;
+  const source = `try { const child = new Worker(URL.createObjectURL(new Blob([${JSON.stringify("self.postMessage('CHILD_EXECUTED');while(true){}") }],{type:"text/javascript"}))); const outcome = await new Promise(resolve=>{child.onmessage=()=>resolve("CHILD_EXECUTED");child.onerror=event=>{event.preventDefault();resolve("CHILD_DENIED")};setTimeout(()=>resolve("CHILD_INCONCLUSIVE"),500);}); child.terminate(); console.log(outcome); } catch(error) {console.log("CHILD_DENIED");}`;
   const child = await page.evaluate(source => window.__risk.run(source, 'dedicated'), source);
   expect(child.status).toBe('success');
   await info.attach('actual-child-capability', { body: JSON.stringify(child), contentType: 'application/json' });
