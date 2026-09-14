@@ -5,6 +5,8 @@ test('E05 delayed draft load blocks early edits and preserves a confirmed replac
   await page.goto('/');
   const editor = page.locator('.cm-content');
   await expect(editor).toHaveAttribute('contenteditable', 'false');
+  await expect(page.getByLabel('Owner')).toBeDisabled();
+  await expect(page.getByLabel('Task')).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Run', exact: true })).toBeDisabled();
   await editor.click(); await page.keyboard.type('ignored during load');
   await expect(editor).toHaveAttribute('contenteditable', 'true');
@@ -91,6 +93,7 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
           await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
           await other.getByRole('textbox', { name: 'JavaScript source' }).fill(otherSource);
           await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
+          expect(await other.evaluate(() => window.__risk.source())).toBe(otherSource);
         }
         await request.post('/__revision');
         await page.evaluate(async () => { await (await navigator.serviceWorker.getRegistration())?.update(); });
@@ -110,9 +113,12 @@ test('E05 B09 eight reload, six update and six multiclient cycles retain source 
       const pending = await page.evaluate(() => window.__risk.pending());
       expect(pending).toEqual(initial);
       if (other) {
+        const beforeReload = await other.evaluate(() => ({ owner: sessionStorage.getItem('prototype-owner'), source: window.__risk.source(), selectedOwner: document.querySelector<HTMLSelectElement>('select')?.value }));
         await other.reload();
         await expect(other.getByTestId('save-state')).toHaveText('Saved on this device');
-        expect(await other.evaluate(() => window.__risk.source())).toBe(otherSource);
+        const afterReload = await other.evaluate(() => ({ owner: sessionStorage.getItem('prototype-owner'), source: window.__risk.source(), selectedOwner: document.querySelector<HTMLSelectElement>('select')?.value }));
+        await info.attach('B09-owner-transition-' + cycle, { body: JSON.stringify({ cycle, beforeReload, afterReload, expected: otherSource }), contentType: 'application/json' });
+        expect(afterReload.source).toBe(otherSource);
         await other.close();
       }
       rows.push({ mode, cycle, confirmedSource, otherSource: mode === 'multiclient' ? otherSource : null, exactSourceRetained: true, pending });

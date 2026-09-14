@@ -5,6 +5,23 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
 });
 
+test('E01 rapid input never replaces newer source with a React snapshot', async ({ page }, info) => {
+  const editor = page.getByRole('textbox', { name: 'JavaScript source' });
+  const rows = [];
+  for (let trial = 0; trial < 6; trial++) {
+    const source = `console.log("Ready for CodeQuest ${trial}");\n// rapid input retained`;
+    await editor.focus(); await editor.press('Control+a');
+    await page.keyboard.type(source);
+    expect(await page.evaluate(() => window.__risk.source())).toBe(source);
+    await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+    await page.reload();
+    await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+    expect(await page.evaluate(() => window.__risk.source())).toBe(source);
+    rows.push({ trial, exactTypedAndReloadedSource: source });
+  }
+  await info.attach('rapid-editor-input', { body: JSON.stringify({ rows, inputMethod: 'zero-delay automated keyboard events; not physical typing', originalSourceCorruption: 'retained in earlier full cross-engine evidence' }), contentType: 'application/json' });
+});
+
 test('E01/E06 keyboard editing, selection, undo redo, focus escape and distinct feedback', async ({ page, browser }, info) => {
   const editor = page.getByRole('textbox', { name: 'JavaScript source' });
   await editor.focus();

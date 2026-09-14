@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
 import { Annotation, Compartment, EditorState, Prec } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { basicSetup } from 'codemirror';
@@ -18,7 +19,7 @@ const sourceReplacement = Annotation.define<boolean>();
 declare global {
   interface Window {
     __risk: {
-      run: (source: string, candidate: Candidate, task?: string) => Promise<RunResult>;
+      run: (source: string, candidate: Candidate, task?: string, observeStart?: boolean) => Promise<RunResult>;
       preview: (html: string, candidate?: 'opaque' | 'dedicated') => Promise<{ status: string; elapsed: number }>;
       previewSource: (source: string, task?: string) => ReturnType<PreviewRuntime["runSource"]>;
       stop: () => void;
@@ -29,7 +30,7 @@ declare global {
   }
 }
 window.__risk = {
-  run: (source, candidate, task = 'Q01') => probeRuntime.run({ source, candidate, task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1' }),
+  run: (source, candidate, task = 'Q01', observeStart = false) => probeRuntime.run({ source, candidate, task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1', previewMarker: observeStart }),
   preview: (html, candidate) => previewRuntime.run(html, document.getElementById('preview') ?? document.body, candidate),
   previewSource: (source, task) => previewRuntime.runSource(source, document.getElementById("preview") ?? document.body, task),
   stop: () => { runtime.stop(); probeRuntime.stop(); previewRuntime.stop(); },
@@ -44,7 +45,12 @@ function receiptFrom(raw: unknown): Receipt {
 }
 
 function App() {
-  const [owner, setOwner] = useState(sessionStorage.getItem('prototype-owner') ?? 'guest');
+  const [initialIdentity] = useState(() => {
+    try { return { owner: sessionStorage.getItem('prototype-owner') ?? 'guest', warning: '' }; }
+    catch (error: unknown) { return { owner: 'guest', warning: 'Session storage unavailable; identity is temporary: ' + (error instanceof Error ? error.message : 'unknown error') }; }
+  });
+  const [owner, setOwner] = useState(initialIdentity.owner);
+  const [storageWarning, setStorageWarning] = useState(initialIdentity.warning);
   const [task, setTask] = useState('Q01');
   const [source, setSource] = useState<string>(quest.starter);
   const [candidate, setCandidate] = useState<Candidate>('opaque');
@@ -63,12 +69,21 @@ function App() {
   const mount = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView>(null);
   const requestId = useRef('');
+  const draftRevision = useRef(0);
   const [editorReadiness] = useState(() => new Compartment());
   const key = draftKey(owner, task);
   const fixture = task === 'Q01' ? quest : recordFixture;
 
+  function replaceSource(next: string) {
+    draftRevision.current += 1;
+    const view = editor.current;
+    if (view && view.state.doc.toString() !== next) view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: next }, annotations: sourceReplacement.of(true) });
+    setSource(next);
+  }
+
   useEffect(() => {
-    localStorage.setItem('prototype-session-canary', 'SYNTHETIC_SESSION_ONLY');
+    try { localStorage.setItem('prototype-session-canary', 'SYNTHETIC_SESSION_ONLY'); }
+    catch (error: unknown) { setStorageWarning('Local storage unavailable; keep a copy: ' + (error instanceof Error ? error.message : 'unknown error')); }
     let active = true;
     const changeNetwork = () => setOnline(navigator.onLine);
     window.addEventListener('online', changeNetwork);
@@ -103,11 +118,11 @@ function App() {
     };
     void load().then(([draft, actions]) => {
       if (!active) return;
-      setSource(draft?.source ?? fixture.starter);
+      replaceSource(draft?.source ?? fixture.starter);
       setProvisional(draft?.provisional ?? false);
       setPending(actions.find((action) => action.quest === task));
       setLoadedKey(key); setSaveState(draft ? 'Saved on this device' : 'Starter loaded; not yet saved'); setFeedback('Ready');
-    }).catch((error: unknown) => { if (active) { setSource(fixture.starter); setLoadedKey(key); setSaveState('Storage unavailable; keep a copy: ' + (error instanceof Error ? error.message : 'unknown error')); } });
+    }).catch((error: unknown) => { if (active) { replaceSource(fixture.starter); setLoadedKey(key); setSaveState('Storage unavailable; keep a copy: ' + (error instanceof Error ? error.message : 'unknown error')); } });
     return () => { active = false; runtime.stop(); previewRuntime.stop(); };
   }, [key, owner, task, fixture.starter]);
 
@@ -120,7 +135,7 @@ function App() {
         document.getElementById('run')?.focus();
         return true;
       } })),
-        EditorView.updateListener.of((update) => { if (update.docChanged && !update.transactions.every(transaction => transaction.annotation(sourceReplacement))) { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); } }),
+        EditorView.updateListener.of((update) => { if (update.docChanged && !update.transactions.every(transaction => transaction.annotation(sourceReplacement))) { draftRevision.current += 1; flushSync(() => { setSource(update.state.doc.toString()); setSaveState('Unsaved edits'); requestId.current = ''; setResult(undefined); }); } }),
       ],
     }) });
     editor.current = view;
@@ -131,16 +146,13 @@ function App() {
   useEffect(() => {
     editor.current?.dispatch({ effects: editorReadiness.reconfigure([EditorView.editable.of(loadedKey === key), EditorState.readOnly.of(loadedKey !== key)]) });
   }, [editorReadiness, loadedKey, key]);
-  useEffect(() => {
-    const view = editor.current;
-    if (view && view.state.doc.toString() !== source) view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: source }, annotations: sourceReplacement.of(true) });
-  }, [source]);
 
   useEffect(() => {
     if (loadedKey !== key) return;
     let active = true;
+    const revision = draftRevision.current;
     const timer = setTimeout(() => {
-      void saveDraft({ key, owner, task, source, contentVersion: '1', assessmentVersion: '1', provisional }).then(() => { if (active) setSaveState('Saved on this device'); }).catch((error: unknown) => { if (active) setSaveState('Save failed; keep a copy: ' + (error instanceof Error ? error.message : 'unknown error')); });
+      void saveDraft({ key, owner, task, source, contentVersion: '1', assessmentVersion: '1', provisional }).then(() => { if (active && revision === draftRevision.current && editor.current?.state.doc.toString() === source) setSaveState('Saved on this device'); }).catch((error: unknown) => { if (active && revision === draftRevision.current && editor.current?.state.doc.toString() === source) setSaveState('Save failed; keep a copy: ' + (error instanceof Error ? error.message : 'unknown error')); });
     }, 200);
     return () => { active = false; clearTimeout(timer); };
   }, [loadedKey, key, owner, task, source, provisional]);
@@ -152,7 +164,7 @@ function App() {
     setResult(outcome);
     const passed = outcome.status === 'success' && (task === 'Q01' ? outcome.output.join('\n') === quest.expected : outcome.value === '5');
     setFeedback(check ? (passed ? 'Local check passed — provisional only' : outcome.status === 'success' ? 'Check failed — compare with the objective' : outcome.status) : outcome.status);
-    if (check && passed && !provisional) { setSaveState('Unsaved local completion'); setProvisional(true); }
+    if (check && passed && !provisional) { draftRevision.current += 1; flushSync(() => { setSaveState('Unsaved local completion'); setProvisional(true); }); }
   }
 
   async function submit() {
@@ -183,31 +195,36 @@ function App() {
   }
   async function switchOwner(next: string) {
     runtime.stop(); previewRuntime.stop(); requestId.current = '';
+    draftRevision.current += 1;
+    flushSync(() => { setLoadedKey(''); setSaveState('Saving before workspace switch'); });
     try {
       await saveDraft({ key, owner, task, source, contentVersion: '1', assessmentVersion: '1', provisional });
       sessionStorage.setItem('prototype-owner', next); setOwner(next);
-    } catch { setFeedback('Owner switch paused: save failed; copy the current source first'); }
+    } catch { setLoadedKey(key); setSaveState('Save failed; keep a copy'); setFeedback('Owner switch paused: save failed; copy the current source first'); }
   }
   async function switchTask(next: string) {
     runtime.stop(); previewRuntime.stop(); requestId.current = '';
+    draftRevision.current += 1;
+    flushSync(() => { setLoadedKey(''); setSaveState('Saving before workspace switch'); });
     try {
       await saveDraft({ key, owner, task, source, contentVersion: '1', assessmentVersion: '1', provisional });
       setTask(next);
-    } catch { setFeedback('Task switch paused: save failed; copy the current source first'); }
+    } catch { setLoadedKey(key); setSaveState('Save failed; keep a copy'); setFeedback('Task switch paused: save failed; copy the current source first'); }
   }
 
   return <main>
     <header><p>Phase 1 · disposable technical prototype</p><h1>CodeQuest validation workspace</h1><p>No real accounts, authoritative rewards, telemetry or independent grading.</p></header>
     <section className="controls" aria-label="Prototype configuration">
-      <label>Owner <select value={owner} onChange={(event) => void switchOwner(event.target.value)}><option>guest</option><option>account-A</option><option>account-B</option><option>expired</option></select></label>
-      <label>Task <select value={task} onChange={(event) => void switchTask(event.target.value)}><option value="Q01">Q01 output</option><option value="RECORDS">Records fixture</option></select></label>
+      <label>Owner <select disabled={loadedKey !== key} value={owner} onChange={(event) => void switchOwner(event.target.value)}><option>guest</option><option>account-A</option><option>account-B</option><option>expired</option></select></label>
+      <label>Task <select disabled={loadedKey !== key} value={task} onChange={(event) => void switchTask(event.target.value)}><option value="Q01">Q01 output</option><option value="RECORDS">Records fixture</option></select></label>
       <label>Compartment <select value={candidate} onChange={(event) => { const value = event.target.value; if (value === 'opaque' || value === 'dedicated' || value === 'control') setCandidate(value); }}><option value="opaque">Opaque origin candidate</option><option value="dedicated">Dedicated origin candidate</option><option value="control">Permissive negative control (unsafe)</option></select></label>
     </section>
+    <p role="status">{storageWarning}</p>
     <p role="status">{online ? 'Online' : 'Offline'} · {pwa}</p>{waiting && <button onClick={() => void applyUpdate()}>Save draft and apply available update</button>}
     <section className="workspace">
       <article><h2>{fixture.title}</h2><p>{fixture.objective}</p><button onClick={() => setHint(!hint)}>Show hint</button>{hint && <p>{quest.hint}</p>}<p>Escape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit.</p></article>
       <section className="editor-panel" aria-label="Coding workspace"><div ref={mount} /><p role="status" data-testid="save-state">{saveState}</p>
-        <div className="actions"><button id="run" disabled={loadedKey !== key} onClick={() => void run(false)}>Run</button><button disabled={loadedKey !== key} onClick={() => void run(true)}>Check</button><button onClick={() => runtime.stop()}>Stop</button><button disabled={loadedKey !== key} onClick={() => { if (window.confirm('Replace the current draft with starter code? Account progress is not reset.')) { runtime.stop(); requestId.current = ''; setSource(fixture.starter); setSaveState('Unsaved edits'); setResult(undefined); } }}>Reset source</button><button disabled={loadedKey !== key} onClick={() => void navigator.clipboard.writeText(source).then(() => setFeedback('Source copied')).catch(() => setFeedback('Copy unavailable; select source and copy manually'))}>Copy source</button></div>
+        <div className="actions"><button id="run" disabled={loadedKey !== key} onClick={() => void run(false)}>Run</button><button disabled={loadedKey !== key} onClick={() => void run(true)}>Check</button><button onClick={() => runtime.stop()}>Stop</button><button disabled={loadedKey !== key} onClick={() => { if (window.confirm('Replace the current draft with starter code? Account progress is not reset.')) { runtime.stop(); requestId.current = ''; replaceSource(fixture.starter); setSaveState('Unsaved edits'); setResult(undefined); } }}>Reset source</button><button disabled={loadedKey !== key} onClick={() => void navigator.clipboard.writeText(source).then(() => setFeedback('Source copied')).catch(() => setFeedback('Copy unavailable; select source and copy manually'))}>Copy source</button></div>
       </section>
     </section>
     <section aria-label="Feedback"><h2>Output and results</h2><p role="status" data-testid="feedback">{feedback}</p><pre data-testid="output">{result?.output.join('\n') ?? ''}</pre><p>{result?.value}</p><p>{provisional ? 'Local provisional completion; not accepted account progress' : 'No local completion'}</p></section>
