@@ -7,11 +7,12 @@ import { join, relative, resolve } from 'node:path';
 
 const attachControl = process.argv.includes('--attach-control');
 const native = process.argv.includes('--chrome');
+const candidate = process.argv.includes('--dedicated') ? 'dedicated' : 'opaque';
 const record = {
   recordedAt: new Date().toISOString(), command: process.argv,
   commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   dirtyPaths: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean),
-  experiment: 'E02 nested target-lifecycle diagnostic', attachControl,
+  experiment: 'E02 target-lifecycle diagnostic', attachControl, candidate,
   channel: native ? 'installed chrome' : 'bundled chromium', physicalTyping: false,
   limitation: 'Target descriptors and current-process CPU observations; no hard quota or confirmed per-target CPU attribution',
   scriptHash: createHash('sha256').update(readFileSync('scripts/worker-target-diagnostics.mjs')).digest('hex'),
@@ -47,10 +48,13 @@ try {
   const snapshot = async label => record.snapshots.push({ label, recordedAt: new Date().toISOString(), targets: await targets(), processes: await cdp.send('SystemInfo.getProcessInfo') });
   await snapshot('before');
   const child = 'self.postMessage("CHILD_STARTED");while(true){}';
-  const source = `const child=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(child)}],{type:'text/javascript'})));await new Promise(resolve=>{child.onmessage=()=>{};child.onerror=()=>resolve()});`;
+  const source = candidate === 'dedicated' ? 'while(true){}' : `const child=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(child)}],{type:'text/javascript'})));await new Promise(resolve=>{child.onmessage=()=>{};child.onerror=()=>resolve()});`;
   record.sourceHash = createHash('sha256').update(source).digest('hex');
-  await page.evaluate(source => { window.__targetTrial = window.__risk.run(source, 'opaque', 'Q01', true); }, source);
-  for (let attempt = 0; attempt < 100 && (await targets()).length < 2; attempt++) await new Promise(resolveDelay => setTimeout(resolveDelay, 10));
+  await page.evaluate(({ source, candidate }) => { window.__targetTrial = window.__risk.run(source, candidate, 'Q01', true); }, { source, candidate });
+  record.parentMarkerObserved = false;
+  try { await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')), undefined, { timeout: 1900 }); record.parentMarkerObserved = true; }
+  catch (error) { record.markerError = error.message; }
+  for (let attempt = 0; attempt < 100 && (await targets()).length < (candidate === 'dedicated' ? 1 : 2); attempt++) await new Promise(resolveDelay => setTimeout(resolveDelay, 10));
   await snapshot('active');
   await page.evaluate(() => window.__risk.stop());
   record.stopped = await page.evaluate(() => window.__targetTrial);
@@ -75,7 +79,7 @@ try {
     await new Promise(resolveDelay => setTimeout(resolveDelay, delay));
     await snapshot('natural elapsed interval +' + delay + 'ms');
   }
-  record.fresh = await page.evaluate(() => window.__risk.run('console.log("fresh after target observation")', 'opaque'));
+  record.fresh = await page.evaluate(candidate => window.__risk.run('console.log("fresh after target observation")', candidate), candidate);
   await page.evaluate(() => window.__risk.dispose());
   await snapshot('after explicit disposal');
 } catch (error) { record.error = error.message; }

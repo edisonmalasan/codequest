@@ -5,6 +5,8 @@ test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.ge
 test('D3 dedicated public cache preserves Worker CSP and excludes data', async ({ page, request }, info) => {
   const first = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
   expect(first.status).toBe('success');
+  // Online execution need not wait for downloads; inspect cache only after preparation.
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
   const frame = page.frames().find(frame => frame.url().startsWith('http://127.0.0.2:4311/bootstrap.html'));
   if (!frame) throw new Error('Trusted dedicated bootstrap unavailable');
   const inventory = await frame.evaluate(async () => {
@@ -21,6 +23,7 @@ test('D3 dedicated public cache preserves Worker CSP and excludes data', async (
 });
 
 test('D3 learner cache poisoning cannot replace trusted public code or CSP', async ({ page }, info) => {
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
   const first = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
   expect(first.status).toBe('success');
   const poison = `const cache=await caches.open("codequest-runner-public-v1");await cache.put("/worker.js",new Response("self.postMessage('POISON_EXECUTED')",{headers:{"Content-Type":"text/javascript","Content-Security-Policy":"default-src *;script-src *"}}));console.log("cache mutated");`;
@@ -51,6 +54,7 @@ test('D3 dedicated denies child construction and terminates forged output before
 });
 
 test('D3 cache metadata and oversized-body poisoning cannot add network authority', async ({ page, request }, info) => {
+  await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
   const sink = 'http://127.0.0.1:4312';
   await request.post(sink + '/reset');
   const initial = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
