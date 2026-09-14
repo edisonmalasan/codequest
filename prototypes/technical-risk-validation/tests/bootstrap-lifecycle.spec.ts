@@ -37,7 +37,8 @@ test('E02 missing private acknowledgment removes bootstrap within bounded fallba
   expect(first.status).toBe('success');
   await page.evaluate(() => { window.__bootstrapLoop = window.__risk.run('while(true){}', 'opaque', 'Q01', true); });
   await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')));
-  const frame = page.frames().find(frame => frame.name() === '' && frame.url() === 'about:srcdoc');
+  const handle = await page.locator('iframe[data-preview-started="yes"]').elementHandle();
+  const frame = await handle?.contentFrame();
   if (!frame) throw new Error('Active trusted bootstrap missing');
   // Explicit trusted-control fault injection, never learner API access.
   await frame.evaluate('control.onmessage = null');
