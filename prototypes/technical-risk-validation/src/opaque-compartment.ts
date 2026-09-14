@@ -1,12 +1,13 @@
 import bootstrapSource from '../public/opaque-bootstrap.js?raw';
 import workerSource from '../public/worker.js?raw';
 import { isRecord, type RunIdentity } from './protocol';
-import type { RunRequest } from './runtime';
+import { runnerOrigin, type RunRequest } from './runtime';
 
 const policy = "default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' blob:; worker-src blob:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
 const sameIdentity = (raw: unknown, identity: RunIdentity): boolean => isRecord(raw) && raw.run === identity.run && raw.task === identity.task && raw.contentVersion === identity.contentVersion && raw.assessmentVersion === identity.assessmentVersion;
 
 export class OpaqueCompartment {
+  readonly candidate: 'opaque' | 'dedicated';
   readonly frame = document.createElement('iframe');
   private readonly channel = new MessageChannel();
   private readonly bootstrapId = crypto.randomUUID();
@@ -19,18 +20,20 @@ export class OpaqueCompartment {
   lastCleanup = { acknowledged: false, fallback: false, retainedTrustedBootstrap: false };
   private pending: { ticket: string; identity: RunIdentity; finish: (acknowledged: boolean) => void } | undefined;
   private readonly handshake = (event: MessageEvent<unknown>) => {
-    if (this.connected || event.source !== this.frame.contentWindow || !isRecord(event.data) || event.data.type !== 'opaque-bootstrap-ready' || event.data.bootstrapId !== this.bootstrapId) return;
+    if (!this.connected && event.source === this.frame.contentWindow && event.origin === runnerOrigin && isRecord(event.data) && event.data.bootstrapId === this.bootstrapId && event.data.type === 'dedicated-bootstrap-unavailable') { this.remove(); return; }
+    if (this.connected || event.source !== this.frame.contentWindow || (this.candidate === 'dedicated' && event.origin !== runnerOrigin) || !isRecord(event.data) || event.data.type !== this.candidate + '-bootstrap-ready' || event.data.bootstrapId !== this.bootstrapId) return;
     this.connected = true;
     window.removeEventListener('message', this.handshake);
-    this.frame.contentWindow?.postMessage('connect-private-control', '*', [this.channel.port2]);
+    this.frame.contentWindow?.postMessage('connect-private-control', this.candidate === 'dedicated' ? runnerOrigin : '*', [this.channel.port2]);
   };
 
-  constructor() {
+  constructor(candidate: 'opaque' | 'dedicated' = 'opaque') {
+    this.candidate = candidate;
     this.frame.hidden = true;
     this.frame.title = 'Trusted opaque bootstrap';
     this.frame.dataset.trustedBootstrap = 'yes';
     this.frame.dataset.activeWorkers = '0';
-    this.frame.setAttribute('sandbox', 'allow-scripts');
+    this.frame.setAttribute('sandbox', candidate === 'dedicated' ? 'allow-scripts allow-same-origin' : 'allow-scripts');
     this.channel.port1.onmessage = (event: MessageEvent<unknown>) => {
       if (!this.initialized && event.data === 'private-control-ready') {
         this.initialized = true;
@@ -43,7 +46,8 @@ export class OpaqueCompartment {
       else this.remove();
     };
     const script = `const bootstrapId=${JSON.stringify(this.bootstrapId)};const publicWorkerSource=${JSON.stringify(workerSource)};\n${bootstrapSource}`;
-    this.frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}"><script>${script.replaceAll('</script', '<\\/script')}</script>`;
+    if (candidate === 'dedicated') this.frame.src = runnerOrigin + '/bootstrap.html#' + this.bootstrapId;
+    else this.frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}"><script>${script.replaceAll('</script', '<\\/script')}</script>`;
     window.addEventListener('message', this.handshake);
     document.body.append(this.frame);
   }
@@ -76,7 +80,7 @@ export class OpaqueCompartment {
         clearTimeout(timer);
         this.lastCleanup = { acknowledged, fallback: !acknowledged, retainedTrustedBootstrap: acknowledged && !dispose };
         if (acknowledged && !dispose) {
-          this.frame.title = 'Trusted opaque bootstrap';
+          this.frame.title = 'Trusted ' + this.candidate + ' bootstrap';
           this.frame.dataset.activeWorkers = '0';
           delete this.frame.dataset.previewStarted;
         } else this.remove();

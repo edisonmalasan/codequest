@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page, request }) => {
   await request.post('http://127.0.0.1:4312/reset');
-  await page.goto('/?framePolicy=none');
+  await page.goto('/?framePolicy=isolated');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
 });
 

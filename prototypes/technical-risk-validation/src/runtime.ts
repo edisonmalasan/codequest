@@ -51,9 +51,10 @@ export class BrowserRuntime {
       };
       const receive = (event: MessageEvent<unknown>) => {
         if (!frame || event.source !== frame.contentWindow) return;
-        if (request.candidate === 'opaque') {
+        if (request.candidate === 'opaque' || request.candidate === 'dedicated') {
+          if (request.candidate === 'dedicated' && event.origin !== runnerOrigin) return;
           const packet = event.data;
-          if (isRecord(packet) && packet.type === 'opaque-bootstrap-ready') return;
+          if (isRecord(packet) && (packet.type === request.candidate + '-bootstrap-ready' || packet.type === request.candidate + '-bootstrap-unavailable')) return;
           if (!isRecord(packet) || packet.type !== 'learner-output' || !isRecord(packet.identity)) { onResult(null); return; }
           const identity = packet.identity;
           if (identity.run !== request.run || identity.task !== request.task || identity.contentVersion !== request.contentVersion || identity.assessmentVersion !== request.assessmentVersion) return;
@@ -61,10 +62,6 @@ export class BrowserRuntime {
           onResult(packet.raw);
           return;
         }
-        if (request.candidate === 'dedicated' && event.origin !== runnerOrigin) return;
-        if (request.candidate === 'dedicated' && event.data === 'ready') {
-          frame.contentWindow?.postMessage({ type: 'start', input: request }, request.candidate === 'dedicated' ? runnerOrigin : '*');
-        } else onResult(event.data);
       };
       const timer = setTimeout(() => finish({ status: 'timeout', output: [], value: 'Execution deadline exceeded' }), limits.deadline);
       this.cancel = () => finish({ status: 'stopped', output: [], value: 'Stopped' });
@@ -75,23 +72,16 @@ export class BrowserRuntime {
           worker.onmessage = (event: MessageEvent<unknown>) => onResult(event.data);
           worker.onerror = () => finish({ status: 'runtime-error', output: [], value: 'Worker bootstrap failed' });
           worker.postMessage(request);
-        } else if (request.candidate === 'opaque') {
+        } else {
           void this.cleanup.then(async () => {
             if (finished) return;
-            if (!this.compartment?.available) this.compartment = new OpaqueCompartment();
+            if (this.compartment?.candidate !== request.candidate) { await this.compartment?.stop(true); this.compartment = undefined; }
+            if (!this.compartment?.available) this.compartment = new OpaqueCompartment(request.candidate === 'dedicated' ? 'dedicated' : 'opaque');
             compartment = this.compartment;
             frame = compartment.frame;
             window.addEventListener('message', receive);
-            if (!await compartment.start(request) && !finished) finish({ status: 'runtime-error', output: [], value: 'Opaque bootstrap unavailable' });
-          }).catch(() => finish({ status: 'runtime-error', output: [], value: 'Opaque bootstrap failed' }));
-        } else {
-          frame = document.createElement('iframe');
-          frame.hidden = true;
-          frame.title = 'Learner execution compartment';
-          frame.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-          window.addEventListener('message', receive);
-          frame.src = runnerOrigin + '/bootstrap.html';
-          document.body.append(frame);
+            if (!await compartment.start(request) && !finished) finish({ status: 'runtime-error', output: [], value: 'Trusted bootstrap unavailable' });
+          }).catch(() => finish({ status: 'runtime-error', output: [], value: 'Trusted bootstrap failed' }));
         }
       } catch {
         finish({ status: 'runtime-error', output: [], value: 'Compartment creation failed' });
@@ -123,7 +113,7 @@ export class PreviewRuntime {
       };
       const timer = setTimeout(() => finish(frame ? 'preview-reset' : 'preview-timeout'), limits.deadline);
       this.cancel = () => finish('preview-stopped');
-      void this.computation.run({ source, candidate: 'opaque', task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1', previewMarker: true }).then(result => {
+      void this.computation.run({ source, candidate: 'dedicated', task, run: crypto.randomUUID(), contentVersion: '1', assessmentVersion: '1', previewMarker: true }).then(result => {
         if (finished) return;
         execution = result;
         if (result.status !== 'success') { finish(result.status); return; }

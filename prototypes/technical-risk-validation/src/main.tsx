@@ -7,6 +7,7 @@ import { basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { quest, recordFixture } from './fixtures';
 import { BrowserRuntime, PreviewRuntime } from './runtime';
+import { prepareRunnerResources } from './runner-preparation';
 import { draftKey, saveDraft, store, downloadLesson, lessonKey } from './storage';
 import { isRecord, type Candidate, type RunResult } from './protocol';
 import { type Snapshot, type Receipt } from './mock';
@@ -55,7 +56,7 @@ function App() {
   const [storageWarning, setStorageWarning] = useState(initialIdentity.warning);
   const [task, setTask] = useState('Q01');
   const [source, setSource] = useState<string>(quest.starter);
-  const [candidate, setCandidate] = useState<Candidate>('opaque');
+  const [candidate, setCandidate] = useState<Candidate>('dedicated');
   const [loadedKey, setLoadedKey] = useState('');
   const [saveState, setSaveState] = useState('Loading draft');
   const [feedback, setFeedback] = useState('Ready');
@@ -103,6 +104,7 @@ function App() {
             for (const task of ['Q01', 'RECORDS']) {
               if (!await store.lessons.get(lessonKey(task, '1', '1'))) await downloadLesson(task, '1', '1');
             }
+            await prepareRunnerResources();
             if (active) setPwa('Public lesson and runtime assets prepared offline');
           } catch (error: unknown) { if (active) setPwa('Offline lesson missing; any existing draft remains local: ' + (error instanceof Error ? error.message : 'unknown error')); }
         });

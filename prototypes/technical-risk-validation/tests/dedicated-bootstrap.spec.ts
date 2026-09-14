@@ -1,0 +1,74 @@
+import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.getByTestId('save-state')).toHaveText('Saved on this device'); });
+
+test('D3 dedicated public cache preserves Worker CSP and excludes data', async ({ page, request }, info) => {
+  const first = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
+  expect(first.status).toBe('success');
+  const frame = page.frames().find(frame => frame.url().startsWith('http://127.0.0.2:4311/bootstrap.html'));
+  if (!frame) throw new Error('Trusted dedicated bootstrap unavailable');
+  const inventory = await frame.evaluate(async () => {
+    const cache = await caches.open('codequest-runner-public-v1');
+    const urls = (await cache.keys()).map(request => request.url).sort();
+    const response = await cache.match('/worker.js');
+    return { urls, policy: response?.headers.get('Content-Security-Policy'), controlled: Boolean(navigator.serviceWorker.controller) };
+  });
+  expect(inventory.urls).toEqual(['bootstrap.html', 'bootstrap.js', 'worker.js', 'runner-prepare.html', 'runner-prepare.js'].map(path => 'http://127.0.0.2:4311/' + path).sort());
+  expect(inventory.policy).toBe("default-src 'none'; script-src 'unsafe-eval'; connect-src 'none'; worker-src 'none'");
+  expect(inventory.controlled).toBe(true);
+  for (const path of ['/__protected', '/__mock', '/index.html', '/worker.js?source=PRIVATE']) expect((await request.get('http://127.0.0.2:4311' + path)).status()).toBe(404);
+  await info.attach('runner-public-cache-policy', { body: JSON.stringify({ first, inventory }), contentType: 'application/json' });
+});
+
+test('D3 learner cache poisoning cannot replace trusted public code or CSP', async ({ page }, info) => {
+  const first = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
+  expect(first.status).toBe('success');
+  const poison = `const cache=await caches.open("codequest-runner-public-v1");await cache.put("/worker.js",new Response("self.postMessage('POISON_EXECUTED')",{headers:{"Content-Type":"text/javascript","Content-Security-Policy":"default-src *;script-src *"}}));console.log("cache mutated");`;
+  const poisoned = await page.evaluate(source => window.__risk.run(source, 'dedicated'), poison);
+  expect(poisoned.status).toBe('success');
+  const source = await page.evaluate(() => window.__risk.source());
+  const fresh = await page.evaluate(() => window.__risk.run('console.log("must not execute poisoned code")', 'dedicated'));
+  await info.attach('learner-cache-poisoning', { body: JSON.stringify({ first, poisoned, fresh }), contentType: 'application/json' });
+  expect(fresh.status).toBe('protocol-error');
+  expect(fresh.output).not.toContain('POISON_EXECUTED');
+  expect(await page.evaluate(() => window.__risk.source())).toBe(source);
+});
+
+test('D3 dedicated denies child construction and terminates forged output before reuse', async ({ page }, info) => {
+  const source = `try { const child = new Worker(URL.createObjectURL(new Blob([${JSON.stringify("self.postMessage('CHILD_EXECUTED');while(true){}") }],{type:"text/javascript"}))); const outcome = await new Promise(resolve=>{child.onmessage=()=>resolve("CHILD_EXECUTED");child.onerror=()=>resolve("CHILD_DENIED");setTimeout(()=>resolve("CHILD_INCONCLUSIVE"),500);}); child.terminate(); console.log(outcome); } catch(error) {console.log("CHILD_DENIED");}`;
+  const child = await page.evaluate(source => window.__risk.run(source, 'dedicated'), source);
+  expect(child.status).toBe('success');
+  await info.attach('actual-child-capability', { body: JSON.stringify(child), contentType: 'application/json' });
+  expect(child.output.join('\n')).toBe('CHILD_DENIED');
+  const forged = await page.evaluate(() => window.__risk.run('self.postMessage("forged");while(true){}', 'dedicated'));
+  expect(forged.status).toBe('protocol-error');
+  expect(forged.cleanup?.acknowledged).toBe(true);
+  const fresh = await page.evaluate(() => window.__risk.run('console.log("fresh")', 'dedicated'));
+  expect(fresh.status).toBe('success'); expect(fresh.elapsed).toBeLessThanOrEqual(1000);
+  await info.attach('dedicated-child-denial', { body: JSON.stringify({ child, forged, fresh, childExecution: 'denied, not a witnessed child-loop recovery' }), contentType: 'application/json' });
+});
+
+test('D3 dedicated ten witnessed loops and 100 fresh Worker cycles meet original budgets', async ({ page }, info) => {
+  test.setTimeout(45000);
+  const source = await page.evaluate(() => window.__risk.source());
+  const loops = [];
+  for (let trial = 0; trial < 10; trial++) {
+    await page.evaluate(() => { window.__bootstrapLoop = window.__risk.run('while(true){}', 'dedicated', 'Q01', true); });
+    await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')));
+    const loop = await page.evaluate(() => window.__bootstrapLoop);
+    const fresh = await page.evaluate(() => window.__risk.run('console.log("recovered")', 'dedicated'));
+    loops.push({ trial, loop, fresh });
+    await info.attach('dedicated-loop-' + trial, { body: JSON.stringify({ trial, witnessed: true, loop, fresh }), contentType: 'application/json' });
+    expect(loop.status).toBe('timeout'); expect(loop.elapsed).toBeLessThanOrEqual(3000);
+    expect(fresh.status).toBe('success'); expect(fresh.elapsed).toBeLessThanOrEqual(1000);
+  }
+  const cycles = await page.evaluate(async () => {
+    const results = [];
+    for (let trial = 0; trial < 100; trial++) results.push(await window.__risk.run('console.log("cycle")', 'dedicated'));
+    return results;
+  });
+  await info.attach('dedicated-frozen-lifecycle', { body: JSON.stringify({ loops, cycles }), contentType: 'application/json' });
+  expect(cycles.every(result => result.status === 'success' && result.elapsed <= 1000)).toBe(true);
+  expect(await page.evaluate(() => window.__risk.source())).toBe(source);
+  await page.evaluate(() => window.__risk.dispose()); await expect(page.locator('iframe')).toHaveCount(0);
+});

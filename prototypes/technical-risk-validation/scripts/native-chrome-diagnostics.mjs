@@ -144,20 +144,20 @@ try {
   await sampleResources('before ten Worker loops and hundred Worker/preview cycles');
   record.workerLoopTrials = [];
   for (let trial = 0; trial < 10; trial++) {
-    await page.evaluate(() => { window.__nativeWorkerTrial = window.__risk.run('while(true){}', 'opaque', 'Q01', true); });
+    await page.evaluate(() => { window.__nativeWorkerTrial = window.__risk.run('while(true){}', 'dedicated', 'Q01', true); });
     let markerObserved = false;
     let markerError = '';
     try { await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')), undefined, { timeout: 1900 }); markerObserved = true; }
     catch (error) { markerError = error instanceof Error ? error.message : String(error); }
     await page.getByRole('button', { name: 'Show hint' }).click();
     const result = await page.evaluate(() => window.__nativeWorkerTrial);
-    const fresh = await page.evaluate(() => window.__risk.run('console.log("fresh")', 'opaque'));
+    const fresh = await page.evaluate(() => window.__risk.run('console.log("fresh")', 'dedicated'));
     record.workerLoopTrials.push({ trial, markerObserved, markerError, result, fresh, exactSourceRetained: await page.evaluate(expected => window.__risk.source() === expected, source) });
   }
   record.lifecycle = await page.evaluate(async () => {
     const rows = [];
     for (let cycle = 0; cycle < 100; cycle++) {
-      const result = await window.__risk.run('console.log("native cycle")', 'opaque');
+      const result = await window.__risk.run('console.log("native cycle")', 'dedicated');
       rows.push({ cycle, status: result.status, elapsed: result.elapsed, sourcePreserved: window.__risk.source() === 'console.log("Ready for CodeQuest");', remainingCompartments: document.querySelectorAll('iframe[title="Learner execution compartment"]').length, trustedBootstrapFrames: document.querySelectorAll('iframe[data-trusted-bootstrap="yes"]').length, acknowledgedActiveWorkers: document.querySelectorAll('iframe[data-active-workers="1"]').length, cleanup: result.cleanup });
     }
     const previews = [];

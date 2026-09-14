@@ -2,6 +2,7 @@ import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { SimulationLedger, snapshotFrom } from '../src/mock.ts';
 import { quest, recordFixture } from '../src/fixtures.ts';
 
@@ -16,7 +17,8 @@ let revision = 1;
 let incompatibleLesson = false;
 let appOutage = false;
 const workerPolicy = "default-src 'none'; script-src 'unsafe-eval'; connect-src 'none'; worker-src 'none'";
-const bootstrapPolicy = "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
+const bootstrapPolicy = "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'";
+const runnerPublicPaths = new Set(['/bootstrap.html', '/bootstrap.js', '/worker.js', '/runner-sw.js', '/runner-prepare.html', '/runner-prepare.js', '/preview.html', '/preview.js']);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' };
 const servers = [];
 
@@ -25,6 +27,7 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
     try {
       const url = new URL(req.url ?? '/', `http://${host}:${port}`);
       res.setHeader('Cache-Control', 'no-store');
+      if (role === 'runner' && (req.method !== 'GET' || url.search || !runnerPublicPaths.has(url.pathname))) { res.writeHead(404); res.end('Runner public resource unavailable'); return; }
       if (role === 'sink') {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
@@ -75,11 +78,17 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
       if (!path.startsWith(root.endsWith(sep) ? root : root + sep)) { res.writeHead(403); res.end(); return; }
       if (role === 'runner') res.setHeader('Content-Security-Policy', url.pathname === '/worker.js' ? workerPolicy : url.pathname === '/preview.html' ? "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; worker-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'" : bootstrapPolicy);
       if (role === 'app' && url.searchParams.get('framePolicy') === 'none') res.setHeader('Content-Security-Policy', "frame-src 'none'");
-      if (role === 'app' && url.searchParams.get('framePolicy') === 'isolated') res.setHeader('Content-Security-Policy', "frame-src http://127.0.0.2:4311/bootstrap.html http://127.0.0.2:4311/preview.html");
+      if (role === 'app' && url.searchParams.get('framePolicy') === 'isolated') res.setHeader('Content-Security-Policy', "frame-src http://127.0.0.2:4311/bootstrap.html http://127.0.0.2:4311/runner-prepare.html http://127.0.0.2:4311/preview.html");
       res.setHeader('Content-Type', mime[extname(path)] ?? 'application/octet-stream');
       if (!(await stat(path)).isFile()) { res.writeHead(404); res.end(); return; }
       const bytes = await readFile(path);
-      res.end(url.pathname === '/sw.js' ? Buffer.concat([bytes, Buffer.from(`\n// synthetic build revision ${revision}\n`)]) : bytes);
+      if (role === 'runner' && url.pathname === '/runner-sw.js') {
+        const hashes = {};
+        for (const publicPath of ['/bootstrap.html', '/bootstrap.js', '/worker.js', '/runner-prepare.html', '/runner-prepare.js']) hashes[publicPath] = createHash('sha256').update(await readFile(resolve(root, '.' + publicPath))).digest('hex');
+        res.end(bytes.toString().replace('const publicHashes = /* trusted-public-manifest */ {};', 'const publicHashes = ' + JSON.stringify(hashes) + ';') + `\n// synthetic build revision ${revision}\n`);
+        return;
+      }
+      res.end(url.pathname === '/sw.js' || url.pathname === '/runner-sw.js' ? Buffer.concat([bytes, Buffer.from(`\n// synthetic build revision ${revision}\n`)]) : bytes);
     } catch (error) {
       if (!res.headersSent) res.writeHead(404);
       res.end(error instanceof Error ? error.message : 'Request failed');
