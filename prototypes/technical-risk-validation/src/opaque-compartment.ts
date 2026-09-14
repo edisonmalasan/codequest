@@ -20,7 +20,6 @@ export class OpaqueCompartment {
   lastCleanup = { acknowledged: false, fallback: false, retainedTrustedBootstrap: false };
   private pending: { ticket: string; identity: RunIdentity; finish: (acknowledged: boolean) => void } | undefined;
   private readonly handshake = (event: MessageEvent<unknown>) => {
-    if (!this.connected && event.source === this.frame.contentWindow && event.origin === runnerOrigin && isRecord(event.data) && event.data.bootstrapId === this.bootstrapId && event.data.type === 'dedicated-bootstrap-unavailable') { this.remove(); return; }
     if (this.connected || event.source !== this.frame.contentWindow || (this.candidate === 'dedicated' && event.origin !== runnerOrigin) || !isRecord(event.data) || event.data.type !== this.candidate + '-bootstrap-ready' || event.data.bootstrapId !== this.bootstrapId) return;
     this.connected = true;
     window.removeEventListener('message', this.handshake);

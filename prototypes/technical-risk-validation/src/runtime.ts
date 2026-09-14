@@ -54,7 +54,7 @@ export class BrowserRuntime {
         if (request.candidate === 'opaque' || request.candidate === 'dedicated') {
           if (request.candidate === 'dedicated' && event.origin !== runnerOrigin) return;
           const packet = event.data;
-          if (isRecord(packet) && (packet.type === request.candidate + '-bootstrap-ready' || packet.type === request.candidate + '-bootstrap-unavailable')) return;
+          if (isRecord(packet) && packet.type === request.candidate + '-bootstrap-ready') return;
           if (!isRecord(packet) || packet.type !== 'learner-output' || !isRecord(packet.identity)) { onResult(null); return; }
           const identity = packet.identity;
           if (identity.run !== request.run || identity.task !== request.task || identity.contentVersion !== request.contentVersion || identity.assessmentVersion !== request.assessmentVersion) return;

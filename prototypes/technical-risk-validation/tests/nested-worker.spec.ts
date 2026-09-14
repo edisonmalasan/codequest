@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test('E03 nested Blob Worker capability and inherited network policy are observed with a real control', async ({ page, request, browser }, info) => {
+for (const candidate of ['control', 'opaque', 'dedicated'] as const) {
+test(`E03 ${candidate} nested Blob Worker capability and inherited network policy are observed with a real control`, async ({ page, request, browser }, info) => {
   test.setTimeout(45000);
   await page.goto('/');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
   const sink = 'http://127.0.0.1:4312';
   const rows = [];
-  for (const candidate of ['control', 'opaque', 'dedicated'] as const) {
     await request.post(sink + '/reset');
     const childSource = `fetch('${sink}/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))`;
     const source = `console.log('SharedWorker:'+typeof SharedWorker);
@@ -20,7 +20,7 @@ test('E03 nested Blob Worker capability and inherited network policy are observe
             const response=await new Promise(resolve=>{
               const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);
               child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};
-              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};
+              child.onerror=event=>{event.preventDefault();clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};
             });
             console.log(response);
           }finally{child.terminate()}
@@ -40,17 +40,17 @@ test('E03 nested Blob Worker capability and inherited network policy are observe
       expect(result.output.some(line => line === 'NETWORK_REQUEST_DENIED' || line === 'NESTED_API_UNAVAILABLE' || line === 'NESTED_BOOTSTRAP_DENIED' || line.startsWith('NESTED_CONSTRUCTOR_DENIED:'))).toBe(true);
       expect(records).toEqual([]);
     }
-  }
   await info.attach('nested-blob-comparison', { body: JSON.stringify({ rows, physicalMobile: 'untested', hardResourceQuota: 'unverified' }), contentType: 'application/json' });
 });
+}
 
-test('E02/E03 nested Blob loop start triggers bounded rejection and usable fresh execution', async ({ page, browser }, info) => {
+for (const candidate of ['opaque', 'dedicated'] as const) {
+test(`E02/E03 ${candidate} nested Blob loop start triggers bounded rejection and usable fresh execution`, async ({ page, browser }, info) => {
   test.setTimeout(60000);
   await page.goto('/');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
   const original = await page.evaluate(() => window.__risk.source());
   const rows = [];
-  for (const candidate of ['opaque', 'dedicated'] as const) {
     for (let trial = 0; trial < 10; trial++) {
       const child = 'self.postMessage("SYNTHETIC_CHILD_STARTED");while(true){}';
       const source = `let child;const url=URL.createObjectURL(new Blob([${JSON.stringify(child)}],{type:'text/javascript'}));
@@ -70,18 +70,20 @@ test('E02/E03 nested Blob loop start triggers bounded rejection and usable fresh
       const { result, childStartObserved } = observed;
       const nestedUnavailable = result.status === 'success' && result.output.some(line => line.startsWith('NESTED_CONSTRUCTOR_DENIED:') || line === 'NESTED_BOOTSTRAP_DENIED');
       const childStartRejection = result.status === 'protocol-error' && childStartObserved;
-      const fresh = await page.evaluate(() => window.__risk.run('console.log("fresh after nested child")', 'opaque'));
+      const fresh = await page.evaluate(candidate => window.__risk.run('console.log("fresh after nested child")', candidate), candidate);
       const exactSourceRetained = await page.evaluate(expected => window.__risk.source() === expected, original);
       const row = { candidate, trial, result, nestedUnavailable, childStartObserved, childStartRejection, fresh, exactSourceRetained, childExplicitlyTerminatedByFixture: false, termination: 'runtime cleanup after observed child-first-message rejection; finite capability test is separate', physicalMobile: 'untested' };
       rows.push(row);
       await info.attach('nested-loop-' + candidate + '-' + trial, { body: JSON.stringify(row), contentType: 'application/json' });
-      expect(nestedUnavailable || childStartRejection).toBe(true);
-      expect(result.elapsed).toBeLessThan(3000);
-      expect(exactSourceRetained).toBe(true);
-      expect(fresh.status).toBe('success');
-      expect(fresh.elapsed).toBeLessThan(1000);
-      await expect(page.locator('iframe[title="Learner execution compartment"]')).toHaveCount(0);
+
     }
-  }
   await info.attach('nested-loop-comparison', { body: JSON.stringify({ browser: browser.version(), rows, limitation: 'fixed child-first-message fixture; host rejects that untrusted message, never grants a privileged action. A missing/bootstrap-error message is not a child-start proof.', hardMemoryQuota: 'unverified' }), contentType: 'application/json' });
+  for (const row of rows) {
+    expect(row.nestedUnavailable || row.childStartRejection).toBe(true);
+    expect(row.result.elapsed).toBeLessThan(3000);
+    expect(row.exactSourceRetained).toBe(true);
+    expect(row.fresh.status).toBe('success'); expect(row.fresh.elapsed).toBeLessThan(1000);
+  }
+  await expect(page.locator('iframe[title="Learner execution compartment"]')).toHaveCount(0);
 });
+}
