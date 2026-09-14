@@ -102,36 +102,38 @@ test('E02 replayed actual prior output from the retained bootstrap cannot fail t
   await info.attach('actual-prior-output-replay', { body: JSON.stringify({ browser: browser.version(), captured, current, replaySender: 'actual same retained bootstrap window', physical: false }), contentType: 'application/json' });
 });
 
-test('E02 CDP observes parent and nested Worker targets disappear after private cleanup', async ({ page, browser, browserName }, info) => {
-  test.skip(browserName !== 'chromium', 'Browser-specific target instrumentation unavailable; not a Firefox/WebKit target-lifecycle pass');
-  const cdp = await browser.newBrowserCDPSession();
-  const workerTargets = async () => (await cdp.send('Target.getTargets')).targetInfos.filter(target => target.type === 'worker');
-  try {
-    const before = await workerTargets();
-    expect(before).toHaveLength(0);
-    const child = 'self.postMessage("CHILD_STARTED");while(true){}';
-    const source = `const child=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(child)}],{type:'text/javascript'})));await new Promise(resolve=>{child.onmessage=()=>{};child.onerror=()=>resolve()});`;
-    await page.evaluate(source => { window.__bootstrapLoop = window.__risk.run(source, 'opaque', 'Q01', true); }, source);
-    await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')));
-    await expect.poll(async () => (await workerTargets()).length, { timeout: 1500, intervals: [10, 25, 50] }).toBe(2);
-    const active = await workerTargets();
-    const start = Date.now();
-    await page.evaluate(() => window.__risk.stop());
-    const stopped = await page.evaluate(() => window.__bootstrapLoop);
-    expect(stopped.status).toBe('stopped');
-    expect(stopped.cleanup?.acknowledged).toBe(true);
-    const afterAcknowledgment = await workerTargets();
-    await info.attach('worker-targets-after-ack', { body: JSON.stringify({ before, active, stopped, afterAcknowledgment }), contentType: 'application/json' });
-    await expect.poll(async () => (await workerTargets()).length, { timeout: 1000, intervals: [10, 25, 50] }).toBe(0);
-    const recoveryMs = Date.now() - start;
-    expect(recoveryMs).toBeLessThan(1000);
-    const fresh = await page.evaluate(() => window.__risk.run('console.log("after observed descendant cleanup")', 'opaque'));
-    expect(fresh.status).toBe('success');
-    expect(fresh.elapsed).toBeLessThan(1000);
-    await page.evaluate(() => window.__risk.dispose());
-    await expect(page.locator('iframe')).toHaveCount(0);
-    await info.attach('actual-worker-target-cleanup', { body: JSON.stringify({ browser: browser.version(), before, active, after: await workerTargets(), stopped, recoveryMs, fresh, childExplicitlyTerminatedByFixture: false, limitation: 'owned Chrome target observation, not a hard CPU/memory quota or cross-browser instrumentation claim' }), contentType: 'application/json' });
-  } finally { await cdp.detach(); }
+test.describe('Chromium target instrumentation', () => {
+  test.skip(({ browserName }) => browserName !== 'chromium', 'Browser-specific target instrumentation unavailable; not a Firefox/WebKit target-lifecycle pass');
+  test('E02 CDP observes parent and nested Worker targets disappear after private cleanup', async ({ page, browser }, info) => {
+    const cdp = await browser.newBrowserCDPSession();
+    const workerTargets = async () => (await cdp.send('Target.getTargets')).targetInfos.filter(target => target.type === 'worker');
+    try {
+      const before = await workerTargets();
+      expect(before).toHaveLength(0);
+      const child = 'self.postMessage("CHILD_STARTED");while(true){}';
+      const source = `const child=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(child)}],{type:'text/javascript'})));await new Promise(resolve=>{child.onmessage=()=>{};child.onerror=()=>resolve()});`;
+      await page.evaluate(source => { window.__bootstrapLoop = window.__risk.run(source, 'opaque', 'Q01', true); }, source);
+      await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')));
+      await expect.poll(async () => (await workerTargets()).length, { timeout: 1500, intervals: [10, 25, 50] }).toBe(2);
+      const active = await workerTargets();
+      const start = Date.now();
+      await page.evaluate(() => window.__risk.stop());
+      const stopped = await page.evaluate(() => window.__bootstrapLoop);
+      expect(stopped.status).toBe('stopped');
+      expect(stopped.cleanup?.acknowledged).toBe(true);
+      const afterAcknowledgment = await workerTargets();
+      await info.attach('worker-targets-after-ack', { body: JSON.stringify({ before, active, stopped, afterAcknowledgment }), contentType: 'application/json' });
+      await expect.poll(async () => (await workerTargets()).length, { timeout: 1000, intervals: [10, 25, 50] }).toBe(0);
+      const recoveryMs = Date.now() - start;
+      expect(recoveryMs).toBeLessThan(1000);
+      const fresh = await page.evaluate(() => window.__risk.run('console.log("after observed descendant cleanup")', 'opaque'));
+      expect(fresh.status).toBe('success');
+      expect(fresh.elapsed).toBeLessThan(1000);
+      await page.evaluate(() => window.__risk.dispose());
+      await expect(page.locator('iframe')).toHaveCount(0);
+      await info.attach('actual-worker-target-cleanup', { body: JSON.stringify({ browser: browser.version(), before, active, after: await workerTargets(), stopped, recoveryMs, fresh, childExplicitlyTerminatedByFixture: false, limitation: 'owned Chrome target observation, not a hard CPU/memory quota or cross-browser instrumentation claim' }), contentType: 'application/json' });
+    } finally { await cdp.detach(); }
+  });
 });
 
 declare global {
