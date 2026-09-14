@@ -6,12 +6,12 @@ import { expect, test } from 'vitest';
 const policy = "default-src 'none'; script-src 'unsafe-eval'; connect-src 'none'; worker-src 'none'";
 const bytes = 'fixed public Worker bytes';
 
-async function cachedResponse(response: Response): Promise<Response> {
+async function cachedResponse(response: Response, repair = false): Promise<Response> {
   let fetchHandler: ((event: { request: Request; respondWith: (response: Promise<Response>) => void }) => void) | undefined;
-  const script = readFileSync(new URL('../public/runner-sw.js', import.meta.url), 'utf8').replace('const publicHashes = /* trusted-public-manifest */ {};', 'const publicHashes = ' + JSON.stringify({ '/worker.js': createHash('sha256').update(bytes).digest('hex') }) + ';');
+  const script = readFileSync(new URL('../public/runner-sw.js', import.meta.url), 'utf8').replace('const publicHashes = /* trusted-public-manifest */ {};', 'const publicHashes = ' + JSON.stringify({ '/worker.js': createHash('sha256').update(bytes).digest('hex') }) + ';').replace('const publicResources = /* trusted-public-bytes */ {};', 'const publicResources = ' + JSON.stringify(repair ? { '/worker.js': { body: bytes, headers: { 'Content-Security-Policy': policy } } } : {}) + ';');
   runInNewContext(script, {
     crypto: webcrypto, URL, Response, location: { origin: 'http://127.0.0.2:4311' },
-    caches: { open: async () => ({ match: async () => response }) },
+    caches: { open: async () => ({ match: async () => response, put: async () => {} }) },
     addEventListener: (type: string, handler: typeof fetchHandler) => { if (type === 'fetch') fetchHandler = handler; },
   });
   return new Promise<Response>((resolve, reject) => {
@@ -33,4 +33,11 @@ test('learner cache body poisoning fails closed even with the expected CSP', asy
 
 test('learner CSP poisoning fails closed even with the expected public bytes', async () => {
   expect((await cachedResponse(new Response(bytes, { headers: { 'Content-Security-Policy': "default-src *" } }))).status).toBe(503);
+});
+
+test('trusted immutable resource bytes repair a poisoned cache without serving learner bytes', async () => {
+  const response = await cachedResponse(new Response('poison'), true);
+  expect(response.status).toBe(200);
+  expect(await response.text()).toBe(bytes);
+  expect(response.headers.get('Content-Security-Policy')).toBe(policy);
 });

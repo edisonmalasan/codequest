@@ -84,8 +84,13 @@ for (const [host, port, role] of [['127.0.0.1', 4310, 'app'], ['127.0.0.2', 4311
       const bytes = await readFile(path);
       if (role === 'runner' && url.pathname === '/runner-sw.js') {
         const hashes = {};
-        for (const publicPath of ['/bootstrap.html', '/bootstrap.js', '/worker.js', '/runner-prepare.html', '/runner-prepare.js']) hashes[publicPath] = createHash('sha256').update(await readFile(resolve(root, '.' + publicPath))).digest('hex');
-        res.end(bytes.toString().replace('const publicHashes = /* trusted-public-manifest */ {};', 'const publicHashes = ' + JSON.stringify(hashes) + ';') + `\n// synthetic build revision ${revision}\n`);
+        const resources = {};
+        for (const publicPath of ['/bootstrap.html', '/bootstrap.js', '/worker.js', '/runner-prepare.html', '/runner-prepare.js']) {
+          const publicBytes = await readFile(resolve(root, '.' + publicPath));
+          hashes[publicPath] = createHash('sha256').update(publicBytes).digest('hex');
+          resources[publicPath] = { body: publicBytes.toString(), headers: { 'Content-Type': mime[extname(publicPath)], 'Content-Security-Policy': publicPath === '/worker.js' ? workerPolicy : bootstrapPolicy } };
+        }
+        res.end(bytes.toString().replace('const publicHashes = /* trusted-public-manifest */ {};', 'const publicHashes = ' + JSON.stringify(hashes) + ';').replace('const publicResources = /* trusted-public-bytes */ {};', 'const publicResources = ' + JSON.stringify(resources) + ';') + `\n// synthetic build revision ${revision}\n`);
         return;
       }
       res.end(url.pathname === '/sw.js' || url.pathname === '/runner-sw.js' ? Buffer.concat([bytes, Buffer.from(`\n// synthetic build revision ${revision}\n`)]) : bytes);

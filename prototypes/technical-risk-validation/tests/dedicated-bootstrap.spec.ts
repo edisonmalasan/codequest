@@ -29,7 +29,9 @@ test('D3 learner cache poisoning cannot replace trusted public code or CSP', asy
   const source = await page.evaluate(() => window.__risk.source());
   const fresh = await page.evaluate(() => window.__risk.run('console.log("must not execute poisoned code")', 'dedicated'));
   await info.attach('learner-cache-poisoning', { body: JSON.stringify({ first, poisoned, fresh }), contentType: 'application/json' });
-  expect(fresh.status).toBe('protocol-error');
+  expect(fresh.status).toBe('success');
+  expect(fresh.elapsed).toBeLessThanOrEqual(1000);
+  expect(fresh.output).toEqual(['must not execute poisoned code']);
   expect(fresh.output).not.toContain('POISON_EXECUTED');
   expect(await page.evaluate(() => window.__risk.source())).toBe(source);
 });
