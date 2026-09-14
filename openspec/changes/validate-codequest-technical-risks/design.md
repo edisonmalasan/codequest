@@ -170,3 +170,7 @@ Terminal-output lifecycle correction: the trusted bootstrap now invokes Worker t
 
 
 Further dedicated-bootstrap lifetime/public-offline-resource revision is [proposed for explicit review only](../../../docs/technical-risk-validation/proposed-bootstrap-revision.md). It is not part of the currently approved opaque-bootstrap contract and must not be implemented or selected from an instruction merely to continue existing work. It preserves the two-candidate limit, P11 and all numerical gates; new security/cache/startup evidence is required.
+
+## Authorized dedicated-bootstrap experiment - 2026-09-15
+
+The owner explicitly approved the persistent dedicated-bootstrap/public-offline-cache experiment with "i approve it. continue finishing all the tasks in phase 1". The frozen contract is docs/technical-risk-validation/proposed-bootstrap-revision.md: at most one trusted dedicated document per runtime, fresh HTTP Worker per run, exact-origin/window private handshake, unchanged 100ms cleanup fallback, generation-bound bounded output, and isolated public-resource-only runner cache preserving Worker CSP. Trusted bootstrap/service-worker network is restricted to its own public resources; learner Worker connect/import/nested-worker permissions remain denied. Both restricted candidates and permissive controls remain available. P11, B01-B09 and unavailable-device classifications remain unchanged. Freeze implementation hashes before trials. Approval is for experimental implementation/retest only; S01-S06, F01/F02 and new progression review remain pending.
