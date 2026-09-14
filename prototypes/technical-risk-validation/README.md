@@ -15,7 +15,7 @@ node --max-old-space-size=128 scripts/serial-probes.mjs
 node --max-old-space-size=96 scripts/preview-watchdog.mjs
 ```
 
-`dev` runs Vite for editor development only; use `build` then `serve` for production-built prototype assets, dedicated-origin candidates, PWA and sink probes. `serve` starts three loopback-only servers: app `http://127.0.0.1:4310`, runner `http://127.0.0.2:4311`, sink `http://127.0.0.1:4312`. No TLS trust/DNS/hosts changes or cloud services are made. Manual mobile HTTPS/installation and real Safari/assistive-technology coverage remain untested until the owner supplies access.
+`dev` runs Vite for editor development only; use `build` then `serve` for production-built prototype assets, dedicated-origin candidates, PWA and sink probes. `serve` starts three loopback-only servers: app `http://127.0.0.1:4310`, runner `http://127.0.0.2:4311`, sink `http://127.0.0.1:4312`. No TLS trust/DNS/hosts changes or cloud services are made. Inaccessible physical mobile/Safari/assistive-technology coverage remains untested. The current owner instruction prohibits requesting manual validation.
 
 The app exposes `window.__risk` exclusively as a synthetic test harness. It is not a production API or security boundary. Permissive control execution is deliberately unsafe and only for synthetic canaries. Worker source is never executed by the local servers. No real accounts, keys, application tables, telemetry, or learner data are used.
 
@@ -49,10 +49,30 @@ The normal Open bounded preview button now reruns current learner source in the 
 
 Run `corepack pnpm@10.30.3 exec playwright test tests/preview-recovery.spec.ts --project=chromium` or `--project=firefox` (with the documented Firefox dependency-preflight option). The owned standalone controller accepts `node --max-old-space-size=96 scripts/preview-watchdog.mjs --worker-shell --default-browser` and optional `--firefox`. It observes a run-bound trusted Worker dispatch marker before checking recovery; this marker grants no privileged host action or correctness proof. Previous executable-HTML modes remain failing comparisons.
 
-Only the canonical app URL `/` is prepared for offline navigation. Diagnostic `?framePolicy=` URLs are not precached; the failed offline diagnostic-query trial is retained. Use canonical navigation for public offline/update integration and physical preparation. See [manual participation checklist](../../docs/technical-risk-validation/manual-checklist.md) for exact Windows owner-operated steps and untested hardware/accessibility configurations.
+Only the canonical app URL `/` is prepared for offline navigation. Diagnostic `?framePolicy=` URLs are not precached; the failed offline diagnostic-query trial is retained. Use canonical navigation for public offline/update integration and physical preparation. See [device validation procedures](../../docs/technical-risk-validation/manual-checklist.md) for retained procedures and limitations; they are not a request for manual owner testing.
 
 ### Offline-path controls
 
 From this directory, with task ports free, run `corepack pnpm@10.30.3 exec playwright test tests/offline-control.spec.ts` for the fixed-response worker diagnostic. It records offline policy separately from successful diagnostic collection. Keep the existing WebKit offline failures; this is not a substitute passing gate.
 
 Run `node scripts/cold-origin-probe.mjs chromium`, then the same command with `firefox` and `webkit`. Each invocation owns a fresh persistent profile/server, closes the prepared browser, stops its server, verifies all three origin ports refuse connections, launches a new headless process and checks cached source/check/preview before task-only cleanup. It never stops an existing service. The known WebKit Windows long-profile preparation failure is retained; compare with `node scripts/cold-origin-probe.mjs webkit --short-profile`, which uses only a newly created profile under ignored repository `temp/phase1-profiles`. This changes profile location only, not security flags. Keep observed single-trial timing separate from physical B07 and keep actual offline-emulation failures failed. Record the preflight environment option exactly when required, as in the earlier procedures.
+
+
+### Installed Windows Chrome automation
+
+Run each command separately with all task ports free. The installed-Chrome project uses headed channel `chrome`, native viewport and default GPU settings. Keyboard events are automated, not physical typing. No dedicated Browser Use/computer tool is exposed in this session. The Win32 helper only attempts restore/focus for the current test process's disposable-profile Chrome windows; failed foreground activation is recorded.
+
+```powershell
+$env:PHASE1_INSTALLED_CHROME='1'
+corepack pnpm@10.30.3 test:browser
+Remove-Item Env:PHASE1_INSTALLED_CHROME
+node scripts/native-chrome-diagnostics.mjs
+node scripts/native-chrome-diagnostics.mjs --storage-denied
+node scripts/cold-origin-probe.mjs chrome --short-profile
+```
+
+The native diagnostic collects ten verified Worker loop trials, 100 Worker and 100 preview/reset cycles, actual task-profile browser zoom at 200%/400%, bounded window-state observations, CDP task-PWA installation/standalone launch, exact 8/6/6 persistence cycles and origin-refused process-cold app recovery. It uninstalls only its own task app and removes only its fresh profile. `--occlusion-control` adds one explicitly recorded comparison flag; its results are not normal-browser passes. `--storage-denied` blocks storage using only fresh-profile preferences, independently observes local/session/IndexedDB denial and verifies editable exact source with a truthful failed-save status. Native disk exhaustion and OS restart are not simulated as passes.
+
+`tests/renderer-recovery.spec.ts` uses CDP Page.crash only on the disposable task page, then checks the real confirmed draft in a new page. It is not an OS restart or learner emergency recovery. Non-CDP engines are explicitly untested for this diagnostic. Original failures are retained, including native lifecycle/deadline failures and WebKit offline-emulation failures. Proposed [scope adjustments](../../docs/technical-risk-validation/proposed-scope-adjustment.md) have not been approved or applied.
+
+`node scripts/native-chrome-diagnostics.mjs --retention-control` adds ten/thirty-second natural-idle resource snapshots after the same workload; it does not force GC or extend recovery/readiness budgets. Current-process CPU sums may decrease when processes exit and are not cumulative workload CPU. Run `test:browser tests/nested-worker.spec.ts` for permissive/restricted nested Blob request controls and fixed child-first-message loop rejection/recovery, recording unavailable constructor/bootstrap paths separately. The proposed persistent-bootstrap follow-up is documented in the report and is not implemented or selected.

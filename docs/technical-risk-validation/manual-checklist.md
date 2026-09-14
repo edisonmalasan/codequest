@@ -1,6 +1,8 @@
-# Phase 1 manual participation checklist
+# Phase 1 device validation procedures
 
-Only the Windows development machine is confirmed. Execute the Windows checklist separately in installed Chrome and Firefox if available; record actual versions, not Playwright engine versions. macOS, Android, iPhone, NVDA and VoiceOver remain **untested** until explicit access is confirmed. The [charter](charter.md) B01-B09 criteria remain unchanged.
+**Current execution instruction (2026-09-14):** Codex performs all available validation through browser/CDP/automation tools and must not request manual user validation. These procedures preserve the original physical/device acceptance methods for future accessible configurations; they are not a current request for manual participation. See the [proposed scope adjustment](proposed-scope-adjustment.md).
+
+Only the Windows development machine and installed Chrome are confirmed. Execute the Windows checklist separately in installed Chrome and Firefox if available; record actual versions, not Playwright engine versions. macOS, Android, iPhone, NVDA and VoiceOver remain **untested** until explicit access is confirmed. The [charter](charter.md) B01-B09 criteria remain unchanged.
 
 Use synthetic data and a separate task browser profile. The redesigned **Open bounded preview** runs learner functions in a restricted Worker and displays fixed, script-disabled supplied-shell output. Do not manually run the historical executable-HTML `__risk.preview` comparison: it previously required emergency termination. Automated preview success does not replace physical or accessibility evidence.
 

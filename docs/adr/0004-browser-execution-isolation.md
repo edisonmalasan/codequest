@@ -47,3 +47,8 @@ F01 is a candidate recommendation pending review and required integration/physic
 ## Offline-path diagnostic evidence - 2026-09-14
 
 The [fixed-response service-worker control and cold-origin trials](../technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) separate WebKit offline emulation from application behavior. All three engines passed a single headless cold-origin functional check, with WebKit requiring a shorter task profile after its original CacheStorage filesystem failure. Original emulation failures remain failed; physical/Safari/accessibility/native quota evidence and new recommendation review remain incomplete. No production mechanism or F02 promise is selected, and AP01/AP02 scope is unchanged.
+
+
+## Native Chrome evidence checkpoint - 2026-09-14
+
+The [installed-Chrome evidence](../technical-risk-validation/report.md#installed-windows-chrome-continuation---2026-09-14) adds actual Windows Chrome interaction, browser zoom, storage-denial recovery, isolated PWA installation and process-cold diagnostics. Native valid-run startup and fresh-preview timing failures remain a redesign/no-go; earlier downloaded-engine passes do not establish the installed-browser gate. Source/save synchronization defects were corrected with focused regression coverage. Native full-storage, physical mobile/Safari, spoken assistive technology and OS restart evidence remain inconclusive/untested. Proposed progression scope adjustments are review recommendations only, not approved exceptions. F01 remains unselected and F02 incomplete; AP01/AP02 and P11 remain unchanged. The current results need dated project-owner technical/product/security self-review. No Phase 2, Sync or Archive begins.

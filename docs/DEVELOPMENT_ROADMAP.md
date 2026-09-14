@@ -9,10 +9,10 @@ Status snapshot: 2026-09-14. Update this section when the phase or OpenSpec stag
 | Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); Apply continuation, not complete |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply continuation - 21/34 tasks complete; usable Worker preview implemented; review of new recommendation and 12 other acceptance gates remain incomplete |
-| Next execution step | Execute confirmed Windows [manual checklist](technical-risk-validation/manual-checklist.md); obtain native Safari/device/accessibility evidence and review the [offline-path diagnostics](technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) and new recommendation |
+| Current OpenSpec stage | Apply continuation - 22/34 tasks complete; inventory and native Chrome diagnostics recorded; 12 required experiment/review gates incomplete |
+| Next execution step | Review native Chrome failures and the [proposed scope adjustment](technical-risk-validation/proposed-scope-adjustment.md); Codex executes available tooling without manual user validation requests. Explicit progression decision remains unresolved |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Worker-preview core passed in Chromium/Firefox/WebKit: 10 loops and 100 resets per engine; single headless cold-origin checks passed (WebKit requires shorter profile). WebKit offline emulation still fails even with a fixed-response worker. Physical/accessibility/native quota gates untested; legacy no-go retained as AP02 |
+| Validation evidence | Bundled-engine Worker-preview core passed; native Chrome has intermittent fresh-run/lifecycle failures. Native zoom, persistence and cold-origin diagnostics recorded; WebKit offline emulation remains failed. Inaccessible device/AT and native quota limits remain untested/inconclusive; AP02 historical no-go retained |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
 
