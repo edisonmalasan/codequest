@@ -1,0 +1,176 @@
+{
+  "recordedAt": "2026-09-13T21:08:50.997Z",
+  "commit": "fd02666a01d9ddab071e9cd16c8f37e04ef0eb47",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/scripts/serve.mjs",
+    "?? prototypes/technical-risk-validation/scripts/fixtures/",
+    "?? prototypes/technical-risk-validation/tests/offline-control.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/offline-control.spec.ts"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T21:08:41.196Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "afb291e568135c54495890c56c55074923f3f2d2f62633c3955c24cb99e6f5a9",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-CTcQfg3o.js": "7380a4d06df30c558309573ac871034822ab8f4950e18bd089e0c357ebae26bb",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f236978a1946645ebe5cb754dc4697d5e55bf61e4fa70e35fa9c0a1b3092aa3c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "c0b544ee56a96c5a5a1beab552e69fc13c9e11a9f064f6d0805a965cc5bba15f",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 10937.334,
+  "cases": [
+    {
+      "title": " / chromium / offline-control.spec.ts / E05 diagnostic isolates offline emulation from the application and cache library",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 355,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "minimal-worker-offline-control",
+          "data": {
+            "browser": "153.0.8010.12",
+            "fixtureHashes": {
+              "offline-control.html": "e3429427a8d8c8bef307a9f6c1c0311590525d4983c2bec6997cbe5804e42df3",
+              "offline-control-worker.js": "6985aaae3b4566ce990aaf36ad8f09e05f1a4a4d424c3a971f444f85b2256bdb"
+            },
+            "online": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "before": {
+              "fetchCount": 1,
+              "workerOnline": true
+            },
+            "pageOnline": false,
+            "offline": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "after": {
+              "fetchCount": 2,
+              "workerOnline": false
+            },
+            "navigationError": "",
+            "offlinePolicyPassed": true,
+            "diagnosticOnly": true,
+            "physical": false,
+            "scope": "fixed in-memory service-worker Response; no Serwist/React/IndexedDB/learner execution"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / offline-control.spec.ts / E05 diagnostic isolates offline emulation from the application and cache library",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2515,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "minimal-worker-offline-control",
+          "data": {
+            "browser": "155.0",
+            "fixtureHashes": {
+              "offline-control.html": "e3429427a8d8c8bef307a9f6c1c0311590525d4983c2bec6997cbe5804e42df3",
+              "offline-control-worker.js": "6985aaae3b4566ce990aaf36ad8f09e05f1a4a4d424c3a971f444f85b2256bdb"
+            },
+            "online": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "before": {
+              "fetchCount": 1,
+              "workerOnline": true
+            },
+            "pageOnline": false,
+            "offline": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "after": {
+              "fetchCount": 2,
+              "workerOnline": true
+            },
+            "navigationError": "",
+            "offlinePolicyPassed": true,
+            "diagnosticOnly": true,
+            "physical": false,
+            "scope": "fixed in-memory service-worker Response; no Serwist/React/IndexedDB/learner execution"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / offline-control.spec.ts / E05 diagnostic isolates offline emulation from the application and cache library",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 506,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "minimal-worker-offline-control",
+          "data": {
+            "browser": "26.6",
+            "fixtureHashes": {
+              "offline-control.html": "e3429427a8d8c8bef307a9f6c1c0311590525d4983c2bec6997cbe5804e42df3",
+              "offline-control-worker.js": "6985aaae3b4566ce990aaf36ad8f09e05f1a4a4d424c3a971f444f85b2256bdb"
+            },
+            "online": {
+              "status": 200,
+              "body": "<h1>SYNTHETIC_SW_RESPONSE</h1>",
+              "error": ""
+            },
+            "before": {
+              "fetchCount": 1,
+              "workerOnline": true
+            },
+            "pageOnline": false,
+            "offline": {
+              "status": 0,
+              "body": "",
+              "error": "Load failed"
+            },
+            "after": {
+              "fetchCount": 1,
+              "workerOnline": false
+            },
+            "navigationError": "page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4310/__offline-control/\", waiting until \"load\"\u001b[22m\n",
+            "offlinePolicyPassed": false,
+            "diagnosticOnly": true,
+            "physical": false,
+            "scope": "fixed in-memory service-worker Response; no Serwist/React/IndexedDB/learner execution"
+          }
+        }
+      ]
+    }
+  ]
+}

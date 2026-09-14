@@ -1,0 +1,132 @@
+{
+  "recordedAt": "2026-09-14T07:33:03.841Z",
+  "commit": "045eb0e6a0073d3e7024bb5941696fb26d8ede45",
+  "diagnostic": "parent/nested target liveness after acknowledged termination",
+  "physical": false,
+  "active": [
+    {
+      "targetId": "D15480E9D70851C184371A34595123C2",
+      "type": "worker",
+      "title": "blob:null/8010e8ec-7fa6-4b37-a8c1-0b9b737a8746",
+      "url": "blob:null/8010e8ec-7fa6-4b37-a8c1-0b9b737a8746",
+      "attached": true,
+      "parentId": "757F248BC0AEBEA25E6A285A2BC39B4D",
+      "canAccessOpener": false,
+      "parentFrameId": "B7A8212A80DCDAEF2BC1C040B3998190",
+      "browserContextId": "82966B06888A5E499ACC4A263FCFE876"
+    },
+    {
+      "targetId": "4A7AB597C896CA80EABC515299DB4F67",
+      "type": "worker",
+      "title": "blob:null/d234efe3-b259-42aa-8e85-a4ba68b6e9ae",
+      "url": "blob:null/d234efe3-b259-42aa-8e85-a4ba68b6e9ae",
+      "attached": true,
+      "parentId": "D15480E9D70851C184371A34595123C2",
+      "canAccessOpener": false,
+      "parentFrameId": "B7A8212A80DCDAEF2BC1C040B3998190",
+      "browserContextId": "82966B06888A5E499ACC4A263FCFE876"
+    }
+  ],
+  "stopped": {
+    "source": "const w=new Worker(URL.createObjectURL(new Blob([\"self.postMessage(\\\"CHILD\\\");while(true){}\"],{type:'text/javascript'})));await new Promise(r=>{w.onmessage=()=>{};w.onerror=()=>r()});",
+    "candidate": "opaque",
+    "task": "Q01",
+    "run": "4c117e39-4517-4f11-9530-07b4f36ecab0",
+    "contentVersion": "1",
+    "assessmentVersion": "1",
+    "previewMarker": true,
+    "status": "stopped",
+    "output": [],
+    "value": "Stopped",
+    "elapsed": 57.899999998509884,
+    "cleanup": {
+      "acknowledged": true,
+      "fallback": false,
+      "retainedTrustedBootstrap": true
+    }
+  },
+  "after": [
+    {
+      "targetId": "D15480E9D70851C184371A34595123C2",
+      "type": "worker",
+      "title": "blob:null/8010e8ec-7fa6-4b37-a8c1-0b9b737a8746",
+      "url": "blob:null/8010e8ec-7fa6-4b37-a8c1-0b9b737a8746",
+      "attached": true,
+      "parentId": "757F248BC0AEBEA25E6A285A2BC39B4D",
+      "canAccessOpener": false,
+      "parentFrameId": "B7A8212A80DCDAEF2BC1C040B3998190",
+      "browserContextId": "82966B06888A5E499ACC4A263FCFE876"
+    },
+    {
+      "targetId": "4A7AB597C896CA80EABC515299DB4F67",
+      "type": "worker",
+      "title": "blob:null/d234efe3-b259-42aa-8e85-a4ba68b6e9ae",
+      "url": "blob:null/d234efe3-b259-42aa-8e85-a4ba68b6e9ae",
+      "attached": true,
+      "parentId": "D15480E9D70851C184371A34595123C2",
+      "canAccessOpener": false,
+      "parentFrameId": "B7A8212A80DCDAEF2BC1C040B3998190",
+      "browserContextId": "82966B06888A5E499ACC4A263FCFE876"
+    }
+  ],
+  "cpuBefore": {
+    "processInfo": [
+      {
+        "type": "browser",
+        "id": 19264,
+        "cpuTime": 0.302175
+      },
+      {
+        "type": "renderer",
+        "id": 19396,
+        "cpuTime": 0.622998
+      },
+      {
+        "type": "GPU",
+        "id": 20552,
+        "cpuTime": 0.086011
+      },
+      {
+        "type": "network.mojom.NetworkService",
+        "id": 18568,
+        "cpuTime": 0.088675
+      }
+    ]
+  },
+  "attach": [
+    {
+      "targetId": "D15480E9D70851C184371A34595123C2",
+      "reply": "no response in 200ms"
+    },
+    {
+      "targetId": "4A7AB597C896CA80EABC515299DB4F67",
+      "reply": "no response in 200ms"
+    }
+  ],
+  "afterTwoSeconds": [],
+  "cpuAfter": {
+    "processInfo": [
+      {
+        "type": "browser",
+        "id": 19264,
+        "cpuTime": 0.31551
+      },
+      {
+        "type": "renderer",
+        "id": 19396,
+        "cpuTime": 2.333048
+      },
+      {
+        "type": "GPU",
+        "id": 20552,
+        "cpuTime": 0.090193
+      },
+      {
+        "type": "network.mojom.NetworkService",
+        "id": 18568,
+        "cpuTime": 0.091292
+      }
+    ]
+  },
+  "afterDisposal": []
+}

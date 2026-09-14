@@ -76,13 +76,17 @@ The owner is the assigned technical, product and security reviewer. This is a pr
 
 F01 is **reviewed no-go for the evaluated preview mechanisms; production selection blocked pending scoped redesign**. Worker focused results do not compensate for preview recovery failure. F02 is **inconclusive for required physical/device/accessibility coverage**; no production support matrix or performance promise is selected. The charter's numeric limits remain experimental criteria, not measured production guarantees. P01-P15/U01/AP01 and F03-F09 remain unchanged.
 
+## Phase 1 Worker-preview continuation - 2026-09-13
+
+The owner explicitly instructed a scoped preview containment/recovery redesign preserving P11 and the approved limits. Core Worker-backed supplied-shell automation now passes in Chromium, Firefox and WebKit; WebKit simulated-offline integration fails and required physical/accessibility evidence remains untested. See the [current report](technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13) and [ADR 0004 addendum](adr/0004-browser-execution-isolation.md). F01 remains unselected for production; review of the new recommendation is pending. AP02 remains historical approval of the failed executable-HTML candidates, not approval of this new result. F02 stays inconclusive; P01-P15/U01/AP01 and F03-F09 are unchanged.
+
 ## Deferred decisions
 
 AP01 approves retaining these deferrals and their owners/triggers. It does not select their unspecified implementation details, numeric values or operational policies, nor authorize building features.
 
 | ID | Topic | Status/source | Rationale / alternatives | Affected documents | Owner | Blocking stage / revisit trigger |
 | --- | --- | --- | --- | --- | --- | --- |
-| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | reviewed no-go, AP02; production selection blocked | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
+| F01 | Origin/capability isolation mechanism, iframe/CSP flags, numeric runtime/output limits | legacy preview reviewed no-go AP02; Worker-preview recommendation pending review; production selection blocked | Needs prototype evidence; same-origin privilege assumption is unacceptable | security, frontend, ADR 0004 | TO/SO | Phase 1, before production runtime proposal |
 | F02 | Editor layout, exact supported device/browser versions and performance budgets | inconclusive required coverage, AP02; selection deferred | Needs real keyboard/touch/low-end tests; no assumed mobile parity | frontend, product | PO/TO | Phase 1 before supported coding promises |
 | F03 | DTOs, schemas, content compiler/publication projection, sync conflict algorithm/cache implementation | deferred, D5–D7 | Policies before mechanisms; no root packages extracted speculatively | backend, architecture, curriculum, frontend | TO | Relevant capability proposal after Phase 0 |
 | F04 | XP values, level curve, content timing/difficulty balance | deferred, R/D8 | Needs final curriculum and learner feedback | gamification, curriculum | PO/CO | Before beta balancing |
@@ -165,3 +169,24 @@ Performed during documentation apply on 2026-09-13:
 - The repository also has no root `package.json`, frontend or backend workspace. No workspace or dependencies were created to make unrelated application checks runnable.
 
 Documentation validation is not application test coverage or proof of isolation/learning efficacy. All F01–F09 retain the owners/triggers above. Policy decisions and Phase 1 evidence are needed before later implementation promises; beta data collection additionally requires F06. No automatic sync/archive/merge is performed.
+
+## Offline-path diagnostic evidence - 2026-09-14
+
+The [fixed-response service-worker control and cold-origin trials](technical-risk-validation/report.md#offline-emulation-and-cold-origin-diagnostics---2026-09-14) separate WebKit offline emulation from application behavior. All three engines passed a single headless cold-origin functional check, with WebKit requiring a shorter task profile after its original CacheStorage filesystem failure. Original emulation failures remain failed; physical/Safari/accessibility/native quota evidence and new recommendation review remain incomplete. No production mechanism or F02 promise is selected, and AP01/AP02 scope is unchanged.
+
+
+## Native Chrome evidence checkpoint - 2026-09-14
+
+The [installed-Chrome evidence](technical-risk-validation/report.md#installed-windows-chrome-continuation---2026-09-14) adds actual Windows Chrome interaction, browser zoom, storage-denial recovery, isolated PWA installation and process-cold diagnostics. Native valid-run startup and fresh-preview timing failures remain a redesign/no-go; earlier downloaded-engine passes do not establish the installed-browser gate. Source/save synchronization defects were corrected with focused regression coverage. Native full-storage, physical mobile/Safari, spoken assistive technology and OS restart evidence remain inconclusive/untested. Proposed progression scope adjustments are review recommendations only, not approved exceptions. F01 remains unselected and F02 incomplete; AP01/AP02 and P11 remain unchanged. The current results need dated project-owner technical/product/security self-review. No Phase 2, Sync or Archive begins.
+
+
+## Authorized bootstrap experiment checkpoint - 2026-09-14
+
+The project owner explicitly approved the persistent trusted opaque bootstrap/fresh-per-run Worker experiment and D3/charter revision, preserving P11 and all numerical limits. It is implemented through `e9e8436`, including private cleanup control and generation-bound untrusted output. This approval is not S01-S06 approval, F01 production selection, F02 support acceptance or Proceed. See the [current evidence report](technical-risk-validation/report.md#authorized-persistent-bootstrap-checkpoint---2026-09-14). Final installed Chrome: **45 passed / 4 failed**; independent native cycles: **96/100 valid Worker successes, four timeouts, next fresh success 1101.9ms**; 10 witnessed loop recoveries/100 preview cycles and native zoom/PWA/20 persistence cycles pass. Bundled affected retest: **111 passed / 5 failed / 4 skipped**; replay passes all three engines, target-lifetime/WebKit offline failures retained, isolated focus retest passes without erasing the prior failure. Chrome ten-cold-trial probe fails before any completed trial; WebKit single cold-origin control passes.
+
+**Phase 1 remains 22/34 and Redesign/no-go**. Missing physical macOS/Android/iPhone, installed Firefox and NVDA/VoiceOver remain untested; native background/full quota/OS restart and total resource bounds remain unverified. Scope adjustment and dated owner product/technical/security self-review are pending. Security review is self-review, not an independent audit. AP01/AP02, approved Phase 0 policy and required recovery limits remain unchanged. No Phase 2, Sync or Archive.
+
+
+## Latest Apply continuation - 2026-09-15
+
+Terminal-output Worker termination ordering was corrected and verified by 20 unit tests; lint/typechecks/build pass. Full installed Chrome remains **34 passed / 15 failed**; affected bundled engines **31 passed / 4 failed / 1 skipped**, followed by two explicit unsupported-CDP skips. Independent 100 Worker/100 preview cycles and PWA/20 persistence cycles pass, but four post-loop fresh runs time out, the ten-cold-process probe completes 0/10 trials, and the 400% local Check times out. [Latest evidence](technical-risk-validation/report.md#final-continuation-evidence-and-progression---2026-09-15) retains original failures and exact hashes. **Phase 1 stays 22/34 and Redesign/no-go**. The [dedicated-bootstrap follow-up](technical-risk-validation/proposed-bootstrap-revision.md) and S01-S06 are proposed only; new owner technical/product/security self-review and production/support selection remain pending. Security review is self-review, not an independent audit. Accepted Phase 0 policies/AP01/AP02 remain unchanged. No Phase 2, Sync or Archive.

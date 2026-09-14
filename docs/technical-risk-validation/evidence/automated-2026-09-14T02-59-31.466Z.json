@@ -1,0 +1,1733 @@
+{
+  "recordedAt": "2026-09-14T02:59:31.466Z",
+  "commit": "278e11053743aeff014086ab01e14d50ac00a452",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-10-51.844Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-07.933Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-46.420Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-13-09.545Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-18-28.884Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-33-57.415Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-31-08.710Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-35-25.784Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-36-13.622Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-39-46.463Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-42-51.823Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-47-22.281Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-55-08.988Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-55-45.794Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-56-45.796Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-58-31.678Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-50-01.338Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-51-24.716Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-08-37.339Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-20-59.934Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-24-02.800Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-20-30.170Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-21-44.817Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-49-20.566Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-53-49.439Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-56-07.059Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-13T22-15-11.801Z.json",
+    "?? docs/technical-risk-validation/proposed-scope-adjustment.md",
+    "?? prototypes/technical-risk-validation/tests/nested-worker.spec.ts",
+    "?? prototypes/technical-risk-validation/tests/renderer-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/nested-worker.spec.ts",
+    "--grep",
+    "loop start"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": true,
+    "mode": "headed installed Windows Chrome; automated interaction, not physical typing or assistive technology",
+    "chromiumArgs": [],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T02:59:19.912Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "9d244fd31a04192536ac0466401fad6b549779d40d58b600d91a094470f5776a",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-VZMd8kAk.js": "67bc4623deeb0c75b0a3c6eae67c7927071cf4eb58b6f1a02642a4dc4acf5d1a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "9cc94f44cd25d5d5305aaddd1f9703267ab2b1e3e030a993a1c25a280a8de60b",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "88693153d973c04fc8cdd2ebe95342d0dff01d6528ed8b8898ec2dfce850417d",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 12069.526,
+  "cases": [
+    {
+      "title": " / installed-chrome / nested-worker.spec.ts / E02/E03 nested Blob loop start triggers bounded rejection and usable fresh execution",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 7811,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "nested-loop-opaque-0",
+          "data": {
+            "candidate": "opaque",
+            "trial": 0,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "5aaa8c10-0a18-48be-9770-e9d871ac675b",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 85.40000000596046
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "4e009258-a566-4bfc-ab9e-41db057447b4",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 90.30000000447035
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-1",
+          "data": {
+            "candidate": "opaque",
+            "trial": 1,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "ffc92685-f926-4d8c-a15b-8f8cb3f371a0",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 74.10000000149012
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "16b5b03a-bc33-45e0-8e6f-cba6d6bb0010",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 92.89999999850988
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-2",
+          "data": {
+            "candidate": "opaque",
+            "trial": 2,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "2a42cebc-44f4-4824-a6b7-269017540e63",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 164.19999999552965
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "3df67ec8-0530-46f2-b031-1c20190ec9e0",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 51.5
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-3",
+          "data": {
+            "candidate": "opaque",
+            "trial": 3,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "90715599-ea42-496c-b392-5a5107243be1",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 129.90000000596046
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "fa6ce7f7-6b36-445c-85be-bf680002a4a1",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 74.29999999701977
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-4",
+          "data": {
+            "candidate": "opaque",
+            "trial": 4,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "30416c76-1c4f-4974-b17e-0b439439e1c9",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 163.80000000447035
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "41c2082b-9f2e-4178-89f1-eae9ae580c79",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 43.70000000298023
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-5",
+          "data": {
+            "candidate": "opaque",
+            "trial": 5,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "c623bd9c-5546-4a1b-843e-a05071973031",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 379.1000000014901
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "8c435632-5111-41e6-993b-96857d673c8c",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 81.80000000447035
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-6",
+          "data": {
+            "candidate": "opaque",
+            "trial": 6,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "c139f12e-1ac7-4c5d-b568-a57af0558462",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 509.20000000298023
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "5e012fea-76ff-4737-8b68-d9d7ff5cce25",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 195.29999999701977
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-7",
+          "data": {
+            "candidate": "opaque",
+            "trial": 7,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "eb51228d-3c52-4dd2-a29c-f941a3a5ea20",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 484.5
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "342515fc-4320-4967-b5ab-2732543d9d5a",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 68.09999999403954
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-8",
+          "data": {
+            "candidate": "opaque",
+            "trial": 8,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "87ab6d50-436c-4a2e-9346-a71b9697d52a",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 208.40000000596046
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "e3648026-fbcc-4ba9-8ec0-307f0206bcd4",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 102.10000000149012
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-opaque-9",
+          "data": {
+            "candidate": "opaque",
+            "trial": 9,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "fd02fde2-a870-443a-b890-4435aa37e964",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 216.09999999403954
+            },
+            "nestedUnavailable": false,
+            "childStartRejection": true,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "0e0d9e86-816d-4b4b-b62e-fd334b0a2b47",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 113.20000000298023
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-0",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 0,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "f559d6fd-e46c-4972-bc9e-cfd53bfe9086",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 156.10000000149012
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "efa488c1-55f9-47c3-990b-7d5f331994c6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 101.20000000298023
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-1",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 1,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "40eba49b-fbf0-441a-99fb-0104f1ae0ebc",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 123.80000000447035
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "44c687f5-5627-4603-b4f0-97f84185e73c",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 99.39999999850988
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-2",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 2,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "9741c361-071e-40e9-a839-a0b3478f8b15",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 116.70000000298023
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "a5323eda-416b-425b-aa40-c2de4ce806fd",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 137.89999999850988
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-3",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 3,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "9fd52c20-64cc-4d16-a945-0d811e358d98",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 195.69999999552965
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "f4b3fb9b-40d1-4204-ac4f-926b9cc327e6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 117.40000000596046
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-4",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 4,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "8d70b8dc-d7c9-4970-ab1c-f99975d29325",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 128.59999999403954
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "ce048fc0-f91b-44c9-98d8-0c641d8e9ea1",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 152.79999999701977
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-5",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 5,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "5c10cdd9-4ed1-4373-85ee-83ad1f80170b",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 130.69999999552965
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "f2b7126a-c325-4221-9fc6-0fcc09a44435",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 98.89999999850988
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-6",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 6,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "7dfb4bf2-99a2-47b7-ac95-2a2b70726821",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 105.5
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "e74e0796-1e78-467c-a8b0-54e2ff11fe6e",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 134.59999999403954
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-7",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 7,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "12e81227-2e09-4ff3-ae90-19b63d1bf5f8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 128.20000000298023
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "200c8331-5af7-462a-9298-e2a1c7ef1ba3",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 138.39999999850988
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-8",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 8,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "bfcbba98-8a5e-4b45-b0d9-e76e5ffe5144",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 140.10000000149012
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "d69dea54-3680-4fc2-87c4-aac9251b4179",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 120.20000000298023
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-dedicated-9",
+          "data": {
+            "candidate": "dedicated",
+            "trial": 9,
+            "result": {
+              "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "e4f11b4c-c8e2-4be9-b3f2-d33dd12b7109",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 100.69999999552965
+            },
+            "nestedUnavailable": true,
+            "childStartRejection": false,
+            "fresh": {
+              "source": "console.log(\"fresh after nested child\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "9feea353-207a-4092-8f56-444a48493bef",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh after nested child"
+              ],
+              "value": "[undefined]",
+              "elapsed": 146.80000000447035
+            },
+            "exactSourceRetained": true,
+            "childExplicitlyTerminatedByFixture": false,
+            "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+            "physicalMobile": "untested"
+          }
+        },
+        {
+          "name": "nested-loop-comparison",
+          "data": {
+            "browser": "153.0.8010.37",
+            "rows": [
+              {
+                "candidate": "opaque",
+                "trial": 0,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "5aaa8c10-0a18-48be-9770-e9d871ac675b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 85.40000000596046
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "4e009258-a566-4bfc-ab9e-41db057447b4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 90.30000000447035
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 1,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "ffc92685-f926-4d8c-a15b-8f8cb3f371a0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 74.10000000149012
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "16b5b03a-bc33-45e0-8e6f-cba6d6bb0010",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 92.89999999850988
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 2,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "2a42cebc-44f4-4824-a6b7-269017540e63",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 164.19999999552965
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "3df67ec8-0530-46f2-b031-1c20190ec9e0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 51.5
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 3,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "90715599-ea42-496c-b392-5a5107243be1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 129.90000000596046
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "fa6ce7f7-6b36-445c-85be-bf680002a4a1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 74.29999999701977
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 4,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "30416c76-1c4f-4974-b17e-0b439439e1c9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 163.80000000447035
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "41c2082b-9f2e-4178-89f1-eae9ae580c79",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 43.70000000298023
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 5,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "c623bd9c-5546-4a1b-843e-a05071973031",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 379.1000000014901
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "8c435632-5111-41e6-993b-96857d673c8c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 81.80000000447035
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 6,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "c139f12e-1ac7-4c5d-b568-a57af0558462",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 509.20000000298023
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "5e012fea-76ff-4737-8b68-d9d7ff5cce25",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 195.29999999701977
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 7,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "eb51228d-3c52-4dd2-a29c-f941a3a5ea20",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 484.5
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "342515fc-4320-4967-b5ab-2732543d9d5a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 68.09999999403954
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 8,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "87ab6d50-436c-4a2e-9346-a71b9697d52a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 208.40000000596046
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "e3648026-fbcc-4ba9-8ec0-307f0206bcd4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 102.10000000149012
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "opaque",
+                "trial": 9,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "fd02fde2-a870-443a-b890-4435aa37e964",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "protocol-error",
+                  "output": [],
+                  "value": "Malformed or stale result rejected",
+                  "elapsed": 216.09999999403954
+                },
+                "nestedUnavailable": false,
+                "childStartRejection": true,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "0e0d9e86-816d-4b4b-b62e-fd334b0a2b47",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 113.20000000298023
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 0,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "f559d6fd-e46c-4972-bc9e-cfd53bfe9086",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 156.10000000149012
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "efa488c1-55f9-47c3-990b-7d5f331994c6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 101.20000000298023
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 1,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "40eba49b-fbf0-441a-99fb-0104f1ae0ebc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 123.80000000447035
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "44c687f5-5627-4603-b4f0-97f84185e73c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 99.39999999850988
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 2,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "9741c361-071e-40e9-a839-a0b3478f8b15",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 116.70000000298023
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "a5323eda-416b-425b-aa40-c2de4ce806fd",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 137.89999999850988
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 3,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "9fd52c20-64cc-4d16-a945-0d811e358d98",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 195.69999999552965
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "f4b3fb9b-40d1-4204-ac4f-926b9cc327e6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 117.40000000596046
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 4,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "8d70b8dc-d7c9-4970-ab1c-f99975d29325",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 128.59999999403954
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "ce048fc0-f91b-44c9-98d8-0c641d8e9ea1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 152.79999999701977
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 5,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "5c10cdd9-4ed1-4373-85ee-83ad1f80170b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 130.69999999552965
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "f2b7126a-c325-4221-9fc6-0fcc09a44435",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 98.89999999850988
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 6,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "7dfb4bf2-99a2-47b7-ac95-2a2b70726821",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 105.5
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "e74e0796-1e78-467c-a8b0-54e2ff11fe6e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 134.59999999403954
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 7,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "12e81227-2e09-4ff3-ae90-19b63d1bf5f8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 128.20000000298023
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "200c8331-5af7-462a-9298-e2a1c7ef1ba3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 138.39999999850988
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 8,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "bfcbba98-8a5e-4b45-b0d9-e76e5ffe5144",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 140.10000000149012
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "d69dea54-3680-4fc2-87c4-aac9251b4179",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 120.20000000298023
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              },
+              {
+                "candidate": "dedicated",
+                "trial": 9,
+                "result": {
+                  "source": "let child;const url=URL.createObjectURL(new Blob([\"self.postMessage(\\\"SYNTHETIC_CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'}));\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child)await new Promise(resolve=>{child.onmessage=event=>{if(event.data==='SYNTHETIC_CHILD_STARTED')self.postMessage('SYNTHETIC_CHILD_STARTED');else{console.log('NESTED_UNEXPECTED_MESSAGE');resolve()}};child.onerror=event=>{event.preventDefault();console.log('NESTED_BOOTSTRAP_DENIED');resolve()}});",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e4f11b4c-c8e2-4be9-b3f2-d33dd12b7109",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 100.69999999552965
+                },
+                "nestedUnavailable": true,
+                "childStartRejection": false,
+                "fresh": {
+                  "source": "console.log(\"fresh after nested child\")",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "9feea353-207a-4092-8f56-444a48493bef",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "fresh after nested child"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 146.80000000447035
+                },
+                "exactSourceRetained": true,
+                "childExplicitlyTerminatedByFixture": false,
+                "termination": "runtime cleanup after invalid raw message; finite capability test is separate",
+                "physicalMobile": "untested"
+              }
+            ],
+            "limitation": "fixed child-first-message fixture; host rejects that untrusted message, never grants a privileged action. A missing/bootstrap-error message is not a child-start proof.",
+            "hardMemoryQuota": "unverified"
+          }
+        }
+      ]
+    }
+  ]
+}

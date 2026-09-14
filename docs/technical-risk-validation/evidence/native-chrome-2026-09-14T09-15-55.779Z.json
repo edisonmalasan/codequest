@@ -1,0 +1,5586 @@
+{
+  "recordedAt": "2026-09-14T09:15:55.779Z",
+  "experiment": "E01/E05 native Chrome diagnostics",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\native-chrome-diagnostics.mjs",
+    "--retention-control"
+  ],
+  "commit": "d4d37f861000ff5d6bfb2bddb4120966a948ca38",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/README.md",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-08-43.812Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-12-43.433Z.json",
+    "?? docs/technical-risk-validation/evidence/environment-context-2026-09-14-continuation.json",
+    "?? docs/technical-risk-validation/proposed-bootstrap-revision.md"
+  ],
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "fc4255ee1886ba4e7d2bd52155f88cb431e8a6c9a438c21d7fa2834778e0b6f3",
+    "assets/index-Br5Xj04R.js": "8653f36811bb4a34cb8885e2aa2172cdd010a84390d70c6a8a8a2d5777fa1ae1",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "08be72945865a46b4943ec26a229a71286820da4e19787cc02de884939ad1618",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "f797f6d97f6b4886249449e1f6a6cf7034476420bdef51a21e926c316ba1930c",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "eb465db3f5ba3af24ff9b8de1964e32cd83848c135312bf57ff67c5865705ced",
+  "channel": "chrome",
+  "headed": true,
+  "viewportEmulation": false,
+  "physicalTyping": false,
+  "storageDeniedProfile": false,
+  "launchOptions": {
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "timeout": 15000
+  },
+  "browserUse": "no dedicated Browser Use/computer tool exposed; Playwright/CDP interaction",
+  "assistiveTechnology": "NVDA/VoiceOver untested",
+  "operatingSystemRestart": "untested; active user development session not restarted",
+  "stage": "diagnostic collection complete",
+  "nativeWindow": {
+    "windows": [
+      {
+        "browserPid": 13936,
+        "parentPid": 9876,
+        "window": 5834202,
+        "restoreRequested": true,
+        "foregroundRequested": true,
+        "foregroundObserved": true,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "ordinaryWindowsTouched": false,
+    "note": "Win32 control restricted to disposable-profile Chrome children of this test process; failure to focus is inconclusive"
+  },
+  "pageErrors": [],
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "browserCommandLineLimitation": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+  "resourceSnapshots": [
+    {
+      "label": "before ten Worker loops and hundred Worker/preview cycles",
+      "recordedAt": "2026-09-14T09:13:36.628Z",
+      "hardMemoryQuota": "unverified",
+      "processCounts": {
+        "browser": 1,
+        "renderer": 3,
+        "GPU": 1,
+        "network.mojom.NetworkService": 1,
+        "storage.mojom.StorageService": 1
+      },
+      "totalCpuSeconds": 4.3019680000000005,
+      "hostMetrics": [
+        {
+          "name": "Documents",
+          "value": 6
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 352
+        },
+        {
+          "name": "Nodes",
+          "value": 259
+        },
+        {
+          "name": "TaskDuration",
+          "value": 0.000026
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 6145616
+        },
+        {
+          "name": "JSHeapTotalSize",
+          "value": 10022912
+        }
+      ]
+    },
+    {
+      "label": "after ten Worker loops and hundred Worker/preview cycles",
+      "recordedAt": "2026-09-14T09:14:18.029Z",
+      "hardMemoryQuota": "unverified",
+      "processCounts": {
+        "browser": 1,
+        "renderer": 4,
+        "GPU": 1,
+        "network.mojom.NetworkService": 1,
+        "storage.mojom.StorageService": 1
+      },
+      "totalCpuSeconds": 19.268698,
+      "hostMetrics": [
+        {
+          "name": "Documents",
+          "value": 20
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 280
+        },
+        {
+          "name": "Nodes",
+          "value": 326
+        },
+        {
+          "name": "TaskDuration",
+          "value": 1.649728
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 6439000
+        },
+        {
+          "name": "JSHeapTotalSize",
+          "value": 8773632
+        }
+      ]
+    },
+    {
+      "label": "ten seconds natural idle after lifecycle",
+      "recordedAt": "2026-09-14T09:14:28.045Z",
+      "hardMemoryQuota": "unverified",
+      "processCounts": {
+        "browser": 1,
+        "renderer": 4,
+        "GPU": 1,
+        "network.mojom.NetworkService": 1,
+        "storage.mojom.StorageService": 1
+      },
+      "totalCpuSeconds": 19.373750000000005,
+      "hostMetrics": [
+        {
+          "name": "Documents",
+          "value": 20
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 280
+        },
+        {
+          "name": "Nodes",
+          "value": 326
+        },
+        {
+          "name": "TaskDuration",
+          "value": 1.651012
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 6439000
+        },
+        {
+          "name": "JSHeapTotalSize",
+          "value": 8773632
+        }
+      ]
+    },
+    {
+      "label": "thirty seconds natural idle after lifecycle",
+      "recordedAt": "2026-09-14T09:14:48.064Z",
+      "hardMemoryQuota": "unverified",
+      "processCounts": {
+        "browser": 1,
+        "renderer": 4,
+        "GPU": 1,
+        "network.mojom.NetworkService": 1,
+        "storage.mojom.StorageService": 1
+      },
+      "totalCpuSeconds": 19.809411,
+      "hostMetrics": [
+        {
+          "name": "Documents",
+          "value": 20
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 280
+        },
+        {
+          "name": "Nodes",
+          "value": 326
+        },
+        {
+          "name": "TaskDuration",
+          "value": 1.656919
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 6439000
+        },
+        {
+          "name": "JSHeapTotalSize",
+          "value": 8773632
+        }
+      ]
+    }
+  ],
+  "workerLoopTrials": [
+    {
+      "trial": 0,
+      "markerObserved": false,
+      "markerError": "page.waitForFunction: Timeout 1900ms exceeded.",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "2d94b33f-363a-4ad7-b422-8c29c995fd79",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2002.1000000014901,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "b2716572-c33c-436f-a626-1dc3b6443fb5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2006.8999999985099,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 1,
+      "markerObserved": false,
+      "markerError": "page.waitForFunction: Timeout 1900ms exceeded.",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "5490fffd-05b0-4063-b8ef-9cab353e7599",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2005.2999999970198,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "bf283d47-59da-463d-9cb8-5396b640a022",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2112.6999999955297,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 2,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "caf05c1c-4f1a-4543-be1d-d69412918c22",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2013.8000000044703,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "e370d8ff-92b9-4408-8e52-a90384e2c1e5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 283.79999999701977,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 3,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "64f47650-38e7-4451-8075-6ebdc35e51dc",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2024.7999999970198,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "1a62afc6-b474-4e6e-a3a2-62b41ee48812",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 100.79999999701977,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 4,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "f8defeb8-f7e7-4b1f-a5c5-96257ca32d5d",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2120.5,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "d5930d5b-8b83-44e2-bd7c-14fcb573858f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2016.6000000014901,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 5,
+      "markerObserved": false,
+      "markerError": "page.waitForFunction: Timeout 1900ms exceeded.",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "b618bd32-3642-4bed-a186-47aed577de62",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2006.0999999940395,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "49daeae8-f952-4382-b4ca-31b780531675",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2009.2999999970198,
+        "cleanup": {
+          "acknowledged": false,
+          "fallback": true,
+          "retainedTrustedBootstrap": false
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 6,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "1c52402c-7d42-47bd-9f46-365d70c1cf18",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2100.39999999851,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "c272bc8d-312d-4e55-a38e-ed8f11efd224",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 75.29999999701977,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 7,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "41306f2d-29fc-4c05-8686-713eefb3b1f9",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2020.9000000059605,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "9a250f43-7049-4ae9-927b-f62589e2c6fa",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 33.79999999701977,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 8,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "c11f8819-095a-472f-a32d-2e1a6297b390",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2029.7999999970198,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "b18fa0cb-d8c3-4bbc-9ecd-fc1a273e5fb5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 25.299999997019768,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    },
+    {
+      "trial": 9,
+      "markerObserved": true,
+      "markerError": "",
+      "result": {
+        "source": "while(true){}",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "a99ee2ea-041e-467c-9393-59b04faf34ac",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2030.8999999985099,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "fresh": {
+        "source": "console.log(\"fresh\")",
+        "candidate": "opaque",
+        "task": "Q01",
+        "run": "13d1d654-c1e0-4a60-a0e9-6507153ed3df",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 96.5,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      "exactSourceRetained": true
+    }
+  ],
+  "lifecycle": {
+    "rows": [
+      {
+        "cycle": 0,
+        "status": "success",
+        "elapsed": 70.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 1,
+        "status": "success",
+        "elapsed": 124.29999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 2,
+        "status": "success",
+        "elapsed": 40.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 3,
+        "status": "success",
+        "elapsed": 95,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 4,
+        "status": "success",
+        "elapsed": 101.79999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 5,
+        "status": "success",
+        "elapsed": 102.09999999403954,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 6,
+        "status": "success",
+        "elapsed": 88.89999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 7,
+        "status": "success",
+        "elapsed": 56.600000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 8,
+        "status": "success",
+        "elapsed": 20,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 9,
+        "status": "success",
+        "elapsed": 16.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 10,
+        "status": "success",
+        "elapsed": 40.29999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 11,
+        "status": "success",
+        "elapsed": 53.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 12,
+        "status": "success",
+        "elapsed": 161.90000000596046,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 13,
+        "status": "success",
+        "elapsed": 29,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 14,
+        "status": "success",
+        "elapsed": 59.099999994039536,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 15,
+        "status": "success",
+        "elapsed": 46.70000000298023,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 16,
+        "status": "success",
+        "elapsed": 139.39999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 17,
+        "status": "success",
+        "elapsed": 110.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 18,
+        "status": "success",
+        "elapsed": 37,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 19,
+        "status": "success",
+        "elapsed": 22,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 20,
+        "status": "success",
+        "elapsed": 27.299999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 21,
+        "status": "success",
+        "elapsed": 12,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 22,
+        "status": "success",
+        "elapsed": 8.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 23,
+        "status": "success",
+        "elapsed": 15.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 24,
+        "status": "success",
+        "elapsed": 13.100000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 25,
+        "status": "success",
+        "elapsed": 13.300000004470348,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 26,
+        "status": "success",
+        "elapsed": 23.299999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 27,
+        "status": "success",
+        "elapsed": 13,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 28,
+        "status": "success",
+        "elapsed": 12.400000005960464,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 29,
+        "status": "success",
+        "elapsed": 11.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 30,
+        "status": "success",
+        "elapsed": 11.300000004470348,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 31,
+        "status": "success",
+        "elapsed": 15.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 32,
+        "status": "success",
+        "elapsed": 18.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 33,
+        "status": "success",
+        "elapsed": 17.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 34,
+        "status": "success",
+        "elapsed": 16,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 35,
+        "status": "success",
+        "elapsed": 14.600000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 36,
+        "status": "success",
+        "elapsed": 12.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 37,
+        "status": "success",
+        "elapsed": 17.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 38,
+        "status": "success",
+        "elapsed": 19,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 39,
+        "status": "success",
+        "elapsed": 20.799999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 40,
+        "status": "success",
+        "elapsed": 14.600000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 41,
+        "status": "success",
+        "elapsed": 13.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 42,
+        "status": "success",
+        "elapsed": 12.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 43,
+        "status": "success",
+        "elapsed": 10.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 44,
+        "status": "success",
+        "elapsed": 16.100000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 45,
+        "status": "success",
+        "elapsed": 17.799999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 46,
+        "status": "success",
+        "elapsed": 20.799999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 47,
+        "status": "success",
+        "elapsed": 8.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 48,
+        "status": "success",
+        "elapsed": 19.100000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 49,
+        "status": "success",
+        "elapsed": 26.30000000447035,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 50,
+        "status": "success",
+        "elapsed": 22.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 51,
+        "status": "success",
+        "elapsed": 14.199999995529652,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 52,
+        "status": "success",
+        "elapsed": 14.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 53,
+        "status": "success",
+        "elapsed": 41.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 54,
+        "status": "success",
+        "elapsed": 43,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 55,
+        "status": "success",
+        "elapsed": 126.29999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 56,
+        "status": "success",
+        "elapsed": 43.29999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 57,
+        "status": "success",
+        "elapsed": 16.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 58,
+        "status": "success",
+        "elapsed": 23.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 59,
+        "status": "success",
+        "elapsed": 30.900000005960464,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 60,
+        "status": "success",
+        "elapsed": 12.300000004470348,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 61,
+        "status": "success",
+        "elapsed": 14.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 62,
+        "status": "success",
+        "elapsed": 15.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 63,
+        "status": "success",
+        "elapsed": 22.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 64,
+        "status": "success",
+        "elapsed": 39.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 65,
+        "status": "success",
+        "elapsed": 15.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 66,
+        "status": "success",
+        "elapsed": 24.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 67,
+        "status": "success",
+        "elapsed": 99.59999999403954,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 68,
+        "status": "success",
+        "elapsed": 75.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 69,
+        "status": "success",
+        "elapsed": 69.70000000298023,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 70,
+        "status": "success",
+        "elapsed": 24.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 71,
+        "status": "success",
+        "elapsed": 19.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 72,
+        "status": "success",
+        "elapsed": 301.3999999985099,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 73,
+        "status": "success",
+        "elapsed": 89.89999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 74,
+        "status": "success",
+        "elapsed": 19.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 75,
+        "status": "success",
+        "elapsed": 25.100000001490116,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 76,
+        "status": "success",
+        "elapsed": 48.20000000298023,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 77,
+        "status": "success",
+        "elapsed": 39.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 78,
+        "status": "success",
+        "elapsed": 57.29999999701977,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 79,
+        "status": "success",
+        "elapsed": 20.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 80,
+        "status": "success",
+        "elapsed": 108.89999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 81,
+        "status": "success",
+        "elapsed": 126.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 82,
+        "status": "success",
+        "elapsed": 18.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 83,
+        "status": "success",
+        "elapsed": 82.80000000447035,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 84,
+        "status": "success",
+        "elapsed": 21.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 85,
+        "status": "success",
+        "elapsed": 34.30000000447035,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 86,
+        "status": "success",
+        "elapsed": 90.39999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 87,
+        "status": "success",
+        "elapsed": 50.399999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 88,
+        "status": "success",
+        "elapsed": 17.700000002980232,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 89,
+        "status": "success",
+        "elapsed": 37.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 90,
+        "status": "success",
+        "elapsed": 65.60000000149012,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 91,
+        "status": "success",
+        "elapsed": 52.70000000298023,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 92,
+        "status": "success",
+        "elapsed": 21.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 93,
+        "status": "success",
+        "elapsed": 11.299999997019768,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 94,
+        "status": "success",
+        "elapsed": 34,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 95,
+        "status": "success",
+        "elapsed": 49.899999998509884,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 96,
+        "status": "success",
+        "elapsed": 27.30000000447035,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 97,
+        "status": "success",
+        "elapsed": 57.69999999552965,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 98,
+        "status": "success",
+        "elapsed": 31.5,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      },
+      {
+        "cycle": 99,
+        "status": "success",
+        "elapsed": 69.89999999850988,
+        "sourcePreserved": true,
+        "remainingCompartments": 0,
+        "trustedBootstrapFrames": 1,
+        "acknowledgedActiveWorkers": 0,
+        "cleanup": {
+          "acknowledged": true,
+          "fallback": false,
+          "retainedTrustedBootstrap": true
+        }
+      }
+    ],
+    "previews": [
+      {
+        "cycle": 0,
+        "ready": true,
+        "readinessMs": 91.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 91.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d33cb144-cb40-46fe-b158-ef9ea0656a63",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 76.40000000596046,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 1,
+        "ready": true,
+        "readinessMs": 187.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 189,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c5e92610-40ee-4c97-8f08-5eecf340b805",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 183.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 2,
+        "ready": true,
+        "readinessMs": 33.399999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 37.29999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "39b1bdef-965e-4d5b-bbfd-7734e8630eb3",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 29.100000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 3,
+        "ready": true,
+        "readinessMs": 145.60000000149012,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 148.60000000149012,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c36e6d8b-e816-4439-a47c-d951a40051b3",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 142,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 4,
+        "ready": true,
+        "readinessMs": 32.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 34.399999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "ed349d3a-23f7-46f0-ac4a-6167434ebaad",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 25.299999997019768,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 5,
+        "ready": true,
+        "readinessMs": 39.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 40.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "34497312-b7f8-4c2a-b2b2-a847df0ee699",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 30.100000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 6,
+        "ready": true,
+        "readinessMs": 22.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 24,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c860069a-ab77-4c58-90ef-b10a48ebe4c1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 20.900000005960464,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 7,
+        "ready": true,
+        "readinessMs": 44.900000005960464,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "aba333ce-1da5-4fc5-b9a7-98129b56f7cc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 38,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 8,
+        "ready": true,
+        "readinessMs": 32.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 34.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c016fd26-d9e1-41c0-888b-64f3bb989811",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 25,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 9,
+        "ready": true,
+        "readinessMs": 36.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 36.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "34feae75-0aff-48a7-a74a-17ca2bdbb793",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 32.600000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 10,
+        "ready": true,
+        "readinessMs": 32.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 32.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c49a6dc9-4e61-46b8-87f2-ef50805ea04a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 21.299999997019768,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 11,
+        "ready": true,
+        "readinessMs": 44.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.600000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c375c164-c4be-4b71-8914-ff29a7595908",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 42,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 12,
+        "ready": true,
+        "readinessMs": 34.19999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 34.29999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "0c717f36-fad2-40d1-a5ac-1ceef4e61aef",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 22.200000002980232,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 13,
+        "ready": true,
+        "readinessMs": 44.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 46.399999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "781391c2-652f-48b4-a247-120976ce8477",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 32.79999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 14,
+        "ready": true,
+        "readinessMs": 33.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 33.20000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2f3ff3c9-633d-4ccf-919a-d361cf770701",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 21,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 15,
+        "ready": true,
+        "readinessMs": 21.799999997019768,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 22.299999997019768,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "4258fa23-de09-4cc3-b7bc-5f6c867b521c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 18,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 16,
+        "ready": true,
+        "readinessMs": 46.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 46.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "9afaf85b-ba87-461b-946d-24231d848253",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 35.70000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 17,
+        "ready": true,
+        "readinessMs": 42.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 44.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2c4991cb-8c28-45ba-8751-e17cdefbe705",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 34.70000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 18,
+        "ready": true,
+        "readinessMs": 24,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 25.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "eab02740-4460-47fe-bf02-d94df9ba2b2e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 21.299999997019768,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 19,
+        "ready": true,
+        "readinessMs": 48,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 49.900000005960464,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "b0b67d6b-df86-427a-9690-826cba49e06d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 44.600000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 20,
+        "ready": true,
+        "readinessMs": 88.20000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 89.10000000149012,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c1f58f7f-ddb3-4a5e-9fb1-b5161f6beabd",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 80.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 21,
+        "ready": true,
+        "readinessMs": 33.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 35.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "9f3953e6-3f2c-4eca-b1a1-0102edc09fb7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 25.399999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 22,
+        "ready": true,
+        "readinessMs": 179.19999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 180.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "4f3df42a-1d5a-4eea-8c01-66e576cead6b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 173.89999999850988,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 23,
+        "ready": true,
+        "readinessMs": 35.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 38.599999994039536,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "59215a56-14c0-4ce3-b7d3-29b679d11f79",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 31.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 24,
+        "ready": true,
+        "readinessMs": 57.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 57.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "8b0e8d2e-b923-455e-829d-e4e0596a67ac",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 48.899999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 25,
+        "ready": true,
+        "readinessMs": 34.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 35.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "f4a1f8a5-ba07-4757-9b81-f5ab1e50855b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 24.899999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 26,
+        "ready": true,
+        "readinessMs": 44.599999994039536,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.899999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "8116a359-02a9-4836-aab3-4b8001fb9a81",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 41.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 27,
+        "ready": true,
+        "readinessMs": 71.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 72.39999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "ee3aa8b3-ad45-4318-a9f5-c8d76de53048",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 66.30000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 28,
+        "ready": true,
+        "readinessMs": 100.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 101.39999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "16f02b2a-3c4c-433c-ab48-f904fb2c5cb8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 91.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 29,
+        "ready": true,
+        "readinessMs": 88.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 88.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "00ddb407-158b-4c3f-be8d-d0bd7b9d1f31",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 78.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 30,
+        "ready": true,
+        "readinessMs": 171,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 173.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "760742e1-be89-4ed3-9a61-b139abffd6b4",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 167.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 31,
+        "ready": true,
+        "readinessMs": 460.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 460.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "cee55581-5243-4ea2-9668-4b6a167eb979",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 452.8999999985099,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 32,
+        "ready": true,
+        "readinessMs": 87.09999999403954,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 87.89999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2610467b-aeaf-4a60-9338-ebe06fa36aed",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 78.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 33,
+        "ready": true,
+        "readinessMs": 97.89999999850988,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 98.59999999403954,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "51985b56-7a11-4608-9a11-9bcaeae771e7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 92.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 34,
+        "ready": true,
+        "readinessMs": 90,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 94.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "3f952954-a469-45a1-b3b5-5a6d596ef6fb",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 81.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 35,
+        "ready": true,
+        "readinessMs": 64.90000000596046,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 66.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "18aa4935-3592-41be-9784-d07dba0c591f",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 54.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 36,
+        "ready": true,
+        "readinessMs": 46.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 47.899999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2a43eb3c-5ae8-4bd4-aa59-ae6f169f9c3d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 38.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 37,
+        "ready": true,
+        "readinessMs": 146.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 147.59999999403954,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c7c7acd2-3398-4aeb-b324-d86b6a1f9e5b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 139.40000000596046,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 38,
+        "ready": true,
+        "readinessMs": 112.70000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 115.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d2d52996-96ed-4984-9cda-99390ab2aa38",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 105.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 39,
+        "ready": true,
+        "readinessMs": 167.70000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 167.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "7dd68592-9184-43be-9a5b-34182031d26d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 157.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 40,
+        "ready": true,
+        "readinessMs": 67.39999999850988,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 69,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d2e11048-bba3-4a1e-88cd-f3d897e879e8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 57.100000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 41,
+        "ready": true,
+        "readinessMs": 57.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 59.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "9409f5b1-5a7b-4fda-bac6-cc812072066c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 53.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 42,
+        "ready": true,
+        "readinessMs": 67.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 68.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "09e67340-4063-457a-891c-81974bf5dada",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 62.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 43,
+        "ready": true,
+        "readinessMs": 90.70000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 91.20000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "deeceed1-8c43-4604-990b-62d1242a273d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 78.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 44,
+        "ready": true,
+        "readinessMs": 103,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 105.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "651d3128-fbd0-488f-b66e-7bad1b8a1082",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 98.79999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 45,
+        "ready": true,
+        "readinessMs": 79.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 79.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "7d0d6d80-2833-496a-8254-47cb79172c27",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 70.30000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 46,
+        "ready": true,
+        "readinessMs": 101,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 103.69999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "af830736-9e76-4180-8921-345d756d98bc",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 97.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 47,
+        "ready": true,
+        "readinessMs": 93.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 95.30000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d02fbd31-debe-4e9d-9073-7cd147fc610a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 88.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 48,
+        "ready": true,
+        "readinessMs": 102.09999999403954,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 104.39999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "22f9e70a-8c0e-4367-a3be-589f4d2e3cb7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 98.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 49,
+        "ready": true,
+        "readinessMs": 77.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 78,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "cec16d30-73be-4390-9434-41abd4d67fc5",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 69.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 50,
+        "ready": true,
+        "readinessMs": 33.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 35.29999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "956b6ea7-4709-45df-9f36-6715c7ce4a29",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 29.399999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 51,
+        "ready": true,
+        "readinessMs": 45.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.899999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2dd66758-a988-4d3c-beb1-07ccf01dd2e2",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 37.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 52,
+        "ready": true,
+        "readinessMs": 22.399999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 24.899999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "0f5ba5e5-4039-4dec-9a49-33e3c982ead0",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 19.200000002980232,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 53,
+        "ready": true,
+        "readinessMs": 21.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 22.799999997019768,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d24fca1d-2fbd-43f9-887c-61e20f2bc5a7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 13.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 54,
+        "ready": true,
+        "readinessMs": 33.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 35.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "e1cc0d18-2997-445e-a88b-8cbe58f5dd67",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 28.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 55,
+        "ready": true,
+        "readinessMs": 22.399999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 23.700000002980232,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "354b8888-5214-48a8-89f8-ae074acec02a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 16.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 56,
+        "ready": true,
+        "readinessMs": 33.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 34.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "7cb9bfdc-d970-417e-9242-20704fdb8ff9",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 27.700000002980232,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 57,
+        "ready": true,
+        "readinessMs": 45,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.899999998509884,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "fccfcd4b-87b4-4ebc-a562-5e3276766cb6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 37.399999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 58,
+        "ready": true,
+        "readinessMs": 32.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 34.600000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c8913f9e-40d5-4f15-aeff-99508a6542be",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 28.899999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 59,
+        "ready": true,
+        "readinessMs": 46.099999994039536,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 46.599999994039536,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "f9b86b8d-bf6f-4298-9166-8b593be68005",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 44.30000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 60,
+        "ready": true,
+        "readinessMs": 35.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 36.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "58a48178-4d5c-4c99-af99-67ca6ba8e1ed",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 30.600000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 61,
+        "ready": true,
+        "readinessMs": 56.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 59.20000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "36b08cfb-eaea-4e48-84d3-deb056bd16f3",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 48.19999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 62,
+        "ready": true,
+        "readinessMs": 122.40000000596046,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 124.60000000149012,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "228e45ab-39de-44df-b187-824632c18097",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 119.40000000596046,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 63,
+        "ready": true,
+        "readinessMs": 98.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 99.10000000149012,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "524b7995-afda-43f0-9b29-9c0b25752b30",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 89.29999999701977,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 64,
+        "ready": true,
+        "readinessMs": 86.39999999850988,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 90.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "71d7843d-bd24-41ac-a41a-0b665bc1223c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 79.89999999850988,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 65,
+        "ready": true,
+        "readinessMs": 46.20000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 47.900000005960464,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "4989c2e9-2591-448b-b369-df9af484096c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 41,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 66,
+        "ready": true,
+        "readinessMs": 44.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 45.599999994039536,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "37e41b31-d799-4781-bd1a-70b96081058c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 38.100000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 67,
+        "ready": true,
+        "readinessMs": 76.40000000596046,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 77.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "a1387ae9-e4e1-4732-9b5c-dd297beca6ec",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 71.10000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 68,
+        "ready": true,
+        "readinessMs": 79.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 80.39999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "1206236f-82ce-4b38-96a5-29fbf7f44978",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 71.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 69,
+        "ready": true,
+        "readinessMs": 90.79999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 91.29999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "440c37d5-c205-45b6-a6bb-6bac4f84a523",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 89,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 70,
+        "ready": true,
+        "readinessMs": 90.39999999850988,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 90.70000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "f3f0d269-7bbd-4eb3-9706-fd1353f4f64e",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 80.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 71,
+        "ready": true,
+        "readinessMs": 79.19999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 80.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d5e96198-56cf-4034-bbcb-85d6cb1a13e6",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 73.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 72,
+        "ready": true,
+        "readinessMs": 306.20000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 310.1000000014901,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "16f2f22f-c940-49b5-96db-31bc7289e2e9",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 297.8999999985099,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 73,
+        "ready": true,
+        "readinessMs": 90.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 91.59999999403954,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "9d21bb56-10aa-49da-beb3-866b8a70a934",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 79,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 74,
+        "ready": true,
+        "readinessMs": 90.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 91,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "d74c231a-0385-4b9b-b337-8872c24efaa1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 82.89999999850988,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 75,
+        "ready": true,
+        "readinessMs": 102.60000000149012,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 102.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "901d9744-881d-438b-be51-ab2817379f2b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 92.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 76,
+        "ready": true,
+        "readinessMs": 172.30000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 173.89999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2c3b3e96-0d43-48bd-bc86-d84657d3f771",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 163,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 77,
+        "ready": true,
+        "readinessMs": 91.70000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 98.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "963f074f-dc22-41b6-b841-a1fedd92bdbb",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 81.70000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 78,
+        "ready": true,
+        "readinessMs": 54.400000005960464,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 55.20000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "8e87f967-807a-47b1-9012-f88407a7657b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 47.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 79,
+        "ready": true,
+        "readinessMs": 102.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 104.20000000298023,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "018bc13a-6659-48b0-a553-470b39a5c585",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 99,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 80,
+        "ready": true,
+        "readinessMs": 153.40000000596046,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 154.30000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "2afdfb16-69a7-4f5a-a328-36094ca0e709",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 149.70000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 81,
+        "ready": true,
+        "readinessMs": 101.19999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 102.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "c32cd63f-6ada-4fcb-bbfc-689a05938a11",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 93.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 82,
+        "ready": true,
+        "readinessMs": 92.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 95.10000000149012,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "a0be05e6-49bd-4991-90b0-22215b9a0852",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 88.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 83,
+        "ready": true,
+        "readinessMs": 54.099999994039536,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 54.599999994039536,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "dd1dd772-599c-4569-973d-0a54a5af4c9a",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 45.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 84,
+        "ready": true,
+        "readinessMs": 79.60000000149012,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 80.30000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "84f2d2a5-24ea-43e4-814f-7496aea4807f",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 74.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 85,
+        "ready": true,
+        "readinessMs": 77.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 78.19999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "f127ea5e-24cd-4d94-8c4a-e8293819245f",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 75.90000000596046,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 86,
+        "ready": true,
+        "readinessMs": 66.80000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 70.80000000447035,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "8ad28433-1127-4bab-b3ab-d1a1e53c4034",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 59.100000001490116,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 87,
+        "ready": true,
+        "readinessMs": 58,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 59.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "cfb80c64-1671-4368-b74e-d3a376b92c49",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 53.899999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 88,
+        "ready": true,
+        "readinessMs": 80,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 81.29999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "fd2b8c4e-8c21-45a3-9e9a-969991bf1a5b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 73.20000000298023,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 89,
+        "ready": true,
+        "readinessMs": 45.19999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 46.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "bf516a75-8238-4611-943e-972451909f5b",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 36.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 90,
+        "ready": true,
+        "readinessMs": 55,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 55.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "3b98330d-e55e-400a-8c4f-88d93d893ade",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 46.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 91,
+        "ready": true,
+        "readinessMs": 78,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 78.89999999850988,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "402d9105-eb6b-4108-9fdf-d65d535a417c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 70.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 92,
+        "ready": true,
+        "readinessMs": 115.29999999701977,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 115.69999999552965,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "a13a5d2f-1b0b-4813-a10e-40479e4c5f44",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 100.60000000149012,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 93,
+        "ready": true,
+        "readinessMs": 33.70000000298023,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 36.5,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "bd6d5090-a16c-4f3a-a1ff-95079ff40f47",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 28.200000002980232,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 94,
+        "ready": true,
+        "readinessMs": 23.899999998509884,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 25.600000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "1ad95f84-551e-4665-8c04-e886ecf667f1",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 21.399999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 95,
+        "ready": true,
+        "readinessMs": 37.599999994039536,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 39.79999999701977,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "e860fd80-3d86-4946-9325-997863327fc5",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 30.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 96,
+        "ready": true,
+        "readinessMs": 23.100000001490116,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 23.600000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "f1ae188e-87de-42f4-9f12-001a45f9be1c",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 21.399999998509884,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 97,
+        "ready": true,
+        "readinessMs": 40.5,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 43.600000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "958adaee-5c62-425a-a46c-76d0b9504dc7",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 30.69999999552965,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 98,
+        "ready": true,
+        "readinessMs": 57.69999999552965,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 58.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "e1cbdfef-db06-470b-8fe2-6c4a8d1b914d",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 45.5,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      },
+      {
+        "cycle": 99,
+        "ready": true,
+        "readinessMs": 25.80000000447035,
+        "bootstrapPresentAtBoundary": false,
+        "result": {
+          "status": "preview-stopped",
+          "elapsed": 29.100000001490116,
+          "execution": {
+            "source": "function summarize(){return 5}",
+            "candidate": "opaque",
+            "task": "RECORDS",
+            "run": "1d25c76d-6080-4f55-8ef6-07e7da4cbbf8",
+            "contentVersion": "1",
+            "assessmentVersion": "1",
+            "previewMarker": true,
+            "status": "success",
+            "output": [],
+            "value": "5",
+            "elapsed": 18.80000000447035,
+            "cleanup": {
+              "acknowledged": true,
+              "fallback": false,
+              "retainedTrustedBootstrap": true
+            }
+          }
+        },
+        "sourcePreserved": true,
+        "remainingFrames": 2,
+        "trustedBootstrapFrames": 2,
+        "acknowledgedActiveWorkers": 0
+      }
+    ],
+    "warmupWithinEachTotal": 10,
+    "hardMemoryQuota": "unverified",
+    "visibility": "visible",
+    "clock": "monotonic browser clocks; no added GPU/renderer restrictions",
+    "physicalTyping": false
+  },
+  "retentionControl": "natural idle observation only; no forced GC, quota or altered acceptance budget",
+  "zoom": {
+    "baseline": {
+      "dpr": 1,
+      "width": 929,
+      "height": 869
+    },
+    "trials": [
+      {
+        "requestedFactor": 2,
+        "observed": {
+          "dpr": 2,
+          "width": 464,
+          "height": 434,
+          "documentWidth": 457
+        },
+        "sourcePreserved": true,
+        "actualBrowserZoomObserved": true,
+        "localCheckPassed": true,
+        "screenshotMethod": "CDP viewport surface; prior Playwright full-page captures clipped at page zoom",
+        "screenshotHash": "44dbfa02ee2af46276ac0bb8fd1f292f31f39cbadf52cf5826a533ce337499e0"
+      },
+      {
+        "requestedFactor": 4,
+        "observed": {
+          "dpr": 4,
+          "width": 232,
+          "height": 217,
+          "documentWidth": 228
+        },
+        "sourcePreserved": true,
+        "actualBrowserZoomObserved": true,
+        "localCheckPassed": false,
+        "error": "expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('feedback')\nExpected substring: \"Local check passed\"\nReceived string:    \"timeout\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"toContainText\" getByTestId('feedback') with timeout 5000ms\n  - waiting for getByTestId('feedback')\n    8 × locator resolved to <p role=\"status\" data-testid=\"feedback\">Running</p>\n      - unexpected value \"Running\"\n    6 × locator resolved to <p role=\"status\" data-testid=\"feedback\">timeout</p>\n      - unexpected value \"timeout\"\n",
+        "screenshotMethod": "CDP viewport surface; prior Playwright full-page captures clipped at page zoom",
+        "screenshotHash": "d1a6a29df268c4bf388c0e54f24b30f911165ec0efe18dda87ac884297111ec8"
+      }
+    ],
+    "options": [
+      {
+        "label": "\n            25%\n          ",
+        "value": "0.25"
+      },
+      {
+        "label": "\n            33%\n          ",
+        "value": "0.3333333333333333"
+      },
+      {
+        "label": "\n            50%\n          ",
+        "value": "0.5"
+      },
+      {
+        "label": "\n            67%\n          ",
+        "value": "0.6666666666666666"
+      },
+      {
+        "label": "\n            75%\n          ",
+        "value": "0.75"
+      },
+      {
+        "label": "\n            80%\n          ",
+        "value": "0.8"
+      },
+      {
+        "label": "\n            90%\n          ",
+        "value": "0.9"
+      },
+      {
+        "label": "\n            100%\n          ",
+        "value": "1"
+      },
+      {
+        "label": "\n            110%\n          ",
+        "value": "1.1"
+      },
+      {
+        "label": "\n            125%\n          ",
+        "value": "1.25"
+      },
+      {
+        "label": "\n            150%\n          ",
+        "value": "1.5"
+      },
+      {
+        "label": "\n            175%\n          ",
+        "value": "1.75"
+      },
+      {
+        "label": "\n            200%\n          ",
+        "value": "2"
+      },
+      {
+        "label": "\n            250%\n          ",
+        "value": "2.5"
+      },
+      {
+        "label": "\n            300%\n          ",
+        "value": "3"
+      },
+      {
+        "label": "\n            400%\n          ",
+        "value": "4"
+      },
+      {
+        "label": "\n            500%\n          ",
+        "value": "5"
+      }
+    ],
+    "verdict": "failed or inconclusive; inspect actual geometry, source and check result"
+  },
+  "windowLifecycle": {
+    "minimizedVisibility": "visible",
+    "resumedVisibility": "visible",
+    "exactSourceRetained": true,
+    "mobileLifecycle": "untested",
+    "verdict": "inconclusive; command accepted but hidden state not observed"
+  },
+  "manifest": {
+    "url": "http://127.0.0.1:4310/manifest.json",
+    "errors": [],
+    "data": "{\"id\":\"/\",\"name\":\"CodeQuest validation prototype\",\"short_name\":\"CQ spike\",\"start_url\":\"/\",\"display\":\"standalone\",\"theme_color\":\"#17251d\",\"background_color\":\"#f4f6ef\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"any\",\"type\":\"image/svg+xml\",\"purpose\":\"any\"}]}\r\n",
+    "parsed": {
+      "scope": "http://127.0.0.1:4310/"
+    },
+    "manifest": {
+      "backgroundColor": "rgba(244,246,239,1)",
+      "display": "kStandalone",
+      "icons": [
+        {
+          "url": "http://127.0.0.1:4310/icon.svg",
+          "sizes": "0x0",
+          "type": "image/svg+xml"
+        }
+      ],
+      "id": "http://127.0.0.1:4310/",
+      "name": "CodeQuest validation prototype",
+      "orientation": "DEFAULT",
+      "preferRelatedApplications": false,
+      "scope": "http://127.0.0.1:4310/",
+      "startUrl": "http://127.0.0.1:4310/",
+      "themeColor": "rgba(23,37,29,1)"
+    }
+  },
+  "installability": {
+    "installabilityErrors": []
+  },
+  "manifestId": "http://127.0.0.1:4310/",
+  "pwa": {
+    "install": "passed",
+    "osState": {
+      "badgeCount": 0,
+      "fileHandlers": []
+    },
+    "displayModeStandalone": true,
+    "installedModeVerdict": "standalone display observed",
+    "target": "92F8193F0DFF8893749BF55747C50E17",
+    "persistenceCycles": [
+      {
+        "mode": "reload",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 6,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 7,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      }
+    ],
+    "originControls": [
+      {
+        "host": "127.0.0.1",
+        "port": 4310,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 4311,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 4312,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      }
+    ],
+    "coldOriginUnreachableRelaunch": {
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "displayModeStandalone": true,
+      "physicalNetworkDisconnect": false
+    }
+  },
+  "pwaUninstalled": true,
+  "taskProfileRemoved": true
+}

@@ -1,0 +1,249 @@
+{
+  "recordedAt": "2026-09-14T07:31:44.313Z",
+  "commit": "045eb0e6a0073d3e7024bb5941696fb26d8ede45",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/protocol.ts",
+    " M prototypes/technical-risk-validation/src/runtime.ts",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-30-14.260Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-31-30.111Z.json",
+    "?? prototypes/technical-risk-validation/public/opaque-bootstrap.js",
+    "?? prototypes/technical-risk-validation/src/opaque-compartment.ts",
+    "?? prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/bootstrap-lifecycle.spec.ts",
+    "--project=chromium"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T07:31:38.192Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "fb182484ef5446b87a938a39cb5d35520d5d23c6612d84ae5c9eb6df3045cdd0",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-CpAIG2N9.js": "e5c934e4430b52d6f6514cffcb1a2993899a67f6760e157c5a4283ea86ba15df",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "b254c7c9f01ae201e996f5d11f872abcd44c75bffbfba9e175ddcfee0cf94f7c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "64764b8ef19954e23ccc84344da58c215a530c42805738ab357df7028fa0dd3e",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "4389fc903d22e51e16d69c0ecea0583e5b5750ab8bc7c94556e5388a31cca8b6",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 6900.048,
+  "cases": [
+    {
+      "title": " / chromium / bootstrap-lifecycle.spec.ts / E02/E03 private cleanup remains separate from forged learner output and bootstrap reuse",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 980,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "private-cleanup-reuse",
+          "data": {
+            "browser": "153.0.8010.12",
+            "first": {
+              "source": "console.log(\"first\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "cde9b63a-1092-403d-b857-8c6de387e31f",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "first"
+              ],
+              "value": "[undefined]",
+              "elapsed": 22.200000002980232,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "forged": {
+              "source": "self.postMessage(JSON.stringify({type:\"cleaned\",ticket:\"FORGED\",activeWorkers:0}));while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "dd49c4c9-c127-4197-bdbc-f6f3141c7efa",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "protocol-error",
+              "output": [],
+              "value": "Malformed or stale result rejected",
+              "elapsed": 10.899999998509884,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"fresh\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "6d05df32-2201-40c5-b750-eb11b1fd72a6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "fresh"
+              ],
+              "value": "[undefined]",
+              "elapsed": 22.30000000447035,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "exactSourceRetained": true,
+            "disposedFrames": 0,
+            "physicalMobile": "untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / bootstrap-lifecycle.spec.ts / E02 missing private acknowledgment removes bootstrap within bounded fallback and restarts",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1043,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "missing-ack-fallback",
+          "data": {
+            "browser": "153.0.8010.12",
+            "stopped": {
+              "source": "while(true){}",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "d669a774-370f-4a63-8f11-e894bdf68009",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "stopped",
+              "output": [],
+              "value": "Stopped",
+              "elapsed": 181.5,
+              "cleanup": {
+                "acknowledged": false,
+                "fallback": true,
+                "retainedTrustedBootstrap": false
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"after fallback\")",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "39fe64cb-49be-42c6-82af-46b49e495724",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "after fallback"
+              ],
+              "value": "[undefined]",
+              "elapsed": 55,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "injection": "trusted bootstrap private handler deliberately disabled",
+            "additionalRecoveryLimitMs": 1000,
+            "configuredFallbackMs": 100
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / bootstrap-lifecycle.spec.ts / E02 superseded runs and unsolicited stop-shaped window messages cannot replace fresh output",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 811,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "superseded-private-control",
+          "data": {
+            "browser": "153.0.8010.12",
+            "result": {
+              "old": {
+                "source": "await new Promise(r=>setTimeout(r,500));console.log(\"stale\")",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "bde9b133-a39f-466c-a627-a1d359030985",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "stopped",
+                "output": [],
+                "value": "Stopped",
+                "elapsed": 0.5
+              },
+              "fresh": {
+                "source": "console.log(\"current\")",
+                "candidate": "opaque",
+                "task": "Q01",
+                "run": "0fd41605-a8a0-4928-8abf-6946a73f0b1b",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "current"
+                ],
+                "value": "[undefined]",
+                "elapsed": 48.70000000298023,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": " / chromium / bootstrap-lifecycle.spec.ts / E02 CDP observes parent and nested Worker targets disappear after private cleanup",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 1826,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\nCall Log:\n- Timeout 1000ms exceeded while waiting on the predicate"
+      ],
+      "evidence": []
+    }
+  ]
+}

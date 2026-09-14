@@ -1,0 +1,362 @@
+{
+  "recordedAt": "2026-09-13T22:08:37.339Z",
+  "experiment": "E01/E05 native Chrome diagnostics",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\native-chrome-diagnostics.mjs"
+  ],
+  "commit": "f65f13848517ee67091be1d1e9b712cfbf07ed6b",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/playwright.config.ts",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/style.css",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    "?? prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts"
+  ],
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "93f5404eef003eb18b7ce7d52a4e8ded6ec2623e886c646dc84e54ef8f6205f7",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-qYq-WMi2.js": "1f9deb15351eb81926a87346584279ac0af582e6bbd76ec433372f0075e9465c",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f9be01d617dab5523d06f9b228587d5f8f34a42aa776428293cc57b5d4e30e89",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "aab318822f0c7b861918fbe3760bbb1adb89b1f825c6093d54dac6609cdbc5e7",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "3bec0826b6620e97f7f2ef84f7496691c241e5647f230defe06324c7da7c3db6",
+  "channel": "chrome",
+  "headed": true,
+  "viewportEmulation": false,
+  "physicalTyping": false,
+  "launchOptions": {
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "timeout": 15000
+  },
+  "browserUse": "no dedicated Browser Use/computer tool exposed; Playwright/CDP interaction",
+  "assistiveTechnology": "NVDA/VoiceOver untested",
+  "operatingSystemRestart": "untested; active user development session not restarted",
+  "stage": "diagnostic collection complete",
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "browserCommandLineLimitation": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+  "zoom": {
+    "baseline": {
+      "dpr": 1,
+      "width": 929,
+      "height": 869
+    },
+    "trials": [
+      {
+        "requestedFactor": 2,
+        "observed": {
+          "dpr": 2,
+          "width": 464,
+          "height": 434,
+          "documentWidth": 457
+        },
+        "sourcePreserved": true,
+        "actualBrowserZoomObserved": true,
+        "localCheckPassed": true,
+        "screenshotHash": "595ac2a6a94b544ac4815ebcaaa80bfebb3aa3a9ab0026794d2a8f8ce285bc3f"
+      },
+      {
+        "requestedFactor": 4,
+        "observed": {
+          "dpr": 4,
+          "width": 232,
+          "height": 217,
+          "documentWidth": 228
+        },
+        "sourcePreserved": true,
+        "actualBrowserZoomObserved": true,
+        "localCheckPassed": true,
+        "screenshotHash": "bf2aa7f11660b741eee6bdaf68c8ac084e8aa67e939531fad89a5fea5bceac9a"
+      }
+    ],
+    "options": [
+      {
+        "label": "\n            25%\n          ",
+        "value": "0.25"
+      },
+      {
+        "label": "\n            33%\n          ",
+        "value": "0.3333333333333333"
+      },
+      {
+        "label": "\n            50%\n          ",
+        "value": "0.5"
+      },
+      {
+        "label": "\n            67%\n          ",
+        "value": "0.6666666666666666"
+      },
+      {
+        "label": "\n            75%\n          ",
+        "value": "0.75"
+      },
+      {
+        "label": "\n            80%\n          ",
+        "value": "0.8"
+      },
+      {
+        "label": "\n            90%\n          ",
+        "value": "0.9"
+      },
+      {
+        "label": "\n            100%\n          ",
+        "value": "1"
+      },
+      {
+        "label": "\n            110%\n          ",
+        "value": "1.1"
+      },
+      {
+        "label": "\n            125%\n          ",
+        "value": "1.25"
+      },
+      {
+        "label": "\n            150%\n          ",
+        "value": "1.5"
+      },
+      {
+        "label": "\n            175%\n          ",
+        "value": "1.75"
+      },
+      {
+        "label": "\n            200%\n          ",
+        "value": "2"
+      },
+      {
+        "label": "\n            250%\n          ",
+        "value": "2.5"
+      },
+      {
+        "label": "\n            300%\n          ",
+        "value": "3"
+      },
+      {
+        "label": "\n            400%\n          ",
+        "value": "4"
+      },
+      {
+        "label": "\n            500%\n          ",
+        "value": "5"
+      }
+    ],
+    "verdict": "passed native page zoom and essential check/source retention"
+  },
+  "windowLifecycle": {
+    "minimizedVisibility": "visible",
+    "resumedVisibility": "visible",
+    "exactSourceRetained": true,
+    "mobileLifecycle": "untested"
+  },
+  "manifest": {
+    "url": "http://127.0.0.1:4310/manifest.json",
+    "errors": [],
+    "data": "{\"id\":\"/\",\"name\":\"CodeQuest validation prototype\",\"short_name\":\"CQ spike\",\"start_url\":\"/\",\"display\":\"standalone\",\"theme_color\":\"#17251d\",\"background_color\":\"#f4f6ef\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"any\",\"type\":\"image/svg+xml\",\"purpose\":\"any\"}]}\r\n",
+    "parsed": {
+      "scope": "http://127.0.0.1:4310/"
+    },
+    "manifest": {
+      "backgroundColor": "rgba(244,246,239,1)",
+      "display": "kStandalone",
+      "icons": [
+        {
+          "url": "http://127.0.0.1:4310/icon.svg",
+          "sizes": "0x0",
+          "type": "image/svg+xml"
+        }
+      ],
+      "id": "http://127.0.0.1:4310/",
+      "name": "CodeQuest validation prototype",
+      "orientation": "DEFAULT",
+      "preferRelatedApplications": false,
+      "scope": "http://127.0.0.1:4310/",
+      "startUrl": "http://127.0.0.1:4310/",
+      "themeColor": "rgba(23,37,29,1)"
+    }
+  },
+  "installability": {
+    "installabilityErrors": []
+  },
+  "manifestId": "http://127.0.0.1:4310/",
+  "pwa": {
+    "install": "passed",
+    "osState": {
+      "badgeCount": 0,
+      "fileHandlers": []
+    },
+    "displayModeStandalone": false,
+    "target": "21BCCAD671EA29DEAA281A41524F1D9A",
+    "persistenceCycles": [
+      {
+        "mode": "reload",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 6,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "reload",
+        "cycle": 7,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "update",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 0,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 1,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 2,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 3,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 4,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      },
+      {
+        "mode": "multiclient",
+        "cycle": 5,
+        "exactSourceRetained": true,
+        "immutablePendingRetained": true
+      }
+    ],
+    "originControls": [
+      {
+        "host": "127.0.0.1",
+        "port": 4310,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 4311,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 4312,
+        "reachable": false,
+        "error": "ECONNREFUSED"
+      }
+    ],
+    "coldOriginUnreachableRelaunch": {
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "displayModeStandalone": false,
+      "physicalNetworkDisconnect": false
+    }
+  },
+  "pwaUninstalled": true,
+  "taskProfileRemoved": true
+}

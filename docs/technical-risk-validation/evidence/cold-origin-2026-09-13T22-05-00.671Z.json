@@ -1,0 +1,170 @@
+{
+  "recordedAt": "2026-09-13T22:05:00.671Z",
+  "experiment": "E05/E06 cold origin-unreachable diagnostic",
+  "engine": "chrome",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\cold-origin-probe.mjs",
+    "chrome",
+    "--short-profile"
+  ],
+  "node": "v24.21.0",
+  "physical": false,
+  "networkOffline": false,
+  "offlineEmulation": false,
+  "trials": 10,
+  "b07PhysicalTiming": "untested; no physical network disconnect or lower-powered designation",
+  "installedChrome": true,
+  "interaction": "headed native Windows Chrome, automated interaction",
+  "profileLocation": "task-only repository temp/phase1-profiles",
+  "commit": "f65f13848517ee67091be1d1e9b712cfbf07ed6b",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/playwright.config.ts",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/style.css",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts"
+  ],
+  "buildHashesFrozenBeforeTrial": {
+    ".vite/manifest.json": "93f5404eef003eb18b7ce7d52a4e8ded6ec2623e886c646dc84e54ef8f6205f7",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-qYq-WMi2.js": "1f9deb15351eb81926a87346584279ac0af582e6bbd76ec433372f0075e9465c",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f9be01d617dab5523d06f9b228587d5f8f34a42aa776428293cc57b5d4e30e89",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "aab318822f0c7b861918fbe3760bbb1adb89b1f825c6093d54dac6609cdbc5e7",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "e62385e015d362efc7227d4e446ecaebc088ce6428569ee5937aa96a2638f1fe",
+  "serverHash": "9f81f22f3db48aec45768f27e47a269957877a057617d77878a9ff1b2e26e6bb",
+  "sourceHash": "5ddad786095dafaec558f1b9e74b8095a6751bc8291f4ae6f50a41e50a3478c6",
+  "skipHostDependencyPreflight": false,
+  "launchOptions": {
+    "headless": false,
+    "channel": "chrome",
+    "args": [],
+    "timeout": 15000
+  },
+  "stage": "completed functional diagnostic",
+  "ownedServerPid": 6432,
+  "browserVersion": "153.0.8010.37",
+  "preparedController": "http://127.0.0.1:4310/sw.js",
+  "preparedBrowserClosedBeforeRelaunch": true,
+  "originTransportControls": [
+    {
+      "host": "127.0.0.1",
+      "port": 4310,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.2",
+      "port": 4311,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 4312,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    }
+  ],
+  "coldTrials": [
+    {
+      "trial": 0,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1371.6095000000005,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 1,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1598.1666999999998,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 2,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1125.4174999999996,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 3,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1248.8552,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 4,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1394.4882000000016,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 5,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1255.744999999999,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 6,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1123.8754000000008,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 7,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1202.9143000000004,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 8,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1167.1324999999997,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    },
+    {
+      "trial": 9,
+      "exactSourceRetained": true,
+      "localCheckProvisional": true,
+      "functionalReadyMs": 1198.597600000001,
+      "suppliedPreviewAndTextPassed": true,
+      "controller": "http://127.0.0.1:4310/sw.js"
+    }
+  ],
+  "exactSourceRetained": true,
+  "localCheckProvisional": true,
+  "functionalReadyMs": 1198.597600000001,
+  "suppliedPreviewAndTextPassed": true,
+  "verdict": "passed 10 headed installed Chrome cold-process origin-unreachable diagnostics; physical/offline-emulation gates not replaced",
+  "taskProfileRemoved": true
+}

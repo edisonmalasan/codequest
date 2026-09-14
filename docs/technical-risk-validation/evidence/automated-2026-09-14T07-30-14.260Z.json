@@ -1,0 +1,76 @@
+{
+  "recordedAt": "2026-09-14T07:30:14.260Z",
+  "commit": "045eb0e6a0073d3e7024bb5941696fb26d8ede45",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/protocol.ts",
+    " M prototypes/technical-risk-validation/src/runtime.ts",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    "?? prototypes/technical-risk-validation/public/opaque-bootstrap.js",
+    "?? prototypes/technical-risk-validation/src/opaque-compartment.ts",
+    "?? prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/preview-recovery.spec.ts",
+    "-g",
+    "renders useful",
+    "--project=chromium"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T07:30:03.664Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "fb182484ef5446b87a938a39cb5d35520d5d23c6612d84ae5c9eb6df3045cdd0",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-CpAIG2N9.js": "e5c934e4430b52d6f6514cffcb1a2993899a67f6760e157c5a4283ea86ba15df",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "b254c7c9f01ae201e996f5d11f872abcd44c75bffbfba9e175ddcfee0cf94f7c",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "64764b8ef19954e23ccc84344da58c215a530c42805738ab357df7028fa0dd3e",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "4389fc903d22e51e16d69c0ecea0583e5b5750ab8bc7c94556e5388a31cca8b6",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 12123.035,
+  "cases": [
+    {
+      "title": " / chromium / preview-recovery.spec.ts / E04 Worker supplied shell renders useful results and hostile markup as inert text",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2683,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-shell-denial",
+          "data": {
+            "browser": "153.0.8010.12",
+            "usefulTotal": "5",
+            "hostileMarkup": "inert text, not executable DOM",
+            "sinkRequests": [],
+            "physical": false
+          }
+        }
+      ]
+    }
+  ]
+}

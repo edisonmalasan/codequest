@@ -6,6 +6,8 @@ h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.2; }
 h2 { font-size: 1.2rem; }
 button, select { font: inherit; padding: 10px 14px; margin: 4px; min-height: 44px; border: 1px solid #526353; border-radius: 4px; background: white; color: #17251d; }
 button { cursor: pointer; }
+select { min-width: 0; max-width: calc(100% - 8px); }
+.controls label { min-width: 0; max-width: 100%; }
 button:focus-visible, select:focus-visible { outline: 3px solid #2354a0; outline-offset: 3px; }
 .controls, .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .workspace { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr); gap: 24px; }

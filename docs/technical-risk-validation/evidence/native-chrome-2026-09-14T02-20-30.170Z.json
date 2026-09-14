@@ -1,0 +1,112 @@
+{
+  "recordedAt": "2026-09-14T02:20:30.170Z",
+  "experiment": "E01/E05 native Chrome diagnostics",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\native-chrome-diagnostics.mjs",
+    "--storage-denied"
+  ],
+  "commit": "555434d047bc709b535b11441803df886a1231e6",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-10-51.844Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-07.933Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-46.420Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-13-09.545Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-18-28.884Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-33-57.415Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-08-37.339Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-20-59.934Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-24-02.800Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-13T22-15-11.801Z.json",
+    "?? docs/technical-risk-validation/proposed-scope-adjustment.md",
+    "?? prototypes/technical-risk-validation/tests/renderer-recovery.spec.ts"
+  ],
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "5cc0cca8a25935e17603af0f8b952a17e7c3d55a84b4eeef3f44878920a70ccd",
+    "assets/index-CIz3fIiL.js": "b082e6bcb8eaa2bb582ceb72332dc52478ae550ccec3f21462fc52fb39ff7796",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "82a4cc842879ba60f2bd0a319ce577bf89f205b7d5a0fafbd9caa45274916e53",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "37d5fd93555c47047bbe2ef29c30f3fe1ac42e58b323c2a081b75ae1c7714d52",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "786b11be26739bd56f65756056ecc60c68c3cd2705f04ebe4d091629fcc82148",
+  "channel": "chrome",
+  "headed": true,
+  "viewportEmulation": false,
+  "physicalTyping": false,
+  "storageDeniedProfile": "task-only Preferences: profile.default_content_setting_values.cookies=2; actual denial must be observed",
+  "launchOptions": {
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "timeout": 15000
+  },
+  "browserUse": "no dedicated Browser Use/computer tool exposed; Playwright/CDP interaction",
+  "assistiveTechnology": "NVDA/VoiceOver untested",
+  "operatingSystemRestart": "untested; active user development session not restarted",
+  "stage": "native storage-denied startup",
+  "nativeWindow": {
+    "windows": [
+      {
+        "browserPid": 10248,
+        "parentPid": 2484,
+        "window": 3015284,
+        "restoreRequested": true,
+        "foregroundRequested": false,
+        "foregroundObserved": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "ordinaryWindowsTouched": false,
+    "note": "Win32 control restricted to disposable-profile Chrome children of this test process; failure to focus is inconclusive"
+  },
+  "pageErrors": [
+    "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+  ],
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "browserCommandLineLimitation": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+  "nativeStorageAccess": {
+    "localStorage": {
+      "permitted": false,
+      "error": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+    },
+    "sessionStorage": {
+      "permitted": false,
+      "error": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+    },
+    "indexedDB": {
+      "permitted": false,
+      "error": "The user denied permission to access the database."
+    }
+  },
+  "storageDeniedPageText": "",
+  "error": "expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('save-state')\nExpected pattern: /Storage unavailable|Save failed/\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toContainText\" getByTestId('save-state') with timeout 5000ms\n  - waiting for getByTestId('save-state')\n",
+  "taskProfileRemoved": true
+}

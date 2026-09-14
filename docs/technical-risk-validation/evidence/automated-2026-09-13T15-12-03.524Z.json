@@ -1,0 +1,76 @@
+{
+  "recordedAt": "2026-09-13T15:12:03.524Z",
+  "commit": "cc27317abf77409a4210fb2c7f918422128056d8",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/public/worker.js",
+    " M prototypes/technical-risk-validation/scripts/preview-watchdog.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/runtime.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-06-49.013Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-09-21.282Z.json",
+    "?? prototypes/technical-risk-validation/tests/preview-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/preview-recovery.spec.ts",
+    "--project=firefox",
+    "--grep",
+    "offline preparation"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T15:11:40.269Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "daca5c9d1bb053baea70ec6c017e7972b6fcfa0e305bd4100c607683eb35e875",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-BbHlFNU4.js": "f16812e43605b550a74a43318177fd21839ab88e72eb0d671f03833ec79397da",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "391e20c5343a36a0899b569d41070eed874bc4e9918b7bb5372b7cda410b6027",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "03b9d74a75a2900f62cdff12720ba9e612020e3a240f8f96dc79bf43212721a3",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 23930.791,
+  "cases": [
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04/E05 Worker preview retains containment after offline preparation and public asset update",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 18270,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-offline-update",
+          "data": {
+            "browser": "155.0",
+            "sameProcessOfflineReload": true,
+            "publicAssetUpdate": true,
+            "onlineLearnerRequests": [],
+            "physicalColdLaunch": "untested"
+          }
+        }
+      ]
+    }
+  ]
+}

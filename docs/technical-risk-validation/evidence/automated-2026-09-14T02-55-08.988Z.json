@@ -1,0 +1,600 @@
+{
+  "recordedAt": "2026-09-14T02:55:08.988Z",
+  "commit": "278e11053743aeff014086ab01e14d50ac00a452",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-10-51.844Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-07.933Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-46.420Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-13-09.545Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-18-28.884Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-33-57.415Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-31-08.710Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-35-25.784Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-36-13.622Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-39-46.463Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-42-51.823Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-47-22.281Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-50-01.338Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-51-24.716Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-08-37.339Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-20-59.934Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-24-02.800Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-20-30.170Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-21-44.817Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-49-20.566Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-53-49.439Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-13T22-15-11.801Z.json",
+    "?? docs/technical-risk-validation/proposed-scope-adjustment.md",
+    "?? prototypes/technical-risk-validation/tests/nested-worker.spec.ts",
+    "?? prototypes/technical-risk-validation/tests/renderer-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/nested-worker.spec.ts"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T02:54:43.516Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "9d244fd31a04192536ac0466401fad6b549779d40d58b600d91a094470f5776a",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-VZMd8kAk.js": "67bc4623deeb0c75b0a3c6eae67c7927071cf4eb58b6f1a02642a4dc4acf5d1a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "9cc94f44cd25d5d5305aaddd1f9703267ab2b1e3e030a993a1c25a280a8de60b",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "88693153d973c04fc8cdd2ebe95342d0dff01d6528ed8b8898ec2dfce850417d",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 26246.225,
+  "cases": [
+    {
+      "title": " / chromium / nested-worker.spec.ts / E03 nested Blob Worker capability and inherited network policy are observed with a real control",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1901,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "nested-blob-control",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "control",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "control",
+              "task": "Q01",
+              "run": "75f61bb3-1d97-46ac-bc82-bfe1502b9c9d",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_ALLOWED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 56
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/nested-blob",
+                "query": "",
+                "at": 1789354487996
+              }
+            ],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-opaque",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "opaque",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "fee587e3-4ff6-4f0b-ab21-0ad96dc6c112",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 112.10000000149012
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-dedicated",
+          "data": {
+            "browser": "153.0.8010.12",
+            "candidate": "dedicated",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "29ce308b-f137-415c-bf7c-cd80ac631194",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 47.19999999552965
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-comparison",
+          "data": {
+            "rows": [
+              {
+                "candidate": "control",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "control",
+                  "task": "Q01",
+                  "run": "75f61bb3-1d97-46ac-bc82-bfe1502b9c9d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_ALLOWED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 56
+                },
+                "records": [
+                  {
+                    "method": "GET",
+                    "path": "/nested-blob",
+                    "query": "",
+                    "at": 1789354487996
+                  }
+                ]
+              },
+              {
+                "candidate": "opaque",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "fee587e3-4ff6-4f0b-ab21-0ad96dc6c112",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 112.10000000149012
+                },
+                "records": []
+              },
+              {
+                "candidate": "dedicated",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "29ce308b-f137-415c-bf7c-cd80ac631194",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 47.19999999552965
+                },
+                "records": []
+              }
+            ],
+            "physicalMobile": "untested",
+            "hardResourceQuota": "unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / nested-worker.spec.ts / E03 nested Blob Worker capability and inherited network policy are observed with a real control",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 9772,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "nested-blob-control",
+          "data": {
+            "browser": "155.0",
+            "candidate": "control",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "control",
+              "task": "Q01",
+              "run": "183a2529-2e47-429c-ba17-97193b4f2b88",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_ALLOWED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 336
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/nested-blob",
+                "query": "",
+                "at": 1789354502141
+              }
+            ],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-opaque",
+          "data": {
+            "browser": "155.0",
+            "candidate": "opaque",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "22f9c047-b8b5-47e3-893c-a562484404e9",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 656
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-dedicated",
+          "data": {
+            "browser": "155.0",
+            "candidate": "dedicated",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "2866921b-2f85-49bd-be2a-e7caa36afdd6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 96
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-comparison",
+          "data": {
+            "rows": [
+              {
+                "candidate": "control",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "control",
+                  "task": "Q01",
+                  "run": "183a2529-2e47-429c-ba17-97193b4f2b88",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_ALLOWED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 336
+                },
+                "records": [
+                  {
+                    "method": "GET",
+                    "path": "/nested-blob",
+                    "query": "",
+                    "at": 1789354502141
+                  }
+                ]
+              },
+              {
+                "candidate": "opaque",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "22f9c047-b8b5-47e3-893c-a562484404e9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 656
+                },
+                "records": []
+              },
+              {
+                "candidate": "dedicated",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "2866921b-2f85-49bd-be2a-e7caa36afdd6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 96
+                },
+                "records": []
+              }
+            ],
+            "physicalMobile": "untested",
+            "hardResourceQuota": "unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / webkit / nested-worker.spec.ts / E03 nested Blob Worker capability and inherited network policy are observed with a real control",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3077,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "nested-blob-control",
+          "data": {
+            "browser": "26.6",
+            "candidate": "control",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "control",
+              "task": "Q01",
+              "run": "626b079f-54b5-469e-b5f1-780cfd42c9cc",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_ALLOWED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 184
+            },
+            "records": [
+              {
+                "method": "GET",
+                "path": "/nested-blob",
+                "query": "",
+                "at": 1789354508288
+              }
+            ],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-opaque",
+          "data": {
+            "browser": "26.6",
+            "candidate": "opaque",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "opaque",
+              "task": "Q01",
+              "run": "ee263205-90b5-4780-a00d-34014155a846",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NETWORK_REQUEST_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 87
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-dedicated",
+          "data": {
+            "browser": "26.6",
+            "candidate": "dedicated",
+            "result": {
+              "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "c9e9ea1c-76df-473d-a69c-40232e641374",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "SharedWorker:undefined",
+                "NESTED_BOOTSTRAP_DENIED"
+              ],
+              "value": "[undefined]",
+              "elapsed": 171
+            },
+            "records": [],
+            "childExplicitlyTerminatedByFixture": true,
+            "descendantDeadlineRecovery": "not demonstrated by this finite capability probe"
+          }
+        },
+        {
+          "name": "nested-blob-comparison",
+          "data": {
+            "rows": [
+              {
+                "candidate": "control",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "control",
+                  "task": "Q01",
+                  "run": "626b079f-54b5-469e-b5f1-780cfd42c9cc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_ALLOWED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 184
+                },
+                "records": [
+                  {
+                    "method": "GET",
+                    "path": "/nested-blob",
+                    "query": "",
+                    "at": 1789354508288
+                  }
+                ]
+              },
+              {
+                "candidate": "opaque",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "opaque",
+                  "task": "Q01",
+                  "run": "ee263205-90b5-4780-a00d-34014155a846",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NETWORK_REQUEST_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 87
+                },
+                "records": []
+              },
+              {
+                "candidate": "dedicated",
+                "result": {
+                  "source": "console.log('SharedWorker:'+typeof SharedWorker);\n      if(typeof Worker!=='function'){console.log('NESTED_API_UNAVAILABLE')}\n      else {\n        const url=URL.createObjectURL(new Blob([\"fetch('http://127.0.0.1:4312/nested-blob').then(()=>self.postMessage('NETWORK_REQUEST_ALLOWED'),()=>self.postMessage('NETWORK_REQUEST_DENIED'))\"],{type:'text/javascript'}));\n        let child;\n        try{child=new Worker(url)}catch(error){console.log('NESTED_CONSTRUCTOR_DENIED:'+error.name)}\n        if(child){\n          try{\n            const response=await new Promise(resolve=>{\n              const timer=setTimeout(()=>resolve('NESTED_REPLY_MISSING'),700);\n              child.onmessage=event=>{clearTimeout(timer);resolve(event.data)};\n              child.onerror=()=>{clearTimeout(timer);resolve('NESTED_BOOTSTRAP_DENIED')};\n            });\n            console.log(response);\n          }finally{child.terminate()}\n        }\n        URL.revokeObjectURL(url);\n      }",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "c9e9ea1c-76df-473d-a69c-40232e641374",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "SharedWorker:undefined",
+                    "NESTED_BOOTSTRAP_DENIED"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 171
+                },
+                "records": []
+              }
+            ],
+            "physicalMobile": "untested",
+            "hardResourceQuota": "unverified"
+          }
+        }
+      ]
+    }
+  ]
+}

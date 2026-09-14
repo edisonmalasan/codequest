@@ -1,0 +1,387 @@
+{
+  "recordedAt": "2026-09-14T08:13:10.546Z",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\worker-target-diagnostics.mjs"
+  ],
+  "commit": "e9e8436f23341df4b0b8a676b48d02fa7289b277",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/README.md",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-30-14.260Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-31-30.111Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-31-44.313Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-39-17.365Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-55-14.206Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T08-07-06.927Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T08-11-40.028Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T07-42-53.015Z.json",
+    "?? docs/technical-risk-validation/evidence/queued-output-replay-2026-09-14T07-47-20.260Z.json",
+    "?? docs/technical-risk-validation/evidence/worker-target-liveness-2026-09-14T07-33-03.841Z.json"
+  ],
+  "experiment": "E02 nested target-lifecycle diagnostic",
+  "attachControl": false,
+  "channel": "bundled chromium",
+  "physicalTyping": false,
+  "limitation": "Target descriptors and current-process CPU observations; no hard quota or confirmed per-target CPU attribution",
+  "scriptHash": "7b7f03f64fdffc0251efa81a265bce0abf35944cbcf073a67528e7d37b0a729b",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "6173d7311e533ad90a4a44ebfa6bbb67b0c3687d06a103a70cc83acc95ae93ee",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-Cvq5Xrou.js": "bee3d3534e430b4300fc388230cd66325d76b2a0440b3e26b04873d1dca8549a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "002857b81b51ba2e72aa453e5fc11321162f0ac1717491c6e2d93dfb37b0c00f",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "1ba3dfaf6757c01d6a8d9f460bd9f2e3515c814de12dfd4103de6935fa71160d",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "ecd28d7cb80d93289dab3d5003add9d3b0a3a0813c29f295fe1b1bebc8fbdb02",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "snapshots": [
+    {
+      "label": "before",
+      "recordedAt": "2026-09-14T08:13:14.216Z",
+      "targets": [],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.283647
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 0.587439
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.087395
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.089886
+          }
+        ]
+      }
+    },
+    {
+      "label": "active",
+      "recordedAt": "2026-09-14T08:13:14.308Z",
+      "targets": [
+        {
+          "targetId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "type": "worker",
+          "title": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "url": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "attached": true,
+          "parentId": "325B7898B927FE8D4352ED272E0CCD23",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        },
+        {
+          "targetId": "3DB5052160E95BABF6FC376BFD348EA9",
+          "type": "worker",
+          "title": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "url": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "attached": true,
+          "parentId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        }
+      ],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.302046
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 0.697062
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.09344
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.090905
+          }
+        ]
+      }
+    },
+    {
+      "label": "immediately after acknowledged stop",
+      "recordedAt": "2026-09-14T08:13:14.333Z",
+      "targets": [
+        {
+          "targetId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "type": "worker",
+          "title": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "url": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "attached": true,
+          "parentId": "325B7898B927FE8D4352ED272E0CCD23",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        },
+        {
+          "targetId": "3DB5052160E95BABF6FC376BFD348EA9",
+          "type": "worker",
+          "title": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "url": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "attached": true,
+          "parentId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        }
+      ],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.303596
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 0.748847
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.09381
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.09094
+          }
+        ]
+      }
+    },
+    {
+      "label": "natural elapsed interval +100ms",
+      "recordedAt": "2026-09-14T08:13:14.445Z",
+      "targets": [
+        {
+          "targetId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "type": "worker",
+          "title": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "url": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "attached": true,
+          "parentId": "325B7898B927FE8D4352ED272E0CCD23",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        },
+        {
+          "targetId": "3DB5052160E95BABF6FC376BFD348EA9",
+          "type": "worker",
+          "title": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "url": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "attached": true,
+          "parentId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        }
+      ],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.331443
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 0.885109
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.098608
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.092978
+          }
+        ]
+      }
+    },
+    {
+      "label": "natural elapsed interval +900ms",
+      "recordedAt": "2026-09-14T08:13:15.363Z",
+      "targets": [
+        {
+          "targetId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "type": "worker",
+          "title": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "url": "blob:null/65fe610a-414b-4103-a870-9dd4e6fbd946",
+          "attached": true,
+          "parentId": "325B7898B927FE8D4352ED272E0CCD23",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        },
+        {
+          "targetId": "3DB5052160E95BABF6FC376BFD348EA9",
+          "type": "worker",
+          "title": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "url": "blob:null/66f9b187-5e16-4a2b-835c-bd849a4c97d5",
+          "attached": true,
+          "parentId": "7E3E69FC029FAC8325C492EF00CC9FC6",
+          "canAccessOpener": false,
+          "parentFrameId": "14E26C824065CE60C30EB8128E61BE2F",
+          "browserContextId": "09BF13042BED606E06EAB0BA3084564F"
+        }
+      ],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.333121
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 1.77186
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.098852
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.092978
+          }
+        ]
+      }
+    },
+    {
+      "label": "natural elapsed interval +1000ms",
+      "recordedAt": "2026-09-14T08:13:16.374Z",
+      "targets": [],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.337123
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 2.645384
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.098852
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.093386
+          }
+        ]
+      }
+    },
+    {
+      "label": "after explicit disposal",
+      "recordedAt": "2026-09-14T08:13:16.406Z",
+      "targets": [],
+      "processes": {
+        "processInfo": [
+          {
+            "type": "browser",
+            "id": 1288,
+            "cpuTime": 0.344099
+          },
+          {
+            "type": "renderer",
+            "id": 1600,
+            "cpuTime": 2.659896
+          },
+          {
+            "type": "GPU",
+            "id": 1544,
+            "cpuTime": 0.099077
+          },
+          {
+            "type": "network.mojom.NetworkService",
+            "id": 16052,
+            "cpuTime": 0.094139
+          }
+        ]
+      }
+    }
+  ],
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "HeadlessChrome/153.0.8010.12",
+    "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "jsVersion": "15.3.76.4"
+  },
+  "sourceHash": "22826381b678d044b96321cf2b17a99fd747f27ef465944e2cf79f979dd7b1e0",
+  "stopped": {
+    "source": "const child=new Worker(URL.createObjectURL(new Blob([\"self.postMessage(\\\"CHILD_STARTED\\\");while(true){}\"],{type:'text/javascript'})));await new Promise(resolve=>{child.onmessage=()=>{};child.onerror=()=>resolve()});",
+    "candidate": "opaque",
+    "task": "Q01",
+    "run": "9d5bb5d4-eee0-481c-9cc6-24ddcfc2f714",
+    "contentVersion": "1",
+    "assessmentVersion": "1",
+    "previewMarker": true,
+    "status": "stopped",
+    "output": [],
+    "value": "Stopped",
+    "elapsed": 82.89999999850988,
+    "cleanup": {
+      "acknowledged": true,
+      "fallback": false,
+      "retainedTrustedBootstrap": true
+    }
+  },
+  "fresh": {
+    "source": "console.log(\"fresh after target observation\")",
+    "candidate": "opaque",
+    "task": "Q01",
+    "run": "02768506-6220-46ad-8fba-2e36be9e5c26",
+    "contentVersion": "1",
+    "assessmentVersion": "1",
+    "previewMarker": false,
+    "status": "success",
+    "output": [
+      "fresh after target observation"
+    ],
+    "value": "[undefined]",
+    "elapsed": 12,
+    "cleanup": {
+      "acknowledged": true,
+      "fallback": false,
+      "retainedTrustedBootstrap": true
+    }
+  }
+}

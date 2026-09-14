@@ -1,0 +1,506 @@
+{
+  "recordedAt": "2026-09-14T03:01:47.158Z",
+  "commit": "278e11053743aeff014086ab01e14d50ac00a452",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/architecture.md",
+    " M docs/decisions.md",
+    " M docs/frontend.md",
+    " M docs/security.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/manual-checklist.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/native-chrome-diagnostics.mjs",
+    " M prototypes/technical-risk-validation/tests/preview-recovery.spec.ts",
+    " M prototypes/technical-risk-validation/tests/workspace.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-04-06.137Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-10-51.844Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-07.933Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-11-46.420Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-13-09.545Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-18-28.884Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-33-57.415Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-31-08.710Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-35-25.784Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-36-13.622Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-39-46.463Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-42-51.823Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-47-22.281Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-55-08.988Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-55-45.794Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-56-45.796Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-58-31.678Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T02-59-31.466Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T03-00-11.310Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T22-05-00.671Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-50-01.338Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T02-51-24.716Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-06-56.293Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-08-37.339Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-20-59.934Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-13T22-24-02.800Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-20-30.170Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-21-44.817Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-49-20.566Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-53-49.439Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T02-56-07.059Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-13T22-15-11.801Z.json",
+    "?? docs/technical-risk-validation/proposed-scope-adjustment.md",
+    "?? prototypes/technical-risk-validation/tests/nested-worker.spec.ts",
+    "?? prototypes/technical-risk-validation/tests/renderer-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/workspace.spec.ts",
+    "--grep",
+    "saved source survives twenty"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": true,
+    "mode": "headed installed Windows Chrome; automated interaction, not physical typing or assistive technology",
+    "chromiumArgs": [],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T03:01:41.731Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "9d244fd31a04192536ac0466401fad6b549779d40d58b600d91a094470f5776a",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-VZMd8kAk.js": "67bc4623deeb0c75b0a3c6eae67c7927071cf4eb58b6f1a02642a4dc4acf5d1a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "9cc94f44cd25d5d5305aaddd1f9703267ab2b1e3e030a993a1c25a280a8de60b",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "88693153d973c04fc8cdd2ebe95342d0dff01d6528ed8b8898ec2dfce850417d",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 5907.102000000001,
+  "cases": [
+    {
+      "title": " / installed-chrome / workspace.spec.ts / E05 saved source survives twenty reload cycles and protected response is not cached",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3931,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "reload-startup-0",
+          "data": {
+            "cycle": 0,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-1",
+          "data": {
+            "cycle": 1,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-2",
+          "data": {
+            "cycle": 2,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-3",
+          "data": {
+            "cycle": 3,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-4",
+          "data": {
+            "cycle": 4,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-5",
+          "data": {
+            "cycle": 5,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-6",
+          "data": {
+            "cycle": 6,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-7",
+          "data": {
+            "cycle": 7,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-8",
+          "data": {
+            "cycle": 8,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-9",
+          "data": {
+            "cycle": 9,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-10",
+          "data": {
+            "cycle": 10,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-11",
+          "data": {
+            "cycle": 11,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-12",
+          "data": {
+            "cycle": 12,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-13",
+          "data": {
+            "cycle": 13,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-14",
+          "data": {
+            "cycle": 14,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-15",
+          "data": {
+            "cycle": 15,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-16",
+          "data": {
+            "cycle": 16,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-17",
+          "data": {
+            "cycle": 17,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-18",
+          "data": {
+            "cycle": 18,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reload-startup-19",
+          "data": {
+            "cycle": 19,
+            "navigationStatus": 200,
+            "contentType": "text/html",
+            "pageErrors": [],
+            "crashes": 0,
+            "snapshot": {
+              "readyState": "complete",
+              "rootChildren": 1,
+              "harnessPresent": true,
+              "source": "console.log(\"persistent source\")",
+              "state": "Saved on this device",
+              "scripts": [
+                "http://127.0.0.1:4310/assets/index-VZMd8kAk.js"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

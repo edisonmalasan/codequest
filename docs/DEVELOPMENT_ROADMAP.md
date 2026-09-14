@@ -2,19 +2,19 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-13. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-15. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 — Technical Risk Validation (roadmap: Technical Prototypes); reviewed no-go for evaluated preview mechanisms; remaining validation blocked |
+| Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); Apply continuation, not complete |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply - 21/34 tasks complete; owner-reviewed no-go (AP02); 13 acceptance gates remain incomplete |
-| Next execution step | Define scoped redesign/retest for [approved preview no-go](technical-risk-validation/report.md); supply physical/browser/assistive access for remaining [coverage](technical-risk-validation/coverage.md) |
+| Current OpenSpec stage | Apply continuation - 22/34 tasks complete; inventory and native Chrome diagnostics recorded; 12 required experiment/review gates incomplete |
+| Next execution step | Retest the owner-approved [dedicated-bootstrap experiment](technical-risk-validation/proposed-bootstrap-revision.md) against unchanged limits. Review final evidence and the still-proposed [scope adjustment](technical-risk-validation/proposed-scope-adjustment.md); support/progression decisions unresolved |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Focused Chromium/Firefox/unit/prototype checks passed; preview navigation and tight-loop recovery failed; actual WebKit page creation unavailable, required physical/accessibility coverage incomplete; no-go review approved by AP02 |
+| Validation evidence | Approved persistent-bootstrap experiment implemented/retested: native full suite 34 passed/15 failed; independent post-loop fresh runs retain four timeouts. Native PWA/persistence and zoom geometry/source pass; 400% local Check times out; ten cold-process probe fails. Bundled target-lifetime and WebKit offline failures retained. Inaccessible device/AT and native quota limits remain untested/inconclusive; AP02 historical no-go retained |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
-| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 reviewed no-go; F02 inconclusive; evidence/retest required |
+| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
 
 ## 1. Product Goal
 
