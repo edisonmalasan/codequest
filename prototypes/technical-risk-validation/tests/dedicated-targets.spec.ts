@@ -15,6 +15,7 @@ test.describe('D3 dedicated Chromium target instrumentation', () => {
       const start = Date.now(); await page.evaluate(() => window.__risk.stop());
       const stopped = await page.evaluate(() => window.__bootstrapLoop);
       expect(stopped.status).toBe('stopped'); expect(stopped.cleanup?.acknowledged).toBe(true);
+      await info.attach('dedicated-targets-after-ack', { body: JSON.stringify({ browser: browser.version(), before, active, stopped, afterAcknowledgment: await targets(), limitation: 'retained target descriptors alone prove neither continuing execution nor termination' }), contentType: 'application/json' });
       await expect.poll(async () => (await targets()).length, { timeout: 1000, intervals: [10, 25, 50] }).toBe(0);
       const recoveryMs = Date.now() - start; expect(recoveryMs).toBeLessThanOrEqual(1000);
       const fresh = await page.evaluate(() => window.__risk.run('console.log("after observed cleanup")', 'dedicated'));
