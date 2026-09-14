@@ -1,5 +1,5 @@
 import { OpaqueCompartment } from './opaque-compartment';
-import { byteLength, decodeResult, limits, type Candidate, type RunIdentity, type RunResult } from './protocol';
+import { byteLength, decodeResult, isRecord, limits, type Candidate, type RunIdentity, type RunResult } from './protocol';
 
 export const runnerOrigin = 'http://127.0.0.2:4311';
 export type RunRequest = RunIdentity & { source: string; candidate: Candidate; previewMarker?: boolean };
@@ -51,7 +51,16 @@ export class BrowserRuntime {
       };
       const receive = (event: MessageEvent<unknown>) => {
         if (!frame || event.source !== frame.contentWindow) return;
-        if (request.candidate === 'opaque' && event.data === 'opaque-bootstrap-ready' && frame.dataset.activeWorkers === '0') return;
+        if (request.candidate === 'opaque') {
+          const packet = event.data;
+          if (isRecord(packet) && packet.type === 'opaque-bootstrap-ready') return;
+          if (!isRecord(packet) || packet.type !== 'learner-output' || !isRecord(packet.identity)) { onResult(null); return; }
+          const identity = packet.identity;
+          if (identity.run !== request.run || identity.task !== request.task || identity.contentVersion !== request.contentVersion || identity.assessmentVersion !== request.assessmentVersion) return;
+          if (typeof packet.raw !== 'string' || packet.raw.length > limits.message || byteLength(packet.raw) > limits.message || byteLength(JSON.stringify({ type: 'learner-output', identity: { run: request.run, task: request.task, contentVersion: request.contentVersion, assessmentVersion: request.assessmentVersion }, raw: packet.raw })) > limits.message) { onResult(null); return; }
+          onResult(packet.raw);
+          return;
+        }
         if (request.candidate === 'dedicated' && event.origin !== runnerOrigin) return;
         if (request.candidate === 'dedicated' && event.data === 'ready') {
           frame.contentWindow?.postMessage({ type: 'start', input: request }, request.candidate === 'dedicated' ? runnerOrigin : '*');

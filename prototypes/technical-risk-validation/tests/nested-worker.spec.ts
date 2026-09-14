@@ -59,7 +59,9 @@ test('E02/E03 nested Blob loop start triggers bounded rejection and usable fresh
       const observed = await page.evaluate(async ({ source, candidate }) => {
         let childStartObserved = false;
         const observe = (event: MessageEvent<unknown>) => {
-          if (event.data === 'SYNTHETIC_CHILD_STARTED' && Array.from(document.querySelectorAll<HTMLIFrameElement>('iframe[title="Learner execution compartment"]')).some(frame => frame.contentWindow === event.source)) childStartObserved = true;
+          const data = event.data;
+          const raw = typeof data === 'object' && data !== null && 'type' in data && data.type === 'learner-output' && 'raw' in data ? data.raw : data;
+          if (raw === 'SYNTHETIC_CHILD_STARTED' && Array.from(document.querySelectorAll<HTMLIFrameElement>('iframe[title="Learner execution compartment"]')).some(frame => frame.contentWindow === event.source)) childStartObserved = true;
         };
         window.addEventListener('message', observe);
         try { return { result: await window.__risk.run(source, candidate), childStartObserved }; }

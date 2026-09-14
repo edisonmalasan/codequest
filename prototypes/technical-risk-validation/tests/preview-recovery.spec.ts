@@ -66,7 +66,9 @@ test('E04 Worker preview hundred starts and resets reject flooding without leake
   expect(rows.rows.every(row => row.status === 'preview-stopped')).toBe(true);
   expect(rows.flood.status).toBe('protocol-error');
   await expect(page.locator('iframe[title="Learner execution compartment"], iframe[title="Supplied Worker result preview"]')).toHaveCount(0);
-  await expect(page.locator('iframe[data-trusted-bootstrap="yes"]')).toHaveCount(1);
+  expect(rows.flood.execution?.cleanup).toBeDefined();
+  // An acknowledged stop retains one bootstrap; the approved fallback removes it.
+  await expect(page.locator('iframe[data-trusted-bootstrap="yes"]')).toHaveCount(rows.flood.execution?.cleanup?.retainedTrustedBootstrap ? 1 : 0);
   await expect(page.locator('iframe[data-active-workers="1"]')).toHaveCount(0);
   await page.evaluate(() => window.__risk.dispose());
   await expect(page.locator('iframe')).toHaveCount(0);

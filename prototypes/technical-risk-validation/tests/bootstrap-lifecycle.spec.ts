@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { isRecord } from '../src/protocol';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -71,6 +72,34 @@ test('E02 superseded runs and unsolicited stop-shaped window messages cannot rep
   await expect(page.locator('iframe[data-active-workers="1"]')).toHaveCount(0);
   await expect(page.locator('iframe[data-trusted-bootstrap="yes"]')).toHaveCount(1);
   await info.attach('superseded-private-control', { body: JSON.stringify({ browser: browser.version(), result }), contentType: 'application/json' });
+});
+
+test('E02 replayed actual prior output from the retained bootstrap cannot fail the current run', async ({ page, browser }, info) => {
+  const captured = await page.evaluate(async () => {
+    let packet: unknown;
+    const observe = (event: MessageEvent<unknown>) => {
+      if (!Array.from(document.querySelectorAll<HTMLIFrameElement>('iframe[data-trusted-bootstrap="yes"]')).some(frame => frame.contentWindow === event.source)) return;
+      const data = event.data;
+      const raw = typeof data === 'string' ? data : typeof data === 'object' && data !== null && 'raw' in data ? data.raw : undefined;
+      if (typeof raw === 'string' && raw.includes('"status":"success"')) packet = data;
+    };
+    window.addEventListener('message', observe);
+    try { const first = await window.__risk.run('console.log("prior")', 'opaque'); return { first, packet }; }
+    finally { window.removeEventListener('message', observe); }
+  });
+  expect(captured.first.status).toBe('success');
+  expect(typeof captured.packet === 'string' || isRecord(captured.packet)).toBe(true);
+  await page.evaluate(() => { window.__bootstrapLoop = window.__risk.run('await new Promise(r=>setTimeout(r,300));console.log("current")', 'opaque'); });
+  const handle = await page.locator('iframe[data-active-workers="1"]').elementHandle();
+  const frame = await handle?.contentFrame();
+  if (!frame) throw new Error('Current trusted bootstrap unavailable for replay');
+  await frame.evaluate(packet => parent.postMessage(packet, '*'), captured.packet);
+  const current = await page.evaluate(() => window.__bootstrapLoop);
+  expect(current.status).toBe('success');
+  expect(current.output).toEqual(['current']);
+  expect(current.elapsed).toBeLessThan(1000);
+  expect(current.cleanup?.acknowledged).toBe(true);
+  await info.attach('actual-prior-output-replay', { body: JSON.stringify({ browser: browser.version(), captured, current, replaySender: 'actual same retained bootstrap window', physical: false }), contentType: 'application/json' });
 });
 
 test('E02 CDP observes parent and nested Worker targets disappear after private cleanup', async ({ page, browser, browserName }, info) => {

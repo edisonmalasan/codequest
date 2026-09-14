@@ -9,6 +9,7 @@ const sameIdentity = (raw: unknown, identity: RunIdentity): boolean => isRecord(
 export class OpaqueCompartment {
   readonly frame = document.createElement('iframe');
   private readonly channel = new MessageChannel();
+  private readonly bootstrapId = crypto.randomUUID();
   private resolveReady: (ready: boolean) => void = () => {};
   private readonly ready = new Promise<boolean>(resolve => { this.resolveReady = resolve; });
   private connected = false;
@@ -18,7 +19,7 @@ export class OpaqueCompartment {
   lastCleanup = { acknowledged: false, fallback: false, retainedTrustedBootstrap: false };
   private pending: { ticket: string; identity: RunIdentity; finish: (acknowledged: boolean) => void } | undefined;
   private readonly handshake = (event: MessageEvent<unknown>) => {
-    if (this.connected || event.source !== this.frame.contentWindow || event.data !== 'opaque-bootstrap-ready') return;
+    if (this.connected || event.source !== this.frame.contentWindow || !isRecord(event.data) || event.data.type !== 'opaque-bootstrap-ready' || event.data.bootstrapId !== this.bootstrapId) return;
     this.connected = true;
     window.removeEventListener('message', this.handshake);
     this.frame.contentWindow?.postMessage('connect-private-control', '*', [this.channel.port2]);
@@ -41,7 +42,7 @@ export class OpaqueCompartment {
       if (pending && isRecord(raw) && raw.type === 'cleaned' && raw.ticket === pending.ticket && raw.activeWorkers === 0 && sameIdentity(raw.identity, pending.identity)) pending.finish(true);
       else this.remove();
     };
-    const script = `const publicWorkerSource=${JSON.stringify(workerSource)};\n${bootstrapSource}`;
+    const script = `const bootstrapId=${JSON.stringify(this.bootstrapId)};const publicWorkerSource=${JSON.stringify(workerSource)};\n${bootstrapSource}`;
     this.frame.srcdoc = `<meta http-equiv="Content-Security-Policy" content="${policy}"><script>${script.replaceAll('</script', '<\\/script')}</script>`;
     window.addEventListener('message', this.handshake);
     document.body.append(this.frame);

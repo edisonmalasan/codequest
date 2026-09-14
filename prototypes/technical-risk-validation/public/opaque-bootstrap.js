@@ -25,6 +25,12 @@ addEventListener('message', event => {
       const input = command.input;
       if (!input || typeof input.source !== 'string' || utf8.encode(input.source).length > 65536) return;
       identity = { run: input.run, task: input.task, contentVersion: input.contentVersion, assessmentVersion: input.assessmentVersion };
+      const runIdentity = identity;
+      const deliver = raw => {
+        let packet = { type: 'learner-output', identity: runIdentity, raw };
+        if (utf8.encode(JSON.stringify(packet)).length > 16384) packet = { type: 'learner-output', identity: runIdentity, raw: 'bootstrap-protocol-error' };
+        owner.postMessage(packet, '*');
+      };
       received = 0;
       publicWorkerUrl ??= URL.createObjectURL(new Blob([publicWorkerSource], { type: 'text/javascript' }));
       try {
@@ -36,20 +42,20 @@ addEventListener('message', event => {
           const raw = event.data;
           if (received > 200 || typeof raw !== 'string' || raw.length > 16384 || utf8.encode(raw).length > 16384) {
             terminateCurrent();
-            owner.postMessage('bootstrap-protocol-error', '*');
+            deliver('bootstrap-protocol-error');
             return;
           }
-          owner.postMessage(raw, '*');
+          deliver(raw);
         };
         worker.onerror = () => {
           if (current !== worker) return;
           terminateCurrent();
-          owner.postMessage('bootstrap-error', '*');
+          deliver('bootstrap-error');
         };
         worker.postMessage(input);
       } catch {
         terminateCurrent();
-        owner.postMessage('bootstrap-error', '*');
+        deliver('bootstrap-error');
       }
     } else if (command.type === 'stop' && typeof command.ticket === 'string' && command.ticket.length <= 64 && sameIdentity(command.identity, identity)) {
       terminateCurrent();
@@ -62,4 +68,4 @@ addEventListener('message', event => {
   };
   control.postMessage('private-control-ready');
 });
-owner.postMessage('opaque-bootstrap-ready', '*');
+owner.postMessage({ type: 'opaque-bootstrap-ready', bootstrapId }, '*');
