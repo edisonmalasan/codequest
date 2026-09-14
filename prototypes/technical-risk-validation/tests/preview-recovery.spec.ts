@@ -105,3 +105,56 @@ test('E04/E05 Worker preview retains containment after offline preparation and p
   expect(await (await request.get('http://127.0.0.1:4312/records')).json()).toEqual([]);
   await info.attach('worker-preview-offline-update', { body: JSON.stringify({ browser: browser.version(), sameProcessOfflineReload: true, publicAssetUpdate: true, onlineLearnerRequests: [], physicalColdLaunch: 'untested' }), contentType: 'application/json' });
 });
+
+
+test('E03/E04 online authority probes remain denied after public update independently of offline emulation', async ({ page, request, browser }, info) => {
+  test.setTimeout(60000);
+  await expect(page.getByText(/Public lesson and runtime assets prepared offline/)).toBeVisible();
+  await request.post('/__revision');
+  await page.evaluate(async () => { await (await navigator.serviceWorker.getRegistration())?.update(); });
+  await page.getByRole('button', { name: 'Save draft and apply available update' }).click();
+  await expect.poll(() => page.evaluate(async () => !(await navigator.serviceWorker.getRegistration())?.waiting)).toBe(true);
+  await page.reload();
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  await request.post('http://127.0.0.1:4312/reset');
+  await page.evaluate(async () => { await fetch('http://127.0.0.1:4312/post-update-control'); });
+  const control: unknown = await (await request.get('http://127.0.0.1:4312/records')).json();
+  expect(control).toEqual(expect.arrayContaining([expect.objectContaining({ path: '/post-update-control' })]));
+  await request.post('http://127.0.0.1:4312/reset');
+  await page.evaluate(async () => {
+    await new Promise<void>((resolve, reject) => {
+      const open = indexedDB.open('application-canary', 1);
+      open.onupgradeneeded = () => open.result.createObjectStore('secrets');
+      open.onerror = () => reject(open.error);
+      open.onsuccess = () => {
+        const transaction = open.result.transaction('secrets', 'readwrite');
+        transaction.objectStore('secrets').put('SYNTHETIC_SESSION_ONLY', 'token');
+        transaction.oncomplete = () => { open.result.close(); resolve(); };
+        transaction.onerror = () => reject(transaction.error);
+      };
+    });
+    if (!(await indexedDB.databases()).some(database => database.name === 'application-canary')) throw new Error('Trusted application storage control missing');
+  });
+  const probes = [
+    ['fetch', 'await fetch("http://127.0.0.1:4312/update-fetch")'],
+    ['xhr', 'const x=new XMLHttpRequest();x.open("GET","http://127.0.0.1:4312/update-xhr");x.send()'],
+    ['socket', 'new WebSocket("ws://127.0.0.1:4312/update-socket")'],
+    ['import', 'await import("http://127.0.0.1:4312/update-import")'],
+    ['importScripts', 'importScripts("http://127.0.0.1:4312/update-script")'],
+    ['nestedWorker', 'new Worker("http://127.0.0.1:4312/update-worker")'],
+    ['protected', 'await fetch("http://127.0.0.1:4310/__protected");console.log("APP_FOUND")'],
+    ['storage', 'console.log(typeof document);console.log(typeof localStorage);try{console.log((await indexedDB.databases()).some(d=>d.name==="application-canary")?"APP_FOUND":"APP_NOT_FOUND")}catch(e){}'],
+  ];
+  const rows = [];
+  for (const [id, body] of probes) {
+    const source = 'try{' + body + '}catch(e){};function summarize(){return 5}';
+    const result = await page.evaluate(source => window.__risk.previewSource(source), source);
+    rows.push({ id, result });
+    expect(result.status, id).toBe('preview-reset');
+    expect(result.execution?.output).not.toContain('APP_FOUND');
+    await page.evaluate(() => window.__risk.stop());
+  }
+  const records: unknown = await (await request.get('http://127.0.0.1:4312/records')).json();
+  expect(records).toEqual([]);
+  await info.attach('online-post-update-authority', { body: JSON.stringify({ browser: browser.version(), control, rows, records, offlineEmulation: false, physicalMobile: 'untested' }), contentType: 'application/json' });
+});

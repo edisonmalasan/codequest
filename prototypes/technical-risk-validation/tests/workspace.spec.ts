@@ -89,12 +89,22 @@ test('E06 immutable pending source, owner isolation and explicit import', async 
   await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('later draft');
 });
 
-test('E05 saved source survives twenty reload cycles and protected response is not cached', async ({ page, request }) => {
+test('E05 saved source survives twenty reload cycles and protected response is not cached', async ({ page, request }, info) => {
+  const pageErrors: string[] = [];
+  let crashes = 0;
+  page.on('pageerror', error => { if (pageErrors.length < 8) pageErrors.push(error.message.slice(0, 1500)); });
+  page.on('crash', () => { crashes += 1; });
   await edit(page, 'console.log("persistent source")');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
   for (let cycle = 0; cycle < 20; cycle++) {
-    await page.reload();
-    await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+    const navigation = await page.reload();
+    try { await expect(page.getByTestId('save-state')).toHaveText('Saved on this device'); }
+    finally {
+      let snapshot: unknown;
+      try { snapshot = await page.evaluate(() => ({ readyState: document.readyState, rootChildren: document.getElementById('root')?.childElementCount, harnessPresent: typeof window.__risk?.source === 'function', source: typeof window.__risk?.source === 'function' ? window.__risk.source() : 'application harness absent', state: document.querySelector('[data-testid="save-state"]')?.textContent, scripts: Array.from(document.scripts, script => script.src) })); }
+      catch (error: unknown) { snapshot = { error: error instanceof Error ? error.message : String(error) }; }
+      await info.attach('reload-startup-' + cycle, { body: JSON.stringify({ cycle, navigationStatus: navigation?.status(), contentType: navigation?.headers()['content-type'], pageErrors, crashes, snapshot }), contentType: 'application/json' });
+    }
     await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('persistent source');
   }
   await request.get('/__protected', { headers: { Authorization: 'Bearer SYNTHETIC_ONLY' } });

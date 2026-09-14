@@ -61,7 +61,7 @@ async function stopServer() {
     child.kill('SIGTERM');
   });
 }
-const launchOptions = { headless: engine !== 'chrome', ...(engine === 'chrome' ? { channel: 'chrome' } : {}), args: engine === 'chromium' ? ['--disable-gpu', '--renderer-process-limit=2'] : [], timeout: 15000 };
+const launchOptions = { headless: engine !== 'chrome', ...(engine === 'chrome' ? { channel: 'chrome', viewport: null } : {}), args: engine === 'chromium' ? ['--disable-gpu', '--renderer-process-limit=2'] : [], timeout: 15000 };
 record.launchOptions = launchOptions;
 try {
   record.stage = 'task-port preflight';

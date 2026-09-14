@@ -9,6 +9,11 @@ import { resolve, join, relative, sep } from 'node:path';
 const profileRoot = resolve('../../temp/phase1-profiles');
 await mkdir(profileRoot, { recursive: true });
 const profile = await mkdtemp(join(profileRoot, 'native-chrome-'));
+const storageDenied = process.argv.includes('--storage-denied');
+if (storageDenied) {
+  await mkdir(join(profile, 'Default'));
+  await writeFile(join(profile, 'Default', 'Preferences'), JSON.stringify({ profile: { default_content_setting_values: { cookies: 2 } } }));
+}
 const endpoints = [['127.0.0.1', 4310], ['127.0.0.2', 4311], ['127.0.0.1', 4312]];
 const origin = 'http://127.0.0.1:4310';
 const source = 'console.log("Ready for CodeQuest");';
@@ -28,6 +33,7 @@ const record = {
   dirtyPaths: execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean),
   buildHashesFrozenBeforeTrials: assets, scriptHash: createHash('sha256').update(readFileSync('scripts/native-chrome-diagnostics.mjs')).digest('hex'),
   channel: 'chrome', headed: true, viewportEmulation: false, physicalTyping: false,
+  storageDeniedProfile: storageDenied ? 'task-only Preferences: profile.default_content_setting_values.cookies=2; actual denial must be observed' : false,
   launchOptions: { channel: 'chrome', headless: false, viewport: null, timeout: 15000 },
   browserUse: 'no dedicated Browser Use/computer tool exposed; Playwright/CDP interaction',
   assistiveTechnology: 'NVDA/VoiceOver untested', operatingSystemRestart: 'untested; active user development session not restarted',
@@ -50,6 +56,24 @@ let context;
 let installed = false;
 let cdp;
 let manifestId = origin + '/';
+async function sampleResources(label) {
+  const snapshot = { label, recordedAt: new Date().toISOString(), hardMemoryQuota: 'unverified' };
+  try {
+    const browser = context.browser();
+    if (!browser) throw new Error('Owned browser CDP session unavailable');
+    const browserSession = await browser.newBrowserCDPSession();
+    try {
+      const { processInfo } = await browserSession.send('SystemInfo.getProcessInfo');
+      snapshot.processCounts = processInfo.reduce((counts, process) => { counts[process.type] = (counts[process.type] ?? 0) + 1; return counts; }, {});
+      snapshot.totalCpuSeconds = processInfo.reduce((total, process) => total + process.cpuTime, 0);
+    } finally { await browserSession.detach(); }
+    await cdp.send('Performance.enable');
+    const { metrics } = await cdp.send('Performance.getMetrics');
+    snapshot.hostMetrics = metrics.filter(metric => ['JSHeapUsedSize', 'JSHeapTotalSize', 'Documents', 'Nodes', 'JSEventListeners', 'TaskDuration'].includes(metric.name));
+  } catch (error) { snapshot.limitation = error instanceof Error ? error.message : String(error); }
+  record.resourceSnapshots ??= [];
+  record.resourceSnapshots.push(snapshot);
+}
 async function stopServer() {
   if (!server || server.exitCode !== null || server.signalCode !== null) return;
   await new Promise((resolveExit, reject) => {
@@ -80,15 +104,56 @@ try {
   let page = context.pages()[0];
   if (!page) throw new Error('No native Chrome page');
   cdp = await context.newCDPSession(page);
+  record.pageErrors = [];
+  page.on('pageerror', error => { if (record.pageErrors.length < 16) record.pageErrors.push(error.message.slice(0, 2000)); });
   record.version = await cdp.send('Browser.getVersion');
   try { record.browserCommandLine = (await cdp.send('Browser.getBrowserCommandLine')).arguments.map(arg => arg.startsWith('--user-data-dir=') ? '--user-data-dir=<task-owned>' : arg); }
   catch (error) { record.browserCommandLineLimitation = error instanceof Error ? error.message : String(error); }
-  await page.goto(origin + '/'); await ready(page);
+  await page.goto(origin + '/');
+  if (storageDenied) {
+    record.stage = 'native storage-denied startup';
+    record.nativeStorageAccess = await page.evaluate(async () => {
+      const observations = {};
+      for (const name of ['localStorage', 'sessionStorage']) {
+        try { window[name].setItem('SYNTHETIC_POLICY_CONTROL', 'SYNTHETIC_ONLY'); observations[name] = { permitted: true }; }
+        catch (error) { observations[name] = { permitted: false, error: error instanceof Error ? error.message : String(error) }; }
+      }
+      try {
+        observations.indexedDB = await new Promise((resolveAccess, reject) => {
+          const request = indexedDB.open('SYNTHETIC_POLICY_CONTROL');
+          request.onsuccess = () => { request.result.close(); resolveAccess({ permitted: true }); };
+          request.onerror = () => reject(request.error);
+        });
+      } catch (error) { observations.indexedDB = { permitted: false, error: error instanceof Error ? error.message : String(error) }; }
+      return observations;
+    });
+    try {
+      await expect(page.getByTestId('save-state')).toContainText(/Storage unavailable|Save failed/);
+      const editor = page.getByRole('textbox', { name: 'JavaScript source' });
+      await editor.fill(source);
+      await expect(page.getByTestId('save-state')).toContainText('Save failed');
+      record.storageDeniedRecovery = { editable: true, exactSourceRetained: await page.evaluate(expected => window.__risk.source() === expected, source), saveState: await page.getByTestId('save-state').textContent() };
+    } finally { record.storageDeniedPageText = (await page.locator('body').innerText()).slice(0, 16384); }
+  } else {
+  await ready(page);
   await expect(page.getByText(/Public lesson and runtime assets prepared offline/)).toBeVisible();
   await page.getByRole('textbox', { name: 'JavaScript source' }).fill(source); await ready(page);
 
   record.stage = 'native lifecycle and bootstrap diagnostics';
   await page.bringToFront();
+  await sampleResources('before ten Worker loops and hundred Worker/preview cycles');
+  record.workerLoopTrials = [];
+  for (let trial = 0; trial < 10; trial++) {
+    await page.evaluate(() => { window.__nativeWorkerTrial = window.__risk.run('while(true){}', 'opaque', 'Q01', true); });
+    let markerObserved = false;
+    let markerError = '';
+    try { await page.waitForFunction(() => Boolean(document.querySelector('iframe[data-preview-started="yes"]')), undefined, { timeout: 1900 }); markerObserved = true; }
+    catch (error) { markerError = error instanceof Error ? error.message : String(error); }
+    await page.getByRole('button', { name: 'Show hint' }).click();
+    const result = await page.evaluate(() => window.__nativeWorkerTrial);
+    const fresh = await page.evaluate(() => window.__risk.run('console.log("fresh")', 'opaque'));
+    record.workerLoopTrials.push({ trial, markerObserved, markerError, result, fresh, exactSourceRetained: await page.evaluate(expected => window.__risk.source() === expected, source) });
+  }
   record.lifecycle = await page.evaluate(async () => {
     const rows = [];
     for (let cycle = 0; cycle < 100; cycle++) {
@@ -110,6 +175,14 @@ try {
   });
 
   record.stage = 'native page zoom settings';
+  await sampleResources('after ten Worker loops and hundred Worker/preview cycles');
+  if (process.argv.includes('--retention-control')) {
+    for (const [delay, label] of [[10000, 'ten seconds natural idle after lifecycle'], [20000, 'thirty seconds natural idle after lifecycle']]) {
+      await page.waitForTimeout(delay);
+      await sampleResources(label);
+    }
+    record.retentionControl = 'natural idle observation only; no forced GC, quota or altered acceptance budget';
+  }
   const baseline = await page.evaluate(() => ({ dpr: devicePixelRatio, width: innerWidth, height: innerHeight }));
   record.zoom = { baseline, trials: [] };
   const settings = await context.newPage();
@@ -129,7 +202,9 @@ try {
       try { await expect(page.getByTestId('feedback')).toContainText('Local check passed'); trial.localCheckPassed = true; }
       catch (error) { trial.localCheckPassed = false; trial.error = error instanceof Error ? error.message : String(error); }
       const imagePath = resolve(`../../temp/native-chrome-zoom-${factor * 100}.png`);
-      await page.screenshot({ path: imagePath, fullPage: true });
+      const capture = await cdp.send('Page.captureScreenshot', { format: 'png', fromSurface: true, captureBeyondViewport: false });
+      await writeFile(imagePath, Buffer.from(capture.data, 'base64'));
+      trial.screenshotMethod = 'CDP viewport surface; prior Playwright full-page captures clipped at page zoom';
       record.zoom.trials.at(-1).screenshotHash = createHash('sha256').update(readFileSync(imagePath)).digest('hex');
     }
     await zoom.selectOption('1');
@@ -211,6 +286,7 @@ try {
       await expect(cold.page.getByTestId('feedback')).toContainText('Local check passed');
       record.pwa.coldOriginUnreachableRelaunch = { exactSourceRetained: true, localCheckProvisional: true, displayModeStandalone: await cold.page.evaluate(() => matchMedia('(display-mode: standalone)').matches), physicalNetworkDisconnect: false };
     } catch (error) { record.pwa = { ...record.pwa, verdict: 'inconclusive or failed installation/lifecycle diagnostic', error: error instanceof Error ? error.message : String(error) }; }
+  }
   }
   record.stage = 'diagnostic collection complete';
 } catch (error) {
