@@ -28,7 +28,7 @@ try {
     window.Worker = new Proxy(NativeWorker, { construct(target, args) { log('worker-constructor-before'); const worker = Reflect.construct(target, args); log('worker-constructor-after'); worker.addEventListener('message', () => log('worker-result-received')); worker.addEventListener('error', () => log('worker-error')); return worker; } });
     const descriptor = Object.getOwnPropertyDescriptor(MessagePort.prototype, 'onmessage');
     if (descriptor?.set) Object.defineProperty(MessagePort.prototype, 'onmessage', { ...descriptor, set(handler) { descriptor.set.call(this, typeof handler === 'function' ? function(event) { log('port-receive:' + (event.data?.type ?? String(event.data)), event.data?.input?.run ?? event.data?.identity?.run); return handler.call(this, event); } : handler); } });
-    addEventListener('message', event => { if (event.data?.type === 'opaque-bootstrap-ready' || event.data?.type === 'learner-output') log('window-receive:' + event.data.type, event.data.identity?.run); });
+    addEventListener('message', event => { if (event.data?.type === 'opaque-bootstrap-ready' || event.data?.type === 'dedicated-bootstrap-ready' || event.data?.type === 'learner-output') log('window-receive:' + event.data.type, event.data.identity?.run); });
   });
   await page.goto('http://127.0.0.1:4310/');
   await page.getByTestId('save-state').waitFor();
