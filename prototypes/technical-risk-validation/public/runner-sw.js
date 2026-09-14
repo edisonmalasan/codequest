@@ -7,9 +7,30 @@ const publicResources = /* trusted-public-bytes */ {};
 const publicCache = 'codequest-runner-public-v1';
 const workerPolicy = "default-src 'none'; script-src 'unsafe-eval'; connect-src 'none'; worker-src 'none'";
 const bootstrapPolicy = "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'none'";
+const publicResourceLimit = 65536;
 async function validPublicResponse(path, response) {
   if (!response || !response.ok || response.headers.get('Content-Security-Policy') !== (path === '/worker.js' ? workerPolicy : bootstrapPolicy)) return false;
-  const digest = await crypto.subtle.digest('SHA-256', await response.clone().arrayBuffer());
+  const reader = response.clone().body?.getReader();
+  if (!reader) return false;
+  const chunks = [];
+  let length = 0;
+  try {
+    while (true) {
+      const part = await reader.read();
+      if (part.done) break;
+      length += part.value.byteLength;
+      if (length > publicResourceLimit) {
+        const canceled = await Promise.allSettled([reader.cancel(), response.body?.cancel()]);
+        if (canceled.some(result => result.status === 'rejected')) throw new Error('Public resource cancellation failed');
+        return false;
+      }
+      chunks.push(part.value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes = new Uint8Array(length);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
   const hash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
   return publicHashes[path] === hash;
 }
@@ -45,6 +66,9 @@ addEventListener('fetch', event => {
       if (!await validPublicResponse(url.pathname, response)) return new Response('Public runner resource unavailable', { status: 503 });
       await cache.put(url.pathname, response.clone());
     }
-    return response;
+    const headers = publicResources[url.pathname]?.headers;
+    if (!headers) return new Response('Public runner headers unavailable', { status: 503 });
+    // No learner-supplied reporting, refresh, cookie or other response metadata.
+    return new Response(response.body, { headers });
   })());
 });

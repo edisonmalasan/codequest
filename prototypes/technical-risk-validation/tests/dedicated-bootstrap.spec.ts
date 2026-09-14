@@ -50,6 +50,29 @@ test('D3 dedicated denies child construction and terminates forged output before
   await info.attach('dedicated-child-denial', { body: JSON.stringify({ child, forged, fresh, childExecution: 'denied, not a witnessed child-loop recovery' }), contentType: 'application/json' });
 });
 
+test('D3 cache metadata and oversized-body poisoning cannot add network authority', async ({ page, request }, info) => {
+  const sink = 'http://127.0.0.1:4312';
+  await request.post(sink + '/reset');
+  const initial = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
+  expect(initial.status).toBe('success');
+  const metadataSource = `const cache=await caches.open("codequest-runner-public-v1");const response=await cache.match("/worker.js");const headers=new Headers(response.headers);headers.set("Content-Security-Policy-Report-Only","default-src 'none'; report-uri ${sink}/poison-report");headers.set("Refresh","0;url=${sink}/poison-refresh");await cache.put("/worker.js",new Response(await response.text(),{headers}));console.log("metadata mutated");`;
+  const metadata = await page.evaluate(source => window.__risk.run(source, 'dedicated'), metadataSource);
+  expect(metadata.status).toBe('success');
+  const frame = page.frames().find(frame => frame.url().startsWith('http://127.0.0.2:4311/bootstrap.html'));
+  if (!frame) throw new Error('Trusted bootstrap unavailable');
+  const delivered = await frame.evaluate(async () => { const response = await fetch('/worker.js'); return { reportOnly: response.headers.get('Content-Security-Policy-Report-Only'), refresh: response.headers.get('Refresh'), policy: response.headers.get('Content-Security-Policy') }; });
+  expect(delivered.reportOnly).toBeNull(); expect(delivered.refresh).toBeNull();
+  const denied = await page.evaluate(source => window.__risk.run(source, 'dedicated'), `await fetch("${sink}/must-not-request").catch(()=>{});console.log("blocked");`);
+  expect(denied.status).toBe('success');
+  const oversized = await page.evaluate(() => window.__risk.run('const cache=await caches.open("codequest-runner-public-v1");await cache.put("/worker.js",new Response("x".repeat(1048576),{headers:{"Content-Security-Policy":"default-src \'none\'; script-src \'unsafe-eval\'; connect-src \'none\'; worker-src \'none\'"}}));console.log("oversized public body inserted");', 'dedicated'));
+  expect(oversized.status).toBe('success');
+  const fresh = await page.evaluate(() => window.__risk.run('console.log("after oversized cache body")', 'dedicated'));
+  await page.waitForTimeout(200);
+  const records: unknown = await (await request.get(sink + '/records')).json();
+  await info.attach('cache-metadata-byte-guard', { body: JSON.stringify({ metadata, delivered, denied, oversized, fresh, records, injectedBodyBytes: 1048576, trustedReadLimitBytes: 65536 }), contentType: 'application/json' });
+  expect(fresh.status).toBe('success'); expect(fresh.elapsed).toBeLessThanOrEqual(1000); expect(records).toEqual([]);
+});
+
 test('D3 prepared offline cache deletion and bootstrap poisoning preserve trusted recovery', async ({ page, context }, info) => {
   await expect(page.getByText('Online · Public lesson and runtime assets prepared offline')).toBeVisible();
   const initial = await page.evaluate(() => window.__risk.run('console.log("initial")', 'dedicated'));
