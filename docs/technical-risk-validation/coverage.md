@@ -1,6 +1,6 @@
 # Phase 1 coverage inventory
 
-Updated 2026-09-18 after available automation and the dedicated final-bundled analysis. Source: [charter](charter.md), approved [validation spec](../../openspec/changes/validate-codequest-technical-risks/specs/technical-risk-validation/spec.md), and the project owner's explicit device/reviewer instruction. Availability is separate from an experiment verdict. Available automation is summarized in the [preliminary report](report.md); physical/manual configurations remain untested.
+Updated 2026-09-18 after available automation and the dedicated final-bundled analysis. Source: [charter](charter.md), approved [validation spec](../../openspec/changes/archive/2026-09-19-validate-codequest-technical-risks/specs/technical-risk-validation/spec.md), and the project owner's explicit device/reviewer instruction. Availability is separate from an experiment verdict. Available automation is summarized in the [preliminary report](report.md); physical/manual configurations remain untested.
 
 | Configuration | Access status | E01 editor | E02 runtime | E03 containment | E04 preview | E05 offline/PWA | E06 integration |
 | --- | --- | --- | --- | --- | --- | --- | --- |
