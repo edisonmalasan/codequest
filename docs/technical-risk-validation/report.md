@@ -356,4 +356,16 @@ The delayed-draft fixture now captures disabled controls and attempts browser ed
 
 The [refreshed exact inventory](evidence/windows-inventory-2026-09-14T16-57-42.1245077Z.json) confirms the same Windows10Pro22H2/19045.6466, HPProDesk600G2SFF, i5-6500, 8,464,728,064-byte RAM, IntelHD530 and installed Chrome153.0.8010.37. Firefox standard paths and four App Paths entries remain unconfirmed; no ordinary browser profile was inspected. No dedicated Browser Use/computer tool is exposed in this environment; installed-Chrome Playwright/CDP and bounded Win32 interaction are used. Bundled engines are not native Safari/mobile evidence.
 
-Final bundled, independent native/PWA/zoom/storage, target and process-cold results are appended after collection. Until those results and the explicit scope/product/technical/security review are resolved, the change remains **22/34**, PR6 draft, no production selection or Proceed. Security review is project-owner self-review, not an independent audit. Phase2, Sync and Archive remain unauthorized.
+### Final bundled dedicated run (dae76ba)
+
+The final bundled run [evidence/automated-2026-09-14T17-39-07.668Z.json] executes 162 cases against commit `dae76ba` with the build manifest frozen before trials. Headless Chromium/Firefox/WebKit on win32, Node v24.21.0, GPU disabled, renderer-process limit two, traces off, host-dependency preflight explicitly bypassed. Outcome: **145 passed / 13 failed / 4 skipped**.
+
+| Engine | Outcome | Retained failures |
+| --- | --- | --- |
+| Chromium (54 cases) | 53 passed / 1 failed | Dedicated-targets zero-Worker-target assertion fails; the dedicated CDP descriptor remains after acknowledged Stop, matching the D9 native observation: failed assertion, not proof of continuing CPU execution |
+| Firefox (54 cases) | 44 passed / 8 failed / 2 skipped | Learner cache-poisoning replacement, dedicated nested-loop rejection, versioned-lesson identity truthfulness, useful-result/hostile-markup rendering, hundred preview starts/resets, offline-preparation containment, post-update online-authority denial, and cross-origin channel/cookie canary fail; dedicated-targets and bounded-quota probes skip as unsupported |
+| WebKit (54 cases) | 48 passed / 4 failed / 2 skipped | Prepared offline cache-deletion/bootstrap-poisoning recovery, prepared offline new page, versioned-lesson identity truthfulness, and offline-preparation containment fail; dedicated-targets and bounded-quota probes skip as unsupported |
+
+All dedicated-bootstrap cache/CSP, private-cleanup, nested-capability, online-denial, malformed-message, preview flood/reset, persistence B09-mix and mock-quest cases pass in Chromium; Firefox and WebKit pass the same core except the retained failures above. Versioned-lesson identity fails on Firefox and WebKit while passing Chromium. The Firefox/WebKit offline-preparation containment failures keep the E04/E05 integrated gates failed. This run adds no physical, installed-Firefox, mobile, Safari, AT, native-quota, background, OS-restart or review evidence.
+
+Final bundled results are appended above. Independent native/PWA/zoom/storage, target and process-cold results, and the explicit scope/product/technical/security review, remain pending. Until those are resolved, the change remains **22/34**, PR6 draft, no production selection or Proceed. Security review is project-owner self-review, not an independent audit. Phase2, Sync and Archive remain unauthorized.
