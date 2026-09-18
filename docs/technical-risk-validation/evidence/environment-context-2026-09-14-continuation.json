@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-09-14T09:04:58.6651643Z",
+  "experiment": "Phase 1 read-only environment context",
+  "source": "Win32_OperatingSystem",
+  "units": "KiB, raw WMI values",
+  "FreePhysicalMemory": 650012,
+  "TotalVisibleMemorySize": 8266336,
+  "FreeVirtualMemory": 881408,
+  "TotalVirtualMemorySize": 15408780,
+  "limitation": "Machine-level context only; does not establish cause of browser failures or attributable learner memory",
+  "unrelatedProcessesChanged": false
+}

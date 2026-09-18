@@ -133,6 +133,17 @@ Validation SHALL include automated Chromium/Firefox/WebKit coverage and declared
 - **WHEN** a browser genuinely does not provide the tested installation capability
 - **THEN** installation is recorded as unsupported with evidence, ordinary browser-learning results remain separate, and no installability promise is inferred
 
+### Requirement: Approved development-gate scope adjustment (AP03)
+Under delegated approval AP03, the Phase 1 development gate SHALL apply adjustments S01–S06 exactly as specified in the approved scope adjustment. Inaccessible physical-device and assistive-technology evidence moves to explicit pre-beta release gates recorded as `untested` obligations without support claims; automated desktop keyboard/focus-escape, native browser zoom, reflow, reduced-motion and textual-preview proxies satisfy the Phase 1 accessibility gate without certifying NVDA/VoiceOver; native-Chrome rendered-DOM/frame latency proxy and isolated-profile cold-process substitute satisfy B01/B07 measurement eligibility with unchanged budgets and sample counts; native quota/OS-restart gaps are accepted as disclosed inconclusive evidence; the retained WebKit offline-emulation failure is accepted as a reviewed test-configuration limitation with original failures retained. P11, all B01–B09 budgets and sample counts, failure retention, and the prohibition on inferring passes remain unchanged.
+
+#### Scenario: Development gate is evaluated under the adjustment
+- **WHEN** all automated required gates pass on accessible installed Windows Chrome and pinned Chromium/Firefox/WebKit component coverage, with unavailable physical/AT evidence recorded as deferred release obligations
+- **THEN** the Phase 1 development gate may Proceed while the deferred obligations remain open pre-beta requirements, with no mobile/Safari/accessibility support promise inferred
+
+#### Scenario: An actual automated failure remains
+- **WHEN** any required automated gate fails on an eligible configuration
+- **THEN** the adjustment does not apply to it; the result stays failed and blocks Proceed until repaired and retested
+
 ### Requirement: Production gate requires reviewed evidence
 The final packet SHALL include the experiment charter, reproducible commands/versions/fixtures, coverage matrix, raw measurements, containment/request-sink evidence, accessibility observations, failure/retest history, limitations, and proceed/redesign/inconclusive recommendation. Proceed MUST require passing required integrated, containment, recovery, offline/update, and device gates, evidence-backed F01/F02 recommendations, and explicit technical/security/product review. Passing Phase 1 MUST NOT authorize Phase 2 execution or change approved product policies implicitly.
 

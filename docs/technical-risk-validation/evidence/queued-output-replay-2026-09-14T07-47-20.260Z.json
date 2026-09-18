@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-09-14T07:47:20.260Z",
+  "experiment": "E02 replay of actual prior-run output",
+  "commit": "3b36f44396cf50dee47f29042176a3f2770fef73",
+  "build": "CpAIG2N9; existing owned baseline-suite fixture, no sink/revision/reset mutation",
+  "physical": false,
+  "observed": {
+    "first": {
+      "source": "console.log(\"prior\")",
+      "candidate": "opaque",
+      "task": "Q01",
+      "run": "f7a4b666-a401-4cbc-8468-3a36aa4cdaa8",
+      "contentVersion": "1",
+      "assessmentVersion": "1",
+      "previewMarker": false,
+      "status": "success",
+      "output": [
+        "prior"
+      ],
+      "value": "[undefined]",
+      "elapsed": 93.10000000149012,
+      "cleanup": {
+        "acknowledged": true,
+        "fallback": false,
+        "retainedTrustedBootstrap": true
+      }
+    },
+    "packet": "{\"run\":\"f7a4b666-a401-4cbc-8468-3a36aa4cdaa8\",\"task\":\"Q01\",\"contentVersion\":\"1\",\"assessmentVersion\":\"1\",\"status\":\"success\",\"output\":[\"prior\"],\"value\":\"[undefined]\"}"
+  },
+  "current": {
+    "source": "await new Promise(r=>setTimeout(r,300));console.log(\"current\")",
+    "candidate": "opaque",
+    "task": "Q01",
+    "run": "2788a77e-d797-40e3-a766-bf00d77cd383",
+    "contentVersion": "1",
+    "assessmentVersion": "1",
+    "previewMarker": false,
+    "status": "protocol-error",
+    "output": [],
+    "value": "Malformed or stale result rejected",
+    "elapsed": 222.10000000149012,
+    "cleanup": {
+      "acknowledged": true,
+      "fallback": false,
+      "retainedTrustedBootstrap": true
+    }
+  },
+  "expected": "current succeeds with exact output; replay cannot fail or replace it",
+  "verdict": "failed"
+}

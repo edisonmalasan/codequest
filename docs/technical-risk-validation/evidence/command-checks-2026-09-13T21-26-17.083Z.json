@@ -1,0 +1,150 @@
+{
+  "recordedAt": "2026-09-13T21:26:17.083Z",
+  "scope": "disposable Phase 1 diagnostics only",
+  "sourceCommit": "57667f4928a488fa1fe46e34c41c3362704ba429",
+  "dirtyPaths": [
+    "M docs/DEVELOPMENT_ROADMAP.md",
+    " M docs/adr/0004-browser-execution-isolation.md",
+    " M docs/decisions.md",
+    " M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/coverage.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/tasks.md",
+    " M prototypes/technical-risk-validation/README.md",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T21-08-50.997Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T21-19-57.079Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-11-24.407Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-11-49.132Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-12-43.599Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-13-56.326Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-15-01.656Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-16-05.735Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-13T21-21-27.227Z.json"
+  ],
+  "environmentAtCheckpoint": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "ramBytes": 8464728064,
+    "node": "v24.21.0"
+  },
+  "checks": [
+    {
+      "command": "corepack pnpm@10.30.3 test",
+      "cwd": "prototype",
+      "status": "passed",
+      "tests": 18,
+      "provenance": "same source tree before commit 57667f4"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 lint",
+      "cwd": "prototype",
+      "status": "passed"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 typecheck",
+      "cwd": "prototype",
+      "status": "passed",
+      "scope": "application and service-worker strict checks"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 build",
+      "cwd": "prototype",
+      "status": "passed",
+      "assets": 12,
+      "hashComparison": "all rebuilt hashes match previously tested full-run manifest"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test tests/offline-control.spec.ts",
+      "status": "passed diagnostic collection",
+      "cases": 3,
+      "evidence": "automated-2026-09-13T21-08-50.997Z.json",
+      "limitation": "WebKit offlinePolicyPassed false; application gate not passed"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 exec playwright test tests/offline.spec.ts tests/persistence.spec.ts tests/preview-recovery.spec.ts tests/offline-control.spec.ts --project=webkit --grep \"prepared offline new page|versioned lesson identity|after offline preparation|isolates offline emulation\"",
+      "status": "failed",
+      "failed": 3,
+      "passed": 1,
+      "evidence": "automated-2026-09-13T21-19-57.079Z.json"
+    },
+    {
+      "command": "node scripts/cold-origin-probe.mjs chromium",
+      "status": "passed single functional diagnostic",
+      "evidence": "cold-origin-2026-09-13T21-11-24.407Z.json"
+    },
+    {
+      "command": "node scripts/cold-origin-probe.mjs firefox",
+      "status": "passed single functional diagnostic",
+      "evidence": "cold-origin-2026-09-13T21-11-49.132Z.json"
+    },
+    {
+      "command": "node scripts/cold-origin-probe.mjs webkit --short-profile",
+      "status": "passed single functional diagnostic",
+      "evidence": "cold-origin-2026-09-13T21-16-05.735Z.json"
+    },
+    {
+      "command": "node scripts/cold-origin-probe.mjs webkit",
+      "status": "inconclusive cold recovery; online preparation failed",
+      "evidence": "cold-origin-2026-09-13T21-21-27.227Z.json",
+      "error": "CacheStorage filesystem-write error in longer task profile"
+    },
+    {
+      "command": "pnpm test",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "pnpm lint",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "pnpm typecheck",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "pnpm not on PATH"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 test",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 lint",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND"
+    },
+    {
+      "command": "corepack pnpm@10.30.3 typecheck",
+      "cwd": "repository root",
+      "status": "unavailable",
+      "reason": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND"
+    },
+    {
+      "command": "openspec validate validate-codequest-technical-risks --strict",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "relative documentation link inspection",
+      "status": "passed",
+      "links": 136,
+      "failed": 0
+    },
+    {
+      "command": "Get-NetTCPConnection task ports 4310/4311/4312",
+      "status": "passed teardown observation",
+      "listeners": 0
+    }
+  ],
+  "phase1": "21/34 incomplete; original failed assertions and physical/review gates unchanged",
+  "physicalAndAccessibility": "untested; no Phase 2, Sync or Archive"
+}

@@ -4,7 +4,11 @@ async function edit(page: Page, source: string) {
   const editor = page.getByRole('textbox', { name: 'JavaScript source' });
   await editor.fill(source);
 }
-test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.getByTestId('save-state')).toHaveText('Saved on this device'); });
+test.beforeEach(async ({ page, request }) => {
+  await request.post('/__mock-reset');
+  await page.goto('/');
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+});
 
 test('E01/E06 read, run, failed check, hint, correction, provisional save and reload', async ({ page, browser }, info) => {
   await page.getByRole('button', { name: 'Run', exact: true }).click();
@@ -20,7 +24,9 @@ test('E01/E06 read, run, failed check, hint, correction, provisional save and re
   await page.reload();
   await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('Ready for CodeQuest');
   await expect(page.getByText('Local provisional completion; not accepted account progress')).toBeVisible();
-  await page.getByRole('textbox', { name: 'JavaScript source' }).focus(); await page.keyboard.press('Escape');
+  const editor = page.getByRole('textbox', { name: 'JavaScript source' });
+  await editor.click();
+  await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: 'Run', exact: true })).toBeFocused();
   await info.attach('environment', { body: JSON.stringify({ browser: browser.version(), viewport: page.viewportSize(), physical: false }), contentType: 'application/json' });
 });
@@ -85,12 +91,22 @@ test('E06 immutable pending source, owner isolation and explicit import', async 
   await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('later draft');
 });
 
-test('E05 saved source survives twenty reload cycles and protected response is not cached', async ({ page, request }) => {
+test('E05 saved source survives twenty reload cycles and protected response is not cached', async ({ page, request }, info) => {
+  const pageErrors: string[] = [];
+  let crashes = 0;
+  page.on('pageerror', error => { if (pageErrors.length < 8) pageErrors.push(error.message.slice(0, 1500)); });
+  page.on('crash', () => { crashes += 1; });
   await edit(page, 'console.log("persistent source")');
   await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
   for (let cycle = 0; cycle < 20; cycle++) {
-    await page.reload();
-    await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+    const navigation = await page.reload();
+    try { await expect(page.getByTestId('save-state')).toHaveText('Saved on this device'); }
+    finally {
+      let snapshot: unknown;
+      try { snapshot = await page.evaluate(() => ({ readyState: document.readyState, rootChildren: document.getElementById('root')?.childElementCount, harnessPresent: typeof window.__risk?.source === 'function', source: typeof window.__risk?.source === 'function' ? window.__risk.source() : 'application harness absent', state: document.querySelector('[data-testid="save-state"]')?.textContent, scripts: Array.from(document.scripts, script => script.src) })); }
+      catch (error: unknown) { snapshot = { error: error instanceof Error ? error.message : String(error) }; }
+      await info.attach('reload-startup-' + cycle, { body: JSON.stringify({ cycle, navigationStatus: navigation?.status(), contentType: navigation?.headers()['content-type'], pageErrors, crashes, snapshot }), contentType: 'application/json' });
+    }
     await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('persistent source');
   }
   await request.get('/__protected', { headers: { Authorization: 'Bearer SYNTHETIC_ONLY' } });

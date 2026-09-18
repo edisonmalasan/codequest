@@ -1,0 +1,111 @@
+{
+  "recordedAt": "2026-09-14T16:19:07.879Z",
+  "experiment": "E05/E06 cold origin-unreachable diagnostic",
+  "engine": "chrome",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\cold-origin-probe.mjs",
+    "chrome",
+    "--short-profile"
+  ],
+  "node": "v24.21.0",
+  "physical": false,
+  "networkOffline": false,
+  "offlineEmulation": false,
+  "trials": 10,
+  "b07PhysicalTiming": "untested; no physical network disconnect or lower-powered designation",
+  "installedChrome": true,
+  "interaction": "headed native Windows Chrome, automated interaction",
+  "profileLocation": "task-only repository temp/phase1-profiles",
+  "commit": "d4d37f861000ff5d6bfb2bddb4120966a948ca38",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-08-43.812Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-12-43.433Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T16-17-27.833Z.json",
+    "?? docs/technical-risk-validation/evidence/environment-context-2026-09-14-continuation.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T09-15-55.779Z.json",
+    "?? docs/technical-risk-validation/evidence/windows-inventory-2026-09-14T16-18-35.4467946Z.json",
+    "?? docs/technical-risk-validation/proposed-bootstrap-revision.md"
+  ],
+  "buildHashesFrozenBeforeTrial": {
+    ".vite/manifest.json": "fc4255ee1886ba4e7d2bd52155f88cb431e8a6c9a438c21d7fa2834778e0b6f3",
+    "assets/index-Br5Xj04R.js": "8653f36811bb4a34cb8885e2aa2172cdd010a84390d70c6a8a8a2d5777fa1ae1",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "08be72945865a46b4943ec26a229a71286820da4e19787cc02de884939ad1618",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "f797f6d97f6b4886249449e1f6a6cf7034476420bdef51a21e926c316ba1930c",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "24d13625021a9658b208606957a6a598e8626eb0e1b1abccdd1ed9ea81f9803f",
+  "serverHash": "9f81f22f3db48aec45768f27e47a269957877a057617d77878a9ff1b2e26e6bb",
+  "sourceHash": "5ddad786095dafaec558f1b9e74b8095a6751bc8291f4ae6f50a41e50a3478c6",
+  "skipHostDependencyPreflight": false,
+  "launchOptions": {
+    "headless": false,
+    "channel": "chrome",
+    "viewport": null,
+    "args": [],
+    "timeout": 15000
+  },
+  "stage": "cold provisional check",
+  "ownedServerPid": 11536,
+  "browserVersion": "153.0.8010.37",
+  "preparedController": "http://127.0.0.1:4310/sw.js",
+  "preparedBrowserClosedBeforeRelaunch": true,
+  "originTransportControls": [
+    {
+      "host": "127.0.0.1",
+      "port": 4310,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.2",
+      "port": 4311,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 4312,
+      "reachable": false,
+      "error": "ECONNREFUSED"
+    }
+  ],
+  "coldTrials": [],
+  "exactSourceRetained": true,
+  "verdict": "failed or inconclusive diagnostic; physical gate remains untested",
+  "error": "expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('feedback')\nExpected substring: \"Local check passed\"\nReceived string:    \"timeout\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"toContainText\" getByTestId('feedback') with timeout 5000ms\n  - waiting for getByTestId('feedback')\n    8 × locator resolved to <p role=\"status\" data-testid=\"feedback\">Running</p>\n      - unexpected value \"Running\"\n    6 × locator resolved to <p role=\"status\" data-testid=\"feedback\">timeout</p>\n      - unexpected value \"timeout\"\n",
+  "failurePageText": "Phase 1 · disposable technical prototype\n\nCodeQuest validation workspace\n\nNo real accounts, authoritative rewards, telemetry or independent grading.\n\nOwner \nguest\naccount-A\naccount-B\nexpired\nTask \nQ01 output\nRecords fixture\nCompartment \nOpaque origin candidate\nDedicated origin candidate\nPermissive negative control (unsafe)\n\nOnline · Public lesson and runtime assets prepared offline\n\nSend your first signal\n\nPrint exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.\n\nShow hint\n\nEscape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit.\n\n1\nconsole.log(\"Ready for CodeQuest\");\n\nSaved on this device\n\nRun\nCheck\nStop\nReset source\nCopy source\nOutput and results\n\ntimeout\n\nExecution deadline exceeded\n\nNo local completion\n\nMock acceptance only\nSave pending snapshotReplay pending snapshotExplicitly import guest snapshotLose synthetic response after acceptance\n\nNo pending snapshot for this owner\n\nSupplied preview\n\nText equivalent: No preview result\n\nOpen bounded preview",
+  "failureEnvironment": {
+    "secureContext": true,
+    "serviceWorkerAvailable": true,
+    "controller": "http://127.0.0.1:4310/sw.js",
+    "registrationError": "",
+    "cacheDiagnostic": {
+      "savedValue": "SYNTHETIC_CACHE_CONTROL",
+      "names": [
+        "serwist-precache-v2-http://127.0.0.1:4310/",
+        "synthetic-cold-preparation-diagnostic"
+      ]
+    },
+    "registrations": [
+      {
+        "scope": "http://127.0.0.1:4310/",
+        "active": "activated"
+      }
+    ]
+  },
+  "taskProfileRemoved": true
+}

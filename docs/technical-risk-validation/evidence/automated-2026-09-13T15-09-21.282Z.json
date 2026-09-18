@@ -1,0 +1,2038 @@
+{
+  "recordedAt": "2026-09-13T15:09:21.282Z",
+  "commit": "cc27317abf77409a4210fb2c7f918422128056d8",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/public/worker.js",
+    " M prototypes/technical-risk-validation/scripts/preview-watchdog.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/runtime.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T15-06-49.013Z.json",
+    "?? prototypes/technical-risk-validation/tests/preview-recovery.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/preview-recovery.spec.ts",
+    "--project=firefox"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T15:08:29.020Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "daca5c9d1bb053baea70ec6c017e7972b6fcfa0e305bd4100c607683eb35e875",
+    "assets/index-9dBvS5KA.css": "8f2b7a73f3d11cc3948f205e7d8ba0af368abd1fbf7e04cd699beb136c4ab980",
+    "assets/index-BbHlFNU4.js": "f16812e43605b550a74a43318177fd21839ab88e72eb0d671f03833ec79397da",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "391e20c5343a36a0899b569d41070eed874bc4e9918b7bb5372b7cda410b6027",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "03b9d74a75a2900f62cdff12720ba9e612020e3a240f8f96dc79bf43212721a3",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 53019.484,
+  "cases": [
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04 Worker supplied shell renders useful results and hostile markup as inert text",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 4176,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-shell-denial",
+          "data": {
+            "browser": "155.0",
+            "usefulTotal": "5",
+            "hostileMarkup": "inert text, not executable DOM",
+            "sinkRequests": [],
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04 Worker preview ten verified infinite loops recover with usable host and exact source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 27303,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-recovery",
+          "data": {
+            "browser": "155.0",
+            "rows": [
+              {
+                "trial": 0,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2065
+                },
+                "freshRunMs": 235,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 1,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2044
+                },
+                "freshRunMs": 271,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 2,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2070
+                },
+                "freshRunMs": 184,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 3,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2076
+                },
+                "freshRunMs": 233,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 4,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2036
+                },
+                "freshRunMs": 442,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 5,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2167
+                },
+                "freshRunMs": 244,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 6,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2106
+                },
+                "freshRunMs": 254,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 7,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2081
+                },
+                "freshRunMs": 270,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 8,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2022
+                },
+                "freshRunMs": 343,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              },
+              {
+                "trial": 9,
+                "result": {
+                  "status": "preview-timeout",
+                  "elapsed": 2013
+                },
+                "freshRunMs": 143,
+                "hostInteraction": true,
+                "exactSourceRetained": true
+              }
+            ],
+            "physical": false,
+            "marker": "trusted Worker dispatch immediately before executing source",
+            "emergencyTermination": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04 Worker preview hundred starts and resets reject flooding without leaked compartments",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 8647,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-resets",
+          "data": {
+            "browser": "155.0",
+            "rows": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 50,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2a243efd-75aa-4f4a-93cc-28f4c13023bc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31
+                }
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6544d946-5dc7-4f16-84ba-a553ffb4d4b9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 56,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "72483185-152c-4dac-b688-7568b5bc9fa4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 46
+                }
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9299fdee-7312-4358-b793-e726f8f5588d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31
+                }
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 37,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2b6bf178-62c9-4042-942c-b470ae377deb",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25
+                }
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5805c591-3c4b-4d76-91a2-2c4eb5cea22e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 33
+                }
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 68,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e284bdb4-a7f6-40b4-8026-82bbd2409282",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 62
+                }
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 61,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "14c95d0b-0ea2-447c-b50e-1db751d6f531",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 62,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "3a3c89c9-73b9-4f66-a099-c20e432d5785",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 59,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "b63a9201-e05f-4dbe-bbad-9dee15575183",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 54
+                }
+              },
+              {
+                "cycle": 10,
+                "status": "preview-stopped",
+                "elapsed": 47,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "35313cdf-94ae-47e5-961b-85064eaf0dd4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 11,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "f8dfc261-adc1-4660-892d-02c6bf7c1892",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 41
+                }
+              },
+              {
+                "cycle": 12,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "7bfac682-3246-4774-a536-e8c310cae86d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 30
+                }
+              },
+              {
+                "cycle": 13,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ea5da92a-203a-4b20-9c0f-a06b777c0316",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 35
+                }
+              },
+              {
+                "cycle": 14,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5f55b740-574b-4680-91c0-61b07f863de4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 33
+                }
+              },
+              {
+                "cycle": 15,
+                "status": "preview-stopped",
+                "elapsed": 96,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "de4a74d5-2e8e-42cc-bbdf-dcbb68e6ccde",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 63
+                }
+              },
+              {
+                "cycle": 16,
+                "status": "preview-stopped",
+                "elapsed": 85,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0643e118-5002-453b-bd1d-88fb5c6e5fa3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 58
+                }
+              },
+              {
+                "cycle": 17,
+                "status": "preview-stopped",
+                "elapsed": 65,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5ff4d5b2-0358-4235-b379-87f748dc536d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 49
+                }
+              },
+              {
+                "cycle": 18,
+                "status": "preview-stopped",
+                "elapsed": 73,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "878a109e-45f7-4314-b30a-3ce7889520c0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 19,
+                "status": "preview-stopped",
+                "elapsed": 76,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "419281e6-69b4-4d91-8155-740130783b78",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 50
+                }
+              },
+              {
+                "cycle": 20,
+                "status": "preview-stopped",
+                "elapsed": 68,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e6d6472e-3908-4bb6-a79d-4e9c2cf70272",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 21,
+                "status": "preview-stopped",
+                "elapsed": 87,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "fb2f45da-78b7-46c9-83e9-9308cdaf4a8d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 67
+                }
+              },
+              {
+                "cycle": 22,
+                "status": "preview-stopped",
+                "elapsed": 66,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "34cb4b7c-68b5-4ba6-8024-ad71a6032198",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 54
+                }
+              },
+              {
+                "cycle": 23,
+                "status": "preview-stopped",
+                "elapsed": 68,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "78f9f1b4-8336-4912-828d-2a39bb214c71",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 58
+                }
+              },
+              {
+                "cycle": 24,
+                "status": "preview-stopped",
+                "elapsed": 62,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "de929b83-aee3-4468-ad8f-c9b48f12e610",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 25,
+                "status": "preview-stopped",
+                "elapsed": 51,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "069c98a8-2dc3-4982-8dad-e5a0f9d4dbb6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 43
+                }
+              },
+              {
+                "cycle": 26,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "84253acc-1af3-4654-b8ac-330f3ba086d8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 30
+                }
+              },
+              {
+                "cycle": 27,
+                "status": "preview-stopped",
+                "elapsed": 42,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "cd439ba0-3ea9-4286-9dcf-b994b6b896d6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 35
+                }
+              },
+              {
+                "cycle": 28,
+                "status": "preview-stopped",
+                "elapsed": 61,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ba2732c0-308e-49de-b273-92c78059b50d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 45
+                }
+              },
+              {
+                "cycle": 29,
+                "status": "preview-stopped",
+                "elapsed": 49,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "71383c0d-557b-419d-86e0-a67e914daf51",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 40
+                }
+              },
+              {
+                "cycle": 30,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1ab10d99-6191-46eb-a1d7-f808c427c28e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 32
+                }
+              },
+              {
+                "cycle": 31,
+                "status": "preview-stopped",
+                "elapsed": 79,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "76959e43-e407-426f-8a49-b5cfb2f791ae",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 61
+                }
+              },
+              {
+                "cycle": 32,
+                "status": "preview-stopped",
+                "elapsed": 77,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "aaecae11-1f39-4c62-b026-4964838682e7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 62
+                }
+              },
+              {
+                "cycle": 33,
+                "status": "preview-stopped",
+                "elapsed": 71,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1f002471-b0be-4be1-96f6-1becb32a9e4c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 55
+                }
+              },
+              {
+                "cycle": 34,
+                "status": "preview-stopped",
+                "elapsed": 50,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c494e024-a88d-445f-8dd2-6086fa00df17",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 38
+                }
+              },
+              {
+                "cycle": 35,
+                "status": "preview-stopped",
+                "elapsed": 60,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c4927436-e756-473c-ab4d-458e8c3f4eab",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 36,
+                "status": "preview-stopped",
+                "elapsed": 106,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "df9e94a5-644b-4582-b2e7-6db3c1346c9a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 77
+                }
+              },
+              {
+                "cycle": 37,
+                "status": "preview-stopped",
+                "elapsed": 61,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "68a881cf-01a0-4abc-8643-fd49a12f7b29",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 35
+                }
+              },
+              {
+                "cycle": 38,
+                "status": "preview-stopped",
+                "elapsed": 47,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ce159dee-1d64-44a6-8d54-4b53119e163c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 42
+                }
+              },
+              {
+                "cycle": 39,
+                "status": "preview-stopped",
+                "elapsed": 49,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "386ee422-f4a4-4bfb-90a6-a14b496fdef8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 39
+                }
+              },
+              {
+                "cycle": 40,
+                "status": "preview-stopped",
+                "elapsed": 48,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c1f96a7e-b578-4e1b-a580-10eaccc7182b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 42
+                }
+              },
+              {
+                "cycle": 41,
+                "status": "preview-stopped",
+                "elapsed": 48,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "f7389852-5cfa-4681-b5df-007c96dbbb51",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27
+                }
+              },
+              {
+                "cycle": 42,
+                "status": "preview-stopped",
+                "elapsed": 121,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "d7266365-3ab9-410e-8289-0054dbb08b24",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 81
+                }
+              },
+              {
+                "cycle": 43,
+                "status": "preview-stopped",
+                "elapsed": 80,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e539ace5-cf98-4db5-8af0-3d075ea04d0d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 68
+                }
+              },
+              {
+                "cycle": 44,
+                "status": "preview-stopped",
+                "elapsed": 101,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "094d0373-81e5-4a7d-bda2-464b3da3a967",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 80
+                }
+              },
+              {
+                "cycle": 45,
+                "status": "preview-stopped",
+                "elapsed": 57,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "780ab564-dea6-4e6d-9cd1-35407c4dc351",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 47
+                }
+              },
+              {
+                "cycle": 46,
+                "status": "preview-stopped",
+                "elapsed": 74,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "4ca3392a-1c39-4880-93aa-df4342d3a5a5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 54
+                }
+              },
+              {
+                "cycle": 47,
+                "status": "preview-stopped",
+                "elapsed": 57,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "f8f88e3e-c3d5-4f80-85dd-d22e178c3ee1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 47
+                }
+              },
+              {
+                "cycle": 48,
+                "status": "preview-stopped",
+                "elapsed": 56,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "50009e9b-bcc5-49c2-81cc-b6928f485eba",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 40
+                }
+              },
+              {
+                "cycle": 49,
+                "status": "preview-stopped",
+                "elapsed": 75,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c925922f-ed2f-4c85-a4d0-9fa5a046038d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 63
+                }
+              },
+              {
+                "cycle": 50,
+                "status": "preview-stopped",
+                "elapsed": 58,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e445cdf4-adb9-4835-821f-3ef4a86071d1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28
+                }
+              },
+              {
+                "cycle": 51,
+                "status": "preview-stopped",
+                "elapsed": 61,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a04e80e2-872a-467c-8e36-c8939a89c839",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 52,
+                "status": "preview-stopped",
+                "elapsed": 47,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ab12c6c5-e9e7-416f-96fc-4ad454da709a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 37
+                }
+              },
+              {
+                "cycle": 53,
+                "status": "preview-stopped",
+                "elapsed": 55,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2d44f3a8-d2f9-4dbb-8d0d-94950c756a79",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 43
+                }
+              },
+              {
+                "cycle": 54,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ffc3d8c7-7096-4738-9e21-a2ea4f6514c1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 29
+                }
+              },
+              {
+                "cycle": 55,
+                "status": "preview-stopped",
+                "elapsed": 59,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2a05143b-6e33-478e-854c-12bcca40167c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28
+                }
+              },
+              {
+                "cycle": 56,
+                "status": "preview-stopped",
+                "elapsed": 92,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "498dadc9-6709-4c4f-90ae-5a0b0b5b0048",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 50
+                }
+              },
+              {
+                "cycle": 57,
+                "status": "preview-stopped",
+                "elapsed": 63,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c998c7bc-4516-4000-802b-df1316f6b4af",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 45
+                }
+              },
+              {
+                "cycle": 58,
+                "status": "preview-stopped",
+                "elapsed": 51,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "246dc4c6-e320-49ae-8e16-96e076abc99a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 47
+                }
+              },
+              {
+                "cycle": 59,
+                "status": "preview-stopped",
+                "elapsed": 89,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6cbef133-758e-4f81-9a20-99db99ba8bf1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 81
+                }
+              },
+              {
+                "cycle": 60,
+                "status": "preview-stopped",
+                "elapsed": 55,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e7d936ba-c46e-4c9b-9c55-c9d247c5e7bc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 45
+                }
+              },
+              {
+                "cycle": 61,
+                "status": "preview-stopped",
+                "elapsed": 58,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c27a9ef7-c28a-4916-bb82-1997561b798f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 42
+                }
+              },
+              {
+                "cycle": 62,
+                "status": "preview-stopped",
+                "elapsed": 102,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "9f93e2fb-cf0b-45ee-a34a-ec2f578a42aa",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 50
+                }
+              },
+              {
+                "cycle": 63,
+                "status": "preview-stopped",
+                "elapsed": 78,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a0235195-44dd-45f5-beee-fee1cd0d9b0f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 68
+                }
+              },
+              {
+                "cycle": 64,
+                "status": "preview-stopped",
+                "elapsed": 54,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1ddf3f40-9d67-446c-8c33-18e82c9c462b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 47
+                }
+              },
+              {
+                "cycle": 65,
+                "status": "preview-stopped",
+                "elapsed": 47,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "8807db64-7cf5-45da-a368-7bdc445b0a18",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 39
+                }
+              },
+              {
+                "cycle": 66,
+                "status": "preview-stopped",
+                "elapsed": 53,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "4f4e1d31-d31f-4f12-b887-b6656505eed8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 43
+                }
+              },
+              {
+                "cycle": 67,
+                "status": "preview-stopped",
+                "elapsed": 50,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "862995a6-15c0-403b-a3c2-d83461083753",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 35
+                }
+              },
+              {
+                "cycle": 68,
+                "status": "preview-stopped",
+                "elapsed": 85,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5d158aee-dca0-4116-baae-9c0b612861ac",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 63
+                }
+              },
+              {
+                "cycle": 69,
+                "status": "preview-stopped",
+                "elapsed": 101,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "f1ea4fdc-83e2-46a2-ab74-e6aa92dd05e7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 83
+                }
+              },
+              {
+                "cycle": 70,
+                "status": "preview-stopped",
+                "elapsed": 90,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "4d8b4645-a93e-4f55-94b0-1c34ea1f3abc",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 64
+                }
+              },
+              {
+                "cycle": 71,
+                "status": "preview-stopped",
+                "elapsed": 103,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "6878be34-b322-4141-ad26-f44491296e52",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 57
+                }
+              },
+              {
+                "cycle": 72,
+                "status": "preview-stopped",
+                "elapsed": 98,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ffc4636f-55c5-4f17-b9dd-8be115674019",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 79
+                }
+              },
+              {
+                "cycle": 73,
+                "status": "preview-stopped",
+                "elapsed": 81,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "7332c969-f4fd-47b5-8575-e7af51ff7cc2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 62
+                }
+              },
+              {
+                "cycle": 74,
+                "status": "preview-stopped",
+                "elapsed": 80,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "688967a8-7bb9-4c0e-b7d2-7dd5c22982e7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 56
+                }
+              },
+              {
+                "cycle": 75,
+                "status": "preview-stopped",
+                "elapsed": 73,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "82a4c6fa-1dfa-474b-aaf0-d4d7f9345e08",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 57
+                }
+              },
+              {
+                "cycle": 76,
+                "status": "preview-stopped",
+                "elapsed": 117,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5a15f187-35f7-4eae-97fd-58f091dee69c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 71
+                }
+              },
+              {
+                "cycle": 77,
+                "status": "preview-stopped",
+                "elapsed": 122,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ad6d47b0-ca21-4523-b264-13c98549e418",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 99
+                }
+              },
+              {
+                "cycle": 78,
+                "status": "preview-stopped",
+                "elapsed": 64,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "a3c43121-05d4-401c-b853-78993d969ec8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 52
+                }
+              },
+              {
+                "cycle": 79,
+                "status": "preview-stopped",
+                "elapsed": 117,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "60cedaaf-8ecb-441b-91dc-84b66330ac00",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 84
+                }
+              },
+              {
+                "cycle": 80,
+                "status": "preview-stopped",
+                "elapsed": 100,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ee593a22-4c5b-456f-b42f-a432cc020439",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 80
+                }
+              },
+              {
+                "cycle": 81,
+                "status": "preview-stopped",
+                "elapsed": 97,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "bc8683e6-46d2-46b5-86e8-13a14b99ab24",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 67
+                }
+              },
+              {
+                "cycle": 82,
+                "status": "preview-stopped",
+                "elapsed": 92,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c93b4302-0619-4bd7-8e18-0e1e325cb1ba",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 74
+                }
+              },
+              {
+                "cycle": 83,
+                "status": "preview-stopped",
+                "elapsed": 111,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "07f882fe-2b70-4687-bb1e-2708364e0650",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 83
+                }
+              },
+              {
+                "cycle": 84,
+                "status": "preview-stopped",
+                "elapsed": 81,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "5f53629b-7c37-4c80-83f6-053a78c4ddc4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 63
+                }
+              },
+              {
+                "cycle": 85,
+                "status": "preview-stopped",
+                "elapsed": 82,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "e63ae89b-5fe8-49dc-8a2d-b7f17efc0155",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 60
+                }
+              },
+              {
+                "cycle": 86,
+                "status": "preview-stopped",
+                "elapsed": 62,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "96599dcb-8b71-4500-8a0c-58b1e331eec0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 42
+                }
+              },
+              {
+                "cycle": 87,
+                "status": "preview-stopped",
+                "elapsed": 77,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0bd85675-d14c-4f21-a5a0-22d376984194",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 88,
+                "status": "preview-stopped",
+                "elapsed": 71,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c20ce112-ee99-4df8-9350-bd1d7468f0af",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 58
+                }
+              },
+              {
+                "cycle": 89,
+                "status": "preview-stopped",
+                "elapsed": 67,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "c3ccf5ec-fe5e-489a-a453-02ebabf10f93",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 53
+                }
+              },
+              {
+                "cycle": 90,
+                "status": "preview-stopped",
+                "elapsed": 56,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "1bc16473-609e-4326-9b83-4349cfa36c4d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 49
+                }
+              },
+              {
+                "cycle": 91,
+                "status": "preview-stopped",
+                "elapsed": 67,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "2143e0ba-276b-4e58-9954-f56aa037a779",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 53
+                }
+              },
+              {
+                "cycle": 92,
+                "status": "preview-stopped",
+                "elapsed": 100,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "803ec870-cd32-40b2-bac5-67f34bfeda5d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 51
+                }
+              },
+              {
+                "cycle": 93,
+                "status": "preview-stopped",
+                "elapsed": 78,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "14ee3d9a-a6fe-4a9f-849d-8c63edcdf57d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 49
+                }
+              },
+              {
+                "cycle": 94,
+                "status": "preview-stopped",
+                "elapsed": 115,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "0620ae8e-a9a8-4e14-a8a7-9766d434422c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 87
+                }
+              },
+              {
+                "cycle": 95,
+                "status": "preview-stopped",
+                "elapsed": 115,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "ec1392d3-c147-4a73-bffe-9095a81ea257",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 101
+                }
+              },
+              {
+                "cycle": 96,
+                "status": "preview-stopped",
+                "elapsed": 124,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "4c0c0604-f629-4ddf-a0ec-228fdbbf63e3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 96
+                }
+              },
+              {
+                "cycle": 97,
+                "status": "preview-stopped",
+                "elapsed": 230,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "66155633-aa4d-4e34-a908-55250974cb19",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 203
+                }
+              },
+              {
+                "cycle": 98,
+                "status": "preview-stopped",
+                "elapsed": 100,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "76af01c4-6bb3-4c00-990a-e9396e13adb2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 71
+                }
+              },
+              {
+                "cycle": 99,
+                "status": "preview-stopped",
+                "elapsed": 65,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "opaque",
+                  "task": "RECORDS",
+                  "run": "766790bd-47c5-4f16-9114-5a291bdd08c1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 49
+                }
+              }
+            ],
+            "flood": {
+              "status": "protocol-error",
+              "elapsed": 39,
+              "execution": {
+                "source": "for(let i=0;i<1000;i++)self.postMessage(\"spoof\")",
+                "candidate": "opaque",
+                "task": "RECORDS",
+                "run": "da2570a9-bf55-4629-8a3b-d86be92f9de4",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": true,
+                "status": "protocol-error",
+                "output": [],
+                "value": "Malformed or stale result rejected",
+                "elapsed": 39
+              }
+            },
+            "physical": false,
+            "retainedMemoryQuota": "unverified"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04/E05 Worker preview retains containment after offline preparation and public asset update",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 2825,
+      "errors": [
+        "Error: page.reload: NS_ERROR_OFFLINE\nCall log:\n\u001b[2m  - waiting for navigation until \"load\"\u001b[22m\n"
+      ],
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,1101 @@
+{
+  "recordedAt": "2026-09-13T22:04:06.137Z",
+  "commit": "f65f13848517ee67091be1d1e9b712cfbf07ed6b",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/playwright.config.ts",
+    " M prototypes/technical-risk-validation/scripts/cold-origin-probe.mjs",
+    " M prototypes/technical-risk-validation/scripts/evidence-reporter.mjs",
+    " M prototypes/technical-risk-validation/src/main.tsx",
+    " M prototypes/technical-risk-validation/src/style.css",
+    " M prototypes/technical-risk-validation/tests/persistence.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-01-15.809Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-13T22-02-30.356Z.json",
+    "?? prototypes/technical-risk-validation/tests/desktop-interaction.spec.ts"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/desktop-interaction.spec.ts",
+    "tests/persistence.spec.ts"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": true,
+    "mode": "headed installed Windows Chrome; automated interaction, not physical typing or assistive technology",
+    "chromiumArgs": [],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-13T22:03:31.713Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "93f5404eef003eb18b7ce7d52a4e8ded6ec2623e886c646dc84e54ef8f6205f7",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-qYq-WMi2.js": "1f9deb15351eb81926a87346584279ac0af582e6bbd76ec433372f0075e9465c",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "f9be01d617dab5523d06f9b228587d5f8f34a42aa776428293cc57b5d4e30e89",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "aab318822f0c7b861918fbe3760bbb1adb89b1f825c6093d54dac6609cdbc5e7",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 35292.314999999995,
+  "cases": [
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01/E06 keyboard editing, selection, undo redo, focus escape and distinct feedback",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 8836,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('feedback')\nExpected substring: \u001b[32m\"syntax-error\"\u001b[39m\nReceived string:    \u001b[31m\"Local check passed — provisional only\"\u001b[39m\nTimeout: 6000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('feedback') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('feedback')\u001b[22m\n\u001b[2m    15 × locator resolved to <p role=\"status\" data-testid=\"feedback\">Local check passed — provisional only</p>\u001b[22m\n\u001b[2m       - unexpected value \"Local check passed — provisional only\"\u001b[22m\n"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 zoom shortcuts and narrow reflow preserve essential actions and source",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1966,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "browser-zoom-attempt",
+          "data": {
+            "browser": "153.0.8010.37",
+            "baseline": {
+              "dpr": 1,
+              "width": 929,
+              "visualScale": 1
+            },
+            "zoomRows": [
+              {
+                "requestedPercent": 200,
+                "observed": {
+                  "dpr": 1,
+                  "width": 929,
+                  "visualScale": 1
+                },
+                "actualBrowserZoomObserved": false
+              },
+              {
+                "requestedPercent": 400,
+                "observed": {
+                  "dpr": 1,
+                  "width": 929,
+                  "visualScale": 1
+                },
+                "actualBrowserZoomObserved": false
+              }
+            ],
+            "note": "Actual zoom must be confirmed by geometry; shortcuts alone do not pass zoom"
+          }
+        },
+        {
+          "name": "desktop-zoom-reflow",
+          "data": {
+            "browser": "153.0.8010.37",
+            "baseline": {
+              "dpr": 1,
+              "width": 929,
+              "visualScale": 1
+            },
+            "zoomRows": [
+              {
+                "requestedPercent": 200,
+                "observed": {
+                  "dpr": 1,
+                  "width": 929,
+                  "visualScale": 1
+                },
+                "actualBrowserZoomObserved": false
+              },
+              {
+                "requestedPercent": 400,
+                "observed": {
+                  "dpr": 1,
+                  "width": 929,
+                  "visualScale": 1
+                },
+                "actualBrowserZoomObserved": false
+              }
+            ],
+            "overflow": {
+              "viewport": 320,
+              "document": 305,
+              "body": 305
+            },
+            "narrowViewportIsMobileEvidence": false,
+            "note": "Unobserved browser zoom is untested, never replaced by CSS zoom; 320px is desktop reflow only"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 reduced-motion preference and accessibility tree expose essential text",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1241,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "desktop-motion-ax",
+          "data": {
+            "motion": {
+              "preference": true,
+              "activeAnimations": 0,
+              "scrollBehavior": "auto"
+            },
+            "tree": [
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "button",
+                "name": "Save draft and apply available update"
+              },
+              {
+                "role": "heading",
+                "name": "CodeQuest validation workspace"
+              },
+              {
+                "role": "StaticText",
+                "name": "Online"
+              },
+              {
+                "role": "StaticText",
+                "name": " · "
+              },
+              {
+                "role": "StaticText",
+                "name": "Public lesson and runtime assets prepared offline"
+              },
+              {
+                "role": "StaticText",
+                "name": "Save draft and apply available update"
+              },
+              {
+                "role": "heading",
+                "name": "Output and results"
+              },
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "heading",
+                "name": "Mock acceptance only"
+              },
+              {
+                "role": "button",
+                "name": "Save pending snapshot"
+              },
+              {
+                "role": "button",
+                "name": "Replay pending snapshot"
+              },
+              {
+                "role": "button",
+                "name": "Explicitly import guest snapshot"
+              },
+              {
+                "role": "heading",
+                "name": "Supplied preview"
+              },
+              {
+                "role": "button",
+                "name": "Open bounded preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Phase 1 · disposable technical prototype"
+              },
+              {
+                "role": "StaticText",
+                "name": "CodeQuest validation workspace"
+              },
+              {
+                "role": "StaticText",
+                "name": "No real accounts, authoritative rewards, telemetry or independent grading."
+              },
+              {
+                "role": "StaticText",
+                "name": "Owner "
+              },
+              {
+                "role": "StaticText",
+                "name": "Task "
+              },
+              {
+                "role": "StaticText",
+                "name": "Compartment "
+              },
+              {
+                "role": "heading",
+                "name": "Supplied inventory preview"
+              },
+              {
+                "role": "button",
+                "name": "Show hint"
+              },
+              {
+                "role": "status",
+                "name": ""
+              },
+              {
+                "role": "button",
+                "name": "Run"
+              },
+              {
+                "role": "button",
+                "name": "Check"
+              },
+              {
+                "role": "button",
+                "name": "Stop"
+              },
+              {
+                "role": "button",
+                "name": "Reset source"
+              },
+              {
+                "role": "button",
+                "name": "Copy source"
+              },
+              {
+                "role": "StaticText",
+                "name": "Output and results"
+              },
+              {
+                "role": "StaticText",
+                "name": "Ready"
+              },
+              {
+                "role": "StaticText",
+                "name": "No local completion"
+              },
+              {
+                "role": "StaticText",
+                "name": "Mock acceptance only"
+              },
+              {
+                "role": "StaticText",
+                "name": "Save pending snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "Replay pending snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "Explicitly import guest snapshot"
+              },
+              {
+                "role": "StaticText",
+                "name": "No pending snapshot for this owner"
+              },
+              {
+                "role": "StaticText",
+                "name": "Supplied preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Text equivalent: "
+              },
+              {
+                "role": "StaticText",
+                "name": "5"
+              },
+              {
+                "role": "StaticText",
+                "name": "Open bounded preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Supplied inventory preview"
+              },
+              {
+                "role": "StaticText",
+                "name": "Return the total quantity from summarize(records). The display plumbing is supplied."
+              },
+              {
+                "role": "StaticText",
+                "name": "Show hint"
+              },
+              {
+                "role": "StaticText",
+                "name": "Change the text between the quotes, then compare the output with the objective."
+              },
+              {
+                "role": "StaticText",
+                "name": "Escape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit."
+              },
+              {
+                "role": "StaticText",
+                "name": "Saved on this device"
+              },
+              {
+                "role": "StaticText",
+                "name": "Run"
+              },
+              {
+                "role": "StaticText",
+                "name": "Check"
+              },
+              {
+                "role": "StaticText",
+                "name": "Stop"
+              },
+              {
+                "role": "StaticText",
+                "name": "Reset source"
+              },
+              {
+                "role": "StaticText",
+                "name": "Copy source"
+              },
+              {
+                "role": "textbox",
+                "name": "JavaScript source"
+              },
+              {
+                "role": "StaticText",
+                "name": "function"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "summarize"
+              },
+              {
+                "role": "StaticText",
+                "name": "("
+              },
+              {
+                "role": "StaticText",
+                "name": "records"
+              },
+              {
+                "role": "StaticText",
+                "name": ") {"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "let"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "total"
+              },
+              {
+                "role": "StaticText",
+                "name": " = "
+              },
+              {
+                "role": "StaticText",
+                "name": "0"
+              },
+              {
+                "role": "StaticText",
+                "name": ";"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "for"
+              },
+              {
+                "role": "StaticText",
+                "name": " ("
+              },
+              {
+                "role": "StaticText",
+                "name": "const"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "record"
+              },
+              {
+                "role": "StaticText",
+                "name": " "
+              },
+              {
+                "role": "StaticText",
+                "name": "of"
+              },
+              {
+                "role": "StaticText",
+                "name": " records) total += record.quantity;"
+              },
+              {
+                "role": "StaticText",
+                "name": "  "
+              },
+              {
+                "role": "StaticText",
+                "name": "return"
+              },
+              {
+                "role": "StaticText",
+                "name": " total;"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              }
+            ],
+            "preferenceMethod": "browser media emulation; global Windows preference unchanged",
+            "screenReaderComprehension": "untested; accessibility tree does not establish NVDA or VoiceOver speech"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / desktop-interaction.spec.ts / E01 instrumented input-to-next-rendered-frame latency records ten warmup and hundred samples",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3031,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "desktop-input-latency",
+          "data": {
+            "browser": "153.0.8010.37",
+            "samples": [
+              {
+                "elapsed": 13.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 3.599999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 7.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.299999997019768,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.200000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 7.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 15.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.200000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.600000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.900000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 15.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 10.100000001490116,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 15.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.399999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 9.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.5,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.699999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.300000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.800000000745058,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 11.700000002980232,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 12.199999999254942,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.400000002235174,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 13.899999998509884,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.099999997764826,
+                "expectedSourceRetained": true
+              },
+              {
+                "elapsed": 14.199999999254942,
+                "expectedSourceRetained": true
+              }
+            ],
+            "warmup": 10,
+            "measured": 100,
+            "p95": 14.300000000745058,
+            "diagnosticThresholdMs": 100,
+            "diagnosticWithinThreshold": true,
+            "boundary": "beforeinput receipt to next animation-frame callback with exact current source; frame proxy, not actual pixel presentation or physical input",
+            "physicalTyping": false,
+            "lowerPoweredDeviceDeclared": false,
+            "b01PhysicalVerdict": "untested; scope adjustment required to use this automated diagnostic as progression evidence"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 delayed draft load blocks early edits and preserves a confirmed replacement",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2205,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "delayed-load",
+          "data": {
+            "artificialDelayMs": 500,
+            "earlyEditsBlocked": true,
+            "confirmedReplacementRetained": true,
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 versioned lesson identity, missing resources and cleared task storage are truthful",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1694,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "task-storage-clearing",
+          "data": {
+            "inventory": [
+              {
+                "key": "Q01/1/1",
+                "task": "Q01",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Print exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.",
+                "starter": "console.log(\"Not ready\");",
+                "hash": "0292c0f0a6169f5cec14085efa2a09b7f5163ed4ca66e111a7b0145625053d65"
+              },
+              {
+                "key": "RECORDS/1/1",
+                "task": "RECORDS",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Return the total quantity from summarize(records). The display plumbing is supplied.",
+                "starter": "function summarize(records) {\n  let total = 0;\n  for (const record of records) total += record.quantity;\n  return total;\n}",
+                "hash": "26f1811235ead3d53b98e2483bd494dd4da7b8742ae62e44b5d2c677ade8c03a"
+              }
+            ],
+            "confirmedSourceLostAfterExplicitTaskDatabaseClear": true,
+            "missingLessonDisclosed": true,
+            "realQuotaExhaustion": "not simulated by clearing; separately untested",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 interrupted unconfirmed edit does not replace the last confirmed draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1272,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "interrupted-save",
+          "data": {
+            "previousConfirmedSourceRecovered": true,
+            "failedUnconfirmedEditLostOnReload": true,
+            "physicalBackgroundLifecycle": "untested"
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 B09 eight reload, six update and six multiclient cycles retain source and pending identity",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 3857,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[32m- console.log(\"\u001b[7mReady for CodeQuest\");\u001b[27m\u001b[39m\n\u001b[32m- // reload 5\u001b[39m\n\u001b[31m+ console.log(\"\u001b[7mNot ready\");\u001b[27m\u001b[39m"
+      ],
+      "evidence": []
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 incompatible downloaded assessment is rejected without replacing a saved draft",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 1605,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "downloaded-version-rejection",
+          "data": {
+            "expectedIdentity": "Q01/1/1",
+            "receivedIdentity": "Q01/1/2",
+            "rejected": true,
+            "savedSourceRetained": "console.log(\"version rejection retains source\")",
+            "fixture": "controlled server response, not route interception",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / installed-chrome / persistence.spec.ts / E05 bounded task-origin quota experiment records enforcement and recovery",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 2104,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "browser-quota",
+          "data": {
+            "origin": "http://127.0.0.1:4310",
+            "quotaBytes": 1,
+            "pressure": {
+              "committed": 128,
+              "errorName": "",
+              "maximumAttemptedSourceBytes": 8388608
+            },
+            "usage": {
+              "usage": 2795703,
+              "quota": 1,
+              "overrideActive": true,
+              "usageBreakdown": [
+                {
+                  "storageType": "file_systems",
+                  "usage": 0
+                },
+                {
+                  "storageType": "indexeddb",
+                  "usage": 106496
+                },
+                {
+                  "storageType": "cache_storage",
+                  "usage": 2657603
+                },
+                {
+                  "storageType": "service_workers",
+                  "usage": 31604
+                }
+              ]
+            },
+            "failure": "Saved on this device",
+            "quotaFailureObserved": false,
+            "diagnosticOnly": true,
+            "sourceRetainedInMemory": true,
+            "recoveredAfterOverrideReset": true,
+            "injectionDisabled": true,
+            "physicalDiskExhaustion": "not performed",
+            "physical": false
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -73,7 +73,7 @@ P08/P15: guest/offline state is provisional. Authenticated reconnect/import reco
 | [0001](adr/0001-frontend-backend-separation.md) | Separation/modular monolith — accepted documented commitment |
 | [0002](adr/0002-api-contract-and-client-ownership.md) | REST/OpenAPI/client ownership — accepted documented commitment |
 | [0003](adr/0003-curriculum-source-and-publication.md) | Curriculum source/publication — accepted ownership; publication mechanism deferred |
-| [0004](adr/0004-browser-execution-isolation.md) | Browser execution - approved policy; evaluated previews reviewed no-go (AP02) |
+| [0004](adr/0004-browser-execution-isolation.md) | Browser execution - approved policy; legacy previews reviewed no-go (AP02); Worker-preview recommendation pending review |
 | [0005](adr/0005-assessment-trust-and-completion.md) | Assessment trust — approved risk policy |
 | [0006](adr/0006-local-guest-and-cloud-state.md) | Local/guest/cloud — approved authority/replay/date policy |
 | [0007](adr/0007-curriculum-identity-and-versioning.md) | Identity/version compatibility — approved policy |
@@ -81,6 +81,27 @@ P08/P15: guest/offline state is provisional. Authenticated reconnect/import reco
 
 F01–F03 defer actual sandbox/config/schema/compiler/sync mechanisms. F09 defers future execution/AI/storage adapters, root extraction and service splits until a consumer/scaling/security need exists. Security/testing/accessibility apply from first prototypes; later roadmap phases verify and harden. Phase 0 does not create any of this infrastructure or establish runtime feasibility.
 
-## Reviewed Phase 1 outcome - 2026-09-13
+## Reviewed legacy Phase 1 outcome (AP02) - 2026-09-13
 
 [AP02](decisions.md#ap02-reviewed-phase-1-no-go) records the project owner's technical/product/security approval of the [no-go report](technical-risk-validation/report.md). Security review is a project-owner self-review. [ADR 0004](adr/0004-browser-execution-isolation.md) retains the accepted policy and records failed preview recovery: neither evaluated preview mechanism is selected for production. Focused Chromium/Firefox execution and persistence results do not satisfy the failed preview gate or missing physical/device/accessibility coverage. F01 requires scoped redesign/retest; F02 remains inconclusive. Production scaffolding stays blocked, with no changed Phase 0 policy, remote-runner fallback or Phase 2 authorization.
+
+## Phase 1 preview redesign continuation - 2026-09-13
+
+The [Worker-backed supplied-shell preview](technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13) passes core automated recovery/containment checks in all three downloaded engines. Learner logic stays in the restricted Worker; fixed script-disabled iframe output and its text equivalent receive bounded escaped data. The historical executable-HTML no-go remains AP02 evidence. WebKit simulated-offline integration fails, physical/accessibility evidence remains untested, and review of the new F01 recommendation is pending. Production selection and Phase 2 stay blocked; accepted architecture, P11 and all acceptance criteria remain unchanged.
+
+
+## Native Chrome evidence checkpoint - 2026-09-14
+
+The [installed-Chrome evidence](technical-risk-validation/report.md#installed-windows-chrome-continuation---2026-09-14) adds actual Windows Chrome interaction, browser zoom, storage-denial recovery, isolated PWA installation and process-cold diagnostics. Native valid-run startup and fresh-preview timing failures remain a redesign/no-go; earlier downloaded-engine passes do not establish the installed-browser gate. Source/save synchronization defects were corrected with focused regression coverage. Native full-storage, physical mobile/Safari, spoken assistive technology and OS restart evidence remain inconclusive/untested. Proposed progression scope adjustments are review recommendations only, not approved exceptions. F01 remains unselected and F02 incomplete; AP01/AP02 and P11 remain unchanged. The current results need dated project-owner technical/product/security self-review. No Phase 2, Sync or Archive begins.
+
+
+## Authorized bootstrap experiment checkpoint - 2026-09-14
+
+The project owner explicitly approved the persistent trusted opaque bootstrap/fresh-per-run Worker experiment and D3/charter revision, preserving P11 and all numerical limits. It is implemented through `e9e8436`, including private cleanup control and generation-bound untrusted output. This approval is not S01-S06 approval, F01 production selection, F02 support acceptance or Proceed. See the [current evidence report](technical-risk-validation/report.md#authorized-persistent-bootstrap-checkpoint---2026-09-14). Final installed Chrome: **45 passed / 4 failed**; independent native cycles: **96/100 valid Worker successes, four timeouts, next fresh success 1101.9ms**; 10 witnessed loop recoveries/100 preview cycles and native zoom/PWA/20 persistence cycles pass. Bundled affected retest: **111 passed / 5 failed / 4 skipped**; replay passes all three engines, target-lifetime/WebKit offline failures retained, isolated focus retest passes without erasing the prior failure. Chrome ten-cold-trial probe fails before any completed trial; WebKit single cold-origin control passes.
+
+**Phase 1 remains 22/34 and Redesign/no-go**. Missing physical macOS/Android/iPhone, installed Firefox and NVDA/VoiceOver remain untested; native background/full quota/OS restart and total resource bounds remain unverified. Scope adjustment and dated owner product/technical/security self-review are pending. Security review is self-review, not an independent audit. AP01/AP02, approved Phase 0 policy and required recovery limits remain unchanged. No Phase 2, Sync or Archive.
+
+
+## Latest Apply continuation - 2026-09-15
+
+Terminal-output Worker termination ordering was corrected and verified by 20 unit tests; lint/typechecks/build pass. Full installed Chrome remains **34 passed / 15 failed**; affected bundled engines **31 passed / 4 failed / 1 skipped**, followed by two explicit unsupported-CDP skips. Independent 100 Worker/100 preview cycles and PWA/20 persistence cycles pass, but four post-loop fresh runs time out, the ten-cold-process probe completes 0/10 trials, and the 400% local Check times out. [Latest evidence](technical-risk-validation/report.md#final-continuation-evidence-and-progression---2026-09-15) retains original failures and exact hashes. **Phase 1 stays 22/34 and Redesign/no-go**. The [dedicated-bootstrap follow-up](technical-risk-validation/proposed-bootstrap-revision.md) and S01-S06 are proposed only; new owner technical/product/security self-review and production/support selection remain pending. Security review is self-review, not an independent audit. Accepted Phase 0 policies/AP01/AP02 remain unchanged. No Phase 2, Sync or Archive.

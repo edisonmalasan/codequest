@@ -1,0 +1,105 @@
+{
+  "recordedAt": "2026-09-14T08:14:58.722Z",
+  "experiment": "E01/E05 native Chrome diagnostics",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\native-chrome-diagnostics.mjs",
+    "--storage-denied"
+  ],
+  "commit": "e9e8436f23341df4b0b8a676b48d02fa7289b277",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/README.md",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-30-14.260Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-31-30.111Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-31-44.313Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-39-17.365Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T07-55-14.206Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T08-07-06.927Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T08-11-40.028Z.json",
+    "?? docs/technical-risk-validation/evidence/cold-origin-2026-09-14T08-14-27.643Z.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T07-42-53.015Z.json",
+    "?? docs/technical-risk-validation/evidence/queued-output-replay-2026-09-14T07-47-20.260Z.json",
+    "?? docs/technical-risk-validation/evidence/worker-target-diagnostics-2026-09-14T08-13-10.546Z.json",
+    "?? docs/technical-risk-validation/evidence/worker-target-diagnostics-2026-09-14T08-13-35.844Z.json",
+    "?? docs/technical-risk-validation/evidence/worker-target-liveness-2026-09-14T07-33-03.841Z.json"
+  ],
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "6173d7311e533ad90a4a44ebfa6bbb67b0c3687d06a103a70cc83acc95ae93ee",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-Cvq5Xrou.js": "bee3d3534e430b4300fc388230cd66325d76b2a0440b3e26b04873d1dca8549a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "002857b81b51ba2e72aa453e5fc11321162f0ac1717491c6e2d93dfb37b0c00f",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "1ba3dfaf6757c01d6a8d9f460bd9f2e3515c814de12dfd4103de6935fa71160d",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "ecd28d7cb80d93289dab3d5003add9d3b0a3a0813c29f295fe1b1bebc8fbdb02",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "scriptHash": "eb465db3f5ba3af24ff9b8de1964e32cd83848c135312bf57ff67c5865705ced",
+  "channel": "chrome",
+  "headed": true,
+  "viewportEmulation": false,
+  "physicalTyping": false,
+  "storageDeniedProfile": "task-only Preferences: profile.default_content_setting_values.cookies=2; actual denial must be observed",
+  "launchOptions": {
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "timeout": 15000
+  },
+  "browserUse": "no dedicated Browser Use/computer tool exposed; Playwright/CDP interaction",
+  "assistiveTechnology": "NVDA/VoiceOver untested",
+  "operatingSystemRestart": "untested; active user development session not restarted",
+  "stage": "diagnostic collection complete",
+  "nativeWindow": {
+    "windows": [
+      {
+        "browserPid": 18896,
+        "parentPid": 17128,
+        "window": 10682996,
+        "restoreRequested": true,
+        "foregroundRequested": false,
+        "foregroundObserved": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "ordinaryWindowsTouched": false,
+    "note": "Win32 control restricted to disposable-profile Chrome children of this test process; failure to focus is inconclusive"
+  },
+  "pageErrors": [],
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "browserCommandLineLimitation": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+  "nativeStorageAccess": {
+    "localStorage": {
+      "permitted": false,
+      "error": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+    },
+    "sessionStorage": {
+      "permitted": false,
+      "error": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+    },
+    "indexedDB": {
+      "permitted": false,
+      "error": "The user denied permission to access the database."
+    }
+  },
+  "storageDeniedRecovery": {
+    "editable": true,
+    "exactSourceRetained": true,
+    "saveState": "Save failed; keep a copy: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+  },
+  "storageDeniedPageText": "Phase 1 · disposable technical prototype\n\nCodeQuest validation workspace\n\nNo real accounts, authoritative rewards, telemetry or independent grading.\n\nOwner \nguest\naccount-A\naccount-B\nexpired\nTask \nQ01 output\nRecords fixture\nCompartment \nOpaque origin candidate\nDedicated origin candidate\nPermissive negative control (unsafe)\n\nLocal storage unavailable; keep a copy: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n\nOnline · Offline preparation failed: Failed to register a ServiceWorker for scope ('http://127.0.0.1:4310/') with script ('http://127.0.0.1:4310/sw.js'): The user denied permission to use Service Worker.\n\nSend your first signal\n\nPrint exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.\n\nShow hint\n\nEscape moves focus out of the editor to Run. Drafts are local only; clearing browser data can lose them. Guest/offline work is provisional, with no backdated streak credit.\n\n1\nconsole.log(\"Ready for CodeQuest\");\n\nSave failed; keep a copy: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n\nRun\nCheck\nStop\nReset source\nCopy source\nOutput and results\n\nReady\n\nNo local completion\n\nMock acceptance only\nSave pending snapshotReplay pending snapshotExplicitly import guest snapshotLose synthetic response after acceptance\n\nNo pending snapshot for this owner\n\nSupplied preview\n\nText equivalent: No preview result\n\nOpen bounded preview",
+  "taskProfileRemoved": true
+}

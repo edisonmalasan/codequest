@@ -1,0 +1,4276 @@
+{
+  "recordedAt": "2026-09-14T08:57:34.732Z",
+  "experiment": "E02 native startup stage diagnostic",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\scripts\\native-startup-diagnostics.mjs",
+    "--dedicated",
+    "--hostile-first"
+  ],
+  "commit": "afc418ac401245463fa8a20bcb14a12e79b82ed1",
+  "dirtyPaths": [
+    "?? docs/technical-risk-validation/evidence/native-startup-diagnostics-2026-09-14T08-55-38.643Z.json",
+    "?? docs/technical-risk-validation/evidence/native-startup-diagnostics-2026-09-14T08-56-25.686Z.json",
+    "?? prototypes/technical-risk-validation/scripts/native-startup-diagnostics.mjs"
+  ],
+  "scriptHash": "449f7ce44e4a6c85f5b8c4ee206bd91bbb85476195a522fa158f5030dee4d5e7",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "6173d7311e533ad90a4a44ebfa6bbb67b0c3687d06a103a70cc83acc95ae93ee",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-Cvq5Xrou.js": "bee3d3534e430b4300fc388230cd66325d76b2a0440b3e26b04873d1dca8549a",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "002857b81b51ba2e72aa453e5fc11321162f0ac1717491c6e2d93dfb37b0c00f",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "1ba3dfaf6757c01d6a8d9f460bd9f2e3515c814de12dfd4103de6935fa71160d",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "ecd28d7cb80d93289dab3d5003add9d3b0a3a0813c29f295fe1b1bebc8fbdb02",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "instrumentation": "Document-only Worker constructor/message and private-port receive timestamps; no learner Worker instrumentation, policy or deadline changes. Diagnostic, not acceptance replacement.",
+  "events": [
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258069.5,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258124.2998,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258207.2998,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258210.7,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258417.2,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258651.7,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "port-receive:null",
+      "run": "",
+      "time": 1789376258671.7,
+      "document": "http://127.0.0.1:4310/",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376258821.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376258825.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376258977.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376260512.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376260534.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376269673.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376269673.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376269885.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376270581.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376270582.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376270613.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376272489.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376272490.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376272505.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376274564.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376274583.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376274907.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376276980.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376277064,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376277360.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376281971.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376281973.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376281993.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282042.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282043.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282066,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282106.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282107.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282145.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282186.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282188.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282202.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282242.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282244.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282262.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282298.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282299.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282312.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282349.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282350.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282365.9001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282396.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282397.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282408,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282440.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282441,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282453.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282486.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282487.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282502.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282541.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282543.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282554.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282585,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282585.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376282625.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376282675.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376282680.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289005.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289017.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289143.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289198.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289209.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289272.9001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289355.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289360.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289436.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289530.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289542.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289581.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289616,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289616.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289633.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289665.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289665.9001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289711.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289766,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289766.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289782.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289817.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289818.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289832.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289872.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289875.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376289898.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376289947.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376289949,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290111.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290159.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290159.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290199.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290250.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290255.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290268.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290306.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290307.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290341.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290390.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290391.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290441.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290518.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290526.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290561.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376290618.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376290628.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376290655.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291284.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291314.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291344.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291418.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291429.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291452.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291511.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291511.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291569,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291630.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291634.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291656.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291697.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291698.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291712,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291759.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291764.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291790.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291850.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291856.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291896.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376291939.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376291941.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376291961.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292009.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292012,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292041.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292091.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292098.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292146.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292190.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292192.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292212.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292265.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292268.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292289.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292324.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292326.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292356.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292400.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292401.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292445.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292484.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292490.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292508,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292555.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292556.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292573.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292618.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292619.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292633.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292679.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292681.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292698.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292741.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292743.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292761.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292822.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292836.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376292852.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376292902.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376292907.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293000.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293042.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293043,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293178.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293216.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293218.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293239.2998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293275,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293278.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293294.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293334.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293345.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293367.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293424.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293425.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293444.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293518.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293531.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293559,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293610.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293616.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376293675.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376293748.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376293749.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376294016.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376294078.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376294083.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376294142.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376294198,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376294205,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376294233.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376294291,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376294291.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376294361.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376294784.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376294796,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376294866.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376296032.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376296032.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376296066.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376296144.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376296146.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376296161.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298016.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298017.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298049.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298093.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298095,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298108.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298150.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298151.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298167.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298226.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298228.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298280.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298325.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298326.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298340,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298376.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298378.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298392.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298432.9001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298440.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298451.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298498.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298499,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298515.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298554.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298556.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298569,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298608.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298609.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298628.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298664.2,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298666.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298681.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298734.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298735.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298760.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298805.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298806,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298822.7998,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298880.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298881.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298907,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376298949.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376298951.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376298966.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299014.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299018.9001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299031,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299069.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299071,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299085.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299126,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299128.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299141.1,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299182.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299188.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299202.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299235.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299236.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299248.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299294.2002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299295.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299314.7002,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299367.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299368.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376299385,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376299765.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376299765.5999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376301508.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376301509.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376301599.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376302388.0999,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376302395,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376302419.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376302482.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376302518.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376302546.9,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376302602,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376302608,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376302636.4001,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376302715.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376302729.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376302758.7,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376307447.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376307484.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376307552.4,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376307601,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376307601.8,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376307614.5,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-before",
+      "run": "",
+      "time": 1789376307654.6,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-constructor-after",
+      "run": "",
+      "time": 1789376307655.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    },
+    {
+      "stage": "worker-result-received",
+      "run": "",
+      "time": 1789376307669.3,
+      "document": "http://127.0.0.2:4311/bootstrap.html",
+      "visible": "visible"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "before": 1789376278521,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "a701cc9b-b286-481f-8057-a8c7addc1783",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2014.8999999985099
+      }
+    },
+    {
+      "cycle": 1,
+      "before": 1789376280558,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "0f8034f1-8965-4ed5-8871-381ae48e02e2",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 1434
+      }
+    },
+    {
+      "cycle": 2,
+      "before": 1789376281996,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "87f6a039-cf5b-45a5-9049-23e79211f89f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 68.10000000149012
+      }
+    },
+    {
+      "cycle": 3,
+      "before": 1789376282068,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "086c35cf-4591-45ed-99c0-c4dd51f38287",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 75.20000000298023
+      }
+    },
+    {
+      "cycle": 4,
+      "before": 1789376282147,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "659de0f7-e432-4fc7-9b04-01ae75e5ce4c",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 55.5
+      }
+    },
+    {
+      "cycle": 5,
+      "before": 1789376282207,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "266bb1de-9eda-4037-b80c-416beec91daf",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 54.100000001490116
+      }
+    },
+    {
+      "cycle": 6,
+      "before": 1789376282264,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "576e7a2a-7872-42db-8b7b-62669eb95132",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 46.80000000447035
+      }
+    },
+    {
+      "cycle": 7,
+      "before": 1789376282314,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "a8fa7e7a-e3bb-48e1-a407-5251b4a66231",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 50.20000000298023
+      }
+    },
+    {
+      "cycle": 8,
+      "before": 1789376282368,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "2f8cea8e-4490-455b-836e-72f656d85385",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 38.5
+      }
+    },
+    {
+      "cycle": 9,
+      "before": 1789376282411,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "cbbeeaa6-2844-4a13-a50e-cf910f8dd77c",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 42.30000000447035
+      }
+    },
+    {
+      "cycle": 10,
+      "before": 1789376282457,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "86518bae-c604-4e71-8e70-0f4af8d9dba8",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 43.899999998509884
+      }
+    },
+    {
+      "cycle": 11,
+      "before": 1789376282505,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "c474ea8d-a02b-4cd1-b751-fa8fcd8be7a9",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 46.899999998509884
+      }
+    },
+    {
+      "cycle": 12,
+      "before": 1789376282557,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "c9a6a06c-62d3-4d8e-a175-9f39c6f1f2ad",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 67.10000000149012
+      }
+    },
+    {
+      "cycle": 13,
+      "before": 1789376282628,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "3e67f9ba-c8a6-42b4-a73c-733f5295ed30",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2014.6000000014901
+      }
+    },
+    {
+      "cycle": 14,
+      "before": 1789376284648,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "6e8e01b3-cb5c-41a7-bcde-064d5528ddd7",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2013.7999999970198
+      }
+    },
+    {
+      "cycle": 15,
+      "before": 1789376286668,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "26670c19-fd1c-4fd7-a0f3-02330c140ddc",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2014.8999999985099
+      }
+    },
+    {
+      "cycle": 16,
+      "before": 1789376288696,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "0f263fee-5652-4a13-84a8-374e94d19d3b",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 446.3999999985099
+      }
+    },
+    {
+      "cycle": 17,
+      "before": 1789376289147,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "8f605a8b-fa1e-4db4-982e-cafcb2b32b24",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 126.10000000149012
+      }
+    },
+    {
+      "cycle": 18,
+      "before": 1789376289276,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "ee113973-29c1-4719-b833-513f1ff09368",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 160.69999999552965
+      }
+    },
+    {
+      "cycle": 19,
+      "before": 1789376289441,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "1d6092b5-eab8-45fc-a769-be62247160cb",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 140.79999999701977
+      }
+    },
+    {
+      "cycle": 20,
+      "before": 1789376289585,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "92e01e79-9429-44c0-9b90-eadb420d6784",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 47
+      }
+    },
+    {
+      "cycle": 21,
+      "before": 1789376289635,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "bc4e4df8-9f49-4cf9-bc30-0ed97bf05acc",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 74.39999999850988
+      }
+    },
+    {
+      "cycle": 22,
+      "before": 1789376289713,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "0ff4defa-4e79-4434-a58a-c158df08c760",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 67.89999999850988
+      }
+    },
+    {
+      "cycle": 23,
+      "before": 1789376289784,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "c43e5dbb-8cad-419f-8f60-8dbb4e695b40",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 47.29999999701977
+      }
+    },
+    {
+      "cycle": 24,
+      "before": 1789376289834,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "4eed84c7-2b59-4284-8339-fbd51b610bed",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 63.29999999701977
+      }
+    },
+    {
+      "cycle": 25,
+      "before": 1789376289900,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "469ffe45-c996-4cc5-aa4a-cd3129419afb",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 210.89999999850988
+      }
+    },
+    {
+      "cycle": 26,
+      "before": 1789376290114,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "1039215d-0cbf-4749-a124-22a533feffe3",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 84.09999999403954
+      }
+    },
+    {
+      "cycle": 27,
+      "before": 1789376290202,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "4abbf4be-ec06-4b1f-bd84-9b5025e836df",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 64.80000000447035
+      }
+    },
+    {
+      "cycle": 28,
+      "before": 1789376290271,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "65eaffb3-1d29-4070-bfbd-ba967da03cd9",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 70.10000000149012
+      }
+    },
+    {
+      "cycle": 29,
+      "before": 1789376290344,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f213cea7-0d56-4bb2-a3dd-7c0f38e79ca0",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 96.79999999701977
+      }
+    },
+    {
+      "cycle": 30,
+      "before": 1789376290444,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "9a7ffa62-e999-4732-b39c-3a76fa10fe78",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 116.5
+      }
+    },
+    {
+      "cycle": 31,
+      "before": 1789376290564,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "4c39199b-dd2e-48a7-a388-35aac7de6afa",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 90.5
+      }
+    },
+    {
+      "cycle": 32,
+      "before": 1789376290658,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "0b59ff36-d7df-4ca4-b362-5a6258e5be7d",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 685.5
+      }
+    },
+    {
+      "cycle": 33,
+      "before": 1789376291348,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "c489ded3-84ca-4afe-b9b9-79bf2236d7e0",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 104.20000000298023
+      }
+    },
+    {
+      "cycle": 34,
+      "before": 1789376291457,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "ed1b4e73-50c3-4519-9722-50216e038da4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 113.10000000149012
+      }
+    },
+    {
+      "cycle": 35,
+      "before": 1789376291574,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "3e23a0c8-98ce-425f-ae46-a7488e815163",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 81.10000000149012
+      }
+    },
+    {
+      "cycle": 36,
+      "before": 1789376291658,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "ede1a849-2e95-4324-a7ee-df07570f59a4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 53.600000001490116
+      }
+    },
+    {
+      "cycle": 37,
+      "before": 1789376291717,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "d8605b50-0730-4759-a2d5-e6324701ca74",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 72.30000000447035
+      }
+    },
+    {
+      "cycle": 38,
+      "before": 1789376291792,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "5a41bacf-a258-4572-bd9f-92f3f1cd87a2",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 103.39999999850988
+      }
+    },
+    {
+      "cycle": 39,
+      "before": 1789376291899,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "d0343066-099a-4f7d-9783-c6ba05367db3",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 60.100000001490116
+      }
+    },
+    {
+      "cycle": 40,
+      "before": 1789376291963,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b2a8ce52-f144-4fee-a387-fd4c2a392644",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 77.70000000298023
+      }
+    },
+    {
+      "cycle": 41,
+      "before": 1789376292047,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "18eacb25-129c-4cb9-ac6b-a67e5e117677",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 98.09999999403954
+      }
+    },
+    {
+      "cycle": 42,
+      "before": 1789376292149,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "15d62744-435d-4c67-9443-66b640b7eed7",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 62.900000005960464
+      }
+    },
+    {
+      "cycle": 43,
+      "before": 1789376292216,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "fa8b133e-0aca-4298-9677-0c498f4d14fb",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 72.10000000149012
+      }
+    },
+    {
+      "cycle": 44,
+      "before": 1789376292291,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "46122cd8-9ddf-4efe-a868-79d14cbc12ff",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 63.79999999701977
+      }
+    },
+    {
+      "cycle": 45,
+      "before": 1789376292358,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "ffe8f563-4be2-41d1-a211-d0d2c0e938a7",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 86.30000000447035
+      }
+    },
+    {
+      "cycle": 46,
+      "before": 1789376292448,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b668d159-1a80-44a1-a182-2e8ceb8c1f11",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 58.899999998509884
+      }
+    },
+    {
+      "cycle": 47,
+      "before": 1789376292510,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b1e6ba7b-33da-4065-b1f0-68c9c7663538",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 62.100000001490116
+      }
+    },
+    {
+      "cycle": 48,
+      "before": 1789376292575,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "bd7b89b6-f9ef-40a7-b0c3-4427c8ede492",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 58.599999994039536
+      }
+    },
+    {
+      "cycle": 49,
+      "before": 1789376292638,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "2f522475-afcf-49a8-af09-84315ba889f5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 59.20000000298023
+      }
+    },
+    {
+      "cycle": 50,
+      "before": 1789376292701,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "89f40183-d798-438d-9a55-4d9808d9ae69",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 59.100000001490116
+      }
+    },
+    {
+      "cycle": 51,
+      "before": 1789376292763,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "492043c9-2017-4e81-9bca-afb083e06735",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 88.5
+      }
+    },
+    {
+      "cycle": 52,
+      "before": 1789376292856,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b5507bb2-cc6d-410b-bb02-e67a7eab0747",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 147.40000000596046
+      }
+    },
+    {
+      "cycle": 53,
+      "before": 1789376293007,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "4004d937-29ba-43e2-ba5b-738aa803b878",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 170.69999999552965
+      }
+    },
+    {
+      "cycle": 54,
+      "before": 1789376293180,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "13fc7fdf-de20-4e9f-91be-525eb8dc123f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 57.600000001490116
+      }
+    },
+    {
+      "cycle": 55,
+      "before": 1789376293241,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "374d5537-e475-489c-a47d-5cfa6a27a879",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 52.69999999552965
+      }
+    },
+    {
+      "cycle": 56,
+      "before": 1789376293297,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "6e7b64ab-54ca-4aec-ba2f-0a8a51b383b4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 68.10000000149012
+      }
+    },
+    {
+      "cycle": 57,
+      "before": 1789376293370,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b24d1f93-0c07-4326-9a6a-693f987df575",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 73.5
+      }
+    },
+    {
+      "cycle": 58,
+      "before": 1789376293447,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "66e52446-f1b9-4df1-9566-5cb4efc440d5",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 110.69999999552965
+      }
+    },
+    {
+      "cycle": 59,
+      "before": 1789376293561,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "3e20c7e8-b984-482d-9687-845ff247c32d",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 113.79999999701977
+      }
+    },
+    {
+      "cycle": 60,
+      "before": 1789376293678,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "88a495c1-90f2-4bbc-b11e-89f1341df49f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 338.8999999985099
+      }
+    },
+    {
+      "cycle": 61,
+      "before": 1789376294021,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "1cc02ac2-c6da-4956-bff4-942696d1d5dd",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 121.40000000596046
+      }
+    },
+    {
+      "cycle": 62,
+      "before": 1789376294147,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "8899253e-c834-4b75-b803-84e44cc2c0a7",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 86
+      }
+    },
+    {
+      "cycle": 63,
+      "before": 1789376294236,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "af28a352-7a11-4a55-b643-58142f4c0518",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 124.30000000447035
+      }
+    },
+    {
+      "cycle": 64,
+      "before": 1789376294364,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "54aed762-3564-421b-b5d0-8db4f5a2ecde",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 502.80000000447035
+      }
+    },
+    {
+      "cycle": 65,
+      "before": 1789376294871,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "a0145b37-33bd-46d6-a275-45d53b758737",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 1195.1000000014901
+      }
+    },
+    {
+      "cycle": 66,
+      "before": 1789376296070,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f52630bb-41d3-4934-bcf1-ef845cb82f66",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 90.10000000149012
+      }
+    },
+    {
+      "cycle": 67,
+      "before": 1789376296164,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "001de033-28c9-4658-9a90-82da147d4d01",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 1885.1000000014901
+      }
+    },
+    {
+      "cycle": 68,
+      "before": 1789376298052,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "aae6527e-a026-4705-931f-e46473881934",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 55
+      }
+    },
+    {
+      "cycle": 69,
+      "before": 1789376298112,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "67793cf8-35d9-416f-abc1-cda63c1cf4cb",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 52.79999999701977
+      }
+    },
+    {
+      "cycle": 70,
+      "before": 1789376298172,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "6e2ca756-6bb8-4ab3-9aff-5f0a608df9dc",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 106.70000000298023
+      }
+    },
+    {
+      "cycle": 71,
+      "before": 1789376298282,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "fc340358-507d-478f-bca6-372ee40853ca",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 57.600000001490116
+      }
+    },
+    {
+      "cycle": 72,
+      "before": 1789376298344,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "46673ab8-50e3-4e57-a461-75131716682e",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 47.79999999701977
+      }
+    },
+    {
+      "cycle": 73,
+      "before": 1789376298394,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "e92b2a93-f64c-48b9-8685-eec1dce6c852",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 58
+      }
+    },
+    {
+      "cycle": 74,
+      "before": 1789376298457,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "03bd3be3-b3a0-45b2-b9c2-4bab7ce924da",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 57.5
+      }
+    },
+    {
+      "cycle": 75,
+      "before": 1789376298519,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "a31fd5e4-045a-402d-a076-86209df37841",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 48.80000000447035
+      }
+    },
+    {
+      "cycle": 76,
+      "before": 1789376298571,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "37719c46-9f46-4673-8663-010d5b41582e",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 55.29999999701977
+      }
+    },
+    {
+      "cycle": 77,
+      "before": 1789376298630,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "98d3fba5-63a4-4286-bc3b-15a295347155",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 49.899999998509884
+      }
+    },
+    {
+      "cycle": 78,
+      "before": 1789376298683,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "d0200293-9f54-427e-a8cb-149835af563b",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 77.60000000149012
+      }
+    },
+    {
+      "cycle": 79,
+      "before": 1789376298765,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "bf049319-d5fb-4a10-9720-e89200ab26a6",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 56.399999998509884
+      }
+    },
+    {
+      "cycle": 80,
+      "before": 1789376298825,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "9465b5a3-bc50-4ef2-85c9-45093e39336e",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 82.39999999850988
+      }
+    },
+    {
+      "cycle": 81,
+      "before": 1789376298911,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "83504dc3-42cf-4e23-b084-d5f8b52e74b4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 59.899999998509884
+      }
+    },
+    {
+      "cycle": 82,
+      "before": 1789376298974,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "4be724aa-dfcd-4c65-95bc-55d4e661a0d9",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 55.30000000447035
+      }
+    },
+    {
+      "cycle": 83,
+      "before": 1789376299033,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "0bff2c87-71f2-478b-9080-0dabe05efe3f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 50.5
+      }
+    },
+    {
+      "cycle": 84,
+      "before": 1789376299089,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f0031036-3d05-4e5d-8a06-93c09c1867a1",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 51.100000001490116
+      }
+    },
+    {
+      "cycle": 85,
+      "before": 1789376299143,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "67efb564-8631-430a-9cbc-50644d096797",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 58.80000000447035
+      }
+    },
+    {
+      "cycle": 86,
+      "before": 1789376299205,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "e0a73f36-0223-4901-b43b-e18d587cad7b",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 42.5
+      }
+    },
+    {
+      "cycle": 87,
+      "before": 1789376299250,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b28e2582-24c8-46ff-899f-784070a2e877",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 63.20000000298023
+      }
+    },
+    {
+      "cycle": 88,
+      "before": 1789376299317,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f9c851a9-8d79-424b-b321-436bbfd7a3a7",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 66.5
+      }
+    },
+    {
+      "cycle": 89,
+      "before": 1789376299387,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f3f017ea-7b3d-4bb3-87b8-c4b87d6ea473",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2012.3000000044703
+      }
+    },
+    {
+      "cycle": 90,
+      "before": 1789376301410,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "1a89c529-eb3f-4924-b9a3-5d4cae946ed4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 189
+      }
+    },
+    {
+      "cycle": 91,
+      "before": 1789376301604,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "59904b99-3e7e-47a0-8f4a-ea8faf3d8c0a",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 817
+      }
+    },
+    {
+      "cycle": 92,
+      "before": 1789376302427,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "c4c37b93-bcaf-448d-b2a4-7a7891835275",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 121.5
+      }
+    },
+    {
+      "cycle": 93,
+      "before": 1789376302552,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b0e02244-a864-40e9-a6ec-a1aec5a7a1ce",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 84.70000000298023
+      }
+    },
+    {
+      "cycle": 94,
+      "before": 1789376302641,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f9d8dd90-a857-4498-a539-e23156b8d0f4",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 117.29999999701977
+      }
+    },
+    {
+      "cycle": 95,
+      "before": 1789376302761,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "bd2d8e2e-505a-45b6-89b0-4270c98dd21a",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2004.0999999940395
+      }
+    },
+    {
+      "cycle": 96,
+      "before": 1789376304771,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "5f2b3a20-bd1f-43a3-8c36-826e191adc9b",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2016.2999999970198
+      }
+    },
+    {
+      "cycle": 97,
+      "before": 1789376306805,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "7ba94ba0-0ebd-4f4c-a1ff-646eea5ae046",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 746.1999999955297
+      }
+    },
+    {
+      "cycle": 98,
+      "before": 1789376307554,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "1cceb2fb-0efc-4e6d-a387-95c27ed91df1",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 58.600000001490116
+      }
+    },
+    {
+      "cycle": 99,
+      "before": 1789376307616,
+      "result": {
+        "source": "console.log(\"diagnostic fresh\")",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "9e3d98ae-4640-4b5a-af4c-44fedc35f627",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": false,
+        "status": "success",
+        "output": [
+          "diagnostic fresh"
+        ],
+        "value": "[undefined]",
+        "elapsed": 50.899999998509884
+      }
+    }
+  ],
+  "candidate": "dedicated",
+  "hostileFirst": true,
+  "version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "hostileTrials": [
+    {
+      "trial": 0,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f5bd57ab-46a9-4318-85b7-150539ba170e",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2001.5999999940395
+      }
+    },
+    {
+      "trial": 1,
+      "markerObserved": false,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "e95fb0e2-0539-4fd0-84f1-0e6bf5cca410",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2001.2999999970198
+      }
+    },
+    {
+      "trial": 2,
+      "markerObserved": false,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "b143ce96-3755-4a81-a4bc-cbdf6ae7fe6e",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2013.9000000059605
+      }
+    },
+    {
+      "trial": 3,
+      "markerObserved": false,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "99335c38-0cf6-47ad-a128-e9812161eb5f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2016
+      }
+    },
+    {
+      "trial": 4,
+      "markerObserved": false,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "14efa9f2-b9c1-47d9-bd62-2940abda57f6",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2001.3000000044703
+      }
+    },
+    {
+      "trial": 5,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "dd38a682-c493-414a-b423-c9945daa5ba0",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2004.2999999970198
+      }
+    },
+    {
+      "trial": 6,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "d445c23c-6f76-4898-85c9-47e5f93c564f",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2008.7999999970198
+      }
+    },
+    {
+      "trial": 7,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "43e1d06b-d46b-4b52-9690-665e1f67b88c",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2004.6000000014901
+      }
+    },
+    {
+      "trial": 8,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "f5c31595-d882-4ae6-89bb-455fe0d32b45",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2006.0999999940395
+      }
+    },
+    {
+      "trial": 9,
+      "markerObserved": true,
+      "result": {
+        "source": "while(true){}",
+        "candidate": "dedicated",
+        "task": "Q01",
+        "run": "dddda060-2b8a-4502-81a8-f54e40a15d97",
+        "contentVersion": "1",
+        "assessmentVersion": "1",
+        "previewMarker": true,
+        "status": "timeout",
+        "output": [],
+        "value": "Execution deadline exceeded",
+        "elapsed": 2012.1000000014901
+      }
+    }
+  ],
+  "verdict": "failed instrumented fresh-run diagnostic",
+  "stage": "completed"
+}

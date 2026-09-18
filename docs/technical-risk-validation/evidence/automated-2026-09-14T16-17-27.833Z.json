@@ -1,0 +1,76 @@
+{
+  "recordedAt": "2026-09-14T16:17:27.833Z",
+  "commit": "d4d37f861000ff5d6bfb2bddb4120966a948ca38",
+  "dirtyPaths": [
+    "M docs/technical-risk-validation/charter.md",
+    " M docs/technical-risk-validation/report.md",
+    " M openspec/changes/validate-codequest-technical-risks/design.md",
+    " M prototypes/technical-risk-validation/README.md",
+    " M prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-08-43.812Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-14T09-12-43.433Z.json",
+    "?? docs/technical-risk-validation/evidence/environment-context-2026-09-14-continuation.json",
+    "?? docs/technical-risk-validation/evidence/native-chrome-2026-09-14T09-15-55.779Z.json",
+    "?? docs/technical-risk-validation/proposed-bootstrap-revision.md"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/bootstrap-lifecycle.spec.ts",
+    "-g",
+    "CDP observes",
+    "--project=firefox",
+    "--project=webkit"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": false,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-14T16:17:25.752Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "fc4255ee1886ba4e7d2bd52155f88cb431e8a6c9a438c21d7fa2834778e0b6f3",
+    "assets/index-Br5Xj04R.js": "8653f36811bb4a34cb8885e2aa2172cdd010a84390d70c6a8a8a2d5777fa1ae1",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "545c4dfd25ad284354164bc2e78814b11742a546466ec20204296cd76a1b5fbd",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "08be72945865a46b4943ec26a229a71286820da4e19787cc02de884939ad1618",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "sw.js": "f797f6d97f6b4886249449e1f6a6cf7034476420bdef51a21e926c316ba1930c",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 3321.5630000000006,
+  "cases": [
+    {
+      "title": " / firefox / bootstrap-lifecycle.spec.ts / Chromium target instrumentation / E02 CDP observes parent and nested Worker targets disappear after private cleanup",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "durationMs": 0,
+      "errors": [],
+      "evidence": []
+    },
+    {
+      "title": " / webkit / bootstrap-lifecycle.spec.ts / Chromium target instrumentation / E02 CDP observes parent and nested Worker targets disappear after private cleanup",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "durationMs": 0,
+      "errors": [],
+      "evidence": []
+    }
+  ]
+}

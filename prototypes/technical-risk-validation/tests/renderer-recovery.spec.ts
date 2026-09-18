@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test';
+
+test('E05 owned renderer crash recovers a real committed draft without false progress', async ({ page, context, browserName, browser }, info) => {
+  test.skip(browserName !== 'chromium', 'CDP renderer fault injection unavailable; not an OS restart or other-device pass');
+  await page.goto('/');
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  const confirmed = 'console.log("confirmed before owned renderer crash")';
+  const unconfirmed = 'console.log("edit immediately before owned renderer crash")';
+  await page.getByRole('textbox', { name: 'JavaScript source' }).fill(confirmed);
+  await expect(page.getByTestId('save-state')).toHaveText('Saved on this device');
+  let crashObserved = false;
+  page.once('crash', () => { crashObserved = true; });
+  const session = await context.newCDPSession(page);
+  await page.getByRole('textbox', { name: 'JavaScript source' }).fill(unconfirmed);
+  const lastVisibleState = await page.getByTestId('save-state').textContent();
+  const started = Date.now();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const command = session.send('Page.crash').then(() => 'completed').catch((error: unknown) => error instanceof Error ? error.message : String(error));
+  const commandResult = await Promise.race([command, new Promise<string>(resolve => { timer = setTimeout(() => resolve('command did not settle within five-second diagnostic window'), 5000); })]);
+  if (timer) clearTimeout(timer);
+  expect(crashObserved).toBe(true);
+  await page.close();
+  const recovered = await context.newPage();
+  await recovered.goto('/');
+  await expect(recovered.getByTestId('save-state')).toHaveText('Saved on this device');
+  const actual = await recovered.evaluate(() => window.__risk.source());
+  expect([confirmed, unconfirmed]).toContain(actual);
+  await expect(recovered.getByText('No local completion', { exact: true })).toBeVisible();
+  await info.attach('owned-renderer-crash', { body: JSON.stringify({ browser: browser.version(), operator: 'Codex CDP Page.crash on the disposable task page only', crashObserved, commandResult: commandResult.slice(0, 1000), confirmed, unconfirmed, lastVisibleState, recoveredSource: actual, recoveryMs: Date.now() - started, commitMayRaceCrash: true, ordinaryProfilesTouched: false, physicalOsRestart: 'untested', learnerEmergencyTermination: false }), contentType: 'application/json' });
+});

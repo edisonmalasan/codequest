@@ -1,0 +1,2405 @@
+{
+  "recordedAt": "2026-09-18T22:46:33.427Z",
+  "commit": "9dfb5fae267fcd545c76b1f5894ee0d1a6d4e821",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts",
+    " M prototypes/technical-risk-validation/tests/workspace.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T13-44-50.659Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-24-38.001Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-24-51.860Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-25-35.166Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-26-17.268Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-39-31.447Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-43-54.770Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-44-31.709Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-45-25.149Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-46-15.682Z.json"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/preview-recovery.spec.ts",
+    "--project=firefox",
+    "-g",
+    "hundred starts and resets"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-18T22:46:24.001Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "ee72a22dc5da6e9322563cbe22d71b3b1e9e5de0a6bce458a3b1483ab81fe96e",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-D9AqijGN.js": "22269d2977d7a61517ab30728b662a01b7b97a4569dedc8cd0a5698d6be90c7e",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "f6d62c1bd80c7dc13b27872f9e4b0be1b01637aa87edb90cf7d101f8609f1c64",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "0dbb077fb341d95d41b0c82bbf90eb796ec0dab243e0cfb82d09cb8ac8e70e25",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "runner-prepare.html": "6ba0759025db269854c6250b131d7b75d118fed3a25b89f410d4766e92457ce6",
+    "runner-prepare.js": "4a36fbb12714940b439680033f909139b3770586f0bd5ebe21189d7a9819c8f6",
+    "runner-sw.js": "8db1f58ce1bd5beeb90b4616abddb4ca6010c6a76c8c86670593b4902685c544",
+    "sw.js": "29839083f85afd80099c2dbd94ac4607ae646ff3fbb4d66098c8f9f46e053a64",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 9890.913,
+  "cases": [
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04 Worker preview hundred starts and resets reject flooding without leaked compartments",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 6760,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "worker-preview-resets",
+          "data": {
+            "browser": "155.0",
+            "rows": [
+              {
+                "cycle": 0,
+                "status": "preview-stopped",
+                "elapsed": 202,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "afbe9fcb-f321-47dd-9e32-6f255cb5035e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 160,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 1,
+                "status": "preview-stopped",
+                "elapsed": 71,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "0bcb8e1f-ba29-4aad-b6c7-9decbbf060ba",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 49,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 2,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "fe487bab-22e5-4565-9428-8902e2025691",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 3,
+                "status": "preview-stopped",
+                "elapsed": 42,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "caa036a7-cc56-4c70-82be-972593cab26d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 4,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "33bd850c-f017-4a97-9017-ac1333cda2e3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 5,
+                "status": "preview-stopped",
+                "elapsed": 60,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "2971383e-e810-4ff9-b4e4-1d8fec0d1524",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 46,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 6,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "ee54ba87-706e-4adc-a975-7baa13b8c61d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 7,
+                "status": "preview-stopped",
+                "elapsed": 45,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b3be0c86-7a5b-4311-a9f7-4336f2a3837d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 8,
+                "status": "preview-stopped",
+                "elapsed": 27,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "519a4e8f-e8e2-4539-8e1c-50482b8bd9e6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 9,
+                "status": "preview-stopped",
+                "elapsed": 45,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "ee479bdc-e283-4b94-b6b0-6865f3e02a8c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 10,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "7f09f5b0-686e-49b6-855f-8478a88ed7c5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 11,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "c21bb103-199e-4043-92e4-2ed9f81759fe",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 12,
+                "status": "preview-stopped",
+                "elapsed": 42,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "c5e88b12-91f6-4c6b-b8c9-fe2b00a9bd9e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 33,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 13,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "2554cf12-9e96-4868-8b62-5c807449398e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 14,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "17acc87c-ba43-4c05-bb17-994929538251",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 33,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 15,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "0a24a463-01d4-41ff-977f-7e43858a2988",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 16,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "3666a02c-7b33-4865-9812-93ea58f8f0c1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 17,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "141a7536-e2f7-4888-a876-37b7ec665dbd",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 18,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "15f7d71d-8d26-48fc-bedf-34f1350214aa",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 19,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "1e46a10e-71e5-4404-9199-43f1e0919642",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 20,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d4246dff-6f41-4af5-b906-90ab2aa6559b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 21,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "6de135ca-9506-40d3-8b47-e4c59a4ce048",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 22,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "f414617c-e7ca-4a7d-907d-b46d6412e3b7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 34,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 23,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "ec52118e-f21d-4f94-8c9d-94011064f7bb",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 24,
+                "status": "preview-stopped",
+                "elapsed": 28,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "4ec274b7-c744-46ac-beee-95b263cbbfb2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 25,
+                "status": "preview-stopped",
+                "elapsed": 24,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d758e3c1-72ad-4178-b5f7-9c5f9c51de44",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 18,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 26,
+                "status": "preview-stopped",
+                "elapsed": 31,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "a47c9a83-c84b-4ef1-b65b-6fdb5d245b51",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 27,
+                "status": "preview-stopped",
+                "elapsed": 37,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "fa5badea-88ff-4b79-833d-9a23f8d5229d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 28,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "7a3526c4-bb64-47e1-8734-e52336d9ac31",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 29,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 29,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e18347fb-8c5c-436f-a33c-f6a3a3c4ec60",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 22,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 30,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "64ade3ff-8a77-440f-bf09-8f1b426d5b92",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 31,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "88df2910-6c6d-484e-8746-963e54d13f6c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 32,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "c5023bca-b0d5-4e0b-bc87-2ca7766885eb",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 18,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 33,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "13df66e6-fa87-4d85-b0b4-cf5d43c2a17c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 34,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "8948f6d4-a5a0-4e72-9661-130cce71d130",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 35,
+                "status": "preview-stopped",
+                "elapsed": 31,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "87effc79-9d10-452f-a75f-e628b261bd72",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 36,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "603b050c-59b6-4b43-887f-a28690c20dd3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 37,
+                "status": "preview-stopped",
+                "elapsed": 31,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "f320d2bb-1b55-47aa-b087-726632b623c4",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 38,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "17bed627-0002-4aac-9093-ef5545fdb73a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 39,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "974ecf34-f500-44ca-bede-bc06d9d0a69f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 40,
+                "status": "preview-stopped",
+                "elapsed": 33,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "ef619933-bb1c-403a-bd1d-b1f7f83b5149",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 41,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "6d587ac9-8c6e-4405-a2e9-498aa005b6c1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 42,
+                "status": "preview-stopped",
+                "elapsed": 29,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "6aa1fad9-06c3-4211-b2f6-f37aa0053d93",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 43,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "1af14e17-cd4f-4808-b662-ee264d6bccff",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 44,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "2a78e1f4-4a17-4f56-af98-ccb41ed199e9",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 45,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "6d735181-0a83-4f4c-bd4c-6798e39eb6d2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 46,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "33d4856e-cf6c-4c27-8430-b5ddeb05afe1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 47,
+                "status": "preview-stopped",
+                "elapsed": 49,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e5c1a5a6-a2b8-46c8-a64b-f0a35245ee41",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 22,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 48,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "3ed0670c-a008-46a4-834d-5c80f2a1502d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 49,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "dc621203-e751-473e-b4cc-72b8c18b1659",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 50,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e9a4400d-8920-472f-8d9c-783f40a225ca",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 51,
+                "status": "preview-stopped",
+                "elapsed": 29,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "2cca9912-5305-4b49-aaf2-8825e2f22891",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 52,
+                "status": "preview-stopped",
+                "elapsed": 42,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "9b1467e7-10cc-4750-b7b3-20d06ec7b536",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 53,
+                "status": "preview-stopped",
+                "elapsed": 42,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "21ad35ba-53e0-45e4-a6b6-5637895bd530",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 54,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b119be2b-e43b-45d5-b792-4fae151404b3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 55,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "863dd902-c87c-48bf-acc5-59d6c60dab02",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 56,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "792e5967-72ac-4ebb-a9f4-9f3f98f61b9e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 57,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b17718c4-446c-4b61-9478-ce850b0b424b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 58,
+                "status": "preview-stopped",
+                "elapsed": 37,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e7a994a3-40e5-4b9c-92ca-d0d4b2ec53a0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 59,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "df257175-3b9b-4148-8967-0c4bf64437b3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 60,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e92545d1-31f4-43cb-bd3d-64683e62a94a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 61,
+                "status": "preview-stopped",
+                "elapsed": 37,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d8dab780-1bce-47b4-abbb-fce01c53a402",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 62,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "c4851511-ba71-4a57-9e46-8f79c5e42ba3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 63,
+                "status": "preview-stopped",
+                "elapsed": 44,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "abffa47c-66b4-47d1-9b2c-1a901c83e819",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 32,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 64,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "1a671bb0-ebf7-47a6-9c22-2c721985d6e3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 65,
+                "status": "preview-stopped",
+                "elapsed": 32,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "f3db8811-8b62-4339-8c2d-e2f3e7be380c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 66,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "58e204e1-790d-4551-bf63-55236656188b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 67,
+                "status": "preview-stopped",
+                "elapsed": 37,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "f8d66505-3fbb-4837-85b6-5d07caaab9ef",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 68,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "7d5936d3-e20c-43c7-a234-21f4cd7d76bf",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 18,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 69,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e52b1b3c-e5ac-480f-93a9-e8fffa2d08ef",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 70,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "293a1bbc-db7d-4b47-a102-ccaf72a127d1",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 71,
+                "status": "preview-stopped",
+                "elapsed": 29,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b1c441f1-cb1d-490b-933c-4e040c32999e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 72,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "4c69cd9c-2ee0-4a25-bc9e-e18468d18a2d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 73,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "44d26ce5-e929-4ae7-bb9b-d2afc8760ccd",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 22,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 74,
+                "status": "preview-stopped",
+                "elapsed": 34,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "5c548935-487d-42b3-9b7a-b8f2ac62c2d5",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 75,
+                "status": "preview-stopped",
+                "elapsed": 26,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "3362ed0d-dcd1-4486-9b30-e78e83b5fa4c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 18,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 76,
+                "status": "preview-stopped",
+                "elapsed": 24,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e5bdab32-f76d-4492-8a1c-ed01419e9a6a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 77,
+                "status": "preview-stopped",
+                "elapsed": 32,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "999218b4-f4eb-47c4-b0a8-a179e02a1a76",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 22,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 78,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d9f67aa6-301f-48bb-a8c0-b037ad599c63",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 79,
+                "status": "preview-stopped",
+                "elapsed": 35,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "c8e5301c-7578-4a93-989d-5503f7f4ffb7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 80,
+                "status": "preview-stopped",
+                "elapsed": 32,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "40408f7b-27ff-42ee-8130-bc964cdb7f9f",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 81,
+                "status": "preview-stopped",
+                "elapsed": 40,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e198ba26-72ee-4b10-b74d-06d94dd3df33",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 82,
+                "status": "preview-stopped",
+                "elapsed": 28,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "91af453b-7a60-4171-9903-810ba0f4f985",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 22,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 83,
+                "status": "preview-stopped",
+                "elapsed": 31,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "033df183-56e9-40fa-8e8b-19c1a0d403c7",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 84,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "aabec70d-f3d1-4102-bc2e-b8cf3967ba51",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 85,
+                "status": "preview-stopped",
+                "elapsed": 56,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b4031e4b-5234-4162-8ea1-acf1439b98ff",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 35,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 86,
+                "status": "preview-stopped",
+                "elapsed": 43,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "84535393-202a-4eca-acbb-1dfaa7130676",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 29,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 87,
+                "status": "preview-stopped",
+                "elapsed": 31,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "0e40b0cd-1fa0-47d4-a5f8-9bbb732f73b0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 88,
+                "status": "preview-stopped",
+                "elapsed": 51,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d7c334c6-b41f-45af-8bb6-ae10eea0bbcf",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 89,
+                "status": "preview-stopped",
+                "elapsed": 27,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "815d0669-aada-446a-b667-6892e2fc7c57",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 19,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 90,
+                "status": "preview-stopped",
+                "elapsed": 38,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "6fb7f768-0678-407e-bb20-204327f8da3a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 91,
+                "status": "preview-stopped",
+                "elapsed": 30,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "f33a9cba-50e3-442c-a1ba-40c28c4e703e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 92,
+                "status": "preview-stopped",
+                "elapsed": 39,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "e1ad33fa-3ccf-4b2f-b880-e0c25f57682e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 28,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 93,
+                "status": "preview-stopped",
+                "elapsed": 49,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "d09d9220-89ae-4833-b277-7861a0bb4261",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 94,
+                "status": "preview-stopped",
+                "elapsed": 46,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "eda6d8ac-243e-43e7-ad5e-f3b2a140c582",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 27,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 95,
+                "status": "preview-stopped",
+                "elapsed": 36,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "7d04b792-f45a-44c7-a4a2-f220ecc8cf01",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 96,
+                "status": "preview-stopped",
+                "elapsed": 30,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "b138ba80-3079-41c5-82ed-69aebe839ac0",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 97,
+                "status": "preview-stopped",
+                "elapsed": 28,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "ccaa6a01-880b-40e7-8280-4edb8657496d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 98,
+                "status": "preview-stopped",
+                "elapsed": 45,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "a72f2597-d5ed-4620-b607-f88dcf0a1cd2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 31,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "cycle": 99,
+                "status": "preview-stopped",
+                "elapsed": 32,
+                "execution": {
+                  "source": "function summarize(){return 5}",
+                  "candidate": "dedicated",
+                  "task": "RECORDS",
+                  "run": "bf1d5e75-0eb7-4ed0-8b30-de899c56473a",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "success",
+                  "output": [],
+                  "value": "5",
+                  "elapsed": 21,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              }
+            ],
+            "flood": {
+              "status": "protocol-error",
+              "elapsed": 19,
+              "execution": {
+                "source": "for(let i=0;i<1000;i++)self.postMessage(\"spoof\")",
+                "candidate": "dedicated",
+                "task": "RECORDS",
+                "run": "e78215f1-4676-405f-b68f-d5c194f623e2",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": true,
+                "status": "protocol-error",
+                "output": [],
+                "value": "Malformed or stale result rejected",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              }
+            },
+            "physical": false,
+            "retainedMemoryQuota": "unverified"
+          }
+        }
+      ]
+    }
+  ]
+}
