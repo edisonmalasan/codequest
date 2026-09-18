@@ -1,0 +1,2971 @@
+{
+  "recordedAt": "2026-09-18T22:46:15.682Z",
+  "commit": "9dfb5fae267fcd545c76b1f5894ee0d1a6d4e821",
+  "dirtyPaths": [
+    "M prototypes/technical-risk-validation/tests/bootstrap-lifecycle.spec.ts",
+    " M prototypes/technical-risk-validation/tests/workspace.spec.ts",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T13-44-50.659Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-24-38.001Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-24-51.860Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-25-35.166Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-26-17.268Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-39-31.447Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-43-54.770Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-44-31.709Z.json",
+    "?? docs/technical-risk-validation/evidence/automated-2026-09-18T22-45-25.149Z.json"
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/dedicated-bootstrap.spec.ts",
+    "--project=firefox",
+    "-g",
+    "ten witnessed loops"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-18T22:45:47.383Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "ee72a22dc5da6e9322563cbe22d71b3b1e9e5de0a6bce458a3b1483ab81fe96e",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-D9AqijGN.js": "22269d2977d7a61517ab30728b662a01b7b97a4569dedc8cd0a5698d6be90c7e",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "f6d62c1bd80c7dc13b27872f9e4b0be1b01637aa87edb90cf7d101f8609f1c64",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "0dbb077fb341d95d41b0c82bbf90eb796ec0dab243e0cfb82d09cb8ac8e70e25",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "runner-prepare.html": "6ba0759025db269854c6250b131d7b75d118fed3a25b89f410d4766e92457ce6",
+    "runner-prepare.js": "4a36fbb12714940b439680033f909139b3770586f0bd5ebe21189d7a9819c8f6",
+    "runner-sw.js": "8db1f58ce1bd5beeb90b4616abddb4ca6010c6a76c8c86670593b4902685c544",
+    "sw.js": "29839083f85afd80099c2dbd94ac4607ae646ff3fbb4d66098c8f9f46e053a64",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "passed",
+  "durationMs": 28830.707,
+  "cases": [
+    {
+      "title": " / firefox / dedicated-bootstrap.spec.ts / D3 dedicated ten witnessed loops and 100 fresh Worker cycles meet original budgets",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 25904,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "dedicated-loop-0",
+          "data": {
+            "trial": 0,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "11532c2d-6406-4001-b93c-128cd682e7aa",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2013,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "b9a01051-5409-45dd-80b6-836de024a8b2",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 24,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-1",
+          "data": {
+            "trial": 1,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "6fde8e6f-052e-431c-8006-0dbc3962b3a3",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2068,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "f7a1e6e9-0073-483d-8e3b-8e2c59ee1270",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 25,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-2",
+          "data": {
+            "trial": 2,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "95121274-eeb0-46e2-954f-1a00a165b7a3",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2006,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "30521cf4-80b6-42e1-af15-2e3498c9ac22",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 25,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-3",
+          "data": {
+            "trial": 3,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "621a42f2-0890-4ece-b456-58179553e1ab",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2054,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "436d0609-8f0c-4f58-aa68-42021ffdbc44",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 24,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-4",
+          "data": {
+            "trial": 4,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "c9b85edc-c49d-4b72-aed9-2cd97fa9ba00",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2141,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "5989b864-cf48-4ff5-84b9-dd26c1275e01",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 23,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-5",
+          "data": {
+            "trial": 5,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "2b832c65-076c-4598-a357-0238c4a4ed4b",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2120,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "2a184b8b-1f9f-46bb-bb41-1feb9f4e1f80",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 26,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-6",
+          "data": {
+            "trial": 6,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "66fc60ec-d394-42d5-8f1f-de5a211f7d1c",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2202,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "c2f39be6-2984-43af-93a0-c7f7b11d4803",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 23,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-7",
+          "data": {
+            "trial": 7,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "92acf467-ca8a-4b13-98bd-d81649f66fe8",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2072,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "212b5b63-1628-46af-abba-4ed4f5a7ae2e",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 20,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-8",
+          "data": {
+            "trial": 8,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "1f96cfe1-e898-4a39-b1b4-687350d1a70d",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2036,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "d32af4f8-5b39-4d75-92e1-634e1e234a59",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 41,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-loop-9",
+          "data": {
+            "trial": 9,
+            "witnessed": true,
+            "markerError": "",
+            "loop": {
+              "source": "while(true){}",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "e760cbbe-416d-4439-9fc2-c0f259115d9c",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": true,
+              "status": "timeout",
+              "output": [],
+              "value": "Execution deadline exceeded",
+              "elapsed": 2057,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"recovered\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "d5ea1086-6351-4a68-bfae-3276e59880c6",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "recovered"
+              ],
+              "value": "[undefined]",
+              "elapsed": 23,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        },
+        {
+          "name": "dedicated-frozen-lifecycle",
+          "data": {
+            "loops": [
+              {
+                "trial": 0,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "11532c2d-6406-4001-b93c-128cd682e7aa",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2013,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "b9a01051-5409-45dd-80b6-836de024a8b2",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 1,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "6fde8e6f-052e-431c-8006-0dbc3962b3a3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2068,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "f7a1e6e9-0073-483d-8e3b-8e2c59ee1270",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 2,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "95121274-eeb0-46e2-954f-1a00a165b7a3",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2006,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "30521cf4-80b6-42e1-af15-2e3498c9ac22",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 25,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 3,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "621a42f2-0890-4ece-b456-58179553e1ab",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2054,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "436d0609-8f0c-4f58-aa68-42021ffdbc44",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 24,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 4,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "c9b85edc-c49d-4b72-aed9-2cd97fa9ba00",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2141,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "5989b864-cf48-4ff5-84b9-dd26c1275e01",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 5,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "2b832c65-076c-4598-a357-0238c4a4ed4b",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2120,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "2a184b8b-1f9f-46bb-bb41-1feb9f4e1f80",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 26,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 6,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "66fc60ec-d394-42d5-8f1f-de5a211f7d1c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2202,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "c2f39be6-2984-43af-93a0-c7f7b11d4803",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 7,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "92acf467-ca8a-4b13-98bd-d81649f66fe8",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2072,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "212b5b63-1628-46af-abba-4ed4f5a7ae2e",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 20,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 8,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "1f96cfe1-e898-4a39-b1b4-687350d1a70d",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2036,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "d32af4f8-5b39-4d75-92e1-634e1e234a59",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 41,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              },
+              {
+                "trial": 9,
+                "witnessed": true,
+                "markerError": "",
+                "loop": {
+                  "source": "while(true){}",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "e760cbbe-416d-4439-9fc2-c0f259115d9c",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": true,
+                  "status": "timeout",
+                  "output": [],
+                  "value": "Execution deadline exceeded",
+                  "elapsed": 2057,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                },
+                "fresh": {
+                  "source": "console.log(\"recovered\")",
+                  "candidate": "dedicated",
+                  "task": "Q01",
+                  "run": "d5ea1086-6351-4a68-bfae-3276e59880c6",
+                  "contentVersion": "1",
+                  "assessmentVersion": "1",
+                  "previewMarker": false,
+                  "status": "success",
+                  "output": [
+                    "recovered"
+                  ],
+                  "value": "[undefined]",
+                  "elapsed": 23,
+                  "cleanup": {
+                    "acknowledged": true,
+                    "fallback": false,
+                    "retainedTrustedBootstrap": true
+                  }
+                }
+              }
+            ],
+            "cycles": [
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "2ec37e03-1878-4cb6-af7d-23e977ccfc08",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "898c3b00-4c0b-418b-8d08-cf8e8f9de8c4",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "258a8eb7-20ba-4a64-ba25-0531d4652991",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "e8019a7a-c8be-4071-88b6-f73b838b3bf0",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "876103f4-fa65-481f-998d-fa279fed518e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 28,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "4241fcf8-575c-4bec-8d62-3a208b3ae496",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 30,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "719b581f-fdfe-4577-8334-09bf8db71b62",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c9019658-1a3d-4333-b89c-0d08992bc307",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 26,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "e592a7b3-bde2-4461-b00d-73b7563ee33a",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "6e2eb156-58f3-4c76-8bba-167af7187108",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8128ed41-4b3c-4e5b-994a-958a1805790d",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 26,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c7775a0d-088d-4b0d-9224-26f66d22b1ee",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ac00f0c2-f33f-44af-bf86-5f75950a075d",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c7308660-2415-48a8-9b86-022bb26d46e9",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 24,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "4ba9f72e-9a2d-4e2e-aa7a-5aba0392077e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "d404f6fa-4959-4b58-9db6-491507746606",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 26,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "e6fdf6b0-cb1f-4737-8488-af694492e5d7",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "f3c68390-e988-4ecb-b65e-0bc1498d4d10",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "fef13b49-6ffb-4339-b07b-2fa4f8dc54a1",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "bec1fbd3-bdf3-4d6c-b55b-1900efe664a5",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "4d64ed58-e3c1-4dec-9e18-e88bb7b36cd1",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "668d589a-bd0d-44cb-a9a7-b0512d338537",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 25,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8aaaffa4-b064-47e2-a554-fbaa42845b6f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "9d560909-4505-421c-9001-ed44f1d7b6f8",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3963ab3d-6182-4cc9-ba55-d7464d4e3185",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "9ac8e82b-01ea-446f-b8a0-3b247ab758d6",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 24,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c2793b73-bbc1-4edb-99e6-04d5069608d9",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 27,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "47422f0b-f46d-46db-8d60-5c808191da23",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3fe62de4-02c4-4e8d-8cc9-fdd5f5723546",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "7c6e0987-bf67-472c-99dc-f97aeb347f3f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 25,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "6fad5327-c0bd-4702-beb7-2b2aadc5867f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 28,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "beeb4ca8-dfa7-44c6-b34d-b728f75661a9",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c4bb9b8c-6c57-4f45-82da-cb87491d6794",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 27,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "04cb52bb-e2da-4b16-ac92-7e160fa9594a",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "36ddf3b8-6495-472f-8a9e-ab055f4fed4f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "776af289-c62f-4ecb-ace4-cfd77664ab78",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 27,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "a74b839d-5656-405e-8732-2fc5d03cc986",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "4a49927c-2e20-4b60-9d27-86f1c669f4a5",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "10deb767-4f79-4151-83fb-7d882753e603",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "b2a5ca19-d410-4307-b072-a5a6e74e0d4c",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c13595bb-27fc-4379-9175-ce97bdf67208",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 17,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "9cbd9a7a-2679-4891-9a24-85d003cb3ed4",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 14,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "1451a063-df01-4a33-bd14-e2891fb4ff8c",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "b14e195f-a6e7-4880-b260-79fd3f38ed8b",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ae5224d5-d07b-4e50-9b3f-e7ffca3d1207",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 16,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "484c3106-64fb-43e6-ba2d-8f20a7384b1c",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3919f4c7-9965-482d-8005-2c2fbefce1dc",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "2bdcbcf2-192d-45d4-a107-3f16fb389515",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "60a7b3a8-23a6-4ac1-ab52-3c48b3775295",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "1ee80b4a-08be-433d-8d7b-b3914b45bca2",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "38fdda81-7c9f-4ed3-9d20-add056febb53",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3b2b6031-20f6-4561-8e0a-901dc8a537ed",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "f26a671c-99e5-4c7a-80e0-714f15116127",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "5304ab50-a24d-486b-a395-42cdb931bcf5",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "bd8bde5b-6ba2-48ae-bc58-af97eb914c27",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8d480d22-4794-425d-8ac5-0715af06021f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8557396e-1dcb-4c62-9a3d-453a3cef64de",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "2c953a11-5b88-4d0e-885e-ba5466fb2e0c",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3196ba4f-568d-4025-88f0-66b558e70315",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 16,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "2c92601c-ba7f-4f55-bd04-30316d5241be",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "a1cf51e6-d4bb-440b-8179-5bf412cd52d2",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 26,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ea75e34d-4974-4d16-bc51-b347cce00bdb",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "17b8bff9-0dc2-48aa-b5b6-304f3301e0e5",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "7062c832-84c6-4e79-be3e-c3b1bf2063bf",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "e78cba9b-5433-4e60-9e19-0f58943cd616",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "f38643ae-6ce0-4f0b-8d40-f4c9d77057e8",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "67c7a590-bf5a-456c-846c-69042183a522",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "5dae685c-58e4-4c28-a92a-5ad49d2f9033",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "3d257652-b463-41c9-97d2-646314d1a5bd",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "fcc2a2e8-2a3b-445f-9098-c2310fb6058d",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "09686625-3f69-4916-9605-951844fee53e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "1ee2c5c0-eb8e-44ce-a1f7-5a77e69c65c9",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ee51dbbd-1e1f-4651-aac7-46174c17b011",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 17,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "da1a94b5-f571-4ec6-af1f-31db5ba61a74",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 22,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "f50b6d68-06de-4040-a405-8ebcee15b985",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 26,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "a625a334-6d0c-4d6c-a290-9ef64aeb65ff",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 25,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "c4f0c4b0-bb7f-45cb-a2b4-f8523b5946d1",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "6d234abb-d8b5-4dd3-8c03-2f31af9bf803",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 19,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "f3425302-5742-4b70-ba11-8aa0e1a7be24",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ba6b7da1-083c-4e98-b6c3-eca5243acdcd",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 25,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "af59534b-5459-4f26-86d6-fa31e3888c25",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 25,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "a2fd9662-955b-4b8f-990d-ab02dc94d5db",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 24,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "5738baf4-c556-4fc1-93cd-598dc57fc74c",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 28,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "44f6a8eb-eeed-4790-9b66-db4d70ade021",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 28,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "b917876a-2577-4a59-a99a-1904e3805968",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "ae1358fe-a07c-4363-b6c5-263a54db5018",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "311b90b5-efd0-4e66-8c85-46b97608a30f",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 30,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "577c8391-4de0-4461-abec-5330b48bc5ee",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 32,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "eadb6c6e-cf61-462a-b7c9-c04e2ea99bbb",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8f241e9d-e27d-4fdc-bbd0-f7fa90ebe06e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 24,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "902e65a4-7a9a-44eb-bd5d-15aada595003",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8f03aa4d-0bd8-481b-bea5-a4c91300ffb5",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 24,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "086e3245-7997-4370-8f59-052a24f61d73",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 30,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "509ec845-eab1-4368-b030-c38d246eff1e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 27,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "bce71d80-f9d6-496a-90a8-1cbdd48a44aa",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "8f5842ba-6b76-44f0-aa57-c4afdada09fe",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 18,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "1c5641e1-5eb3-4c61-bcb2-dab5451df12e",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 20,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "24f3ff29-3060-4707-8345-5647e72273a1",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 23,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "4a6c34a2-91a4-489a-9098-f005aecbbc8d",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 17,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              },
+              {
+                "source": "console.log(\"cycle\")",
+                "candidate": "dedicated",
+                "task": "Q01",
+                "run": "e0f77331-dae0-4c72-b073-bb83a41a2873",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "previewMarker": false,
+                "status": "success",
+                "output": [
+                  "cycle"
+                ],
+                "value": "[undefined]",
+                "elapsed": 21,
+                "cleanup": {
+                  "acknowledged": true,
+                  "fallback": false,
+                  "retainedTrustedBootstrap": true
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

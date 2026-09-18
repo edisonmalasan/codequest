@@ -24,7 +24,9 @@ test('E01/E06 read, run, failed check, hint, correction, provisional save and re
   await page.reload();
   await expect(page.getByRole('textbox', { name: 'JavaScript source' })).toContainText('Ready for CodeQuest');
   await expect(page.getByText('Local provisional completion; not accepted account progress')).toBeVisible();
-  await page.getByRole('textbox', { name: 'JavaScript source' }).focus(); await page.keyboard.press('Escape');
+  const editor = page.getByRole('textbox', { name: 'JavaScript source' });
+  await editor.click();
+  await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: 'Run', exact: true })).toBeFocused();
   await info.attach('environment', { body: JSON.stringify({ browser: browser.version(), viewport: page.viewportSize(), physical: false }), contentType: 'application/json' });
 });
