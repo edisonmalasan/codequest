@@ -55,3 +55,8 @@ Final bundled dedicated run against `dae76ba` with the build manifest frozen bef
 ## Delegated review checkpoint - 2026-09-18
 
 Retest campaign: Chromium bundled dedicated scope fully passes after the charter-backed targets correction; unit 28/28 with clean lint/typechecks. Firefox downloaded-headless verdicts churn on timing (flakes, not stable defects) with a reproducibly slow offline-preparation path; WebKit offline cluster stable and environmental. Delegated review verdict: **Inconclusive** for dedicated-candidate progression (historical opaque Redesign/no-go retained); task 9.3 complete, **23/34**. See the [review](report.md#delegated-technicalproductsecurity-review---2026-09-18). No untested configuration marked passed. PR #6 remains draft; no Proceed, Phase 2, Sync, Archive or merge.
+
+
+## Handshake diagnosis and cold-process reversal - 2026-09-18
+
+Firefox post-update first-probe failure root-caused to a browser/environment limitation (bootstrap iframe loads, handshake never completes; runner worker registration `frame-src`-blocked, page left uncontrolled); identical flow without the isolated policy executes in ~75ms. Cold-process S04 substitute passes **10/10 on headed installed Chrome** (source, provisional Check, preview/text, controller, refusal, cleanup). See the [finding](report.md#firefox-post-update-handshake-finding-and-cold-process-reversal---2026-09-18). Still **23/34**; delegated Inconclusive stands. PR #6 remains draft.
