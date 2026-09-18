@@ -85,6 +85,9 @@ A preview loop may starve a host watchdog; sandbox permissions are not CPU conta
 
 Record exact OS/browser versions, hardware, viewport, input method, network state and install mode before testing. This matrix selects validation environments, not a forever support-version promise. Physical installation is tested where exposed; lack of an install capability is documented as unsupported, not success. Required reading/editing/local JS/containment failure cannot be excused as unsupported without explicit product-scope revision. Missing required hardware yields untested coverage and an inconclusive overall gate. No timer or resource assumption comes solely from browser emulation.
 
+### D6 amendment (AP03, 2026-09-18): development gate vs release gates
+Delegated approval AP03 applies S01–S06 to the Phase 1 development gate only. Automated coverage (accessible installed Windows Chrome plus pinned Chromium/Firefox/WebKit component/online containment/recovery/integrated evidence) gates Phase 1 progression; inaccessible physical mobile/Safari/Firefox-install and NVDA/VoiceOver evidence become explicit pre-beta release obligations recorded `untested`, never passes and never support promises. B01/B07 substitute measurements (rendered-DOM/frame proxy, isolated-profile cold-process trials) keep every budget and sample count; WebKit offline-emulation failure is a reviewed configuration limitation with failures retained. See the approved scope adjustment and decision AP03.
+
 Alternative: automated engines alone. Rejected because virtual keyboard, Safari/PWA lifecycle and physical low-end performance are material risks.
 
 ### D7: Predeclare provisional budgets before measurements
@@ -119,6 +122,9 @@ Final recommendation:
 Name actual accountable experiment and review owners in the charter before execution. Technical owner reviews mechanism/reproducibility; security owner reviews boundary and residual limits; product owner reviews declared mobile/offline promise and exclusions; curriculum owner confirms fixture consistency. Reviewer evidence may be an explicit user instruction where it identifies the applicable decision/outcome; do not infer it from committing, proposing, or running experiments.
 
 Update F01/F02 with reviewed selections and evidence references; add feasibility evidence to ADR 0004 and consistent frontend/security/architecture notes without rewriting AP01 or reopening Phase 0. If policy must change, do not edit it silently: request explicit scoped approval and revise active planning artifacts before proceeding. A report documenting no-go can finish the investigation but cannot satisfy the successful Phase 1 progression gate. Phase 2 remains a separate proposal/execution authorization even after Proceed.
+
+### D8 amendment (AP03, 2026-09-18): Proceed under the adjusted development gate
+Proceed additionally requires AP03 entry conditions verified (no stably-failing product finding on any engine; S06 control conditions met) and every deferred physical/AT obligation recorded as an explicit pre-beta release gate in the roadmap. The final review verdict applies to the development gate; release obligations stay open and block support claims, not Phase 2 authorization.
 
 ### D9: Maintain the roadmap snapshot without rewriting historical plans
 

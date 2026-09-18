@@ -60,3 +60,8 @@ Retest campaign: Chromium bundled dedicated scope fully passes after the charter
 ## Handshake diagnosis and cold-process reversal - 2026-09-18
 
 Firefox post-update first-probe failure root-caused to a browser/environment limitation (bootstrap iframe loads, handshake never completes; runner worker registration `frame-src`-blocked, page left uncontrolled); identical flow without the isolated policy executes in ~75ms. Cold-process S04 substitute passes **10/10 on headed installed Chrome** (source, provisional Check, preview/text, controller, refusal, cleanup). See the [finding](report.md#firefox-post-update-handshake-finding-and-cold-process-reversal---2026-09-18). Still **23/34**; delegated Inconclusive stands. PR #6 remains draft.
+
+
+## AP03 approval and 34/34 completion - 2026-09-18
+
+Delegated approval AP03 applies S01-S06 to the Phase 1 development gate (see [decision](../decisions.md#ap03-delegated-s01-s06-scope-approval---2026-09-18)). **34/34 tasks complete.** Automated evidence: installed Chrome 63/63 native, Chromium bundled scope, Firefox partitioned component coverage (harness-allowlist repair; load contention proven environmental), WebKit except the reviewed S06 offline-emulation cluster; per-test matrix confirms every required automated test holds a pass on Chromium/installed-Chrome/Firefox. Deferred pre-beta release obligations (`untested`, no support claims): physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power timing, native quota/background/OS-restart. Final delegated review: **Proceed (development gate)**. See the [final review](report.md#final-delegated-review---2026-09-18-proceed-development-gate). PR #6 ready for merge-commit merge; Sync/Archive to follow.
