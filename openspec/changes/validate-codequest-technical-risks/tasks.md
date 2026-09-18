@@ -127,3 +127,7 @@ Temporary Firefox diagnostic (spec removed after use; suite unchanged) root-caus
 ## Default-config authority counterpart - 2026-09-18
 
 Full 8-probe post-update authority loop on Firefox against `/` (no comparison parent policy) passes: all `preview-reset`, empty sink, `APP_NOT_FOUND` correctly reported ([evidence](../../../docs/technical-risk-validation/evidence/automated-2026-09-18T13-04-31.185Z.json), recorded in the [finding](../../../docs/technical-risk-validation/report.md#firefox-post-update-handshake-finding-and-cold-process-reversal---2026-09-18)). Temporary diagnostic spec removed after use. Firefox failure scoped to the isolated-policy variant plus update timing; remaining gap is offline-preparation containment and run-to-run flakes. Still **23/34**, no checkbox moves. PR #6 remains draft.
+
+## Native 63/63 and review addendum - 2026-09-18
+
+Full 63-case suite passes **63/63 on headed installed Chrome** ([evidence](../../../docs/technical-risk-validation/evidence/automated-2026-09-18T13-10-15.545Z.json)), superseding D9 61/2 for the corrected scope. Focused Firefox redistribution 2/3: cache-poisoning and versioned-identity pass, offline-containment fails at the banner precondition (1/4 across runs, same post-update mechanism). Review addendum confirms **Inconclusive** stands on the new evidence (recorded in the [review](../../../docs/technical-risk-validation/report.md#delegated-technicalproductsecurity-review---2026-09-18)). Still **23/34**, no checkbox moves. PR #6 remains draft; no merge, Phase 2, Sync or Archive.

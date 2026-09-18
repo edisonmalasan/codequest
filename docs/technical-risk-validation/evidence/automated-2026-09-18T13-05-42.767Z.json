@@ -1,0 +1,177 @@
+{
+  "recordedAt": "2026-09-18T13:05:42.767Z",
+  "commit": "31e7d343f00917916fbc7cd594dd4f5ef49cb6c2",
+  "dirtyPaths": [
+    ""
+  ],
+  "command": [
+    "D:\\Projects\\codequest\\prototypes\\technical-risk-validation\\node_modules\\@playwright\\test\\cli.js",
+    "test",
+    "tests/preview-recovery.spec.ts",
+    "tests/dedicated-bootstrap.spec.ts",
+    "tests/persistence.spec.ts",
+    "--project=firefox",
+    "-g",
+    "retains containment after offline preparation|cache poisoning|versioned lesson identity"
+  ],
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.19045",
+    "cpu": "Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz",
+    "node": "v24.21.0",
+    "nodeOptions": "",
+    "skipHostDependencyPreflight": true,
+    "installedChrome": false,
+    "mode": "headless automated browser; no physical/manual claim",
+    "chromiumArgs": [
+      "--disable-gpu",
+      "--renderer-process-limit=2"
+    ],
+    "traces": "off; bounded JSON evidence instead"
+  },
+  "buildFrozenAt": "2026-09-18T13:05:24.056Z",
+  "buildHashesFrozenBeforeTrials": {
+    ".vite/manifest.json": "ee72a22dc5da6e9322563cbe22d71b3b1e9e5de0a6bce458a3b1483ab81fe96e",
+    "assets/index-CKRekp1-.css": "832e129fddbb10be315d5cffd5282ce992059c97b272f10dfcc3dad4585730ed",
+    "assets/index-D9AqijGN.js": "22269d2977d7a61517ab30728b662a01b7b97a4569dedc8cd0a5698d6be90c7e",
+    "bootstrap.html": "3083a5c490720c82c0a7387811f11873a212e5939747e8aa5b2acc3176e489d2",
+    "bootstrap.js": "f6d62c1bd80c7dc13b27872f9e4b0be1b01637aa87edb90cf7d101f8609f1c64",
+    "icon.svg": "87ed90941f29780f966a32f65d9e09b9c4a5aa0b096cf1c4d81c0a7574ee56bd",
+    "index.html": "0dbb077fb341d95d41b0c82bbf90eb796ec0dab243e0cfb82d09cb8ac8e70e25",
+    "manifest.json": "b2808897e28cfcd73210abaa78e500bcdbba1361794b44de8cd454ae9768862f",
+    "opaque-bootstrap.js": "0633fd1d68628a321709eb07e2b62caad4b15615330be927abf1ccf22c796481",
+    "preview.html": "d1756b5329ef2ca3eb2b6d33ed356f1487c1b2e0a99816c8cf703e1a125363cf",
+    "preview.js": "e6b5a4e6439313e95bb13558a9e8807c8cdeab22c9e15ba642c11d4f3e014aa8",
+    "runner-prepare.html": "6ba0759025db269854c6250b131d7b75d118fed3a25b89f410d4766e92457ce6",
+    "runner-prepare.js": "4a36fbb12714940b439680033f909139b3770586f0bd5ebe21189d7a9819c8f6",
+    "runner-sw.js": "8db1f58ce1bd5beeb90b4616abddb4ca6010c6a76c8c86670593b4902685c544",
+    "sw.js": "29839083f85afd80099c2dbd94ac4607ae646ff3fbb4d66098c8f9f46e053a64",
+    "worker.js": "0f48720dbbb010cece856dc6dbabb7ff45d8a10ae0663ae7d47fbb5180033f41"
+  },
+  "status": "failed",
+  "durationMs": 19263.881,
+  "cases": [
+    {
+      "title": " / firefox / dedicated-bootstrap.spec.ts / D3 learner cache poisoning cannot replace trusted public code or CSP",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 3130,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "learner-cache-poisoning",
+          "data": {
+            "first": {
+              "source": "console.log(\"initial\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "72e649dd-7823-4f87-b195-34fcfb29ad9b",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "initial"
+              ],
+              "value": "[undefined]",
+              "elapsed": 54,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "poisoned": {
+              "source": "const cache=await caches.open(\"codequest-runner-public-v1\");await cache.put(\"/worker.js\",new Response(\"self.postMessage('POISON_EXECUTED')\",{headers:{\"Content-Type\":\"text/javascript\",\"Content-Security-Policy\":\"default-src *;script-src *\"}}));console.log(\"cache mutated\");",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "6fb64ab8-dd5e-4ede-bbd0-7fc9ba470afc",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "cache mutated"
+              ],
+              "value": "[undefined]",
+              "elapsed": 26,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            },
+            "fresh": {
+              "source": "console.log(\"must not execute poisoned code\")",
+              "candidate": "dedicated",
+              "task": "Q01",
+              "run": "32ff63de-4059-4b55-93ad-f125c262cadd",
+              "contentVersion": "1",
+              "assessmentVersion": "1",
+              "previewMarker": false,
+              "status": "success",
+              "output": [
+                "must not execute poisoned code"
+              ],
+              "value": "[undefined]",
+              "elapsed": 27,
+              "cleanup": {
+                "acknowledged": true,
+                "fallback": false,
+                "retainedTrustedBootstrap": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / persistence.spec.ts / E05 versioned lesson identity, missing resources and cleared task storage are truthful",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "durationMs": 4117,
+      "errors": [],
+      "evidence": [
+        {
+          "name": "task-storage-clearing",
+          "data": {
+            "inventory": [
+              {
+                "key": "Q01/1/1",
+                "task": "Q01",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Print exactly Ready for CodeQuest. Run explores your code; Check evaluates the objective.",
+                "starter": "console.log(\"Not ready\");",
+                "hash": "0292c0f0a6169f5cec14085efa2a09b7f5163ed4ca66e111a7b0145625053d65"
+              },
+              {
+                "key": "RECORDS/1/1",
+                "task": "RECORDS",
+                "contentVersion": "1",
+                "assessmentVersion": "1",
+                "objective": "Return the total quantity from summarize(records). The display plumbing is supplied.",
+                "starter": "function summarize(records) {\n  let total = 0;\n  for (const record of records) total += record.quantity;\n  return total;\n}",
+                "hash": "26f1811235ead3d53b98e2483bd494dd4da7b8742ae62e44b5d2c677ade8c03a"
+              }
+            ],
+            "confirmedSourceLostAfterExplicitTaskDatabaseClear": true,
+            "missingLessonDisclosed": true,
+            "realQuotaExhaustion": "not simulated by clearing; separately untested",
+            "physical": false
+          }
+        }
+      ]
+    },
+    {
+      "title": " / firefox / preview-recovery.spec.ts / E04/E05 Worker preview retains containment after offline preparation and public asset update",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "durationMs": 8921,
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Online · Public lesson and runtime assets prepared offline')\nExpected: visible\nTimeout: 6000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Online · Public lesson and runtime assets prepared offline') with timeout 6000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Online · Public lesson and runtime assets prepared offline')\u001b[22m\n"
+      ],
+      "evidence": []
+    }
+  ]
+}
