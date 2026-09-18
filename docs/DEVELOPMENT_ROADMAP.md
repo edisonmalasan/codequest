@@ -2,19 +2,19 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-15. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-18. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
 | Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); Apply continuation, not complete |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
 | Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply continuation - 22/34 tasks complete; inventory and native Chrome diagnostics recorded; 12 required experiment/review gates incomplete |
-| Next execution step | Retest the owner-approved [dedicated-bootstrap experiment](technical-risk-validation/proposed-bootstrap-revision.md) against unchanged limits. Review final evidence and the still-proposed [scope adjustment](technical-risk-validation/proposed-scope-adjustment.md); support/progression decisions unresolved |
+| Current OpenSpec stage | Apply continuation - 23/34 tasks complete; delegated review Inconclusive for dedicated-candidate progression; 11 acceptance gates remain incomplete |
+| Next execution step | Stabilize Firefox offline-preparation/update evidence (quarantine timing flakes vs product cause) and resolve the native cold-process substitute; then re-review. Historical opaque Redesign/no-go retained; S01-S06 remain proposed, not applied |
 | Next phase | Phase 2 — Repository Foundation, blocked on reviewed Phase 1 validation evidence and separate execution authorization |
-| Validation evidence | Approved persistent-bootstrap experiment implemented/retested: native full suite 34 passed/15 failed; independent post-loop fresh runs retain four timeouts. Native PWA/persistence and zoom geometry/source pass; 400% local Check times out; ten cold-process probe fails. Bundled target-lifetime and WebKit offline failures retained. Inaccessible device/AT and native quota limits remain untested/inconclusive; AP02 historical no-go retained |
+| Validation evidence | Chromium bundled dedicated scope fully passes (charter-backed targets correction, hard ack/fresh/source gates); unit 28/28 with clean lint/typechecks; Firefox downloaded-headless verdicts churn on timing with a reproducibly slow offline-prep path (containment signals holding); WebKit offline cluster stable and environmental; opaque-era native 0/10 cold-process, post-loop timeouts and 400% Check failures retained; physical/AT untested |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |
-| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; F01 Worker-preview recommendation pending review/required evidence; F02 inconclusive; no production selection |
+| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 review Inconclusive for dedicated candidate; F01 Chromium-complete recommendation pending; F02 inconclusive; no production selection |
 
 ## 1. Product Goal
 
