@@ -2,16 +2,16 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-18. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); Apply complete, Proceed (development gate), PR #6 pending merge |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived |
-| Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/validate-codequest-technical-risks/proposal.md) |
-| Current OpenSpec stage | Apply complete - 34/34 tasks; delegated AP03 scope approval applied; F01/F02 selected; final review Proceed (development gate) |
-| Next execution step | Merge PR #6 (merge commit), OpenSpec Sync if required, Archive the Phase 1 change, then Phase 2 — Repository Foundation under separate authorization |
-| Next phase | Phase 2 — Repository Foundation, awaiting Phase 1 Archive and separate execution authorization |
+| Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); **complete and archived**, Proceed (development gate) |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived |
+| Current OpenSpec change | [validate-codequest-technical-risks](../openspec/changes/archive/2026-09-19-validate-codequest-technical-risks/proposal.md) (archived 2026-09-19; PR #6 merged) |
+| Current OpenSpec stage | Archive complete - change archived with all tasks verified complete; no active change |
+| Next execution step | Phase 2 — Repository Foundation: create the next bounded OpenSpec Explore/Propose workflow under separate authorization |
+| Next phase | Phase 2 — Repository Foundation, awaiting new Explore/Propose authorization |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts and isolated disposable Phase 1 prototypes; no production application workspace or infrastructure |

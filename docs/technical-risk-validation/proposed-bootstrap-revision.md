@@ -1,6 +1,6 @@
 # Proposed dedicated-bootstrap experiment revision
 
-**Experiment approved 2026-09-15; implementation/retest pending; not selected for production.** Approval evidence: the project owner replied "i approve it. continue finishing all the tasks in phase 1" to the explicit dedicated-bootstrap/public-offline-cache experiment question. Active change: [validate-codequest-technical-risks](../../openspec/changes/validate-codequest-technical-risks/proposal.md). This approves the contract below only, not S01-S06, a passing outcome, production selection or Phase 2.
+**Experiment approved 2026-09-15; implementation/retest pending; not selected for production.** Approval evidence: the project owner replied "i approve it. continue finishing all the tasks in phase 1" to the explicit dedicated-bootstrap/public-offline-cache experiment question. Active change: [validate-codequest-technical-risks](../../openspec/changes/archive/2026-09-19-validate-codequest-technical-risks/proposal.md). This approves the contract below only, not S01-S06, a passing outcome, production selection or Phase 2.
 
 ## Evidence and hypothesis
 
