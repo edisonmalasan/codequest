@@ -1,13 +1,62 @@
 @import 'tailwindcss';
+@import './pixel.css';
 
 @theme {
+  /* Surface ramp (dark-first pixel identity) */
   --color-surface: #0f1222;
+  --color-surface-raised: #171b31;
+  --color-surface-sunken: #0a0d1a;
+  --color-line: #2b3157;
+
+  /* Ink ramp */
   --color-ink: #e8eaf2;
-  --radius-base: 0.375rem;
+  --color-muted: #a7aec9;
+
+  /* Single action accent + text drawn on it */
+  --color-ascent: #34d399;
+  --color-ascent-ink: #0a0d1a;
+
+  /* Reward accent (reserved for rewards/achievements) + text drawn on it */
+  --color-reward: #fbbf24;
+  --color-reward-ink: #0a0d1a;
+
+  /* Feedback */
+  --color-success: #34d399;
+  --color-danger: #f87171;
+
+  /* Typography */
   --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-display: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* Conventional radii for interactive controls and cards */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Shadows: hard offsets for game surfaces, soft elevation for UI */
+  --shadow-hard-sm: 3px 3px 0 0 #05060d;
+  --shadow-hard: 5px 5px 0 0 #05060d;
+  --shadow-soft: 0 8px 24px 0 rgb(5 6 13 / 0.45);
+
+  /* Motion rules: stepped for game feedback, short smooth curve for UI */
+  --ease-ui: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-instant: 0ms;
+  --duration-quick: 120ms;
+  --duration-base: 200ms;
 }
 
 body {
   background-color: var(--color-surface);
   color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
