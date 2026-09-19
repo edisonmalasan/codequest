@@ -6,12 +6,12 @@ Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 2 - Repository Foundation; **complete and archived** |
+| Current phase | Phase 3 — Frontend Foundation; **active (proposal under review)** |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived |
-| Current OpenSpec change | [repository-foundation](../openspec/changes/archive/2026-09-19-repository-foundation/proposal.md) (archived 2026-09-19; PR #9 merged) |
-| Current OpenSpec stage | Archive complete - change archived with all tasks verified complete; no active change |
-| Next execution step | Phase 3 — Frontend Foundation: create the next bounded OpenSpec Explore/Propose workflow under separate authorization |
-| Next phase | Phase 3 — Frontend Foundation, awaiting new Explore/Propose authorization |
+| Current OpenSpec change | [frontend-foundation](../openspec/changes/frontend-foundation/proposal.md) (proposed; proposal PR under review) |
+| Current OpenSpec stage | Propose — proposal, spec, design, and tasks drafted; awaiting review and merge before Apply |
+| Next execution step | Review and merge the frontend-foundation proposal PR; then open the Apply implementation branch |
+| Next phase | Phase 4 — Design System, not started |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI), and isolated disposable Phase 1 prototypes; no database, generated client, content engine, or runtime |
