@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { AppProviders } from './providers';
+import '../styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'CodeQuest',
@@ -12,7 +14,9 @@ export default function RootLayout({
 }): React.JSX.Element {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }
