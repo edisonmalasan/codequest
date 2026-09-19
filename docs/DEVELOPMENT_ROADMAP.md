@@ -14,7 +14,7 @@ Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stag
 | Next phase | Phase 4 — Design System, awaiting new Explore/Propose authorization |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Documentation, OpenSpec artifacts, Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI), and isolated disposable Phase 1 prototypes; no database, generated client, content engine, or runtime |
+| Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation (structure, theme base, providers, state primitive, Dexie skeleton, editor proof) on the Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI), and isolated disposable Phase 1 prototypes; no database, generated client, content engine, or runtime |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
