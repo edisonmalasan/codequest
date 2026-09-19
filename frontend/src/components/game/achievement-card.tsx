@@ -47,7 +47,7 @@ export function AchievementCard({
       <span className="flex flex-col">
         <span className="font-sans text-sm font-bold text-ink">{title}</span>
         <span className="font-sans text-sm text-muted">{description}</span>
-        <span className="mt-0.5 font-display text-[11px] tracking-wide text-muted uppercase">
+        <span className="mt-0.5 font-display text-xs tracking-wide text-muted uppercase">
           {unlocked ? 'Unlocked' : 'Locked'}
         </span>
       </span>

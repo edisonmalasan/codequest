@@ -22,7 +22,7 @@ export function QuestPath({
     >
       <span
         aria-hidden="true"
-        className="absolute top-2 bottom-2 left-[18px] w-0.5 bg-line"
+        className="absolute top-2 bottom-2 left-5 w-0.5 bg-line"
       />
       {children}
     </ol>
