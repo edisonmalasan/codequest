@@ -1,0 +1,63 @@
+/*
+ * Pixel styling language (game identity surfaces only).
+ *
+ * RULE: pixel treatment marks game identity — logo mark, XP displays,
+ * badges, quest nodes, chapter art frames. Everything interactive that
+ * is NOT a game emblem uses conventional controls (rounded radii,
+ * soft shadows). One shape system per surface; never both.
+ *
+ * ACCESSIBILITY: clip-path trims focus outlines, so any pixel-shaped
+ * interactive element MUST drop its clip-path under :focus-visible and
+ * show a conventional high-contrast outline instead.
+ */
+
+.pixel-corners {
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+}
+
+.pixel-corners-sm {
+  clip-path: polygon(
+    5px 0,
+    100% 0,
+    100% calc(100% - 5px),
+    calc(100% - 5px) 100%,
+    0 100%,
+    0 5px
+  );
+}
+
+.pixel-frame {
+  position: relative;
+  background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-hard);
+}
+
+.pixel-frame-reward {
+  position: relative;
+  background-color: var(--color-surface-raised);
+  box-shadow: 5px 5px 0 0 rgb(251 191 36 / 0.35);
+}
+
+button.pixel-corners:focus-visible,
+a.pixel-corners:focus-visible,
+button.pixel-corners-sm:focus-visible,
+a.pixel-corners-sm:focus-visible {
+  clip-path: none;
+  border-radius: var(--radius-sm);
+  outline: 2px solid var(--color-ascent);
+  outline-offset: 2px;
+}
+
+/* Stepped fill for game progress: discrete jumps, never smooth sweeps. */
+.pixel-steps {
+  transition-timing-function: steps(12, end);
+  transition-duration: var(--duration-base);
+  transition-property: width;
+}

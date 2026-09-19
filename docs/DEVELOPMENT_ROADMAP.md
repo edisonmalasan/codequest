@@ -6,11 +6,11 @@ Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 4 — Design System; **active (proposal under review)** |
+| Current phase | Phase 4 — Design System; **active (Apply implementation complete, PR under review)** |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived |
-| Current OpenSpec change | [design-system](../openspec/changes/design-system/proposal.md) (proposed; proposal PR under review) |
-| Current OpenSpec stage | Propose — proposal, spec, design, and tasks drafted; awaiting review and merge before Apply |
-| Next execution step | Review and merge the design-system proposal PR; then open the Apply implementation branch |
+| Current OpenSpec change | [design-system](../openspec/changes/design-system/proposal.md) (proposal merged in PR #16; implementation on `feat/design-system`) |
+| Current OpenSpec stage | Apply — all 5 task groups implemented; lint/typecheck/test/build green locally and in root, dev route renders 200, contrast audited to WCAG AA; awaiting PR review and CI |
+| Next execution step | Review and merge the Apply PR; then Sync if required and Archive |
 | Next phase | Phase 5 — Backend Foundation, not started |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
