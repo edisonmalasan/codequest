@@ -16,4 +16,4 @@
 ## 4. Integration and close-out
 
 - [x] 4.1 Full root contract green 2026-09-19: `pnpm install`, `lint`, `typecheck`, `test` (7 tests), `build` (both apps) via turbo; `pnpm dev` boots backend + frontend together (Nest `/health` ok, Next 200). Environment note: local `corepack enable` fails without admin, so pnpm 12.4.1 was installed via `npm i -g` (machine setup, not a repo change); CI uses `pnpm/action-setup` and is unaffected
-- [ ] 4.2 Update `architecture.md` current-state line and roadmap Project Status to the Phase 2 outcome; verify links resolve and strict OpenSpec validation passes
+- [x] 4.2 Update `architecture.md` current-state line and roadmap Project Status to the Phase 2 outcome; verify links resolve and strict OpenSpec validation passes
