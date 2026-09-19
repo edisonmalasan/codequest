@@ -34,7 +34,7 @@ export function QuestNode({
       <span
         aria-hidden="true"
         className={cn(
-          'pixel-corners-sm flex h-9 w-9 items-center justify-center',
+          'pixel-corners-sm flex h-8 w-8 items-center justify-center',
           status === 'completed' && 'bg-ascent text-ascent-ink',
           status === 'in_progress' &&
             'pixel-frame bg-surface-raised text-ascent',
@@ -48,7 +48,7 @@ export function QuestNode({
         <span className="font-sans text-sm font-semibold text-ink">
           {label}
         </span>
-        <span className="font-display text-[11px] tracking-wide text-muted uppercase">
+        <span className="font-display text-xs tracking-wide text-muted uppercase">
           {text}
         </span>
       </span>
@@ -71,7 +71,7 @@ export function QuestNode({
         type="button"
         onClick={onSelect}
         aria-label={`${label}, ${text}`}
-        className="flex items-center gap-3 rounded-sm p-1 outline-none transition-transform duration-quick ease-ui hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ascent"
+        className="flex items-center gap-3 rounded-sm p-1 -m-1 outline-none transition-transform duration-quick ease-ui hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ascent"
       >
         {inner}
       </button>

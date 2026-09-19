@@ -32,4 +32,20 @@ describe('Dropdown', () => {
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('menu')).toBeNull();
   });
+
+  it('moves focus into the menu on keyboard open for announcement', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(
+      <Dropdown label="Difficulty" options={options} onSelect={onSelect} />,
+    );
+    await user.tab();
+    await user.keyboard('{ArrowDown}');
+    expect(screen.getByRole('menu', { name: 'Difficulty' })).toBeDefined();
+    expect(document.activeElement).toHaveProperty('textContent', 'Easy');
+    await user.keyboard('{ArrowDown}');
+    expect(document.activeElement).toHaveProperty('textContent', 'Normal');
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith('normal');
+  });
 });
