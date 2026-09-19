@@ -6,7 +6,7 @@ Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-
 
 ## Current and intended state
 
-The current repository has documentation, engineering instructions, installed skills, and OpenSpec planning artifacts; no application workspace, database, generated client, content engine, or runtime exists. Future paths below describe ownership rather than directories created by Phase 0.
+The current repository has documentation, engineering instructions, installed skills, OpenSpec planning artifacts, and the Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI); no database, generated client, content engine, or runtime exists. Future paths below describe ownership rather than directories created by Phase 0.
 
 The intended stack follows AGENTS.md: TypeScript; Next.js/React browser/PWA; NestJS/Fastify modular monolith; REST/OpenAPI; Drizzle/PostgreSQL through Supabase; Supabase Auth/Storage. CodeMirror, TanStack Query, Zustand, Dexie and Serwist serve client concerns. Test/ops directions are Vitest/Testing Library/Playwright, pnpm/Turborepo, GitHub Actions, PostHog and Sentry. Their presence in a document does not mean they are installed or configured.
 
