@@ -8,8 +8,8 @@ Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stag
 | --- | --- |
 | Current phase | Phase 1 - Technical Risk Validation (roadmap: Technical Prototypes); **complete and archived**, Proceed (development gate) |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived |
-| Current OpenSpec change | [repository-foundation](../openspec/changes/repository-foundation/proposal.md) (proposed; PR pending) |
-| Current OpenSpec stage | Propose - repository foundation proposal under review; no active implementation |
+| Current OpenSpec change | [repository-foundation](../openspec/changes/repository-foundation/proposal.md) (Apply; PR pending) |
+| Current OpenSpec stage | Apply - workspace implemented and verified locally; CI runs on the Apply PR |
 | Next execution step | Phase 2 — Repository Foundation: create the next bounded OpenSpec Explore/Propose workflow under separate authorization |
 | Next phase | Phase 2 — Repository Foundation, awaiting new Explore/Propose authorization |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
