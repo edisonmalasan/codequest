@@ -6,15 +6,15 @@ Status snapshot: 2026-09-21. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 4 — Design System; **visual direction revision proposed** because the archived implementation does not yet satisfy the roadmap's scalable pixel-game identity objective |
+| Current phase | Phase 4 — Design System; superseding pixel-game identity redesign implemented and verified, pending specification sync and archive |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; original Phase 4 — Design System: technically complete and preserved in the historical archive, now superseded for visual direction by the active redesign proposal |
 | Current OpenSpec change | [redesign-codequest-pixel-game-identity](../openspec/changes/redesign-codequest-pixel-game-identity/proposal.md) (active superseding Phase 4 change); the [2026-09-19 design-system archive](../openspec/changes/archive/2026-09-19-design-system/proposal.md) remains unchanged history |
-| Current OpenSpec stage | Propose — repository/visual audit and reference exploration complete; superseding proposal, design, delta spec, and tasks in preparation |
-| Next execution step | Review and merge the Phase 4 redesign proposal, then Apply it from a new implementation branch |
+| Current OpenSpec stage | Apply complete — 25/25 redesign tasks and available verification complete; Apply PR pending merge before Sync and Archive |
+| Next execution step | Merge the Apply PR, sync the approved delta into the canonical design-system spec, then archive the superseding change through separate PRs |
 | Next phase | Phase 5 — Backend Foundation, blocked until the revised Phase 4 is applied, verified, synced, and archived |
-| Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
+| Validation evidence | Phase 4 redesign: installed Chrome 153 visual/accessibility review 29/29 at 1440×1000 and 390×844; frontend 29 files/101 tests and backend 2 files/4 tests pass; frontend and root lint/typecheck/test/build pass; WCAG contrast pairs pass; production showcase guard returns 404 |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation (structure, theme base, providers, state primitive, Dexie skeleton, editor proof) on the Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI), and isolated disposable Phase 1 prototypes; no database, generated client, content engine, or runtime |
+| Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation, and the verified Phase 4 pixel-game identity implementation with original assets, redesigned presentation components, and a development-only `/design-system` showcase; no Phase 5 backend foundation, database, generated client, content engine, or production runtime |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
