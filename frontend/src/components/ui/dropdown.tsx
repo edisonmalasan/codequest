@@ -137,7 +137,7 @@ export function Dropdown({
         aria-controls={`${baseId}-menu`}
         onClick={() => (open ? setOpen(false) : openMenu(0, false))}
         onKeyDown={onTriggerKeyDown}
-        className="inline-flex h-10 items-center justify-between gap-2 rounded-sm border border-line bg-surface-raised px-4 font-sans text-sm font-semibold text-ink outline-none transition-colors duration-quick hover:border-muted focus-visible:ring-2 focus-visible:ring-ascent"
+        className="inline-flex min-h-11 items-center justify-between gap-2 rounded-md border border-line-strong bg-surface-raised px-4 font-sans text-sm font-semibold text-ink outline-none transition-colors duration-quick hover:border-discovery hover:bg-surface-elevated"
       >
         {selected ? selected.label : label}
         <ChevronDown
@@ -153,7 +153,7 @@ export function Dropdown({
           aria-label={label}
           tabIndex={-1}
           onKeyDown={onMenuKeyDown}
-          className="absolute top-full left-0 z-30 mt-1 min-w-44 rounded-sm border border-line bg-surface-raised p-1 shadow-soft"
+          className="absolute top-full left-0 z-30 mt-2 min-w-44 rounded-md border border-line-strong bg-surface-raised p-1.5 shadow-soft"
         >
           {options.map((option, index) => (
             <button
@@ -169,9 +169,9 @@ export function Dropdown({
               }}
               onMouseEnter={() => setActiveIndex(index)}
               className={
-                'flex w-full items-center rounded-sm px-3 py-2 font-sans text-sm outline-none transition-colors ' +
+                'flex min-h-11 w-full items-center rounded-sm px-3 py-2 font-sans text-sm outline-none transition-colors ' +
                 (index === activeIndex
-                  ? 'bg-surface-sunken text-ink'
+                  ? 'bg-surface-elevated text-ink'
                   : 'text-muted')
               }
             >

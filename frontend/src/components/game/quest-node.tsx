@@ -4,7 +4,12 @@ import { Check, Circle, Lock, Play } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 export type QuestStatus =
-  'not_started' | 'in_progress' | 'completed' | 'locked';
+  | 'not_started'
+  | 'available'
+  | 'in_progress'
+  | 'current'
+  | 'completed'
+  | 'locked';
 
 export interface QuestNodeProps {
   status: QuestStatus;
@@ -15,13 +20,13 @@ export interface QuestNodeProps {
 
 const statusMeta: Record<QuestStatus, { text: string; Icon: typeof Check }> = {
   not_started: { text: 'Not started', Icon: Circle },
+  available: { text: 'Available', Icon: Circle },
   in_progress: { text: 'In progress', Icon: Play },
+  current: { text: 'Current quest', Icon: Play },
   completed: { text: 'Completed', Icon: Check },
   locked: { text: 'Locked', Icon: Lock },
 };
 
-// Display-only quest node. Status arrives as a prop; prerequisite evaluation
-// belongs to the backend. Locked nodes are inert; others invoke onSelect.
 export function QuestNode({
   status,
   label,
@@ -34,23 +39,21 @@ export function QuestNode({
       <span
         aria-hidden="true"
         className={cn(
-          'pixel-corners-sm flex h-8 w-8 items-center justify-center',
-          status === 'completed' && 'bg-ascent text-ascent-ink',
-          status === 'in_progress' &&
-            'pixel-frame bg-surface-raised text-ascent',
-          status === 'not_started' && 'bg-surface-raised text-muted',
-          status === 'locked' && 'bg-surface-sunken text-muted/60',
+          'pixel-corners-sm relative flex h-12 w-12 shrink-0 items-center justify-center border-2',
+          status === 'completed' && 'border-ascent bg-ascent text-ascent-ink',
+          (status === 'in_progress' || status === 'current') &&
+            'border-reward bg-surface-sunken text-reward shadow-hard-amber',
+          (status === 'not_started' || status === 'available') &&
+            'border-discovery bg-surface-sunken text-discovery',
+          status === 'locked' &&
+            'border-line bg-surface-sunken text-muted opacity-80',
         )}
       >
-        <Icon className="h-4 w-4" strokeWidth={2.5} />
+        <Icon className="h-5 w-5" strokeWidth={2.5} />
       </span>
-      <span className="flex flex-col items-start">
-        <span className="font-sans text-sm font-semibold text-ink">
-          {label}
-        </span>
-        <span className="font-display text-xs tracking-wide text-muted uppercase">
-          {text}
-        </span>
+      <span className="flex flex-col items-start rounded-sm bg-surface-sunken/90 px-2 py-1">
+        <span className="font-sans text-sm font-bold text-ink">{label}</span>
+        <span className="game-label text-[10px] text-muted">{text}</span>
       </span>
     </>
   );
@@ -59,19 +62,19 @@ export function QuestNode({
     return (
       <li
         aria-disabled={status === 'locked' || undefined}
-        className={cn('flex items-center gap-3', className)}
+        className={cn('relative z-10 flex items-center gap-3', className)}
       >
         {inner}
       </li>
     );
   }
   return (
-    <li className={cn('flex', className)}>
+    <li className={cn('relative z-10 flex', className)}>
       <button
         type="button"
         onClick={onSelect}
         aria-label={`${label}, ${text}`}
-        className="flex items-center gap-3 rounded-sm p-1 -m-1 outline-none transition-transform duration-quick ease-ui hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ascent"
+        className="flex min-h-14 items-center gap-3 rounded-sm p-1 -m-1 outline-none transition-transform duration-quick ease-ui hover:-translate-y-1"
       >
         {inner}
       </button>

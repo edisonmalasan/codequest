@@ -5,15 +5,15 @@ import { cn } from '@/lib/cn';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 const trackStyles = cva(
-  'h-2.5 w-full overflow-hidden rounded-sm bg-surface-sunken',
+  'h-3 w-full overflow-hidden rounded-sm border border-line bg-surface-sunken p-0.5',
 );
 const fillStyles = cva(
-  'h-full rounded-sm transition-[width] duration-base ease-ui',
+  'h-full rounded-xs transition-[width] duration-base ease-ui',
   {
     variants: {
       variant: {
-        ascent: 'bg-ascent',
-        reward: 'bg-reward',
+        ascent: 'progress-glow-ascent bg-ascent',
+        reward: 'progress-glow-reward bg-reward',
       },
     },
     defaultVariants: { variant: 'ascent' },

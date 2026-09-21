@@ -51,7 +51,7 @@ export function Tooltip({ tip, children }: TooltipProps): React.JSX.Element {
         id={tipId}
         role="tooltip"
         className={
-          'pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 -translate-x-1/2 rounded-sm border border-line bg-surface-sunken px-2 py-1 font-sans text-xs whitespace-nowrap text-ink shadow-soft transition-opacity duration-quick ' +
+          'pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 -translate-x-1/2 rounded-md border border-line-strong bg-surface-sunken px-3 py-2 font-sans text-xs whitespace-nowrap text-ink shadow-soft transition-opacity duration-quick ' +
           (visible ? 'opacity-100' : 'opacity-0')
         }
       >

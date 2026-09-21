@@ -61,7 +61,7 @@ export function Dialog({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'relative w-full max-w-md rounded-md border border-line bg-surface-raised p-6 shadow-soft',
+          'relative w-full max-w-md rounded-lg border border-line-strong bg-surface-raised p-6 shadow-soft',
           className,
         )}
       >
@@ -76,7 +76,7 @@ export function Dialog({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="rounded-sm p-1 text-muted outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-ascent"
+            className="grid min-h-11 min-w-11 place-items-center rounded-md text-muted outline-none transition-colors hover:bg-surface-elevated hover:text-ink"
           >
             <X aria-hidden="true" className="h-5 w-5" strokeWidth={2} />
           </button>

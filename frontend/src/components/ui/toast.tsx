@@ -53,14 +53,14 @@ export function ToastProvider({
       <div
         aria-live="polite"
         aria-label="Notifications"
-        className="pointer-events-none fixed right-4 bottom-4 z-50 flex w-full max-w-sm flex-col gap-2"
+        className="pointer-events-none fixed right-4 bottom-4 left-4 z-50 flex flex-col gap-2 sm:left-auto sm:w-full sm:max-w-sm"
       >
         {toasts.map((toast) => (
           <div
             key={toast.id}
             role="status"
             className={cn(
-              'pointer-events-auto flex items-start justify-between gap-3 rounded-md border border-line bg-surface-raised p-4 shadow-soft',
+              'pointer-events-auto flex items-start justify-between gap-3 rounded-lg border border-line-strong bg-surface-raised p-4 shadow-soft',
               toast.variant === 'ascent' && 'border-ascent/60',
               toast.variant === 'danger' && 'border-danger/60',
             )}
@@ -79,7 +79,7 @@ export function ToastProvider({
               type="button"
               onClick={() => dismiss(toast.id)}
               aria-label={`Dismiss: ${toast.title}`}
-              className="rounded-sm p-1 text-muted outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-ascent"
+              className="grid min-h-11 min-w-11 place-items-center rounded-md text-muted outline-none transition-colors hover:bg-surface-elevated hover:text-ink"
             >
               <X aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
             </button>

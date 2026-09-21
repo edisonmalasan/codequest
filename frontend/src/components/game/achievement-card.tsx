@@ -7,47 +7,53 @@ export interface AchievementCardProps {
   title: string;
   description: string;
   unlocked: boolean;
+  emblemSrc?: string;
+  rarity?: string;
   className?: string;
 }
 
-// Display-only achievement. Unlock state arrives as a prop; earning rules
-// belong to the backend and later phases. Locked cards show a silhouette plus
-// explicit "Locked" text, never color alone.
 export function AchievementCard({
   title,
   description,
   unlocked,
+  emblemSrc,
+  rarity,
   className,
 }: AchievementCardProps): React.JSX.Element {
   return (
     <div
       className={cn(
-        'flex items-center gap-4 rounded-md border p-4',
+        'pixel-corners-sm relative flex items-center gap-4 overflow-hidden border-2 p-4',
         unlocked
-          ? 'border-reward/60 bg-surface-raised'
-          : 'border-line bg-surface-sunken',
+          ? 'border-reward bg-surface-raised shadow-hard-amber'
+          : 'border-line bg-surface-sunken opacity-85',
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          'pixel-corners-sm flex h-12 w-12 shrink-0 items-center justify-center',
+          'pixel-corners-sm flex h-16 w-16 shrink-0 items-center justify-center border-2',
           unlocked
-            ? 'bg-reward text-reward-ink'
-            : 'bg-surface-raised text-muted/50',
+            ? 'border-reward bg-reward/10 text-reward'
+            : 'border-line bg-surface-raised text-muted/70',
         )}
       >
-        {unlocked ? (
-          <Trophy className="h-6 w-6" strokeWidth={2} />
+        {unlocked && emblemSrc ? (
+          <img src={emblemSrc} alt="" className="pixel-art h-11 w-11" />
+        ) : unlocked ? (
+          <Trophy className="h-7 w-7" strokeWidth={2} />
         ) : (
           <Lock className="h-6 w-6" strokeWidth={2} />
         )}
       </span>
-      <span className="flex flex-col">
-        <span className="font-sans text-sm font-bold text-ink">{title}</span>
+      <span className="flex min-w-0 flex-col">
+        {rarity && (
+          <span className="game-label text-[10px] text-reward">{rarity}</span>
+        )}
+        <span className="font-display text-lg font-bold text-ink">{title}</span>
         <span className="font-sans text-sm text-muted">{description}</span>
-        <span className="mt-0.5 font-display text-xs tracking-wide text-muted uppercase">
+        <span className="game-label mt-1 text-[10px] text-muted">
           {unlocked ? 'Unlocked' : 'Locked'}
         </span>
       </span>
