@@ -59,7 +59,7 @@ export function Drawer({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'absolute top-0 right-0 flex h-full w-full max-w-sm flex-col border-l border-line bg-surface-raised p-6 shadow-soft',
+          'absolute top-0 right-0 flex h-full w-full max-w-sm flex-col border-l border-line-strong bg-surface-raised p-6 shadow-soft',
           className,
         )}
       >
@@ -69,7 +69,7 @@ export function Drawer({
             type="button"
             onClick={onClose}
             aria-label="Close panel"
-            className="rounded-sm p-1 text-muted outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-ascent"
+            className="grid min-h-11 min-w-11 place-items-center rounded-md text-muted outline-none transition-colors hover:bg-surface-elevated hover:text-ink"
           >
             <X aria-hidden="true" className="h-5 w-5" strokeWidth={2} />
           </button>

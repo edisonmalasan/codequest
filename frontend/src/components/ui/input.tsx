@@ -5,7 +5,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/cn';
 
 const inputStyles = cva(
-  'h-10 w-full rounded-sm border bg-surface-sunken px-3 text-base text-ink placeholder:text-muted/70 outline-none transition-colors duration-quick ease-ui focus:border-ascent focus:ring-2 focus:ring-ascent/40 disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger aria-[invalid=true]:focus:ring-danger/40',
+  'min-h-11 w-full rounded-md border border-line-strong bg-surface-sunken px-3 text-base text-ink placeholder:text-muted/70 outline-none transition-colors duration-quick ease-ui hover:border-muted focus:border-discovery disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger',
 );
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

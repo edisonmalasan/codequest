@@ -1,0 +1,339 @@
+{
+  "timestamp": "2026-09-21T14:59:30.873Z",
+  "browser": "Installed Google Chrome",
+  "version": "153.0.8010.48",
+  "checks": [
+    {
+      "name": "desktop-1440x1000: route responds",
+      "result": "passed",
+      "httpStatus": 200
+    },
+    {
+      "name": "desktop-1440x1000: identity heading",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: all images load",
+      "result": "passed",
+      "broken": []
+    },
+    {
+      "name": "desktop-1440x1000: no horizontal overflow",
+      "result": "passed",
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    },
+    {
+      "name": "desktop-1440x1000: primary targets at least 44px",
+      "result": "passed",
+      "small": []
+    },
+    {
+      "name": "desktop-1440x1000: keyboard focus visible",
+      "result": "passed",
+      "focus": [
+        {
+          "tag": "A",
+          "label": "Identity",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "A",
+          "label": "Quest world",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "A",
+          "label": "Rewards",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "A",
+          "label": "Controls",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "A",
+          "label": "Access",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Explore the system",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Preview reward",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Data types, Current quest",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Expressions, Available",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Open chapter",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "INPUT",
+          "label": "",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "INPUT",
+          "label": "",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "SELECT",
+          "label": "System defaultDark",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Primary action",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Secondary",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Ghost",
+          "outline": "solid",
+          "width": "2px"
+        }
+      ]
+    },
+    {
+      "name": "desktop-1440x1000: dialog opens",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: dialog receives focus",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: dialog traps focus",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: dialog closes",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: drawer opens",
+      "result": "passed"
+    },
+    {
+      "name": "desktop-1440x1000: dropdown keyboard opens",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: route responds",
+      "result": "passed",
+      "httpStatus": 200
+    },
+    {
+      "name": "mobile-390x844: identity heading",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: all images load",
+      "result": "passed",
+      "broken": []
+    },
+    {
+      "name": "mobile-390x844: no horizontal overflow",
+      "result": "passed",
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "name": "mobile-390x844: primary targets at least 44px",
+      "result": "passed",
+      "small": []
+    },
+    {
+      "name": "mobile-390x844: keyboard focus visible",
+      "result": "passed",
+      "focus": [
+        {
+          "tag": "BUTTON",
+          "label": "Explore the system",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Preview reward",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Data types, Current quest",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Expressions, Available",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Open chapter",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "INPUT",
+          "label": "",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "INPUT",
+          "label": "",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "SELECT",
+          "label": "System defaultDark",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Primary action",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Secondary",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Ghost",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Danger",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Brief",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "DIV",
+          "label": "Read the goal before ope",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Quest difficulty",
+          "outline": "solid",
+          "width": "2px"
+        },
+        {
+          "tag": "BUTTON",
+          "label": "Focus for tooltip",
+          "outline": "solid",
+          "width": "2px"
+        }
+      ]
+    },
+    {
+      "name": "mobile-390x844: dialog opens",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: dialog receives focus",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: dialog traps focus",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: dialog closes",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: drawer opens",
+      "result": "passed"
+    },
+    {
+      "name": "mobile-390x844: dropdown keyboard opens",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion: reward is effectively instant",
+      "result": "passed",
+      "transitionDuration": "1e-05s",
+      "animationDuration": "1e-05s"
+    },
+    {
+      "name": "runtime: no console errors",
+      "result": "passed",
+      "errors": []
+    },
+    {
+      "name": "runtime: no page errors",
+      "result": "passed",
+      "errors": []
+    },
+    {
+      "name": "runtime: no failed requests",
+      "result": "passed",
+      "failures": []
+    },
+    {
+      "name": "runtime: no error responses",
+      "result": "passed",
+      "responses": []
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "badResponses": []
+}

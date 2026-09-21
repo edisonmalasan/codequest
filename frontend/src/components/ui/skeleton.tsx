@@ -19,7 +19,7 @@ export function Skeleton({
       aria-label={label}
       aria-hidden={false}
       className={cn(
-        'animate-pulse rounded-sm bg-surface-raised motion-reduce:animate-none',
+        'animate-pulse rounded-md border border-line bg-surface-elevated motion-reduce:animate-none',
         className,
       )}
       {...props}

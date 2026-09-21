@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title" shape-rendering="crispEdges">
+  <title id="title">Builder cube emblem</title>
+  <path fill="#ffcb5c" d="M28 4h8v4h8v4h8v8h8v28h-8v4h-8v4H28v-4h-8v-4h-8V20h8v-8h8z"/>
+  <path fill="#f2ead3" d="M20 20h8v4h8v8h-8v-4h-8zm24 0h8v8h-8v4h-8v-8h8z"/>
+  <path fill="#11182b" d="M28 32h8v20h-8zm-8-4h8v20h-8zm16 0h8v20h-8z"/>
+</svg>

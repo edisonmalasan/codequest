@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title" shape-rendering="crispEdges">
+  <title id="title">Pathfinder flag emblem</title>
+  <path fill="#69b7ff" d="M16 4h8v4h28v8h8v20H28v-8h24V16H24v44h-8z"/>
+  <path fill="#53f6a6" d="M28 16h16v4h8v8H36v-4h-8z"/>
+  <path fill="#f2ead3" d="M8 56h24v4H8z"/>
+</svg>
