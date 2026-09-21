@@ -1,16 +1,18 @@
 import 'reflect-metadata';
-import { NestFactory } from '@nestjs/core';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
-import { getPort } from './config';
+import { createApplication } from './application';
+import { loadBackendConfig } from './infrastructure/config/backend-config';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule, new FastifyAdapter());
-  const port = getPort(process.env);
-  await app.listen(port, '127.0.0.1');
+  const config = loadBackendConfig(process.env);
+  const app = await createApplication(config);
+  await app.listen(config.port, config.host);
 }
 
 bootstrap().catch((error: unknown) => {
-  console.error(error);
+  const errorName = error instanceof Error ? error.name : 'UnknownStartupError';
+  const message = error instanceof Error ? error.message : 'Startup failed';
+  process.stderr.write(
+    `${JSON.stringify({ event: 'application.startup_failed', errorName, message })}\n`,
+  );
   process.exitCode = 1;
 });
