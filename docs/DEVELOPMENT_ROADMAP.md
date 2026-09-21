@@ -6,12 +6,12 @@ Status snapshot: 2026-09-21. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 4 — Design System; superseding pixel-game identity redesign implemented and verified, pending specification sync and archive |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; original Phase 4 — Design System: technically complete and preserved in the historical archive, now superseded for visual direction by the active redesign proposal |
-| Current OpenSpec change | [redesign-codequest-pixel-game-identity](../openspec/changes/redesign-codequest-pixel-game-identity/proposal.md) (active superseding Phase 4 change); the [2026-09-19 design-system archive](../openspec/changes/archive/2026-09-19-design-system/proposal.md) remains unchanged history |
-| Current OpenSpec stage | Sync in progress — Apply PR #22 merged; approved redesign requirements are being merged into the canonical design-system capability |
-| Next execution step | Merge the canonical spec sync PR, then archive the superseding change and record revised Phase 4 completion |
-| Next phase | Phase 5 — Backend Foundation, blocked until the revised Phase 4 is applied, verified, synced, and archived |
+| Current phase | Phase 4 — Design System redesign complete; no Phase 5 work has started |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; the original Phase 4 archive remains preserved as superseded history |
+| Current OpenSpec change | None; [2026-09-21 pixel-game identity redesign archive](../openspec/changes/archive/2026-09-21-redesign-codequest-pixel-game-identity/proposal.md) supersedes the visual direction of the unchanged [2026-09-19 design-system archive](../openspec/changes/archive/2026-09-19-design-system/proposal.md) |
+| Current OpenSpec stage | Archive complete — Apply PR #22 and Sync PR #23 merged; archive PR pending merge |
+| Next execution step | Merge the archive PR and stop; begin Phase 5 only under a separately authorized OpenSpec workflow |
+| Next phase | Phase 5 — Backend Foundation, ready for future exploration but not started |
 | Validation evidence | Phase 4 redesign: installed Chrome 153 visual/accessibility review 29/29 at 1440×1000 and 390×844; frontend 29 files/101 tests and backend 2 files/4 tests pass; frontend and root lint/typecheck/test/build pass; WCAG contrast pairs pass; production showcase guard returns 404 |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation, and the verified Phase 4 pixel-game identity implementation with original assets, redesigned presentation components, and a development-only `/design-system` showcase; no Phase 5 backend foundation, database, generated client, content engine, or production runtime |
@@ -611,6 +611,12 @@ Build:
 * ChapterCard
 * AchievementCard
 * RewardPopup
+
+## Revised Phase 4 completion
+
+The scalable pixel-game identity was completed on 2026-09-21 through the superseding [pixel-game identity redesign archive](../openspec/changes/archive/2026-09-21-redesign-codequest-pixel-game-identity/proposal.md). It preserves the [original Phase 4 archive](../openspec/changes/archive/2026-09-19-design-system/proposal.md) as historical context while the canonical [design-system specification](../openspec/specs/design-system/spec.md) defines the revised visual contract.
+
+The revised system combines original CodeQuest game-world assets and presentation components with conventional application controls. Its development-only `/design-system` showcase passed installed-Chrome desktop and responsive review, keyboard and reduced-motion checks, contrast tests, repository checks, and strict OpenSpec validation. Phase 5 was not started.
 
 ---
 
