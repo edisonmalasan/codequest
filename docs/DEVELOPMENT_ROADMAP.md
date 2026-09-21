@@ -2,19 +2,19 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-21. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 5 — Backend Foundation proposal in progress |
+| Current phase | Phase 5 — Backend Foundation implemented and verified, pending specification sync and archive |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; the original Phase 4 archive remains preserved as superseded history |
 | Current OpenSpec change | [establish-backend-foundation](../openspec/changes/establish-backend-foundation/proposal.md); the [2026-09-21 pixel-game identity redesign archive](../openspec/changes/archive/2026-09-21-redesign-codequest-pixel-game-identity/proposal.md) remains the completed visual baseline |
-| Current OpenSpec stage | Propose — backend foundation scope and contracts are being defined before implementation |
-| Next execution step | Complete and merge the backend-foundation proposal, then Apply it from a fresh implementation branch |
+| Current OpenSpec stage | Apply complete — 18/18 tasks and available verification complete; Apply PR pending merge before Sync and Archive |
+| Next execution step | Merge the backend-foundation Apply PR, then sync the approved capability and archive the change through separate branches and PRs |
 | Next phase | Phase 6 — Database Foundation, blocked until backend-foundation Apply, verification, Sync, and Archive are complete |
-| Validation evidence | Phase 4 redesign: installed Chrome 153 visual/accessibility review 29/29 at 1440×1000 and 390×844; frontend 29 files/101 tests and backend 2 files/4 tests pass; frontend and root lint/typecheck/test/build pass; WCAG contrast pairs pass; production showcase guard returns 404 |
+| Validation evidence | Backend foundation: frozen install passes; backend lint/typecheck/build and 4 files/22 tests pass; root lint/typecheck/build and 101 frontend + 22 backend tests pass; strict OpenSpec, boundary, credential, link, and diff checks pass. Phase 4 visual evidence remains archived. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation, and the verified Phase 4 pixel-game identity implementation with original assets, redesigned presentation components, and a development-only `/design-system` showcase; no Phase 5 backend foundation, database, generated client, content engine, or production runtime |
+| Current repository | Documentation, OpenSpec artifacts, the frontend foundation and pixel-game design system, plus the verified NestJS/Fastify backend foundation with modular boundaries, `/api/v1`, validation/errors, request correlation/logging, CORS, OpenAPI, throttling, and health; no database, authentication behavior, generated client, content engine, learner runtime, or Phase 6 implementation |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
