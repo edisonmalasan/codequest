@@ -109,4 +109,3 @@ The backend SHALL enable graceful shutdown hooks, SHALL keep frontend and backen
 
 - **WHEN** the completed change is reviewed
 - **THEN** all implementation stays within the backend foundation and repository metadata, no later capability is implemented, and learner-provided code has no execution path in the NestJS process
-
