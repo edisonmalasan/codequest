@@ -6,12 +6,12 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 5 — Backend Foundation implemented and verified, pending specification sync and archive |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; the original Phase 4 archive remains preserved as superseded history |
-| Current OpenSpec change | [establish-backend-foundation](../openspec/changes/establish-backend-foundation/proposal.md); the [2026-09-21 pixel-game identity redesign archive](../openspec/changes/archive/2026-09-21-redesign-codequest-pixel-game-identity/proposal.md) remains the completed visual baseline |
-| Current OpenSpec stage | Sync in progress — Apply PR #26 merged; the approved backend-foundation capability is being added to the canonical specs |
-| Next execution step | Merge the canonical spec sync PR, then archive the completed backend-foundation change |
-| Next phase | Phase 6 — Database Foundation, blocked until backend-foundation Apply, verification, Sync, and Archive are complete |
+| Current phase | Phase 5 — Backend Foundation complete; no Phase 6 work has started |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived |
+| Current OpenSpec change | None; [2026-09-22 backend foundation archive](../openspec/changes/archive/2026-09-22-establish-backend-foundation/proposal.md) records the completed work, and the [backend-foundation specification](../openspec/specs/backend-foundation/spec.md) is canonical |
+| Current OpenSpec stage | Archive complete — proposal PR #25, Apply PR #26, and Sync PR #27 merged; archive PR pending merge |
+| Next execution step | Merge the archive PR and stop; begin database-foundation work only under a separately authorized OpenSpec workflow |
+| Next phase | Phase 6 — Database Foundation, ready for future exploration but not started |
 | Validation evidence | Backend foundation: frozen install passes; backend lint/typecheck/build and 4 files/22 tests pass; root lint/typecheck/build and 101 frontend + 22 backend tests pass; strict OpenSpec, boundary, credential, link, and diff checks pass. Phase 4 visual evidence remains archived. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, the frontend foundation and pixel-game design system, plus the verified NestJS/Fastify backend foundation with modular boundaries, `/api/v1`, validation/errors, request correlation/logging, CORS, OpenAPI, throttling, and health; no database, authentication behavior, generated client, content engine, learner runtime, or Phase 6 implementation |
@@ -682,6 +682,12 @@ BillingModule
 ```text
 /api/v1
 ```
+
+## Phase 5 completion
+
+The backend foundation was completed on 2026-09-22 through the [backend foundation archive](../openspec/changes/archive/2026-09-22-establish-backend-foundation/proposal.md). The canonical [backend-foundation specification](../openspec/specs/backend-foundation/spec.md) defines the modular NestJS/Fastify, versioned REST, validation/error, request-correlation/logging, configuration/CORS, OpenAPI, throttling, health, and lifecycle contract.
+
+All 18 tasks passed the frozen-install, backend, repository, strict OpenSpec, boundary, credential, link, and diff gates recorded in the archive evidence. No database, migration, Supabase, authentication behavior, curriculum/business rule, generated client, learner execution, deployment infrastructure, or Phase 6 implementation was added.
 
 ---
 
