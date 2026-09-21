@@ -1,48 +1,152 @@
-/*
- * Pixel styling language (game identity surfaces only).
- *
- * RULE: pixel treatment marks game identity — logo mark, XP displays,
- * badges, quest nodes, chapter art frames. Everything interactive that
- * is NOT a game emblem uses conventional controls (rounded radii,
- * soft shadows). One shape system per surface; never both.
- *
- * ACCESSIBILITY: clip-path trims focus outlines, so any pixel-shaped
- * interactive element MUST drop its clip-path under :focus-visible and
- * show a conventional high-contrast outline instead.
- */
+/* CodeQuest game-world language. Conventional controls do not use this layer. */
+
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 
 .pixel-corners {
   clip-path: polygon(
     8px 0,
-    100% 0,
+    calc(100% - 8px) 0,
+    calc(100% - 8px) 4px,
+    100% 4px,
     100% calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 8px),
     calc(100% - 8px) 100%,
-    0 100%,
-    0 8px
+    8px 100%,
+    8px calc(100% - 4px),
+    0 calc(100% - 4px),
+    0 8px,
+    8px 8px
   );
 }
 
 .pixel-corners-sm {
   clip-path: polygon(
-    5px 0,
-    100% 0,
-    100% calc(100% - 5px),
-    calc(100% - 5px) 100%,
-    0 100%,
-    0 5px
+    4px 0,
+    calc(100% - 4px) 0,
+    calc(100% - 4px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 4px),
+    0 calc(100% - 4px),
+    0 4px,
+    4px 4px
   );
 }
 
-.pixel-frame {
+.pixel-frame,
+.pixel-frame-reward,
+.pixel-frame-discovery {
   position: relative;
-  background-color: var(--color-surface-raised);
-  box-shadow: var(--shadow-hard);
+  isolation: isolate;
+  border: 2px solid var(--color-line-strong);
+  background: var(--color-surface-raised);
+  box-shadow:
+    inset 0 2px 0 rgb(243 244 239 / 0.1),
+    var(--shadow-hard);
+}
+
+.pixel-frame::after,
+.pixel-frame-reward::after,
+.pixel-frame-discovery::after {
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  border: 1px solid rgb(243 244 239 / 0.08);
+  content: '';
+  pointer-events: none;
 }
 
 .pixel-frame-reward {
-  position: relative;
-  background-color: var(--color-surface-raised);
-  box-shadow: 5px 5px 0 0 rgb(251 191 36 / 0.35);
+  border-color: var(--color-reward);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 0.14),
+    var(--shadow-hard-amber);
+}
+
+.pixel-frame-discovery {
+  border-color: var(--color-discovery);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 0.14),
+    6px 6px 0 rgb(105 183 255 / 0.18);
+}
+
+.pixel-grid {
+  background-image:
+    linear-gradient(rgb(105 183 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(105 183 255 / 0.055) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.pixel-dither {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgb(174 187 208 / 0.12) 1px,
+    transparent 0
+  );
+  background-size: 8px 8px;
+}
+
+.game-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pixel-steps {
+  transition-property: width;
+  transition-duration: var(--duration-celebrate);
+  transition-timing-function: steps(12, end);
+}
+
+.pixel-highlight {
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.35);
+}
+
+.xp-segments {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 16px,
+    var(--color-surface-sunken) 16px 18px
+  );
+}
+
+.progress-glow-ascent {
+  box-shadow: 0 0 8px rgb(83 246 166 / 0.25);
+}
+
+.progress-glow-reward {
+  box-shadow: 0 0 8px rgb(255 203 92 / 0.25);
+}
+
+.world-hero-scrim {
+  background-image:
+    linear-gradient(
+      90deg,
+      var(--color-canvas) 0%,
+      rgb(7 10 18 / 0.9) 34%,
+      rgb(7 10 18 / 0.18) 75%
+    ),
+    linear-gradient(0deg, var(--color-canvas) 0%, transparent 55%);
+}
+
+.avatar-silhouette {
+  box-shadow: 0 16px 0 8px var(--color-line-strong);
+}
+
+.circuit-route {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-ascent) 0 12px,
+    transparent 12px 20px
+  );
+  filter: drop-shadow(0 0 5px rgb(83 246 166 / 0.35));
 }
 
 button.pixel-corners:focus-visible,
@@ -51,13 +155,10 @@ button.pixel-corners-sm:focus-visible,
 a.pixel-corners-sm:focus-visible {
   clip-path: none;
   border-radius: var(--radius-sm);
-  outline: 2px solid var(--color-ascent);
-  outline-offset: 2px;
 }
 
-/* Stepped fill for game progress: discrete jumps, never smooth sweeps. */
-.pixel-steps {
-  transition-timing-function: steps(12, end);
-  transition-duration: var(--duration-base);
-  transition-property: width;
+@media (prefers-reduced-motion: reduce) {
+  .pixel-steps {
+    transition: none;
+  }
 }

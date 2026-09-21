@@ -1,73 +1,98 @@
 @import 'tailwindcss';
 @import './pixel.css';
 
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('/assets/design-system/fonts/pixelify-sans.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 @theme {
-  /* Surface ramp (dark-first pixel identity) */
-  --color-surface: #0f1222;
-  --color-surface-raised: #171b31;
-  --color-surface-sunken: #0a0d1a;
-  --color-line: #2b3157;
+  /* Debugger's frontier: one semantic palette shared by game and app layers. */
+  --color-canvas: #070a12;
+  --color-surface: #0b1020;
+  --color-surface-raised: #111a2e;
+  --color-surface-elevated: #182540;
+  --color-surface-sunken: #060810;
+  --color-line: #344568;
+  --color-line-strong: #5f7398;
+  --color-ink: #f3f4ef;
+  --color-ink-inverse: #07100b;
+  --color-muted: #aebbd0;
+  --color-ascent: #53f6a6;
+  --color-ascent-strong: #22cf7c;
+  --color-ascent-ink: #06130d;
+  --color-reward: #ffcb5c;
+  --color-reward-strong: #e9a92b;
+  --color-reward-ink: #161006;
+  --color-discovery: #69b7ff;
+  --color-discovery-ink: #07111c;
+  --color-success: #53f6a6;
+  --color-danger: #ff7777;
+  --color-danger-ink: #1c0709;
 
-  /* Ink ramp */
-  --color-ink: #e8eaf2;
-  --color-muted: #a7aec9;
-
-  /* Single action accent + text drawn on it */
-  --color-ascent: #34d399;
-  --color-ascent-ink: #0a0d1a;
-
-  /* Reward accent (reserved for rewards/achievements) + text drawn on it */
-  --color-reward: #fbbf24;
-  --color-reward-ink: #0a0d1a;
-
-  /* Feedback */
-  --color-success: #34d399;
-  --color-danger: #f87171;
-
-  /* Typography */
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-display: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  --font-display: 'Pixelify Sans', 'Cascadia Mono', Menlo, Consolas, monospace;
   --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
 
-  /* Spacing: components consume the 0.25rem base scale (gap-2, p-5, ...).
-     Arbitrary spacing literals are not allowed in component sources. */
+  /* The 4px utility unit supports the 8px identity grid and half-step exceptions. */
   --spacing: 0.25rem;
-
-  /* Breakpoints: locked product responsive contract. Below md (768px)
-     multi-column layouts collapse to a single column; coding workspace
-     targets lg (1024px) and up per the desktop-first policy. */
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 96rem;
-
-  /* Conventional radii for interactive controls and cards */
   --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-
-  /* Shadows: hard offsets for game surfaces, soft elevation for UI */
-  --shadow-hard-sm: 3px 3px 0 0 #05060d;
-  --shadow-hard: 5px 5px 0 0 #05060d;
-  --shadow-soft: 0 8px 24px 0 rgb(5 6 13 / 0.45);
-
-  /* Motion rules: stepped for game feedback, short smooth curve for UI */
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --shadow-hard-sm: 4px 4px 0 0 #03050a;
+  --shadow-hard: 8px 8px 0 0 #03050a;
+  --shadow-hard-mint: 6px 6px 0 0 rgb(83 246 166 / 0.2);
+  --shadow-hard-amber: 6px 6px 0 0 rgb(255 203 92 / 0.2);
+  --shadow-soft: 0 16px 40px 0 rgb(0 0 0 / 0.42);
   --ease-ui: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-instant: 0ms;
   --duration-quick: 120ms;
   --duration-base: 200ms;
+  --duration-celebrate: 320ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-canvas);
 }
 
 body {
-  background-color: var(--color-surface);
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--color-canvas);
   color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-ascent);
+  color: var(--color-ascent-ink);
+}
+
+:where(button, a, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-reward);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
+    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

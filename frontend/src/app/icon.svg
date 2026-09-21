@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc" shape-rendering="crispEdges">
+  <title id="title">CodeQuest portal mark</title>
+  <desc id="desc">Code brackets surround a doorway and ascending path.</desc>
+  <path fill="#53f6a6" d="M4 20h8v-8h8v8h-4v8h-4v8h4v8h4v8h-8v-8H4zm40-8h8v8h8v24h-8v8h-8v-8h4v-8h4v-8h-4v-8h-4z"/>
+  <path fill="#f2ead3" d="M24 20h16v4h4v28H20V24h4zm4 8v20h8V28z"/>
+  <path fill="#ffcb5c" d="M28 4h8v8h8v8h-8v8h-8v-8h-8v-8h8z"/>
+  <path fill="#53f6a6" d="M28 40h8v8h-8zm-8 16h24v4H20z"/>
+</svg>
