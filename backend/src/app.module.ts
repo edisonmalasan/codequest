@@ -1,7 +1,39 @@
-import { Module } from '@nestjs/common';
-import { HealthController } from './health.controller';
+import { DynamicModule, Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { BackendConfig } from './infrastructure/config/backend-config';
+import { CurriculumModule } from './modules/curriculum/curriculum.module';
+import { GamificationModule } from './modules/gamification/gamification.module';
+import { HealthModule } from './modules/health/health.module';
+import { IdentityModule } from './modules/identity/identity.module';
+import { LearningModule } from './modules/learning/learning.module';
+import { ProgressModule } from './modules/progress/progress.module';
 
-@Module({
-  controllers: [HealthController],
-})
-export class AppModule {}
+export const BACKEND_CONFIG = Symbol('BACKEND_CONFIG');
+
+@Module({})
+export class AppModule {
+  static register(config: BackendConfig): DynamicModule {
+    return {
+      module: AppModule,
+      imports: [
+        ThrottlerModule.forRoot([
+          {
+            ttl: config.rateLimitTtlMs,
+            limit: config.rateLimitMax,
+          },
+        ]),
+        IdentityModule,
+        CurriculumModule,
+        LearningModule,
+        ProgressModule,
+        GamificationModule,
+        HealthModule,
+      ],
+      providers: [
+        { provide: BACKEND_CONFIG, useValue: config },
+        { provide: APP_GUARD, useClass: ThrottlerGuard },
+      ],
+    };
+  }
+}
