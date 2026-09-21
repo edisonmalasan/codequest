@@ -2,16 +2,16 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-19. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-21. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 4 — Design System; **complete and archived** |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; Phase 4 — Design System: token system + pixel language + 13 core + 7 game components, 90 tests green, WCAG AA audited, change archived |
-| Current OpenSpec change | [design-system](../openspec/changes/archive/2026-09-19-design-system/proposal.md) (archived 2026-09-19; Apply PR #17 and acceptance-repair PR #18 merged) |
-| Current OpenSpec stage | Archive complete - change archived with all tasks verified complete; no active change |
-| Next execution step | Phase 5 — Backend Foundation: create the next bounded OpenSpec Explore/Propose workflow under separate authorization |
-| Next phase | Phase 5 — Backend Foundation, awaiting new Explore/Propose authorization |
+| Current phase | Phase 4 — Design System; **visual direction revision proposed** because the archived implementation does not yet satisfy the roadmap's scalable pixel-game identity objective |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; original Phase 4 — Design System: technically complete and preserved in the historical archive, now superseded for visual direction by the active redesign proposal |
+| Current OpenSpec change | [redesign-codequest-pixel-game-identity](../openspec/changes/redesign-codequest-pixel-game-identity/proposal.md) (active superseding Phase 4 change); the [2026-09-19 design-system archive](../openspec/changes/archive/2026-09-19-design-system/proposal.md) remains unchanged history |
+| Current OpenSpec stage | Propose — repository/visual audit and reference exploration complete; superseding proposal, design, delta spec, and tasks in preparation |
+| Next execution step | Review and merge the Phase 4 redesign proposal, then Apply it from a new implementation branch |
+| Next phase | Phase 5 — Backend Foundation, blocked until the revised Phase 4 is applied, verified, synced, and archived |
 | Validation evidence | Installed Chrome 63/63 native; Chromium bundled scope; Firefox partitioned component coverage; cold-process substitute 10/10; unit 28/28 with clean lint/typechecks; WebKit offline cluster reviewed S06 limitation; opaque-era failures retained as history |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, Phase 3 frontend foundation (structure, theme base, providers, state primitive, Dexie skeleton, editor proof) on the Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI), and isolated disposable Phase 1 prototypes; no database, generated client, content engine, or runtime |
