@@ -6,15 +6,15 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 7 — API Contract Generation Apply complete and verified; Sync and Archive have not started |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change |
-| Current OpenSpec change | [`generate-typed-api-client`](../openspec/changes/generate-typed-api-client/proposal.md) active; the completed Phase 6 change is [archived](../openspec/changes/archive/2026-09-22-establish-database-foundation/proposal.md) and its [specification](../openspec/specs/database-foundation/spec.md) is canonical |
-| Current OpenSpec stage | Phase 7 Apply complete — proposal PR #34 merged; generated client, contract drift gate, and verification delivered; Sync and Archive have not started |
-| Next execution step | Run Sync on a separate branch once the verified Apply PR is merged; do not begin Phase 8 |
-| Next phase | Phase 7 — API Contract Generation remains active; Phase 8 — Authentication has not started |
-| Validation evidence | API contract generation: frozen install, backend/frontend/root lint/typecheck/tests/build (106 frontend + 33 backend tests), strict OpenSpec, deterministic generation, positive/negative drift, boundary/link/credential, and diff checks pass locally. Database foundation CI/PostgreSQL evidence remains in its archive. |
+| Current phase | Phase 7 — API Contract Generation complete, synced, and archived; Phase 8 has not started |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change |
+| Current OpenSpec change | None; Phase 7 is [archived](../openspec/changes/archive/2026-09-22-generate-typed-api-client/proposal.md) and its [api-contract-generation specification](../openspec/specs/api-contract-generation/spec.md) is canonical |
+| Current OpenSpec stage | Phase 7 lifecycle complete - Proposal, Apply, Sync, and Archive completed through separate branches and PRs |
+| Next execution step | Phase 8 — Authentication is the next roadmap phase and has not started; begin it through a separate OpenSpec Explore and Propose workflow |
+| Next phase | Phase 8 — Authentication; not started |
+| Validation evidence | Phase 7 API contract generation passed frozen install, backend/frontend/root lint/typecheck/tests/build (106 frontend + 33 backend tests), strict OpenSpec validation, deterministic generation, positive/negative drift, boundary/link/credential, and diff checks; Sync and Archive validation also passed |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Documentation, OpenSpec artifacts, frontend foundation and pixel-game design system, NestJS/Fastify backend and Drizzle/PostgreSQL database foundations, and the implemented OpenAPI export, frontend-local generated types/typed health transport, and CI drift check; no authentication behavior, curriculum publication, offline sync, learner runtime, production database provisioning, or Phase 8 implementation |
+| Current repository | Documentation, canonical OpenSpec specifications, archived changes, frontend foundation and pixel-game design system, NestJS/Fastify backend and Drizzle/PostgreSQL database foundations, and the implemented OpenAPI export, frontend-local generated types/typed health transport, and CI drift check; no active OpenSpec change, authentication behavior, curriculum publication, offline sync, learner runtime, production database provisioning, or Phase 8 implementation |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
@@ -795,7 +795,7 @@ packages/api-client
 Next.js
 ```
 
-The `packages/api-client` line is a historical example, superseded by [approved decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). Generated client code belongs under `frontend/src/lib/api/generated/`; a root shared package requires at least two real independent consumers and a separately approved extraction. The [Phase 7 proposal](../openspec/changes/generate-typed-api-client/proposal.md) uses the frontend-local path. See [API contract generation](api-contract.md) for the regeneration workflow.
+The `packages/api-client` line is a historical example, superseded by [approved decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). Generated client code belongs under `frontend/src/lib/api/generated/`; a root shared package requires at least two real independent consumers and a separately approved extraction. The archived [Phase 7 change](../openspec/changes/archive/2026-09-22-generate-typed-api-client/proposal.md) uses the frontend-local path, and the [api-contract-generation specification](../openspec/specs/api-contract-generation/spec.md) records the canonical contract. See [API contract generation](api-contract.md) for the regeneration workflow.
 
 ## Rule
 
@@ -814,6 +814,12 @@ frontend
 → generated api-client
 → backend
 ```
+
+## Phase 7 completion
+
+API contract generation was completed on 2026-09-22 through the [archived change](../openspec/changes/archive/2026-09-22-generate-typed-api-client/proposal.md). The canonical [api-contract-generation specification](../openspec/specs/api-contract-generation/spec.md) defines implemented backend routes as the sole contract source, frontend-local generated ownership, reproducible generation and drift enforcement, transport and security boundaries, and the exclusion of later domain behavior.
+
+All 8 tasks passed backend, frontend, root, deterministic generation, positive and negative drift, boundary, credential, strict OpenSpec, CI, and diff verification. No authentication, authorization, curriculum publication, submissions, progress, rewards, offline sync, new product endpoints, or Phase 8 implementation was added.
 
 ---
 
