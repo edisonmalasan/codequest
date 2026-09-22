@@ -6,12 +6,12 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 6 — Database Foundation complete, synced, and archived; Phase 7 has not started |
+| Current phase | Phase 7 — API Contract Generation proposal under review; implementation has not started |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change |
-| Current OpenSpec change | None; the [database-foundation specification](../openspec/specs/database-foundation/spec.md) is canonical and the completed change is [archived](../openspec/changes/archive/2026-09-22-establish-database-foundation/proposal.md) |
-| Current OpenSpec stage | Phase 6 lifecycle complete — proposal PR #30, Apply PR #31, and Sync PR #32 merged; the completed change is archived |
-| Next execution step | Phase 7 — API Contract Generation is the next roadmap phase; begin it only through a separate OpenSpec workflow |
-| Next phase | Phase 7 — API Contract Generation; not started |
+| Current OpenSpec change | [`generate-typed-api-client`](../openspec/changes/generate-typed-api-client/proposal.md) proposed; the completed Phase 6 change is [archived](../openspec/changes/archive/2026-09-22-establish-database-foundation/proposal.md) and its [specification](../openspec/specs/database-foundation/spec.md) is canonical |
+| Current OpenSpec stage | Phase 7 Propose — planning artifacts prepared for review; Apply has not started |
+| Next execution step | Review and merge the proposal PR before a separate Apply branch; do not begin Phase 8 |
+| Next phase | Phase 7 — API Contract Generation Apply, after proposal review and merge; Phase 8 — Authentication has not started |
 | Validation evidence | Database foundation: frozen install, migration generation/check/drift/application, backend lint/typecheck/build and 8 files/33 tests pass; root lint/typecheck/build and 101 frontend + 33 backend tests pass; disposable PostgreSQL 17 CI, local PGlite, strict OpenSpec, boundary, credential, link, and diff checks pass. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, frontend foundation and pixel-game design system, the NestJS/Fastify backend foundation, and the verified backend-only Drizzle/PostgreSQL schema, forward migration, ownership/version/learning/reward constraints, derived-state queries, and migration gates; no authentication behavior, generated client, curriculum publication, sync, learner runtime, production database provisioning, or Phase 7 implementation |
@@ -794,6 +794,8 @@ packages/api-client
         ↓
 Next.js
 ```
+
+The `packages/api-client` line is a historical example, superseded by [approved decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). Generated client code belongs under `frontend/src/lib/api/generated/`; a root shared package requires at least two real independent consumers and a separately approved extraction. The [Phase 7 proposal](../openspec/changes/generate-typed-api-client/proposal.md) uses the frontend-local path.
 
 ## Rule
 
