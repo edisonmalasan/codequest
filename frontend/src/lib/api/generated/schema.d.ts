@@ -22,6 +22,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/journeys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List published curriculum journeys */
+        get: operations["CurriculumController_listJourneys_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/journeys/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one published journey */
+        get: operations["CurriculumController_findJourney_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one published journey through the Course alias */
+        get: operations["CurriculumController_findCourseAlias_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chapters/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one published chapter */
+        get: operations["CurriculumController_findChapter_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/quests/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one published quest snapshot */
+        get: operations["CurriculumController_findQuest_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health": {
         parameters: {
             query?: never;
@@ -73,6 +158,135 @@ export interface components {
         };
         ApiErrorResponseDto: {
             error: components["schemas"]["ApiErrorDto"];
+        };
+        JourneySummaryDto: {
+            /** @example JAVASCRIPT-FOUNDATIONS */
+            id: string;
+            /** @example javascript-foundations */
+            slug: string;
+            title: string;
+            position: number;
+            chapterCount: number;
+            questCount: number;
+        };
+        OutcomeDto: {
+            /** @example O1 */
+            id: string;
+            description: string;
+        };
+        ChapterSummaryDto: {
+            /** @example CH01 */
+            id: string;
+            /** @example variables */
+            slug: string;
+            title: string;
+            position: number;
+            objectiveSummary: string;
+            questCount: number;
+        };
+        JourneyDetailDto: {
+            /** @example JAVASCRIPT-FOUNDATIONS */
+            id: string;
+            /** @example javascript-foundations */
+            slug: string;
+            title: string;
+            position: number;
+            chapterCount: number;
+            questCount: number;
+            entryRequirements: string[];
+            outcomes: components["schemas"]["OutcomeDto"][];
+            chapters: components["schemas"]["ChapterSummaryDto"][];
+        };
+        QuestSummaryDto: {
+            /** @example Q01 */
+            id: string;
+            /** @example first-message */
+            slug: string;
+            title: string;
+            position: number;
+            /** @enum {string} */
+            kind: "instructional" | "capstone";
+            guestEligible: boolean;
+            /** @example 1.0.0 */
+            contentVersion: string;
+            /** @example 1.0.0 */
+            assessmentVersion: string;
+            /** @enum {string} */
+            difficulty: "introductory" | "developing" | "integrative";
+            xpAward: number;
+        };
+        ChapterDetailDto: {
+            /** @example CH01 */
+            id: string;
+            /** @example variables */
+            slug: string;
+            title: string;
+            position: number;
+            objectiveSummary: string;
+            questCount: number;
+            journey: components["schemas"]["JourneySummaryDto"];
+            quests: components["schemas"]["QuestSummaryDto"][];
+        };
+        QuestHierarchyDto: {
+            journey: components["schemas"]["JourneySummaryDto"];
+            chapter: components["schemas"]["ChapterSummaryDto"];
+        };
+        ConceptDto: {
+            /** @example js-values */
+            id: string;
+            title: string;
+        };
+        QuestPrerequisiteDto: {
+            id: string;
+            slug: string;
+            title: string;
+        };
+        QuestHintsDto: {
+            question: string;
+            concept: string;
+            nextStep: string;
+        };
+        QuestCaseDto: {
+            id: string;
+            /** @enum {string} */
+            category: "normal" | "boundary";
+            /** @enum {string} */
+            kind: "console" | "function";
+            feedback: string;
+            expectedOutput?: string;
+            functionName?: string;
+            args?: unknown[];
+            expected?: Record<string, never>;
+        };
+        QuestDetailDto: {
+            /** @example Q01 */
+            id: string;
+            /** @example first-message */
+            slug: string;
+            title: string;
+            position: number;
+            /** @enum {string} */
+            kind: "instructional" | "capstone";
+            guestEligible: boolean;
+            /** @example 1.0.0 */
+            contentVersion: string;
+            /** @example 1.0.0 */
+            assessmentVersion: string;
+            /** @enum {string} */
+            difficulty: "introductory" | "developing" | "integrative";
+            xpAward: number;
+            hierarchy: components["schemas"]["QuestHierarchyDto"];
+            objective: string;
+            /** @example O1 */
+            outcomeId: string;
+            concepts: components["schemas"]["ConceptDto"][];
+            prerequisites: components["schemas"]["QuestPrerequisiteDto"][];
+            hints: components["schemas"]["QuestHintsDto"];
+            lesson: string;
+            starterCode: string;
+            cases: components["schemas"]["QuestCaseDto"][];
+            explanationPrompt?: string;
+            transferPrompt?: string;
         };
         HealthResponseDto: {
             /**
@@ -205,6 +419,269 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_listJourneys_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JourneySummaryDto"][];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_findJourney_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JourneyDetailDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_findCourseAlias_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JourneyDetailDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_findChapter_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChapterDetailDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_findQuest_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestDetailDto"];
+                };
+            };
+            404: {
                 headers: {
                     /** @description Correlated request ID */
                     "x-request-id"?: string;
