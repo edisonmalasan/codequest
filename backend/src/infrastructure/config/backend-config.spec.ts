@@ -45,6 +45,30 @@ describe('loadBackendConfig', () => {
     ).toThrow('wildcard origins are not allowed');
   });
 
+  it('does not expose a credential-like invalid origin in startup error text', () => {
+    const invalidOrigin =
+      'https://learner:super-secret@example.com/private?token=credential-token';
+
+    let thrown: unknown;
+    try {
+      loadBackendConfig({ CORS_ORIGINS: invalidOrigin });
+    } catch (error) {
+      thrown = error;
+    }
+
+    expect(thrown).toBeInstanceOf(Error);
+    const message = thrown instanceof Error ? thrown.message : String(thrown);
+    const startupLog = JSON.stringify({
+      event: 'application.startup_failed',
+      message,
+    });
+
+    expect(message).toBe('Invalid CORS_ORIGINS entry');
+    expect(startupLog).not.toContain(invalidOrigin);
+    expect(startupLog).not.toContain('super-secret');
+    expect(startupLog).not.toContain('credential-token');
+  });
+
   it.each([
     [{ NODE_ENV: 'staging' }, 'NODE_ENV'],
     [{ HOST: 'bad host' }, 'HOST'],
