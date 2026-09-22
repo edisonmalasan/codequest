@@ -6,12 +6,12 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 6 — Database Foundation Apply complete; Sync and Archive have not started |
-| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived |
-| Current OpenSpec change | [`establish-database-foundation`](../openspec/changes/establish-database-foundation/proposal.md); Phase 5 remains archived and its [backend-foundation specification](../openspec/specs/backend-foundation/spec.md) is canonical |
-| Current OpenSpec stage | Apply complete — proposal PR #30 merged and Apply PR #31 delivers the verified database foundation; Sync and Archive have not started |
-| Next execution step | After Apply PR #31 is merged, run the database-foundation Sync stage on its own branch and PR; do not begin Phase 7 |
-| Next phase | Phase 6 — Database Foundation is current; Phase 7 — API Contract Generation has not started |
+| Current phase | Phase 6 — Database Foundation complete, synced, and archived; Phase 7 has not started |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change |
+| Current OpenSpec change | None; the [database-foundation specification](../openspec/specs/database-foundation/spec.md) is canonical and the completed change is [archived](../openspec/changes/archive/2026-09-22-establish-database-foundation/proposal.md) |
+| Current OpenSpec stage | Phase 6 lifecycle complete — proposal PR #30, Apply PR #31, and Sync PR #32 merged; the completed change is archived |
+| Next execution step | Phase 7 — API Contract Generation is the next roadmap phase; begin it only through a separate OpenSpec workflow |
+| Next phase | Phase 7 — API Contract Generation; not started |
 | Validation evidence | Database foundation: frozen install, migration generation/check/drift/application, backend lint/typecheck/build and 8 files/33 tests pass; root lint/typecheck/build and 101 frontend + 33 backend tests pass; disposable PostgreSQL 17 CI, local PGlite, strict OpenSpec, boundary, credential, link, and diff checks pass. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Documentation, OpenSpec artifacts, frontend foundation and pixel-game design system, the NestJS/Fastify backend foundation, and the verified backend-only Drizzle/PostgreSQL schema, forward migration, ownership/version/learning/reward constraints, derived-state queries, and migration gates; no authentication behavior, generated client, curriculum publication, sync, learner runtime, production database provisioning, or Phase 7 implementation |
@@ -766,6 +766,12 @@ Use:
 * explicit ownership
 
 Avoid storing values that can easily be derived.
+
+## Phase 6 completion
+
+The database foundation was completed on 2026-09-22 through the [database foundation archive](../openspec/changes/archive/2026-09-22-establish-database-foundation/proposal.md). The canonical [database-foundation specification](../openspec/specs/database-foundation/spec.md) defines backend-owned PostgreSQL persistence, reproducible Drizzle migrations, identity and curriculum relationships, auditable learning facts, completion and reward uniqueness, explicit relational behavior, and PostgreSQL verification.
+
+All 25 tasks passed the migration, relational, backend, repository, strict OpenSpec, boundary, credential, link, and diff gates recorded in the archive artifacts. No REST endpoints, generated API client, authentication behavior, curriculum publication, progress or gamification computation, offline sync, production provisioning, or Phase 7 implementation was added.
 
 ---
 
