@@ -39,6 +39,7 @@ jobs:
       - run: pnpm --dir backend db:check
       - run: pnpm --dir backend db:drift
       - run: pnpm --dir backend db:migrate
+      - run: pnpm api:check
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
