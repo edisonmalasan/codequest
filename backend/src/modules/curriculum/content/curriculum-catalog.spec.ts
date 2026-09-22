@@ -216,4 +216,24 @@ journeys:
       'Published slug is ambiguous',
     );
   });
+
+  it('rejects a published snapshot with a dangling prerequisite', () => {
+    const root = fixture();
+    reviewed(root);
+    publish(root);
+    const versionFile = join(
+      root,
+      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/version.yaml',
+    );
+    writeFileSync(
+      versionFile,
+      readFileSync(versionFile, 'utf8').replace(
+        'prerequisiteQuestIds: []',
+        'prerequisiteQuestIds:\n  - Q99',
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Unknown or self prerequisite quest ID',
+    );
+  });
 });
