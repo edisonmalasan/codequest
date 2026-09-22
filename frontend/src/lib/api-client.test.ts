@@ -1,5 +1,9 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
-import { createCodequestApi, type HealthResponse } from './api-client';
+import {
+  createCodequestApi,
+  type AccountResponse,
+  type HealthResponse,
+} from './api-client';
 import type { paths } from './api/generated/schema';
 
 const health: HealthResponse = {
@@ -20,7 +24,9 @@ function jsonResponse(value: unknown, status = 200): Response {
 
 describe('CodeQuest typed API client', () => {
   it('uses the generated health path and configured base URL without credentials', async () => {
-    expectTypeOf<keyof paths>().toEqualTypeOf<'/api/v1/health'>();
+    expectTypeOf<keyof paths>().toEqualTypeOf<
+      '/api/v1/account' | '/api/v1/health'
+    >();
     expectTypeOf<
       '/api/v1/journeys' extends keyof paths ? true : false
     >().toEqualTypeOf<false>();
@@ -61,6 +67,59 @@ describe('CodeQuest typed API client', () => {
         authorization: null,
       },
     ]);
+  });
+
+  it('gets a fresh token for each account request and never authenticates health', async () => {
+    expectTypeOf<keyof paths>().toEqualTypeOf<
+      '/api/v1/account' | '/api/v1/health'
+    >();
+    const account: AccountResponse = {
+      id: '00000000-0000-4000-8000-000000000001',
+      timezone: 'UTC',
+      createdAt: '2026-09-22T00:00:00.000Z',
+      updatedAt: '2026-09-22T00:00:00.000Z',
+    };
+    const authorizations: Array<string | null> = [];
+    let tokenCalls = 0;
+    const client = createCodequestApi({
+      getAccessToken: async () => `fresh-token-${++tokenCalls}`,
+      fetch: async (input) => {
+        const request = input instanceof Request ? input : new Request(input);
+        authorizations.push(request.headers.get('authorization'));
+        return jsonResponse(request.url.endsWith('/health') ? health : account);
+      },
+    });
+
+    await expect(client.getHealth()).resolves.toMatchObject({ ok: true });
+    await expect(client.establishAccount()).resolves.toMatchObject({
+      ok: true,
+      data: account,
+    });
+    await expect(client.getAccount()).resolves.toMatchObject({
+      ok: true,
+      data: account,
+    });
+    expect(authorizations).toEqual([
+      null,
+      'Bearer fresh-token-1',
+      'Bearer fresh-token-2',
+    ]);
+  });
+
+  it('fails closed before transport when an account session is missing', async () => {
+    let transported = false;
+    const client = createCodequestApi({
+      getAccessToken: async () => null,
+      fetch: async () => {
+        transported = true;
+        return jsonResponse({});
+      },
+    });
+    await expect(client.getAccount()).resolves.toEqual({
+      ok: false,
+      kind: 'unauthenticated',
+    });
+    expect(transported).toBe(false);
   });
 
   it('returns the safe correlated error for a documented HTTP status', async () => {

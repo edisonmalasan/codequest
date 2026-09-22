@@ -8,6 +8,10 @@ async function exportOpenApi(outputPath: string): Promise<void> {
   const config = loadBackendConfig({
     NODE_ENV: 'test',
     DATABASE_URL: 'postgresql://contract@127.0.0.1/contract',
+    SUPABASE_AUTH_ISSUER: 'http://127.0.0.1:54321/auth/v1',
+    SUPABASE_AUTH_AUDIENCE: 'authenticated',
+    SUPABASE_AUTH_JWKS_URL:
+      'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
   });
   const app = await createApplication(config, {
     nestLogger: false,

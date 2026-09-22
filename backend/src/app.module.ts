@@ -25,7 +25,7 @@ export class AppModule {
             limit: config.rateLimitMax,
           },
         ]),
-        IdentityModule,
+        IdentityModule.register(config.auth),
         CurriculumModule,
         LearningModule,
         ProgressModule,

@@ -9,6 +9,15 @@ export interface BackendEnvironment {
   RATE_LIMIT_TTL_MS?: string;
   RATE_LIMIT_MAX?: string;
   DATABASE_URL?: string;
+  SUPABASE_AUTH_ISSUER?: string;
+  SUPABASE_AUTH_AUDIENCE?: string;
+  SUPABASE_AUTH_JWKS_URL?: string;
+}
+
+export interface SupabaseAuthConfig {
+  readonly issuer: string;
+  readonly audience: string;
+  readonly jwksUrl: string;
 }
 
 export interface BackendConfig {
@@ -20,6 +29,7 @@ export interface BackendConfig {
   readonly rateLimitTtlMs: number;
   readonly rateLimitMax: number;
   readonly databaseUrl: string;
+  readonly auth: SupabaseAuthConfig;
 }
 
 const DEFAULT_CORS_ORIGINS = [
@@ -92,6 +102,73 @@ function parseDatabaseUrl(value: string | undefined): string {
   }
 
   return value;
+}
+
+function parseAuthUrl(
+  name: 'SUPABASE_AUTH_ISSUER' | 'SUPABASE_AUTH_JWKS_URL',
+  value: string | undefined,
+  environment: RuntimeEnvironment,
+): URL {
+  if (value === undefined || value.trim() === '') {
+    throw new Error(`Invalid ${name}: a URL is required`);
+  }
+
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error(`Invalid ${name}`);
+  }
+
+  if (
+    (url.protocol !== 'https:' &&
+      !(environment !== 'production' && url.protocol === 'http:')) ||
+    url.username !== '' ||
+    url.password !== '' ||
+    url.search !== '' ||
+    url.hash !== '' ||
+    url.origin === 'null'
+  ) {
+    throw new Error(`Invalid ${name}`);
+  }
+  return url;
+}
+
+function parseAudience(value: string | undefined): string {
+  if (
+    value === undefined ||
+    !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(value)
+  ) {
+    throw new Error('Invalid SUPABASE_AUTH_AUDIENCE');
+  }
+  return value;
+}
+
+function parseAuthConfig(
+  env: BackendEnvironment,
+  environment: RuntimeEnvironment,
+): SupabaseAuthConfig {
+  const issuer = parseAuthUrl(
+    'SUPABASE_AUTH_ISSUER',
+    env.SUPABASE_AUTH_ISSUER,
+    environment,
+  );
+  const jwks = parseAuthUrl(
+    'SUPABASE_AUTH_JWKS_URL',
+    env.SUPABASE_AUTH_JWKS_URL,
+    environment,
+  );
+  const issuerPath = issuer.pathname.replace(/\/+$/, '');
+  const expectedJwksPath = `${issuerPath}/.well-known/jwks.json`;
+  if (jwks.origin !== issuer.origin || jwks.pathname !== expectedJwksPath) {
+    throw new Error('Invalid SUPABASE_AUTH_JWKS_URL');
+  }
+
+  return Object.freeze({
+    issuer: `${issuer.origin}${issuerPath}`,
+    audience: parseAudience(env.SUPABASE_AUTH_AUDIENCE),
+    jwksUrl: jwks.toString(),
+  });
 }
 
 function normalizeOrigin(value: string): string {
@@ -176,5 +253,6 @@ export function loadBackendConfig(
       10_000,
     ),
     databaseUrl: parseDatabaseUrl(env.DATABASE_URL),
+    auth: parseAuthConfig(env, environment),
   });
 }

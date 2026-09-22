@@ -31,6 +31,8 @@ interface TestDatabase {
 const migrationsFolder = resolve('drizzle');
 const USER_A = '00000000-0000-4000-8000-000000000001';
 const USER_B = '00000000-0000-4000-8000-000000000002';
+const USER_C = '00000000-0000-4000-8000-000000000003';
+const USER_D = '00000000-0000-4000-8000-000000000004';
 const VERSION_Q1_V1 = '00000000-0000-4000-8000-000000000101';
 const VERSION_Q1_V2 = '00000000-0000-4000-8000-000000000102';
 const VERSION_Q2_V1 = '00000000-0000-4000-8000-000000000103';
@@ -385,5 +387,45 @@ describe('database foundation migrations and relational contract', () => {
         ? 'pglite'
         : 'postgres-server',
     );
+  });
+
+  it('supports idempotent account establishment from the verified subject UUID', async () => {
+    await database.exec(
+      `insert into codequest.users (id) values ('${USER_C}');`,
+    );
+    const establish = () =>
+      database.exec(`
+        insert into codequest.users (id) values ('${USER_C}') on conflict do nothing;
+        insert into codequest.profiles (user_id) values ('${USER_C}') on conflict do nothing;
+      `);
+    await Promise.all([establish(), establish()]);
+    expect(
+      await database.query(`
+        select users.id, profiles.timezone
+        from codequest.users
+        inner join codequest.profiles on profiles.user_id = users.id
+        where users.id = '${USER_C}';
+      `),
+    ).toEqual([{ id: USER_C, timezone: 'UTC' }]);
+    expect(
+      await database.query(`
+        select count(*)::integer as count
+        from codequest.profiles where user_id = '${USER_A}';
+      `),
+    ).toEqual([{ count: 0 }]);
+
+    await expectRejected(
+      database,
+      `begin;
+       insert into codequest.users (id) values ('${USER_D}');
+       insert into codequest.profiles (user_id, timezone) values ('${USER_D}', '');
+       commit;`,
+    );
+    await database.exec('rollback;');
+    expect(
+      await database.query(
+        `select count(*)::integer as count from codequest.users where id = '${USER_D}';`,
+      ),
+    ).toEqual([{ count: 0 }]);
   });
 });
