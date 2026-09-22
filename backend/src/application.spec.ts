@@ -28,6 +28,9 @@ interface ErrorResponse {
   };
 }
 
+const DATABASE_URL =
+  'postgresql://codequest:local-password@127.0.0.1:5432/codequest';
+
 class EchoRequestDto {
   @IsString()
   @MinLength(2)
@@ -74,7 +77,7 @@ class CapturingFoundationLogger implements FoundationLogger {
 
 function configuration(overrides: Partial<BackendConfig> = {}): BackendConfig {
   return Object.freeze({
-    ...loadBackendConfig({ NODE_ENV: 'test' }),
+    ...loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL }),
     ...overrides,
   });
 }
