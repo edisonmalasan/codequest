@@ -95,7 +95,7 @@ CO reviews pedagogical sequence, clarity, cognitive load and hint quality. TO re
 
 ## Identity, publication and version lifecycle
 
-Confirmed C05: Git-first content under `backend/content/`; backend owns available versions and API delivery. Frontend does not bundle/import raw authored curriculum or query application tables. Database projections, content format/compiler and deployment publication mechanism are deferred F03. Approved P15/ADR 0007:
+Confirmed C05: Git-first content under `backend/content/`; backend owns available versions and API delivery. Frontend does not bundle/import raw authored curriculum or query application tables. Phase 10 resolves F03 publication with a root `publication.yaml`: only complete reviewed Journeys with both approvals and exact quest content/assessment versions enter the immutable startup catalog. Invalid selection fails closed; an empty selection is valid. The public API exposes only selected snapshots, and Course is a read alias for Journey. No database projection or author mutation is introduced. Approved P15/ADR 0007:
 
 | Change category | Acceptance/history policy |
 | --- | --- |
