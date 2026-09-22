@@ -9,6 +9,15 @@ export function createOpenApiDocument(app: INestApplication): OpenAPIObject {
       .setDescription('CodeQuest versioned application API')
       .setVersion('1.0.0')
       .addServer('/')
+      .addBearerAuth(
+        {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Verified Supabase access token',
+        },
+        'supabase',
+      )
       .build(),
   );
 }

@@ -11,7 +11,6 @@ import { LearningModule } from './modules/learning/learning.module';
 import { ProgressModule } from './modules/progress/progress.module';
 
 const inertModules = [
-  IdentityModule,
   CurriculumModule,
   LearningModule,
   ProgressModule,
@@ -20,18 +19,24 @@ const inertModules = [
 
 const DATABASE_URL =
   'postgresql://codequest:local-password@127.0.0.1:5432/codequest';
+const AUTH_ENV = {
+  SUPABASE_AUTH_ISSUER: 'http://127.0.0.1:54321/auth/v1',
+  SUPABASE_AUTH_AUDIENCE: 'authenticated',
+  SUPABASE_AUTH_JWKS_URL:
+    'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
+} as const;
 
 describe('AppModule', () => {
   it('compiles all initial module boundaries', async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         AppModule.register(
-          loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL }),
+          loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL, ...AUTH_ENV }),
         ),
       ],
     }).compile();
 
-    for (const moduleType of [...inertModules, HealthModule]) {
+    for (const moduleType of [...inertModules, HealthModule, IdentityModule]) {
       expect(moduleRef.get(moduleType)).toBeInstanceOf(moduleType);
     }
     await moduleRef.close();

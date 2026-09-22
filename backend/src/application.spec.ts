@@ -31,6 +31,12 @@ interface ErrorResponse {
 
 const DATABASE_URL =
   'postgresql://codequest:local-password@127.0.0.1:5432/codequest';
+const AUTH_ENV = {
+  SUPABASE_AUTH_ISSUER: 'http://127.0.0.1:54321/auth/v1',
+  SUPABASE_AUTH_AUDIENCE: 'authenticated',
+  SUPABASE_AUTH_JWKS_URL:
+    'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
+} as const;
 
 class EchoRequestDto {
   @IsString()
@@ -78,7 +84,7 @@ class CapturingFoundationLogger implements FoundationLogger {
 
 function configuration(overrides: Partial<BackendConfig> = {}): BackendConfig {
   return Object.freeze({
-    ...loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL }),
+    ...loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL, ...AUTH_ENV }),
     ...overrides,
   });
 }
@@ -320,7 +326,10 @@ describe('backend HTTP foundation', () => {
     }>();
     expect(document.openapi).toMatch(/^3\./);
     expect(document.paths).toHaveProperty('/api/v1/health');
-    expect(Object.keys(document.paths)).toEqual(['/api/v1/health']);
+    expect(Object.keys(document.paths).sort()).toEqual([
+      '/api/v1/account',
+      '/api/v1/health',
+    ]);
     const exported = createOpenApiDocument(app);
     expect(document).toEqual(exported);
     expect(exported.paths['/api/v1/health']?.get?.responses).toMatchObject({
@@ -351,9 +360,37 @@ describe('backend HTTP foundation', () => {
         required: ['code', 'message', 'status', 'requestId'],
       },
     });
+    expect(exported.paths['/api/v1/account']?.get?.security).toEqual([
+      { supabase: [] },
+    ]);
+    expect(exported.paths['/api/v1/account']?.put?.security).toEqual([
+      { supabase: [] },
+    ]);
 
     const docs = await fastify.inject({ method: 'GET', url: '/api/docs' });
     expect(docs.statusCode).toBe(200);
+  });
+
+  it('keeps health public and rejects account access without a bearer token', async () => {
+    const app = await createApplication(configuration(), {
+      foundationLogger: new CapturingFoundationLogger(),
+      nestLogger: false,
+      enableShutdownHooks: false,
+    });
+    applications.push(app);
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+
+    expect(
+      (await fastify.inject({ method: 'GET', url: '/api/v1/health' }))
+        .statusCode,
+    ).toBe(200);
+    const account = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/account',
+      headers: { 'x-user-id': '00000000-0000-4000-8000-000000000099' },
+    });
+    expect(account.statusCode).toBe(401);
+    expect(account.body).not.toContain('00000000-0000-4000-8000-000000000099');
   });
 
   it('returns a correlated normalized response after the request limit', async () => {

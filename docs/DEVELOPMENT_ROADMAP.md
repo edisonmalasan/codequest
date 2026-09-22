@@ -6,15 +6,15 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 8 — Authentication proposal complete and ready for review; implementation has not started |
+| Current phase | Phase 8 — Authentication Apply complete and verified; lifecycle Sync and Archive remain |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change |
 | Current OpenSpec change | [`establish-supabase-authentication`](../openspec/changes/establish-supabase-authentication/proposal.md) active; Phase 7 is [archived](../openspec/changes/archive/2026-09-22-generate-typed-api-client/proposal.md) and its [specification](../openspec/specs/api-contract-generation/spec.md) is canonical |
-| Current OpenSpec stage | Phase 8 Explore complete; Proposal artifacts complete and validated on a dedicated proposal branch; Apply has not started |
-| Next execution step | Review and merge the Phase 8 proposal PR; begin Apply only after the proposal is approved and merged |
+| Current OpenSpec stage | Phase 8 Apply complete and verified on its dedicated implementation branch; Sync and Archive have not started |
+| Next execution step | Merge the verified Phase 8 Apply PR, then perform canonical specification Sync and Archive as separate stages |
 | Next phase | Phase 8 — Authentication is active in planning; Phase 9 — Curriculum Content Architecture has not started |
-| Validation evidence | Phase 8 planning artifacts pass strict OpenSpec validation and diff checks; no authentication implementation or live-provider result is claimed. Phase 7 implementation and lifecycle gates remain recorded in its archive. |
+| Validation evidence | Phase 8 has controlled JWT/JWKS, ownership, route, session, generated-client, PostgreSQL, and Chromium fixture coverage. Exact final gate results are recorded in the active change tasks; live provider provisioning is not claimed. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Phase 0-7 foundations and canonical specifications plus the active Phase 8 authentication proposal; no authentication implementation, production identity-provider configuration, curriculum publication, guest sync, learner runtime, or Phase 9 behavior |
+| Current repository | Phase 0-7 foundations plus the active Phase 8 implementation; no production identity-provider provisioning, curriculum publication, guest sync, learner runtime, or Phase 9 behavior |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
@@ -863,7 +863,7 @@ NestJS must:
 
 Never accept frontend-supplied `userId` as authority.
 
-The active [Phase 8 proposal](../openspec/changes/establish-supabase-authentication/proposal.md) defines the Supabase session, backend verification, application-user bootstrap, ownership, permission, generated-client, security, testing, and exclusion boundaries. It is planning only; Apply and all authentication behavior remain unstarted until the proposal is approved and merged.
+The active [Phase 8 change](../openspec/changes/establish-supabase-authentication/proposal.md) implements the Supabase session, backend verification, application-user bootstrap, ownership, permission, generated-client, security, and testing boundaries. Production Google/GitHub provisioning, recovery, MFA, account linking/deletion, guest import, and Phase 9 curriculum behavior remain deferred. Canonical Sync and Archive are later OpenSpec stages.
 
 ---
 

@@ -40,7 +40,7 @@ Phase 1 must test benign output, syntax/runtime errors, infinite loops, huge out
 
 ## Authentication, transport and data access
 
-P13 establishes Supabase Auth identity flows on the trusted client and bearer identity on protected REST requests to NestJS. Tokens only reach Auth handling and authorized API request transport; no runtime/preview/lesson messages, source fixtures, telemetry, URLs, service-worker protected-response cache or learner-controlled code. Session refresh/storage specifics require separate auth design; alternate cookie/session transport must preserve the same boundary and receive review.
+Phase 8 implements P13 through Supabase's cookie-backed PKCE session on the trusted Next.js boundary and verified bearer identity on protected REST requests to NestJS. Tokens only reach Auth handling and authorized API request transport; no runtime/preview/lesson messages, source fixtures, telemetry, URLs, service-worker protected-response cache or learner-controlled code. Backend verification accepts only configured asymmetric algorithms, issuer, audience, time bounds, key IDs and UUID subjects. Alternate session transport must preserve the same boundary and receive review. See [authentication](authentication.md).
 
 NestJS verifies token signature/issuer/audience/expiry and derives user identity/permissions. HTTPS/session expiration/CORS/request validation/rate limits are requirements for later production configuration, not configured by this definition. No frontend user ID/role is trusted; no learner code executes in NestJS. Backend table access uses least privilege; author/operator operations need explicit authorization and audit boundaries. Secrets/service-role keys stay backend-only and out of source, generated clients and logs.
 
@@ -52,7 +52,7 @@ P12 establishes private learner code/submissions: accessible to their owner and 
 
 | Data | Purpose / minimization | Local/cloud and deletion principle |
 | --- | --- | --- |
-| Session credentials | Identity only; never instructional/runtime/analytics payload | Clear/revoke under account/logout policy; final transport/storage F03 |
+| Session credentials | Identity only; never instructional/runtime/analytics payload | Cookie-backed PKCE refresh; clear session and protected query state on logout |
 | Local drafts/preferences | Avoid edit loss | Owner-isolated device state; disclose no cloud backup; offer local removal; retention details F06 |
 | Guest progress | Low-friction trial; provisional | Q01–Q04 local state/import only by explicit action; browser clearing can lose it |
 | Account progress cache | Offline display of minimal learning state | Owner-isolated derived fields in IndexedDB, not raw token-bearing protected-response/service-worker cache; clear protected state on switch/logout |

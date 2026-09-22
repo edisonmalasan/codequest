@@ -26,6 +26,9 @@ jobs:
     env:
       DATABASE_URL: postgresql://codequest:codequest_test_password@127.0.0.1:5432/codequest_test
       DATABASE_TEST_URL: postgresql://codequest:codequest_test_password@127.0.0.1:5432/codequest_test
+      SUPABASE_AUTH_ISSUER: http://127.0.0.1:54321/auth/v1
+      SUPABASE_AUTH_AUDIENCE: authenticated
+      SUPABASE_AUTH_JWKS_URL: http://127.0.0.1:54321/auth/v1/.well-known/jwks.json
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

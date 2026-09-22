@@ -8,7 +8,7 @@ Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-
 
 Next.js owns UI/routing/PWA, responsive rendering, accessibility, CodeMirror workspace, browser execution/preview, local drafts/preferences, IndexedDB/cache and API consumption. Use the documented stack direction without adding code or configuration in Phase 0. Accepted progress/rewards/unlock rules and application database access stay in NestJS. Frontend neither imports backend source/raw curriculum nor reads/writes application tables. API types come from generated OpenAPI code at `frontend/src/lib/api/generated/`.
 
-Supabase Auth identity UI/flows are permitted under approved P12/P13; verified API identity/ownership remains backend responsibility. No MVP direct learner Storage/uploads. Session/token material stays out of runtime messages, lesson fixtures, cached protected responses and telemetry. Learner compartment cannot issue authenticated requests. Exact session storage/refresh/generator/service-worker implementation awaits later capability design.
+Phase 8 implements Supabase Auth identity UI and cookie-backed PKCE session refresh through isolated browser/server adapters. `/login`, `/register`, `/auth/callback`, and `/account` use validated local return paths; protected API calls obtain the current access token at call time through the typed frontend wrapper. Sign-out clears protected query state. Verified API identity/ownership remains backend responsibility. No MVP direct learner Storage/uploads. Session/token material stays out of runtime messages, lesson fixtures, cached protected responses and telemetry. Learner compartment cannot issue authenticated requests. See [authentication](authentication.md).
 
 ## Editor and feedback
 
