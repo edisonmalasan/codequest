@@ -1,7 +1,7 @@
 ## 1. Backend contract source
 
-- [ ] 1.1 Expose a reusable in-memory OpenAPI document/export path from the existing NestJS setup without starting a listener or requiring production credentials; verify the exported document and `/api/openapi.json` describe the same implemented paths and schemas.
-- [ ] 1.2 Document the current health success, request ID, and implemented safe error responses in backend-owned OpenAPI metadata without changing their wire behavior; verify Fastify response tests and OpenAPI schema assertions agree.
+- [x] 1.1 Expose a reusable in-memory OpenAPI document/export path from the existing NestJS setup without starting a listener or requiring production credentials; verify the exported document and `/api/openapi.json` describe the same implemented paths and schemas.
+- [x] 1.2 Document the current health success, request ID, and implemented safe error responses in backend-owned OpenAPI metadata without changing their wire behavior; verify Fastify response tests and OpenAPI schema assertions agree.
 
 ## 2. Frontend generation and transport
 
