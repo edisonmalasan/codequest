@@ -8,7 +8,11 @@
     "start": "node dist/main.js",
     "test": "vitest run",
     "lint": "eslint . && prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "db:check": "drizzle-kit check --config drizzle.config.ts",
+    "db:drift": "node scripts/check-migration-drift.mjs"
   },
   "dependencies": {
     "@fastify/cors": "11.3.0",
@@ -20,14 +24,18 @@
     "@nestjs/throttler": "6.7.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.15.1",
+    "drizzle-orm": "0.45.3",
     "fastify": "5.11.3",
+    "postgres": "3.4.9",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@eslint/js": "9.39.5",
     "@nestjs/testing": "11.2.5",
     "@types/node": "26.6.2",
+    "drizzle-kit": "0.31.11",
     "eslint": "9.39.5",
     "prettier": "3.9.8",
     "typescript": "5.9.3",

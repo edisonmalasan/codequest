@@ -8,6 +8,7 @@ export interface BackendEnvironment {
   BODY_LIMIT_BYTES?: string;
   RATE_LIMIT_TTL_MS?: string;
   RATE_LIMIT_MAX?: string;
+  DATABASE_URL?: string;
 }
 
 export interface BackendConfig {
@@ -18,6 +19,7 @@ export interface BackendConfig {
   readonly bodyLimitBytes: number;
   readonly rateLimitTtlMs: number;
   readonly rateLimitMax: number;
+  readonly databaseUrl: string;
 }
 
 const DEFAULT_CORS_ORIGINS = [
@@ -66,6 +68,30 @@ function parseHost(value: string | undefined): string {
     throw new Error('Invalid HOST: expected a hostname or IP address');
   }
   return host;
+}
+
+function parseDatabaseUrl(value: string | undefined): string {
+  if (value === undefined || value.trim() === '') {
+    throw new Error('Invalid DATABASE_URL: a PostgreSQL URL is required');
+  }
+
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error('Invalid DATABASE_URL');
+  }
+
+  if (
+    (url.protocol !== 'postgres:' && url.protocol !== 'postgresql:') ||
+    url.hostname === '' ||
+    url.username === '' ||
+    url.pathname.length <= 1
+  ) {
+    throw new Error('Invalid DATABASE_URL');
+  }
+
+  return value;
 }
 
 function normalizeOrigin(value: string): string {
@@ -149,5 +175,6 @@ export function loadBackendConfig(
       1,
       10_000,
     ),
+    databaseUrl: parseDatabaseUrl(env.DATABASE_URL),
   });
 }
