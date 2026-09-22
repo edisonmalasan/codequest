@@ -31,6 +31,8 @@ jobs:
       SUPABASE_AUTH_JWKS_URL: http://127.0.0.1:54321/auth/v1/.well-known/jwks.json
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 12.4.1
@@ -43,6 +45,7 @@ jobs:
       - run: pnpm --dir backend db:drift
       - run: pnpm --dir backend db:migrate
       - run: pnpm api:check
+      - run: pnpm --dir backend curriculum:validate
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test

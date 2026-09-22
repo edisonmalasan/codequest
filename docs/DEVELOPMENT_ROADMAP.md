@@ -6,15 +6,15 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 9 — Curriculum Content Architecture proposal; no implementation started |
+| Current phase | Phase 9 — Curriculum Content Architecture Apply complete; specification sync and archive pending |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change |
-| Current OpenSpec change | [`define-git-curriculum-content`](../openspec/changes/define-git-curriculum-content/proposal.md) active in planning; Phase 8 is [archived](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/proposal.md) |
-| Current OpenSpec stage | Phase 9 Explore complete; Proposal artifacts drafted and awaiting PR review; Apply has not started |
-| Next execution step | Review the Phase 9 proposal PR; begin Apply only after proposal approval and merge |
-| Next phase | Phase 9 — Curriculum Content Architecture is in planning; Phase 10 — Curriculum Backend has not started |
-| Validation evidence | Phase 9 proposal passes strict OpenSpec validation and diff checks; no curriculum implementation is claimed. Phase 8 completed 27/27 Apply tasks; its [archive evidence](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/tasks.md) remains authoritative. |
+| Current OpenSpec change | [`define-git-curriculum-content`](../openspec/changes/define-git-curriculum-content/proposal.md) active; Phase 8 is [archived](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/proposal.md) |
+| Current OpenSpec stage | Phase 9 proposal merged; Apply implementation and verification complete; Sync and Archive have not started |
+| Next execution step | Sync the approved curriculum-content delta to the canonical spec, then archive on separate branches and PRs |
+| Next phase | Phase 10 — Curriculum Backend has not started |
+| Validation evidence | Phase 9 Apply checks are recorded in the [change tasks](../openspec/changes/define-git-curriculum-content/tasks.md); the authored Q01 fixture remains draft and unpublished. Phase 8 completed 27/27 Apply tasks; its [archive evidence](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/tasks.md) remains authoritative. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Phase 0-8 foundations and canonical specifications plus the active Phase 9 proposal; no authored curriculum implementation, production identity-provider provisioning, curriculum publication, guest sync, learner runtime, or Phase 10 behavior |
+| Current repository | Phase 0-8 foundations and canonical specifications plus Phase 9 backend-owned Git authoring source, validation tooling, and one draft fixture; no curriculum publication, guest sync, learner runtime, or Phase 10 behavior |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
@@ -914,7 +914,7 @@ Include:
 
 CI should reject invalid curriculum.
 
-The active [Phase 9 proposal](../openspec/changes/define-git-curriculum-content/proposal.md) defines a backend-owned Git authoring tree at `backend/content/`, versioned quest snapshots, data-only validation definitions, and a Zod-based CI gate. The root `content/` sketch above is superseded by AGENTS.md, C05, architecture, and ADR 0003. This is planning only; no content validator, authored course, API publication, or Phase 10 behavior has been implemented.
+The active [Phase 9 change](../openspec/changes/define-git-curriculum-content/proposal.md) establishes a backend-owned Git authoring tree at `backend/content/`, versioned quest snapshots, data-only validation definitions, a Zod-based CI gate, and one explicitly draft Q01 fixture. The root `content/` sketch above is superseded by AGENTS.md, C05, architecture, and ADR 0003. No course publication, curriculum API, learner assessment runtime, or Phase 10 behavior has been implemented. Canonical spec sync and archive remain separate OpenSpec stages.
 
 ---
 
