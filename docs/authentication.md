@@ -1,6 +1,6 @@
 # Authentication
 
-Status: Phase 8 Apply implementation. Canonical OpenSpec synchronization and archive remain separate lifecycle stages.
+Status: Phase 8 implementation complete; canonical [authentication specification](../openspec/specs/authentication/spec.md) synced and [change archived](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/proposal.md).
 
 CodeQuest uses Supabase Auth for email/password, Google, and GitHub identity. Next.js owns the cookie-backed PKCE session boundary and passes a current access token only to protected NestJS requests. NestJS verifies the token against the configured asymmetric JWKS, derives the application user ID from the verified UUID `sub`, assigns backend-defined permissions, and alone reads or writes CodeQuest application tables.
 
