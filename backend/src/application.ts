@@ -17,11 +17,13 @@ import {
 } from './common/http/request-context';
 import { BackendConfig } from './infrastructure/config/backend-config';
 import { setupOpenApi } from './infrastructure/openapi/setup-openapi';
+import { CurriculumCatalog } from './modules/curriculum/content/curriculum-catalog';
 
 export interface ApplicationOptions {
   readonly foundationLogger?: FoundationLogger;
   readonly nestLogger?: false | LoggerService;
   readonly enableShutdownHooks?: boolean;
+  readonly curriculumCatalog?: CurriculumCatalog;
 }
 
 function pathname(url: string): string {
@@ -90,7 +92,9 @@ export async function createApplication(
   options: ApplicationOptions = {},
 ): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule.register(config),
+    AppModule.register(config, {
+      curriculumCatalog: options.curriculumCatalog,
+    }),
     new FastifyAdapter({ bodyLimit: config.bodyLimitBytes }),
     { logger: options.nestLogger ?? false },
   );

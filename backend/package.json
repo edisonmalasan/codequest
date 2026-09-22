@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tsc -p tsconfig.build.json && node --watch dist/main.js",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-curriculum-content.mjs",
     "start": "node dist/main.js",
     "test": "vitest run --no-file-parallelism && node --test scripts/*.spec.mjs",
     "lint": "eslint . && prettier --check .",
@@ -29,8 +29,14 @@
     "fastify": "5.11.3",
     "jose": "5.10.0",
     "postgres": "3.4.9",
+    "remark-mdx": "3.1.1",
+    "remark-parse": "11.0.0",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.2"
+    "rxjs": "7.8.2",
+    "typescript": "5.9.3",
+    "unified": "11.0.5",
+    "yaml": "2.8.1",
+    "zod": "4.1.11"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",
@@ -40,14 +46,8 @@
     "drizzle-kit": "0.31.11",
     "eslint": "9.39.5",
     "prettier": "3.9.8",
-    "remark-mdx": "3.1.1",
-    "remark-parse": "11.0.0",
     "tsx": "4.20.6",
-    "typescript": "5.9.3",
     "typescript-eslint": "8.70.0",
-    "unified": "11.0.5",
-    "vitest": "3.2.7",
-    "yaml": "2.8.1",
-    "zod": "4.1.11"
+    "vitest": "3.2.7"
   }
 }

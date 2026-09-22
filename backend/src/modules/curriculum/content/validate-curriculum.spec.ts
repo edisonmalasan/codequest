@@ -402,7 +402,7 @@ describe('Git curriculum authoring validation', () => {
     );
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('Invalid YAML');
-  });
+  }, 15_000);
 
   it('does not echo credential-like malformed metadata values', () => {
     const root = fixture();

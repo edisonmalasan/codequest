@@ -6,15 +6,15 @@ Status snapshot: 2026-09-23. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 10 — Curriculum Backend proposal |
+| Current phase | Phase 10 — Curriculum Backend Apply |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change |
 | Current OpenSpec change | [`expose-versioned-curriculum-api`](../openspec/changes/expose-versioned-curriculum-api/proposal.md) active; Phase 9 is [archived](../openspec/changes/archive/2026-09-23-define-git-curriculum-content/proposal.md) |
-| Current OpenSpec stage | Phase 10 Explore complete; proposal ready for review |
-| Next execution step | Merge the Phase 10 proposal, then Apply on a separate implementation branch |
-| Next phase | Phase 10 — Curriculum Backend is in planning; Phase 11 has not started |
-| Validation evidence | Phase 9 Apply checks are recorded in the [archived change tasks](../openspec/changes/archive/2026-09-23-define-git-curriculum-content/tasks.md); the authored Q01 fixture remains draft and unpublished. Phase 8 completed 27/27 Apply tasks; its [archive evidence](../openspec/changes/archive/2026-09-22-establish-supabase-authentication/tasks.md) remains authoritative. |
+| Current OpenSpec stage | Phase 10 Apply implementation complete and verified; the active change remains open for Sync and Archive |
+| Next execution step | After the Apply merge, Sync the canonical specs and Archive on separate branches |
+| Next phase | Phase 11 — Journey and Course UI has not started |
+| Validation evidence | Phase 10 adds an empty production publication manifest, fail-closed immutable catalog, five public read endpoints, generated frontend types, and focused backend/frontend tests. Exact final commands are recorded in the active change tasks. The authored Q01 fixture remains draft and unpublished. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Phase 0-9 foundations and canonical specifications, including the backend-owned Git authoring source, validation tooling, and one draft fixture; no curriculum publication, guest sync, learner runtime, or Phase 10 behavior |
+| Current repository | Phase 0-9 foundations plus the Phase 10 reviewed-publication catalog and public generated curriculum read contract; production publication is empty, and no guest sync, learner runtime, or Phase 11 behavior exists |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
@@ -946,6 +946,8 @@ GET /api/v1/quests/:slug
 ## Completion criteria
 
 Frontend no longer depends directly on raw content files.
+
+Apply status (2026-09-23): implemented through an explicit reviewed `publication.yaml` selection, immutable fail-closed backend startup catalog, the five public read endpoints above, and the generated frontend client boundary. The production selection is intentionally empty, so the draft Q01 fixture is not exposed. No database projection, Course entity, author mutation, learner execution, progress, XP award, unlock calculation, guest/offline sync, or Phase 11 UI was added.
 
 ---
 

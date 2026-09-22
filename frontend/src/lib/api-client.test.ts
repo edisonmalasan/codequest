@@ -2,7 +2,11 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 import {
   createCodequestApi,
   type AccountResponse,
+  type ChapterDetail,
   type HealthResponse,
+  type JourneyDetail,
+  type JourneySummary,
+  type QuestDetail,
 } from './api-client';
 import type { paths } from './api/generated/schema';
 
@@ -10,6 +14,66 @@ const health: HealthResponse = {
   status: 'ok',
   service: 'codequest-api',
   version: '1',
+};
+
+const journeySummary: JourneySummary = {
+  id: 'JAVASCRIPT-FOUNDATIONS',
+  slug: 'javascript-foundations',
+  title: 'JavaScript Foundations',
+  position: 1,
+  chapterCount: 1,
+  questCount: 1,
+};
+const chapterSummary = {
+  id: 'CH01',
+  slug: 'variables',
+  title: 'Variables',
+  position: 1,
+  objectiveSummary: 'Learn values.',
+  questCount: 1,
+};
+const journey: JourneyDetail = {
+  ...journeySummary,
+  entryRequirements: ['Use a browser'],
+  outcomes: [{ id: 'O1', description: 'Read values' }],
+  chapters: [chapterSummary],
+};
+const questSummary = {
+  id: 'Q01',
+  slug: 'first-message',
+  title: 'First message',
+  position: 1,
+  kind: 'instructional' as const,
+  guestEligible: true,
+  contentVersion: '1.0.0',
+  assessmentVersion: '1.0.0',
+  difficulty: 'introductory' as const,
+  xpAward: 10,
+};
+const chapter: ChapterDetail = {
+  ...chapterSummary,
+  journey: journeySummary,
+  quests: [questSummary],
+};
+const quest: QuestDetail = {
+  ...questSummary,
+  hierarchy: { journey: journeySummary, chapter: chapterSummary },
+  objective: 'Print a message.',
+  outcomeId: 'O1',
+  concepts: [{ id: 'js-values', title: 'JavaScript values' }],
+  prerequisites: [],
+  hints: { question: 'What prints?', concept: 'Strings', nextStep: 'Edit it' },
+  lesson: '# First message',
+  starterCode: "console.log('Hello');",
+  cases: [
+    {
+      id: 'normal-message',
+      category: 'normal',
+      kind: 'console',
+      feedback: 'Match the output.',
+      expectedOutput: 'Hello',
+    },
+  ],
 };
 
 function jsonResponse(value: unknown, status = 200): Response {
@@ -25,11 +89,17 @@ function jsonResponse(value: unknown, status = 200): Response {
 describe('CodeQuest typed API client', () => {
   it('uses the generated health path and configured base URL without credentials', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
-      '/api/v1/account' | '/api/v1/health'
+      | '/api/v1/account'
+      | '/api/v1/chapters/{slug}'
+      | '/api/v1/courses/{slug}'
+      | '/api/v1/health'
+      | '/api/v1/journeys'
+      | '/api/v1/journeys/{slug}'
+      | '/api/v1/quests/{slug}'
     >();
     expectTypeOf<
       '/api/v1/journeys' extends keyof paths ? true : false
-    >().toEqualTypeOf<false>();
+    >().toEqualTypeOf<true>();
 
     const calls: Array<{
       url: string;
@@ -71,7 +141,13 @@ describe('CodeQuest typed API client', () => {
 
   it('gets a fresh token for each account request and never authenticates health', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
-      '/api/v1/account' | '/api/v1/health'
+      | '/api/v1/account'
+      | '/api/v1/chapters/{slug}'
+      | '/api/v1/courses/{slug}'
+      | '/api/v1/health'
+      | '/api/v1/journeys'
+      | '/api/v1/journeys/{slug}'
+      | '/api/v1/quests/{slug}'
     >();
     const account: AccountResponse = {
       id: '00000000-0000-4000-8000-000000000001',
@@ -194,6 +270,91 @@ describe('CodeQuest typed API client', () => {
     controller.abort();
 
     await expect(client.getHealth(controller.signal)).resolves.toEqual({
+      ok: false,
+      kind: 'cancelled',
+    });
+  });
+
+  it('reads each curriculum contract publicly with encoded path parameters', async () => {
+    const calls: Array<{ url: string; authorization: string | null }> = [];
+    const client = createCodequestApi({
+      getAccessToken: async () => 'must-not-be-used',
+      fetch: async (input) => {
+        const request = input instanceof Request ? input : new Request(input);
+        calls.push({
+          url: request.url,
+          authorization: request.headers.get('authorization'),
+        });
+        if (request.url.endsWith('/journeys'))
+          return jsonResponse([journeySummary]);
+        if (request.url.includes('/courses/')) return jsonResponse(journey);
+        if (request.url.includes('/journeys/')) return jsonResponse(journey);
+        if (request.url.includes('/chapters/')) return jsonResponse(chapter);
+        return jsonResponse(quest);
+      },
+    });
+
+    await expect(client.getJourneys()).resolves.toMatchObject({ ok: true });
+    await expect(
+      client.getJourney('javascript foundations'),
+    ).resolves.toMatchObject({ ok: true });
+    await expect(
+      client.getCourseAlias('javascript-foundations'),
+    ).resolves.toMatchObject({ ok: true });
+    await expect(client.getChapter('variables')).resolves.toMatchObject({
+      ok: true,
+    });
+    await expect(client.getQuest('first-message')).resolves.toMatchObject({
+      ok: true,
+    });
+    expect(calls.map((call) => call.authorization)).toEqual([
+      null,
+      null,
+      null,
+      null,
+      null,
+    ]);
+    expect(calls[1].url).toContain('/journeys/javascript%20foundations');
+  });
+
+  it('rejects malformed curriculum success data and preserves failure taxonomy', async () => {
+    const invalid = createCodequestApi({
+      fetch: async () => jsonResponse({ id: 'incomplete' }),
+    });
+    await expect(invalid.getQuest('first-message')).resolves.toEqual({
+      ok: false,
+      kind: 'invalid-response',
+      status: 200,
+    });
+
+    const missing = createCodequestApi({
+      fetch: async () =>
+        jsonResponse(
+          {
+            error: {
+              code: 'NOT_FOUND',
+              message: 'Resource not found',
+              status: 404,
+              requestId: 'curriculum-missing',
+            },
+          },
+          404,
+        ),
+    });
+    await expect(missing.getJourney('missing')).resolves.toMatchObject({
+      ok: false,
+      kind: 'http',
+      status: 404,
+    });
+
+    const controller = new AbortController();
+    controller.abort();
+    const cancelled = createCodequestApi({
+      fetch: async () => {
+        throw new Error('private transport detail');
+      },
+    });
+    await expect(cancelled.getJourneys(controller.signal)).resolves.toEqual({
       ok: false,
       kind: 'cancelled',
     });
