@@ -14,7 +14,7 @@ Initial domain responsibilities are identity, curriculum, learning, progress and
 
 Every protected action derives principal from a verified Supabase Auth token. Validate issuer/audience/signature/expiry and reject invalid/expired identity; never accept frontend user IDs/roles as authority. Enforce ownership for profile, submission, progress and account sync resources independently of IDs in payloads. Curriculum availability and privileged author/operator policy are explicit; no public administrative writes.
 
-P13 establishes bearer API requests from trusted client Auth handling; final refresh/storage/transport mechanics are later design. Bound request/source/event/output payloads, validate shape and known values, apply rate limits/least privilege and explicit error categories. Operational logs use request IDs/route/status/duration, not secrets/source. Application-table authorization is not delegated to client-side checks or exposed direct Supabase queries.
+Phase 8 implements bearer API requests from the trusted client Auth boundary. The Identity module verifies asymmetric Supabase JWTs by algorithm, signature, issuer, audience, time bounds, key ID and UUID subject. Its immutable principal carries backend-defined self-account permissions. Protected `PUT` and `GET /api/v1/account` operations derive ownership exclusively from that principal and establish/read the existing `users` and `profiles` schema transactionally. See [authentication](authentication.md). Operational logs use request IDs/route/status/duration, not secrets/source. Application-table authorization is not delegated to client-side checks or exposed direct Supabase queries.
 
 ## Completion acceptance and trust
 
