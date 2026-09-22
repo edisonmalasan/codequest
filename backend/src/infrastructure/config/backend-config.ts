@@ -32,7 +32,9 @@ function parseEnvironment(value: string | undefined): RuntimeEnvironment {
     environment !== 'test' &&
     environment !== 'production'
   ) {
-    throw new Error(`Invalid NODE_ENV: ${environment}`);
+    throw new Error(
+      'Invalid NODE_ENV: expected development, test, or production',
+    );
   }
   return environment;
 }
@@ -75,7 +77,7 @@ function normalizeOrigin(value: string): string {
   try {
     url = new URL(value);
   } catch {
-    throw new Error(`Invalid CORS_ORIGINS entry: ${value}`);
+    throw new Error('Invalid CORS_ORIGINS entry');
   }
 
   if (
@@ -87,7 +89,7 @@ function normalizeOrigin(value: string): string {
     url.hash !== '' ||
     url.origin === 'null'
   ) {
-    throw new Error(`Invalid CORS_ORIGINS entry: ${value}`);
+    throw new Error('Invalid CORS_ORIGINS entry');
   }
   return url.origin;
 }
