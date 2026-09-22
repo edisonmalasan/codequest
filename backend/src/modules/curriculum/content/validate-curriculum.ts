@@ -94,7 +94,7 @@ export function validateCurriculum(contentRoot: string): void {
   const root = resolve(contentRoot);
   let visitedFiles = 0;
   const authoredFile =
-    /^(?:README\.md|concepts\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.js|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
+    /^(?:README\.md|concepts\.yaml|publication\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.js|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
   function scan(folder: string, depth: number): void {
     if (depth > 16)
       throw new ContentError(

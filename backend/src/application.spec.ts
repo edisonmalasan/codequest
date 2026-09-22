@@ -306,7 +306,7 @@ describe('backend HTTP foundation', () => {
     expect(denied.headers['access-control-allow-origin']).toBeUndefined();
   });
 
-  it('publishes OpenAPI for the implemented health surface only', async () => {
+  it('publishes OpenAPI for the implemented public and account surfaces', async () => {
     const app = await createApplication(configuration(), {
       foundationLogger: new CapturingFoundationLogger(),
       nestLogger: false,
@@ -328,7 +328,12 @@ describe('backend HTTP foundation', () => {
     expect(document.paths).toHaveProperty('/api/v1/health');
     expect(Object.keys(document.paths).sort()).toEqual([
       '/api/v1/account',
+      '/api/v1/chapters/{slug}',
+      '/api/v1/courses/{slug}',
       '/api/v1/health',
+      '/api/v1/journeys',
+      '/api/v1/journeys/{slug}',
+      '/api/v1/quests/{slug}',
     ]);
     const exported = createOpenApiDocument(app);
     expect(document).toEqual(exported);

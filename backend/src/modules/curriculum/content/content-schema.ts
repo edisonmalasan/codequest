@@ -32,7 +32,7 @@ export const journeySchema = z
     slug,
     title: text,
     position,
-    status: z.literal('draft'),
+    status: z.enum(['draft', 'reviewed']),
     entryRequirements: z.array(text).max(20),
     outcomes: z
       .array(
@@ -149,5 +149,53 @@ export const casesSchema = z
     }
   });
 
+const publicationQuestSchema = z
+  .object({
+    id,
+    contentVersion: version,
+    assessmentVersion: version,
+  })
+  .strict();
+
+export const publicationSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    journeys: z
+      .array(
+        z
+          .object({
+            id,
+            curriculumReview: z.literal('approved'),
+            technicalReview: z.literal('approved'),
+            quests: z.array(publicationQuestSchema).max(500),
+          })
+          .strict(),
+      )
+      .max(50),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    if (
+      new Set(value.journeys.map((item) => item.id)).size !==
+      value.journeys.length
+    )
+      context.addIssue({ code: 'custom', message: 'Duplicate journey ID' });
+    for (const [index, journey] of value.journeys.entries()) {
+      if (
+        new Set(journey.quests.map((item) => item.id)).size !==
+        journey.quests.length
+      )
+        context.addIssue({
+          code: 'custom',
+          path: ['journeys', index, 'quests'],
+          message: 'Duplicate quest ID',
+        });
+    }
+  });
+
 export type Quest = z.infer<typeof questSchema>;
 export type QuestVersion = z.infer<typeof versionSchema>;
+export type Journey = z.infer<typeof journeySchema>;
+export type Chapter = z.infer<typeof chapterSchema>;
+export type CurriculumCase = z.infer<typeof caseSchema>;
+export type Publication = z.infer<typeof publicationSchema>;
