@@ -14,3 +14,5 @@ minimumReleaseAgeExclude:
   - '@turbo/windows-arm64@2.11.2'
   - '@types/node@26.6.2'
   - turbo@2.11.2
+  - drizzle-orm@0.45.3
+  - drizzle-kit@0.31.11

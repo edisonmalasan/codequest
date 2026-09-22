@@ -6,15 +6,15 @@ Status snapshot: 2026-09-22. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 6 — Database Foundation proposal in review; implementation has not started |
+| Current phase | Phase 6 — Database Foundation Apply complete; Sync and Archive have not started |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived |
 | Current OpenSpec change | [`establish-database-foundation`](../openspec/changes/establish-database-foundation/proposal.md); Phase 5 remains archived and its [backend-foundation specification](../openspec/specs/backend-foundation/spec.md) is canonical |
-| Current OpenSpec stage | Propose — database-foundation planning artifacts validated and under review; Apply has not started |
-| Next execution step | Review and merge the database-foundation proposal PR; begin Apply only after explicit approval in a separate request |
+| Current OpenSpec stage | Apply complete — proposal PR #30 merged and Apply PR #31 delivers the verified database foundation; Sync and Archive have not started |
+| Next execution step | After Apply PR #31 is merged, run the database-foundation Sync stage on its own branch and PR; do not begin Phase 7 |
 | Next phase | Phase 6 — Database Foundation is current; Phase 7 — API Contract Generation has not started |
-| Validation evidence | Backend foundation: frozen install passes; backend lint/typecheck/build and 4 files/23 tests pass; root lint/typecheck/build and 101 frontend + 23 backend tests pass; strict OpenSpec, boundary, credential, link, and diff checks pass. Phase 4 visual evidence remains archived. |
+| Validation evidence | Database foundation: frozen install, migration generation/check/drift/application, backend lint/typecheck/build and 8 files/33 tests pass; root lint/typecheck/build and 101 frontend + 33 backend tests pass; disposable PostgreSQL 17 CI, local PGlite, strict OpenSpec, boundary, credential, link, and diff checks pass. |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Documentation, OpenSpec artifacts, the frontend foundation and pixel-game design system, plus the verified NestJS/Fastify backend foundation with modular boundaries, `/api/v1`, validation/errors, request correlation/logging, CORS, OpenAPI, throttling, and health; no database, authentication behavior, generated client, content engine, learner runtime, or Phase 6 implementation |
+| Current repository | Documentation, OpenSpec artifacts, frontend foundation and pixel-game design system, the NestJS/Fastify backend foundation, and the verified backend-only Drizzle/PostgreSQL schema, forward migration, ownership/version/learning/reward constraints, derived-state queries, and migration gates; no authentication behavior, generated client, curriculum publication, sync, learner runtime, production database provisioning, or Phase 7 implementation |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal

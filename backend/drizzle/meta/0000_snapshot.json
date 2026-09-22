@@ -1,0 +1,1530 @@
+{
+  "id": "8854d1b6-2a7e-4d40-9c92-7c02936f112e",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "codequest.chapters": {
+      "name": "chapters",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "journey_id": {
+          "name": "journey_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "chapters_journey_id_journeys_id_fk": {
+          "name": "chapters_journey_id_journeys_id_fk",
+          "tableFrom": "chapters",
+          "tableTo": "journeys",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "journey_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "chapters_journey_position_unique": {
+          "name": "chapters_journey_position_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "journey_id",
+            "position"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "chapters_id_nonempty": {
+          "name": "chapters_id_nonempty",
+          "value": "length(\"codequest\".\"chapters\".\"id\") > 0"
+        },
+        "chapters_position_positive": {
+          "name": "chapters_position_positive",
+          "value": "\"codequest\".\"chapters\".\"position\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.concepts": {
+      "name": "concepts",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "concepts_id_nonempty": {
+          "name": "concepts_id_nonempty",
+          "value": "length(\"codequest\".\"concepts\".\"id\") > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.journey_enrollments": {
+      "name": "journey_enrollments",
+      "schema": "codequest",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "journey_id": {
+          "name": "journey_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enrolled_at": {
+          "name": "enrolled_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "journey_enrollments_journey_idx": {
+          "name": "journey_enrollments_journey_idx",
+          "columns": [
+            {
+              "expression": "journey_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "journey_enrollments_user_id_users_id_fk": {
+          "name": "journey_enrollments_user_id_users_id_fk",
+          "tableFrom": "journey_enrollments",
+          "tableTo": "users",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "journey_enrollments_journey_id_journeys_id_fk": {
+          "name": "journey_enrollments_journey_id_journeys_id_fk",
+          "tableFrom": "journey_enrollments",
+          "tableTo": "journeys",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "journey_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "journey_enrollments_primary": {
+          "name": "journey_enrollments_primary",
+          "columns": [
+            "user_id",
+            "journey_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.journeys": {
+      "name": "journeys",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "journeys_position_unique": {
+          "name": "journeys_position_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "position"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "journeys_id_nonempty": {
+          "name": "journeys_id_nonempty",
+          "value": "length(\"codequest\".\"journeys\".\"id\") > 0"
+        },
+        "journeys_position_positive": {
+          "name": "journeys_position_positive",
+          "value": "\"codequest\".\"journeys\".\"position\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.profiles": {
+      "name": "profiles",
+      "schema": "codequest",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'UTC'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "profiles_user_id_users_id_fk": {
+          "name": "profiles_user_id_users_id_fk",
+          "tableFrom": "profiles",
+          "tableTo": "users",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "profiles_timezone_nonempty": {
+          "name": "profiles_timezone_nonempty",
+          "value": "length(\"codequest\".\"profiles\".\"timezone\") > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.quest_attempts": {
+      "name": "quest_attempts",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_version_id": {
+          "name": "quest_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_event_id": {
+          "name": "client_event_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "quest_attempts_owner_time_idx": {
+          "name": "quest_attempts_owner_time_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "submitted_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "quest_attempts_quest_time_idx": {
+          "name": "quest_attempts_quest_time_idx",
+          "columns": [
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "submitted_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "quest_attempts_version_idx": {
+          "name": "quest_attempts_version_idx",
+          "columns": [
+            {
+              "expression": "quest_version_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_attempts_user_id_users_id_fk": {
+          "name": "quest_attempts_user_id_users_id_fk",
+          "tableFrom": "quest_attempts",
+          "tableTo": "users",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "quest_attempts_version_fk": {
+          "name": "quest_attempts_version_fk",
+          "tableFrom": "quest_attempts",
+          "tableTo": "quest_versions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_version_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id",
+            "quest_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "quest_attempts_owner_event_unique": {
+          "name": "quest_attempts_owner_event_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "client_event_id"
+          ]
+        },
+        "quest_attempts_id_owner_quest_unique": {
+          "name": "quest_attempts_id_owner_quest_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id",
+            "user_id",
+            "quest_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.quest_completions": {
+      "name": "quest_completions",
+      "schema": "codequest",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accepted_attempt_id": {
+          "name": "accepted_attempt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accepted_at": {
+          "name": "accepted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "quest_completions_quest_idx": {
+          "name": "quest_completions_quest_idx",
+          "columns": [
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "quest_completions_owner_time_idx": {
+          "name": "quest_completions_owner_time_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "accepted_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_completions_user_id_users_id_fk": {
+          "name": "quest_completions_user_id_users_id_fk",
+          "tableFrom": "quest_completions",
+          "tableTo": "users",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "quest_completions_quest_id_quests_id_fk": {
+          "name": "quest_completions_quest_id_quests_id_fk",
+          "tableFrom": "quest_completions",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "quest_completions_attempt_owner_quest_fk": {
+          "name": "quest_completions_attempt_owner_quest_fk",
+          "tableFrom": "quest_completions",
+          "tableTo": "quest_attempts",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "accepted_attempt_id",
+            "user_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id",
+            "user_id",
+            "quest_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "quest_completions_primary": {
+          "name": "quest_completions_primary",
+          "columns": [
+            "user_id",
+            "quest_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "quest_completions_attempt_unique": {
+          "name": "quest_completions_attempt_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "accepted_attempt_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.quest_concepts": {
+      "name": "quest_concepts",
+      "schema": "codequest",
+      "columns": {
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "concept_id": {
+          "name": "concept_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "quest_concepts_concept_idx": {
+          "name": "quest_concepts_concept_idx",
+          "columns": [
+            {
+              "expression": "concept_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_concepts_quest_id_quests_id_fk": {
+          "name": "quest_concepts_quest_id_quests_id_fk",
+          "tableFrom": "quest_concepts",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "quest_concepts_concept_id_concepts_id_fk": {
+          "name": "quest_concepts_concept_id_concepts_id_fk",
+          "tableFrom": "quest_concepts",
+          "tableTo": "concepts",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "concept_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "quest_concepts_primary": {
+          "name": "quest_concepts_primary",
+          "columns": [
+            "quest_id",
+            "concept_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.quest_prerequisites": {
+      "name": "quest_prerequisites",
+      "schema": "codequest",
+      "columns": {
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prerequisite_quest_id": {
+          "name": "prerequisite_quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "quest_prerequisites_prerequisite_idx": {
+          "name": "quest_prerequisites_prerequisite_idx",
+          "columns": [
+            {
+              "expression": "prerequisite_quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_prerequisites_quest_id_quests_id_fk": {
+          "name": "quest_prerequisites_quest_id_quests_id_fk",
+          "tableFrom": "quest_prerequisites",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "quest_prerequisites_prerequisite_quest_id_quests_id_fk": {
+          "name": "quest_prerequisites_prerequisite_quest_id_quests_id_fk",
+          "tableFrom": "quest_prerequisites",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "prerequisite_quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "quest_prerequisites_primary": {
+          "name": "quest_prerequisites_primary",
+          "columns": [
+            "quest_id",
+            "prerequisite_quest_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "quest_prerequisites_not_self": {
+          "name": "quest_prerequisites_not_self",
+          "value": "\"codequest\".\"quest_prerequisites\".\"quest_id\" <> \"codequest\".\"quest_prerequisites\".\"prerequisite_quest_id\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.quest_starts": {
+      "name": "quest_starts",
+      "schema": "codequest",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_version_id": {
+          "name": "quest_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "quest_starts_quest_idx": {
+          "name": "quest_starts_quest_idx",
+          "columns": [
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "quest_starts_version_idx": {
+          "name": "quest_starts_version_idx",
+          "columns": [
+            {
+              "expression": "quest_version_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_starts_user_id_users_id_fk": {
+          "name": "quest_starts_user_id_users_id_fk",
+          "tableFrom": "quest_starts",
+          "tableTo": "users",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "quest_starts_version_fk": {
+          "name": "quest_starts_version_fk",
+          "tableFrom": "quest_starts",
+          "tableTo": "quest_versions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_version_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id",
+            "quest_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "quest_starts_primary": {
+          "name": "quest_starts_primary",
+          "columns": [
+            "user_id",
+            "quest_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.quest_submissions": {
+      "name": "quest_submissions",
+      "schema": "codequest",
+      "columns": {
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reported_result": {
+          "name": "reported_result",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "explanation": {
+          "name": "explanation",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quest_submissions_attempt_id_quest_attempts_id_fk": {
+          "name": "quest_submissions_attempt_id_quest_attempts_id_fk",
+          "tableFrom": "quest_submissions",
+          "tableTo": "quest_attempts",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "attempt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.quest_version_compatibility": {
+      "name": "quest_version_compatibility",
+      "schema": "codequest",
+      "columns": {
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "from_version_id": {
+          "name": "from_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "to_version_id": {
+          "name": "to_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "quest_version_compatibility_to_idx": {
+          "name": "quest_version_compatibility_to_idx",
+          "columns": [
+            {
+              "expression": "to_version_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "quest_version_compatibility_quest_idx": {
+          "name": "quest_version_compatibility_quest_idx",
+          "columns": [
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "quest_version_compatibility_quest_id_quests_id_fk": {
+          "name": "quest_version_compatibility_quest_id_quests_id_fk",
+          "tableFrom": "quest_version_compatibility",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "quest_version_compatibility_from_fk": {
+          "name": "quest_version_compatibility_from_fk",
+          "tableFrom": "quest_version_compatibility",
+          "tableTo": "quest_versions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "from_version_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id",
+            "quest_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "quest_version_compatibility_to_fk": {
+          "name": "quest_version_compatibility_to_fk",
+          "tableFrom": "quest_version_compatibility",
+          "tableTo": "quest_versions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "to_version_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id",
+            "quest_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "quest_version_compatibility_primary": {
+          "name": "quest_version_compatibility_primary",
+          "columns": [
+            "from_version_id",
+            "to_version_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "quest_version_compatibility_not_self": {
+          "name": "quest_version_compatibility_not_self",
+          "value": "\"codequest\".\"quest_version_compatibility\".\"from_version_id\" <> \"codequest\".\"quest_version_compatibility\".\"to_version_id\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.quest_versions": {
+      "name": "quest_versions",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content_version": {
+          "name": "content_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assessment_version": {
+          "name": "assessment_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quest_versions_quest_id_quests_id_fk": {
+          "name": "quest_versions_quest_id_quests_id_fk",
+          "tableFrom": "quest_versions",
+          "tableTo": "quests",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "quest_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "quest_versions_quest_content_unique": {
+          "name": "quest_versions_quest_content_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "quest_id",
+            "content_version"
+          ]
+        },
+        "quest_versions_id_quest_unique": {
+          "name": "quest_versions_id_quest_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id",
+            "quest_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "quest_versions_content_nonempty": {
+          "name": "quest_versions_content_nonempty",
+          "value": "length(\"codequest\".\"quest_versions\".\"content_version\") > 0"
+        },
+        "quest_versions_assessment_nonempty": {
+          "name": "quest_versions_assessment_nonempty",
+          "value": "length(\"codequest\".\"quest_versions\".\"assessment_version\") > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.quests": {
+      "name": "quests",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "chapter_id": {
+          "name": "chapter_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'instructional'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quests_chapter_id_chapters_id_fk": {
+          "name": "quests_chapter_id_chapters_id_fk",
+          "tableFrom": "quests",
+          "tableTo": "chapters",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "chapter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "quests_chapter_position_unique": {
+          "name": "quests_chapter_position_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "chapter_id",
+            "position"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "quests_id_nonempty": {
+          "name": "quests_id_nonempty",
+          "value": "length(\"codequest\".\"quests\".\"id\") > 0"
+        },
+        "quests_position_positive": {
+          "name": "quests_position_positive",
+          "value": "\"codequest\".\"quests\".\"position\" > 0"
+        },
+        "quests_kind_allowed": {
+          "name": "quests_kind_allowed",
+          "value": "\"codequest\".\"quests\".\"kind\" in ('instructional', 'capstone')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.streak_activity_days": {
+      "name": "streak_activity_days",
+      "schema": "codequest",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "activity_date": {
+          "name": "activity_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "qualifying_quest_id": {
+          "name": "qualifying_quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accepted_at": {
+          "name": "accepted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "streak_activity_days_quest_idx": {
+          "name": "streak_activity_days_quest_idx",
+          "columns": [
+            {
+              "expression": "qualifying_quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "streak_activity_days_completion_fk": {
+          "name": "streak_activity_days_completion_fk",
+          "tableFrom": "streak_activity_days",
+          "tableTo": "quest_completions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id",
+            "qualifying_quest_id"
+          ],
+          "columnsTo": [
+            "user_id",
+            "quest_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "streak_activity_days_primary": {
+          "name": "streak_activity_days_primary",
+          "columns": [
+            "user_id",
+            "activity_date"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "streak_activity_days_completion_unique": {
+          "name": "streak_activity_days_completion_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "qualifying_quest_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "streak_activity_days_timezone_nonempty": {
+          "name": "streak_activity_days_timezone_nonempty",
+          "value": "length(\"codequest\".\"streak_activity_days\".\"timezone\") > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "codequest.users": {
+      "name": "users",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "codequest.xp_events": {
+      "name": "xp_events",
+      "schema": "codequest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quest_id": {
+          "name": "quest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "awarded_at": {
+          "name": "awarded_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "xp_events_quest_idx": {
+          "name": "xp_events_quest_idx",
+          "columns": [
+            {
+              "expression": "quest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "xp_events_owner_time_idx": {
+          "name": "xp_events_owner_time_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "awarded_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "xp_events_completion_fk": {
+          "name": "xp_events_completion_fk",
+          "tableFrom": "xp_events",
+          "tableTo": "quest_completions",
+          "schemaTo": "codequest",
+          "columnsFrom": [
+            "user_id",
+            "quest_id"
+          ],
+          "columnsTo": [
+            "user_id",
+            "quest_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "xp_events_owner_quest_unique": {
+          "name": "xp_events_owner_quest_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "quest_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "xp_events_amount_positive": {
+          "name": "xp_events_amount_positive",
+          "value": "\"codequest\".\"xp_events\".\"amount\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {
+    "codequest": "codequest"
+  },
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

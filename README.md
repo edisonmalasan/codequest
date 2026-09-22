@@ -5,7 +5,7 @@ A pixel-themed, game-like coding education platform for learning, practicing, an
 ## Tech stack
 
 - **Frontend:** Next.js 15, React 19, TypeScript, Tailwind CSS, TanStack Query, Zustand, Dexie, CodeMirror 6
-- **Backend:** NestJS 11, Fastify, TypeScript
+- **Backend:** NestJS 11, Fastify, TypeScript, Drizzle ORM, PostgreSQL
 - **Tooling:** pnpm workspaces, Turborepo, Vitest, ESLint, Prettier, GitHub Actions
 
 ## Repository structure
@@ -32,21 +32,24 @@ pnpm install
 
 ## Environment setup
 
-No environment files are required to boot locally. Two optional variables have built-in defaults:
+The backend requires a PostgreSQL connection URL. Other local variables have built-in defaults:
 
-| Variable              | Used by  | Default                 |
-| --------------------- | -------- | ----------------------- |
-| `PORT`                | backend  | `3001`                  |
-| `NEXT_PUBLIC_API_URL` | frontend | `http://127.0.0.1:3001` |
+| Variable              | Used by  | Default/requirement                        |
+| --------------------- | -------- | ------------------------------------------ |
+| `DATABASE_URL`        | backend  | Required PostgreSQL URL; keep backend-only |
+| `PORT`                | backend  | `3001`                                     |
+| `NEXT_PUBLIC_API_URL` | frontend | `http://127.0.0.1:3001`                    |
 
 Set them in your shell when you need non-default values:
 
 ```bash
 # Windows (PowerShell)
 $env:PORT = "3001"
+$env:DATABASE_URL = "postgresql://codequest:local-password@127.0.0.1:5432/codequest"
 
 # macOS / Linux
 export PORT=3001
+export DATABASE_URL='postgresql://codequest:local-password@127.0.0.1:5432/codequest'
 ```
 
 ## Development
@@ -58,7 +61,7 @@ pnpm dev
 ```
 
 - Frontend: http://localhost:3000
-- Backend health check: http://127.0.0.1:3001/health → `{"status":"ok"}`
+- Backend health check: http://127.0.0.1:3001/api/v1/health → `{"status":"ok","service":"codequest-api","version":"1"}`
 
 Run a single app:
 
@@ -101,6 +104,8 @@ Both accept the same per-app form: `pnpm --dir frontend lint`, `pnpm --dir backe
 | `pnpm test`      | Run all tests                             |
 | `pnpm lint`      | Lint and formatting check                 |
 | `pnpm typecheck` | Strict type check                         |
+
+Database migration and verification commands are documented in [docs/database.md](docs/database.md).
 
 ## License
 

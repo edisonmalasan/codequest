@@ -18,10 +18,17 @@ const inertModules = [
   GamificationModule,
 ];
 
+const DATABASE_URL =
+  'postgresql://codequest:local-password@127.0.0.1:5432/codequest';
+
 describe('AppModule', () => {
   it('compiles all initial module boundaries', async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule.register(loadBackendConfig({ NODE_ENV: 'test' }))],
+      imports: [
+        AppModule.register(
+          loadBackendConfig({ NODE_ENV: 'test', DATABASE_URL }),
+        ),
+      ],
     }).compile();
 
     for (const moduleType of [...inertModules, HealthModule]) {
