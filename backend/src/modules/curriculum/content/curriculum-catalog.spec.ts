@@ -13,6 +13,7 @@ import {
   loadAuthoredCurriculum,
   loadCurriculumCatalog,
 } from './curriculum-catalog';
+import { publicationSchema } from './content-schema';
 
 const source = resolve(process.cwd(), 'content');
 const created: string[] = [];
@@ -54,6 +55,40 @@ afterEach(() => {
 });
 
 describe('curriculum publication catalog', () => {
+  it('rejects unknown publication fields and duplicate stable IDs', () => {
+    const reviewedSelection = {
+      schemaVersion: 1,
+      journeys: [
+        {
+          id: 'JAVASCRIPT-FOUNDATIONS',
+          curriculumReview: 'approved',
+          technicalReview: 'approved',
+          quests: [
+            {
+              id: 'Q01',
+              contentVersion: '1.0.0',
+              assessmentVersion: '1.0.0',
+            },
+          ],
+        },
+      ],
+    };
+    expect(publicationSchema.safeParse(reviewedSelection).success).toBe(true);
+    expect(
+      publicationSchema.safeParse({ ...reviewedSelection, unknown: true })
+        .success,
+    ).toBe(false);
+    expect(
+      publicationSchema.safeParse({
+        ...reviewedSelection,
+        journeys: [
+          reviewedSelection.journeys[0],
+          reviewedSelection.journeys[0],
+        ],
+      }).success,
+    ).toBe(false);
+  });
+
   it('accepts an empty production publication and freezes authored data', () => {
     const authored = loadAuthoredCurriculum(source);
     const catalog = loadCurriculumCatalog(source);

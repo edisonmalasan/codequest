@@ -154,11 +154,20 @@ export function loadAuthoredCurriculum(
             return { metadata: quest, snapshots };
           },
         );
+        quests.sort(
+          (left, right) => left.metadata.position - right.metadata.position,
+        );
         return { metadata: chapter, quests };
       },
     );
+    chapters.sort(
+      (left, right) => left.metadata.position - right.metadata.position,
+    );
     return { metadata: journey, chapters };
   });
+  journeys.sort(
+    (left, right) => left.metadata.position - right.metadata.position,
+  );
   return freeze({ concepts, journeys }) as AuthoredCurriculum;
 }
 

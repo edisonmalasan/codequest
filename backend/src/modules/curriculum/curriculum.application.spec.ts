@@ -11,7 +11,10 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyInstance } from 'fastify';
 import { afterEach, describe, expect, it } from 'vitest';
 import { createApplication } from '../../application';
-import { loadBackendConfig } from '../../infrastructure/config/backend-config';
+import {
+  BackendConfig,
+  loadBackendConfig,
+} from '../../infrastructure/config/backend-config';
 import { createOpenApiDocument } from '../../infrastructure/openapi/setup-openapi';
 import { loadCurriculumCatalog } from './content/curriculum-catalog';
 
@@ -44,20 +47,26 @@ journeys:
   return root;
 }
 
-function configuration() {
-  return loadBackendConfig({
-    NODE_ENV: 'test',
-    DATABASE_URL:
-      'postgresql://codequest:local-password@127.0.0.1:5432/codequest',
-    SUPABASE_AUTH_ISSUER: 'http://127.0.0.1:54321/auth/v1',
-    SUPABASE_AUTH_AUDIENCE: 'authenticated',
-    SUPABASE_AUTH_JWKS_URL:
-      'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
-  });
+function configuration(overrides: Partial<BackendConfig> = {}): BackendConfig {
+  return {
+    ...loadBackendConfig({
+      NODE_ENV: 'test',
+      DATABASE_URL:
+        'postgresql://codequest:local-password@127.0.0.1:5432/codequest',
+      SUPABASE_AUTH_ISSUER: 'http://127.0.0.1:54321/auth/v1',
+      SUPABASE_AUTH_AUDIENCE: 'authenticated',
+      SUPABASE_AUTH_JWKS_URL:
+        'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
+    }),
+    ...overrides,
+  };
 }
 
-async function application(root?: string): Promise<NestFastifyApplication> {
-  const app = await createApplication(configuration(), {
+async function application(
+  root?: string,
+  overrides?: Partial<BackendConfig>,
+): Promise<NestFastifyApplication> {
+  const app = await createApplication(configuration(overrides), {
     enableShutdownHooks: false,
     nestLogger: false,
     ...(root ? { curriculumCatalog: loadCurriculumCatalog(root) } : {}),
@@ -173,5 +182,26 @@ describe('public curriculum API', () => {
     expect(schemas).not.toContain('publication.yaml');
     expect(schemas).not.toContain('curriculumReview');
     expect(schemas).not.toContain('repositoryPath');
+  });
+
+  it('uses the normalized correlated envelope when curriculum reads are throttled', async () => {
+    const app = await application(undefined, { rateLimitMax: 1 });
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+    expect(
+      (await fastify.inject({ method: 'GET', url: '/api/v1/journeys' }))
+        .statusCode,
+    ).toBe(200);
+    const limited = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/journeys',
+      headers: { 'x-request-id': 'curriculum-limited' },
+    });
+    expect(limited.statusCode).toBe(429);
+    expect(limited.json().error).toEqual({
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Too many requests',
+      status: 429,
+      requestId: 'curriculum-limited',
+    });
   });
 });
