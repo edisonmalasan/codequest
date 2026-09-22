@@ -1,6 +1,7 @@
 /* global process, URL */
 
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 export function assertNoMigrationDrift(statusOutput) {
   const changedMigrationFiles = statusOutput
@@ -18,19 +19,27 @@ export function assertNoMigrationDrift(statusOutput) {
 if (process.argv.includes('--simulate-dirty')) {
   assertNoMigrationDrift('?? drizzle/0001_controlled_drift.sql');
 } else {
-  const executable =
-    process.platform === 'win32' ? 'drizzle-kit.cmd' : 'drizzle-kit';
+  const drizzleKit = fileURLToPath(
+    new URL('../node_modules/drizzle-kit/bin.cjs', import.meta.url),
+  );
   const generate = spawnSync(
-    executable,
+    process.execPath,
     [
+      drizzleKit,
       'generate',
       '--config',
       'drizzle.config.ts',
       '--name',
       'migration-drift-check',
     ],
-    { cwd: process.cwd(), encoding: 'utf8', shell: false, stdio: 'inherit' },
+    {
+      cwd: process.cwd(),
+      encoding: 'utf8',
+      shell: false,
+      stdio: 'inherit',
+    },
   );
+  if (generate.error !== undefined) throw generate.error;
   if (generate.status !== 0) process.exit(generate.status ?? 1);
 
   const status = spawnSync(

@@ -24,6 +24,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
+      DATABASE_URL: postgresql://codequest:codequest_test_password@127.0.0.1:5432/codequest_test
       DATABASE_TEST_URL: postgresql://codequest:codequest_test_password@127.0.0.1:5432/codequest_test
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +36,9 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm --dir backend db:check
+      - run: pnpm --dir backend db:drift
+      - run: pnpm --dir backend db:migrate
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
