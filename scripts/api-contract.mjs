@@ -26,10 +26,10 @@ function runPnpm(args) {
   if (pnpmPath === undefined) {
     throw new Error('Run this command through pnpm');
   }
-  if (extname(pnpmPath).toLowerCase() === '.exe') {
-    run(pnpmPath, args);
-  } else {
+  if (['.js', '.cjs', '.mjs'].includes(extname(pnpmPath).toLowerCase())) {
     run(process.execPath, [pnpmPath, ...args]);
+  } else {
+    run(pnpmPath, args);
   }
 }
 
