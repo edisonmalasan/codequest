@@ -25,7 +25,11 @@ describe('CodeQuest typed API client', () => {
       '/api/v1/journeys' extends keyof paths ? true : false
     >().toEqualTypeOf<false>();
 
-    const calls: Array<{ url: string; credentials: RequestCredentials }> = [];
+    const calls: Array<{
+      url: string;
+      credentials: RequestCredentials;
+      authorization: string | null;
+    }> = [];
     const fetcher: typeof fetch = async (input, init) => {
       calls.push({
         url: input instanceof Request ? input.url : String(input),
@@ -33,6 +37,10 @@ describe('CodeQuest typed API client', () => {
           input instanceof Request
             ? input.credentials
             : (init?.credentials ?? 'same-origin'),
+        authorization:
+          input instanceof Request
+            ? input.headers.get('authorization')
+            : new Headers(init?.headers).get('authorization'),
       });
       return jsonResponse(health);
     };
@@ -47,7 +55,11 @@ describe('CodeQuest typed API client', () => {
       requestId: 'health-request',
     });
     expect(calls).toEqual([
-      { url: 'https://api.example.test/api/v1/health', credentials: 'omit' },
+      {
+        url: 'https://api.example.test/api/v1/health',
+        credentials: 'omit',
+        authorization: null,
+      },
     ]);
   });
 
@@ -113,7 +125,9 @@ describe('CodeQuest typed API client', () => {
 
   it('reports cancellation without exposing the transport error', async () => {
     const client = createCodequestApi({
-      fetch: async () => {
+      fetch: async (input) => {
+        expect(input).toBeInstanceOf(Request);
+        if (input instanceof Request) expect(input.signal.aborted).toBe(true);
         throw new DOMException('private cancellation detail', 'AbortError');
       },
     });

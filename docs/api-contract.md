@@ -15,3 +15,7 @@ pnpm api:check
 The hand-authored `frontend/src/lib/api-client.ts` uses `openapi-fetch` with the generated `paths` type and the existing API base URL. Its current health call distinguishes success, safe HTTP errors, malformed responses, network failures, and cancellation. It sends no credentials by default. Future authenticated operations need a separate approved token-handling design and must stay outside the learner execution compartment.
 
 The roadmap's `packages/api-client` diagram predates [decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). The approved frontend-local path takes precedence. Frontend code must not import backend source, database schema, or raw curriculum; no root API package is justified by a second consumer today.
+
+## Apply verification (2026-09-22)
+
+The frozen install, backend and frontend lint/typecheck/tests/build, root lint/typecheck/tests/build, strict OpenSpec validation, and `api:check` passed locally. The frontend ran 106 tests and the backend ran 33. Generating twice produced identical output. A temporary change to health DTO OpenAPI metadata made `api:check` fail without rewriting the committed artifact; restoring the DTO made it pass. Backend test files run serially because parallel database initialization repeatedly delayed the existing HTTP startup test past its unchanged five-second timeout on the development machine.

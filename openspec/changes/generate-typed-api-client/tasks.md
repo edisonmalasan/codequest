@@ -13,4 +13,4 @@
 
 - [x] 3.1 Add a non-writing contract-drift check to CI that regenerates from the current backend and fails on stale committed output; verify unchanged output passes and a deliberate temporary DTO/contract mismatch fails before restoring the fixture.
 - [x] 3.2 Document the regenerate/review workflow and resolved `frontend/src/lib/api/generated/` precedence in the appropriate API documentation; verify paths and commands are accurate and no root `packages/api-client` or direct cross-app source import is introduced.
-- [ ] 3.3 Run frontend/backend lint, typecheck, tests, builds, root lint, typecheck, tests, build, strict OpenSpec validation, contract-drift, boundary/credential checks, and `git diff --check`; record actual results and verify no Phase 8+ behavior entered the Apply diff.
+- [x] 3.3 Run frontend/backend lint, typecheck, tests, builds, root lint, typecheck, tests, build, strict OpenSpec validation, contract-drift, boundary/credential checks, and `git diff --check`; record actual results and verify no Phase 8+ behavior entered the Apply diff.

@@ -89,6 +89,8 @@ export interface operations {
             };
             429: {
                 headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -97,6 +99,8 @@ export interface operations {
             };
             500: {
                 headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
                     [name: string]: unknown;
                 };
                 content: {

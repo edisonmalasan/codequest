@@ -9,6 +9,13 @@ import {
 import { ApiErrorResponseDto } from '../../common/http/api-error-response.dto';
 import { HealthResponseDto } from './health-response.dto';
 
+const requestIdHeader = {
+  'x-request-id': {
+    description: 'Correlated request ID',
+    schema: { type: 'string' },
+  },
+};
+
 @ApiTags('health')
 @Controller('health')
 export class HealthController {
@@ -18,15 +25,18 @@ export class HealthController {
   @ApiHeader({ name: 'x-request-id', required: false })
   @ApiOkResponse({
     type: HealthResponseDto,
-    headers: {
-      'x-request-id': {
-        description: 'Correlated request ID',
-        schema: { type: 'string' },
-      },
-    },
+    headers: requestIdHeader,
   })
-  @ApiResponse({ status: 429, type: ApiErrorResponseDto })
-  @ApiResponse({ status: 500, type: ApiErrorResponseDto })
+  @ApiResponse({
+    status: 429,
+    type: ApiErrorResponseDto,
+    headers: requestIdHeader,
+  })
+  @ApiResponse({
+    status: 500,
+    type: ApiErrorResponseDto,
+    headers: requestIdHeader,
+  })
   check(): HealthResponseDto {
     return {
       status: 'ok',

@@ -326,6 +326,7 @@ describe('backend HTTP foundation', () => {
     expect(exported.paths['/api/v1/health']?.get?.responses).toMatchObject({
       '200': { headers: { 'x-request-id': { schema: { type: 'string' } } } },
       '429': {
+        headers: { 'x-request-id': { schema: { type: 'string' } } },
         content: {
           'application/json': {
             schema: { $ref: '#/components/schemas/ApiErrorResponseDto' },
@@ -333,6 +334,7 @@ describe('backend HTTP foundation', () => {
         },
       },
       '500': {
+        headers: { 'x-request-id': { schema: { type: 'string' } } },
         content: {
           'application/json': {
             schema: { $ref: '#/components/schemas/ApiErrorResponseDto' },
