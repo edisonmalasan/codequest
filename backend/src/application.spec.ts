@@ -17,6 +17,7 @@ import {
   BackendConfig,
   loadBackendConfig,
 } from './infrastructure/config/backend-config';
+import { createOpenApiDocument } from './infrastructure/openapi/setup-openapi';
 
 interface ErrorResponse {
   readonly error: {
@@ -320,6 +321,36 @@ describe('backend HTTP foundation', () => {
     expect(document.openapi).toMatch(/^3\./);
     expect(document.paths).toHaveProperty('/api/v1/health');
     expect(Object.keys(document.paths)).toEqual(['/api/v1/health']);
+    const exported = createOpenApiDocument(app);
+    expect(document).toEqual(exported);
+    expect(exported.paths['/api/v1/health']?.get?.responses).toMatchObject({
+      '200': { headers: { 'x-request-id': { schema: { type: 'string' } } } },
+      '429': {
+        headers: { 'x-request-id': { schema: { type: 'string' } } },
+        content: {
+          'application/json': {
+            schema: { $ref: '#/components/schemas/ApiErrorResponseDto' },
+          },
+        },
+      },
+      '500': {
+        headers: { 'x-request-id': { schema: { type: 'string' } } },
+        content: {
+          'application/json': {
+            schema: { $ref: '#/components/schemas/ApiErrorResponseDto' },
+          },
+        },
+      },
+    });
+    expect(exported.components?.schemas).toMatchObject({
+      ApiErrorResponseDto: {
+        required: ['error'],
+        properties: { error: { $ref: '#/components/schemas/ApiErrorDto' } },
+      },
+      ApiErrorDto: {
+        required: ['code', 'message', 'status', 'requestId'],
+      },
+    });
 
     const docs = await fastify.inject({ method: 'GET', url: '/api/docs' });
     expect(docs.statusCode).toBe(200);

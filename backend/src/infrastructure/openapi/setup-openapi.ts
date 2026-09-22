@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
-export function setupOpenApi(app: INestApplication): void {
-  const document = SwaggerModule.createDocument(
+export function createOpenApiDocument(app: INestApplication): OpenAPIObject {
+  return SwaggerModule.createDocument(
     app,
     new DocumentBuilder()
       .setTitle('CodeQuest API')
@@ -11,8 +11,10 @@ export function setupOpenApi(app: INestApplication): void {
       .addServer('/')
       .build(),
   );
+}
 
-  SwaggerModule.setup('api/docs', app, document, {
+export function setupOpenApi(app: INestApplication): void {
+  SwaggerModule.setup('api/docs', app, createOpenApiDocument(app), {
     jsonDocumentUrl: 'api/openapi.json',
   });
 }
