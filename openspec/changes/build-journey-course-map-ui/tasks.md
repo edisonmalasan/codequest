@@ -18,9 +18,9 @@
 ## 4. Browser and regression verification
 
 - [x] 4.1 Add a Playwright Journey flow with intercepted public curriculum responses that verifies API consumption, ordering, keyboard navigation, state text, retry behavior, decorative asset loading, and no runtime/hydration/console errors at representative desktop and mobile-reading widths.
-- [ ] 4.2 Run frontend lint, typecheck, tests, production build, and Playwright; run root lint, typecheck, tests, and build; run API drift validation, strict OpenSpec validation, and `git diff --check`, recording exact failures if an environment limitation prevents a command.
-- [ ] 4.3 Review the final diff against the Phase 11 boundary and verify there are no backend, database, OpenAPI/generated-client, curriculum-publication, authentication, persisted-progress, lesson/editor/runtime, analytics, PWA, or Phase 12+ changes.
+- [x] 4.2 Run frontend lint, typecheck, tests, production build, and Playwright; run root lint, typecheck, tests, and build; run API drift validation, strict OpenSpec validation, and `git diff --check`, recording exact failures if an environment limitation prevents a command.
+- [x] 4.3 Review the final diff against the Phase 11 boundary and verify there are no backend, database, OpenAPI/generated-client, curriculum-publication, authentication, persisted-progress, lesson/editor/runtime, analytics, PWA, or Phase 12+ changes.
 
 ## 5. Lifecycle status
 
-- [ ] 5.1 Update `docs/DEVELOPMENT_ROADMAP.md` after Apply verification so Project Status truthfully records Phase 11 Apply completion and identifies Sync as the next OpenSpec stage without claiming the change is synced or archived.
+- [x] 5.1 Update `docs/DEVELOPMENT_ROADMAP.md` after Apply verification so Project Status truthfully records Phase 11 Apply completion and identifies Sync as the next OpenSpec stage without claiming the change is synced or archived.
