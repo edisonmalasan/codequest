@@ -21,10 +21,16 @@ describe('QuestNode', () => {
   it('renders locked nodes as inert with text status', () => {
     render(
       <ul>
-        <QuestNode status="locked" label="Functions" onSelect={() => {}} />
+        <QuestNode
+          status="locked"
+          label="Functions"
+          description="Developing · 15 XP"
+          onSelect={() => {}}
+        />
       </ul>,
     );
     expect(screen.queryByRole('button')).toBeNull();
     expect(screen.getByText('Locked')).toBeDefined();
+    expect(screen.getByText('Developing · 15 XP')).toBeDefined();
   });
 });

@@ -14,6 +14,7 @@ export type QuestStatus =
 export interface QuestNodeProps {
   status: QuestStatus;
   label: string;
+  description?: string;
   onSelect?: () => void;
   className?: string;
 }
@@ -30,6 +31,7 @@ const statusMeta: Record<QuestStatus, { text: string; Icon: typeof Check }> = {
 export function QuestNode({
   status,
   label,
+  description,
   onSelect,
   className,
 }: QuestNodeProps): React.JSX.Element {
@@ -54,6 +56,11 @@ export function QuestNode({
       <span className="flex flex-col items-start rounded-sm bg-surface-sunken/90 px-2 py-1">
         <span className="font-sans text-sm font-bold text-ink">{label}</span>
         <span className="game-label text-[10px] text-muted">{text}</span>
+        {description && (
+          <span className="mt-1 font-sans text-xs text-muted">
+            {description}
+          </span>
+        )}
       </span>
     </>
   );
