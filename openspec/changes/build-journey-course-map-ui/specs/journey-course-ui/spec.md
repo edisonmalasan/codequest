@@ -115,4 +115,3 @@ The change SHALL NOT add or change backend endpoints, OpenAPI schemas, generated
 
 - **WHEN** the completed Phase 11 diff and generated contract are inspected
 - **THEN** all product changes are confined to frontend Journey/Course-map presentation and tests, the generated API contract is unchanged, and no Phase 12 or later behavior is present
-
