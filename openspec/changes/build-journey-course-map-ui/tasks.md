@@ -1,11 +1,11 @@
 ## 1. Course-map model
 
-- [ ] 1.1 Add typed frontend curriculum-graph and completion-snapshot models that preserve generated API identities without copying backend DTOs, verified by frontend typecheck.
-- [ ] 1.2 Implement the pure sorted Journey/Chapter/Quest view-model builder for counts, chapter progression, prerequisite locks, one active/current quest, and remaining available quests; verify focused tests cover unordered input, branching prerequisites, unknown completion IDs, empty journeys, and fully completed chapters.
+- [x] 1.1 Add typed frontend curriculum-graph and completion-snapshot models that preserve generated API identities without copying backend DTOs, verified by frontend typecheck.
+- [x] 1.2 Implement the pure sorted Journey/Chapter/Quest view-model builder for counts, chapter progression, prerequisite locks, one active/current quest, and remaining available quests; verify focused tests cover unordered input, branching prerequisites, unknown completion IDs, empty journeys, and fully completed chapters.
 
 ## 2. Typed curriculum loading
 
-- [ ] 2.1 Add a cancellable Journey graph loader through `createCodequestApi()` that fetches Journey, Chapter, and required Quest details, verifies ownership consistency, and fails closed on any partial graph; verify focused tests cover success, abort, not-found, HTTP, malformed-response, and nested-request failures.
+- [x] 2.1 Add a cancellable Journey graph loader through `createCodequestApi()` that fetches Journey, Chapter, and required Quest details, verifies ownership consistency, and fails closed on any partial graph; verify focused tests cover success, abort, not-found, HTTP, malformed-response, and nested-request failures.
 - [ ] 2.2 Connect the graph loader to TanStack Query with stable Journey-scoped keys, current empty completion evidence, and explicit retry support; verify component tests observe loading, successful, and recoverable failure transitions.
 
 ## 3. Journey and Course-map interface
