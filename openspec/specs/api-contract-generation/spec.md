@@ -12,8 +12,8 @@ The system SHALL derive its frontend API types from the backend's OpenAPI 3 docu
 
 #### Scenario: Current contract is generated
 
-- **WHEN** the contract is generated after the authentication capability is implemented
-- **THEN** it includes the public `GET /api/v1/health` operation and the implemented protected current-account operations with their Bearer security and response contracts, with no invented curriculum, learning, or gamification operations
+- **WHEN** the contract is generated after the curriculum API capability is implemented
+- **THEN** it includes the public health and read-only curriculum operations plus the implemented protected current-account operations, with Bearer security only where required and no invented learning, progress, submission, or gamification operations
 
 #### Scenario: Error is documented
 
@@ -28,6 +28,11 @@ The frontend SHALL consume the backend through a typed client based on generated
 
 - **WHEN** frontend code requests the implemented health operation through the typed client
 - **THEN** its route, method, and success payload types are derived from the generated contract and it uses the configured API base URL
+
+#### Scenario: Typed curriculum request
+
+- **WHEN** frontend code requests an implemented curriculum operation through the typed client
+- **THEN** its route, method, success payload, and documented error types are derived from the generated contract and it uses the configured API base URL without credentials by default
 
 #### Scenario: Source boundary inspection
 
