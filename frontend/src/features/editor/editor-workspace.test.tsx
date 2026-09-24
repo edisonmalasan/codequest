@@ -76,15 +76,26 @@ describe('workspace presentation components', () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
     const { rerender } = render(
-      <FileTabs files={files} activeFileId="main" onSelect={onSelect} />,
+      <FileTabs
+        files={files}
+        activeFileId="main"
+        onSelect={onSelect}
+        panelId="test-panel"
+      />,
     );
     const main = screen.getByRole('tab', { name: 'main.js' });
     main.focus();
     await user.keyboard('{ArrowRight}');
     expect(onSelect).toHaveBeenLastCalledWith('helper');
+    expect(main.getAttribute('aria-controls')).toBe('test-panel');
 
     rerender(
-      <FileTabs files={files} activeFileId="helper" onSelect={onSelect} />,
+      <FileTabs
+        files={files}
+        activeFileId="helper"
+        onSelect={onSelect}
+        panelId="test-panel"
+      />,
     );
     const helper = screen.getByRole('tab', { name: 'helper.js' });
     helper.focus();
