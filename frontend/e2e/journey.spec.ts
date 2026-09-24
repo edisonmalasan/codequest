@@ -257,6 +257,17 @@ test('Journey page renders the ordered accessible Course map at desktop and mobi
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
+  const currentQuest = page.getByRole('link', {
+    name: 'First value, Current quest',
+  });
+  await expect(currentQuest).toHaveAttribute('href', '/quests/first-value');
+  await Promise.all([
+    page.waitForURL('**/quests/first-value'),
+    currentQuest.click(),
+  ]);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'First value' }),
+  ).toBeVisible();
   expect(consoleErrors).toEqual([]);
 });
 

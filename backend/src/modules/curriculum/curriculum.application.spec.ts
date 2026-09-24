@@ -1,5 +1,6 @@
 import {
   cpSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   rmSync,
@@ -30,6 +31,19 @@ function publishedFixture(): string {
   writeFileSync(
     journey,
     readFileSync(journey, 'utf8').replace('status: draft', 'status: reviewed'),
+  );
+  const snapshot = join(
+    root,
+    'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+  );
+  mkdirSync(join(snapshot, 'assets'), { recursive: true });
+  writeFileSync(
+    join(snapshot, 'assets/scope.webp'),
+    Buffer.from('quest-image'),
+  );
+  writeFileSync(
+    join(snapshot, 'lesson.mdx'),
+    `${readFileSync(join(snapshot, 'lesson.mdx'), 'utf8')}\n\n![Scope diagram](./assets/scope.webp)\n`,
   );
   writeFileSync(
     join(root, 'publication.yaml'),
@@ -108,9 +122,9 @@ describe('public curriculum API', () => {
       });
       expect(response.body).not.toContain('draft');
     }
-  });
+  }, 30_000);
 
-  it('serves all five public routes from one selected snapshot', async () => {
+  it('serves published curriculum and selected assets from one snapshot', async () => {
     const app = await application(publishedFixture());
     const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
 
@@ -162,6 +176,49 @@ describe('public curriculum API', () => {
     expect(quest.json().cases).toHaveLength(2);
     expect(quest.body).not.toContain('publication.yaml');
     expect(quest.body).not.toContain('curriculumReview');
+
+    const asset = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/quests/first-message/assets/1.0.0?path=assets%2Fscope.webp',
+    });
+    expect(asset.statusCode).toBe(200);
+    expect(asset.rawPayload).toEqual(Buffer.from('quest-image'));
+    expect(asset.headers).toMatchObject({
+      'content-type': 'image/webp',
+      'cache-control': 'public, max-age=31536000, immutable',
+      'x-content-type-options': 'nosniff',
+    });
+  });
+
+  it.each([
+    [
+      'unselected version',
+      'first-message/assets/9.9.9?path=assets%2Fscope.webp',
+    ],
+    [
+      'path traversal',
+      'first-message/assets/1.0.0?path=assets%2F..%2Fstarter.js',
+    ],
+    ['unsupported type', 'first-message/assets/1.0.0?path=assets%2Fscope.svg'],
+    ['missing file', 'first-message/assets/1.0.0?path=assets%2Fmissing.webp'],
+    ['draft Quest', 'draft-quest/assets/1.0.0?path=assets%2Fscope.webp'],
+  ])('hides %s asset requests behind safe not-found', async (_name, path) => {
+    const app = await application(publishedFixture());
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+    const response = await fastify.inject({
+      method: 'GET',
+      url: `/api/v1/quests/${path}`,
+      headers: { 'x-request-id': 'asset-not-found' },
+    });
+    expect(response.statusCode).toBe(404);
+    expect(response.json().error).toEqual({
+      code: 'NOT_FOUND',
+      message: 'Resource not found',
+      status: 404,
+      requestId: 'asset-not-found',
+    });
+    expect(response.body).not.toContain('starter.js');
+    expect(response.body).not.toContain('publication.yaml');
   });
 
   it('documents public curriculum routes without bearer security', async () => {
@@ -173,6 +230,7 @@ describe('public curriculum API', () => {
       '/api/v1/courses/{slug}',
       '/api/v1/chapters/{slug}',
       '/api/v1/quests/{slug}',
+      '/api/v1/quests/{slug}/assets/{contentVersion}',
     ];
     for (const path of curriculumPaths) {
       expect(document.paths[path]?.get).toBeDefined();

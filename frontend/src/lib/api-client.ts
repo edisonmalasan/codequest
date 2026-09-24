@@ -1,5 +1,5 @@
 import createClient from 'openapi-fetch';
-import { ApiEnv, getApiBaseUrl } from './api-base';
+import { ApiEnv, getApiBaseUrl, getConfiguredApiBaseUrl } from './api-base';
 import type { components, paths } from './api/generated/schema';
 
 export type HealthResponse = components['schemas']['HealthResponseDto'];
@@ -207,7 +207,10 @@ export interface ApiClientOptions {
 
 export function createCodequestApi(options: ApiClientOptions = {}) {
   const client = createClient<paths>({
-    baseUrl: getApiBaseUrl(options.env),
+    baseUrl:
+      options.env === undefined
+        ? getConfiguredApiBaseUrl()
+        : getApiBaseUrl(options.env),
     fetch: options.fetch,
     credentials: 'omit',
   });

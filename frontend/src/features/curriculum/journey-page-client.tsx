@@ -206,6 +206,11 @@ export function JourneyPageView({
                       key={quest.id}
                       status={status}
                       label={quest.title}
+                      href={
+                        status === 'locked'
+                          ? undefined
+                          : `/quests/${encodeURIComponent(quest.slug)}`
+                      }
                       description={`${difficultyLabel(quest.difficulty)} · ${quest.xpAward} XP${quest.guestEligible ? ' · Guest quest' : ''}`}
                     />
                   ))}

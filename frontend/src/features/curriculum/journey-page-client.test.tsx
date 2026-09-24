@@ -86,6 +86,14 @@ describe('JourneyPageView', () => {
     expect(screen.getByText('Available')).toBeDefined();
     expect(screen.getAllByText('Locked')).not.toHaveLength(0);
     expect(
+      screen
+        .getByRole('link', { name: 'Change state, Current quest' })
+        .getAttribute('href'),
+    ).toBe('/quests/change-state');
+    expect(
+      screen.queryByRole('link', { name: /Choose a path, Locked/ }),
+    ).toBeNull();
+    expect(
       screen.getAllByText('Developing · 15 XP · Guest quest'),
     ).toHaveLength(2);
 

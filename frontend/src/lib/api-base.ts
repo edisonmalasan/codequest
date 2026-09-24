@@ -12,3 +12,10 @@ export function getApiBaseUrl(env: ApiEnv = {}): string {
   }
   return url.replace(/\/+$/, '');
 }
+
+export function getConfiguredApiBaseUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_API_URL;
+  return getApiBaseUrl(
+    configured === undefined ? {} : { NEXT_PUBLIC_API_URL: configured },
+  );
+}
