@@ -25,6 +25,6 @@ None.
 ## Impact
 
 - Frontend editor components and a new editor feature module will build on the existing CodeMirror, Dexie, design-token, and core-control foundations.
-- The current draft table remains device-local and owner-isolated; no database migration, cloud draft synchronization, backend endpoint, or generated API-client change is required.
+- The draft table remains device-local and owner-isolated; its IndexedDB schema gains explicit workspace/file identity, while no backend database migration, cloud draft synchronization, backend endpoint, or generated API-client change is required.
 - No learner code executes, no validation occurs, and no attempt, submission, completion, progress, XP, or unlock state is created.
 - Phase 13 status and its verification evidence will be recorded in the development roadmap.
