@@ -124,7 +124,7 @@ describe('public curriculum API', () => {
     }
   }, 30_000);
 
-  it('serves all five public routes from one selected snapshot', async () => {
+  it('serves published curriculum and selected assets from one snapshot', async () => {
     const app = await application(publishedFixture());
     const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
 
