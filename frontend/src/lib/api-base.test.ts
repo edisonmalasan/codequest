@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { getApiBaseUrl } from './api-base';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { getApiBaseUrl, getConfiguredApiBaseUrl } from './api-base';
+
+afterEach(() => vi.unstubAllEnvs());
 
 describe('getApiBaseUrl', () => {
   it('defaults to the local backend', () => {
@@ -14,5 +16,10 @@ describe('getApiBaseUrl', () => {
 
   it('rejects an empty URL', () => {
     expect(() => getApiBaseUrl({ NEXT_PUBLIC_API_URL: '   ' })).toThrow();
+  });
+
+  it('reads the browser API origin from public configuration', () => {
+    vi.stubEnv('NEXT_PUBLIC_API_URL', 'https://learn-api.example.com/');
+    expect(getConfiguredApiBaseUrl()).toBe('https://learn-api.example.com');
   });
 });

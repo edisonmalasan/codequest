@@ -1,6 +1,7 @@
 'use client';
 
 import { Check, Circle, Lock, Play } from 'lucide-react';
+import Link from 'next/link';
 import { cn } from '@/lib/cn';
 
 export type QuestStatus =
@@ -15,6 +16,7 @@ export interface QuestNodeProps {
   status: QuestStatus;
   label: string;
   description?: string;
+  href?: string;
   onSelect?: () => void;
   className?: string;
 }
@@ -32,6 +34,7 @@ export function QuestNode({
   status,
   label,
   description,
+  href,
   onSelect,
   className,
 }: QuestNodeProps): React.JSX.Element {
@@ -66,6 +69,19 @@ export function QuestNode({
   );
 
   if (status === 'locked' || onSelect === undefined) {
+    if (status !== 'locked' && href !== undefined) {
+      return (
+        <li className={cn('relative z-10 flex', className)}>
+          <Link
+            href={href}
+            aria-label={`${label}, ${text}`}
+            className="-m-1 flex min-h-14 items-center gap-3 rounded-sm p-1 outline-none transition-transform duration-quick ease-ui hover:-translate-y-1"
+          >
+            {inner}
+          </Link>
+        </li>
+      );
+    }
     return (
       <li
         aria-disabled={status === 'locked' || undefined}

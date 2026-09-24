@@ -33,4 +33,21 @@ describe('QuestNode', () => {
     expect(screen.getByText('Locked')).toBeDefined();
     expect(screen.getByText('Developing · 15 XP')).toBeDefined();
   });
+
+  it('renders an enabled destination as a semantic link', () => {
+    render(
+      <ul>
+        <QuestNode
+          status="current"
+          label="First message"
+          href="/quests/first-message"
+        />
+      </ul>,
+    );
+    expect(
+      screen
+        .getByRole('link', { name: 'First message, Current quest' })
+        .getAttribute('href'),
+    ).toBe('/quests/first-message');
+  });
 });

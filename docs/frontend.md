@@ -10,6 +10,12 @@ Next.js owns UI/routing/PWA, responsive rendering, accessibility, CodeMirror wor
 
 Phase 8 implements Supabase Auth identity UI and cookie-backed PKCE session refresh through isolated browser/server adapters. `/login`, `/register`, `/auth/callback`, and `/account` use validated local return paths; protected API calls obtain the current access token at call time through the typed frontend wrapper. Sign-out clears protected query state. Verified API identity/ownership remains backend responsibility. No MVP direct learner Storage/uploads. Session/token material stays out of runtime messages, lesson fixtures, cached protected responses and telemetry. Learner compartment cannot issue authenticated requests. See [authentication](authentication.md).
 
+## Published lesson reading
+
+Phase 12 adds `/quests/[slug]` as a reading-only route backed by the generated public curriculum contract. It renders the approved static Markdown subset as semantic headings, prose, lists/instructions, callouts, inline and fenced code, safe HTTPS/fragment links, and version-pinned local illustrations. Raw HTML, MDX components/expressions, scripts, remote images, unsupported protocols, and arbitrary paths are never evaluated. Graduated question, concept, and next-step hints use learner-controlled native disclosures with no persistence or reward side effects. Eligible and completed Course-map nodes link to the lesson; locked nodes remain inert.
+
+The reading column uses conventional body typography, bounded measure, responsive images, and local horizontal scrolling for wide code so mobile prose does not create page overflow. Loading, unpublished/not-found, malformed-response, network/retry, and illustration-failure states remain safe and readable. Phase 12 does not expose starter code or assessment cases in the page and adds no editor, runtime, Check, submission, progress acceptance, or XP behavior.
+
 ## Editor and feedback
 
 Workspace supports the MVP editor features: syntax highlights, line numbers, indentation/autocomplete, reset, idle/navigation/visibility autosave, shortcuts, console/check results/runtime status, and responsive panels. Its concepts work independently of one lesson; full file tree/package manager/terminal is excluded. Optional platform-owned preview shell must have textual output equivalence and not introduce assessed DOM requirements.
