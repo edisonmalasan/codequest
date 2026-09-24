@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { WorkspaceTestResult } from './editor-workspace-types';
 
 export function TestResults({
@@ -5,12 +6,14 @@ export function TestResults({
 }: {
   results?: readonly WorkspaceTestResult[];
 }): React.JSX.Element {
+  const titleId = useId();
+
   return (
     <section
-      aria-labelledby="workspace-tests-title"
+      aria-labelledby={titleId}
       className="min-w-0 rounded-md border border-line bg-surface-raised p-4"
     >
-      <h3 id="workspace-tests-title" className="font-sans text-sm font-bold">
+      <h3 id={titleId} className="font-sans text-sm font-bold">
         Test results
       </h3>
       {results.length === 0 ? (

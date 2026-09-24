@@ -7,10 +7,12 @@ export function FileTabs({
   files,
   activeFileId,
   onSelect,
+  panelId,
 }: {
   files: readonly WorkspaceFile[];
   activeFileId: string;
   onSelect: (fileId: string) => void;
+  panelId: string;
 }): React.JSX.Element {
   const baseId = useId();
   const move = (event: React.KeyboardEvent, index: number): void => {
@@ -43,7 +45,7 @@ export function FileTabs({
             type="button"
             role="tab"
             aria-selected={active}
-            aria-controls="editor-workspace-panel"
+            aria-controls={panelId}
             tabIndex={active ? 0 : -1}
             onClick={() => onSelect(file.id)}
             onKeyDown={(event) => move(event, index)}

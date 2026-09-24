@@ -1,4 +1,5 @@
 import { RotateCcw, Save } from 'lucide-react';
+import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 
 export function WorkspaceActions({
@@ -10,9 +11,11 @@ export function WorkspaceActions({
   onReset: () => void;
   disabled?: boolean;
 }): React.JSX.Element {
+  const titleId = useId();
+
   return (
-    <section aria-labelledby="workspace-actions-title" className="space-y-3">
-      <h3 id="workspace-actions-title" className="font-sans text-sm font-bold">
+    <section aria-labelledby={titleId} className="space-y-3">
+      <h3 id={titleId} className="font-sans text-sm font-bold">
         Workspace actions
       </h3>
       <div className="flex flex-wrap gap-3">

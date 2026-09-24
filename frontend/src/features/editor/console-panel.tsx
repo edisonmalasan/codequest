@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { ConsoleLine } from './editor-workspace-types';
 
 export function ConsolePanel({
@@ -5,13 +6,15 @@ export function ConsolePanel({
 }: {
   lines?: readonly ConsoleLine[];
 }): React.JSX.Element {
+  const titleId = useId();
+
   return (
     <section
-      aria-labelledby="workspace-console-title"
+      aria-labelledby={titleId}
       className="min-w-0 rounded-md border border-line bg-surface-sunken"
     >
       <h3
-        id="workspace-console-title"
+        id={titleId}
         className="border-b border-line px-4 py-3 font-sans text-sm font-bold text-ink"
       >
         Console

@@ -1,6 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { CodeEditor } from '@/components/editor/code-editor';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
@@ -82,6 +89,12 @@ export function EditorWorkspace({
   const [resetOpen, setResetOpen] = useState(false);
   const revisionRef = useRef(0);
   const workspaceRef = useRef<HTMLElement | null>(null);
+  const onSourcesChangeRef = useRef(onSourcesChange);
+  const baseId = useId();
+  const titleId = `${baseId}-title`;
+  const panelId = `${baseId}-panel`;
+
+  onSourcesChangeRef.current = onSourcesChange;
 
   const identity = useMemo(
     () => ({ ownerId, workspaceId }),
@@ -122,7 +135,7 @@ export function EditorWorkspace({
         for (const draft of drafts) restored[draft.fileId] = draft.source;
         sourcesRef.current = restored;
         setSources(restored);
-        onSourcesChange?.(restored);
+        onSourcesChangeRef.current?.(restored);
         setSaveStatus(drafts.length > 0 ? 'saved' : 'ready');
         setHydrated(true);
       })
@@ -134,7 +147,7 @@ export function EditorWorkspace({
     return () => {
       cancelled = true;
     };
-  }, [draftRepository, fileDefinitionKey, identity, onSourcesChange]);
+  }, [draftRepository, fileDefinitionKey, identity]);
 
   const persist = useCallback(
     async (
@@ -170,7 +183,7 @@ export function EditorWorkspace({
     sourcesRef.current = next;
     setSources(next);
     setSaveStatus('unsaved');
-    onSourcesChange?.(next);
+    onSourcesChangeRef.current?.(next);
   };
 
   const requestReset = (): void => {
@@ -190,7 +203,7 @@ export function EditorWorkspace({
     sourcesRef.current = next;
     setSources(next);
     setResetOpen(false);
-    onSourcesChange?.(next);
+    onSourcesChangeRef.current?.(next);
     void persist(next, revision);
   };
 
@@ -210,13 +223,10 @@ export function EditorWorkspace({
   if (files.length === 0 || activeFile === undefined) {
     return (
       <section
-        aria-labelledby="editor-workspace-title"
+        aria-labelledby={titleId}
         className="rounded-lg border border-line bg-surface-raised p-6 text-ink"
       >
-        <h1
-          id="editor-workspace-title"
-          className="font-display text-2xl font-bold"
-        >
+        <h1 id={titleId} className="font-display text-2xl font-bold">
           Editor Workspace
         </h1>
         <p className="mt-3 text-muted">No editable files are available.</p>
@@ -227,16 +237,13 @@ export function EditorWorkspace({
   return (
     <section
       ref={workspaceRef}
-      aria-labelledby="editor-workspace-title"
+      aria-labelledby={titleId}
       onKeyDown={onWorkspaceKeyDown}
       className="min-w-0 overflow-hidden rounded-lg border border-line-strong bg-surface text-ink shadow-soft"
     >
       <div className="border-b border-line bg-surface-raised px-4 py-4 sm:px-5">
         <p className="game-label text-xs text-discovery">Local coding space</p>
-        <h1
-          id="editor-workspace-title"
-          className="mt-1 font-display text-2xl font-bold"
-        >
+        <h1 id={titleId} className="mt-1 font-display text-2xl font-bold">
           Editor Workspace
         </h1>
       </div>
@@ -249,9 +256,10 @@ export function EditorWorkspace({
         files={files}
         activeFileId={activeFile.id}
         onSelect={setActiveFileId}
+        panelId={panelId}
       />
       <div className="grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
-        <div id="editor-workspace-panel" role="tabpanel" className="min-w-0">
+        <div id={panelId} role="tabpanel" className="min-w-0">
           <CodeEditor
             value={sources[activeFile.id] ?? activeFile.starterSource}
             language={activeFile.language}
