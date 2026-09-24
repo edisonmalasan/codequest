@@ -3,6 +3,15 @@ import Dexie, { type Table } from 'dexie';
 export interface DraftRecord {
   id: string;
   ownerId: string;
+  workspaceId: string;
+  fileId: string;
+  source: string;
+  updatedAt: number;
+}
+
+interface LegacyDraftRecord {
+  id: string;
+  ownerId: string;
   questId: string;
   source: string;
   updatedAt: number;
@@ -30,6 +39,24 @@ export class CodeQuestDatabase extends Dexie {
       drafts: 'id, [ownerId+questId]',
       outbox: 'eventId, ownerId',
     });
+    this.version(2)
+      .stores({
+        drafts:
+          'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+        outbox: 'eventId, ownerId',
+      })
+      .upgrade((transaction) =>
+        transaction
+          .table<LegacyDraftRecord | DraftRecord, string>('drafts')
+          .toCollection()
+          .modify((draft) => {
+            if ('workspaceId' in draft && 'fileId' in draft) return;
+            Object.assign(draft, {
+              workspaceId: draft.questId,
+              fileId: 'main',
+            });
+          }),
+      );
   }
 }
 
