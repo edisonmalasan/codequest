@@ -67,14 +67,19 @@ The frontend SHALL derive map presentation from published prerequisite IDs plus 
 - **WHEN** a stable quest ID appears in the supplied completion set
 - **THEN** its node and chapter/journey counts show completion without awarding XP, persisting progress, or treating the client model as backend acceptance
 
-### Requirement: Map nodes do not enter unimplemented lesson behavior
+### Requirement: Map nodes enter only approved lesson reading behavior
 
-Phase 11 quest nodes SHALL communicate title, sequence, difficulty, reward metadata, guest eligibility, and map state where available, but SHALL NOT navigate into or simulate a Phase 12 lesson page, render lesson content or hints, edit starter code, run learner code, perform checks, submit attempts, or award progress. Locked nodes SHALL be non-interactive, and any enabled map interaction SHALL remain within Phase 11 navigation.
+Quest nodes SHALL communicate title, sequence, difficulty, reward metadata, guest eligibility, and map state where available. An active/current, available, or completed published node SHALL be a semantic link to `/quests/[slug]`; a locked node SHALL remain non-interactive. Following an enabled node SHALL enter only the Phase 12 lesson-reading experience and SHALL NOT edit starter code, run learner code, perform checks, submit attempts, accept completion, award XP, or change unlock state.
 
-#### Scenario: Learner inspects a quest node
+#### Scenario: Learner opens an eligible Quest
 
-- **WHEN** the learner focuses or reads an available, active/current, completed, or locked node
-- **THEN** its label and state are available in text and no lesson, editor, runtime, or submission behavior starts
+- **WHEN** the learner activates an available, active/current, or completed quest node
+- **THEN** navigation opens that published Quest's lesson route with the node label and state available in text
+
+#### Scenario: Learner inspects a locked Quest
+
+- **WHEN** the learner focuses or reads a locked quest node
+- **THEN** its label and locked state are available in text and it provides no lesson link or later-phase behavior
 
 ### Requirement: Loading and failure states remain truthful and recoverable
 
