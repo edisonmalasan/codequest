@@ -6,15 +6,15 @@ Status snapshot: 2026-09-24. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 12 — Lesson Renderer complete and archived; Phase 13 has not started |
+| Current phase | Phase 13 — Editor Workspace proposal validated; implementation has not started |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change; Phase 10 — Curriculum Backend: reviewed publication catalog, public curriculum REST/OpenAPI contract, generated frontend reads, canonical specs, and archived change; Phase 11 — Journey and Course UI: typed curriculum navigation, prerequisite-aware Course map, accessible states, canonical spec, and archived change; Phase 12 — Lesson Renderer: safe published lesson reading, selected-snapshot illustrations, accessible hints, canonical specs, and archived change |
-| Current OpenSpec change | None |
-| Current OpenSpec stage | Phase 12 Explore, Propose, Apply, Sync, and Archive complete; no active OpenSpec changes |
-| Next execution step | Begin Phase 13 Explore and Propose only when authorized |
-| Next phase | Phase 13 — Editor Workspace is next and has not started |
+| Current OpenSpec change | `build-reusable-editor-workspace` |
+| Current OpenSpec stage | Phase 13 Explore and Propose complete; Apply has not started |
+| Next execution step | Merge the Phase 13 proposal, then Apply on a separate implementation branch |
+| Next phase | Phase 13 — Editor Workspace is active; Phase 14 has not started |
 | Validation evidence | Phase 12 completed all 13 Apply tasks. Backend/frontend focused tests and Chromium lesson/Journey flows cover selected-snapshot assets, safe static Markdown, map navigation, keyboard hints, responsive reflow, image success/failure, and safe API/page errors; exact full-suite results are recorded in the archived [tasks](../openspec/changes/archive/2026-09-24-render-published-lessons/tasks.md). |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Phase 0-12 foundations are complete and archived; production curriculum publication remains intentionally empty, no OpenSpec change is active, and no Phase 13 editor/runtime behavior exists |
+| Current repository | Phase 0-12 foundations are complete and archived; production curriculum publication remains intentionally empty, Phase 13 planning is active, and no Phase 14 runtime behavior exists |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
