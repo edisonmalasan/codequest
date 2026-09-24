@@ -16,6 +16,11 @@ import {
   QuestSummaryDto,
 } from './curriculum.dto';
 
+export interface PublishedQuestAsset {
+  readonly bytes: Buffer;
+  readonly mediaType: 'image/png' | 'image/webp';
+}
+
 @Injectable()
 export class CurriculumService {
   constructor(
@@ -89,6 +94,26 @@ export class CurriculumService {
       ...(snapshot.metadata.transferPrompt
         ? { transferPrompt: snapshot.metadata.transferPrompt }
         : {}),
+    };
+  }
+
+  findQuestAsset(
+    slug: string,
+    contentVersion: string,
+    path: string,
+  ): PublishedQuestAsset {
+    const located = this.locateQuest(slug);
+    if (
+      !located ||
+      located.quest.activeSnapshot.metadata.contentVersion !== contentVersion ||
+      !/^assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)$/.test(path)
+    )
+      throw new NotFoundException();
+    const asset = located.quest.activeSnapshot.assets[path];
+    if (!asset) throw new NotFoundException();
+    return {
+      bytes: Buffer.from(asset.bytesBase64, 'base64'),
+      mediaType: asset.mediaType,
     };
   }
 

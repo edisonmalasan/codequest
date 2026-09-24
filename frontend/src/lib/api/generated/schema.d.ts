@@ -90,6 +90,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/quests/{slug}/assets/{contentVersion}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one published Quest illustration */
+        get: operations["CurriculumController_findQuestAsset_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/quests/{slug}": {
         parameters: {
             query?: never;
@@ -654,6 +671,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_findQuestAsset_v1: {
+        parameters: {
+            query: {
+                path: string;
+            };
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+                contentVersion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": string;
+                    "image/webp": string;
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": components["schemas"]["ApiErrorResponseDto"];
+                    "image/webp": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": components["schemas"]["ApiErrorResponseDto"];
+                    "image/webp": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": components["schemas"]["ApiErrorResponseDto"];
+                    "image/webp": components["schemas"]["ApiErrorResponseDto"];
                 };
             };
         };

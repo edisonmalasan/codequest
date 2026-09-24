@@ -1,5 +1,5 @@
-import { readdirSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { existsSync, readdirSync } from 'node:fs';
+import { join, relative, resolve, sep } from 'node:path';
 import { z } from 'zod';
 import {
   chapterSchema,
@@ -20,6 +20,7 @@ import {
   ContentError,
   readCases,
   readYaml,
+  safeBuffer,
   safeFile,
 } from './static-files';
 import { validateCurriculum } from './validate-curriculum';
@@ -29,11 +30,17 @@ export interface CatalogConcept {
   readonly title: string;
 }
 
+export interface CatalogQuestAsset {
+  readonly mediaType: 'image/png' | 'image/webp';
+  readonly bytesBase64: string;
+}
+
 export interface CatalogQuestSnapshot {
   readonly metadata: QuestVersion;
   readonly lesson: string;
   readonly starterCode: string;
   readonly cases: readonly CurriculumCase[];
+  readonly assets: Readonly<Record<string, CatalogQuestAsset>>;
 }
 
 export interface CatalogQuest {
@@ -93,6 +100,39 @@ function folders(path: string): string[] {
     .sort();
 }
 
+function loadAssets(
+  root: string,
+  snapshotPath: string,
+): Record<string, CatalogQuestAsset> {
+  const assetRoot = join(root, snapshotPath, 'assets');
+  if (!existsSync(assetRoot)) return {};
+  const assets: Record<string, CatalogQuestAsset> = {};
+  const visit = (folder: string): void => {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const absolute = join(folder, entry.name);
+      if (entry.isDirectory()) {
+        visit(absolute);
+        continue;
+      }
+      const path = relative(join(root, snapshotPath), absolute)
+        .split(sep)
+        .join('/');
+      const extension = path.endsWith('.png')
+        ? 'image/png'
+        : path.endsWith('.webp')
+          ? 'image/webp'
+          : undefined;
+      if (!extension) throw new ContentError(path, 'Unsupported lesson asset');
+      assets[path] = {
+        mediaType: extension,
+        bytesBase64: safeBuffer(root, absolute, 262_144).toString('base64'),
+      };
+    }
+  };
+  visit(assetRoot);
+  return assets;
+}
+
 function freeze<T>(value: T): Readonly<T> {
   if (value !== null && typeof value === 'object' && !Object.isFrozen(value)) {
     for (const child of Object.values(value as Record<string, unknown>))
@@ -149,6 +189,7 @@ export function loadAuthoredCurriculum(
                 lesson: safeFile(root, lessonFile, 65_536),
                 starterCode: safeFile(root, starterFile, 32_768),
                 cases: readCases(root, join(snapshotPath, 'tests.ts')),
+                assets: loadAssets(root, snapshotPath),
               };
             }
             return { metadata: quest, snapshots };

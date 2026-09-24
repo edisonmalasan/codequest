@@ -17,6 +17,14 @@ export class ContentError extends Error {
 }
 
 export function safeFile(root: string, file: string, maxBytes: number): string {
+  return safeBuffer(root, file, maxBytes).toString('utf8');
+}
+
+export function safeBuffer(
+  root: string,
+  file: string,
+  maxBytes: number,
+): Buffer {
   const absolute = resolve(root, file);
   const path = relative(root, absolute);
   if (
@@ -40,7 +48,7 @@ export function safeFile(root: string, file: string, maxBytes: number): string {
     throw new ContentError(file, 'File exceeds size limit');
   if (!realpathSync(absolute).startsWith(`${realpathSync(root)}${sep}`))
     throw new ContentError(file, 'Path escapes content root');
-  return readFileSync(absolute, 'utf8');
+  return readFileSync(absolute);
 }
 
 export function readYaml(root: string, file: string): unknown {

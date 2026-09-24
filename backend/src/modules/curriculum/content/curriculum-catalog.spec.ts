@@ -1,9 +1,11 @@
 import {
   cpSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   renameSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -107,6 +109,16 @@ describe('curriculum publication catalog', () => {
     const root = fixture();
     reviewed(root);
     publish(root);
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    mkdirSync(join(snapshot, 'assets'), { recursive: true });
+    writeFileSync(join(snapshot, 'assets/scope.png'), Buffer.from('png-data'));
+    writeFileSync(
+      join(snapshot, 'lesson.mdx'),
+      `${readFileSync(join(snapshot, 'lesson.mdx'), 'utf8')}\n\n![Scope](./assets/scope.png)\n`,
+    );
 
     const catalog = loadCurriculumCatalog(root);
     const journey = catalog.journeys[0];
@@ -118,7 +130,46 @@ describe('curriculum publication catalog', () => {
     });
     expect(quest.activeSnapshot.lesson).toContain('# First message');
     expect(quest.activeSnapshot.cases).toHaveLength(2);
+    expect(quest.activeSnapshot.assets['assets/scope.png']).toEqual({
+      mediaType: 'image/png',
+      bytesBase64: Buffer.from('png-data').toString('base64'),
+    });
     expect(Object.isFrozen(quest.activeSnapshot)).toBe(true);
+  });
+
+  it('rejects an oversized selected-snapshot asset', () => {
+    const root = fixture();
+    reviewed(root);
+    publish(root);
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    mkdirSync(join(snapshot, 'assets'), { recursive: true });
+    writeFileSync(
+      join(snapshot, 'assets/oversized.webp'),
+      Buffer.alloc(262_145),
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Invalid or oversized content file',
+    );
+  });
+
+  it('rejects a symbolic lesson asset directory', () => {
+    const root = fixture();
+    reviewed(root);
+    publish(root);
+    const outside = mkdtempSync(join(tmpdir(), 'codequest-asset-outside-'));
+    created.push(outside);
+    writeFileSync(join(outside, 'outside.png'), Buffer.from('outside'));
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    symlinkSync(outside, join(snapshot, 'assets'), 'junction');
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Symbolic links are not permitted',
+    );
   });
 
   it.each([

@@ -1,14 +1,25 @@
-import { Controller, Get, Inject, Param, Version } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Query,
+  Res,
+  Version,
+} from '@nestjs/common';
 import {
   ApiHeader,
   ApiExtraModels,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiProduces,
+  ApiQuery,
   ApiResponse,
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
+import type { FastifyReply } from 'fastify';
 import { ApiErrorResponseDto } from '../../common/http/api-error-response.dto';
 import {
   ChapterDetailDto,
@@ -84,6 +95,31 @@ export class CurriculumController {
   @ApiResponse({ status: 500, type: ApiErrorResponseDto, headers })
   findChapter(@Param('slug') slug: string): ChapterDetailDto {
     return this.curriculum.findChapter(slug);
+  }
+
+  @Get('quests/:slug/assets/:contentVersion')
+  @Version('1')
+  @ApiOperation({ summary: 'Read one published Quest illustration' })
+  @ApiQuery({ name: 'path', required: true, type: String })
+  @ApiProduces('image/png', 'image/webp')
+  @ApiOkResponse({
+    schema: { type: 'string', format: 'binary' },
+    headers,
+  })
+  @ApiNotFoundResponse({ type: ApiErrorResponseDto, headers })
+  @ApiResponse({ status: 429, type: ApiErrorResponseDto, headers })
+  @ApiResponse({ status: 500, type: ApiErrorResponseDto, headers })
+  findQuestAsset(
+    @Param('slug') slug: string,
+    @Param('contentVersion') contentVersion: string,
+    @Query('path') path: string,
+    @Res({ passthrough: true }) reply: FastifyReply,
+  ): Buffer {
+    const asset = this.curriculum.findQuestAsset(slug, contentVersion, path);
+    reply.header('content-type', asset.mediaType);
+    reply.header('cache-control', 'public, max-age=31536000, immutable');
+    reply.header('x-content-type-options', 'nosniff');
+    return asset.bytes;
   }
 
   @Get('quests/:slug')
