@@ -190,7 +190,9 @@ describe('EditorWorkspace', () => {
     );
 
     await screen.findByText('Saved on this device');
-    expect(screen.getByRole('textbox').textContent).toContain('restored');
+    await waitFor(() =>
+      expect(screen.getByRole('textbox').textContent).toContain('restored'),
+    );
     editActiveSource("const message = 'edited';");
     await user.click(screen.getByRole('tab', { name: 'helper.js' }));
     editActiveSource('export const helper = false;');
