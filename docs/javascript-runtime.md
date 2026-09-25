@@ -1,6 +1,6 @@
 # JavaScript runtime
 
-Status: Phase 14 Apply implementation. This document defines the browser computation boundary implemented by `add-isolated-javascript-runtime`; canonical OpenSpec synchronization and archive remain pending until the Apply PR is merged.
+Status: Phase 14 implementation complete. The browser computation boundary is synced to the canonical OpenSpec capabilities and the completed change is archived.
 
 ## Contract and ownership
 
