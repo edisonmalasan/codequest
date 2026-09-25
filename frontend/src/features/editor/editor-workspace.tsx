@@ -11,6 +11,7 @@ import {
 import { CodeEditor } from '@/components/editor/code-editor';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
+import type { ExecutionAdapter, ExecutionResult } from '@/features/runtime';
 import {
   editorDraftRepository,
   type DraftSource,
@@ -40,7 +41,65 @@ export interface EditorWorkspaceProps {
   consoleLines?: readonly ConsoleLine[];
   testResults?: readonly WorkspaceTestResult[];
   runtimeState?: RuntimeDisplayState;
+  executionAdapter?: ExecutionAdapter;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+}
+
+interface ExecutionPresentation {
+  lines: readonly ConsoleLine[];
+  state: RuntimeDisplayState;
+  running: boolean;
+}
+
+const unavailableExecution: ExecutionPresentation = {
+  lines: [],
+  state: { kind: 'unavailable', label: 'Runtime unavailable' },
+  running: false,
+};
+
+function presentExecution(result: ExecutionResult): ExecutionPresentation {
+  const lines: ConsoleLine[] = result.output.map((text, index) => ({
+    id: `${result.runId}-output-${index}`,
+    kind: 'output',
+    text,
+  }));
+  if (result.status === 'success' && result.value) {
+    lines.push({
+      id: `${result.runId}-value`,
+      kind: 'info',
+      text: `Return: ${result.value}`,
+    });
+  } else if (result.message) {
+    lines.push({
+      id: `${result.runId}-message`,
+      kind: result.status === 'cancelled' ? 'info' : 'error',
+      text: result.message,
+    });
+  }
+
+  const seconds = (result.durationMs / 1_000).toFixed(2);
+  if (result.status === 'success') {
+    return {
+      lines,
+      running: false,
+      state: { kind: 'ready', label: `Completed in ${seconds} seconds` },
+    };
+  }
+  if (result.status === 'cancelled') {
+    return {
+      lines,
+      running: false,
+      state: { kind: 'idle', label: 'Execution cancelled' },
+    };
+  }
+  return {
+    lines,
+    running: false,
+    state: {
+      kind: 'error',
+      label: `${result.status.replaceAll('-', ' ')} after ${seconds} seconds`,
+    },
+  };
 }
 
 function starterSources(
@@ -67,6 +126,7 @@ export function EditorWorkspace({
   consoleLines,
   testResults,
   runtimeState,
+  executionAdapter,
   onSourcesChange,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify(
@@ -89,6 +149,10 @@ export function EditorWorkspace({
   const [resetOpen, setResetOpen] = useState(false);
   const revisionRef = useRef(0);
   const workspaceRef = useRef<HTMLElement | null>(null);
+  const executionControllerRef = useRef<AbortController | null>(null);
+  const executionTokenRef = useRef(0);
+  const [execution, setExecution] =
+    useState<ExecutionPresentation>(unavailableExecution);
   const onSourcesChangeRef = useRef(onSourcesChange);
   const baseId = useId();
   const titleId = `${baseId}-title`;
@@ -171,6 +235,56 @@ export function EditorWorkspace({
   }, [persist]);
 
   useEffect(() => {
+    return () => {
+      executionTokenRef.current += 1;
+      executionControllerRef.current?.abort();
+      void executionAdapter?.cancel();
+    };
+  }, [executionAdapter]);
+
+  const runCurrent = useCallback((): void => {
+    if (executionAdapter === undefined || activeFile === undefined) return;
+    executionControllerRef.current?.abort();
+    const controller = new AbortController();
+    executionControllerRef.current = controller;
+    executionTokenRef.current += 1;
+    const token = executionTokenRef.current;
+    const source =
+      sourcesRef.current[activeFile.id] ?? activeFile.starterSource;
+    setExecution({
+      lines: [],
+      running: true,
+      state: { kind: 'busy', label: `Running ${activeFile.name}` },
+    });
+    void executionAdapter.execute({ source, signal: controller.signal }).then(
+      (result) => {
+        if (executionTokenRef.current !== token) return;
+        executionControllerRef.current = null;
+        setExecution(presentExecution(result));
+      },
+      () => {
+        if (executionTokenRef.current !== token) return;
+        executionControllerRef.current = null;
+        setExecution({
+          lines: [
+            {
+              id: `internal-${token}`,
+              kind: 'error',
+              text: 'Isolated runtime unavailable',
+            },
+          ],
+          running: false,
+          state: { kind: 'error', label: 'Runtime unavailable' },
+        });
+      },
+    );
+  }, [activeFile, executionAdapter]);
+
+  const cancelExecution = useCallback((): void => {
+    executionControllerRef.current?.abort();
+  }, []);
+
+  useEffect(() => {
     if (!hydrated || saveStatus !== 'unsaved') return;
     const timeout = window.setTimeout(saveCurrent, AUTOSAVE_DELAY_MS);
     return () => window.clearTimeout(timeout);
@@ -212,6 +326,11 @@ export function EditorWorkspace({
     if (event.key.toLowerCase() === 's' && !event.shiftKey) {
       event.preventDefault();
       saveCurrent();
+      return;
+    }
+    if (event.key === 'Enter' && !event.shiftKey && executionAdapter) {
+      event.preventDefault();
+      runCurrent();
       return;
     }
     if (event.key === 'Backspace' && event.shiftKey) {
@@ -267,19 +386,26 @@ export function EditorWorkspace({
             onChange={updateSource}
           />
           <div className="mt-4">
-            <ConsolePanel lines={consoleLines} />
+            <ConsolePanel
+              lines={executionAdapter ? execution.lines : consoleLines}
+            />
           </div>
         </div>
         <aside
           aria-label="Workspace information"
           className="grid content-start gap-4"
         >
-          <RuntimeStatus state={runtimeState} />
+          <RuntimeStatus
+            state={executionAdapter ? execution.state : runtimeState}
+          />
           <TestResults results={testResults} />
           <div className="rounded-md border border-line bg-surface-raised p-4">
             <WorkspaceActions
               onSave={saveCurrent}
               onReset={requestReset}
+              onRun={executionAdapter ? runCurrent : undefined}
+              onCancel={executionAdapter ? cancelExecution : undefined}
+              running={execution.running}
               disabled={!hydrated || saveStatus === 'saving'}
             />
           </div>
