@@ -19,6 +19,7 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_URL: 'http://127.0.0.1:54321',
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'publishable-local-browser-fixture',
       NEXT_PUBLIC_SITE_URL: 'http://127.0.0.1:3100',
+      NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://localhost:3100',
     },
     timeout: 120_000,
   },

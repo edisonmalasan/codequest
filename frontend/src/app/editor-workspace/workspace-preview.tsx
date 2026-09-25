@@ -1,7 +1,14 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { EditorWorkspace, type WorkspaceFile } from '@/features/editor';
+import {
+  JavaScriptWorkerAdapter,
+  resolveRunnerOrigin,
+  type ExecutionAdapter,
+} from '@/features/runtime';
 
 const previewFiles: readonly WorkspaceFile[] = [
   {
@@ -27,6 +34,22 @@ console.log(report(quest));`,
 ];
 
 export function WorkspacePreview(): React.JSX.Element {
+  const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
+
+  useEffect(() => {
+    const applicationOrigin = window.location.origin;
+    const runtimeOrigin = resolveRunnerOrigin(
+      process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
+      applicationOrigin,
+    );
+    if (runtimeOrigin === null) return;
+    const adapter = new JavaScriptWorkerAdapter(runtimeOrigin);
+    setExecutionAdapter(adapter);
+    return () => {
+      void adapter.dispose();
+    };
+  }, []);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas px-4 py-6 text-ink sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -40,8 +63,8 @@ export function WorkspacePreview(): React.JSX.Element {
               Reusable workspace preview
             </h1>
             <p className="mt-3 max-w-2xl leading-7 text-muted">
-              Edit and preserve local source. Execution, checks, submissions,
-              and progress are intentionally unavailable.
+              Edit, preserve, and run local JavaScript. Checks, previews,
+              submissions, and progress remain unavailable.
             </p>
           </div>
         </header>
@@ -49,6 +72,7 @@ export function WorkspacePreview(): React.JSX.Element {
           ownerId="preview-guest"
           workspaceId="phase-13-editor-preview"
           files={previewFiles}
+          executionAdapter={executionAdapter}
         />
       </div>
     </main>

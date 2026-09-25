@@ -10,6 +10,12 @@ import {
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type {
+  ExecutionAdapter,
+  ExecutionRequest,
+  ExecutionResult,
+  ExecutionStatus,
+} from '@/features/runtime';
+import type {
   DraftIdentity,
   DraftSource,
   EditorDraftRepository,
@@ -58,6 +64,40 @@ class MemoryDraftRepository implements EditorDraftRepository {
   async load(): Promise<DraftSource[]> {
     return this.drafts;
   }
+}
+
+function executionResult(
+  status: ExecutionStatus,
+  overrides: Partial<ExecutionResult> = {},
+): ExecutionResult {
+  return {
+    runId: 'run-1',
+    status,
+    output: [],
+    value: '',
+    message: '',
+    durationMs: 25,
+    ...overrides,
+  };
+}
+
+class ControlledExecutionAdapter implements ExecutionAdapter {
+  readonly execute = vi.fn((request: ExecutionRequest) => {
+    return new Promise<ExecutionResult>((resolve) => {
+      this.resolve = resolve;
+      request.signal?.addEventListener(
+        'abort',
+        () =>
+          resolve(
+            executionResult('cancelled', { message: 'Execution cancelled' }),
+          ),
+        { once: true },
+      );
+    });
+  });
+  readonly cancel = vi.fn(async () => undefined);
+  readonly dispose = vi.fn(async () => undefined);
+  resolve: (result: ExecutionResult) => void = () => undefined;
 }
 
 function editActiveSource(source: string): void {
@@ -300,6 +340,151 @@ describe('EditorWorkspace', () => {
       screen.queryByRole('button', { name: /Run|Check|Submit/ }),
     ).toBeNull();
   });
+
+  it('runs an immutable source snapshot through the runtime presentation seams', async () => {
+    const adapter = new ControlledExecutionAdapter();
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        executionAdapter={adapter}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    editActiveSource("console.log('snapshot'); return 42;");
+    await user.click(screen.getByRole('button', { name: 'Run' }));
+    expect(adapter.execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        source: "console.log('snapshot'); return 42;",
+        signal: expect.any(AbortSignal),
+      }),
+    );
+    expect(screen.getByText('Running main.js')).toBeDefined();
+    expect(screen.getByRole('button', { name: 'Cancel' })).toBeDefined();
+
+    act(() => {
+      adapter.resolve(
+        executionResult('success', {
+          output: ['snapshot'],
+          value: '42',
+          durationMs: 50,
+        }),
+      );
+    });
+    await screen.findByText('snapshot');
+    expect(screen.getByText('Return: 42')).toBeDefined();
+    expect(screen.getByText('Completed in 0.05 seconds')).toBeDefined();
+    expect(screen.getByRole('textbox').textContent).toContain('snapshot');
+    expect(screen.getByText(/Checks are unavailable/)).toBeDefined();
+  });
+
+  it('cancels execution without changing source and supports the scoped Run shortcut', async () => {
+    const adapter = new ControlledExecutionAdapter();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        executionAdapter={adapter}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    const textbox = screen.getByRole('textbox');
+    fireEvent.keyDown(textbox, { key: 'Enter', ctrlKey: true });
+    await screen.findByRole('button', { name: 'Cancel' });
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(await screen.findAllByText('Execution cancelled')).toHaveLength(2);
+    expect(screen.getByRole('textbox').textContent).toContain('start');
+    expect(screen.getByRole('button', { name: 'Run' })).toBeDefined();
+  });
+
+  it('keeps the run snapshot immutable and ignores a stale completion after a fresh run', async () => {
+    const pending: Array<(result: ExecutionResult) => void> = [];
+    const adapter: ExecutionAdapter = {
+      execute: vi.fn(
+        () =>
+          new Promise<ExecutionResult>((resolve) => {
+            pending.push(resolve);
+          }),
+      ),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        executionAdapter={adapter}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    editActiveSource('return 1;');
+    await user.click(screen.getByRole('button', { name: 'Run' }));
+    editActiveSource('return 2;');
+    fireEvent.keyDown(screen.getByRole('textbox'), {
+      key: 'Enter',
+      ctrlKey: true,
+    });
+    await waitFor(() => expect(adapter.execute).toHaveBeenCalledTimes(2));
+    expect(adapter.execute).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ source: 'return 1;' }),
+    );
+    expect(adapter.execute).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({ source: expect.stringContaining('return 2;') }),
+    );
+
+    act(() => pending[0]?.(executionResult('success', { value: 'stale' })));
+    expect(screen.queryByText('Return: stale')).toBeNull();
+    expect(screen.getByText('Running main.js')).toBeDefined();
+    act(() => pending[1]?.(executionResult('success', { value: 'fresh' })));
+    expect(await screen.findByText('Return: fresh')).toBeDefined();
+    expect(screen.getByRole('textbox').textContent).toContain('return 2;');
+  });
+
+  it.each([
+    'syntax-error',
+    'runtime-error',
+    'timeout',
+    'output-limit',
+    'internal-error',
+  ] as const)(
+    'announces a %s result without implying a Check',
+    async (status) => {
+      const adapter: ExecutionAdapter = {
+        execute: vi.fn(async () =>
+          executionResult(status, { message: `${status} detail` }),
+        ),
+        cancel: vi.fn(async () => undefined),
+        dispose: vi.fn(async () => undefined),
+      };
+      const user = userEvent.setup();
+      render(
+        <EditorWorkspace
+          ownerId="owner-a"
+          workspaceId="workspace-a"
+          files={files}
+          draftRepository={new MemoryDraftRepository()}
+          executionAdapter={adapter}
+        />,
+      );
+      await screen.findByText('Starter source ready');
+      await user.click(screen.getByRole('button', { name: 'Run' }));
+      expect(await screen.findByText(`${status} detail`)).toBeDefined();
+      expect(
+        document.querySelector('[data-runtime="error"]')?.textContent,
+      ).toContain(status.replace('-', ' '));
+      expect(screen.queryByRole('button', { name: /Check|Submit/ })).toBeNull();
+    },
+  );
 
   it('reconciles a newer parent snapshot for the same stable file', async () => {
     const repository = new MemoryDraftRepository();
