@@ -12,6 +12,8 @@ Actors: unauthenticated guest, signed-in learner, malicious guest/learner, trust
 
 Trust crossings: Auth provider → trusted client session boundary; client → verified NestJS API; API → database; authored Git content → publication/rendering; trusted client → learner compartment and back; device-local guest/account cache → authenticated sync; application → analytics/monitoring. [Architecture](architecture.md) maps owners. No application tables are accessed directly by frontend; allowed identity flows are not a general Supabase data-access exemption.
 
+Phase 14 implements the JavaScript computation crossing described in [JavaScript runtime](javascript-runtime.md): a distinct credential-free runner origin, trusted bootstrap, private correlated channel, and fresh literal-URL Worker per run. Fixed source/output/packet/time limits, exact response CSP, termination-before-delivery, and real-browser authority probes enforce the approved P11 boundary for this computation scope. Learner results remain untrusted, browser process memory is not a hard quota, and this does not authorize preview, grading, remote execution, or authenticated access.
+
 ## Threat and mitigation requirements
 
 | Threat | Required boundary/mitigation policy | Verification gate / residual risk |
