@@ -17,6 +17,11 @@ import type {
 } from '@/features/runtime';
 import type { PreviewAdapter, PreviewResult } from '@/features/preview';
 import type {
+  ValidationDefinition,
+  ValidationResult,
+  ValidationStrategy,
+} from '@/features/validation';
+import type {
   DraftIdentity,
   DraftSource,
   EditorDraftRepository,
@@ -650,5 +655,80 @@ describe('EditorWorkspace', () => {
     );
     expect(screen.getByText('No editable files are available.')).toBeDefined();
     expect(repository.save).not.toHaveBeenCalled();
+  });
+
+  it('checks an immutable source snapshot and clears stale local results on edit', async () => {
+    const pending: Array<(value: ValidationResult) => void> = [];
+    const strategy: ValidationStrategy = {
+      validate: vi.fn(
+        () => new Promise<ValidationResult>((resolve) => pending.push(resolve)),
+      ),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    const definition: ValidationDefinition = {
+      cases: [
+        {
+          id: 'one',
+          label: 'One',
+          feedback: 'Try again',
+          mode: 'output-match',
+          expectedLines: ['ready'],
+        },
+      ],
+    };
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        validationStrategy={strategy}
+        validationDefinition={definition}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    expect(strategy.validate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        source: "const message = 'start';",
+        definition,
+      }),
+    );
+    act(() => editActiveSource("console.log('ready');"));
+    act(() =>
+      pending[0]?.({
+        checkId: 'stale',
+        status: 'completed',
+        passed: true,
+        cases: [
+          { id: 'one', label: 'One', status: 'passed', message: 'Passed' },
+        ],
+        failedCaseIds: [],
+        feedback: '',
+        durationMs: 10,
+      }),
+    );
+    expect(screen.queryByText(/Local check passed/)).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    expect(strategy.validate).toHaveBeenLastCalledWith(
+      expect.objectContaining({ source: "console.log('ready');" }),
+    );
+    act(() =>
+      pending[1]?.({
+        checkId: 'fresh',
+        status: 'completed',
+        passed: true,
+        cases: [
+          { id: 'one', label: 'One', status: 'passed', message: 'Passed' },
+        ],
+        failedCaseIds: [],
+        feedback: '',
+        durationMs: 12,
+      }),
+    );
+    expect(await screen.findByText(/Local check passed/)).toBeDefined();
+    expect(screen.getByText(/unverified, no progress recorded/)).toBeDefined();
   });
 });

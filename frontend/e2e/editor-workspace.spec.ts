@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { runtimeOrigin } from './test-origins';
 
 test('workspace executes isolated JavaScript, recovers, persists, and reflows', async ({
   page,
@@ -17,14 +18,14 @@ test('workspace executes isolated JavaScript, recovers, persists, and reflows', 
     'aria-selected',
     'true',
   );
-  await expect(page.getByText(/Checks are unavailable/)).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Check', exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Run' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Check|Submit/ })).toHaveCount(
-    0,
-  );
+  await expect(page.getByRole('button', { name: 'Submit' })).toHaveCount(0);
 
   const bootstrapResponse = await page.request.get(
-    'http://localhost:3100/runtime/bootstrap.html',
+    `${runtimeOrigin}/runtime/bootstrap.html`,
   );
   expect(bootstrapResponse.headers()['content-security-policy']).toContain(
     "worker-src 'self'",
@@ -33,7 +34,7 @@ test('workspace executes isolated JavaScript, recovers, persists, and reflows', 
     "connect-src 'none'",
   );
   const workerResponse = await page.request.get(
-    'http://localhost:3100/runtime/javascript-worker.js',
+    `${runtimeOrigin}/runtime/javascript-worker.js`,
   );
   expect(workerResponse.headers()['content-security-policy']).toContain(
     "worker-src 'none'",
@@ -211,8 +212,9 @@ return 'boundary-ok';`);
     page.getByRole('button', { name: /Save locally/ }),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Run' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Check|Submit/ })).toHaveCount(
-    0,
-  );
+  await expect(
+    page.getByRole('button', { name: 'Check', exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Submit' })).toHaveCount(0);
   expect(consoleErrors).toEqual([]);
 });

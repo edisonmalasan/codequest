@@ -1,4 +1,12 @@
-import { Eye, Play, RotateCcw, RefreshCw, Save, Square } from 'lucide-react';
+import {
+  Eye,
+  Play,
+  RotateCcw,
+  RefreshCw,
+  Save,
+  Square,
+  ListChecks,
+} from 'lucide-react';
 import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -10,6 +18,9 @@ export function WorkspaceActions({
   onPreview,
   onReload,
   onCancelPreview,
+  onCheck,
+  onCancelCheck,
+  checking = false,
   previewRunning = false,
   running = false,
   disabled = false,
@@ -21,6 +32,9 @@ export function WorkspaceActions({
   onPreview?: () => void;
   onReload?: () => void;
   onCancelPreview?: () => void;
+  onCheck?: () => void;
+  onCancelCheck?: () => void;
+  checking?: boolean;
   previewRunning?: boolean;
   running?: boolean;
   disabled?: boolean;
@@ -36,6 +50,21 @@ export function WorkspaceActions({
         {onRun && !running && (
           <Button type="button" onClick={onRun} disabled={disabled}>
             <Play aria-hidden="true" className="h-4 w-4" /> Run
+          </Button>
+        )}
+        {onCheck && !checking && (
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onCheck}
+            disabled={disabled}
+          >
+            <ListChecks aria-hidden="true" className="h-4 w-4" /> Check
+          </Button>
+        )}
+        {onCancelCheck && checking && (
+          <Button type="button" variant="danger" onClick={onCancelCheck}>
+            <Square aria-hidden="true" className="h-4 w-4" /> Cancel check
           </Button>
         )}
         {onCancel && running && (
