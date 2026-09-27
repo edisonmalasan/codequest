@@ -57,6 +57,11 @@ export interface EditorWorkspaceProps {
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+  onSubmit?: (snapshot: {
+    readonly source: string;
+    readonly validation: ValidationResult;
+  }) => void;
+  submitting?: boolean;
 }
 
 interface ExecutionPresentation {
@@ -145,6 +150,8 @@ export function EditorWorkspace({
   validationStrategy,
   validationDefinition,
   onSourcesChange,
+  onSubmit,
+  submitting,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify(
     files.map(({ id, name, language, starterSource }) => ({
@@ -159,6 +166,7 @@ export function EditorWorkspace({
   const [checking, setChecking] = useState(false);
   const validationTokenRef = useRef(0);
   const validationControllerRef = useRef<AbortController | null>(null);
+  const checkedSourceRef = useRef<string | null>(null);
   const [sources, setSources] = useState<Record<string, string>>(() =>
     starterSources(files),
   );
@@ -197,6 +205,7 @@ export function EditorWorkspace({
     validationTokenRef.current += 1;
     validationControllerRef.current?.abort();
     setValidationResult(undefined);
+    checkedSourceRef.current = null;
     setChecking(false);
     const base = starterSources(files);
     sourcesRef.current = base;
@@ -284,6 +293,7 @@ export function EditorWorkspace({
     validationTokenRef.current += 1;
     validationControllerRef.current?.abort();
     setValidationResult(undefined);
+    checkedSourceRef.current = null;
     setChecking(false);
   }, [ownerId, workspaceId, validationDefinition, validationStrategy]);
 
@@ -402,6 +412,7 @@ export function EditorWorkspace({
     const source =
       sourcesRef.current[activeFile.id] ?? activeFile.starterSource;
     setValidationResult(undefined);
+    checkedSourceRef.current = source;
     setChecking(true);
     void validationStrategy
       .validate({
@@ -438,6 +449,7 @@ export function EditorWorkspace({
     validationControllerRef.current?.abort();
     setChecking(false);
     setValidationResult(undefined);
+    checkedSourceRef.current = null;
   };
 
   useEffect(() => {
@@ -606,6 +618,28 @@ export function EditorWorkspace({
                   ? () => validationControllerRef.current?.abort()
                   : undefined
               }
+              onSubmit={
+                onSubmit &&
+                validationResult &&
+                checkedSourceRef.current !== null &&
+                checkedSourceRef.current ===
+                  (sources[activeFile.id] ?? activeFile.starterSource)
+                  ? () => {
+                      const checkedSource = checkedSourceRef.current;
+                      if (
+                        checkedSource !== null &&
+                        checkedSource ===
+                          (sourcesRef.current[activeFile.id] ??
+                            activeFile.starterSource)
+                      )
+                        onSubmit({
+                          source: checkedSource,
+                          validation: validationResult,
+                        });
+                    }
+                  : undefined
+              }
+              submitting={submitting}
               checking={checking}
               onPreview={previewAdapter ? () => showPreview(false) : undefined}
               onReload={

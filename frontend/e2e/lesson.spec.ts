@@ -185,3 +185,31 @@ test('published lesson is keyboard-readable, responsive, and safely illustrated'
   ).toBe(true);
   expect(consoleErrors).toEqual([]);
 });
+
+test('guest can check published quest locally without creating a submission', async ({
+  page,
+}) => {
+  let attemptRequests = 0;
+  await installLessonRoutes(page);
+  page.on('request', (request) => {
+    if (request.url().includes('/api/v1/quests/first-message/attempts'))
+      attemptRequests += 1;
+  });
+  await page.goto('/quests/first-message');
+  await expect(
+    page.getByRole('region', { name: 'Quest workspace' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Submit attempt' }),
+  ).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Sign in' })).toBeVisible();
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await editor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText("console.log('new');");
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
+  expect(attemptRequests).toBe(0);
+});

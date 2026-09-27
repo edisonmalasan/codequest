@@ -1,5 +1,7 @@
 # Backend responsibility and acceptance definition
 
+Phase 17's protected learning operations are documented in [Attempts and submissions](attempts-and-submissions.md). NestJS owns personal-learning acceptance; client check reports are bounded but forgeable under ADR 0005.
+
 Status: approved Phase 0 documentation. NestJS authority/table access and no learner execution are confirmed C02–C06. Acceptance/sync/version/reward/transport policies P06/P08–P15 are approved in the [register](decisions.md). [Product](product.md) owns terms/release inventory; [architecture](architecture.md) owns the matrix. This is not an endpoint, schema or module implementation plan.
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).

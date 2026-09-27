@@ -15,6 +15,7 @@ import {
 import { getConfiguredApiBaseUrl } from '@/lib/api-base';
 import { LessonDocument } from './lesson-document';
 import { LessonHints } from './lesson-hints';
+import { QuestWorkspace } from './quest-workspace';
 
 export interface LessonApi {
   getQuest(
@@ -139,11 +140,12 @@ export function LessonPageView({
             ))}
           </ul>
           <p className="mt-6 border-t border-line pt-5 text-sm leading-6 text-muted">
-            This page is for reading. Editing, running, checking, and submitting
-            arrive in later work.
+            Practice below. Local checks give feedback; the backend decides
+            personal-learning acceptance.
           </p>
         </aside>
       </div>
+      <QuestWorkspace quest={quest} />
     </main>
   );
 }

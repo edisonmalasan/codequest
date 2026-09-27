@@ -36,7 +36,7 @@ Each accepted request SHALL create at most one attempt with a server timestamp, 
 
 #### Scenario: Event is retried
 - **WHEN** the same authenticated event and payload are submitted again
-- **THEN** only one attempt exists and its original result and count are returned
+- **THEN** only one attempt exists, its original acceptance result is returned, and the current owner/quest attempt count is reported
 
 #### Scenario: Source or report exceeds limits
 - **WHEN** source exceeds 64 KiB or report fields exceed the validation contract bounds

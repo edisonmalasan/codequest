@@ -6,6 +6,7 @@ import {
   Save,
   Square,
   ListChecks,
+  Send,
 } from 'lucide-react';
 import { useId } from 'react';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,8 @@ export function WorkspaceActions({
   onCancelPreview,
   onCheck,
   onCancelCheck,
+  onSubmit,
+  submitting = false,
   checking = false,
   previewRunning = false,
   running = false,
@@ -34,6 +37,8 @@ export function WorkspaceActions({
   onCancelPreview?: () => void;
   onCheck?: () => void;
   onCancelCheck?: () => void;
+  onSubmit?: () => void;
+  submitting?: boolean;
   checking?: boolean;
   previewRunning?: boolean;
   running?: boolean;
@@ -65,6 +70,16 @@ export function WorkspaceActions({
         {onCancelCheck && checking && (
           <Button type="button" variant="danger" onClick={onCancelCheck}>
             <Square aria-hidden="true" className="h-4 w-4" /> Cancel check
+          </Button>
+        )}
+        {onSubmit && (
+          <Button
+            type="button"
+            onClick={onSubmit}
+            disabled={disabled || submitting}
+          >
+            <Send aria-hidden="true" className="h-4 w-4" />
+            {submitting ? 'Submitting…' : 'Submit attempt'}
           </Button>
         )}
         {onCancel && running && (

@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { SupabaseAuthConfig } from '../../infrastructure/config/backend-config';
 import { AccountController } from './account.controller';
 import { ACCOUNT_STORE, AccountRepository } from './account.repository';
@@ -11,6 +11,7 @@ import {
 } from './auth-token-verifier';
 import { PermissionGuard } from './permission.guard';
 
+@Global()
 @Module({})
 export class IdentityModule {
   static register(config: SupabaseAuthConfig): DynamicModule {
@@ -25,6 +26,7 @@ export class IdentityModule {
         { provide: ACCOUNT_STORE, useClass: AccountRepository },
         AccountService,
       ],
+      exports: [AUTH_TOKEN_VERIFIER, AuthenticationGuard, PermissionGuard],
     };
   }
 }

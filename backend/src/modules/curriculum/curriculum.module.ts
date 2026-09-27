@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
@@ -9,6 +9,7 @@ import {
 import { CurriculumController } from './curriculum.controller';
 import { CurriculumService } from './curriculum.service';
 
+@Global()
 @Module({})
 export class CurriculumModule {
   static register(
@@ -26,7 +27,7 @@ export class CurriculumModule {
         },
         CurriculumService,
       ],
-      exports: [CurriculumService],
+      exports: [CurriculumService, CURRICULUM_CATALOG],
     };
   }
 }

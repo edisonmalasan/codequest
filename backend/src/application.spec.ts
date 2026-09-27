@@ -335,6 +335,7 @@ describe('backend HTTP foundation', () => {
       '/api/v1/journeys/{slug}',
       '/api/v1/quests/{slug}',
       '/api/v1/quests/{slug}/assets/{contentVersion}',
+      '/api/v1/quests/{slug}/attempts',
     ]);
     const exported = createOpenApiDocument(app);
     expect(document).toEqual(exported);

@@ -731,4 +731,56 @@ describe('EditorWorkspace', () => {
     expect(await screen.findByText(/Local check passed/)).toBeDefined();
     expect(screen.getByText(/unverified, no progress recorded/)).toBeDefined();
   });
+
+  it('submits only the checked source through an optional parent action', async () => {
+    const result: ValidationResult = {
+      checkId: '00000000-0000-4000-8000-000000000001',
+      status: 'completed',
+      passed: true,
+      cases: [{ id: 'one', label: 'One', status: 'passed', message: 'Passed' }],
+      failedCaseIds: [],
+      feedback: 'Passed',
+      durationMs: 8,
+    };
+    const strategy: ValidationStrategy = {
+      validate: vi.fn(async () => result),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    const definition: ValidationDefinition = {
+      cases: [
+        {
+          id: 'one',
+          label: 'One',
+          feedback: 'Try again',
+          mode: 'output-match',
+          expectedLines: ['ready'],
+        },
+      ],
+    };
+    const onSubmit = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="submission-test"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        validationStrategy={strategy}
+        validationDefinition={definition}
+        onSubmit={onSubmit}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    expect(screen.queryByRole('button', { name: 'Submit attempt' })).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByText(/Local check passed/);
+    await user.click(screen.getByRole('button', { name: 'Submit attempt' }));
+    expect(onSubmit).toHaveBeenCalledWith({
+      source: "const message = 'start';",
+      validation: result,
+    });
+    act(() => editActiveSource('new source'));
+    expect(screen.queryByRole('button', { name: 'Submit attempt' })).toBeNull();
+  });
 });

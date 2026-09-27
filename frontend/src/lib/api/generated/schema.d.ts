@@ -124,6 +124,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/quests/{slug}/attempts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read current learner attempt history for a published quest */
+        get: operations["LearningController_history_v1"];
+        put?: never;
+        /** Submit a private personal-learning attempt */
+        post: operations["LearningController_submit_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health": {
         parameters: {
             query?: never;
@@ -304,6 +322,46 @@ export interface components {
             cases: components["schemas"]["QuestCaseDto"][];
             explanationPrompt?: string;
             transferPrompt?: string;
+        };
+        CreateAttemptDto: {
+            /** Format: uuid */
+            clientEventId: string;
+            /** @example 1.0.0 */
+            contentVersion: string;
+            /** @example 1.0.0 */
+            assessmentVersion: string;
+            /** @description Private source snapshot, at most 64 KiB */
+            source: string;
+            report: {
+                [key: string]: unknown;
+            };
+        };
+        AttemptResponseDto: {
+            /** Format: uuid */
+            id: string;
+            /** @example Q01 */
+            questId: string;
+            /** Format: uuid */
+            clientEventId: string;
+            /** @example 1.0.0 */
+            contentVersion: string;
+            /** @example 1.0.0 */
+            assessmentVersion: string;
+            /** Format: date-time */
+            submittedAt: string;
+            attemptCount: number;
+            reportedPassed: boolean;
+            accepted: boolean;
+            /** @example true */
+            clientReported: boolean;
+            source: string;
+            report: {
+                [key: string]: unknown;
+            };
+        };
+        AttemptHistoryDto: {
+            attemptCount: number;
+            attempts: components["schemas"]["AttemptResponseDto"][];
         };
         HealthResponseDto: {
             /**
@@ -761,6 +819,180 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    LearningController_history_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttemptHistoryDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    LearningController_submit_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAttemptDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttemptResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            409: {
                 headers: {
                     /** @description Correlated request ID */
                     "x-request-id"?: string;
