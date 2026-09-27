@@ -6,15 +6,15 @@ Status snapshot: 2026-09-27. Update this section when the phase or OpenSpec stag
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 16 — Validation Engine proposal in review |
+| Current phase | Phase 16 — Validation Engine Apply complete on implementation branch; PR review pending |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change; Phase 10 — Curriculum Backend: reviewed publication catalog, public curriculum REST/OpenAPI contract, generated frontend reads, canonical specs, and archived change; Phase 11 — Journey and Course UI: typed curriculum navigation, prerequisite-aware Course map, accessible states, canonical spec, and archived change; Phase 12 — Lesson Renderer: safe published lesson reading, selected-snapshot illustrations, accessible hints, canonical specs, and archived change; Phase 13 — Editor Workspace: reusable editor shell, owner-isolated local drafts, accessible responsive interactions, canonical spec, and archived change; Phase 14 — JavaScript Runtime: isolated browser execution, bounded results, hostile-code recovery, canonical specs, and archived change; Phase 15 — Web Preview Runtime: dedicated static preview origin, script-disabled HTML/CSS display, separate JavaScript Worker computation, canonical specs, and archived change |
 | Current OpenSpec change | [add-validation-engine](../openspec/changes/add-validation-engine/proposal.md); Phase 15 remains [archived](../openspec/changes/archive/2026-09-27-add-web-preview-runtime/proposal.md) |
-| Current OpenSpec stage | Phase 16 Propose; Phase 15 archived |
-| Next execution step | Merge validated Phase 16 proposal, then Apply on a separate implementation branch |
+| Current OpenSpec stage | Phase 16 proposal merged in [PR #73](https://github.com/edisonmalasan/codequest/pull/73); Apply verification complete, merge pending |
+| Next execution step | Merge Phase 16 Apply PR after checks, then sync canonical specs and archive on separate branches |
 | Next phase | Phase 17 — Attempts and Submissions, after Phase 16 Archive |
-| Validation evidence | Phase 15 Apply: 225 frontend unit tests, 111 backend Vitest tests plus 3 backend history-script tests, 12 configured Playwright flows (all app flows in Chromium; preview containment/recovery in Chromium, Firefox, and WebKit), root lint/typecheck/build, strict OpenSpec validation, and diff/boundary review pass. See the archived [tasks](../openspec/changes/archive/2026-09-27-add-web-preview-runtime/tasks.md) and [preview runtime documentation](web-preview-runtime.md). |
+| Validation evidence | Phase 16 Apply branch: 244 frontend unit tests, 111 backend Vitest tests plus 3 backend history-script tests, 15 Playwright flows (app flows in Chromium; validation and preview containment/recovery in Chromium, Firefox, and WebKit), root lint/typecheck/build, and strict OpenSpec validation. See [Phase 16 tasks](../openspec/changes/add-validation-engine/tasks.md) and [validation runtime documentation](validation-engine.md). |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
-| Current repository | Phase 0-15 are complete and archived; Phase 15 adds a development-only static preview and reusable adapter; production lesson routes and backend learning behavior remain unchanged |
+| Current repository | Phase 0-15 are complete and archived; Phase 16 Apply exists on a feature branch with reusable local validation and development-only workspace Check; production lesson routes and backend learning behavior remain unchanged |
 | Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
@@ -1115,6 +1115,8 @@ Do not expose the authenticated application origin.
 ---
 
 # Phase 16 — Validation Engine
+
+Apply status (2026-09-27): the [merged proposal](../openspec/changes/add-validation-engine/proposal.md) defines a separate deterministic validation strategy using the Phase 14 isolated runner origin. The implementation branch adds bounded output, value, function, and data-only custom checks, fixed validation Worker resources, correlated lifecycle control, and optional local Check in Editor Workspace. Root tests, lint, typecheck, build, and the 15-flow cross-browser Playwright suite pass. The Apply PR and later spec sync/archive remain pending.
 
 ## Objective
 

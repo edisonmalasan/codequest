@@ -16,6 +16,8 @@ Phase 14 implements the JavaScript computation crossing described in [JavaScript
 
 Phase 15 adds a separate [static preview boundary](web-preview-runtime.md): filtered HTML/CSS is displayed in an opaque, script-disabled nested iframe on a dedicated credential-free origin. A fixed bootstrap exchanges bounded, correlated packets with the app over a private port; the learner child receives no port or session data. Optional JavaScript uses a separate Phase 14 Worker and returns text only. Preview does not authorize grading, DOM scripting, or authenticated API access. Browser process memory remains a residual limit.
 
+Phase 16 adds [local deterministic validation](validation-engine.md) through dedicated fixed resources on the credential-free runner origin. Learner source and bounded public case data execute only in fresh Workers; the authenticated application receives bounded correlated text outcomes. A browser-reported pass is unverified and cannot update backend learning state. No executable author callback, LLM grader, or NestJS learner execution is introduced.
+
 ## Threat and mitigation requirements
 
 | Threat | Required boundary/mitigation policy | Verification gate / residual risk |

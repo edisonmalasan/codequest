@@ -14,6 +14,84 @@ import {
   resolveRunnerOrigin,
   type ExecutionAdapter,
 } from '@/features/runtime';
+import {
+  JavaScriptValidationStrategy,
+  type ValidationDefinition,
+  type ValidationStrategy,
+} from '@/features/validation';
+
+const checkExamples: Record<
+  string,
+  { source: string; definition: ValidationDefinition }
+> = {
+  'output-match': {
+    source: "console.log('Quest: Map the signal');",
+    definition: {
+      cases: [
+        {
+          id: 'printed-message',
+          label: 'Printed message',
+          feedback: 'Print the target line exactly.',
+          mode: 'output-match',
+          expectedLines: ['Quest: Map the signal'],
+        },
+      ],
+    },
+  },
+  'value-test': {
+    source: "return { message: 'ready', count: 2 };",
+    definition: {
+      cases: [
+        {
+          id: 'returned-value',
+          label: 'Returned value',
+          feedback: 'Return the expected object.',
+          mode: 'value-test',
+          expected: { message: 'ready', count: 2 },
+        },
+      ],
+    },
+  },
+  'function-test': {
+    source: 'function double(value) { return value * 2; }',
+    definition: {
+      cases: [
+        {
+          id: 'normal-input',
+          label: 'Normal input',
+          feedback: 'Double a positive number.',
+          mode: 'function-test',
+          functionName: 'double',
+          args: [3],
+          expected: 6,
+        },
+        {
+          id: 'boundary-zero',
+          label: 'Boundary zero',
+          feedback: 'Zero should stay zero.',
+          mode: 'function-test',
+          functionName: 'double',
+          args: [0],
+          expected: 0,
+        },
+      ],
+    },
+  },
+  'custom-test': {
+    source: 'return 5;',
+    definition: {
+      cases: [
+        {
+          id: 'numeric-range',
+          label: 'Numeric range',
+          feedback: 'Return a number from 1 through 10.',
+          mode: 'custom-test',
+          predicate: { kind: 'number-range', min: 1, max: 10 },
+        },
+      ],
+    },
+  },
+};
 
 const previewFiles: readonly WorkspaceFile[] = [
   {
@@ -49,6 +127,9 @@ h1 { color: #2357a5; }`,
 export function WorkspacePreview(): React.JSX.Element {
   const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
   const [previewAdapter, setPreviewAdapter] = useState<PreviewAdapter>();
+  const [validationStrategy, setValidationStrategy] =
+    useState<ValidationStrategy>();
+  const [checkMode, setCheckMode] = useState('output-match');
 
   useEffect(() => {
     const applicationOrigin = window.location.origin;
@@ -60,6 +141,10 @@ export function WorkspacePreview(): React.JSX.Element {
       ? new JavaScriptWorkerAdapter(runtimeOrigin)
       : undefined;
     setExecutionAdapter(adapter);
+    const checker = runtimeOrigin
+      ? new JavaScriptValidationStrategy(runtimeOrigin)
+      : undefined;
+    setValidationStrategy(checker);
     const previewOrigin = resolvePreviewOrigin(
       process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
       applicationOrigin,
@@ -74,8 +159,15 @@ export function WorkspacePreview(): React.JSX.Element {
     }
     return () => {
       void adapter?.dispose();
+      void checker?.dispose();
     };
   }, []);
+
+  const example = checkExamples[checkMode] ?? checkExamples['output-match'];
+  const files = [
+    { ...previewFiles[0], starterSource: example.source },
+    ...previewFiles.slice(1),
+  ];
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas px-4 py-6 text-ink sm:px-6 lg:px-8">
@@ -95,12 +187,31 @@ export function WorkspacePreview(): React.JSX.Element {
             </p>
           </div>
         </header>
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <label htmlFor="check-mode" className="text-sm font-semibold">
+            Local check example
+          </label>
+          <select
+            id="check-mode"
+            value={checkMode}
+            onChange={(event) => setCheckMode(event.target.value)}
+            className="rounded-md border border-line bg-surface px-3 py-2 text-ink"
+          >
+            {Object.keys(checkExamples).map((mode) => (
+              <option key={mode} value={mode}>
+                {mode}
+              </option>
+            ))}
+          </select>
+        </div>
         <EditorWorkspace
           ownerId="preview-guest"
-          workspaceId="phase-13-editor-preview"
-          files={previewFiles}
+          workspaceId={`phase-16-${checkMode}`}
+          files={files}
           executionAdapter={executionAdapter}
           previewAdapter={previewAdapter}
+          validationStrategy={validationStrategy}
+          validationDefinition={example.definition}
         />
       </div>
     </main>

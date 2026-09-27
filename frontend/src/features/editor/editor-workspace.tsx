@@ -17,6 +17,11 @@ import type {
   PreviewFile,
   PreviewResult,
 } from '@/features/preview';
+import type {
+  ValidationDefinition,
+  ValidationResult,
+  ValidationStrategy,
+} from '@/features/validation';
 import {
   editorDraftRepository,
   type DraftSource,
@@ -49,6 +54,8 @@ export interface EditorWorkspaceProps {
   runtimeState?: RuntimeDisplayState;
   executionAdapter?: ExecutionAdapter;
   previewAdapter?: PreviewAdapter;
+  validationStrategy?: ValidationStrategy;
+  validationDefinition?: ValidationDefinition;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
 }
 
@@ -135,6 +142,8 @@ export function EditorWorkspace({
   runtimeState,
   executionAdapter,
   previewAdapter,
+  validationStrategy,
+  validationDefinition,
   onSourcesChange,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify(
@@ -146,6 +155,10 @@ export function EditorWorkspace({
     })),
   );
   const [activeFileId, setActiveFileId] = useState(files[0]?.id ?? '');
+  const [validationResult, setValidationResult] = useState<ValidationResult>();
+  const [checking, setChecking] = useState(false);
+  const validationTokenRef = useRef(0);
+  const validationControllerRef = useRef<AbortController | null>(null);
   const [sources, setSources] = useState<Record<string, string>>(() =>
     starterSources(files),
   );
@@ -181,6 +194,10 @@ export function EditorWorkspace({
 
   useEffect(() => {
     let cancelled = false;
+    validationTokenRef.current += 1;
+    validationControllerRef.current?.abort();
+    setValidationResult(undefined);
+    setChecking(false);
     const base = starterSources(files);
     sourcesRef.current = base;
     setSources(base);
@@ -254,6 +271,21 @@ export function EditorWorkspace({
       void executionAdapter?.cancel();
     };
   }, [executionAdapter]);
+
+  useEffect(() => {
+    return () => {
+      validationTokenRef.current += 1;
+      validationControllerRef.current?.abort();
+      void validationStrategy?.cancel();
+    };
+  }, [validationStrategy]);
+
+  useEffect(() => {
+    validationTokenRef.current += 1;
+    validationControllerRef.current?.abort();
+    setValidationResult(undefined);
+    setChecking(false);
+  }, [ownerId, workspaceId, validationDefinition, validationStrategy]);
 
   useEffect(() => {
     if (!previewAdapter || !previewHostRef.current) return;
@@ -356,6 +388,58 @@ export function EditorWorkspace({
     executionControllerRef.current?.abort();
   }, []);
 
+  const checkCurrent = useCallback((): void => {
+    if (
+      !validationStrategy ||
+      !validationDefinition ||
+      activeFile?.language !== 'javascript'
+    )
+      return;
+    validationControllerRef.current?.abort();
+    const controller = new AbortController();
+    validationControllerRef.current = controller;
+    const token = ++validationTokenRef.current;
+    const source =
+      sourcesRef.current[activeFile.id] ?? activeFile.starterSource;
+    setValidationResult(undefined);
+    setChecking(true);
+    void validationStrategy
+      .validate({
+        source,
+        definition: validationDefinition,
+        signal: controller.signal,
+      })
+      .then(
+        (value) => {
+          if (validationTokenRef.current !== token) return;
+          validationControllerRef.current = null;
+          setChecking(false);
+          setValidationResult(value);
+        },
+        () => {
+          if (validationTokenRef.current !== token) return;
+          validationControllerRef.current = null;
+          setChecking(false);
+          setValidationResult({
+            checkId: crypto.randomUUID(),
+            status: 'internal-error',
+            passed: false,
+            cases: [],
+            failedCaseIds: [],
+            feedback: 'Isolated validation unavailable',
+            durationMs: 0,
+          });
+        },
+      );
+  }, [activeFile, validationDefinition, validationStrategy]);
+
+  const invalidateCheck = (): void => {
+    validationTokenRef.current += 1;
+    validationControllerRef.current?.abort();
+    setChecking(false);
+    setValidationResult(undefined);
+  };
+
   useEffect(() => {
     if (!hydrated || saveStatus !== 'unsaved') return;
     const timeout = window.setTimeout(saveCurrent, AUTOSAVE_DELAY_MS);
@@ -364,6 +448,7 @@ export function EditorWorkspace({
 
   const updateSource = (source: string): void => {
     if (activeFile === undefined) return;
+    invalidateCheck();
     revisionRef.current += 1;
     const next = { ...sourcesRef.current, [activeFile.id]: source };
     sourcesRef.current = next;
@@ -380,6 +465,7 @@ export function EditorWorkspace({
 
   const confirmReset = (): void => {
     if (activeFile === undefined) return;
+    invalidateCheck();
     revisionRef.current += 1;
     const revision = revisionRef.current;
     const next = {
@@ -451,7 +537,10 @@ export function EditorWorkspace({
       <FileTabs
         files={files}
         activeFileId={activeFile.id}
-        onSelect={setActiveFileId}
+        onSelect={(id) => {
+          invalidateCheck();
+          setActiveFileId(id);
+        }}
         panelId={panelId}
       />
       <div className="grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
@@ -484,7 +573,13 @@ export function EditorWorkspace({
           <RuntimeStatus
             state={executionAdapter ? execution.state : runtimeState}
           />
-          <TestResults results={testResults} />
+          <TestResults
+            results={
+              validationStrategy && validationDefinition ? [] : testResults
+            }
+            validation={validationResult}
+            checking={checking}
+          />
           <div className="rounded-md border border-line bg-surface-raised p-4">
             <WorkspaceActions
               onSave={saveCurrent}
@@ -499,6 +594,19 @@ export function EditorWorkspace({
                   ? cancelExecution
                   : undefined
               }
+              onCheck={
+                validationStrategy &&
+                validationDefinition &&
+                activeFile.language === 'javascript'
+                  ? checkCurrent
+                  : undefined
+              }
+              onCancelCheck={
+                validationStrategy
+                  ? () => validationControllerRef.current?.abort()
+                  : undefined
+              }
+              checking={checking}
               onPreview={previewAdapter ? () => showPreview(false) : undefined}
               onReload={
                 previewAdapter && previewResult

@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GET } from './route';
 
 const exchangeCodeForSession = vi.fn();
@@ -11,8 +11,15 @@ vi.mock('@/features/auth/supabase-server', () => ({
 }));
 
 describe('authentication callback', () => {
+  afterEach(() => vi.unstubAllEnvs());
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'http://localhost:54321');
+    vi.stubEnv(
+      'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      'publishable-local-test-key',
+    );
+    vi.stubEnv('NEXT_PUBLIC_SITE_URL', 'http://localhost:3000');
     exchangeCodeForSession.mockResolvedValue({ error: null });
   });
 
@@ -36,6 +43,15 @@ describe('authentication callback', () => {
       ),
     );
     expect(exchangeCodeForSession).not.toHaveBeenCalled();
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/login?error=callback',
+    );
+  });
+
+  it('redirects to the configured app origin when the request URL uses the runner host', async () => {
+    const response = await GET(
+      new NextRequest('http://localhost:3100/auth/callback'),
+    );
     expect(response.headers.get('location')).toBe(
       'http://localhost:3000/login?error=callback',
     );

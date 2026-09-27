@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { appOrigin, previewOrigin, runtimeOrigin } from './test-origins';
 
 test('static preview filters active content, preserves source, and isolates Worker output', async ({
   page,
@@ -58,7 +59,7 @@ test('static preview filters active content, preserves source, and isolates Work
   expect(requests).toEqual([]);
 
   const bootstrap = await page.request.get(
-    'http://localhost:3101/preview/bootstrap.html',
+    `${previewOrigin}/preview/bootstrap.html`,
   );
   expect(bootstrap.headers()['content-security-policy']).toContain(
     "connect-src 'none'",
@@ -67,23 +68,17 @@ test('static preview filters active content, preserves source, and isolates Work
     "frame-src 'self'",
   );
   expect(bootstrap.headers()['referrer-policy']).toBe('no-referrer');
-  const appResponse = await page.request.get(
-    'http://127.0.0.1:3100/editor-workspace',
-  );
+  const appResponse = await page.request.get(`${appOrigin}/editor-workspace`);
   expect(appResponse.headers()['content-security-policy']).toContain(
-    'frame-src http://localhost:3100 http://localhost:3101',
+    `frame-src ${runtimeOrigin} ${previewOrigin}`,
   );
   expect(
-    (
-      await page.request.get('http://127.0.0.1:3100/preview/bootstrap.html')
-    ).status(),
+    (await page.request.get(`${appOrigin}/preview/bootstrap.html`)).status(),
   ).toBe(404);
-  expect((await page.request.get('http://localhost:3101/login')).status()).toBe(
-    404,
-  );
+  expect((await page.request.get(`${previewOrigin}/login`)).status()).toBe(404);
   expect(
     (
-      await page.request.get('http://localhost:3101/runtime/bootstrap.html')
+      await page.request.get(`${previewOrigin}/runtime/bootstrap.html`)
     ).status(),
   ).toBe(404);
 
