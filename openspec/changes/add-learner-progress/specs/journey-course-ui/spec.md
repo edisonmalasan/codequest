@@ -21,4 +21,3 @@ The frontend SHALL derive map presentation from published prerequisite IDs plus 
 #### Scenario: Protected progress is unavailable
 - **WHEN** an authenticated Journey's protected progress read fails
 - **THEN** the page shows a recoverable unavailable state instead of asserting zero saved completion
-

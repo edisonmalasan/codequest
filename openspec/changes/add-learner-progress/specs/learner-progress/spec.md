@@ -65,4 +65,3 @@ Implemented progress operations SHALL appear in backend OpenAPI and the regenera
 #### Scenario: Protected read fails
 - **WHEN** an authenticated progress request fails
 - **THEN** the page does not present an empty authoritative account snapshot as saved progress
-
