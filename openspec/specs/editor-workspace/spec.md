@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Provide a reusable, lesson-independent frontend workspace for editing and preserving source while later execution, validation, and submission capabilities remain absent.
+Provide a reusable, lesson-independent frontend workspace for editing and preserving source with optional isolated execution, static preview, and local validation while submissions and learning authority remain absent.
 
 ## Requirements
 
@@ -97,7 +97,7 @@ The workspace SHALL expose its supported keyboard shortcuts in the interface and
 
 ### Requirement: Runtime-facing panels remain truthful presentation surfaces
 
-The workspace SHALL accept an optional execution adapter. Without one, ConsolePanel and RuntimeStatus SHALL retain explicit unavailable states and no Run control SHALL be enabled. With one, workspace actions SHALL expose Run and Cancel, execute only the current active-file source snapshot, and drive bounded console lines and runtime states through the existing presentation surfaces. TestResults SHALL remain inactive, and no runtime result SHALL be treated as a Check, submission, completion, or progress decision.
+The workspace SHALL accept an optional execution adapter. Without one, ConsolePanel and RuntimeStatus SHALL retain explicit unavailable states and no Run control SHALL be enabled. With one, workspace actions SHALL expose Run and Cancel, execute only the current active-file source snapshot, and drive bounded console lines and runtime states through the existing presentation surfaces. TestResults SHALL remain inactive unless a separate validation strategy and definition are supplied, and no runtime result SHALL be treated as a Check, submission, completion, or progress decision.
 
 #### Scenario: Workspace opens before runtime integration
 
@@ -135,12 +135,12 @@ The workspace SHALL preserve logical landmark and heading structure, semantic ta
 
 ### Requirement: Phase 13 excludes learning authority and execution
 
-The Editor Workspace SHALL remain independent from curriculum and learning authority. Its Phase 13 baseline SHALL execute nothing when no adapter is supplied; its optional Phase 14 adapter SHALL add only browser JavaScript Run/Cancel and runtime presentation; its optional Phase 15 preview adapter SHALL add only script-disabled HTML/CSS presentation and separately isolated JavaScript computation. The workspace SHALL NOT add or change backend endpoints, generated API clients, authentication behavior, curriculum publication or lesson integration, DOM scripting, deterministic validation, attempts, submissions, completion acceptance, progress, XP, levels, streaks, unlocks, analytics, PWA behavior, cloud draft sync, or Phase 16+ behavior.
+The Editor Workspace SHALL remain independent from curriculum and learning authority. Its Phase 13 baseline SHALL execute nothing when no adapter is supplied; its optional Phase 14 adapter SHALL add only browser JavaScript Run/Cancel and runtime presentation; its optional Phase 15 preview adapter SHALL add only script-disabled HTML/CSS presentation and separately isolated JavaScript computation; its optional Phase 16 strategy SHALL add only deterministic local Check feedback. The workspace SHALL NOT add or change backend endpoints, generated API clients, authentication behavior, curriculum publication or lesson integration, DOM scripting, attempts, submissions, completion acceptance, progress, XP, levels, streaks, unlocks, analytics, PWA behavior, cloud draft sync, or Phase 17+ behavior.
 
 #### Scenario: Phase boundary is reviewed
 
-- **WHEN** the completed Phase 15 diff and browser behavior are inspected
-- **THEN** the learner can edit, save, reset, run isolated JavaScript, and display static HTML/CSS with separate bounded computation output, but cannot run JavaScript in the preview DOM, check, submit, complete, or earn from preview
+- **WHEN** the completed Phase 16 diff and browser behavior are inspected
+- **THEN** the learner can edit, save, reset, run isolated JavaScript, display static HTML/CSS with separate bounded computation output, and check JavaScript locally, but cannot run JavaScript in the preview DOM, submit, complete, or earn from these actions
 
 ### Requirement: Workspace accepts optional static web preview integration
 
@@ -160,3 +160,22 @@ The Editor Workspace SHALL accept an optional lesson-independent preview adapter
 
 - **WHEN** preview generation, loading, or computation fails
 - **THEN** the workspace announces a bounded failure and retains every editable source and local draft
+
+### Requirement: Workspace supports optional local validation
+
+The Editor Workspace SHALL accept an optional lesson-independent validation strategy and definition from its parent. With both supplied and an active JavaScript file, Check SHALL capture the current source snapshot and present correlated, bounded per-case results in TestResults with an explicit local/unverified label and elapsed time. Run and Preview SHALL remain separate actions; a successful Run or Preview SHALL NOT imply a passing Check. Without validation inputs, Check SHALL remain unavailable. Editing, reset, owner change, cancellation, or unmount SHALL prevent stale check results from presenting as current, preserve local drafts, and release validation resources.
+
+#### Scenario: Check evaluates active source
+
+- **WHEN** a learner activates Check with a valid strategy and JavaScript file
+- **THEN** the workspace announces checking, then presents the current snapshot's ordered local case outcomes and feedback
+
+#### Scenario: Source changes during check
+
+- **WHEN** a learner edits after Check captures source
+- **THEN** the old result cannot appear as a current pass and the new source remains editable and locally saved
+
+#### Scenario: Validation is unavailable
+
+- **WHEN** no strategy or definition is supplied
+- **THEN** the workspace retains the inactive TestResults state and does not enable Check or make a completion claim
