@@ -7,6 +7,8 @@ import {
   completionKeymap,
 } from '@codemirror/autocomplete';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { css } from '@codemirror/lang-css';
+import { html } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { Compartment, EditorState } from '@codemirror/state';
 import {
@@ -23,7 +25,7 @@ export interface CodeEditorProps {
   /** Compatibility input for the Phase 3 proof-of-render. Prefer `value`. */
   initialValue?: string;
   value?: string;
-  language?: 'javascript';
+  language?: 'javascript' | 'html' | 'css';
   label?: string;
   className?: string;
   onChange?: (value: string) => void;
@@ -69,6 +71,7 @@ export function CodeEditor({
   const syncingRef = useRef(false);
   const initialRef = useRef(value ?? initialValue);
   const labelCompartmentRef = useRef(new Compartment());
+  const languageCompartmentRef = useRef(new Compartment());
   onChangeRef.current = onChange;
 
   useEffect(() => {
@@ -84,7 +87,7 @@ export function CodeEditor({
           lineNumbers(),
           highlightActiveLineGutter(),
           highlightActiveLine(),
-          javascript(),
+          languageCompartmentRef.current.of(javascript()),
           closeBrackets(),
           autocompletion({ activateOnTyping: true }),
           keymap.of([
@@ -130,13 +133,22 @@ export function CodeEditor({
     const view = viewRef.current;
     if (view === null) return;
     view.dispatch({
-      effects: labelCompartmentRef.current.reconfigure(
-        EditorView.contentAttributes.of({
-          'aria-label': `${label} (${language})`,
-          'aria-multiline': 'true',
-          spellcheck: 'false',
-        }),
-      ),
+      effects: [
+        labelCompartmentRef.current.reconfigure(
+          EditorView.contentAttributes.of({
+            'aria-label': `${label} (${language})`,
+            'aria-multiline': 'true',
+            spellcheck: 'false',
+          }),
+        ),
+        languageCompartmentRef.current.reconfigure(
+          language === 'html'
+            ? html()
+            : language === 'css'
+              ? css()
+              : javascript(),
+        ),
+      ],
     });
   }, [label, language]);
 

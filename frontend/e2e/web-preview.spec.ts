@@ -1,0 +1,159 @@
+import { expect, test } from '@playwright/test';
+
+test('static preview filters active content, preserves source, and isolates Worker output', async ({
+  page,
+}) => {
+  const requests: string[] = [];
+  await page.route('**/forbidden-preview-sink', async (route) => {
+    requests.push(route.request().url());
+    await route.fulfill({ status: 204 });
+  });
+  await page.goto('/editor-workspace');
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  const htmlTab = page.getByRole('tab', { name: 'index.html' });
+  await htmlTab.click();
+  const htmlEditor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await htmlEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '<main><h1>Safe title</h1><a href="/forbidden-preview-sink">Unsafe link</a><script>fetch("/forbidden-preview-sink")</script><img src="/forbidden-preview-sink" onerror="alert(1)"></main>',
+  );
+  await page.getByRole('tab', { name: 'styles.css' }).click();
+  const cssEditor = page.getByRole('textbox', {
+    name: 'styles.css code editor (css)',
+  });
+  await cssEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    "@import url('/forbidden-preview-sink'); h1 { color: rgb(0, 128, 0); background-image: url('/forbidden-preview-sink'); }",
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(preview.getByRole('status')).toContainText(
+    'Static preview ready',
+  );
+  await expect(
+    preview.getByText('Active HTML content was removed'),
+  ).toBeVisible();
+  const shell = page.frameLocator(
+    'iframe[title="Static HTML and CSS preview"]',
+  );
+  const child = shell.frameLocator(
+    'iframe[title="Static learner HTML and CSS preview"]',
+  );
+  await expect(
+    child.getByRole('heading', { name: 'Safe title' }),
+  ).toBeVisible();
+  expect(
+    await child
+      .getByRole('heading', { name: 'Safe title' })
+      .evaluate((element) => getComputedStyle(element).color),
+  ).toBe('rgb(0, 128, 0)');
+  await expect(child.getByText('Unsafe link')).toBeVisible();
+  await expect(shell.locator('iframe')).toHaveAttribute('sandbox', '');
+  expect(await child.locator('body').evaluate(() => location.origin)).toBe(
+    'null',
+  );
+  expect(requests).toEqual([]);
+
+  const bootstrap = await page.request.get(
+    'http://localhost:3101/preview/bootstrap.html',
+  );
+  expect(bootstrap.headers()['content-security-policy']).toContain(
+    "connect-src 'none'",
+  );
+  expect(bootstrap.headers()['content-security-policy']).toContain(
+    "frame-src 'self'",
+  );
+  expect(bootstrap.headers()['referrer-policy']).toBe('no-referrer');
+  const appResponse = await page.request.get(
+    'http://127.0.0.1:3100/editor-workspace',
+  );
+  expect(appResponse.headers()['content-security-policy']).toContain(
+    'frame-src http://localhost:3100 http://localhost:3101',
+  );
+  expect(
+    (
+      await page.request.get('http://127.0.0.1:3100/preview/bootstrap.html')
+    ).status(),
+  ).toBe(404);
+  expect((await page.request.get('http://localhost:3101/login')).status()).toBe(
+    404,
+  );
+  expect(
+    (
+      await page.request.get('http://localhost:3101/runtime/bootstrap.html')
+    ).status(),
+  ).toBe(404);
+
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  const jsEditor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await jsEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    "console.log(typeof document, typeof fetch); return 'worker-ok';",
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(preview.getByText('undefined undefined')).toBeVisible();
+  await expect(
+    child.getByRole('heading', { name: 'Safe title' }),
+  ).toBeVisible();
+  for (let reload = 0; reload < 3; reload += 1) {
+    await page.getByRole('button', { name: 'Reload preview' }).click();
+    await expect(preview.getByRole('status')).toContainText(
+      'Static preview ready',
+    );
+    await expect(shell.locator('iframe')).toHaveCount(1);
+  }
+  await htmlTab.click();
+  await expect(htmlEditor).toContainText('Safe title');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.setViewportSize({ width: 780, height: 900 });
+  await page.evaluate(() => {
+    document.documentElement.style.zoom = '200%';
+  });
+  await expect(
+    page.getByRole('button', { name: 'Preview', exact: true }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+
+test('preview Worker recovers after a loop and remains independent of Run', async ({
+  page,
+}) => {
+  await page.goto('/editor-workspace');
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await editor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText('while (true) {}');
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(preview.getByRole('status')).toContainText('timed out', {
+    timeout: 5_000,
+  });
+  await expect(editor).toContainText('while (true)');
+
+  await editor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText("console.log('fresh-preview');");
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(preview.getByText('fresh-preview')).toBeVisible();
+  await page.getByRole('button', { name: 'Run', exact: true }).click();
+  await expect(
+    page.getByText('fresh-preview', { exact: true }).last(),
+  ).toBeVisible();
+});

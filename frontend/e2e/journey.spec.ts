@@ -244,11 +244,13 @@ test('Journey page renders the ordered accessible Course map at desktop and mobi
 
   const worldImage = page.locator('img[src*="foundations-valley"]').first();
   await expect(worldImage).toBeVisible();
-  expect(
-    await worldImage.evaluate(
-      (image) => image instanceof HTMLImageElement && image.naturalWidth > 0,
-    ),
-  ).toBe(true);
+  await expect
+    .poll(() =>
+      worldImage.evaluate(
+        (image) => image instanceof HTMLImageElement && image.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('heading', { name: 'Course map' })).toBeVisible();

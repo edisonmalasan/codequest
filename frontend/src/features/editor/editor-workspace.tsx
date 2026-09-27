@@ -12,6 +12,11 @@ import { CodeEditor } from '@/components/editor/code-editor';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import type { ExecutionAdapter, ExecutionResult } from '@/features/runtime';
+import type {
+  PreviewAdapter,
+  PreviewFile,
+  PreviewResult,
+} from '@/features/preview';
 import {
   editorDraftRepository,
   type DraftSource,
@@ -20,6 +25,7 @@ import {
 import { ConsolePanel } from './console-panel';
 import { EditorToolbar } from './editor-toolbar';
 import { FileTabs } from './file-tabs';
+import { PreviewPanel } from './preview-panel';
 import { RuntimeStatus } from './runtime-status';
 import { TestResults } from './test-results';
 import type {
@@ -42,6 +48,7 @@ export interface EditorWorkspaceProps {
   testResults?: readonly WorkspaceTestResult[];
   runtimeState?: RuntimeDisplayState;
   executionAdapter?: ExecutionAdapter;
+  previewAdapter?: PreviewAdapter;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
 }
 
@@ -127,6 +134,7 @@ export function EditorWorkspace({
   testResults,
   runtimeState,
   executionAdapter,
+  previewAdapter,
   onSourcesChange,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify(
@@ -151,6 +159,11 @@ export function EditorWorkspace({
   const workspaceRef = useRef<HTMLElement | null>(null);
   const executionControllerRef = useRef<AbortController | null>(null);
   const executionTokenRef = useRef(0);
+  const previewHostRef = useRef<HTMLDivElement | null>(null);
+  const previewControllerRef = useRef<AbortController | null>(null);
+  const previewTokenRef = useRef(0);
+  const [previewResult, setPreviewResult] = useState<PreviewResult>();
+  const [previewRunning, setPreviewRunning] = useState(false);
   const [execution, setExecution] =
     useState<ExecutionPresentation>(unavailableExecution);
   const onSourcesChangeRef = useRef(onSourcesChange);
@@ -242,8 +255,67 @@ export function EditorWorkspace({
     };
   }, [executionAdapter]);
 
+  useEffect(() => {
+    if (!previewAdapter || !previewHostRef.current) return;
+    previewAdapter.attach(previewHostRef.current);
+    return () => {
+      previewTokenRef.current += 1;
+      previewControllerRef.current?.abort();
+      void previewAdapter.dispose();
+    };
+  }, [previewAdapter]);
+
+  useEffect(() => {
+    previewTokenRef.current += 1;
+    previewControllerRef.current?.abort();
+    void previewAdapter?.cancel();
+    setPreviewResult(undefined);
+    setPreviewRunning(false);
+  }, [ownerId, workspaceId, previewAdapter]);
+
+  const showPreview = useCallback(
+    (reload: boolean): void => {
+      if (!previewAdapter) return;
+      previewControllerRef.current?.abort();
+      const controller = new AbortController();
+      previewControllerRef.current = controller;
+      const token = ++previewTokenRef.current;
+      setPreviewRunning(true);
+      setPreviewResult(undefined);
+      const snapshot: PreviewFile[] = files.map((file) => ({
+        id: file.id,
+        language: file.language,
+        source: sourcesRef.current[file.id] ?? file.starterSource,
+      }));
+      const operation = reload
+        ? previewAdapter.reload(controller.signal)
+        : previewAdapter.preview(snapshot, controller.signal);
+      void operation.then(
+        (result) => {
+          if (previewTokenRef.current !== token) return;
+          previewControllerRef.current = null;
+          setPreviewResult(result);
+          setPreviewRunning(false);
+        },
+        () => {
+          if (previewTokenRef.current !== token) return;
+          previewControllerRef.current = null;
+          setPreviewResult({
+            generationId: crypto.randomUUID(),
+            status: 'error',
+            message: 'Preview unavailable',
+            filteredActiveContent: false,
+          });
+          setPreviewRunning(false);
+        },
+      );
+    },
+    [files, previewAdapter],
+  );
+
   const runCurrent = useCallback((): void => {
-    if (executionAdapter === undefined || activeFile === undefined) return;
+    if (executionAdapter === undefined || activeFile?.language !== 'javascript')
+      return;
     executionControllerRef.current?.abort();
     const controller = new AbortController();
     executionControllerRef.current = controller;
@@ -328,7 +400,12 @@ export function EditorWorkspace({
       saveCurrent();
       return;
     }
-    if (event.key === 'Enter' && !event.shiftKey && executionAdapter) {
+    if (
+      event.key === 'Enter' &&
+      !event.shiftKey &&
+      executionAdapter &&
+      activeFile.language === 'javascript'
+    ) {
       event.preventDefault();
       runCurrent();
       return;
@@ -390,6 +467,15 @@ export function EditorWorkspace({
               lines={executionAdapter ? execution.lines : consoleLines}
             />
           </div>
+          {previewAdapter && (
+            <div className="mt-4">
+              <PreviewPanel
+                hostRef={previewHostRef}
+                result={previewResult}
+                running={previewRunning}
+              />
+            </div>
+          )}
         </div>
         <aside
           aria-label="Workspace information"
@@ -403,8 +489,28 @@ export function EditorWorkspace({
             <WorkspaceActions
               onSave={saveCurrent}
               onReset={requestReset}
-              onRun={executionAdapter ? runCurrent : undefined}
-              onCancel={executionAdapter ? cancelExecution : undefined}
+              onRun={
+                executionAdapter && activeFile.language === 'javascript'
+                  ? runCurrent
+                  : undefined
+              }
+              onCancel={
+                executionAdapter && activeFile.language === 'javascript'
+                  ? cancelExecution
+                  : undefined
+              }
+              onPreview={previewAdapter ? () => showPreview(false) : undefined}
+              onReload={
+                previewAdapter && previewResult
+                  ? () => showPreview(true)
+                  : undefined
+              }
+              onCancelPreview={
+                previewAdapter
+                  ? () => previewControllerRef.current?.abort()
+                  : undefined
+              }
+              previewRunning={previewRunning}
               running={execution.running}
               disabled={!hydrated || saveStatus === 'saving'}
             />

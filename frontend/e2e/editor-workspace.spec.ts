@@ -171,11 +171,11 @@ return 'boundary-ok';`);
   expect(forbiddenRequests).toBe(0);
   await expect(page.getByText(/APP_(SESSION|COOKIE)_SENTINEL/)).toHaveCount(0);
 
-  const helperTab = page.getByRole('tab', { name: 'helpers.js' });
+  const helperTab = page.getByRole('tab', { name: 'styles.css' });
   await helperTab.click();
   await expect(
-    page.getByRole('textbox', { name: 'helpers.js code editor (javascript)' }),
-  ).toContainText('normalizeSignal');
+    page.getByRole('textbox', { name: 'styles.css code editor (css)' }),
+  ).toContainText('.preview-page');
   await helperTab.press('Home');
   await expect(page.getByRole('tab', { name: 'main.js' })).toHaveAttribute(
     'aria-selected',
@@ -183,6 +183,7 @@ return 'boundary-ok';`);
   );
   await expect(editor).toContainText('boundary-ok');
 
+  await expect(page.getByText('Saved on this device')).toBeVisible();
   await page.reload();
   await expect(page.getByText('Saved on this device')).toBeVisible();
   await expect(

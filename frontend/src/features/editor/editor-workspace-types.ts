@@ -1,7 +1,7 @@
 export interface WorkspaceFile {
   id: string;
   name: string;
-  language: 'javascript';
+  language: 'javascript' | 'html' | 'css';
   starterSource: string;
 }
 

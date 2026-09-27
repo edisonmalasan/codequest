@@ -15,6 +15,7 @@ import type {
   ExecutionResult,
   ExecutionStatus,
 } from '@/features/runtime';
+import type { PreviewAdapter, PreviewResult } from '@/features/preview';
 import type {
   DraftIdentity,
   DraftSource,
@@ -175,6 +176,123 @@ describe('workspace presentation components', () => {
 });
 
 describe('EditorWorkspace', () => {
+  it('shows no preview controls without an adapter and announces a preview timeout', async () => {
+    const user = userEvent.setup();
+    const webFiles: readonly WorkspaceFile[] = [
+      {
+        id: 'page',
+        name: 'index.html',
+        language: 'html',
+        starterSource: '<p>Safe</p>',
+      },
+    ];
+    const repository = new MemoryDraftRepository();
+    const { rerender } = render(
+      <EditorWorkspace
+        ownerId="guest"
+        workspaceId="optional-preview"
+        files={webFiles}
+        draftRepository={repository}
+      />,
+    );
+    expect(screen.queryByRole('button', { name: /^Preview$/ })).toBeNull();
+    const adapter: PreviewAdapter = {
+      attach: vi.fn(),
+      preview: vi.fn(async (): Promise<PreviewResult> => ({
+        generationId: 'timeout-1',
+        status: 'timeout',
+        message: 'Preview timed out',
+        filteredActiveContent: false,
+      })),
+      reload: vi.fn(async (): Promise<PreviewResult> => ({
+        generationId: 'timeout-2',
+        status: 'error',
+        message: 'Preview returned an invalid result',
+        filteredActiveContent: false,
+      })),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    rerender(
+      <EditorWorkspace
+        ownerId="guest"
+        workspaceId="optional-preview"
+        files={webFiles}
+        draftRepository={repository}
+        previewAdapter={adapter}
+      />,
+    );
+    await user.click(await screen.findByRole('button', { name: /^Preview$/ }));
+    await screen.findByText('Preview timed out');
+    await user.click(screen.getByRole('button', { name: 'Reload preview' }));
+    await screen.findByText('Preview returned an invalid result');
+  });
+  it('captures HTML/CSS/JavaScript sources for an optional preview and reloads the captured version', async () => {
+    const user = userEvent.setup();
+    const previewFiles: readonly WorkspaceFile[] = [
+      {
+        id: 'page',
+        name: 'index.html',
+        language: 'html',
+        starterSource: '<h1>Start</h1>',
+      },
+      {
+        id: 'style',
+        name: 'styles.css',
+        language: 'css',
+        starterSource: 'h1 { color: blue }',
+      },
+      {
+        id: 'logic',
+        name: 'main.js',
+        language: 'javascript',
+        starterSource: "console.log('start')",
+      },
+    ];
+    const ready: PreviewResult = {
+      generationId: 'preview-1',
+      status: 'ready',
+      message: 'Static preview ready',
+      filteredActiveContent: false,
+    };
+    const adapter: PreviewAdapter = {
+      attach: vi.fn(),
+      preview: vi.fn(async () => ready),
+      reload: vi.fn(async () => ({ ...ready, generationId: 'preview-2' })),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    const { unmount } = render(
+      <EditorWorkspace
+        ownerId="guest"
+        workspaceId="static-preview"
+        files={previewFiles}
+        draftRepository={new MemoryDraftRepository()}
+        previewAdapter={adapter}
+      />,
+    );
+    await screen.findByRole('button', { name: /^Preview$/ });
+    await waitFor(() => expect(adapter.attach).toHaveBeenCalled());
+    editActiveSource('<h1>Edited</h1>');
+    await user.click(screen.getByRole('button', { name: /^Preview$/ }));
+    await waitFor(() => expect(adapter.preview).toHaveBeenCalled());
+    const snapshot = vi.mocked(adapter.preview).mock.calls[0]?.[0];
+    expect(snapshot).toEqual([
+      { id: 'page', language: 'html', source: '<h1>Edited</h1>' },
+      { id: 'style', language: 'css', source: 'h1 { color: blue }' },
+      { id: 'logic', language: 'javascript', source: "console.log('start')" },
+    ]);
+    await screen.findByRole('button', { name: 'Reload preview' });
+    expect(
+      within(screen.getByRole('region', { name: 'Web preview' })).getByRole(
+        'status',
+      ).textContent,
+    ).toContain('Static preview ready');
+    await user.click(screen.getByRole('button', { name: 'Reload preview' }));
+    await waitFor(() => expect(adapter.reload).toHaveBeenCalledOnce());
+    unmount();
+    expect(adapter.dispose).toHaveBeenCalled();
+  });
   it('restores drafts and preserves independent edits across file switches', async () => {
     const repository = new MemoryDraftRepository([
       { fileId: 'main', source: "const message = 'restored';" },

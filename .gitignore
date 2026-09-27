@@ -1,6 +1,7 @@
 temp
 node_modules/
 .next/
+.next-preview/
 dist/
 .turbo/
 coverage/
