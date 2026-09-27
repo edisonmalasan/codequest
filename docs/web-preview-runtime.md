@@ -1,6 +1,6 @@
 # Web preview runtime
 
-Status: Phase 15 Apply implementation. The development-only `/editor-workspace` route demonstrates the reusable preview adapter. It is not a lesson assessment surface.
+Status: Phase 15 implemented, verified, synced to the canonical [Web Preview Runtime](../openspec/specs/web-preview-runtime/spec.md) and [Editor Workspace](../openspec/specs/editor-workspace/spec.md) specifications, and [archived](../openspec/changes/archive/2026-09-27-add-web-preview-runtime/proposal.md). The development-only `/editor-workspace` route demonstrates the reusable preview adapter. It is not a lesson assessment surface.
 
 ## Contract
 
