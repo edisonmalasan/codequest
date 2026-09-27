@@ -3,6 +3,8 @@ export const CODEQUEST_PERMISSIONS = [
   'account:read:self',
   'learning:submit:self',
   'learning:read:self',
+  'progress:read:self',
+  'progress:write:self',
 ] as const;
 
 export type CodequestPermission = (typeof CODEQUEST_PERMISSIONS)[number];

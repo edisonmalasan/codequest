@@ -3,13 +3,13 @@
 ## 1. Durable progress facts
 
 - [ ] 1.1 Add the forward Drizzle hint-use migration and schema constraints; verify schema drift and isolated PostgreSQL migration tests.
-- [ ] 1.2 Add owner-scoped, idempotent start and current-version hint recording in ProgressModule with focused auth, validation, retry, and concurrency tests.
+- [x] 1.2 Add owner-scoped, idempotent start and current-version hint recording in ProgressModule with focused auth, validation, retry, and concurrency tests.
 
 ## 2. Derived progress API
 
-- [ ] 2.1 Implement quest, chapter, Journey, and Course-alias reads using published catalog plus owner facts; test statuses, timestamps, counts, empty scope, retired IDs, and owner isolation.
+- [x] 2.1 Implement quest, chapter, Journey, and Course-alias reads using published catalog plus owner facts; test statuses, timestamps, counts, empty scope, retired IDs, and owner isolation.
 - [ ] 2.2 Document versioned protected DTOs and route errors in OpenAPI, regenerate the frontend client, and verify contract drift.
-- [ ] 2.3 Document activity and derivation semantics in `docs/progress.md`; verify links and examples against implemented routes.
+- [x] 2.3 Document activity and derivation semantics in `docs/progress.md`; verify links and examples against implemented routes.
 
 ## 3. Trusted learner views
 
