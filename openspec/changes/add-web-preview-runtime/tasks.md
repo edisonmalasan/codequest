@@ -1,29 +1,30 @@
 # Tasks
 
-## 1. Preview origin and containment proof
+## 1. Static preview boundary
 
-- [ ] 1.1 Add strict `NEXT_PUBLIC_PREVIEW_ORIGIN` validation and fixed preview bootstrap resources on a credential-free distinct origin; verify absent, same-origin, runner-origin, malformed, and insecure settings fail closed in focused tests.
-- [ ] 1.2 Add response CSP and sandbox configuration for trusted bootstrap and opaque learner frame; verify effective policy, useful inline HTML/CSS/JavaScript rendering, and denied parent/storage access in Chromium, Firefox, and WebKit browser tests.
-- [ ] 1.3 Probe fetch, beacon, image, CSS URL, external script, form, child frame/worker, popup, top navigation, direct self-navigation, and link navigation against controlled sinks; verify no request carrying learner data reaches external or authenticated targets. Stop Apply and revise OpenSpec if this gate fails.
-- [ ] 1.4 Probe a tight infinite loop followed by an immediate finite preview, repeated reset, and host responsiveness in targeted browsers; record the independent preview timeout/recovery budget from measured evidence. Stop Apply and revise OpenSpec if recovery fails.
+- [ ] 1.1 Add NEXT_PUBLIC_PREVIEW_ORIGIN validation and fixed credential-free preview resources on an origin distinct from app and Phase 14 runner; verify absent, malformed, same-origin, runner-origin, and insecure settings fail closed in unit tests.
+- [ ] 1.2 Implement bounded snapshot validation for exactly one HTML file and optional CSS/JavaScript files; verify duplicate, unsupported, missing, and oversized input failures plus immutable capture in unit tests.
+- [ ] 1.3 Build a conservative static HTML/CSS document with a real parser, active-markup rejection, safe URLs, and closing-tag escaping; verify useful headings/layout/styles and script/event/refresh/form/embed/URL denial in unit tests.
+- [ ] 1.4 Add fixed bootstrap and child CSP, empty learner sandbox, no-referrer and nosniff headers; verify useful static rendering, effective policies, absent DOM/storage authority, and external/authenticated sink denial including links and redirects in Chromium, Firefox, and WebKit. Stop Apply and revise OpenSpec if containment fails.
+- [ ] 1.5 Document supported static markup, preview-origin deployment, CSP/sandbox, byte limits, and residual browser-memory limits; verify examples and header claims against tests.
 
-## 2. Snapshot and messaging contract
+## 2. Private protocol and lifecycle
 
-- [ ] 2.1 Implement typed HTML/CSS/JavaScript snapshot validation, deterministic document generation, escaping, and fixed byte limits; verify valid multi-file output plus malformed, duplicate, closing-tag, and oversized cases in unit tests.
-- [ ] 2.2 Implement exact-origin/window bootstrap handshake and private correlated port protocol with bounded allowlisted packets; verify forged, stale, duplicate, malformed, and oversized packets cannot change active state in unit and browser tests.
-- [ ] 2.3 Implement preview start, reload, supersession, timeout, error, abort, and dispose; verify fresh-document identity, source preservation, and iframe/port/listener/timer/object-URL cleanup after each terminal path in focused tests.
-- [ ] 2.4 Document the preview configuration, source/packet limits, CSP/sandbox contract, recovery evidence, and residual browser-memory limitation; verify documentation matches deployed headers and test fixtures.
+- [ ] 2.1 Implement exact-origin/window bootstrap handshake, random instance and generation IDs, and a private bounded MessagePort protocol; verify forged, stale, duplicate, malformed, and oversized packets cannot update current state in unit and browser tests.
+- [ ] 2.2 Implement explicit Preview/Reload, startup timeout, supersession, cancellation, and disposal of frames/ports/listeners/timers/URLs; verify fresh generation identity, source preservation, and cleanup after failures and repeated reloads in focused tests.
+- [ ] 2.3 Integrate optional captured JavaScript through a separate instance of the existing Phase 14 ExecutionAdapter and render only bounded text outside the iframe; verify finite output, DOM/network denial, independent Run/Preview cancellation, timeout, and immediate fresh-run recovery without changing Phase 14 limits.
+- [ ] 2.4 Document the adapter/result contract and separate frame/Worker lifecycle, then verify docs match public types and error states.
 
-## 3. Reusable workspace integration
+## 3. Reusable Editor Workspace
 
-- [ ] 3.1 Extend workspace file typing and syntax support to HTML/CSS/JavaScript without changing JavaScript Run/Cancel or owner-scoped draft behavior; verify file switching, editing, save, reset, and existing execution tests.
-- [ ] 3.2 Add optional Preview/Reload actions and an accessible named preview/status panel that captures current multi-file source only on explicit Preview; verify absent-adapter, loading, ready, error, timeout, and stale-generation behavior in component tests.
-- [ ] 3.3 Wire representative HTML/CSS/JavaScript files into the development-only workspace review route; verify no production lesson route or backend integration is introduced and existing JavaScript review behavior remains testable.
-- [ ] 3.4 Test responsive preview/editor reflow, keyboard access, text error alternatives, zoom, and 390 CSS-pixel layout in Playwright; verify no page-level horizontal overflow and source survives reload/failure.
-- [ ] 3.5 Update `docs/frontend.md` and `docs/security.md` for the optional preview boundary and inaccessible learning authority; verify terminology against the canonical editor, JavaScript runtime, and preview delta specs.
+- [ ] 3.1 Extend workspace file typing and CodeMirror modes to HTML/CSS/JavaScript while preserving owner-scoped drafts and JavaScript Run/Cancel; verify editing, switching, save, reset, and existing runtime tests.
+- [ ] 3.2 Add optional Preview/Reload controls and an accessible named preview/status panel; verify absent-adapter, static ready, computation output, error, timeout, and stale-generation states in component tests.
+- [ ] 3.3 Wire representative HTML/CSS/JavaScript files into the development-only workspace review route; verify no production lesson route, backend learning path, or generated API client changes.
+- [ ] 3.4 Verify keyboard access, bounded text alternatives, zoom, and 390 CSS-pixel reflow in Playwright; verify no page-level horizontal overflow and source survives failure/reload.
+- [ ] 3.5 Update frontend and security docs for the static preview and non-DOM JavaScript boundary; verify terminology against canonical and delta specs.
 
 ## 4. Integration verification
 
-- [ ] 4.1 Run `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build`, plus frontend browser security/recovery flows; record exact results and resolve failures without weakening containment assertions.
-- [ ] 4.2 Review final diff, origin/header deployment behavior, secret/source logging, generated-client and backend boundaries, and Phase 16+ exclusions; verify no preview result triggers Check, submission, progress, or rewards.
-- [ ] 4.3 Update the roadmap status and `docs/javascript-runtime.md` after verified Apply work, linking evidence and keeping Phase 14 guarantees intact; verify references and phase status against the final change artifacts.
+- [ ] 4.1 Run pnpm test, pnpm lint, pnpm typecheck, pnpm build, and focused browser containment/recovery flows; record exact results and resolve failures without weakening assertions.
+- [ ] 4.2 Review the final diff for origin/header deployment, raw-source logging, backend/generated-client boundaries, and Phase 16+ exclusions; verify no preview result triggers Check, submission, progress, or rewards.
+- [ ] 4.3 Update roadmap status and JavaScript runtime docs after verified Apply work, linking evidence and preserving Phase 14 guarantees; verify references and phase status against the final artifacts.

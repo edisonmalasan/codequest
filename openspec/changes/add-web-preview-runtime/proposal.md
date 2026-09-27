@@ -2,27 +2,27 @@
 
 ## Why
 
-Phase 14 can run isolated JavaScript but cannot display an HTML/CSS/JavaScript page. Phase 15 needs a reusable preview boundary for exercises and future projects without giving learner markup or scripts access to the authenticated application. The earlier executable-iframe prototype failed hostile-loop recovery, so preview support needs an explicit containment and recovery gate before it can be accepted.
+Phase 14 provides isolated JavaScript computation but no reusable HTML/CSS preview. The prior executable-HTML iframe failed hostile-loop recovery, while the approved Phase 1 Worker-backed supplied-shell pattern preserves the learner authority boundary. Phase 15 adapts that narrower pattern for a reusable Editor Workspace preview.
 
 ## What Changes
 
-- Add a lesson-independent preview adapter that takes a bounded, immutable HTML/CSS/JavaScript file snapshot, builds a fresh preview document, and reports correlated loading, ready, error, timeout, reset, and unavailable states.
-- Host a trusted preview bootstrap on a dedicated, credential-free origin. Render learner content only in a restricted sandboxed child iframe with a deny-by-default CSP and no application-origin credentials, storage, network, navigation, popup, form, or embedding authority.
-- Define a bounded, validated `postMessage` handshake and result protocol, explicit cleanup and reload behavior, and adversarial recovery tests. Failed containment or loop recovery blocks completion rather than weakening the Phase 14 boundary.
-- Add an optional preview surface to the reusable Editor Workspace, including responsive sizing, accessible status and text error feedback, without changing JavaScript Run/Cancel semantics or draft ownership.
-- Update the roadmap and frontend/security/runtime documentation to state the Phase 15 integration and deployment contract.
-- Keep validation, checking, attempts, submissions, progress, rewards, backend learning behavior, public hosting, packages, and an offline preview guarantee outside this change.
+- Add an optional preview adapter that captures bounded HTML, CSS, and JavaScript files. HTML/CSS render as a static page in a script-disabled sandboxed iframe; JavaScript runs separately through the existing isolated Worker and returns bounded text.
+- Use a dedicated credential-free preview origin for a fixed bootstrap and script-disabled learner document, distinct from the authenticated app and Phase 14 runner origins.
+- Restrict sandbox permissions and CSP, validate exact-origin and correlated postMessage traffic, reject stale or malformed packets, and clean up frames, ports, listeners, and timers on reload, cancellation, or unmount.
+- Preserve responsive, accessible Editor Workspace editing, local drafts, and Phase 14 Run/Cancel behavior. Show JavaScript computation output as text; do not execute it against the preview DOM.
+- Require real-browser sink, containment, loop-recovery, repeated-reload, and cross-engine evidence before accepting the capability.
+- Keep DOM scripting, external assets/packages, validation/checking, submissions, progress, rewards, backend learning behavior, public hosting, and an offline preview guarantee outside this change.
 
 ## Capabilities
 
 ### New Capabilities
 
-- `web-preview-runtime`: Isolated preview generation, origin and capability boundary, message protocol, lifecycle, recovery, and responsive preview behavior.
+- web-preview-runtime: Static HTML/CSS display, separately isolated JavaScript computation, preview-origin messaging, lifecycle, security, and responsive presentation.
 
 ### Modified Capabilities
 
-- `editor-workspace`: Permit an optional, independently configured Phase 15 preview surface for HTML/CSS/JavaScript files while preserving the existing Phase 14 execution and learning-authority boundaries.
+- editor-workspace: Permit an optional Phase 15 static preview and separate JavaScript computation surface without changing draft ownership, Phase 14 execution, or learning authority.
 
 ## Impact
 
-The future Apply stage affects frontend preview runtime and workspace modules, a fixed preview bootstrap and response headers on a dedicated origin, focused unit/browser security tests, and supporting docs. It does not require backend endpoints, generated API client changes, migrations, or dependency upgrades. The proposal does not select the previously failed executable-HTML prototype as production-ready; Apply must produce new evidence for the proposed boundary.
+The Apply stage affects frontend preview/runtime integration, fixed preview-origin resources and headers, Editor Workspace components, focused unit/browser tests, and supporting docs. It does not require backend endpoints, generated API client changes, migrations, or dependency upgrades. The previously failed executable-HTML iframe is excluded; Phase 14 Worker guarantees remain intact.
