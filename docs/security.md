@@ -14,6 +14,8 @@ Trust crossings: Auth provider → trusted client session boundary; client → v
 
 Phase 14 implements the JavaScript computation crossing described in [JavaScript runtime](javascript-runtime.md): a distinct credential-free runner origin, trusted bootstrap, private correlated channel, and fresh literal-URL Worker per run. Fixed source/output/packet/time limits, exact response CSP, termination-before-delivery, and real-browser authority probes enforce the approved P11 boundary for this computation scope. Learner results remain untrusted, browser process memory is not a hard quota, and this does not authorize preview, grading, remote execution, or authenticated access.
 
+Phase 15 adds a separate [static preview boundary](web-preview-runtime.md): filtered HTML/CSS is displayed in an opaque, script-disabled nested iframe on a dedicated credential-free origin. A fixed bootstrap exchanges bounded, correlated packets with the app over a private port; the learner child receives no port or session data. Optional JavaScript uses a separate Phase 14 Worker and returns text only. Preview does not authorize grading, DOM scripting, or authenticated API access. Browser process memory remains a residual limit.
+
 ## Threat and mitigation requirements
 
 | Threat | Required boundary/mitigation policy | Verification gate / residual risk |
