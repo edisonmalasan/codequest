@@ -1,9 +1,11 @@
 import { EXECUTION_LIMITS } from './execution-types';
 
 export interface BootstrapCommand {
-  type: 'execute' | 'cancel' | 'dispose';
+  type: 'execute' | 'validate' | 'cancel' | 'dispose';
   runId?: string;
+  checkId?: string;
   source?: string;
+  tests?: readonly unknown[];
 }
 
 export interface BootstrapChannel {
@@ -19,13 +21,14 @@ export type BootstrapChannelFactory = (
 
 export function createIframeBootstrapChannel(
   runtimeOrigin: string,
+  bootstrapPath = '/runtime/bootstrap.html',
 ): BootstrapChannel {
   const bootstrapId = crypto.randomUUID();
   const iframe = document.createElement('iframe');
   iframe.hidden = true;
   iframe.title = 'CodeQuest isolated JavaScript runtime';
   iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-  const url = new URL('/runtime/bootstrap.html', runtimeOrigin);
+  const url = new URL(bootstrapPath, runtimeOrigin);
   url.searchParams.set('parentOrigin', window.location.origin);
   url.hash = bootstrapId;
   iframe.src = url.href;

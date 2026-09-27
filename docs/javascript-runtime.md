@@ -1,5 +1,7 @@
 # JavaScript runtime
 
+Phase 16 adds a separate [local validation engine](validation-engine.md) on the same credential-free runner origin. It uses dedicated fixed bootstrap and Worker resources for deterministic assessment cases while leaving the Phase 14 `ExecutionAdapter` Run contract and its limits unchanged. Local Check results have no completion authority.
+
 Status: Phase 14 implementation complete. The browser computation boundary is synced to the canonical OpenSpec capabilities and the completed change is archived.
 
 ## Contract and ownership

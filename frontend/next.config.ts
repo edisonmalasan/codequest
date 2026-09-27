@@ -127,6 +127,25 @@ const nextConfig: NextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
         ],
       },
+      ...[
+        '/runtime/validation-bootstrap.html',
+        '/runtime/validation-bootstrap.js',
+      ].map((source) => ({
+        source,
+        headers: [
+          { key: 'Content-Security-Policy', value: bootstrapPolicy },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      })),
+      {
+        source: '/runtime/validation-worker.js',
+        headers: [
+          { key: 'Content-Security-Policy', value: workerPolicy },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
     ];
   },
 };
