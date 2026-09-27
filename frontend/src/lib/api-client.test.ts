@@ -87,6 +87,61 @@ function jsonResponse(value: unknown, status = 200): Response {
 }
 
 describe('CodeQuest typed API client', () => {
+  it('sends a bearer only for protected attempts and rejects malformed responses', async () => {
+    const calls: Array<{ authorization: string | null; body: string }> = [];
+    const fetcher: typeof fetch = async (input, init) => {
+      const request =
+        input instanceof Request ? input : new Request(input, init);
+      calls.push({
+        authorization: request.headers.get('authorization'),
+        body: await request.text(),
+      });
+      return jsonResponse(
+        {
+          id: '00000000-0000-4000-8000-000000000201',
+          questId: 'Q01',
+          clientEventId: '00000000-0000-4000-8000-000000000301',
+          contentVersion: '1.0.0',
+          assessmentVersion: '1.0.0',
+          submittedAt: '2026-09-27T00:00:00.000Z',
+          attemptCount: 1,
+          reportedPassed: true,
+          accepted: true,
+          clientReported: true,
+          source: 'print()',
+          report: {},
+        },
+        201,
+      );
+    };
+    const client = createCodequestApi({
+      fetch: fetcher,
+      getAccessToken: async () => 'current-token',
+    });
+    const result = await client.submitAttempt('first-message', {
+      clientEventId: '00000000-0000-4000-8000-000000000301',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'print()',
+      report: {},
+    });
+    expect(result).toMatchObject({
+      ok: true,
+      data: { attemptCount: 1, accepted: true },
+    });
+    expect(calls).toEqual([
+      {
+        authorization: 'Bearer current-token',
+        body: expect.stringContaining('"source":"print()"'),
+      },
+    ]);
+    const guest = createCodequestApi({ fetch: fetcher });
+    await expect(guest.getAttemptHistory('first-message')).resolves.toEqual({
+      ok: false,
+      kind: 'unauthenticated',
+    });
+    expect(calls).toHaveLength(1);
+  });
   it('uses the generated health path and configured base URL without credentials', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
       | '/api/v1/account'
@@ -96,6 +151,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'
+      | '/api/v1/quests/{slug}/attempts'
       | '/api/v1/quests/{slug}/assets/{contentVersion}'
     >();
     expectTypeOf<
@@ -149,6 +205,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'
+      | '/api/v1/quests/{slug}/attempts'
       | '/api/v1/quests/{slug}/assets/{contentVersion}'
     >();
     const account: AccountResponse = {

@@ -8,6 +8,9 @@ export type JourneySummary = components['schemas']['JourneySummaryDto'];
 export type JourneyDetail = components['schemas']['JourneyDetailDto'];
 export type ChapterDetail = components['schemas']['ChapterDetailDto'];
 export type QuestDetail = components['schemas']['QuestDetailDto'];
+export type CreateAttemptRequest = components['schemas']['CreateAttemptDto'];
+export type AttemptResponse = components['schemas']['AttemptResponseDto'];
+export type AttemptHistory = components['schemas']['AttemptHistoryDto'];
 type ErrorResponse = components['schemas']['ApiErrorResponseDto'];
 
 export type HealthResult =
@@ -36,6 +39,11 @@ export type AccountResult =
       readonly data: AccountResponse;
       readonly requestId: string | null;
     }
+  | { readonly ok: false; readonly kind: 'unauthenticated' }
+  | Exclude<HealthResult, { readonly ok: true }>;
+
+export type ProtectedApiResult<T> =
+  | { readonly ok: true; readonly data: T; readonly requestId: string | null }
   | { readonly ok: false; readonly kind: 'unauthenticated' }
   | Exclude<HealthResult, { readonly ok: true }>;
 
@@ -77,6 +85,33 @@ function isAccountResponse(value: unknown): value is AccountResponse {
     typeof value.timezone === 'string' &&
     typeof value.createdAt === 'string' &&
     typeof value.updatedAt === 'string'
+  );
+}
+
+function isAttemptResponse(value: unknown): value is AttemptResponse {
+  return (
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    typeof value.questId === 'string' &&
+    typeof value.clientEventId === 'string' &&
+    typeof value.contentVersion === 'string' &&
+    typeof value.assessmentVersion === 'string' &&
+    typeof value.submittedAt === 'string' &&
+    typeof value.attemptCount === 'number' &&
+    typeof value.reportedPassed === 'boolean' &&
+    typeof value.accepted === 'boolean' &&
+    value.clientReported === true &&
+    typeof value.source === 'string' &&
+    isRecord(value.report)
+  );
+}
+
+function isAttemptHistory(value: unknown): value is AttemptHistory {
+  return (
+    isRecord(value) &&
+    typeof value.attemptCount === 'number' &&
+    Array.isArray(value.attempts) &&
+    value.attempts.every(isAttemptResponse)
   );
 }
 
@@ -296,6 +331,18 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
     }
   }
 
+  async function learningRequest<T>(
+    request: (
+      token: string,
+    ) => Promise<{ data?: unknown; error?: unknown; response: Response }>,
+    validate: (value: unknown) => value is T,
+    signal?: AbortSignal,
+  ): Promise<ProtectedApiResult<T>> {
+    const token = await options.getAccessToken?.();
+    if (!token) return { ok: false, kind: 'unauthenticated' };
+    return publicRequest(() => request(token), validate, signal);
+  }
+
   return {
     async getHealth(signal?: AbortSignal): Promise<HealthResult> {
       try {
@@ -403,6 +450,38 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
             signal,
           }),
         isQuestDetail,
+        signal,
+      );
+    },
+    submitAttempt(
+      slug: string,
+      body: CreateAttemptRequest,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<AttemptResponse>> {
+      return learningRequest(
+        (token) =>
+          client.POST('/api/v1/quests/{slug}/attempts', {
+            params: { path: { slug } },
+            body,
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isAttemptResponse,
+        signal,
+      );
+    },
+    getAttemptHistory(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<AttemptHistory>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/quests/{slug}/attempts', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isAttemptHistory,
         signal,
       );
     },
