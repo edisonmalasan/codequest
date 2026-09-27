@@ -60,7 +60,12 @@ describe('SupabaseTokenVerifier', () => {
     await expect(verifier.verify(token)).resolves.toEqual({
       subject: USER_ID,
       userId: USER_ID,
-      permissions: ['account:establish:self', 'account:read:self'],
+      permissions: [
+        'account:establish:self',
+        'account:read:self',
+        'learning:submit:self',
+        'learning:read:self',
+      ],
     });
   });
 
