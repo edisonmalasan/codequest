@@ -2,16 +2,16 @@
 
 ## Project Status
 
-Status snapshot: 2026-09-25. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
+Status snapshot: 2026-09-27. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
 | Item | Current status |
 | --- | --- |
-| Current phase | Phase 14 — JavaScript Runtime is complete, synced, and archived; Phase 15 has not started |
+| Current phase | Phase 15 — Web Preview Runtime proposal in review; implementation has not started |
 | Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change; Phase 10 — Curriculum Backend: reviewed publication catalog, public curriculum REST/OpenAPI contract, generated frontend reads, canonical specs, and archived change; Phase 11 — Journey and Course UI: typed curriculum navigation, prerequisite-aware Course map, accessible states, canonical spec, and archived change; Phase 12 — Lesson Renderer: safe published lesson reading, selected-snapshot illustrations, accessible hints, canonical specs, and archived change; Phase 13 — Editor Workspace: reusable editor shell, owner-isolated local drafts, accessible responsive interactions, canonical spec, and archived change; Phase 14 — JavaScript Runtime: isolated browser execution, bounded results, hostile-code recovery, canonical specs, and archived change |
-| Current OpenSpec change | None |
-| Current OpenSpec stage | Phase 14 Archive complete; no active OpenSpec changes |
-| Next execution step | Explore Phase 15 — Web Preview Runtime before creating its proposal |
-| Next phase | Phase 15 — Web Preview Runtime; not started |
+| Current OpenSpec change | [add-web-preview-runtime](../openspec/changes/add-web-preview-runtime/proposal.md) |
+| Current OpenSpec stage | Phase 15 Explore complete; proposal validated and pending PR review |
+| Next execution step | Review and merge the Phase 15 proposal PR before a separate Apply branch |
+| Next phase | Phase 15 — Web Preview Runtime; proposal only |
 | Validation evidence | Phase 14 completed all 15 Apply tasks. The full suites pass with 207 frontend tests, 111 backend Vitest tests plus 3 backend history-script tests, 6 Chromium flows including isolated runtime/recovery/security probes, frontend and root lint/typecheck/build, API drift, strict OpenSpec validation, boundary/credential scans, and diff checks; exact evidence is recorded in the archived [tasks](../openspec/changes/archive/2026-09-25-add-isolated-javascript-runtime/tasks.md). |
 | Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
 | Current repository | Phase 0-14 are complete and archived; production curriculum publication remains intentionally empty, and no Phase 15 preview behavior exists |
@@ -1090,6 +1090,8 @@ Completion status (2026-09-25): implemented, verified, synced to the canonical [
 ---
 
 # Phase 15 — Web Preview Runtime
+
+Proposal status (2026-09-27): [OpenSpec planning artifacts](../openspec/changes/add-web-preview-runtime/proposal.md) define a distinct preview origin, opaque sandboxed learner iframe, bounded correlated messaging, lifecycle and responsive workspace integration. The earlier executable-HTML prototype's recovery failure remains a hard Apply gate. No Phase 15 implementation has started.
 
 ## Objective
 
