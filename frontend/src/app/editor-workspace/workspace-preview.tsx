@@ -5,6 +5,11 @@ import { useEffect, useState } from 'react';
 import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { EditorWorkspace, type WorkspaceFile } from '@/features/editor';
 import {
+  resolvePreviewOrigin,
+  StaticPreviewAdapter,
+  type PreviewAdapter,
+} from '@/features/preview';
+import {
   JavaScriptWorkerAdapter,
   resolveRunnerOrigin,
   type ExecutionAdapter,
@@ -24,17 +29,26 @@ function report(message) {
 console.log(report(quest));`,
   },
   {
-    id: 'helpers',
-    name: 'helpers.js',
-    language: 'javascript',
-    starterSource: `export function normalizeSignal(value) {
-  return value.trim().toLowerCase();
-}`,
+    id: 'page',
+    name: 'index.html',
+    language: 'html',
+    starterSource: `<main class="preview-page">
+  <h1>Build a tiny web page</h1>
+  <p>HTML and CSS render in an isolated static preview.</p>
+</main>`,
+  },
+  {
+    id: 'styles',
+    name: 'styles.css',
+    language: 'css',
+    starterSource: `.preview-page { font-family: system-ui; padding: 2rem; color: #172b46; }
+h1 { color: #2357a5; }`,
   },
 ];
 
 export function WorkspacePreview(): React.JSX.Element {
   const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
+  const [previewAdapter, setPreviewAdapter] = useState<PreviewAdapter>();
 
   useEffect(() => {
     const applicationOrigin = window.location.origin;
@@ -42,11 +56,24 @@ export function WorkspacePreview(): React.JSX.Element {
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
       applicationOrigin,
     );
-    if (runtimeOrigin === null) return;
-    const adapter = new JavaScriptWorkerAdapter(runtimeOrigin);
+    const adapter = runtimeOrigin
+      ? new JavaScriptWorkerAdapter(runtimeOrigin)
+      : undefined;
     setExecutionAdapter(adapter);
+    const previewOrigin = resolvePreviewOrigin(
+      process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
+      applicationOrigin,
+      runtimeOrigin,
+    );
+    if (previewOrigin) {
+      const preview = new StaticPreviewAdapter(
+        previewOrigin,
+        runtimeOrigin ? new JavaScriptWorkerAdapter(runtimeOrigin) : undefined,
+      );
+      setPreviewAdapter(preview);
+    }
     return () => {
-      void adapter.dispose();
+      void adapter?.dispose();
     };
   }, []);
 
@@ -63,8 +90,8 @@ export function WorkspacePreview(): React.JSX.Element {
               Reusable workspace preview
             </h1>
             <p className="mt-3 max-w-2xl leading-7 text-muted">
-              Edit, preserve, and run local JavaScript. Checks, previews,
-              submissions, and progress remain unavailable.
+              Edit local HTML, CSS, and JavaScript. Preview shows static markup;
+              JavaScript runs separately and prints text below it.
             </p>
           </div>
         </header>
@@ -73,6 +100,7 @@ export function WorkspacePreview(): React.JSX.Element {
           workspaceId="phase-13-editor-preview"
           files={previewFiles}
           executionAdapter={executionAdapter}
+          previewAdapter={previewAdapter}
         />
       </div>
     </main>

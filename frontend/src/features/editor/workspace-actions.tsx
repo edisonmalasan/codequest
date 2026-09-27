@@ -1,4 +1,4 @@
-import { Play, RotateCcw, Save, Square } from 'lucide-react';
+import { Eye, Play, RotateCcw, RefreshCw, Save, Square } from 'lucide-react';
 import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -7,6 +7,10 @@ export function WorkspaceActions({
   onReset,
   onRun,
   onCancel,
+  onPreview,
+  onReload,
+  onCancelPreview,
+  previewRunning = false,
   running = false,
   disabled = false,
 }: {
@@ -14,6 +18,10 @@ export function WorkspaceActions({
   onReset: () => void;
   onRun?: () => void;
   onCancel?: () => void;
+  onPreview?: () => void;
+  onReload?: () => void;
+  onCancelPreview?: () => void;
+  previewRunning?: boolean;
   running?: boolean;
   disabled?: boolean;
 }): React.JSX.Element {
@@ -33,6 +41,31 @@ export function WorkspaceActions({
         {onCancel && running && (
           <Button type="button" variant="danger" onClick={onCancel}>
             <Square aria-hidden="true" className="h-4 w-4" /> Cancel
+          </Button>
+        )}
+        {onPreview && (
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onPreview}
+            disabled={disabled || previewRunning}
+          >
+            <Eye aria-hidden="true" className="h-4 w-4" /> Preview
+          </Button>
+        )}
+        {onReload && (
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onReload}
+            disabled={disabled || previewRunning}
+          >
+            <RefreshCw aria-hidden="true" className="h-4 w-4" /> Reload preview
+          </Button>
+        )}
+        {onCancelPreview && previewRunning && (
+          <Button type="button" variant="danger" onClick={onCancelPreview}>
+            <Square aria-hidden="true" className="h-4 w-4" /> Cancel preview
           </Button>
         )}
         <Button type="button" onClick={onSave} disabled={disabled}>

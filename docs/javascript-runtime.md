@@ -40,4 +40,4 @@ Browsers do not offer a dependable hard per-Worker memory quota. Source, output,
 
 ## Phase boundary
 
-Phase 15 may consume the adapter's bounded computation results when it introduces a separately specified web-preview boundary. Phase 14 provides no iframe preview, HTML/CSS execution, validation/checking, submissions, progress, XP, unlocks, analytics, backend execution, or offline-runtime guarantee.
+Phase 15's [static web preview](web-preview-runtime.md) consumes a separate instance of this adapter for optional JavaScript computation. It does not change the Phase 14 Worker boundary or give learner code DOM access. Phase 14 still provides no validation/checking, submissions, progress, XP, unlocks, analytics, backend execution, or offline-runtime guarantee.

@@ -1,10 +1,40 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { updateAuthSession } from '@/features/auth/update-session';
 
 export async function middleware(request: NextRequest) {
+  const configuredPreviewOrigin = process.env.NEXT_PUBLIC_PREVIEW_ORIGIN;
+  if (configuredPreviewOrigin) {
+    try {
+      if (
+        request.headers.get('host') === new URL(configuredPreviewOrigin).host
+      ) {
+        if (
+          request.nextUrl.pathname !== '/preview/bootstrap.html' &&
+          request.nextUrl.pathname !== '/preview/bootstrap.js'
+        ) {
+          return new NextResponse(null, { status: 404 });
+        }
+        return NextResponse.next();
+      }
+    } catch {
+      return new NextResponse(null, { status: 503 });
+    }
+  }
+  const path = request.nextUrl.pathname;
+  if (path.startsWith('/preview/')) {
+    return new NextResponse(null, { status: 404 });
+  }
+  if (
+    path.startsWith('/_next/static/') ||
+    path.startsWith('/_next/image') ||
+    path === '/icon.svg' ||
+    path.startsWith('/assets/')
+  ) {
+    return NextResponse.next();
+  }
   return updateAuthSession(request);
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|icon.svg|assets/).*)'],
+  matcher: ['/:path*'],
 };
