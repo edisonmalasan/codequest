@@ -1,5 +1,7 @@
 # Local validation engine
 
+Phase 17 can send a captured local report with source through the protected [attempt API](attempts-and-submissions.md). Local feedback remains unverified; only NestJS can accept a personal-learning completion under ADR 0005.
+
 Phase 16 provides a reusable frontend `ValidationStrategy`. A caller supplies one immutable JavaScript source snapshot and a bounded, data-only `ValidationDefinition`. The returned `ValidationResult` has a terminal status, overall `passed` flag, ordered case outcomes, `failedCaseIds`, bounded feedback, and measured `durationMs`. A pass is local and unverified. It never submits an attempt or changes accepted progress, XP, rewards, or unlocks.
 
 `output-match` compares the complete ordered console-line sequence exactly, including whitespace and extra lines. `value-test` compares the returned JSON-compatible value structurally. `function-test` calls a named function with JSON-compatible arguments in a fresh Worker for each case, then compares the result structurally. `custom-test` accepts only `output-contains` and inclusive finite `number-range` predicates. Callbacks, regexes, executable test strings, DOM checks, packages, and LLM grading are excluded.

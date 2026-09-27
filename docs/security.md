@@ -1,5 +1,7 @@
 # Security and privacy boundaries
 
+Phase 17 stores private code snapshots through the protected backend only. See [Attempts and submissions](attempts-and-submissions.md) for owner-only history, bounded client-reported checks, and backend personal-learning acceptance. This is not independent grading; F06 still gates real learner data collection.
+
 Status: approved Phase 0 threat/policy definition, not a security certification or configured infrastructure. Backend ownership and no NestJS learner execution are confirmed C03/C06/C11. Trust, capabilities, transport, data and age policies P01/P06/P08/P11–P13/U01 are approved by AP01 in the [register](decisions.md). No prototype evidence exists. Exact containment/configuration/limits are F01/F03; operational retention/legal decisions are F06.
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
