@@ -227,6 +227,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/chapters/{slug}/progress'
       | '/api/v1/journeys/{slug}/progress'
       | '/api/v1/courses/{slug}/progress'
+      | '/api/v1/xp'
     >();
     expectTypeOf<
       '/api/v1/journeys' extends keyof paths ? true : false
@@ -287,6 +288,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/chapters/{slug}/progress'
       | '/api/v1/journeys/{slug}/progress'
       | '/api/v1/courses/{slug}/progress'
+      | '/api/v1/xp'
     >();
     const account: AccountResponse = {
       id: '00000000-0000-4000-8000-000000000001',

@@ -10,7 +10,7 @@ import { IdentityModule } from './modules/identity/identity.module';
 import { LearningModule } from './modules/learning/learning.module';
 import { ProgressModule } from './modules/progress/progress.module';
 
-const inertModules = [CurriculumModule, GamificationModule];
+const inertModules = [CurriculumModule];
 
 const DATABASE_URL =
   'postgresql://codequest:local-password@127.0.0.1:5432/codequest';
@@ -66,6 +66,15 @@ describe('AppModule', () => {
     ).toHaveLength(1);
     expect(
       Reflect.getMetadata(MODULE_METADATA.CONTROLLERS, ProgressModule),
+    ).toHaveLength(1);
+  });
+
+  it('registers the XP module as an active backend boundary', () => {
+    expect(
+      Reflect.getMetadata(MODULE_METADATA.PROVIDERS, GamificationModule),
+    ).toHaveLength(1);
+    expect(
+      Reflect.getMetadata(MODULE_METADATA.CONTROLLERS, GamificationModule),
     ).toHaveLength(1);
   });
 });

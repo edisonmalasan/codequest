@@ -342,6 +342,7 @@ describe('backend HTTP foundation', () => {
       '/api/v1/quests/{slug}/hints',
       '/api/v1/quests/{slug}/progress',
       '/api/v1/quests/{slug}/start',
+      '/api/v1/xp',
     ]);
     const exported = createOpenApiDocument(app);
     expect(document).toEqual(exported);
@@ -379,6 +380,9 @@ describe('backend HTTP foundation', () => {
     expect(exported.paths['/api/v1/account']?.put?.security).toEqual([
       { supabase: [] },
     ]);
+    expect(exported.paths['/api/v1/xp']?.get?.security).toEqual([
+      { supabase: [] },
+    ]);
 
     const docs = await fastify.inject({ method: 'GET', url: '/api/docs' });
     expect(docs.statusCode).toBe(200);
@@ -409,6 +413,8 @@ describe('backend HTTP foundation', () => {
       url: '/api/v1/journeys/javascript-foundations/progress',
     });
     expect(progress.statusCode).toBe(401);
+    const xp = await fastify.inject({ method: 'GET', url: '/api/v1/xp' });
+    expect(xp.statusCode).toBe(401);
     const start = await fastify.inject({
       method: 'POST',
       url: '/api/v1/quests/first-message/start',

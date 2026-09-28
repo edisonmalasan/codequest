@@ -253,6 +253,10 @@ describe('authoritative attempt persistence', () => {
     expect(await newerService.submit(USER_A, 'first-message', body)).toEqual(
       original,
     );
+    expect(await xp.total(USER_A)).toEqual({
+      totalXp: 10,
+      clientReported: true,
+    });
     await expect(
       newerService.submit(USER_A, 'first-message', {
         ...body,
