@@ -320,8 +320,9 @@ describe('database foundation migrations and relational contract', () => {
         values
           ('${USER_A}', 'q01', '${ATTEMPT_A_Q1}'),
           ('${USER_A}', 'q02', '${ATTEMPT_A_Q2}');
-      insert into codequest.xp_events (user_id, quest_id, amount)
-        values ('${USER_A}', 'q01', 10), ('${USER_A}', 'q02', 15);
+      insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
+        values ('${USER_A}', 'q01', 'quest_completion', 'q01', 10),
+          ('${USER_A}', 'q02', 'quest_completion', 'q02', 15);
       insert into codequest.streak_activity_days
         (user_id, activity_date, timezone, qualifying_quest_id)
         values
@@ -337,8 +338,13 @@ describe('database foundation migrations and relational contract', () => {
     );
     await expectRejected(
       database,
-      `insert into codequest.xp_events (user_id, quest_id, amount)
-        values ('${USER_A}', 'q01', 10);`,
+      `insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
+        values ('${USER_A}', 'q01', 'quest_completion', 'q01', 10);`,
+    );
+    await expectRejected(
+      database,
+      `insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
+        values ('${USER_B}', 'q02', 'quest_completion', 'q01', 10);`,
     );
     await expectRejected(
       database,

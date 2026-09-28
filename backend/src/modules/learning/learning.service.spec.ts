@@ -18,6 +18,7 @@ import {
   loadCurriculumCatalog,
 } from '../curriculum/content/curriculum-catalog';
 import { LearningService } from './learning.service';
+import { XpService } from '../gamification/xp.service';
 
 const USER_A = '00000000-0000-4000-8000-000000000001';
 const USER_B = '00000000-0000-4000-8000-000000000002';
@@ -71,6 +72,7 @@ journeys:
 describe('authoritative attempt persistence', () => {
   let client: PGlite;
   let service: LearningService;
+  let xp: XpService;
   let root: string;
 
   beforeEach(async () => {
@@ -81,11 +83,13 @@ describe('authoritative attempt persistence', () => {
     const module = await Test.createTestingModule({
       providers: [
         LearningService,
+        XpService,
         { provide: DatabaseConnectionService, useValue: { database } },
         { provide: CURRICULUM_CATALOG, useValue: loadCurriculumCatalog(root) },
       ],
     }).compile();
     service = module.get(LearningService);
+    xp = module.get(XpService);
   });
 
   afterEach(async () => {
@@ -110,6 +114,24 @@ describe('authoritative attempt persistence', () => {
       clientReported: true,
     });
     expect(first.submittedAt).toMatch(/^20\d\d-/);
+    const initialAwards = await client.query<{
+      user_id: string;
+      quest_id: string;
+      source_type: string;
+      source_id: string;
+      amount: number;
+    }>(
+      'select user_id, quest_id, source_type, source_id, amount from codequest.xp_events',
+    );
+    expect(initialAwards.rows).toEqual([
+      {
+        user_id: USER_A,
+        quest_id: 'Q01',
+        source_type: 'quest_completion',
+        source_id: 'Q01',
+        amount: 10,
+      },
+    ]);
     expect(await service.submit(USER_A, 'first-message', body)).toEqual(first);
     const second = await service.submit(USER_A, 'first-message', {
       ...body,
@@ -126,11 +148,19 @@ describe('authoritative attempt persistence', () => {
       reportedPassed: false,
       accepted: false,
     });
+    const repeat = await service.submit(USER_A, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000210',
+    });
+    expect(repeat.accepted).toBe(false);
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(1);
     expect(
       (await service.history(USER_A, 'first-message')).attempts.map(
         (attempt) => attempt.source,
       ),
-    ).toEqual([body.source, body.source]);
+    ).toEqual([body.source, body.source, body.source]);
     expect(await service.history(USER_B, 'first-message')).toEqual({
       attemptCount: 0,
       attempts: [],
@@ -165,6 +195,9 @@ describe('authoritative attempt persistence', () => {
     expect((await service.history(USER_A, 'first-message')).attemptCount).toBe(
       1,
     );
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(1);
   });
 
   it('replays an existing event after the published version changes', async () => {
@@ -220,6 +253,10 @@ describe('authoritative attempt persistence', () => {
     expect(await newerService.submit(USER_A, 'first-message', body)).toEqual(
       original,
     );
+    expect(await xp.total(USER_A)).toEqual({
+      totalXp: 10,
+      clientReported: true,
+    });
     await expect(
       newerService.submit(USER_A, 'first-message', {
         ...body,
@@ -247,9 +284,95 @@ describe('authoritative attempt persistence', () => {
     ]);
     expect([one.attemptCount, two.attemptCount].sort()).toEqual([1, 2]);
     expect(Number(one.accepted) + Number(two.accepted)).toBe(1);
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(1);
     expect((await service.history(USER_A, 'first-message')).attemptCount).toBe(
       2,
     );
+  });
+
+  it('rolls back completion and attempt if its XP award cannot commit', async () => {
+    await client.exec(`
+      create function codequest.reject_xp() returns trigger language plpgsql as $$
+      begin raise exception 'award rejected'; end $$;
+      create trigger reject_xp before insert on codequest.xp_events
+      for each row execute function codequest.reject_xp();
+    `);
+    await expect(
+      service.submit(USER_A, 'first-message', {
+        clientEventId: '00000000-0000-4000-8000-000000000211',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        source: 'source',
+        report: REPORT,
+      }),
+    ).rejects.toThrow('Failed query');
+    expect(
+      (await client.query('select id from codequest.quest_attempts')).rows,
+    ).toHaveLength(0);
+    expect(
+      (await client.query('select quest_id from codequest.quest_completions'))
+        .rows,
+    ).toHaveLength(0);
+  });
+
+  it('keeps distinct owners and rejects a duplicate reward source', async () => {
+    const body = {
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'source',
+      report: REPORT,
+    };
+    await service.submit(USER_A, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000212',
+    });
+    await service.submit(USER_B, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000213',
+    });
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(2);
+    expect(await xp.total(USER_A)).toEqual({
+      totalXp: 10,
+      clientReported: true,
+    });
+    expect(await xp.total(USER_B)).toEqual({
+      totalXp: 10,
+      clientReported: true,
+    });
+    expect(await xp.total('00000000-0000-4000-8000-000000000003')).toEqual({
+      totalXp: 0,
+      clientReported: true,
+    });
+    await client.exec(`
+      insert into codequest.quests (id, chapter_id, position) values ('Q02', 'CH01', 2);
+      insert into codequest.quest_versions (quest_id, content_version, assessment_version)
+      values ('Q02', '1.0.0', '1.0.0');
+      insert into codequest.quest_attempts (user_id, quest_id, quest_version_id, client_event_id)
+      select '${USER_A}', 'Q02', id, '00000000-0000-4000-8000-000000000214'
+      from codequest.quest_versions where quest_id = 'Q02';
+      insert into codequest.quest_completions (user_id, quest_id, accepted_attempt_id)
+      select '${USER_A}', 'Q02', id from codequest.quest_attempts where quest_id = 'Q02';
+      insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
+      values ('${USER_A}', 'Q02', 'quest_completion', 'Q02', 25);
+    `);
+    expect(await xp.total(USER_A)).toEqual({
+      totalXp: 35,
+      clientReported: true,
+    });
+    expect(await xp.total(USER_B)).toEqual({
+      totalXp: 10,
+      clientReported: true,
+    });
+    await expect(
+      client.query(`
+      insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
+      values ('${USER_A}', 'Q01', 'quest_completion', 'Q01', 10)
+    `),
+    ).rejects.toThrow();
   });
 
   it('denies unpublished quests and missing prerequisites', async () => {

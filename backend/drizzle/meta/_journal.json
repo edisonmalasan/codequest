@@ -15,6 +15,13 @@
       "when": 1790519518161,
       "tag": "0001_tricky_angel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790568797164,
+      "tag": "0002_charming_snowbird",
+      "breakpoints": true
     }
   ]
 }
