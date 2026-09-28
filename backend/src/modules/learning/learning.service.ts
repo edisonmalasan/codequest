@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { isDeepStrictEqual } from 'node:util';
-import { and, count, desc, eq } from 'drizzle-orm';
+import { and, count, desc, eq, inArray } from 'drizzle-orm';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
 import {
   chapters,
@@ -28,6 +28,11 @@ import {
   PublishedJourney,
   PublishedQuest,
 } from '../curriculum/content/curriculum-catalog';
+import { completionIsCurrent } from '../curriculum/content/completion-compatibility';
+import {
+  publishedQuests,
+  unmetPrerequisites,
+} from '../curriculum/content/unlock-policy';
 import {
   AttemptHistoryDto,
   AttemptResponseDto,
@@ -225,24 +230,58 @@ export class LearningService {
       )
         throw new ConflictException('Assessment version is unavailable');
 
-      const prerequisites = snapshot.metadata.prerequisiteQuestIds;
-      if (report.passed)
-        for (const prerequisiteQuestId of prerequisites) {
-          const completion = await tx
-            .select({ questId: questCompletions.questId })
-            .from(questCompletions)
-            .where(
-              and(
-                eq(questCompletions.userId, userId),
-                eq(questCompletions.questId, prerequisiteQuestId),
-              ),
-            )
-            .limit(1);
-          if (!completion[0])
-            throw new ConflictException(
-              'Complete prerequisites before submitting',
+      const relevantIds = [
+        quest.metadata.id,
+        ...snapshot.metadata.prerequisiteQuestIds,
+      ];
+      const completed = await tx
+        .select({
+          questId: questCompletions.questId,
+          contentVersion: questVersions.contentVersion,
+          assessmentVersion: questVersions.assessmentVersion,
+        })
+        .from(questCompletions)
+        .innerJoin(
+          questAttempts,
+          eq(questCompletions.acceptedAttemptId, questAttempts.id),
+        )
+        .innerJoin(
+          questVersions,
+          eq(questAttempts.questVersionId, questVersions.id),
+        )
+        .where(
+          and(
+            eq(questCompletions.userId, userId),
+            inArray(questCompletions.questId, relevantIds),
+          ),
+        );
+      const byId = new Map(
+        publishedQuests(this.catalog).map((item) => [item.metadata.id, item]),
+      );
+      const currentCompletedIds = new Set(
+        completed
+          .filter((row) => {
+            const published = byId.get(row.questId);
+            return (
+              published !== undefined &&
+              completionIsCurrent(
+                published,
+                row.contentVersion,
+                row.assessmentVersion,
+              )
             );
-        }
+          })
+          .map((row) => row.questId),
+      );
+      const unmet = unmetPrerequisites(
+        quest,
+        this.catalog,
+        currentCompletedIds,
+      );
+      if (unmet.length)
+        throw new ConflictException(
+          `Complete ${unmet[0].title} before submitting`,
+        );
 
       const [attempt] = await tx
         .insert(questAttempts)

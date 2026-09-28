@@ -155,7 +155,12 @@ describe('JourneyPageView', () => {
     ).toBeNull();
     expect(
       screen.getAllByText('Developing · 15 XP · Guest quest'),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
+    expect(
+      screen.getByText(
+        /Developing · 15 XP · Guest quest · Requires Change state/,
+      ),
+    ).toBeDefined();
 
     await user.click(
       screen.getAllByRole('button', { name: 'Open chapter' })[0],
@@ -170,6 +175,8 @@ describe('JourneyPageClient', () => {
     const data: JourneyProgress = {
       journeyId: journeyFixture.id,
       status: 'in_progress',
+      availability: 'available',
+      unmetPrerequisites: [],
       completedQuests: 1,
       totalQuests: 4,
       percentage: 25,
@@ -179,6 +186,8 @@ describe('JourneyPageClient', () => {
           chapter.id === graphFixture.chapters[0].chapter.id
             ? 'in_progress'
             : 'not_started',
+        availability: 'available',
+        unmetPrerequisites: [],
         completedQuests:
           chapter.id === graphFixture.chapters[0].chapter.id ? 1 : 0,
         totalQuests: quests.length,
@@ -186,6 +195,17 @@ describe('JourneyPageClient', () => {
         quests: quests.map((quest) => ({
           questId: quest.id,
           status: quest.id === 'Q01' ? 'completed' : 'not_started',
+          availability: quest.id === 'Q03' ? 'locked' : 'available',
+          unmetPrerequisites:
+            quest.id === 'Q03'
+              ? [
+                  {
+                    questId: 'Q02',
+                    slug: 'change-state',
+                    title: 'Change state',
+                  },
+                ]
+              : [],
           startedAt: null,
           completedAt: null,
           lastActivityAt: null,
@@ -236,18 +256,24 @@ describe('JourneyPageClient', () => {
     const data: JourneyProgress = {
       journeyId: journeyFixture.id,
       status: 'not_started',
+      availability: 'available',
+      unmetPrerequisites: [],
       completedQuests: 0,
       totalQuests: 4,
       percentage: 0,
       chapters: graphFixture.chapters.map(({ chapter, quests }) => ({
         chapterId: chapter.id,
         status: 'not_started',
+        availability: 'available',
+        unmetPrerequisites: [],
         completedQuests: 0,
         totalQuests: quests.length,
         percentage: 0,
         quests: quests.map((quest) => ({
           questId: quest.id,
           status: 'not_started',
+          availability: 'available',
+          unmetPrerequisites: [],
           startedAt: null,
           completedAt: null,
           lastActivityAt: null,

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { JourneyProgress } from '@/lib/api-client';
 import { graphFixture } from './journey-course-test-data';
 import { buildJourneyCourseMap } from './journey-course-model';
 
@@ -27,10 +28,48 @@ describe('buildJourneyCourseMap', () => {
     expect(model.totalQuests).toBe(4);
   });
 
-  it('derives chapter progression and ignores completion IDs outside the journey', () => {
+  it('uses only backend progress and availability for authenticated learners', () => {
+    const progress: JourneyProgress = {
+      journeyId: graphFixture.journey.id,
+      status: 'in_progress',
+      availability: 'available',
+      unmetPrerequisites: [],
+      completedQuests: 2,
+      totalQuests: 4,
+      percentage: 50,
+      chapters: graphFixture.chapters.map(({ chapter, quests }) => ({
+        chapterId: chapter.id,
+        status: chapter.id === 'CH01' ? 'completed' : 'not_started',
+        availability: 'available',
+        unmetPrerequisites: [],
+        completedQuests: chapter.id === 'CH01' ? 2 : 0,
+        totalQuests: quests.length,
+        percentage: chapter.id === 'CH01' ? 100 : 0,
+        quests: quests.map((quest) => ({
+          questId: quest.id,
+          status: chapter.id === 'CH01' ? 'completed' : 'not_started',
+          availability: quest.id === 'Q04' ? 'locked' : 'available',
+          unmetPrerequisites:
+            quest.id === 'Q04'
+              ? [
+                  {
+                    questId: 'Q02',
+                    slug: 'change-state',
+                    title: 'Change state',
+                  },
+                ]
+              : [],
+          startedAt: null,
+          completedAt: null,
+          lastActivityAt: null,
+          attemptCount: 0,
+          hintCount: 0,
+        })),
+      })),
+    };
     const model = buildJourneyCourseMap(graphFixture, {
       authority: 'accepted',
-      completedQuestIds: new Set(['Q01', 'Q02', 'OTHER']),
+      progress,
     });
 
     expect(model.completedQuests).toBe(2);
@@ -41,7 +80,10 @@ describe('buildJourneyCourseMap', () => {
     });
     expect(model.chapters[1]?.quests.map(({ status }) => status)).toEqual([
       'current',
-      'available',
+      'locked',
+    ]);
+    expect(model.chapters[1]?.quests[1]?.unmetPrerequisites).toEqual([
+      { questId: 'Q02', slug: 'change-state', title: 'Change state' },
     ]);
     expect(model.completionAuthority).toBe('accepted');
   });

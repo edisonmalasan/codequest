@@ -24,6 +24,11 @@ import {
   PublishedJourney,
   PublishedQuest,
 } from '../curriculum/content/curriculum-catalog';
+import { completionIsCurrent } from '../curriculum/content/completion-compatibility';
+import {
+  publishedQuests,
+  unmetPrerequisites,
+} from '../curriculum/content/unlock-policy';
 import {
   ActivityResponseDto,
   ChapterProgressDto,
@@ -50,6 +55,9 @@ function aggregate(quests: QuestProgressDto[]) {
   const completedQuests = quests.filter(
     (quest) => quest.status === 'completed',
   ).length;
+  const locked =
+    quests.length > 0 &&
+    quests.every((quest) => quest.availability === 'locked');
   return {
     completedQuests,
     totalQuests,
@@ -61,39 +69,9 @@ function aggregate(quests: QuestProgressDto[]) {
       : quests.some((quest) => quest.status !== 'not_started')
         ? 'in_progress'
         : 'not_started') as QuestProgressDto['status'],
+    availability: locked ? ('locked' as const) : ('available' as const),
+    unmetPrerequisites: locked ? quests[0].unmetPrerequisites : [],
   };
-}
-
-function completionIsCurrent(
-  quest: PublishedQuest,
-  contentVersion: string,
-  assessmentVersion: string,
-): boolean {
-  const active = quest.activeSnapshot.metadata;
-  let content = contentVersion;
-  let assessment = assessmentVersion;
-  const visited = new Set<string>();
-  while (
-    content !== active.contentVersion ||
-    assessment !== active.assessmentVersion
-  ) {
-    const key = `${content}:${assessment}`;
-    if (visited.has(key)) return false;
-    visited.add(key);
-    const transition = quest.metadata.transitions.find(
-      (item) => item.from === content && item.fromAssessment === assessment,
-    );
-    if (
-      !transition ||
-      transition.compatibility !== 'compatible' ||
-      transition.curriculumReview !== 'approved' ||
-      transition.technicalReview !== 'approved'
-    )
-      return false;
-    content = transition.to;
-    assessment = transition.toAssessment;
-  }
-  return true;
 }
 
 @Injectable()
@@ -199,6 +177,7 @@ export class ProgressService {
   ): Promise<ActivityResponseDto> {
     const { journey, chapter, quest } = this.locateQuest(slug);
     this.checkVersion(quest, body.contentVersion);
+    await this.requireAvailable(userId, quest.metadata.id);
     const versionId = await this.ensureVersion(userId, journey, chapter, quest);
     const db = this.connection.database;
     await db
@@ -230,6 +209,7 @@ export class ProgressService {
     this.checkVersion(quest, body.contentVersion);
     if (!['question', 'concept', 'nextStep'].includes(body.hintKey))
       throw new ConflictException('Published hint not found');
+    await this.requireAvailable(userId, quest.metadata.id);
     const versionId = await this.ensureVersion(userId, journey, chapter, quest);
     const db = this.connection.database;
     await db
@@ -329,6 +309,24 @@ export class ProgressService {
           ),
         ),
     ]);
+    const catalogById = new Map(
+      catalogQuests.map((quest) => [quest.metadata.id, quest]),
+    );
+    const currentCompletedIds = new Set(
+      completions
+        .filter((row) => {
+          const published = catalogById.get(row.questId);
+          return (
+            published !== undefined &&
+            completionIsCurrent(
+              published,
+              row.contentVersion,
+              row.assessmentVersion,
+            )
+          );
+        })
+        .map((row) => row.questId),
+    );
     return catalogQuests.map((quest) => {
       const id = quest.metadata.id;
       const startDates = starts
@@ -354,6 +352,11 @@ export class ProgressService {
         ...attemptDates,
       ]);
       const completedAt = currentCompletion?.at.toISOString() ?? null;
+      const unmet = unmetPrerequisites(
+        quest,
+        this.catalog,
+        currentCompletedIds,
+      );
       return {
         questId: id,
         status: currentCompletion
@@ -379,19 +382,44 @@ export class ProgressService {
             )
             .map((row) => row.hintKey),
         ).size,
+        availability: unmet.length ? 'locked' : 'available',
+        unmetPrerequisites: unmet,
       };
     });
   }
 
+  private allProgress(userId: string): Promise<QuestProgressDto[]> {
+    return this.questsProgress(userId, publishedQuests(this.catalog));
+  }
+
+  private async requireAvailable(
+    userId: string,
+    questId: string,
+  ): Promise<void> {
+    const progress = await this.allProgress(userId);
+    if (
+      progress.find((quest) => quest.questId === questId)?.availability !==
+      'available'
+    )
+      throw new ConflictException(
+        'Complete published prerequisites before continuing',
+      );
+  }
+
   async quest(userId: string, slug: string): Promise<QuestProgressDto> {
-    return (
-      await this.questsProgress(userId, [this.locateQuest(slug).quest])
-    )[0];
+    const id = this.locateQuest(slug).quest.metadata.id;
+    const progress = await this.allProgress(userId);
+    const result = progress.find((quest) => quest.questId === id);
+    if (!result) throw new NotFoundException('Published quest not found');
+    return result;
   }
 
   async chapter(userId: string, slug: string): Promise<ChapterProgressDto> {
     const chapter = this.locateChapter(slug);
-    const progress = await this.questsProgress(userId, chapter.quests);
+    const ids = new Set(chapter.quests.map((quest) => quest.metadata.id));
+    const progress = (await this.allProgress(userId)).filter((quest) =>
+      ids.has(quest.questId),
+    );
     return {
       chapterId: chapter.metadata.id,
       ...aggregate(progress),
@@ -401,9 +429,13 @@ export class ProgressService {
 
   async journey(userId: string, slug: string): Promise<JourneyProgressDto> {
     const journey = this.locateJourney(slug);
-    const all = await this.questsProgress(
-      userId,
-      journey.chapters.flatMap((chapter) => chapter.quests),
+    const ids = new Set(
+      journey.chapters.flatMap((chapter) =>
+        chapter.quests.map((quest) => quest.metadata.id),
+      ),
+    );
+    const all = (await this.allProgress(userId)).filter((quest) =>
+      ids.has(quest.questId),
     );
     const chaptersProgress = journey.chapters.map((chapter) => {
       const ids = new Set(chapter.quests.map((quest) => quest.metadata.id));

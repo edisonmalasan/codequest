@@ -27,6 +27,7 @@ import {
   buildJourneyCourseMap,
   chapterStatusLabel,
   emptyCompletionSnapshot,
+  hasCompleteAcceptedAvailability,
   type JourneyCourseMap,
 } from './journey-course-model';
 
@@ -168,7 +169,13 @@ export function JourneyPageView({
           </h2>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             {chapters.map(
-              ({ chapter, completedQuests, totalQuests, status }) => (
+              ({
+                chapter,
+                completedQuests,
+                totalQuests,
+                status,
+                unmetPrerequisites,
+              }) => (
                 <ChapterCard
                   key={chapter.id}
                   title={chapter.title}
@@ -177,7 +184,11 @@ export function JourneyPageView({
                   artworkSrc={WORLD_ART}
                   completedQuests={completedQuests}
                   totalQuests={totalQuests}
-                  statusText={chapterStatusLabel(status)}
+                  statusText={
+                    status === 'locked' && unmetPrerequisites.length
+                      ? `Locked · requires ${unmetPrerequisites.map((item) => item.title).join(', ')}`
+                      : chapterStatusLabel(status)
+                  }
                   onOpen={() => focusChapter(chapter.slug)}
                   className="max-w-none"
                 />
@@ -212,7 +223,7 @@ export function JourneyPageView({
                   description={chapter.objectiveSummary}
                   artworkSrc={WORLD_ART}
                 >
-                  {quests.map(({ quest, status }) => (
+                  {quests.map(({ quest, status, unmetPrerequisites }) => (
                     <QuestNode
                       key={quest.id}
                       status={status}
@@ -222,7 +233,7 @@ export function JourneyPageView({
                           ? undefined
                           : `/quests/${encodeURIComponent(quest.slug)}`
                       }
-                      description={`${difficultyLabel(quest.difficulty)} · ${quest.xpAward} XP${quest.guestEligible ? ' · Guest quest' : ''}`}
+                      description={`${difficultyLabel(quest.difficulty)} · ${quest.xpAward} XP${quest.guestEligible ? ' · Guest quest' : ''}${status === 'locked' && unmetPrerequisites.length ? ` · Requires ${unmetPrerequisites.map((item) => item.title).join(', ')}` : ''}${status === 'locked' && !quest.guestEligible && model.completionAuthority !== 'accepted' ? ' · Sign in to practice' : ''}`}
                     />
                   ))}
                 </QuestPath>
@@ -416,17 +427,25 @@ export function JourneyPageClient({
       />
     );
 
+  if (
+    session.ownerId !== null &&
+    progressQuery.data &&
+    !hasCompleteAcceptedAvailability(query.data, progressQuery.data)
+  )
+    return (
+      <JourneyFailure
+        error={new Error('Protected availability is incomplete')}
+        retry={() => {
+          void progressQuery.refetch();
+        }}
+      />
+    );
+
   const completion =
     session.ownerId !== null && progressQuery.data
       ? {
           authority: 'accepted' as const,
-          completedQuestIds: new Set(
-            progressQuery.data.chapters.flatMap((chapter) =>
-              chapter.quests
-                .filter((quest) => quest.status === 'completed')
-                .map((quest) => quest.questId),
-            ),
-          ),
+          progress: progressQuery.data,
         }
       : emptyCompletionSnapshot;
   const model = buildJourneyCourseMap(query.data, completion);

@@ -536,6 +536,14 @@ export interface components {
             /** @enum {string} */
             hintKey: "question" | "concept" | "nextStep";
         };
+        UnmetPrerequisiteDto: {
+            /** @example Q01 */
+            questId: string;
+            /** @example first-message */
+            slug: string;
+            /** @example First message */
+            title: string;
+        };
         QuestProgressDto: {
             /** @example Q01 */
             questId: string;
@@ -549,6 +557,9 @@ export interface components {
             lastActivityAt: string | null;
             attemptCount: number;
             hintCount: number;
+            /** @enum {string} */
+            availability: "available" | "locked";
+            unmetPrerequisites: components["schemas"]["UnmetPrerequisiteDto"][];
         };
         ChapterProgressDto: {
             /** @example CH01 */
@@ -559,6 +570,9 @@ export interface components {
             totalQuests: number;
             percentage: number;
             quests: components["schemas"]["QuestProgressDto"][];
+            /** @enum {string} */
+            availability: "available" | "locked";
+            unmetPrerequisites: components["schemas"]["UnmetPrerequisiteDto"][];
         };
         JourneyProgressDto: {
             /** @example JAVASCRIPT-FOUNDATIONS */
@@ -569,6 +583,9 @@ export interface components {
             totalQuests: number;
             percentage: number;
             chapters: components["schemas"]["ChapterProgressDto"][];
+            /** @enum {string} */
+            availability: "available" | "locked";
+            unmetPrerequisites: components["schemas"]["UnmetPrerequisiteDto"][];
         };
         XpTotalDto: {
             totalXp: number;
