@@ -441,6 +441,8 @@ export const xpEvents = codequestSchema.table(
     id: uuid('id').defaultRandom().primaryKey(),
     userId: uuid('user_id').notNull(),
     questId: text('quest_id').notNull(),
+    sourceType: text('source_type').notNull(),
+    sourceId: text('source_id').notNull(),
     amount: integer('amount').notNull(),
     awardedAt: timestamp('awarded_at', { withTimezone: true })
       .defaultNow()
@@ -448,6 +450,11 @@ export const xpEvents = codequestSchema.table(
   },
   (table) => [
     unique('xp_events_owner_quest_unique').on(table.userId, table.questId),
+    unique('xp_events_owner_source_unique').on(
+      table.userId,
+      table.sourceType,
+      table.sourceId,
+    ),
     foreignKey({
       name: 'xp_events_completion_fk',
       columns: [table.userId, table.questId],
@@ -458,6 +465,10 @@ export const xpEvents = codequestSchema.table(
     index('xp_events_quest_idx').on(table.questId),
     index('xp_events_owner_time_idx').on(table.userId, table.awardedAt),
     check('xp_events_amount_positive', sql`${table.amount} > 0`),
+    check(
+      'xp_events_quest_source_consistent',
+      sql`${table.sourceType} = 'quest_completion' AND ${table.sourceId} = ${table.questId}`,
+    ),
   ],
 );
 

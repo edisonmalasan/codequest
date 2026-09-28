@@ -244,6 +244,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/xp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own accepted personal-learning XP total */
+        get: operations["XpController_total_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health": {
         parameters: {
             query?: never;
@@ -514,6 +531,11 @@ export interface components {
             totalQuests: number;
             percentage: number;
             chapters: components["schemas"]["ChapterProgressDto"][];
+        };
+        XpTotalDto: {
+            totalXp: number;
+            /** @example true */
+            clientReported: boolean;
         };
         HealthResponseDto: {
             /**
@@ -1546,6 +1568,43 @@ export interface operations {
                 headers: {
                     /** @description Correlated request ID */
                     "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    XpController_total_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["XpTotalDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
                     [name: string]: unknown;
                 };
                 content: {

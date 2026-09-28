@@ -1,5 +1,11 @@
 # Gamification principles and policies
 
+## Phase 19 implemented XP
+
+The backend now writes one `xp_events` row in the same transaction as an authenticated learner's **first accepted** completion of a stable quest ID. That row records the verified owner, `quest_completion` source type, stable quest ID as source ID, positive XP from the published snapshot, and server award time. A database unique constraint on owner and source prevents repeat awards even when a later practice submit uses a new event ID. Exact retries, failed reports, local Check, starts, and hints add no XP. Awards remain in the ledger if content is edited or retired. The current Q01 amount is provisional under F04; an award already recorded keeps its original amount.
+
+`GET /api/v1/xp` requires authentication and `xp:read:self`, and returns `{ totalXp, clientReported: true }`. `totalXp` is summed from the owner's ledger rows, with zero for no events; it is not stored as a separate mutable balance. The qualifier reflects [ADR 0005](adr/0005-assessment-trust-and-completion.md): completion acceptance is personal-learning policy based on a bounded client report, not independent execution proof. Accepted completions from before Phase 19 have no historical XP snapshot, so they receive no inferred backfill or replay award. F06 privacy decisions still gate real learner data collection. Levels, streaks, achievements, unlocks, broader rewards, and reward presentation remain later phases.
+
 Status: approved Phase 0 documentation. Meaningful rewards, repeat protection, derived levels and meaningful streaks are confirmed C01/C09. Concrete qualifying/replay/hint/date/unlock policies P09/P10/P14/P15 are approved in the [register](decisions.md). [Product](product.md) owns scope/glossary; [backend](backend.md) owns accepted effects; [curriculum](curriculum.md) owns instructional prerequisites.
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).

@@ -17,6 +17,7 @@ import {
   questSubmissions,
   questVersions,
   users,
+  xpEvents,
 } from '../../infrastructure/database/schema';
 import {
   CURRICULUM_CATALOG,
@@ -266,6 +267,15 @@ export class LearningService {
           .onConflictDoNothing()
           .returning({ id: questCompletions.acceptedAttemptId });
         accepted = inserted.length > 0;
+        if (accepted) {
+          await tx.insert(xpEvents).values({
+            userId,
+            questId: quest.metadata.id,
+            sourceType: 'quest_completion',
+            sourceId: quest.metadata.id,
+            amount: snapshot.metadata.xpAward,
+          });
+        }
       }
       const [{ value: attemptCount }] = await tx
         .select({ value: count() })
