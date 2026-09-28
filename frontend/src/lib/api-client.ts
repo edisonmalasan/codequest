@@ -15,6 +15,7 @@ export type ActivityResponse = components['schemas']['ActivityResponseDto'];
 export type QuestProgress = components['schemas']['QuestProgressDto'];
 export type ChapterProgress = components['schemas']['ChapterProgressDto'];
 export type JourneyProgress = components['schemas']['JourneyProgressDto'];
+export type XpTotal = components['schemas']['XpTotalDto'];
 type ErrorResponse = components['schemas']['ApiErrorResponseDto'];
 
 export type HealthResult =
@@ -171,6 +172,47 @@ function isJourneyProgress(value: unknown): value is JourneyProgress {
     Number.isSafeInteger(value.percentage) &&
     Array.isArray(value.chapters) &&
     value.chapters.every(isChapterProgress)
+  );
+}
+
+function isSafeInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value);
+}
+
+function isXpTotal(value: unknown): value is XpTotal {
+  if (!isRecord(value)) return false;
+  const {
+    totalXp,
+    level,
+    levelStartXp: start,
+    nextLevelAtXp: next,
+    xpIntoLevel: into,
+    xpToNextLevel: remaining,
+  } = value;
+  if (
+    !isSafeInteger(totalXp) ||
+    !isSafeInteger(level) ||
+    !isSafeInteger(start) ||
+    !isSafeInteger(next) ||
+    !isSafeInteger(into) ||
+    !isSafeInteger(remaining)
+  )
+    return false;
+  const span = next - start;
+  return (
+    totalXp >= 0 &&
+    level >= 1 &&
+    start >= 0 &&
+    span > 0 &&
+    into >= 0 &&
+    into < span &&
+    remaining === span - into &&
+    totalXp === start + into &&
+    start === (level - 1) * span &&
+    typeof value.curveId === 'string' &&
+    value.curveId.length > 0 &&
+    typeof value.curveProvisional === 'boolean' &&
+    value.clientReported === true
   );
 }
 
@@ -445,6 +487,17 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
     },
     establishAccount(signal?: AbortSignal): Promise<AccountResult> {
       return accountRequest('PUT', signal);
+    },
+    getXp(signal?: AbortSignal): Promise<ProtectedApiResult<XpTotal>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/xp', {
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isXpTotal,
+        signal,
+      );
     },
     getJourneys(
       signal?: AbortSignal,
