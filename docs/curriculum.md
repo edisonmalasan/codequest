@@ -106,6 +106,8 @@ Confirmed C05: Git-first content under `backend/content/`; backend owns availabl
 
 Use stable quest IDs separate from slug/title; record content and assessment version with submitted snapshots. Compatibility windows and mappings are explicit backend curriculum policy, not client guesses. Existing completion history and one-reward-per-stable-ID semantics survive editorial/version updates (P09). Reissuing a materially new learning objective/reward needs an explicit new identity and review, not accidental content-version XP farming.
 
+Published `prerequisiteQuestIds` are the Phase 22 unlock relationship. The backend checks each required stable quest ID against the authenticated learner's accepted completion and the prerequisite's active or approved compatible assessment version. It returns the current published title and slug for unmet requirements. A completion can remain in history and retain XP while no longer satisfying a changed prerequisite; a reviewed compatible transition preserves eligibility without rewriting that history. Minimum mastery, XP, and achievement gates remain deferred under F08.
+
 Current journey progress derives from active requirements, with obsolete/history completion shown separately; map any accepted historical equivalent deliberately. No silent percentage denominator changes. Pending guest/offline work can be accepted only against a supported compatible assessment/version and prerequisite policy; otherwise explain rejection and preserve draft for current-version retry. Compatibility-window duration and exact data schema are later F03 decisions.
 
 ## Approved baseline and deferrals

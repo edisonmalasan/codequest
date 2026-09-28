@@ -209,6 +209,8 @@ describe('CodeQuest typed API client', () => {
       return jsonResponse({
         journeyId: 'JAVASCRIPT-FOUNDATIONS',
         status: 'completed',
+        availability: 'available',
+        unmetPrerequisites: [],
         completedQuests: 1,
         totalQuests: 1,
         percentage: 100,
@@ -216,6 +218,8 @@ describe('CodeQuest typed API client', () => {
           {
             chapterId: 'CH01',
             status: 'completed',
+            availability: 'available',
+            unmetPrerequisites: [],
             completedQuests: 1,
             totalQuests: 1,
             percentage: 100,
@@ -223,6 +227,8 @@ describe('CodeQuest typed API client', () => {
               {
                 questId: 'Q01',
                 status: 'completed',
+                availability: 'available',
+                unmetPrerequisites: [],
                 startedAt: '2026-09-27T00:00:00.000Z',
                 completedAt: '2026-09-27T00:00:00.000Z',
                 lastActivityAt: '2026-09-27T00:00:00.000Z',

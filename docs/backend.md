@@ -34,7 +34,7 @@ Browser deterministic results are untrusted reports. NestJS owns policy acceptan
 | Invalid identity/version/prerequisite/payload | Explicit rejected/retry-required result; do not partially accept completion/reward |
 | Pending local pass | No account state until accepted; client labels provisional |
 
-Acceptance and first-completion XP and streak-day effects use one transaction with uniqueness guarantees. Other future unlock effects still require their own scoped implementation. If acceptance fails, do not leave completion accepted while dependent reward effects silently disappear. Explicit errors and reconciliation results let the frontend recover.
+Acceptance and first-completion XP and streak-day effects use one transaction with uniqueness guarantees. Phase 22 availability is a read-time projection of accepted completion facts and published prerequisites, so it needs no separate effect or table. If acceptance fails, do not leave completion accepted while dependent reward effects silently disappear. Explicit errors and reconciliation results let the frontend recover.
 
 ## Progress, rewards, streaks and capstone
 

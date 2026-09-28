@@ -145,6 +145,9 @@ function isQuestProgress(value: unknown): value is QuestProgress {
   return (
     isRecord(value) &&
     typeof value.questId === 'string' &&
+    (value.availability === 'available' || value.availability === 'locked') &&
+    Array.isArray(value.unmetPrerequisites) &&
+    value.unmetPrerequisites.every(isUnmetPrerequisite) &&
     ['not_started', 'in_progress', 'completed'].includes(
       String(value.status),
     ) &&
@@ -162,6 +165,9 @@ function isChapterProgress(value: unknown): value is ChapterProgress {
   return (
     isRecord(value) &&
     typeof value.chapterId === 'string' &&
+    (value.availability === 'available' || value.availability === 'locked') &&
+    Array.isArray(value.unmetPrerequisites) &&
+    value.unmetPrerequisites.every(isUnmetPrerequisite) &&
     ['not_started', 'in_progress', 'completed'].includes(
       String(value.status),
     ) &&
@@ -177,6 +183,9 @@ function isJourneyProgress(value: unknown): value is JourneyProgress {
   return (
     isRecord(value) &&
     typeof value.journeyId === 'string' &&
+    (value.availability === 'available' || value.availability === 'locked') &&
+    Array.isArray(value.unmetPrerequisites) &&
+    value.unmetPrerequisites.every(isUnmetPrerequisite) &&
     ['not_started', 'in_progress', 'completed'].includes(
       String(value.status),
     ) &&
@@ -185,6 +194,15 @@ function isJourneyProgress(value: unknown): value is JourneyProgress {
     Number.isSafeInteger(value.percentage) &&
     Array.isArray(value.chapters) &&
     value.chapters.every(isChapterProgress)
+  );
+}
+
+function isUnmetPrerequisite(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    typeof value.questId === 'string' &&
+    typeof value.slug === 'string' &&
+    typeof value.title === 'string'
   );
 }
 

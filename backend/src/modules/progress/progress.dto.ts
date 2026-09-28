@@ -19,6 +19,12 @@ export class ActivityResponseDto {
   @ApiProperty({ type: String, format: 'date-time' }) occurredAt!: string;
 }
 
+export class UnmetPrerequisiteDto {
+  @ApiProperty({ type: String, example: 'Q01' }) questId!: string;
+  @ApiProperty({ type: String, example: 'first-message' }) slug!: string;
+  @ApiProperty({ type: String, example: 'First message' }) title!: string;
+}
+
 export class QuestProgressDto {
   @ApiProperty({ type: String, example: 'Q01' }) questId!: string;
   @ApiProperty({ enum: ['not_started', 'in_progress', 'completed'] })
@@ -31,6 +37,10 @@ export class QuestProgressDto {
   lastActivityAt!: string | null;
   @ApiProperty({ type: Number }) attemptCount!: number;
   @ApiProperty({ type: Number }) hintCount!: number;
+  @ApiProperty({ enum: ['available', 'locked'] })
+  availability!: 'available' | 'locked';
+  @ApiProperty({ type: [UnmetPrerequisiteDto] })
+  unmetPrerequisites!: UnmetPrerequisiteDto[];
 }
 
 export class ChapterProgressDto {
@@ -41,6 +51,10 @@ export class ChapterProgressDto {
   @ApiProperty({ type: Number }) totalQuests!: number;
   @ApiProperty({ type: Number }) percentage!: number;
   @ApiProperty({ type: [QuestProgressDto] }) quests!: QuestProgressDto[];
+  @ApiProperty({ enum: ['available', 'locked'] })
+  availability!: 'available' | 'locked';
+  @ApiProperty({ type: [UnmetPrerequisiteDto] })
+  unmetPrerequisites!: UnmetPrerequisiteDto[];
 }
 
 export class JourneyProgressDto {
@@ -52,4 +66,8 @@ export class JourneyProgressDto {
   @ApiProperty({ type: Number }) totalQuests!: number;
   @ApiProperty({ type: Number }) percentage!: number;
   @ApiProperty({ type: [ChapterProgressDto] }) chapters!: ChapterProgressDto[];
+  @ApiProperty({ enum: ['available', 'locked'] })
+  availability!: 'available' | 'locked';
+  @ApiProperty({ type: [UnmetPrerequisiteDto] })
+  unmetPrerequisites!: UnmetPrerequisiteDto[];
 }

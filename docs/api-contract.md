@@ -14,6 +14,8 @@ pnpm api:check
 
 The hand-authored `frontend/src/lib/api-client.ts` uses `openapi-fetch` with the generated `paths` type and the existing API base URL. Health, curriculum, and account calls distinguish success, safe HTTP errors, malformed responses, network failures, and cancellation. Public health and curriculum reads send no credentials. Protected account calls obtain the current access token at call time and attach one Bearer header; that transport stays outside the learner execution compartment. See [authentication](authentication.md).
 
+Phase 22 extends protected `GET /api/v1/quests/:slug/progress`, `chapters/:slug/progress`, `journeys/:slug/progress`, and the `courses/:slug/progress` Journey alias with `availability: "available" | "locked"` and `unmetPrerequisites: { questId, slug, title }[]`. The authenticated principal supplies ownership; clients cannot submit unlock state. A new locked quest start, hint use, or attempt returns 409 without recording activity. Exact previously recorded attempt events remain idempotent after publication changes. The trusted client validates the nested response before the authenticated map uses it; a failed or incomplete protected read does not become a zero or unlocked account snapshot. Public curriculum reads and guest map navigation remain provisional.
+
 The roadmap's `packages/api-client` diagram predates [decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). The approved frontend-local path takes precedence. Frontend code must not import backend source, database schema, or raw curriculum; no root API package is justified by a second consumer today.
 
 ## Apply verification (2026-09-22)
