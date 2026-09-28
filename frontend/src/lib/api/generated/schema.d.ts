@@ -142,6 +142,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/quests/{slug}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record first activity for a published quest */
+        post: operations["ProgressController_start_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/quests/{slug}/hints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record first use of a published quest hint */
+        post: operations["ProgressController_hint_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/quests/{slug}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own quest progress */
+        get: operations["ProgressController_quest_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chapters/{slug}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own chapter progress */
+        get: operations["ProgressController_chapter_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/journeys/{slug}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own Journey progress */
+        get: operations["ProgressController_journey_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/{slug}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own Journey progress through Course alias */
+        get: operations["ProgressController_course_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health": {
         parameters: {
             query?: never;
@@ -362,6 +464,56 @@ export interface components {
         AttemptHistoryDto: {
             attemptCount: number;
             attempts: components["schemas"]["AttemptResponseDto"][];
+        };
+        StartQuestDto: {
+            /** @example 1.0.0 */
+            contentVersion: string;
+        };
+        ActivityResponseDto: {
+            /** @example Q01 */
+            questId: string;
+            /** Format: date-time */
+            occurredAt: string;
+        };
+        UseHintDto: {
+            /** @example 1.0.0 */
+            contentVersion: string;
+            /** @enum {string} */
+            hintKey: "question" | "concept" | "nextStep";
+        };
+        QuestProgressDto: {
+            /** @example Q01 */
+            questId: string;
+            /** @enum {string} */
+            status: "not_started" | "in_progress" | "completed";
+            /** Format: date-time */
+            startedAt: string | null;
+            /** Format: date-time */
+            completedAt: string | null;
+            /** Format: date-time */
+            lastActivityAt: string | null;
+            attemptCount: number;
+            hintCount: number;
+        };
+        ChapterProgressDto: {
+            /** @example CH01 */
+            chapterId: string;
+            /** @enum {string} */
+            status: "not_started" | "in_progress" | "completed";
+            completedQuests: number;
+            totalQuests: number;
+            percentage: number;
+            quests: components["schemas"]["QuestProgressDto"][];
+        };
+        JourneyProgressDto: {
+            /** @example JAVASCRIPT-FOUNDATIONS */
+            journeyId: string;
+            /** @enum {string} */
+            status: "not_started" | "in_progress" | "completed";
+            completedQuests: number;
+            totalQuests: number;
+            percentage: number;
+            chapters: components["schemas"]["ChapterProgressDto"][];
         };
         HealthResponseDto: {
             /**
@@ -1013,6 +1165,384 @@ export interface operations {
                 };
             };
             500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_start_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StartQuestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_hint_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UseHintDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_quest_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestProgressDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_chapter_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChapterProgressDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_journey_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JourneyProgressDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_course_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JourneyProgressDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
                 headers: {
                     /** @description Correlated request ID */
                     "x-request-id"?: string;

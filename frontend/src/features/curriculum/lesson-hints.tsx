@@ -6,12 +6,14 @@ const hints = [
 
 export function LessonHints({
   value,
+  onHintOpen,
 }: {
   readonly value: {
     readonly question: string;
     readonly concept: string;
     readonly nextStep: string;
   };
+  readonly onHintOpen?: (key: 'question' | 'concept' | 'nextStep') => void;
 }): React.JSX.Element {
   return (
     <section
@@ -32,6 +34,9 @@ export function LessonHints({
         {hints.map(([label, key], index) => (
           <details
             key={key}
+            onToggle={(event) => {
+              if (event.currentTarget.open) onHintOpen?.(key);
+            }}
             className="group rounded-md border border-line bg-surface-sunken open:border-reward"
           >
             <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-4 py-3 font-bold outline-none marker:content-none">

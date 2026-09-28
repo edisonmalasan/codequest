@@ -1,8 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
-import type { PublicApiResult } from '@/lib/api-client';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import type {
+  JourneyProgress,
+  ProtectedApiResult,
+  PublicApiResult,
+} from '@/lib/api-client';
 import type { CurriculumApi } from './journey-course-loader';
 import {
   flowChapterFixture,
@@ -13,6 +17,50 @@ import {
 } from './journey-course-test-data';
 import { buildJourneyCourseMap } from './journey-course-model';
 import { JourneyPageClient, JourneyPageView } from './journey-page-client';
+
+const authState = vi.hoisted<{
+  ownerId: string;
+  notify: ((id: string) => void) | null;
+}>(() => ({ ownerId: '', notify: null }));
+vi.mock('@/features/auth/supabase-browser', () => ({
+  getBrowserSupabaseClient: () => ({
+    auth: {
+      getSession: async () => ({
+        data: {
+          session: authState.ownerId
+            ? { user: { id: authState.ownerId }, access_token: 'test-token' }
+            : null,
+        },
+        error: null,
+      }),
+      onAuthStateChange: (
+        callback: (
+          event: string,
+          session: { user: { id: string } } | null,
+        ) => void,
+      ) => {
+        authState.notify = (id) =>
+          callback(
+            id ? 'SIGNED_IN' : 'SIGNED_OUT',
+            id ? { user: { id } } : null,
+          );
+        return {
+          data: {
+            subscription: {
+              unsubscribe() {
+                authState.notify = null;
+              },
+            },
+          },
+        };
+      },
+    },
+  }),
+}));
+afterEach(() => {
+  authState.ownerId = '';
+  authState.notify = null;
+});
 
 function success<T>(data: T): PublicApiResult<T> {
   return { ok: true, data, requestId: 'request-id' };
@@ -42,13 +90,25 @@ function apiFixture(): CurriculumApi {
   };
 }
 
-function renderClient(api: CurriculumApi) {
+function renderClient(
+  api: CurriculumApi,
+  progressApi?: {
+    getJourneyProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<JourneyProgress>>;
+  },
+) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   return render(
     <QueryClientProvider client={client}>
-      <JourneyPageClient slug={journeyFixture.slug} api={api} />
+      <JourneyPageClient
+        slug={journeyFixture.slug}
+        api={api}
+        progressApi={progressApi}
+      />
     </QueryClientProvider>,
   );
 }
@@ -105,6 +165,116 @@ describe('JourneyPageView', () => {
 });
 
 describe('JourneyPageClient', () => {
+  it('renders only backend-accepted owner progress and withholds failed protected reads', async () => {
+    authState.ownerId = 'current-owner';
+    const data: JourneyProgress = {
+      journeyId: journeyFixture.id,
+      status: 'in_progress',
+      completedQuests: 1,
+      totalQuests: 4,
+      percentage: 25,
+      chapters: graphFixture.chapters.map(({ chapter, quests }) => ({
+        chapterId: chapter.id,
+        status:
+          chapter.id === graphFixture.chapters[0].chapter.id
+            ? 'in_progress'
+            : 'not_started',
+        completedQuests:
+          chapter.id === graphFixture.chapters[0].chapter.id ? 1 : 0,
+        totalQuests: quests.length,
+        percentage: chapter.id === graphFixture.chapters[0].chapter.id ? 50 : 0,
+        quests: quests.map((quest) => ({
+          questId: quest.id,
+          status: quest.id === 'Q01' ? 'completed' : 'not_started',
+          startedAt: null,
+          completedAt: null,
+          lastActivityAt: null,
+          attemptCount: 0,
+          hintCount: 0,
+        })),
+      })),
+    };
+    const getJourneyProgress = vi.fn(async () => ({
+      ok: true as const,
+      data,
+      requestId: 'progress-request',
+    }));
+    renderClient(apiFixture(), { getJourneyProgress });
+    expect(
+      await screen.findByText('Overall journey progress: 1 / 4'),
+    ).toBeDefined();
+    expect(
+      screen.getByText(/backend-accepted personal-learning progress/i),
+    ).toBeDefined();
+    expect(getJourneyProgress).toHaveBeenCalledWith(
+      journeyFixture.slug,
+      expect.any(AbortSignal),
+    );
+    act(() => {
+      authState.ownerId = '';
+      authState.notify?.('');
+    });
+    expect(
+      await screen.findByText('Overall journey progress: 0 / 4'),
+    ).toBeDefined();
+    expect(screen.getByText(/Sign in to see saved progress/i)).toBeDefined();
+  });
+
+  it('does not present a false zero snapshot when protected progress fails', async () => {
+    authState.ownerId = 'current-owner';
+    renderClient(apiFixture(), {
+      getJourneyProgress: async () => ({ ok: false, kind: 'network' }),
+    });
+    expect(
+      await screen.findByRole('heading', { name: 'Journey unavailable' }),
+    ).toBeDefined();
+    expect(screen.queryByText('Overall journey progress: 0 / 4')).toBeNull();
+  });
+
+  it('retries a failed protected progress read', async () => {
+    authState.ownerId = 'current-owner';
+    const data: JourneyProgress = {
+      journeyId: journeyFixture.id,
+      status: 'not_started',
+      completedQuests: 0,
+      totalQuests: 4,
+      percentage: 0,
+      chapters: graphFixture.chapters.map(({ chapter, quests }) => ({
+        chapterId: chapter.id,
+        status: 'not_started',
+        completedQuests: 0,
+        totalQuests: quests.length,
+        percentage: 0,
+        quests: quests.map((quest) => ({
+          questId: quest.id,
+          status: 'not_started',
+          startedAt: null,
+          completedAt: null,
+          lastActivityAt: null,
+          attemptCount: 0,
+          hintCount: 0,
+        })),
+      })),
+    };
+    const getJourneyProgress = vi
+      .fn<
+        NonNullable<Parameters<typeof renderClient>[1]>['getJourneyProgress']
+      >()
+      .mockResolvedValueOnce({ ok: false, kind: 'network' })
+      .mockResolvedValue({ ok: true, data, requestId: 'retry' });
+    renderClient(apiFixture(), { getJourneyProgress });
+    expect(
+      await screen.findByRole('heading', { name: 'Journey unavailable' }),
+    ).toBeDefined();
+    await userEvent
+      .setup()
+      .click(screen.getByRole('button', { name: 'Retry Journey' }));
+    expect(
+      await screen.findByText('Overall journey progress: 0 / 4'),
+    ).toBeDefined();
+    expect(getJourneyProgress).toHaveBeenCalledTimes(2);
+  });
+
   it('loads the generated curriculum graph and reports the honest empty snapshot', async () => {
     const api = apiFixture();
     renderClient(api);
@@ -117,7 +287,7 @@ describe('JourneyPageClient', () => {
       }),
     ).toBeDefined();
     expect(screen.getByText('Overall journey progress: 0 / 4')).toBeDefined();
-    expect(screen.getByText(/Saved progress is not loaded/i)).toBeDefined();
+    expect(screen.getByText(/Sign in to see saved progress/i)).toBeDefined();
     expect(api.getJourney).toHaveBeenCalledTimes(1);
   });
 

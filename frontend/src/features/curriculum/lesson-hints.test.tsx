@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { LessonHints } from './lesson-hints';
 
 describe('LessonHints', () => {
   it('reveals native disclosures progressively', async () => {
     const user = userEvent.setup();
+    const onHintOpen = vi.fn();
     render(
       <LessonHints
+        onHintOpen={onHintOpen}
         value={{
           question: 'Read the output.',
           concept: 'A string is text.',
@@ -31,9 +33,13 @@ describe('LessonHints', () => {
     expect(nextStep?.hasAttribute('open')).toBe(false);
     await user.click(questionSummary);
     expect(question?.hasAttribute('open')).toBe(true);
+    expect(onHintOpen).toHaveBeenCalledWith('question');
+    await user.click(questionSummary);
+    expect(onHintOpen).toHaveBeenCalledTimes(1);
     expect(concept?.hasAttribute('open')).toBe(false);
     await user.click(conceptSummary);
     expect(concept?.hasAttribute('open')).toBe(true);
+    expect(onHintOpen).toHaveBeenLastCalledWith('concept');
     expect(nextStep?.hasAttribute('open')).toBe(false);
   });
 });
