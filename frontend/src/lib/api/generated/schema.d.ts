@@ -159,6 +159,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/guest-import/{questId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import a provisional guest check into this account */
+        post: operations["GuestImportController_importOne_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/quests/{slug}/start": {
         parameters: {
             query?: never;
@@ -1214,6 +1231,105 @@ export interface operations {
             };
             path: {
                 slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAttemptDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttemptResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            429: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    GuestImportController_importOne_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                questId: string;
             };
             cookie?: never;
         };

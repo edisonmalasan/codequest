@@ -834,6 +834,7 @@ describe('EditorWorkspace', () => {
   });
 
   it('checks an immutable source snapshot and clears stale local results on edit', async () => {
+    const onCheckComplete = vi.fn();
     const pending: Array<(value: ValidationResult) => void> = [];
     const strategy: ValidationStrategy = {
       validate: vi.fn(
@@ -862,6 +863,7 @@ describe('EditorWorkspace', () => {
         draftRepository={new MemoryDraftRepository()}
         validationStrategy={strategy}
         validationDefinition={definition}
+        onCheckComplete={onCheckComplete}
       />,
     );
     await screen.findByText('Starter source ready');
@@ -887,6 +889,7 @@ describe('EditorWorkspace', () => {
       }),
     );
     expect(screen.queryByText(/Local check passed/)).toBeNull();
+    expect(onCheckComplete).not.toHaveBeenCalled();
     await user.click(screen.getByRole('button', { name: 'Check' }));
     expect(strategy.validate).toHaveBeenLastCalledWith(
       expect.objectContaining({ source: "console.log('ready');" }),
@@ -905,6 +908,10 @@ describe('EditorWorkspace', () => {
       }),
     );
     expect(await screen.findByText(/Local check passed/)).toBeDefined();
+    expect(onCheckComplete).toHaveBeenCalledWith({
+      source: "console.log('ready');",
+      validation: expect.objectContaining({ checkId: 'fresh' }),
+    });
     expect(screen.getByText(/unverified, no progress recorded/)).toBeDefined();
   });
 

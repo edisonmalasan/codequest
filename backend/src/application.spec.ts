@@ -333,6 +333,7 @@ describe('backend HTTP foundation', () => {
       '/api/v1/chapters/{slug}/progress',
       '/api/v1/courses/{slug}',
       '/api/v1/courses/{slug}/progress',
+      '/api/v1/guest-import/{questId}',
       '/api/v1/health',
       '/api/v1/journeys',
       '/api/v1/journeys/{slug}',
@@ -439,6 +440,15 @@ describe('backend HTTP foundation', () => {
     });
     expect(start.statusCode).toBe(401);
     expect(start.body).not.toContain('00000000-0000-4000-8000-000000000099');
+    const guestImport = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/guest-import/Q01',
+      payload: { userId: '00000000-0000-4000-8000-000000000099' },
+    });
+    expect(guestImport.statusCode).toBe(401);
+    expect(guestImport.body).not.toContain(
+      '00000000-0000-4000-8000-000000000099',
+    );
   });
 
   it('returns a correlated normalized response after the request limit', async () => {

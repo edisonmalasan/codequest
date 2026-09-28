@@ -16,6 +16,11 @@ import {
   type ValidationStrategy,
 } from '@/features/validation';
 import { createCodequestApi, type QuestDetail } from '@/lib/api-client';
+import {
+  guestLearningRepository,
+  isGuestQuestId,
+  type GuestProgress,
+} from './guest-learning';
 
 type SubmissionState =
   | { status: 'idle' | 'submitting' }
@@ -70,6 +75,12 @@ export function QuestWorkspace({
   const [submission, setSubmission] = useState<SubmissionState>({
     status: 'idle',
   });
+  const [guestProgress, setGuestProgress] = useState<GuestProgress | null>(
+    null,
+  );
+  const [guestStorageError, setGuestStorageError] = useState(false);
+  const [guestSaving, setGuestSaving] = useState(false);
+  const guestAllowed = quest.guestEligible && isGuestQuestId(quest.id);
   const pendingEventRef = useRef<{ key: string; id: string } | null>(null);
   const definition = useMemo(() => questValidationDefinition(quest), [quest]);
   const file = useMemo(
@@ -100,6 +111,51 @@ export function QuestWorkspace({
       void checker?.dispose();
     };
   }, []);
+
+  useEffect(() => {
+    if (!ready || ownerId !== null || !guestAllowed) return;
+    let active = true;
+    void guestLearningRepository.start(quest.id).then(
+      (progress) => {
+        if (active) setGuestProgress(progress);
+      },
+      () => {
+        if (active) setGuestStorageError(true);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, [ready, ownerId, guestAllowed, quest.id]);
+
+  async function recordGuestCheck(snapshot: {
+    source: string;
+    validation: ValidationResult;
+  }): Promise<void> {
+    if (
+      ownerId !== null ||
+      !guestAllowed ||
+      snapshot.validation.status !== 'completed' ||
+      !snapshot.validation.passed
+    )
+      return;
+    setGuestSaving(true);
+    try {
+      const progress = await guestLearningRepository.pass(
+        quest.id,
+        quest.contentVersion,
+        quest.assessmentVersion,
+        snapshot.source,
+        snapshot.validation,
+      );
+      setGuestProgress(progress);
+      setGuestStorageError(false);
+    } catch {
+      setGuestStorageError(true);
+    } finally {
+      setGuestSaving(false);
+    }
+  }
 
   useEffect(() => {
     let active = true;
@@ -166,6 +222,16 @@ export function QuestWorkspace({
   }
 
   if (!ready) return null;
+  if (ownerId === null && !guestAllowed)
+    return (
+      <p role="status" className="mx-auto max-w-6xl px-5 pb-16 text-sm">
+        Guest practice is limited to published Q01–Q04 quests.{' '}
+        <Link href="/login" className="underline">
+          Sign in
+        </Link>{' '}
+        to work on this quest.
+      </p>
+    );
   if (!definition)
     return <p role="status">This quest has no supported local assessment.</p>;
   return (
@@ -177,8 +243,9 @@ export function QuestWorkspace({
         Practice and submit
       </h2>
       <p className="mb-5 text-sm text-muted">
-        Run and Check stay local. Submit sends your source and check report to
-        CodeQuest for a personal-learning decision.
+        {ownerId === null
+          ? 'Run and Check stay on this device. Passing Check is provisional until you explicitly import after signup. Clearing browser data can erase it.'
+          : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
       </p>
       <EditorWorkspace
         ownerId={ownerId ?? 'guest'}
@@ -195,14 +262,35 @@ export function QuestWorkspace({
               }
             : undefined
         }
+        onCheckComplete={
+          ownerId === null
+            ? (snapshot) => {
+                void recordGuestCheck(snapshot);
+              }
+            : undefined
+        }
         onSourcesChange={() => setSubmission({ status: 'idle' })}
       />
       {ownerId === null && (
         <p className="mt-4 text-sm">
-          <Link href="/login" className="underline">
-            Sign in
+          {guestSaving &&
+            'Saving this Check on your device. Wait before leaving. '}
+          {guestProgress?.submission
+            ? 'Provisional completion saved on this device. No account XP, streak, or unlock has been accepted. '
+            : guestProgress
+              ? 'Guest activity saved on this device. Passing Check is needed for provisional completion. '
+              : 'Guest activity has not been saved on this device. '}
+          <Link href="/register?next=%2Faccount" className="underline">
+            Sign up
           </Link>{' '}
-          to submit an attempt.
+          and choose Import on your account to request acceptance.
+        </p>
+      )}
+      {guestStorageError && (
+        <p role="alert" className="mt-4 text-sm text-danger">
+          Guest progress could not be saved on this device. Your current code
+          remains editable; copy it before leaving if local storage is
+          unavailable.
         </p>
       )}
       {submission.status === 'accepted' && (

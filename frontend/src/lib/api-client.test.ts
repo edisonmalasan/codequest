@@ -275,11 +275,16 @@ describe('CodeQuest typed API client', () => {
   });
 
   it('sends a bearer only for protected attempts and rejects malformed responses', async () => {
-    const calls: Array<{ authorization: string | null; body: string }> = [];
+    const calls: Array<{
+      url: string;
+      authorization: string | null;
+      body: string;
+    }> = [];
     const fetcher: typeof fetch = async (input, init) => {
       const request =
         input instanceof Request ? input : new Request(input, init);
       calls.push({
+        url: request.url,
         authorization: request.headers.get('authorization'),
         body: await request.text(),
       });
@@ -318,6 +323,7 @@ describe('CodeQuest typed API client', () => {
     });
     expect(calls).toEqual([
       {
+        url: expect.stringContaining('/api/v1/quests/first-message/attempts'),
         authorization: 'Bearer current-token',
         body: expect.stringContaining('"source":"print()"'),
       },
@@ -327,7 +333,29 @@ describe('CodeQuest typed API client', () => {
       ok: false,
       kind: 'unauthenticated',
     });
+    await expect(
+      guest.importGuestAttempt('Q01', {
+        clientEventId: '00000000-0000-4000-8000-000000000301',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        source: 'print()',
+        report: {},
+      }),
+    ).resolves.toEqual({ ok: false, kind: 'unauthenticated' });
     expect(calls).toHaveLength(1);
+    await expect(
+      client.importGuestAttempt('Q01', {
+        clientEventId: '00000000-0000-4000-8000-000000000301',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        source: 'print()',
+        report: {},
+      }),
+    ).resolves.toMatchObject({ ok: true, data: { accepted: true } });
+    expect(calls[1]).toMatchObject({
+      url: expect.stringContaining('/api/v1/guest-import/Q01'),
+      authorization: 'Bearer current-token',
+    });
   });
   it('uses the generated health path and configured base URL without credentials', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
@@ -337,6 +365,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'
+      | '/api/v1/guest-import/{questId}'
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'
@@ -400,6 +429,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'
+      | '/api/v1/guest-import/{questId}'
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'

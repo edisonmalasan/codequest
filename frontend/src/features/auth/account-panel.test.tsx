@@ -7,6 +7,7 @@ const replace = vi.fn();
 const refresh = vi.fn();
 const signOut = vi.fn();
 const clear = vi.fn();
+const invalidateQueries = vi.fn();
 const establishAccount = vi.fn();
 const getXp = vi.fn();
 const getStreak = vi.fn();
@@ -27,7 +28,14 @@ vi.mock('./supabase-browser', () => ({
   }),
 }));
 vi.mock('@/lib/query-client', () => ({
-  getQueryClient: () => ({ clear }),
+  getQueryClient: () => ({ clear, invalidateQueries }),
+}));
+vi.mock('./guest-import-panel', () => ({
+  GuestImportPanel: ({ onImported }: { onImported: () => void }) => (
+    <button type="button" onClick={onImported}>
+      Simulate confirmed import
+    </button>
+  ),
 }));
 vi.mock('@/lib/api-client', () => ({
   createCodequestApi: () => ({
@@ -150,5 +158,18 @@ describe('AccountPanel', () => {
     );
     expect(await screen.findByText(/Level 3/)).toBeDefined();
     expect(getXp).toHaveBeenCalledTimes(2);
+  });
+
+  it('refreshes accepted account views after a confirmed import', async () => {
+    const user = userEvent.setup();
+    render(<AccountPanel email="learner@example.test" />);
+    await screen.findByText('UTC');
+    await user.click(
+      screen.getByRole('button', { name: 'Simulate confirmed import' }),
+    );
+    await waitFor(() => expect(getXp).toHaveBeenCalledTimes(2));
+    expect(getStreak).toHaveBeenCalledTimes(2);
+    expect(invalidateQueries).toHaveBeenCalledOnce();
+    expect(refresh).toHaveBeenCalledOnce();
   });
 });

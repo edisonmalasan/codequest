@@ -200,6 +200,50 @@ describe('authoritative attempt persistence', () => {
     });
   });
 
+  it('imports only the published guest stable ID through normal acceptance and replay', async () => {
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000299',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: "console.log('guest')",
+      report: REPORT,
+    };
+    await expect(
+      service.importGuest(USER_A, 'Q02', body),
+    ).rejects.toMatchObject({ status: 404 });
+    await expect(
+      service.importGuest(USER_A, 'Q05', body),
+    ).rejects.toMatchObject({ status: 404 });
+    await expect(
+      service.importGuest(USER_A, 'Q01', {
+        ...body,
+        assessmentVersion: '0.9.0',
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+    const first = await service.importGuest(USER_A, 'Q01', body);
+    expect(first).toMatchObject({
+      questId: 'Q01',
+      accepted: true,
+      attemptCount: 1,
+    });
+    expect(await service.importGuest(USER_A, 'Q01', body)).toEqual(first);
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(1);
+    expect(
+      (await client.query('select user_id from codequest.streak_activity_days'))
+        .rows,
+    ).toHaveLength(1);
+    const repeat = await service.importGuest(USER_A, 'Q01', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000298',
+    });
+    expect(repeat.accepted).toBe(false);
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(1);
+  });
+
   it('rejects conflicting replay, wrong version, and forged pass before persistence', async () => {
     const body = {
       clientEventId: '00000000-0000-4000-8000-000000000203',

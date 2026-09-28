@@ -639,6 +639,23 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
         signal,
       );
     },
+    importGuestAttempt(
+      questId: string,
+      body: CreateAttemptRequest,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<AttemptResponse>> {
+      return learningRequest(
+        (token) =>
+          client.POST('/api/v1/guest-import/{questId}', {
+            params: { path: { questId } },
+            body,
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isAttemptResponse,
+        signal,
+      );
+    },
     getAttemptHistory(
       slug: string,
       signal?: AbortSignal,

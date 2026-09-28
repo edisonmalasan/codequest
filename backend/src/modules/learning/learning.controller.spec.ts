@@ -5,8 +5,10 @@ import { createAuthPrincipal } from '../identity/auth-principal';
 import { AuthenticationGuard } from '../identity/authentication.guard';
 import { AUTH_TOKEN_VERIFIER } from '../identity/auth-token-verifier';
 import { PermissionGuard } from '../identity/permission.guard';
+import { REQUIRED_PERMISSIONS } from '../identity/require-permissions';
 import { CreateAttemptDto } from './attempt.dto';
 import { LearningController } from './learning.controller';
+import { GuestImportController } from './guest-import.controller';
 import { LearningService } from './learning.service';
 
 const USER_ID = '00000000-0000-4000-8000-000000000001';
@@ -51,6 +53,45 @@ describe('learning controller boundary', () => {
       accepted: true,
     });
     const errors = await validate(body, {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+    expect(errors.map((error) => error.property)).toEqual(
+      expect.arrayContaining(['userId', 'accepted']),
+    );
+  });
+});
+
+describe('guest import controller boundary', () => {
+  it('uses only the verified owner and rejects forged body authority', async () => {
+    const importGuest = vi.fn().mockResolvedValue({ id: 'attempt' });
+    const module = await Test.createTestingModule({
+      controllers: [GuestImportController],
+      providers: [
+        { provide: LearningService, useValue: { importGuest } },
+        { provide: AuthenticationGuard, useValue: { canActivate: () => true } },
+        { provide: PermissionGuard, useValue: { canActivate: () => true } },
+        { provide: AUTH_TOKEN_VERIFIER, useValue: { verify: vi.fn() } },
+      ],
+    }).compile();
+    const controller = module.get(GuestImportController);
+    const body = Object.assign(new CreateAttemptDto(), {
+      clientEventId: '00000000-0000-4000-8000-000000000002',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'hello',
+      report: {},
+    });
+    await controller.importOne(createAuthPrincipal(USER_ID), 'Q01', body);
+    expect(importGuest).toHaveBeenCalledWith(USER_ID, 'Q01', body);
+    expect(
+      Reflect.getMetadata(REQUIRED_PERMISSIONS, controller.importOne),
+    ).toEqual(['learning:submit:self']);
+    const forged = Object.assign(new CreateAttemptDto(), body, {
+      userId: 'other',
+      accepted: true,
+    });
+    const errors = await validate(forged, {
       whitelist: true,
       forbidNonWhitelisted: true,
     });
