@@ -63,11 +63,13 @@ describe('SupabaseTokenVerifier', () => {
       permissions: [
         'account:establish:self',
         'account:read:self',
+        'account:timezone:self',
         'learning:submit:self',
         'learning:read:self',
         'progress:read:self',
         'progress:write:self',
         'xp:read:self',
+        'streaks:read:self',
       ],
     });
   });

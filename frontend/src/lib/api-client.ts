@@ -16,6 +16,7 @@ export type QuestProgress = components['schemas']['QuestProgressDto'];
 export type ChapterProgress = components['schemas']['ChapterProgressDto'];
 export type JourneyProgress = components['schemas']['JourneyProgressDto'];
 export type XpTotal = components['schemas']['XpTotalDto'];
+export type Streak = components['schemas']['StreakDto'];
 type ErrorResponse = components['schemas']['ApiErrorResponseDto'];
 
 export type HealthResult =
@@ -90,6 +91,18 @@ function isAccountResponse(value: unknown): value is AccountResponse {
     typeof value.timezone === 'string' &&
     typeof value.createdAt === 'string' &&
     typeof value.updatedAt === 'string'
+  );
+}
+
+function isStreak(value: unknown): value is Streak {
+  return (
+    isRecord(value) &&
+    Number.isInteger(value.currentStreak) &&
+    Number.isInteger(value.longestStreak) &&
+    typeof value.timezone === 'string' &&
+    (value.latestActivityDate === null ||
+      typeof value.latestActivityDate === 'string') &&
+    value.clientReported === true
   );
 }
 
@@ -487,6 +500,32 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
     },
     establishAccount(signal?: AbortSignal): Promise<AccountResult> {
       return accountRequest('PUT', signal);
+    },
+    updateTimezone(
+      timezone: string,
+      signal?: AbortSignal,
+    ): Promise<AccountResult> {
+      return learningRequest(
+        (token) =>
+          client.PUT('/api/v1/account/timezone', {
+            headers: { Authorization: `Bearer ${token}` },
+            body: { timezone },
+            signal,
+          }),
+        isAccountResponse,
+        signal,
+      );
+    },
+    getStreak(signal?: AbortSignal): Promise<ProtectedApiResult<Streak>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/streaks', {
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isStreak,
+        signal,
+      );
     },
     getXp(signal?: AbortSignal): Promise<ProtectedApiResult<XpTotal>> {
       return learningRequest(

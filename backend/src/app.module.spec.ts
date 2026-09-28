@@ -69,12 +69,12 @@ describe('AppModule', () => {
     ).toHaveLength(1);
   });
 
-  it('registers the XP module as an active backend boundary', () => {
+  it('registers XP and streaks as active backend boundaries', () => {
     expect(
       Reflect.getMetadata(MODULE_METADATA.PROVIDERS, GamificationModule),
-    ).toHaveLength(1);
+    ).toHaveLength(2);
     expect(
       Reflect.getMetadata(MODULE_METADATA.CONTROLLERS, GamificationModule),
-    ).toHaveLength(1);
+    ).toHaveLength(2);
   });
 });

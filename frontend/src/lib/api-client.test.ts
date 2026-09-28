@@ -87,6 +87,68 @@ function jsonResponse(value: unknown, status = 200): Response {
 }
 
 describe('CodeQuest typed API client', () => {
+  it('uses fresh credentials for owner streak reads and timezone updates', async () => {
+    const calls: Array<{
+      path: string;
+      authorization: string | null;
+      body: string;
+    }> = [];
+    const account: AccountResponse = {
+      id: '00000000-0000-4000-8000-000000000001',
+      timezone: 'Asia/Manila',
+      createdAt: '2026-09-22T00:00:00.000Z',
+      updatedAt: '2026-09-28T00:00:00.000Z',
+    };
+    let tokenNumber = 0;
+    const client = createCodequestApi({
+      getAccessToken: async () => `token-${++tokenNumber}`,
+      fetch: async (input) => {
+        const request = input instanceof Request ? input : new Request(input);
+        calls.push({
+          path: new URL(request.url).pathname,
+          authorization: request.headers.get('authorization'),
+          body: await request.text(),
+        });
+        return jsonResponse(
+          request.url.endsWith('/streaks')
+            ? {
+                currentStreak: 2,
+                longestStreak: 3,
+                timezone: 'Asia/Manila',
+                latestActivityDate: '2026-09-28',
+                clientReported: true,
+              }
+            : account,
+        );
+      },
+    });
+    await expect(client.updateTimezone('Asia/Manila')).resolves.toMatchObject({
+      ok: true,
+      data: account,
+    });
+    await expect(client.getStreak()).resolves.toMatchObject({
+      ok: true,
+      data: { currentStreak: 2 },
+    });
+    expect(calls).toEqual([
+      {
+        path: '/api/v1/account/timezone',
+        authorization: 'Bearer token-1',
+        body: JSON.stringify({ timezone: 'Asia/Manila' }),
+      },
+      { path: '/api/v1/streaks', authorization: 'Bearer token-2', body: '' },
+    ]);
+    const guest = createCodequestApi({
+      getAccessToken: async () => null,
+      fetch: async () => {
+        throw new Error('transported');
+      },
+    });
+    await expect(guest.getStreak()).resolves.toMatchObject({
+      ok: false,
+      kind: 'unauthenticated',
+    });
+  });
   it('reads protected derived XP and rejects malformed or unauthenticated responses', async () => {
     const authorizations: Array<string | null> = [];
     let response: Record<string, unknown> = {
@@ -264,6 +326,8 @@ describe('CodeQuest typed API client', () => {
   it('uses the generated health path and configured base URL without credentials', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
       | '/api/v1/account'
+      | '/api/v1/account/timezone'
+      | '/api/v1/streaks'
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'
@@ -325,6 +389,8 @@ describe('CodeQuest typed API client', () => {
   it('gets a fresh token for each account request and never authenticates health', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
       | '/api/v1/account'
+      | '/api/v1/account/timezone'
+      | '/api/v1/streaks'
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'

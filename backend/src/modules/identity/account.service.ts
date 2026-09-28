@@ -1,5 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { AccountResponseDto } from './account-response.dto';
+import { validateTimezone } from '../gamification/streak-policy';
 import {
   ACCOUNT_STORE,
   AccountRecord,
@@ -30,6 +31,18 @@ export class AccountService {
     if (account === undefined) {
       throw new NotFoundException('Account not established');
     }
+    return toResponse(account);
+  }
+
+  async updateTimezone(
+    userId: string,
+    timezone: string,
+  ): Promise<AccountResponseDto> {
+    const account = await this.repository.updateTimezone(
+      userId,
+      validateTimezone(timezone),
+    );
+    if (!account) throw new NotFoundException('Account not established');
     return toResponse(account);
   }
 }

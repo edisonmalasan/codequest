@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
 import { profiles, users } from '../../infrastructure/database/schema';
@@ -13,13 +13,20 @@ export interface AccountRecord {
 export interface AccountStore {
   establish(userId: string): Promise<AccountRecord>;
   findById(userId: string): Promise<AccountRecord | undefined>;
+  updateTimezone(
+    userId: string,
+    timezone: string,
+  ): Promise<AccountRecord | undefined>;
 }
 
 export const ACCOUNT_STORE = Symbol('ACCOUNT_STORE');
 
 @Injectable()
 export class AccountRepository implements AccountStore {
-  constructor(private readonly connection: DatabaseConnectionService) {}
+  constructor(
+    @Inject(DatabaseConnectionService)
+    private readonly connection: DatabaseConnectionService,
+  ) {}
 
   async establish(userId: string): Promise<AccountRecord> {
     return this.connection.database.transaction(async (transaction) => {
@@ -62,5 +69,35 @@ export class AccountRepository implements AccountStore {
       .where(eq(users.id, userId))
       .limit(1);
     return account[0];
+  }
+
+  async updateTimezone(
+    userId: string,
+    timezone: string,
+  ): Promise<AccountRecord | undefined> {
+    return this.connection.database.transaction(async (tx) => {
+      const [owner] = await tx
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.id, userId))
+        .for('update');
+      if (!owner) return undefined;
+      await tx
+        .update(profiles)
+        .set({ timezone, updatedAt: new Date() })
+        .where(eq(profiles.userId, userId));
+      const [account] = await tx
+        .select({
+          id: users.id,
+          timezone: profiles.timezone,
+          createdAt: users.createdAt,
+          updatedAt: profiles.updatedAt,
+        })
+        .from(users)
+        .innerJoin(profiles, eq(profiles.userId, users.id))
+        .where(eq(users.id, userId))
+        .limit(1);
+      return account;
+    });
   }
 }

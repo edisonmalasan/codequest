@@ -4,7 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Card } from '@/components/ui';
 import { XPBar } from '@/components/game/xp-bar';
-import { AccountResponse, createCodequestApi, XpTotal } from '@/lib/api-client';
+import {
+  AccountResponse,
+  createCodequestApi,
+  Streak,
+  XpTotal,
+} from '@/lib/api-client';
 import { getQueryClient } from '@/lib/query-client';
 import { getBrowserSupabaseClient } from './supabase-browser';
 
@@ -15,6 +20,10 @@ type LoadState =
 type XpLoadState =
   | { readonly status: 'loading' }
   | { readonly status: 'ready'; readonly xp: XpTotal }
+  | { readonly status: 'error' };
+type StreakLoadState =
+  | { readonly status: 'loading' }
+  | { readonly status: 'ready'; readonly streak: Streak }
   | { readonly status: 'error' };
 
 function accountApi(): ReturnType<typeof createCodequestApi> {
@@ -31,8 +40,27 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   const router = useRouter();
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [xpState, setXpState] = useState<XpLoadState>({ status: 'loading' });
+  const [streakState, setStreakState] = useState<StreakLoadState>({
+    status: 'loading',
+  });
+  const [timezoneInput, setTimezoneInput] = useState('UTC');
+  const [timezoneSaving, setTimezoneSaving] = useState(false);
+  const [timezoneError, setTimezoneError] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const requestGeneration = useRef(0);
+  const streakGeneration = useRef(0);
+
+  async function loadStreak(api = accountApi()): Promise<void> {
+    const generation = ++streakGeneration.current;
+    setStreakState({ status: 'loading' });
+    const result = await api.getStreak();
+    if (generation !== streakGeneration.current) return;
+    setStreakState(
+      result.ok
+        ? { status: 'ready', streak: result.data }
+        : { status: 'error' },
+    );
+  }
 
   async function loadXp(api = accountApi()): Promise<void> {
     const generation = ++requestGeneration.current;
@@ -52,7 +80,8 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
     if (generation !== requestGeneration.current) return;
     if (result.ok) {
       setState({ status: 'ready', account: result.data });
-      await loadXp(api);
+      setTimezoneInput(result.data.timezone);
+      await Promise.all([loadXp(api), loadStreak(api)]);
       return;
     }
     if (
@@ -70,6 +99,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
     void loadAccount();
     return () => {
       requestGeneration.current += 1;
+      streakGeneration.current += 1;
     };
   }, []);
 
@@ -77,12 +107,31 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
     if (signingOut) return;
     setSigningOut(true);
     requestGeneration.current += 1;
+    streakGeneration.current += 1;
     setState({ status: 'loading' });
     setXpState({ status: 'loading' });
+    setStreakState({ status: 'loading' });
     await getBrowserSupabaseClient().auth.signOut();
     getQueryClient().clear();
     router.replace('/login');
     router.refresh();
+  }
+
+  async function saveTimezone(): Promise<void> {
+    if (timezoneSaving) return;
+    const generation = requestGeneration.current;
+    setTimezoneSaving(true);
+    setTimezoneError(false);
+    const result = await accountApi().updateTimezone(timezoneInput.trim());
+    if (generation !== requestGeneration.current) return;
+    setTimezoneSaving(false);
+    if (result.ok) {
+      setState({ status: 'ready', account: result.data });
+      setTimezoneInput(result.data.timezone);
+      await loadStreak();
+    } else {
+      setTimezoneError(true);
+    }
   }
 
   return (
@@ -119,6 +168,70 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               <dd className="text-ink">{state.account.timezone}</dd>
             </div>
           </dl>
+          <form
+            className="space-y-2"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void saveTimezone();
+            }}
+          >
+            <label
+              htmlFor="learner-timezone"
+              className="block text-sm font-bold text-ink"
+            >
+              Learner timezone
+            </label>
+            <input
+              id="learner-timezone"
+              value={timezoneInput}
+              onChange={(event) => setTimezoneInput(event.target.value)}
+              className="w-full rounded border border-muted px-3 py-2 text-ink"
+              autoComplete="off"
+            />
+            <p className="text-xs text-muted">
+              Use an IANA timezone such as Asia/Manila. Changes apply only to
+              future accepted completions. Past streak days stay in their
+              original timezone. A new timezone cannot credit another day within
+              24 hours of the last credited day.
+            </p>
+            {timezoneError && (
+              <p role="alert" className="text-sm text-danger">
+                Timezone could not be saved. Check the IANA timezone and try
+                again.
+              </p>
+            )}
+            <Button type="submit" variant="secondary" loading={timezoneSaving}>
+              Save timezone
+            </Button>
+          </form>
+          <section aria-label="Learner streak" className="space-y-2 text-sm">
+            <h2 className="font-display text-lg text-ink">Learning streak</h2>
+            {streakState.status === 'loading' && (
+              <p role="status">Loading streak…</p>
+            )}
+            {streakState.status === 'error' && (
+              <div role="alert">
+                <p>Streak is unavailable.</p>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => void loadStreak()}
+                >
+                  Retry streak
+                </Button>
+              </div>
+            )}
+            {streakState.status === 'ready' && (
+              <>
+                <p>Current streak: {streakState.streak.currentStreak} days</p>
+                <p>Longest streak: {streakState.streak.longestStreak} days</p>
+                <p className="text-xs text-muted">
+                  Based on first accepted completions. Acceptance uses a
+                  client-reported personal-learning check.
+                </p>
+              </>
+            )}
+          </section>
           <section aria-label="Level progress" className="space-y-3">
             {xpState.status === 'loading' && (
               <p role="status" className="text-sm text-muted">
