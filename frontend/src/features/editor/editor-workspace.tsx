@@ -23,6 +23,10 @@ import type {
   ValidationStrategy,
 } from '@/features/validation';
 import {
+  workspacePreferenceRepository,
+  type WorkspacePreferenceRepository,
+} from '@/lib/local-persistence';
+import {
   editorDraftRepository,
   type DraftSource,
   type EditorDraftRepository,
@@ -49,6 +53,7 @@ export interface EditorWorkspaceProps {
   workspaceId: string;
   files: readonly WorkspaceFile[];
   draftRepository?: EditorDraftRepository;
+  preferenceRepository?: WorkspacePreferenceRepository;
   consoleLines?: readonly ConsoleLine[];
   testResults?: readonly WorkspaceTestResult[];
   runtimeState?: RuntimeDisplayState;
@@ -142,6 +147,7 @@ export function EditorWorkspace({
   workspaceId,
   files,
   draftRepository = editorDraftRepository,
+  preferenceRepository = workspacePreferenceRepository,
   consoleLines,
   testResults,
   runtimeState,
@@ -175,8 +181,19 @@ export function EditorWorkspace({
     files.length > 0 ? 'loading' : 'ready',
   );
   const [hydrated, setHydrated] = useState(files.length === 0);
+  const [preferenceError, setPreferenceError] = useState(false);
+  const preferenceGenerationRef = useRef(0);
+  const selectionRevisionRef = useRef(0);
   const [resetOpen, setResetOpen] = useState(false);
   const revisionRef = useRef(0);
+  const savedRevisionRef = useRef(-1);
+  const saveGenerationRef = useRef(0);
+  const queuedSaveRef = useRef<{
+    generation: number;
+    revision: number;
+    snapshot: Readonly<Record<string, string>>;
+  } | null>(null);
+  const saveInFlightRef = useRef<Promise<void> | null>(null);
   const workspaceRef = useRef<HTMLElement | null>(null);
   const executionControllerRef = useRef<AbortController | null>(null);
   const executionTokenRef = useRef(0);
@@ -202,6 +219,10 @@ export function EditorWorkspace({
 
   useEffect(() => {
     let cancelled = false;
+    saveGenerationRef.current += 1;
+    queuedSaveRef.current = null;
+    saveInFlightRef.current = null;
+    savedRevisionRef.current = -1;
     validationTokenRef.current += 1;
     validationControllerRef.current?.abort();
     setValidationResult(undefined);
@@ -210,11 +231,7 @@ export function EditorWorkspace({
     const base = starterSources(files);
     sourcesRef.current = base;
     setSources(base);
-    setActiveFileId((current) =>
-      files.some((file) => file.id === current)
-        ? current
-        : (files[0]?.id ?? ''),
-    );
+    setActiveFileId(files[0]?.id ?? '');
     setResetOpen(false);
     revisionRef.current = 0;
     if (files.length === 0) {
@@ -239,6 +256,7 @@ export function EditorWorkspace({
         sourcesRef.current = restored;
         setSources(restored);
         onSourcesChangeRef.current?.(restored);
+        savedRevisionRef.current = drafts.length > 0 ? 0 : -1;
         setSaveStatus(drafts.length > 0 ? 'saved' : 'ready');
         setHydrated(true);
       })
@@ -252,26 +270,111 @@ export function EditorWorkspace({
     };
   }, [draftRepository, fileDefinitionKey, identity]);
 
-  const persist = useCallback(
-    async (
-      snapshot: Readonly<Record<string, string>>,
-      revision: number,
-    ): Promise<void> => {
-      if (files.length === 0) return;
-      setSaveStatus('saving');
-      try {
-        await draftRepository.save(identity, sourceEntries(files, snapshot));
-        setSaveStatus(revisionRef.current === revision ? 'saved' : 'unsaved');
-      } catch {
-        setSaveStatus('failed');
-      }
+  useEffect(() => {
+    let cancelled = false;
+    const generation = ++preferenceGenerationRef.current;
+    const selectionRevision = selectionRevisionRef.current;
+    setPreferenceError(false);
+    void preferenceRepository.load(ownerId, workspaceId).then(
+      (fileId) => {
+        if (
+          !cancelled &&
+          generation === preferenceGenerationRef.current &&
+          selectionRevision === selectionRevisionRef.current &&
+          fileId &&
+          files.some((file) => file.id === fileId)
+        )
+          setActiveFileId(fileId);
+      },
+      () => {
+        if (!cancelled) setPreferenceError(true);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [ownerId, workspaceId, fileDefinitionKey, preferenceRepository]);
+
+  const queueSave = useCallback(
+    (snapshot: Readonly<Record<string, string>>, revision: number): void => {
+      if (files.length === 0 || revision <= savedRevisionRef.current) return;
+      const generation = saveGenerationRef.current;
+      queuedSaveRef.current = { generation, revision, snapshot };
+      if (saveInFlightRef.current) return;
+      const process = async (): Promise<void> => {
+        while (queuedSaveRef.current?.generation === generation) {
+          const next = queuedSaveRef.current;
+          queuedSaveRef.current = null;
+          if (next.revision <= savedRevisionRef.current) continue;
+          setSaveStatus('saving');
+          try {
+            await draftRepository.save(
+              identity,
+              sourceEntries(files, next.snapshot),
+            );
+            if (saveGenerationRef.current !== generation) return;
+            savedRevisionRef.current = next.revision;
+            setSaveStatus(
+              revisionRef.current === next.revision ? 'saved' : 'unsaved',
+            );
+          } catch {
+            if (saveGenerationRef.current !== generation) return;
+            setSaveStatus(
+              revisionRef.current === next.revision ? 'failed' : 'unsaved',
+            );
+          }
+        }
+      };
+      const pending = process();
+      saveInFlightRef.current = pending;
+      void pending.finally(() => {
+        if (saveInFlightRef.current !== pending) return;
+        saveInFlightRef.current = null;
+        const queued = queuedSaveRef.current;
+        if (queued?.generation === generation) {
+          queuedSaveRef.current = null;
+          queueSave(queued.snapshot, queued.revision);
+        }
+      });
     },
     [draftRepository, files, identity],
   );
 
   const saveCurrent = useCallback((): void => {
-    void persist(sourcesRef.current, revisionRef.current);
-  }, [persist]);
+    if (!hydrated) return;
+    queueSave(sourcesRef.current, revisionRef.current);
+  }, [hydrated, queueSave]);
+
+  const flushCurrent = useCallback((): void => {
+    if (revisionRef.current > 0) saveCurrent();
+  }, [saveCurrent]);
+
+  useEffect(() => {
+    const onHidden = () => {
+      if (document.visibilityState === 'hidden') flushCurrent();
+    };
+    const onPageHide = () => flushCurrent();
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (
+        (revisionRef.current > 0 &&
+          revisionRef.current > savedRevisionRef.current) ||
+        saveInFlightRef.current
+      ) {
+        flushCurrent();
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+    document.addEventListener('visibilitychange', onHidden);
+    window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => {
+      document.removeEventListener('visibilitychange', onHidden);
+      window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('beforeunload', onBeforeUnload);
+      flushCurrent();
+    };
+  }, [flushCurrent]);
 
   useEffect(() => {
     return () => {
@@ -488,7 +591,8 @@ export function EditorWorkspace({
     setSources(next);
     setResetOpen(false);
     onSourcesChangeRef.current?.(next);
-    void persist(next, revision);
+    setSaveStatus('unsaved');
+    queueSave(next, revision);
   };
 
   const onWorkspaceKeyDown = (event: React.KeyboardEvent): void => {
@@ -552,9 +656,26 @@ export function EditorWorkspace({
         onSelect={(id) => {
           invalidateCheck();
           setActiveFileId(id);
+          selectionRevisionRef.current += 1;
+          const generation = preferenceGenerationRef.current;
+          void preferenceRepository.save(ownerId, workspaceId, id).then(
+            () => {
+              if (generation === preferenceGenerationRef.current)
+                setPreferenceError(false);
+            },
+            () => {
+              if (generation === preferenceGenerationRef.current)
+                setPreferenceError(true);
+            },
+          );
         }}
         panelId={panelId}
       />
+      {preferenceError && (
+        <p role="status" className="px-4 text-sm text-danger sm:px-5">
+          File selection could not be saved on this device.
+        </p>
+      )}
       <div className="grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div id={panelId} role="tabpanel" className="min-w-0">
           <CodeEditor

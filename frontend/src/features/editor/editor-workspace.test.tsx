@@ -26,6 +26,7 @@ import type {
   DraftSource,
   EditorDraftRepository,
 } from './draft-repository';
+import type { WorkspacePreferenceRepository } from '@/lib/local-persistence';
 import { EditorWorkspace } from './editor-workspace';
 import { FileTabs } from './file-tabs';
 import { ConsolePanel } from './console-panel';
@@ -70,6 +71,18 @@ class MemoryDraftRepository implements EditorDraftRepository {
   async load(): Promise<DraftSource[]> {
     return this.drafts;
   }
+}
+
+class MemoryPreferenceRepository implements WorkspacePreferenceRepository {
+  readonly load = vi.fn(async (ownerId: string): Promise<string | null> =>
+    ownerId === 'owner-a' ? this.ownerAFileId : null,
+  );
+  readonly save = vi.fn(
+    async (...args: Parameters<WorkspacePreferenceRepository['save']>) => {
+      void args;
+    },
+  );
+  constructor(private readonly ownerAFileId: string | null = null) {}
 }
 
 function executionResult(
@@ -341,6 +354,32 @@ describe('EditorWorkspace', () => {
     expect(screen.getByRole('textbox').textContent).toContain('kept');
   });
 
+  it('retries a failed save without dropping the edited source', async () => {
+    const save = vi
+      .fn()
+      .mockRejectedValueOnce(new Error('quota'))
+      .mockResolvedValue(undefined);
+    const repository: EditorDraftRepository = { load: async () => [], save };
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={repository}
+        preferenceRepository={new MemoryPreferenceRepository()}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    editActiveSource("const message = 'recoverable';");
+    await user.click(screen.getByRole('button', { name: /Save locally/ }));
+    await screen.findByText(/Local save failed/);
+    expect(screen.getByRole('textbox').textContent).toContain('recoverable');
+    await user.click(screen.getByRole('button', { name: /Save locally/ }));
+    await screen.findByText('Saved on this device');
+    expect(save).toHaveBeenCalledTimes(2);
+  });
+
   it('autosaves settled edits and does not mark a newer revision saved', async () => {
     let releaseSave: (() => void) | undefined;
     const repository: EditorDraftRepository = {
@@ -383,6 +422,143 @@ describe('EditorWorkspace', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('coalesces explicit, hidden, and page-exit saves while preserving the newest edit', async () => {
+    let releaseFirst: (() => void) | undefined;
+    const save = vi
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise<void>((resolve) => {
+            releaseFirst = resolve;
+          }),
+      )
+      .mockResolvedValue(undefined);
+    const repository: EditorDraftRepository = { load: async () => [], save };
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={repository}
+        preferenceRepository={new MemoryPreferenceRepository()}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    editActiveSource("const message = 'first';");
+    await user.click(screen.getByRole('button', { name: /Save locally/ }));
+    expect(save).toHaveBeenCalledTimes(1);
+    editActiveSource("const message = 'latest';");
+    Object.defineProperty(document, 'visibilityState', {
+      configurable: true,
+      value: 'hidden',
+    });
+    try {
+      act(() => document.dispatchEvent(new Event('visibilitychange')));
+      act(() => window.dispatchEvent(new Event('pagehide')));
+      expect(save).toHaveBeenCalledTimes(1);
+      const leaving = new Event('beforeunload', { cancelable: true });
+      act(() => window.dispatchEvent(leaving));
+      expect(leaving.defaultPrevented).toBe(true);
+      await act(async () => {
+        releaseFirst?.();
+        await Promise.resolve();
+      });
+      await waitFor(() => expect(save).toHaveBeenCalledTimes(2));
+      expect(save.mock.calls[1]?.[1]).toContainEqual({
+        fileId: 'main',
+        source: "const message = 'latest';",
+      });
+      await screen.findByText('Saved on this device');
+      act(() => window.dispatchEvent(new Event('pagehide')));
+      expect(save).toHaveBeenCalledTimes(2);
+      const cleanExit = new Event('beforeunload', { cancelable: true });
+      act(() => window.dispatchEvent(cleanExit));
+      expect(cleanExit.defaultPrevented).toBe(false);
+    } finally {
+      Object.defineProperty(document, 'visibilityState', {
+        configurable: true,
+        value: 'visible',
+      });
+    }
+  });
+
+  it('restores only the current owner file preference and saves later selection', async () => {
+    const preferences = new MemoryPreferenceRepository('helper');
+    const repository = new MemoryDraftRepository();
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={repository}
+        preferenceRepository={preferences}
+      />,
+    );
+    await waitFor(() =>
+      expect(
+        screen
+          .getByRole('tab', { name: 'helper.js' })
+          .getAttribute('aria-selected'),
+      ).toBe('true'),
+    );
+    rerender(
+      <EditorWorkspace
+        ownerId="owner-b"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={repository}
+        preferenceRepository={preferences}
+      />,
+    );
+    await waitFor(() =>
+      expect(
+        screen
+          .getByRole('tab', { name: 'main.js' })
+          .getAttribute('aria-selected'),
+      ).toBe('true'),
+    );
+    await user.click(screen.getByRole('tab', { name: 'helper.js' }));
+    expect(preferences.save).toHaveBeenCalledWith(
+      'owner-b',
+      'workspace-a',
+      'helper',
+    );
+  });
+
+  it('falls back from a missing file preference and keeps source after preference storage fails', async () => {
+    const preferences: WorkspacePreferenceRepository = {
+      load: async () => 'removed-file',
+      save: async () => {
+        throw new Error('storage denied');
+      },
+    };
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="workspace-a"
+        files={files}
+        draftRepository={new MemoryDraftRepository()}
+        preferenceRepository={preferences}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    expect(
+      screen
+        .getByRole('tab', { name: 'main.js' })
+        .getAttribute('aria-selected'),
+    ).toBe('true');
+    editActiveSource("const message = 'kept';");
+    await user.click(screen.getByRole('tab', { name: 'helper.js' }));
+    await screen.findByText(
+      'File selection could not be saved on this device.',
+    );
+    await user.click(screen.getByRole('tab', { name: 'main.js' }));
+    expect(screen.getByRole('textbox').textContent).toContain('kept');
   });
 
   it('confirms reset, supports cancel, and persists the starter source', async () => {
