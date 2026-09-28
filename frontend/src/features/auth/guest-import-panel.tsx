@@ -178,7 +178,8 @@ export function GuestImportPanel({
               <p>
                 Saved version {record.contentVersion} / assessment{' '}
                 {record.assessmentVersion}.{' '}
-                {outcomes[record.questId] ?? 'Not imported'}
+                {outcomes[record.questId] ??
+                  'Import status not checked in this session'}
               </p>
               {(outcomes[record.questId] === 'retry-required' ||
                 outcomes[record.questId] === 'unavailable' ||
