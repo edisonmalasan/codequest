@@ -321,7 +321,7 @@ function isChapterDetail(value: unknown): value is ChapterDetail {
   );
 }
 
-function isQuestDetail(value: unknown): value is QuestDetail {
+export function isQuestDetail(value: unknown): value is QuestDetail {
   if (!isRecord(value) || !isQuestSummary(value)) return false;
   return (
     isRecord(value.hierarchy) &&

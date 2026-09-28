@@ -1,4 +1,5 @@
 import Dexie, { type Table } from 'dexie';
+import type { QuestDetail } from './api-client';
 
 export interface DraftRecord {
   id: string;
@@ -26,12 +27,53 @@ export interface OutboxRecord {
   createdAt: number;
 }
 
-// Local-persistence skeleton for P08 drafts/outbox vocabulary.
-// Provisional schema only: sync, merge, and acceptance logic belong to later
-// phases (F03 defers the sync mechanism). Tables are owner-isolated by index.
+export interface PendingOperationRecord {
+  eventId: string;
+  ownerId: string;
+  questId: string;
+  schemaVersion: 1;
+  operationType: 'attempt-submit';
+  contentVersion: string;
+  assessmentVersion: string;
+  payload: string;
+  createdAt: number;
+}
+
+export interface WorkspacePreferenceRecord {
+  id: string;
+  ownerId: string;
+  workspaceId: string;
+  activeFileId: string;
+  updatedAt: number;
+}
+
+export interface LessonSnapshotRecord {
+  id: string;
+  ownerId: string;
+  questId: string;
+  contentVersion: string;
+  assessmentVersion: string;
+  snapshot: QuestDetail;
+  savedAt: number;
+}
+
+export interface GuestStateRecord {
+  id: string;
+  ownerId: 'guest';
+  key: string;
+  version: number;
+  payload: string;
+  updatedAt: number;
+}
+
+// Sync, migration and acceptance remain later capabilities. Legacy outbox
+// rows have no schemaVersion and are never treated as replay-ready envelopes.
 export class CodeQuestDatabase extends Dexie {
   drafts!: Table<DraftRecord, string>;
-  outbox!: Table<OutboxRecord, string>;
+  outbox!: Table<OutboxRecord | PendingOperationRecord, string>;
+  preferences!: Table<WorkspacePreferenceRecord, string>;
+  lessonSnapshots!: Table<LessonSnapshotRecord, string>;
+  guestState!: Table<GuestStateRecord, string>;
 
   constructor(name = 'codequest') {
     super(name);
@@ -57,6 +99,15 @@ export class CodeQuestDatabase extends Dexie {
             });
           }),
       );
+    this.version(3).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId, [ownerId+createdAt]',
+      preferences: 'id, [ownerId+workspaceId], ownerId',
+      lessonSnapshots:
+        'id, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      guestState: 'id, [ownerId+key]',
+    });
   }
 }
 

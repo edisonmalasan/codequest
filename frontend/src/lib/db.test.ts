@@ -109,4 +109,40 @@ describe('local persistence skeleton', () => {
     expect(ownerEvents).toHaveLength(1);
     expect(otherEvents).toHaveLength(0);
   });
+
+  it('upgrades version-two drafts and legacy pending rows without replaying them', async () => {
+    const name = `version-two-${Date.now()}`;
+    const old = new Dexie(name);
+    old.version(2).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId',
+    });
+    await old.table('drafts').add({
+      id: 'old-draft',
+      ownerId: 'owner-a',
+      workspaceId: 'workspace-a',
+      fileId: 'main',
+      source: 'keep this source',
+      updatedAt: 5,
+    });
+    await old.table('outbox').add({
+      eventId: 'old-event',
+      ownerId: 'owner-a',
+      questId: 'Q01',
+      contentVersion: 1,
+      payload: '{}',
+      createdAt: 6,
+    });
+    old.close();
+    const database = new CodeQuestDatabase(name);
+    databases.push(database);
+    expect((await database.drafts.get('old-draft'))?.source).toBe(
+      'keep this source',
+    );
+    expect((await database.outbox.get('old-event'))?.ownerId).toBe('owner-a');
+    expect(await database.preferences.count()).toBe(0);
+    expect(await database.lessonSnapshots.count()).toBe(0);
+    expect(await database.guestState.count()).toBe(0);
+  });
 });

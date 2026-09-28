@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CodeQuestDatabase } from '@/lib/db';
 import { createDraftId, IndexedDbDraftRepository } from './draft-repository';
 
@@ -62,5 +62,23 @@ describe('IndexedDbDraftRepository', () => {
         'main file',
       ),
     ).toBe('owner%3Aone:workspace%2Fone:main%20file');
+  });
+
+  it('avoids duplicate writes and preserves a valid draft when a later save is too large', async () => {
+    const { database, repository } = setup();
+    const identity = { ownerId: 'owner-a', workspaceId: 'workspace-a' };
+    const draft = [{ fileId: 'main', source: 'safe source' }];
+    const write = vi.spyOn(database.drafts, 'bulkPut');
+    await repository.save(identity, draft);
+    const before = await database.drafts.toArray();
+    await repository.save(identity, draft);
+    expect(write).toHaveBeenCalledTimes(1);
+    expect(await database.drafts.toArray()).toEqual(before);
+    await expect(
+      repository.save(identity, [
+        { fileId: 'main', source: 'x'.repeat(65_537) },
+      ]),
+    ).rejects.toMatchObject({ kind: 'too-large' });
+    expect(await repository.load(identity, ['main'])).toEqual(draft);
   });
 });
