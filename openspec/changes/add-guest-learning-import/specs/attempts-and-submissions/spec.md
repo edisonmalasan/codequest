@@ -17,4 +17,3 @@ The backend SHALL expose a versioned protected import operation keyed by stable 
 #### Scenario: Quest is not in the guest subset
 - **WHEN** an import names an unpublished or non-guest-eligible quest ID
 - **THEN** no attempt, completion, XP, or streak fact is created
-

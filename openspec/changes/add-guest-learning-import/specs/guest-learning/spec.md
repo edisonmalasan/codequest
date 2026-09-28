@@ -53,4 +53,3 @@ The backend SHALL use the verified principal as the import owner, resolve a publ
 #### Scenario: Old guest activity is imported
 - **WHEN** a valid guest snapshot is first accepted days after its local capture
 - **THEN** any qualifying streak day uses backend acceptance time in the learner's validated timezone, with no backdating
-
