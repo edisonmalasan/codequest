@@ -16,6 +16,8 @@ import {
   quests,
   questSubmissions,
   questVersions,
+  profiles,
+  streakActivityDays,
   users,
   xpEvents,
 } from '../../infrastructure/database/schema';
@@ -36,6 +38,10 @@ import {
   NormalizedReport,
   parseStoredReport,
 } from './attempt-report';
+import {
+  canCreditChangedTimezone,
+  localDate,
+} from '../gamification/streak-policy';
 
 interface LocatedQuest {
   journey: PublishedJourney;
@@ -275,6 +281,41 @@ export class LearningService {
             sourceId: quest.metadata.id,
             amount: snapshot.metadata.xpAward,
           });
+          await tx.insert(profiles).values({ userId }).onConflictDoNothing();
+          const [profile] = await tx
+            .select({ timezone: profiles.timezone })
+            .from(profiles)
+            .where(eq(profiles.userId, userId))
+            .limit(1);
+          if (!profile) throw new Error('Learner profile unavailable');
+          const [latest] = await tx
+            .select({
+              timezone: streakActivityDays.timezone,
+              acceptedAt: streakActivityDays.acceptedAt,
+            })
+            .from(streakActivityDays)
+            .where(eq(streakActivityDays.userId, userId))
+            .orderBy(desc(streakActivityDays.acceptedAt))
+            .limit(1);
+          const date = localDate(attempt.submittedAt, profile.timezone);
+          if (
+            canCreditChangedTimezone(
+              latest,
+              profile.timezone,
+              attempt.submittedAt,
+            )
+          ) {
+            await tx
+              .insert(streakActivityDays)
+              .values({
+                userId,
+                activityDate: date,
+                timezone: profile.timezone,
+                qualifyingQuestId: quest.metadata.id,
+                acceptedAt: attempt.submittedAt,
+              })
+              .onConflictDoNothing();
+          }
         }
       }
       const [{ value: attemptCount }] = await tx

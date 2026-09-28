@@ -9,6 +9,8 @@ const signOut = vi.fn();
 const clear = vi.fn();
 const establishAccount = vi.fn();
 const getXp = vi.fn();
+const getStreak = vi.fn();
+const updateTimezone = vi.fn();
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace, refresh }),
@@ -28,7 +30,12 @@ vi.mock('@/lib/query-client', () => ({
   getQueryClient: () => ({ clear }),
 }));
 vi.mock('@/lib/api-client', () => ({
-  createCodequestApi: () => ({ establishAccount, getXp }),
+  createCodequestApi: () => ({
+    establishAccount,
+    getXp,
+    getStreak,
+    updateTimezone,
+  }),
 }));
 
 describe('AccountPanel', () => {
@@ -58,6 +65,25 @@ describe('AccountPanel', () => {
         curveProvisional: true,
       },
     });
+    getStreak.mockResolvedValue({
+      ok: true,
+      data: {
+        currentStreak: 2,
+        longestStreak: 5,
+        timezone: 'UTC',
+        latestActivityDate: '2026-09-28',
+        clientReported: true,
+      },
+    });
+    updateTimezone.mockResolvedValue({
+      ok: true,
+      data: {
+        id: '00000000-0000-4000-8000-000000000001',
+        timezone: 'Asia/Manila',
+        createdAt: '2026-09-22T00:00:00.000Z',
+        updatedAt: '2026-09-28T00:00:00.000Z',
+      },
+    });
   });
 
   it('establishes the current account and clears protected state on sign-out', async () => {
@@ -72,11 +98,42 @@ describe('AccountPanel', () => {
         .getAttribute('aria-valuenow'),
     ).toBe('35');
     expect(screen.getByText(/235 total XP/)).toBeDefined();
+    expect(await screen.findByText('Current streak: 2 days')).toBeDefined();
     expect(screen.getByText(/thresholds are provisional/)).toBeDefined();
     await user.click(screen.getByRole('button', { name: 'Sign out' }));
     await waitFor(() => expect(signOut).toHaveBeenCalledTimes(1));
     expect(clear).toHaveBeenCalledTimes(1);
     expect(replace).toHaveBeenCalledWith('/login');
+  });
+
+  it('saves the timezone and explains the prospective day rule', async () => {
+    const user = userEvent.setup();
+    render(<AccountPanel email="learner@example.test" />);
+    const input = await screen.findByRole('textbox', {
+      name: 'Learner timezone',
+    });
+    await user.clear(input);
+    await user.type(input, 'Asia/Manila');
+    await user.click(screen.getByRole('button', { name: 'Save timezone' }));
+    await waitFor(() =>
+      expect(updateTimezone).toHaveBeenCalledWith('Asia/Manila'),
+    );
+    expect(await screen.findByText('Asia/Manila')).toBeDefined();
+    expect(
+      screen.getByText(/Changes apply only to future accepted completions/),
+    ).toBeDefined();
+  });
+
+  it('keeps the current timezone on update failure', async () => {
+    updateTimezone.mockResolvedValueOnce({ ok: false, kind: 'network' });
+    const user = userEvent.setup();
+    render(<AccountPanel email="learner@example.test" />);
+    await screen.findByText('UTC');
+    await user.click(screen.getByRole('button', { name: 'Save timezone' }));
+    expect(
+      await screen.findByText(/Timezone could not be saved/),
+    ).toBeDefined();
+    expect(screen.getByText('UTC')).toBeDefined();
   });
 
   it('keeps account details and offers retry when the protected level read fails', async () => {

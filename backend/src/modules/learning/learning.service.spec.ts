@@ -19,6 +19,8 @@ import {
 } from '../curriculum/content/curriculum-catalog';
 import { LearningService } from './learning.service';
 import { XpService } from '../gamification/xp.service';
+import { localDate } from '../gamification/streak-policy';
+import { StreakService } from '../gamification/streak.service';
 
 const USER_A = '00000000-0000-4000-8000-000000000001';
 const USER_B = '00000000-0000-4000-8000-000000000002';
@@ -73,6 +75,7 @@ describe('authoritative attempt persistence', () => {
   let client: PGlite;
   let service: LearningService;
   let xp: XpService;
+  let streaks: StreakService;
   let root: string;
 
   beforeEach(async () => {
@@ -84,12 +87,14 @@ describe('authoritative attempt persistence', () => {
       providers: [
         LearningService,
         XpService,
+        StreakService,
         { provide: DatabaseConnectionService, useValue: { database } },
         { provide: CURRICULUM_CATALOG, useValue: loadCurriculumCatalog(root) },
       ],
     }).compile();
     service = module.get(LearningService);
     xp = module.get(XpService);
+    streaks = module.get(StreakService);
   });
 
   afterEach(async () => {
@@ -132,6 +137,28 @@ describe('authoritative attempt persistence', () => {
         amount: 10,
       },
     ]);
+    const days = await client.query<{
+      user_id: string;
+      activity_date: Date;
+      timezone: string;
+      accepted_at: Date;
+    }>(
+      'select user_id, activity_date, timezone, accepted_at from codequest.streak_activity_days',
+    );
+    expect(days.rows).toHaveLength(1);
+    expect(days.rows[0].user_id).toBe(USER_A);
+    expect(days.rows[0].timezone).toBe('UTC');
+    expect(days.rows[0].activity_date.toISOString().slice(0, 10)).toBe(
+      first.submittedAt.slice(0, 10),
+    );
+    expect(
+      await streaks.current(USER_A, new Date(first.submittedAt)),
+    ).toMatchObject({
+      currentStreak: 1,
+      longestStreak: 1,
+      timezone: 'UTC',
+      clientReported: true,
+    });
     expect(await service.submit(USER_A, 'first-message', body)).toEqual(first);
     const second = await service.submit(USER_A, 'first-message', {
       ...body,
@@ -157,6 +184,9 @@ describe('authoritative attempt persistence', () => {
       (await client.query('select id from codequest.xp_events')).rows,
     ).toHaveLength(1);
     expect(
+      (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(1);
+    expect(
       (await service.history(USER_A, 'first-message')).attempts.map(
         (attempt) => attempt.source,
       ),
@@ -164,6 +194,9 @@ describe('authoritative attempt persistence', () => {
     expect(await service.history(USER_B, 'first-message')).toEqual({
       attemptCount: 0,
       attempts: [],
+    });
+    await expect(streaks.current(USER_B)).rejects.toMatchObject({
+      status: 404,
     });
   });
 
@@ -198,6 +231,29 @@ describe('authoritative attempt persistence', () => {
     expect(
       (await client.query('select id from codequest.xp_events')).rows,
     ).toHaveLength(1);
+  });
+
+  it('uses a configured timezone and the backend acceptance instant', async () => {
+    await client.exec(`insert into codequest.users (id) values ('${USER_A}');
+      insert into codequest.profiles (user_id, timezone) values ('${USER_A}', 'Asia/Manila');`);
+    const result = await service.submit(USER_A, 'first-message', {
+      clientEventId: '00000000-0000-4000-8000-000000000270',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'source',
+      report: REPORT,
+    });
+    const days = await client.query<{ activity_date: Date; timezone: string }>(
+      'select activity_date, timezone from codequest.streak_activity_days',
+    );
+    expect(days.rows).toEqual([
+      {
+        activity_date: new Date(
+          `${localDate(new Date(result.submittedAt), 'Asia/Manila')}T00:00:00.000Z`,
+        ),
+        timezone: 'Asia/Manila',
+      },
+    ]);
   });
 
   it('replays an existing event after the published version changes', async () => {
@@ -319,6 +375,30 @@ describe('authoritative attempt persistence', () => {
     ).toHaveLength(0);
   });
 
+  it('rolls back completion and XP when the qualifying day cannot commit', async () => {
+    await client.exec(`
+      create function codequest.reject_streak_day() returns trigger language plpgsql as $$
+      begin raise exception 'day rejected'; end $$;
+      create trigger reject_streak_day before insert on codequest.streak_activity_days
+      for each row execute function codequest.reject_streak_day();
+    `);
+    await expect(
+      service.submit(USER_A, 'first-message', {
+        clientEventId: '00000000-0000-4000-8000-000000000271',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        source: 'source',
+        report: REPORT,
+      }),
+    ).rejects.toThrow('Failed query');
+    expect(
+      (await client.query('select id from codequest.quest_attempts')).rows,
+    ).toHaveLength(0);
+    expect(
+      (await client.query('select id from codequest.xp_events')).rows,
+    ).toHaveLength(0);
+  });
+
   it('keeps distinct owners and rejects a duplicate reward source', async () => {
     const body = {
       contentVersion: '1.0.0',
@@ -345,6 +425,17 @@ describe('authoritative attempt persistence', () => {
       totalXp: 10,
       clientReported: true,
     });
+    expect(await streaks.current(USER_A)).toMatchObject({
+      currentStreak: 1,
+      longestStreak: 1,
+    });
+    expect(await streaks.current(USER_B)).toMatchObject({
+      currentStreak: 1,
+      longestStreak: 1,
+    });
+    expect(
+      (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(2);
     expect(
       await xp.total('00000000-0000-4000-8000-000000000003'),
     ).toMatchObject({

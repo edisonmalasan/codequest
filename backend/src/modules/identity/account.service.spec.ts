@@ -14,6 +14,7 @@ function store(overrides: Partial<AccountStore> = {}): AccountStore {
   return {
     establish: vi.fn().mockResolvedValue(ACCOUNT),
     findById: vi.fn().mockResolvedValue(ACCOUNT),
+    updateTimezone: vi.fn().mockResolvedValue(ACCOUNT),
     ...overrides,
   };
 }
@@ -40,5 +41,25 @@ describe('AccountService', () => {
       status: 404,
       message: 'Account not established',
     });
+  });
+
+  it('validates timezone before updating the derived owner', async () => {
+    const accountStore = store({
+      updateTimezone: vi
+        .fn()
+        .mockResolvedValue({ ...ACCOUNT, timezone: 'Asia/Manila' }),
+    });
+    const service = new AccountService(accountStore);
+    await expect(
+      service.updateTimezone(USER_ID, 'Asia/Manila'),
+    ).resolves.toMatchObject({ timezone: 'Asia/Manila' });
+    expect(accountStore.updateTimezone).toHaveBeenCalledWith(
+      USER_ID,
+      'Asia/Manila',
+    );
+    await expect(
+      service.updateTimezone(USER_ID, '+08:00'),
+    ).rejects.toMatchObject({ status: 400 });
+    expect(accountStore.updateTimezone).toHaveBeenCalledTimes(1);
   });
 });

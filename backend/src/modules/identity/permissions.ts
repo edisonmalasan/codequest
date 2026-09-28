@@ -1,11 +1,13 @@
 export const CODEQUEST_PERMISSIONS = [
   'account:establish:self',
   'account:read:self',
+  'account:timezone:self',
   'learning:submit:self',
   'learning:read:self',
   'progress:read:self',
   'progress:write:self',
   'xp:read:self',
+  'streaks:read:self',
 ] as const;
 
 export type CodequestPermission = (typeof CODEQUEST_PERMISSIONS)[number];

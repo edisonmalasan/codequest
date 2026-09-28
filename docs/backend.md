@@ -34,7 +34,7 @@ Browser deterministic results are untrusted reports. NestJS owns policy acceptan
 | Invalid identity/version/prerequisite/payload | Explicit rejected/retry-required result; do not partially accept completion/reward |
 | Pending local pass | No account state until accepted; client labels provisional |
 
-Acceptance/progress/XP/unlock effects must be consistent as a single logical operation with uniqueness guarantees; exact transaction/idempotency implementation is deferred F03. If acceptance fails, do not leave completion accepted while dependent reward effects silently disappear. Explicit errors and reconciliation results let the frontend recover.
+Acceptance and first-completion XP and streak-day effects use one transaction with uniqueness guarantees. Other future unlock effects still require their own scoped implementation. If acceptance fails, do not leave completion accepted while dependent reward effects silently disappear. Explicit errors and reconciliation results let the frontend recover.
 
 ## Progress, rewards, streaks and capstone
 

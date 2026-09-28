@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -23,6 +24,7 @@ import { AuthenticationGuard } from './authentication.guard';
 import { CurrentPrincipal } from './current-principal';
 import { PermissionGuard } from './permission.guard';
 import { RequirePermissions } from './require-permissions';
+import { UpdateTimezoneDto } from './update-timezone.dto';
 
 const requestIdHeader = {
   'x-request-id': {
@@ -38,6 +40,21 @@ const requestIdHeader = {
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
+
+  @Put('timezone')
+  @Version('1')
+  @RequirePermissions('account:timezone:self')
+  @ApiOperation({
+    summary: 'Set own IANA timezone for future learning activity',
+  })
+  @ApiOkResponse({ type: AccountResponseDto })
+  @ApiResponse({ status: 400, type: ApiErrorResponseDto })
+  async updateTimezone(
+    @CurrentPrincipal() principal: AuthPrincipal,
+    @Body() body: UpdateTimezoneDto,
+  ): Promise<AccountResponseDto> {
+    return this.accountService.updateTimezone(principal.userId, body.timezone);
+  }
 
   @Put()
   @Version('1')

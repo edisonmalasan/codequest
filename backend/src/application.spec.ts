@@ -328,6 +328,7 @@ describe('backend HTTP foundation', () => {
     expect(document.paths).toHaveProperty('/api/v1/health');
     expect(Object.keys(document.paths).sort()).toEqual([
       '/api/v1/account',
+      '/api/v1/account/timezone',
       '/api/v1/chapters/{slug}',
       '/api/v1/chapters/{slug}/progress',
       '/api/v1/courses/{slug}',
@@ -342,6 +343,7 @@ describe('backend HTTP foundation', () => {
       '/api/v1/quests/{slug}/hints',
       '/api/v1/quests/{slug}/progress',
       '/api/v1/quests/{slug}/start',
+      '/api/v1/streaks',
       '/api/v1/xp',
     ]);
     const exported = createOpenApiDocument(app);

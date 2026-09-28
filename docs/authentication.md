@@ -40,6 +40,7 @@ Enable email/password, Google, and GitHub in the Supabase dashboard. Google and 
 - `/login` supports email/password and Google/GitHub sign-in.
 - `/auth/callback` exchanges a one-time code and redirects only to a validated local path.
 - `/account` requires a verified session, idempotently establishes the matching application user/profile through `PUT /api/v1/account`, and supports sign-out.
+- `PUT /api/v1/account/timezone` validates an authenticated learner's IANA timezone and updates only that principal's profile. It affects future accepted streak days; past days retain their recorded timezone and local date. The account page explains this and the 24-hour changed-zone credit guard.
 
 Sign-out clears Supabase session state and protected TanStack Query state. Owner identity never comes from a request body, query, route parameter, role claim, or frontend header. The protected account API has no owner selector.
 
