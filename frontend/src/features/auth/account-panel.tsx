@@ -12,6 +12,7 @@ import {
 } from '@/lib/api-client';
 import { getQueryClient } from '@/lib/query-client';
 import { getBrowserSupabaseClient } from './supabase-browser';
+import { GuestImportPanel } from './guest-import-panel';
 
 type LoadState =
   | { readonly status: 'loading' }
@@ -279,6 +280,14 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               </>
             )}
           </section>
+          <GuestImportPanel
+            accountId={state.account.id}
+            onImported={() => {
+              void Promise.all([loadXp(), loadStreak()]);
+              void getQueryClient().invalidateQueries();
+              router.refresh();
+            }}
+          />
         </>
       )}
       <Button

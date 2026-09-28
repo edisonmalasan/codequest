@@ -62,6 +62,10 @@ export interface EditorWorkspaceProps {
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+  onCheckComplete?: (snapshot: {
+    readonly source: string;
+    readonly validation: ValidationResult;
+  }) => void;
   onSubmit?: (snapshot: {
     readonly source: string;
     readonly validation: ValidationResult;
@@ -157,6 +161,7 @@ export function EditorWorkspace({
   validationDefinition,
   onSourcesChange,
   onSubmit,
+  onCheckComplete,
   submitting,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify(
@@ -529,6 +534,7 @@ export function EditorWorkspace({
           validationControllerRef.current = null;
           setChecking(false);
           setValidationResult(value);
+          onCheckComplete?.({ source, validation: value });
         },
         () => {
           if (validationTokenRef.current !== token) return;
@@ -545,7 +551,7 @@ export function EditorWorkspace({
           });
         },
       );
-  }, [activeFile, validationDefinition, validationStrategy]);
+  }, [activeFile, onCheckComplete, validationDefinition, validationStrategy]);
 
   const invalidateCheck = (): void => {
     validationTokenRef.current += 1;

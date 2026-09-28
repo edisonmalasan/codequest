@@ -25,6 +25,8 @@ DOM/HTML/CSS/event APIs, asynchronous JavaScript, classes, npm, filesystem/netwo
 
 Seven chapters, **24 instructional quests plus one capstone** (P04/P05). The capstone is a final integration quest in navigation, counted separately in the instructional total. Exact duration/difficulty labels remain balancing F04. Ordering is completion-prerequisite based (P09); Q01 is open, each numbered quest below requires the prior quest, with additional conceptual references listed for review. Q01–Q04 form the approved guest subset P07.
 
+Phase 24 guest learning consumes only published quests explicitly marked guest-eligible within Q01–Q04. The current manifest remains empty and the only authored Q01 is still draft; this implementation does not publish or invent Q02–Q04. Once reviewed content is published, guest local Checks can become provisional device records and explicit account import requests normal backend version/prerequisite acceptance. A changed or retired assessment keeps old guest source available for current-version retry.
+
 Each future quest must contain a clear objective, explanation/example, task, starter material, concepts/prerequisites, stable ID/version, deterministic criteria, graduated hints, and reward/unlock metadata. The briefs below describe that content without writing starter/test code.
 
 | Chapter / quest brief | Outcome / prerequisite | Task and scaffold | Acceptance description / hint direction |

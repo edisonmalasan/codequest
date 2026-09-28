@@ -16,6 +16,8 @@ The hand-authored `frontend/src/lib/api-client.ts` uses `openapi-fetch` with the
 
 Phase 22 extends protected `GET /api/v1/quests/:slug/progress`, `chapters/:slug/progress`, `journeys/:slug/progress`, and the `courses/:slug/progress` Journey alias with `availability: "available" | "locked"` and `unmetPrerequisites: { questId, slug, title }[]`. The authenticated principal supplies ownership; clients cannot submit unlock state. A new locked quest start, hint use, or attempt returns 409 without recording activity. Exact previously recorded attempt events remain idempotent after publication changes. The trusted client validates the nested response before the authenticated map uses it; a failed or incomplete protected read does not become a zero or unlocked account snapshot. Public curriculum reads and guest map navigation remain provisional.
 
+Phase 24 adds protected `POST /api/v1/guest-import/{questId}` with the existing `CreateAttemptDto` body and `AttemptResponseDto` result. The path uses a stable published Q01–Q04 guest-eligible ID, not a browser-supplied owner or completion decision. The backend derives the verified account and applies the normal submission rules, including version/prerequisite rejection and exact event replay. The generated frontend wrapper obtains the current token and never sends one from the learner Worker or guest-local storage.
+
 The roadmap's `packages/api-client` diagram predates [decision C04](decisions.md) and [ADR 0002](adr/0002-api-contract-and-client-ownership.md). The approved frontend-local path takes precedence. Frontend code must not import backend source, database schema, or raw curriculum; no root API package is justified by a second consumer today.
 
 ## Apply verification (2026-09-22)

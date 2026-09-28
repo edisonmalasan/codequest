@@ -74,6 +74,21 @@ export class LearningService {
     throw new NotFoundException('Published quest not found');
   }
 
+  async importGuest(
+    userId: string,
+    questId: string,
+    body: CreateAttemptDto,
+  ): Promise<AttemptResponseDto> {
+    if (!['Q01', 'Q02', 'Q03', 'Q04'].includes(questId))
+      throw new NotFoundException('Published guest quest not found');
+    for (const journey of this.catalog.journeys)
+      for (const chapter of journey.chapters)
+        for (const quest of chapter.quests)
+          if (quest.metadata.id === questId && quest.metadata.guestEligible)
+            return this.submit(userId, quest.metadata.slug, body);
+    throw new NotFoundException('Published guest quest not found');
+  }
+
   async submit(
     userId: string,
     slug: string,
