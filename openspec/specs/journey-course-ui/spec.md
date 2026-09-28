@@ -50,7 +50,7 @@ The Course map SHALL render chapters in Journey position order and each chapter'
 
 ### Requirement: Quest states are derived without inventing authority
 
-The frontend SHALL derive map presentation from published prerequisite IDs plus a supplied set of completed stable quest IDs. A completed ID SHALL render `completed`; an incomplete quest with an unmet prerequisite SHALL render `locked`; the earliest ordered eligible incomplete quest SHALL render as the active/current navigation cue; and any other eligible incomplete quest SHALL render `available`. Active/current SHALL be a map emphasis, not a stored learning status or accepted completion claim. The current Phase 11 page SHALL use an empty completion snapshot until a separately approved progress source exists, and any future provisional snapshot SHALL be labeled provisional.
+The frontend SHALL derive map presentation from published prerequisite IDs plus a supplied set of completed stable quest IDs. A completed ID SHALL render `completed`; an incomplete quest with an unmet prerequisite SHALL render `locked`; the earliest ordered eligible incomplete quest SHALL render as the active/current navigation cue; and any other eligible incomplete quest SHALL render `available`. Active/current SHALL be a map emphasis, not a stored learning status or accepted completion claim. An authenticated Journey page SHALL obtain its accepted completion snapshot from the protected backend progress response; a guest snapshot SHALL remain explicitly provisional. A failed protected read SHALL not be interpreted as an authoritative empty completion set.
 
 #### Scenario: Prerequisites determine availability
 
@@ -64,8 +64,13 @@ The frontend SHALL derive map presentation from published prerequisite IDs plus 
 
 #### Scenario: Completed state comes from supplied evidence
 
-- **WHEN** a stable quest ID appears in the supplied completion set
+- **WHEN** a stable quest ID appears in the supplied accepted completion set
 - **THEN** its node and chapter/journey counts show completion without awarding XP, persisting progress, or treating the client model as backend acceptance
+
+#### Scenario: Protected progress is unavailable
+
+- **WHEN** an authenticated Journey's protected progress read fails
+- **THEN** the page shows a recoverable unavailable state instead of asserting zero saved completion
 
 ### Requirement: Map nodes enter only approved lesson reading behavior
 
