@@ -284,5 +284,73 @@ describe('derived owner progress', () => {
       totalQuests: 1,
       percentage: 0,
     });
+    const transition = {
+      from: '1.0.0',
+      to: '2.0.0',
+      fromAssessment: '1.0.0',
+      toAssessment: '2.0.0',
+      compatibility: 'compatible' as const,
+      pendingWork: 'accept-new' as const,
+      reason: 'Equivalent assessment',
+      curriculumReview: 'approved' as const,
+      technicalReview: 'approved' as const,
+    };
+    const versioned = {
+      ...original,
+      metadata: {
+        ...original.metadata,
+        currentVersion: '2.0.0',
+        transitions: [transition],
+      },
+      activeSnapshot: {
+        ...original.activeSnapshot,
+        metadata: {
+          ...original.activeSnapshot.metadata,
+          contentVersion: '2.0.0',
+          assessmentVersion: '2.0.0',
+        },
+      },
+    };
+    expect(
+      (await (await serviceFor([versioned])).quest(USER_A, 'first-message'))
+        .status,
+    ).toBe('completed');
+    const incompatible = {
+      ...versioned,
+      metadata: {
+        ...versioned.metadata,
+        transitions: [
+          {
+            ...transition,
+            compatibility: 'incompatible' as const,
+            pendingWork: 'retry-current' as const,
+            retryGuidance: 'Retry current quest',
+          },
+        ],
+      },
+    };
+    const obsolete = await (
+      await serviceFor([incompatible])
+    ).quest(USER_A, 'first-message');
+    expect(obsolete).toMatchObject({
+      status: 'in_progress',
+      completedAt: null,
+      attemptCount: 1,
+    });
+    expect(
+      (
+        await (
+          await serviceFor([incompatible])
+        ).journey(USER_A, journey.metadata.slug)
+      ).completedQuests,
+    ).toBe(0);
+    const unmapped = {
+      ...versioned,
+      metadata: { ...versioned.metadata, transitions: [] },
+    };
+    expect(
+      (await (await serviceFor([unmapped])).quest(USER_A, 'first-message'))
+        .status,
+    ).toBe('in_progress');
   });
 });

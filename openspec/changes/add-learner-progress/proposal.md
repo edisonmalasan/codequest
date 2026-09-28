@@ -8,7 +8,7 @@ Phase 17 records private attempts and accepted personal-learning completions, bu
 
 - Record authenticated quest starts and first-use events for the three published hint keys.
 - Expose protected quest, chapter, and Journey progress reads with status, timestamps, attempt and hint counts, last activity, and derived completed/total counts and percentages. Course remains a read alias for Journey.
-- Derive status and aggregates from published curriculum plus owned start, hint, attempt, and accepted-completion facts, including existing Phase 17 attempts with no explicit start.
+- Derive status and aggregates from published curriculum plus owned start, hint, attempt, and accepted-completion facts, including existing Phase 17 attempts with no explicit start. Count historical completion toward current progress only through approved compatible version transitions.
 - Connect authenticated Journey and lesson views to the protected progress API; keep guest state clearly provisional and never send progress authority from the browser.
 - Add focused ownership, derivation, idempotency, API-contract, and frontend tests.
 

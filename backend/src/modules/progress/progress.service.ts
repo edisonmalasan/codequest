@@ -64,6 +64,38 @@ function aggregate(quests: QuestProgressDto[]) {
   };
 }
 
+function completionIsCurrent(
+  quest: PublishedQuest,
+  contentVersion: string,
+  assessmentVersion: string,
+): boolean {
+  const active = quest.activeSnapshot.metadata;
+  let content = contentVersion;
+  let assessment = assessmentVersion;
+  const visited = new Set<string>();
+  while (
+    content !== active.contentVersion ||
+    assessment !== active.assessmentVersion
+  ) {
+    const key = `${content}:${assessment}`;
+    if (visited.has(key)) return false;
+    visited.add(key);
+    const transition = quest.metadata.transitions.find(
+      (item) => item.from === content && item.fromAssessment === assessment,
+    );
+    if (
+      !transition ||
+      transition.compatibility !== 'compatible' ||
+      transition.curriculumReview !== 'approved' ||
+      transition.technicalReview !== 'approved'
+    )
+      return false;
+    content = transition.to;
+    assessment = transition.toAssessment;
+  }
+  return true;
+}
+
 @Injectable()
 export class ProgressService {
   constructor(
@@ -278,8 +310,18 @@ export class ProgressService {
         .select({
           questId: questCompletions.questId,
           at: questCompletions.acceptedAt,
+          contentVersion: questVersions.contentVersion,
+          assessmentVersion: questVersions.assessmentVersion,
         })
         .from(questCompletions)
+        .innerJoin(
+          questAttempts,
+          eq(questCompletions.acceptedAttemptId, questAttempts.id),
+        )
+        .innerJoin(
+          questVersions,
+          eq(questAttempts.questVersionId, questVersions.id),
+        )
         .where(
           and(
             eq(questCompletions.userId, userId),
@@ -297,15 +339,24 @@ export class ProgressService {
         .filter((row) => row.questId === id)
         .map((row) => row.at);
       const completion = completions.find((row) => row.questId === id);
+      const currentCompletion =
+        completion &&
+        completionIsCurrent(
+          quest,
+          completion.contentVersion,
+          completion.assessmentVersion,
+        )
+          ? completion
+          : undefined;
       const startedAt = earliest([
         ...startDates,
         ...hintRows.map((row) => row.at),
         ...attemptDates,
       ]);
-      const completedAt = completion?.at.toISOString() ?? null;
+      const completedAt = currentCompletion?.at.toISOString() ?? null;
       return {
         questId: id,
-        status: completion
+        status: currentCompletion
           ? 'completed'
           : startedAt
             ? 'in_progress'

@@ -24,7 +24,7 @@ The backend SHALL expose versioned, authenticated operations to record a first q
 
 ### Requirement: Quest progress reflects durable learning facts
 
-The backend SHALL expose a protected owner-only progress read for each published quest. It SHALL return stable quest ID, `not_started`, `in_progress`, or `completed`, nullable started/completed/last-activity timestamps, attempt count, and distinct published-hint use count. Accepted Phase 17 completion for the same owner and stable quest SHALL be the only completed signal and SHALL take precedence over starts, hints, and attempts. An owned start, hint use, or attempt SHALL make an incomplete quest `in_progress`. Started time SHALL be the earliest meaningful start, hint, or attempt; completion time SHALL be the accepted-completion server timestamp; last activity SHALL be the latest durable start, hint, attempt, or completion timestamp. Existing Phase 17 attempts without a start SHALL remain visible as in progress.
+The backend SHALL expose a protected owner-only progress read for each published quest. It SHALL return stable quest ID, `not_started`, `in_progress`, or `completed`, nullable started/completed/last-activity timestamps, attempt count, and distinct published-hint use count. An accepted Phase 17 completion for the same owner and stable quest SHALL be the only completed signal, provided its assessed version is active or reaches the active snapshot through an explicitly approved compatible publication-transition chain. An incompatible historical completion SHALL remain durable and visible in owner attempt history but SHALL NOT claim current completion. An owned start, hint use, or attempt SHALL make an incomplete quest `in_progress`. Started time SHALL be the earliest meaningful start, hint, or attempt; current completion time SHALL be the eligible accepted-completion server timestamp; last activity SHALL be the latest durable start, hint, attempt, or completion timestamp. Existing Phase 17 attempts without a start SHALL remain visible as in progress.
 
 #### Scenario: No learning fact exists
 - **WHEN** the owner reads a published quest without an activity fact
@@ -38,9 +38,13 @@ The backend SHALL expose a protected owner-only progress read for each published
 - **WHEN** a passing local Check or forged hint request occurs without backend acceptance
 - **THEN** the quest is not completed; only an accepted completion fact can produce `completed`
 
+#### Scenario: Historical completion is incompatible with current publication
+- **WHEN** an accepted completion assessed an older version with an incompatible or missing transition to the active snapshot
+- **THEN** current quest progress is `in_progress` with no current completion time, while the accepted historical attempt remains in owner history
+
 ### Requirement: Hierarchy progress is derived from current publication
 
-Protected chapter and Journey progress reads SHALL use the current published catalog as the ordered denominator and the owner's accepted stable-quest completions as the numerator. Each read SHALL return completed and total quest counts, a percentage derived as `floor(100 * completed / total)` (zero for an empty denominator), status, and ordered nested progress. Aggregate status SHALL be `completed` only when the nonempty scope is fully completed, `in_progress` when any contained quest has durable activity, and `not_started` otherwise. The Course route SHALL be a read-only alias for the identical Journey representation; it SHALL NOT create a separate Course identity or stored aggregate. Obsolete/unpublished quest history SHALL remain durable but SHALL NOT inflate current published counts.
+Protected chapter and Journey progress reads SHALL use the current published catalog as the ordered denominator and the owner's current-equivalent accepted stable-quest completions as the numerator. Each read SHALL return completed and total quest counts, a percentage derived as `floor(100 * completed / total)` (zero for an empty denominator), status, and ordered nested progress. Aggregate status SHALL be `completed` only when the nonempty scope is fully completed, `in_progress` when any contained quest has durable activity, and `not_started` otherwise. The Course route SHALL be a read-only alias for the identical Journey representation; it SHALL NOT create a separate Course identity or stored aggregate. Obsolete/unpublished quest history SHALL remain durable but SHALL NOT inflate current published counts.
 
 #### Scenario: Partial chapter
 - **WHEN** one of four currently published chapter quests is accepted as complete

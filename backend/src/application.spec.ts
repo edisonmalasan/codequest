@@ -329,13 +329,19 @@ describe('backend HTTP foundation', () => {
     expect(Object.keys(document.paths).sort()).toEqual([
       '/api/v1/account',
       '/api/v1/chapters/{slug}',
+      '/api/v1/chapters/{slug}/progress',
       '/api/v1/courses/{slug}',
+      '/api/v1/courses/{slug}/progress',
       '/api/v1/health',
       '/api/v1/journeys',
       '/api/v1/journeys/{slug}',
+      '/api/v1/journeys/{slug}/progress',
       '/api/v1/quests/{slug}',
       '/api/v1/quests/{slug}/assets/{contentVersion}',
       '/api/v1/quests/{slug}/attempts',
+      '/api/v1/quests/{slug}/hints',
+      '/api/v1/quests/{slug}/progress',
+      '/api/v1/quests/{slug}/start',
     ]);
     const exported = createOpenApiDocument(app);
     expect(document).toEqual(exported);
@@ -398,6 +404,21 @@ describe('backend HTTP foundation', () => {
     });
     expect(account.statusCode).toBe(401);
     expect(account.body).not.toContain('00000000-0000-4000-8000-000000000099');
+    const progress = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/journeys/javascript-foundations/progress',
+    });
+    expect(progress.statusCode).toBe(401);
+    const start = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/quests/first-message/start',
+      payload: {
+        contentVersion: '1.0.0',
+        userId: '00000000-0000-4000-8000-000000000099',
+      },
+    });
+    expect(start.statusCode).toBe(401);
+    expect(start.body).not.toContain('00000000-0000-4000-8000-000000000099');
   });
 
   it('returns a correlated normalized response after the request limit', async () => {
