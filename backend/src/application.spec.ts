@@ -373,6 +373,18 @@ describe('backend HTTP foundation', () => {
       ApiErrorDto: {
         required: ['code', 'message', 'status', 'requestId'],
       },
+      XpTotalDto: {
+        required: expect.arrayContaining([
+          'totalXp',
+          'level',
+          'levelStartXp',
+          'nextLevelAtXp',
+          'xpIntoLevel',
+          'xpToNextLevel',
+          'curveId',
+          'curveProvisional',
+        ]),
+      },
     });
     expect(exported.paths['/api/v1/account']?.get?.security).toEqual([
       { supabase: [] },

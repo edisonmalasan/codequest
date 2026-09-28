@@ -253,9 +253,11 @@ describe('authoritative attempt persistence', () => {
     expect(await newerService.submit(USER_A, 'first-message', body)).toEqual(
       original,
     );
-    expect(await xp.total(USER_A)).toEqual({
+    expect(await xp.total(USER_A)).toMatchObject({
       totalXp: 10,
       clientReported: true,
+      level: 1,
+      xpIntoLevel: 10,
     });
     await expect(
       newerService.submit(USER_A, 'first-message', {
@@ -335,17 +337,21 @@ describe('authoritative attempt persistence', () => {
     expect(
       (await client.query('select id from codequest.xp_events')).rows,
     ).toHaveLength(2);
-    expect(await xp.total(USER_A)).toEqual({
+    expect(await xp.total(USER_A)).toMatchObject({
       totalXp: 10,
       clientReported: true,
     });
-    expect(await xp.total(USER_B)).toEqual({
+    expect(await xp.total(USER_B)).toMatchObject({
       totalXp: 10,
       clientReported: true,
     });
-    expect(await xp.total('00000000-0000-4000-8000-000000000003')).toEqual({
+    expect(
+      await xp.total('00000000-0000-4000-8000-000000000003'),
+    ).toMatchObject({
       totalXp: 0,
       clientReported: true,
+      level: 1,
+      xpToNextLevel: 100,
     });
     await client.exec(`
       insert into codequest.quests (id, chapter_id, position) values ('Q02', 'CH01', 2);
@@ -359,11 +365,14 @@ describe('authoritative attempt persistence', () => {
       insert into codequest.xp_events (user_id, quest_id, source_type, source_id, amount)
       values ('${USER_A}', 'Q02', 'quest_completion', 'Q02', 25);
     `);
-    expect(await xp.total(USER_A)).toEqual({
+    expect(await xp.total(USER_A)).toMatchObject({
       totalXp: 35,
       clientReported: true,
+      level: 1,
+      xpIntoLevel: 35,
+      xpToNextLevel: 65,
     });
-    expect(await xp.total(USER_B)).toEqual({
+    expect(await xp.total(USER_B)).toMatchObject({
       totalXp: 10,
       clientReported: true,
     });

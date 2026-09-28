@@ -27,7 +27,9 @@ export class XpController {
   @Get()
   @Version('1')
   @RequirePermissions('xp:read:self')
-  @ApiOperation({ summary: 'Read own accepted personal-learning XP total' })
+  @ApiOperation({
+    summary: 'Read own accepted XP and derived provisional level',
+  })
   @ApiOkResponse({ type: XpTotalDto })
   @ApiResponse({ status: 401, type: ApiErrorResponseDto })
   @ApiResponse({ status: 403, type: ApiErrorResponseDto })

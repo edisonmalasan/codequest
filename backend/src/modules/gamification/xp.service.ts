@@ -3,6 +3,7 @@ import { eq, sql } from 'drizzle-orm';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
 import { xpEvents } from '../../infrastructure/database/schema';
 import { XpTotalDto } from './xp.dto';
+import { deriveLevel } from './level-policy';
 
 @Injectable()
 export class XpService {
@@ -18,6 +19,10 @@ export class XpService {
       })
       .from(xpEvents)
       .where(eq(xpEvents.userId, userId));
-    return { totalXp: row.total, clientReported: true };
+    return {
+      totalXp: row.total,
+      clientReported: true,
+      ...deriveLevel(row.total),
+    };
   }
 }

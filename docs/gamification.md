@@ -1,5 +1,11 @@
 # Gamification principles and policies
 
+## Phase 20 provisional levels
+
+The protected `GET /api/v1/xp` response now derives level and next-level progress from the same owner-bound XP ledger total. The current policy is **`provisional-linear-100-v1`**: level 1 starts at 0 XP and each 100 XP starts the next level. For example, 0/99 XP are level 1 with 100/1 XP remaining; 100 XP is level 2 with 0/100 XP within that level; 235 XP is level 3 with 35/100 XP within it and a 300 XP next boundary. The response supplies `level`, `levelStartXp`, `nextLevelAtXp`, `xpIntoLevel`, `xpToNextLevel`, `curveId`, and `curveProvisional`. No level row or client level input exists.
+
+This is a provisional implementation policy, **not F04 approval** of names, thresholds, or XP values. Product and curriculum owners still need to balance the curve and reward amounts with final content and learner evidence before beta. A reviewed policy change will rederive displayed levels from historical XP; it will not change earned ledger amounts. XP and level are progress displays, not mastery or certification. The account page labels the curve as provisional and shows unavailable feedback if the protected read fails.
+
 ## Phase 19 implemented XP
 
 The backend now writes one `xp_events` row in the same transaction as an authenticated learner's **first accepted** completion of a stable quest ID. That row records the verified owner, `quest_completion` source type, stable quest ID as source ID, positive XP from the published snapshot, and server award time. A database unique constraint on owner and source prevents repeat awards even when a later practice submit uses a new event ID. Exact retries, failed reports, local Check, starts, and hints add no XP. Awards remain in the ledger if content is edited or retired. The current Q01 amount is provisional under F04; an award already recorded keeps its original amount.

@@ -9,9 +9,18 @@ import { XpService } from './xp.service';
 
 describe('XP controller boundary', () => {
   it('reads only the verified principal owner and declares protected guards', async () => {
-    const total = vi
-      .fn()
-      .mockResolvedValue({ totalXp: 10, clientReported: true });
+    const response = {
+      totalXp: 10,
+      clientReported: true,
+      level: 1,
+      levelStartXp: 0,
+      nextLevelAtXp: 100,
+      xpIntoLevel: 10,
+      xpToNextLevel: 90,
+      curveId: 'provisional-linear-100-v1',
+      curveProvisional: true,
+    };
+    const total = vi.fn().mockResolvedValue(response);
     const module = await Test.createTestingModule({
       controllers: [XpController],
       providers: [
@@ -25,10 +34,7 @@ describe('XP controller boundary', () => {
     const principal = createAuthPrincipal(
       '00000000-0000-4000-8000-000000000001',
     );
-    expect(await controller.total(principal)).toEqual({
-      totalXp: 10,
-      clientReported: true,
-    });
+    expect(await controller.total(principal)).toEqual(response);
     expect(total).toHaveBeenCalledWith(principal.userId);
   });
 });
