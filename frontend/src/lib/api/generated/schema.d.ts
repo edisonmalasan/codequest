@@ -251,7 +251,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Read own accepted personal-learning XP total */
+        /** Read own accepted XP and derived provisional level */
         get: operations["XpController_total_v1"];
         put?: never;
         post?: never;
@@ -536,6 +536,15 @@ export interface components {
             totalXp: number;
             /** @example true */
             clientReported: boolean;
+            level: number;
+            levelStartXp: number;
+            nextLevelAtXp: number;
+            xpIntoLevel: number;
+            xpToNextLevel: number;
+            /** @example provisional-linear-100-v1 */
+            curveId: string;
+            /** @example true */
+            curveProvisional: boolean;
         };
         HealthResponseDto: {
             /**

@@ -87,6 +87,57 @@ function jsonResponse(value: unknown, status = 200): Response {
 }
 
 describe('CodeQuest typed API client', () => {
+  it('reads protected derived XP and rejects malformed or unauthenticated responses', async () => {
+    const authorizations: Array<string | null> = [];
+    let response: Record<string, unknown> = {
+      totalXp: 235,
+      clientReported: true,
+      level: 3,
+      levelStartXp: 200,
+      nextLevelAtXp: 300,
+      xpIntoLevel: 35,
+      xpToNextLevel: 65,
+      curveId: 'provisional-linear-100-v1',
+      curveProvisional: true,
+    };
+    const fetcher: typeof fetch = async (input, init) => {
+      const request =
+        input instanceof Request ? input : new Request(input, init);
+      authorizations.push(request.headers.get('authorization'));
+      return jsonResponse(response);
+    };
+    const client = createCodequestApi({
+      fetch: fetcher,
+      getAccessToken: async () => 'current-token',
+    });
+    await expect(client.getXp()).resolves.toMatchObject({
+      ok: true,
+      data: { totalXp: 235, level: 3, xpToNextLevel: 65 },
+    });
+    expect(authorizations).toEqual(['Bearer current-token']);
+    response = { ...response, level: 99 };
+    await expect(client.getXp()).resolves.toEqual({
+      ok: false,
+      kind: 'invalid-response',
+      status: 200,
+    });
+    const guest = createCodequestApi({ fetch: fetcher });
+    await expect(guest.getXp()).resolves.toEqual({
+      ok: false,
+      kind: 'unauthenticated',
+    });
+    expect(authorizations).toHaveLength(2);
+    const offline = createCodequestApi({
+      fetch: async () => {
+        throw new Error('network offline');
+      },
+      getAccessToken: async () => 'current-token',
+    });
+    await expect(offline.getXp()).resolves.toEqual({
+      ok: false,
+      kind: 'network',
+    });
+  });
   it('keeps progress reads protected and rejects malformed progress responses', async () => {
     const authorizations: Array<string | null> = [];
     const fetcher: typeof fetch = async (input, init) => {
