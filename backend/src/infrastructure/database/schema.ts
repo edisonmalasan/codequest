@@ -303,6 +303,46 @@ export const questStarts = codequestSchema.table(
   ],
 );
 
+export const questHintUses = codequestSchema.table(
+  'quest_hint_uses',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    questId: text('quest_id').notNull(),
+    questVersionId: uuid('quest_version_id').notNull(),
+    hintKey: text('hint_key').notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    primaryKey({
+      name: 'quest_hint_uses_primary',
+      columns: [
+        table.userId,
+        table.questId,
+        table.questVersionId,
+        table.hintKey,
+      ],
+    }),
+    foreignKey({
+      name: 'quest_hint_uses_version_fk',
+      columns: [table.questVersionId, table.questId],
+      foreignColumns: [questVersions.id, questVersions.questId],
+    })
+      .onDelete('restrict')
+      .onUpdate('cascade'),
+    check(
+      'quest_hint_uses_key_check',
+      sql`${table.hintKey} in ('question', 'concept', 'nextStep')`,
+    ),
+    index('quest_hint_uses_owner_time_idx').on(table.userId, table.usedAt),
+    index('quest_hint_uses_version_idx').on(
+      table.questVersionId,
+      table.questId,
+    ),
+  ],
+);
+
 export const questAttempts = codequestSchema.table(
   'quest_attempts',
   {
@@ -469,6 +509,7 @@ export const databaseSchema = {
   questVersionCompatibility,
   journeyEnrollments,
   questStarts,
+  questHintUses,
   questAttempts,
   questSubmissions,
   questCompletions,
@@ -489,6 +530,7 @@ export const DATABASE_TABLE_NAMES = Object.freeze([
   'quest_version_compatibility',
   'journey_enrollments',
   'quest_starts',
+  'quest_hint_uses',
   'quest_attempts',
   'quest_submissions',
   'quest_completions',

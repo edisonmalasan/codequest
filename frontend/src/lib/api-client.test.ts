@@ -87,6 +87,74 @@ function jsonResponse(value: unknown, status = 200): Response {
 }
 
 describe('CodeQuest typed API client', () => {
+  it('keeps progress reads protected and rejects malformed progress responses', async () => {
+    const authorizations: Array<string | null> = [];
+    const fetcher: typeof fetch = async (input, init) => {
+      const request =
+        input instanceof Request ? input : new Request(input, init);
+      authorizations.push(request.headers.get('authorization'));
+      return jsonResponse({
+        journeyId: 'JAVASCRIPT-FOUNDATIONS',
+        status: 'completed',
+        completedQuests: 1,
+        totalQuests: 1,
+        percentage: 100,
+        chapters: [
+          {
+            chapterId: 'CH01',
+            status: 'completed',
+            completedQuests: 1,
+            totalQuests: 1,
+            percentage: 100,
+            quests: [
+              {
+                questId: 'Q01',
+                status: 'completed',
+                startedAt: '2026-09-27T00:00:00.000Z',
+                completedAt: '2026-09-27T00:00:00.000Z',
+                lastActivityAt: '2026-09-27T00:00:00.000Z',
+                attemptCount: 1,
+                hintCount: 0,
+              },
+            ],
+          },
+        ],
+      });
+    };
+    const guest = createCodequestApi({ fetch: fetcher });
+    await expect(
+      guest.getJourneyProgress('javascript-foundations'),
+    ).resolves.toMatchObject({ ok: false, kind: 'unauthenticated' });
+    expect(authorizations).toHaveLength(0);
+    const client = createCodequestApi({
+      fetch: fetcher,
+      getAccessToken: async () => 'progress-token',
+    });
+    await expect(
+      client.getJourneyProgress('javascript-foundations'),
+    ).resolves.toMatchObject({ ok: true, data: { completedQuests: 1 } });
+    expect(authorizations).toEqual(['Bearer progress-token']);
+    const malformed = createCodequestApi({
+      fetch: async () =>
+        jsonResponse({ journeyId: 'fake', completedQuests: 999 }),
+      getAccessToken: async () => 'progress-token',
+    });
+    await expect(
+      malformed.getJourneyProgress('javascript-foundations'),
+    ).resolves.toMatchObject({ ok: false, kind: 'invalid-response' });
+    const abort = new AbortController();
+    const cancelled = createCodequestApi({
+      getAccessToken: async () => 'progress-token',
+      fetch: async () => {
+        abort.abort();
+        throw new DOMException('Cancelled', 'AbortError');
+      },
+    });
+    await expect(
+      cancelled.getJourneyProgress('javascript-foundations', abort.signal),
+    ).resolves.toMatchObject({ ok: false, kind: 'cancelled' });
+  });
+
   it('sends a bearer only for protected attempts and rejects malformed responses', async () => {
     const calls: Array<{ authorization: string | null; body: string }> = [];
     const fetcher: typeof fetch = async (input, init) => {
@@ -153,6 +221,12 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/quests/{slug}'
       | '/api/v1/quests/{slug}/attempts'
       | '/api/v1/quests/{slug}/assets/{contentVersion}'
+      | '/api/v1/quests/{slug}/start'
+      | '/api/v1/quests/{slug}/hints'
+      | '/api/v1/quests/{slug}/progress'
+      | '/api/v1/chapters/{slug}/progress'
+      | '/api/v1/journeys/{slug}/progress'
+      | '/api/v1/courses/{slug}/progress'
     >();
     expectTypeOf<
       '/api/v1/journeys' extends keyof paths ? true : false
@@ -207,6 +281,12 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/quests/{slug}'
       | '/api/v1/quests/{slug}/attempts'
       | '/api/v1/quests/{slug}/assets/{contentVersion}'
+      | '/api/v1/quests/{slug}/start'
+      | '/api/v1/quests/{slug}/hints'
+      | '/api/v1/quests/{slug}/progress'
+      | '/api/v1/chapters/{slug}/progress'
+      | '/api/v1/journeys/{slug}/progress'
+      | '/api/v1/courses/{slug}/progress'
     >();
     const account: AccountResponse = {
       id: '00000000-0000-4000-8000-000000000001',

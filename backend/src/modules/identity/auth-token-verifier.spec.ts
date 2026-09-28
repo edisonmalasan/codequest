@@ -65,6 +65,8 @@ describe('SupabaseTokenVerifier', () => {
         'account:read:self',
         'learning:submit:self',
         'learning:read:self',
+        'progress:read:self',
+        'progress:write:self',
       ],
     });
   });

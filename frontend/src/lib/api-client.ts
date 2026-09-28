@@ -11,6 +11,10 @@ export type QuestDetail = components['schemas']['QuestDetailDto'];
 export type CreateAttemptRequest = components['schemas']['CreateAttemptDto'];
 export type AttemptResponse = components['schemas']['AttemptResponseDto'];
 export type AttemptHistory = components['schemas']['AttemptHistoryDto'];
+export type ActivityResponse = components['schemas']['ActivityResponseDto'];
+export type QuestProgress = components['schemas']['QuestProgressDto'];
+export type ChapterProgress = components['schemas']['ChapterProgressDto'];
+export type JourneyProgress = components['schemas']['JourneyProgressDto'];
 type ErrorResponse = components['schemas']['ApiErrorResponseDto'];
 
 export type HealthResult =
@@ -112,6 +116,61 @@ function isAttemptHistory(value: unknown): value is AttemptHistory {
     typeof value.attemptCount === 'number' &&
     Array.isArray(value.attempts) &&
     value.attempts.every(isAttemptResponse)
+  );
+}
+
+function isActivityResponse(value: unknown): value is ActivityResponse {
+  return (
+    isRecord(value) &&
+    typeof value.questId === 'string' &&
+    typeof value.occurredAt === 'string'
+  );
+}
+
+function isQuestProgress(value: unknown): value is QuestProgress {
+  return (
+    isRecord(value) &&
+    typeof value.questId === 'string' &&
+    ['not_started', 'in_progress', 'completed'].includes(
+      String(value.status),
+    ) &&
+    [value.startedAt, value.completedAt, value.lastActivityAt].every(
+      (at) => at === null || typeof at === 'string',
+    ) &&
+    Number.isSafeInteger(value.attemptCount) &&
+    Number(value.attemptCount) >= 0 &&
+    Number.isSafeInteger(value.hintCount) &&
+    Number(value.hintCount) >= 0
+  );
+}
+
+function isChapterProgress(value: unknown): value is ChapterProgress {
+  return (
+    isRecord(value) &&
+    typeof value.chapterId === 'string' &&
+    ['not_started', 'in_progress', 'completed'].includes(
+      String(value.status),
+    ) &&
+    Number.isSafeInteger(value.completedQuests) &&
+    Number.isSafeInteger(value.totalQuests) &&
+    Number.isSafeInteger(value.percentage) &&
+    Array.isArray(value.quests) &&
+    value.quests.every(isQuestProgress)
+  );
+}
+
+function isJourneyProgress(value: unknown): value is JourneyProgress {
+  return (
+    isRecord(value) &&
+    typeof value.journeyId === 'string' &&
+    ['not_started', 'in_progress', 'completed'].includes(
+      String(value.status),
+    ) &&
+    Number.isSafeInteger(value.completedQuests) &&
+    Number.isSafeInteger(value.totalQuests) &&
+    Number.isSafeInteger(value.percentage) &&
+    Array.isArray(value.chapters) &&
+    value.chapters.every(isChapterProgress)
   );
 }
 
@@ -482,6 +541,101 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
             signal,
           }),
         isAttemptHistory,
+        signal,
+      );
+    },
+    startQuest(
+      slug: string,
+      contentVersion: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<ActivityResponse>> {
+      return learningRequest(
+        (token) =>
+          client.POST('/api/v1/quests/{slug}/start', {
+            params: { path: { slug } },
+            body: { contentVersion },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isActivityResponse,
+        signal,
+      );
+    },
+    useQuestHint(
+      slug: string,
+      contentVersion: string,
+      hintKey: 'question' | 'concept' | 'nextStep',
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<ActivityResponse>> {
+      return learningRequest(
+        (token) =>
+          client.POST('/api/v1/quests/{slug}/hints', {
+            params: { path: { slug } },
+            body: { contentVersion, hintKey },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isActivityResponse,
+        signal,
+      );
+    },
+    getQuestProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<QuestProgress>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/quests/{slug}/progress', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isQuestProgress,
+        signal,
+      );
+    },
+    getChapterProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<ChapterProgress>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/chapters/{slug}/progress', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isChapterProgress,
+        signal,
+      );
+    },
+    getJourneyProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<JourneyProgress>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/journeys/{slug}/progress', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isJourneyProgress,
+        signal,
+      );
+    },
+    getCourseProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<JourneyProgress>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/courses/{slug}/progress', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isJourneyProgress,
         signal,
       );
     },

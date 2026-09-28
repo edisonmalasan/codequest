@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { ChapterCard } from '@/components/game/chapter-card';
@@ -12,7 +12,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
-import { createCodequestApi } from '@/lib/api-client';
+import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
+import {
+  createCodequestApi,
+  type JourneyProgress,
+  type ProtectedApiResult,
+} from '@/lib/api-client';
 import {
   type CurriculumApi,
   JourneyLoadError,
@@ -30,6 +35,12 @@ const WORLD_ART = '/assets/design-system/worlds/foundations-valley.webp';
 export interface JourneyPageClientProps {
   readonly slug: string;
   readonly api?: CurriculumApi;
+  readonly progressApi?: {
+    getJourneyProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<JourneyProgress>>;
+  };
 }
 
 function journeyQueryKey(slug: string) {
@@ -54,10 +65,10 @@ export function JourneyPageView({
   const { journey, chapters, completedQuests, totalQuests } = model;
   const progressNotice =
     model.completionAuthority === 'none'
-      ? 'Saved progress is not loaded in this phase. The map currently shows published prerequisite availability.'
+      ? 'Sign in to see saved progress. Guest progress is provisional on this device.'
       : model.completionAuthority === 'provisional'
         ? 'This device progress is provisional until the backend accepts it.'
-        : 'Completion shown here comes from accepted account progress.';
+        : 'Completion shown here comes from backend-accepted personal-learning progress. Local checks are client-reported.';
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
@@ -308,22 +319,117 @@ function EmptyCourseMap({ model }: { readonly model: JourneyCourseMap }) {
 export function JourneyPageClient({
   slug,
   api,
+  progressApi,
 }: JourneyPageClientProps): React.JSX.Element {
   const curriculumApi = useMemo(() => api ?? createCodequestApi(), [api]);
+  const [session, setSession] = useState<{
+    ready: boolean;
+    ownerId: string | null;
+  }>({ ready: false, ownerId: null });
+  useEffect(() => {
+    let active = true;
+    try {
+      const auth = getBrowserSupabaseClient().auth;
+      void auth.getSession().then(
+        ({ data, error }) => {
+          if (active)
+            setSession({
+              ready: true,
+              ownerId: error ? null : (data.session?.user.id ?? null),
+            });
+        },
+        () => {
+          if (active) setSession({ ready: true, ownerId: null });
+        },
+      );
+      const { data: listener } = auth.onAuthStateChange(
+        (_event, nextSession) => {
+          if (active)
+            setSession({ ready: true, ownerId: nextSession?.user.id ?? null });
+        },
+      );
+      return () => {
+        active = false;
+        listener.subscription.unsubscribe();
+      };
+    } catch {
+      queueMicrotask(() => {
+        if (active) setSession({ ready: true, ownerId: null });
+      });
+      return () => {
+        active = false;
+      };
+    }
+  }, []);
+  const protectedApi = useMemo(
+    () =>
+      progressApi ??
+      createCodequestApi({
+        getAccessToken: async () => {
+          try {
+            const { data, error } =
+              await getBrowserSupabaseClient().auth.getSession();
+            return error ? null : (data.session?.access_token ?? null);
+          } catch {
+            return null;
+          }
+        },
+      }),
+    [progressApi],
+  );
   const query = useQuery({
     queryKey: journeyQueryKey(slug),
     queryFn: ({ signal }) =>
       loadJourneyCurriculumGraph(curriculumApi, slug, signal),
   });
 
-  if (query.isPending) return <JourneyLoading />;
+  const progressQuery = useQuery({
+    queryKey: ['progress', 'journey', session.ownerId, slug],
+    enabled: session.ready && session.ownerId !== null,
+    queryFn: async ({ signal }) => {
+      const result = await protectedApi.getJourneyProgress(slug, signal);
+      if (!result.ok) throw new Error('Saved progress unavailable');
+      return result.data;
+    },
+    retry: false,
+  });
+
+  if (
+    query.isPending ||
+    !session.ready ||
+    (session.ownerId !== null && progressQuery.isPending)
+  )
+    return <JourneyLoading />;
   if (query.isError) {
     return (
       <JourneyFailure error={query.error} retry={() => void query.refetch()} />
     );
   }
 
-  const model = buildJourneyCourseMap(query.data, emptyCompletionSnapshot);
+  if (session.ownerId !== null && progressQuery.isError)
+    return (
+      <JourneyFailure
+        error={progressQuery.error}
+        retry={() => {
+          void progressQuery.refetch();
+        }}
+      />
+    );
+
+  const completion =
+    session.ownerId !== null && progressQuery.data
+      ? {
+          authority: 'accepted' as const,
+          completedQuestIds: new Set(
+            progressQuery.data.chapters.flatMap((chapter) =>
+              chapter.quests
+                .filter((quest) => quest.status === 'completed')
+                .map((quest) => quest.questId),
+            ),
+          ),
+        }
+      : emptyCompletionSnapshot;
+  const model = buildJourneyCourseMap(query.data, completion);
   return model.totalQuests === 0 ? (
     <EmptyCourseMap model={model} />
   ) : (

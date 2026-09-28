@@ -6,7 +6,7 @@ import { DATABASE_TABLE_NAMES, FORBIDDEN_DERIVED_TABLE_NAMES } from './schema';
 describe('database schema inventory', () => {
   it('contains only the approved durable relation inventory', () => {
     const forbiddenTables = new Set<string>(FORBIDDEN_DERIVED_TABLE_NAMES);
-    expect(DATABASE_TABLE_NAMES).toHaveLength(17);
+    expect(DATABASE_TABLE_NAMES).toHaveLength(18);
     expect(
       DATABASE_TABLE_NAMES.filter((tableName) =>
         forbiddenTables.has(tableName),

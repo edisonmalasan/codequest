@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +13,7 @@ import {
   type QuestDetail,
 } from '@/lib/api-client';
 import { getConfiguredApiBaseUrl } from '@/lib/api-base';
+import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import { LessonDocument } from './lesson-document';
 import { LessonHints } from './lesson-hints';
 import { QuestWorkspace } from './quest-workspace';
@@ -63,6 +64,69 @@ export function LessonPageView({
   readonly quest: QuestDetail;
   readonly apiBaseUrl: string;
 }): React.JSX.Element {
+  const [activityError, setActivityError] = useState(false);
+  const progressApi = useMemo(
+    () =>
+      createCodequestApi({
+        getAccessToken: async () => {
+          try {
+            const { data, error } =
+              await getBrowserSupabaseClient().auth.getSession();
+            return error ? null : (data.session?.access_token ?? null);
+          } catch {
+            return null;
+          }
+        },
+      }),
+    [],
+  );
+  useEffect(() => {
+    let active = true;
+    const recordStart = async () => {
+      const result = await progressApi.startQuest(
+        quest.slug,
+        quest.contentVersion,
+      );
+      if (active && !result.ok) setActivityError(true);
+    };
+    try {
+      const auth = getBrowserSupabaseClient().auth;
+      void auth.getSession().then(
+        ({ data, error }) => {
+          if (active && !error && data.session) void recordStart();
+        },
+        () => {
+          if (active) setActivityError(true);
+        },
+      );
+      const { data: listener } = auth.onAuthStateChange((_event, session) => {
+        if (active && session) void recordStart();
+      });
+      return () => {
+        active = false;
+        listener.subscription.unsubscribe();
+      };
+    } catch {
+      return () => {
+        active = false;
+      };
+    }
+  }, [progressApi, quest.slug, quest.contentVersion]);
+  const recordHint = async (hintKey: 'question' | 'concept' | 'nextStep') => {
+    try {
+      const { data, error } =
+        await getBrowserSupabaseClient().auth.getSession();
+      if (error || !data.session) return;
+      const result = await progressApi.useQuestHint(
+        quest.slug,
+        quest.contentVersion,
+        hintKey,
+      );
+      if (!result.ok) setActivityError(true);
+    } catch {
+      setActivityError(true);
+    }
+  };
   const journeyHref = `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
@@ -125,7 +189,17 @@ export function LessonPageView({
             />
           </section>
           <div className="mt-8 max-w-[72ch]">
-            <LessonHints value={quest.hints} />
+            <LessonHints
+              value={quest.hints}
+              onHintOpen={(key) => {
+                void recordHint(key);
+              }}
+            />
+            {activityError && (
+              <p role="status" className="mt-3 text-sm text-danger">
+                Activity could not be saved. You can keep reading.
+              </p>
+            )}
           </div>
         </article>
         <aside className="rounded-lg border border-line bg-surface-raised p-5 lg:sticky lg:top-6">

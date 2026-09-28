@@ -190,7 +190,27 @@ describe('database foundation migrations and relational contract', () => {
     const indexNames = indexRows.map((row) => row.indexname);
     expect(indexNames).toContain('quest_attempts_owner_time_idx');
     expect(indexNames).toContain('quest_completions_owner_time_idx');
+    expect(indexNames).toContain('quest_hint_uses_owner_time_idx');
     expect(indexNames).toContain('xp_events_owner_time_idx');
+  });
+
+  it('enforces owner, quest version, and published hint identity for durable hint use', async () => {
+    await database.exec(`
+      insert into codequest.quest_hint_uses (user_id, quest_id, quest_version_id, hint_key)
+      values ('${USER_A}', 'q01', '${VERSION_Q1_V1}', 'question');
+    `);
+    await expectRejected(
+      database,
+      `insert into codequest.quest_hint_uses (user_id, quest_id, quest_version_id, hint_key) values ('${USER_A}', 'q01', '${VERSION_Q1_V1}', 'question')`,
+    );
+    await expectRejected(
+      database,
+      `insert into codequest.quest_hint_uses (user_id, quest_id, quest_version_id, hint_key) values ('${USER_A}', 'q02', '${VERSION_Q1_V1}', 'concept')`,
+    );
+    await expectRejected(
+      database,
+      `insert into codequest.quest_hint_uses (user_id, quest_id, quest_version_id, hint_key) values ('${USER_A}', 'q01', '${VERSION_Q1_V1}', 'solution')`,
+    );
   });
 
   it('enforces hierarchy, version, concept, and prerequisite integrity', async () => {

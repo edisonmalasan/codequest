@@ -8,6 +8,13 @@
       "when": 1790056743284,
       "tag": "0000_wild_wild_child",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790519518161,
+      "tag": "0001_tricky_angel",
+      "breakpoints": true
     }
   ]
 }
