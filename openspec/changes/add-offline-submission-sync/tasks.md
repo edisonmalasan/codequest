@@ -24,3 +24,5 @@
 - `pnpm --dir frontend test:pwa`: production Chromium 6/6 passed, including offline explicit saving, cold reload recovery, uncertain response and identical reconnect retry, confirmed metadata, unchanged accepted projection, and public cache exclusions. Auth/API acceptance uses explicit browser fixtures; existing backend database tests verify real event/completion/XP/streak uniqueness and acceptance time. Current publication has no live quests.
 - Proposal #122 and pre-existing draft-test durability repair #123 merged after required CI. The first proposal run exposed a stale Saved-label race; the repair waits for exact durable source and selects the draft label exactly. Apply evidence is reviewed before its PR merge.
 - F02 physical mobile/Safari/Firefox installation, spoken assistive technology, low-power/native quota/background/OS restart remain untested; F06 operational privacy/retention/consent/deletion gates remain open. No support/compliance claim or Phase 29 work.
+
+- Apply #124 merged after independent required CI passed, including fresh database/backend tests and production Chromium 6/6.
