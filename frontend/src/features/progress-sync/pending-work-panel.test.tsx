@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PendingWorkPanel } from './pending-work-panel';
 const mock = vi.hoisted(() => ({
   list: vi.fn(),
@@ -26,6 +26,7 @@ vi.mock('./trusted-sync', () => ({
   OUTBOX_CHANGED: 'test-outbox',
 }));
 describe('pending source recovery', () => {
+  afterEach(() => vi.restoreAllMocks());
   beforeEach(() => {
     vi.clearAllMocks();
     mock.owner = 'A';
@@ -72,5 +73,31 @@ describe('pending source recovery', () => {
     view.rerender(<PendingWorkPanel accountId="B" />);
     await screen.findByText('No saved submissions on this device.');
     expect(screen.queryByText('private source')).toBeNull();
+  });
+  it('allows offline source recovery and removal while disabling network retry', async () => {
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+    render(<PendingWorkPanel accountId="A" />);
+    await screen.findByText(/Q01: pending/);
+    const retry = screen.getByRole('button', {
+      name: 'Retry saved submissions',
+    });
+    expect(retry).toHaveProperty('disabled', true);
+    await userEvent.click(retry);
+    expect(mock.replay).not.toHaveBeenCalled();
+    expect(screen.getByText('private source')).toBeDefined();
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Remove this device copy' }),
+    );
+    expect(mock.remove).toHaveBeenCalledWith('A', 'event');
+  });
+  it('guards retry when connectivity changes before its event is received', async () => {
+    const online = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true);
+    render(<PendingWorkPanel accountId="A" />);
+    await screen.findByText(/Q01: pending/);
+    online.mockReturnValue(false);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Retry saved submissions' }),
+    );
+    expect(mock.replay).not.toHaveBeenCalled();
   });
 });

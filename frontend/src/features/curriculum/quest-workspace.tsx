@@ -238,6 +238,7 @@ export function QuestWorkspace({
       if (token !== sessionGeneration.current) return;
       notifyOutbox(account);
       setSubmission({ status: 'pending' });
+      if (!navigator.onLine) return;
       const summary = await progressReplay.replay(
         account,
         ownerSyncApi(account),
@@ -286,7 +287,7 @@ export function QuestWorkspace({
       </h2>
       <p className="mb-5 text-sm text-muted">
         {offline
-          ? 'Run and Check stay local and provisional. Account completion and rewards require backend acceptance after reconnecting.'
+          ? 'Run and Check stay local and provisional. Signed-in Submit saves a snapshot on this device for delivery after reconnecting. Account completion and rewards require backend acceptance.'
           : ownerId === null
             ? 'Run and Check stay on this device. Passing Check is provisional until you explicitly import after signup. Clearing browser data can erase it.'
             : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
@@ -301,7 +302,7 @@ export function QuestWorkspace({
         validationDefinition={definition}
         submitting={submission.status === 'submitting'}
         onSubmit={
-          ownerId && !offline
+          ownerId
             ? (snapshot) => {
                 void submit(snapshot);
               }
@@ -353,7 +354,8 @@ export function QuestWorkspace({
       {submission.status === 'pending' && (
         <p role="status" className="mt-4 text-sm">
           Submission saved on this device; delivery is pending or uncertain. No
-          completion is claimed. Reconnect or retry from your account.
+          completion is claimed. Reconnect or retry from saved submissions in
+          downloaded lessons or your account.
         </p>
       )}
     </section>

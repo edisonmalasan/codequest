@@ -2,14 +2,14 @@
 
 ## 1. Explicit offline submission
 
-- [ ] 1.1 Enable signed-in Submit in downloaded QuestWorkspace through existing durable save/replay; skip transport when known offline. Verify focused workspace tests cover persistence-before-send, offline no-send, no Check auto-submit, storage failure, and originating-owner checks.
-- [ ] 1.2 Document explicit offline submission, pending authority, existing envelope field mapping/bounds, exact-version policy, and backend acceptance-time semantics in offline/sync docs; review against code and ADRs.
+- [x] 1.1 Enable signed-in Submit in downloaded QuestWorkspace through existing durable save/replay; skip transport when known offline. Verify focused workspace tests cover persistence-before-send, offline no-send, no Check auto-submit, storage failure, and originating-owner checks.
+- [x] 1.2 Document explicit offline submission, pending authority, existing envelope field mapping/bounds, exact-version policy, and backend acceptance-time semantics in offline/sync docs; review against code and ADRs.
 
 ## 2. In-library recovery
 
-- [ ] 2.1 Mount the existing owner-keyed PendingWorkPanel in both downloaded-library and selected-lesson views, excluding guests. Verify component coverage for both views, owner switching/logout, and no cross-owner source exposure.
-- [ ] 2.2 Disable and guard retry while known offline while preserving copy/removal and connected retry. Verify panel tests and existing replay regressions for uncertain responses, stale source, owner isolation, serialization, and stable IDs.
-- [ ] 2.3 Document recovery from the offline view, truthful delivery states, source preservation, and device-local draft limitations; review documented UI labels.
+- [x] 2.1 Mount the existing owner-keyed PendingWorkPanel in both downloaded-library and selected-lesson views, excluding guests. Verify component coverage for both views, owner switching/logout, and no cross-owner source exposure.
+- [x] 2.2 Disable and guard retry while known offline while preserving copy/removal and connected retry. Verify panel tests and existing replay regressions for uncertain responses, stale source, owner isolation, serialization, and stable IDs.
+- [x] 2.3 Document recovery from the offline view, truthful delivery states, source preservation, and device-local draft limitations; review documented UI labels.
 
 ## 3. End-to-end integration and verification
 
