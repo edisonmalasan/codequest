@@ -22,6 +22,10 @@ const authState = vi.hoisted<{
   ownerId: string;
   notify: ((id: string) => void) | null;
 }>(() => ({ ownerId: '', notify: null }));
+const saveAccepted = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
+vi.mock('@/lib/local-persistence', () => ({
+  acceptedProgressRepository: { save: saveAccepted },
+}));
 vi.mock('@/features/auth/supabase-browser', () => ({
   getBrowserSupabaseClient: () => ({
     auth: {
@@ -58,6 +62,7 @@ vi.mock('@/features/auth/supabase-browser', () => ({
   }),
 }));
 afterEach(() => {
+  saveAccepted.mockClear();
   authState.ownerId = '';
   authState.notify = null;
 });
@@ -230,6 +235,19 @@ describe('JourneyPageClient', () => {
       journeyFixture.slug,
       expect.any(AbortSignal),
     );
+    await waitFor(() =>
+      expect(saveAccepted).toHaveBeenCalledWith(
+        'current-owner',
+        data,
+        expect.arrayContaining([
+          {
+            questId: 'Q01',
+            contentVersion: questFixtures.Q01.contentVersion,
+            assessmentVersion: questFixtures.Q01.assessmentVersion,
+          },
+        ]),
+      ),
+    );
     act(() => {
       authState.ownerId = '';
       authState.notify?.('');
@@ -249,6 +267,7 @@ describe('JourneyPageClient', () => {
       await screen.findByRole('heading', { name: 'Journey unavailable' }),
     ).toBeDefined();
     expect(screen.queryByText('Overall journey progress: 0 / 4')).toBeNull();
+    expect(saveAccepted).not.toHaveBeenCalled();
   });
 
   it('retries a failed protected progress read', async () => {

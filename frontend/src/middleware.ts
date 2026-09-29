@@ -16,6 +16,9 @@ export async function middleware(request: NextRequest) {
             '/runtime/validation-bootstrap.html',
             '/runtime/validation-bootstrap.js',
             '/runtime/validation-worker.js',
+            '/runtime/offline-sw.js',
+            '/runtime/offline-setup.html',
+            '/runtime/offline-setup.js',
           ]).has(request.nextUrl.pathname)
         ) {
           return new NextResponse(null, { status: 404 });
@@ -65,6 +68,7 @@ export async function middleware(request: NextRequest) {
     path === '/manifest.webmanifest' ||
     path === '/sw.js' ||
     path === '/offline.html' ||
+    path === '/offline-learning' ||
     path === '/offline.css' ||
     /^\/icons\/(?:icon-192|icon-512|maskable-512|apple-touch-icon)\.png$/.test(
       path,

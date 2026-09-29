@@ -12,6 +12,7 @@ const origin = 'https://app.codequest.test';
 describe('public shell cache boundary', () => {
   it.each([
     '/offline.html',
+    '/offline-learning',
     '/icons/icon-192.png',
     '/_next/static/chunks/app/page-abc123.js',
   ])('allows public asset %s', (url) => {
@@ -26,6 +27,7 @@ describe('public shell cache boundary', () => {
     '/runtime/bootstrap.js',
     '/preview/bootstrap.js',
     '/offline.html?token=secret',
+    '/offline-learning?token=secret',
     '//attacker.test/offline.html',
     'https://app.codequest.test/offline.html',
     '/_next/static/chunks/test.js.map',

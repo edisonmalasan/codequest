@@ -7,6 +7,8 @@ export default tseslint.config(
       '.next/**',
       '.next-preview/**',
       'node_modules/**',
+      'test-results/**',
+      'playwright-report/**',
       'next-env.d.ts',
       'public/sw.js',
       'public/sw.js.map',

@@ -4,7 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { PublicApiResult, QuestDetail } from '@/lib/api-client';
 import { questFixtures } from './journey-course-test-data';
-import { LessonPageClient, type LessonApi } from './lesson-page-client';
+import {
+  LessonPageClient,
+  LessonPageView,
+  type LessonApi,
+} from './lesson-page-client';
 
 const authState = vi.hoisted(() => ({ ownerId: '' }));
 vi.mock('@/features/auth/supabase-browser', () => ({
@@ -62,6 +66,21 @@ function renderClient(api: LessonApi) {
     </QueryClientProvider>,
   );
 }
+
+it('offline reading and hints never record backend activity', async () => {
+  authState.ownerId = 'current-owner';
+  const request = vi.fn<typeof fetch>();
+  vi.stubGlobal('fetch', request);
+  render(
+    <LessonPageView quest={quest} apiBaseUrl="https://api.test" offline />,
+  );
+  await userEvent.click(screen.getByText(/Concept hint/));
+  await waitFor(() =>
+    expect(screen.getByText(quest.hints.concept)).toBeDefined(),
+  );
+  expect(request).not.toHaveBeenCalled();
+  expect(screen.queryByRole('button', { name: 'Download lesson' })).toBeNull();
+});
 
 describe('LessonPageClient', () => {
   it('keeps lesson reading available when activity recording fails', async () => {

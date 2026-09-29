@@ -9,6 +9,10 @@ const state = vi.hoisted(() => ({
   refresh: vi.fn(),
   remove: vi.fn(),
   listener: null as ((event: string, session: Session | null) => void) | null,
+  clear: vi.fn().mockResolvedValue(undefined),
+}));
+vi.mock('@/lib/local-persistence', () => ({
+  acceptedProgressRepository: { clear: state.clear },
 }));
 vi.mock('@/features/auth/supabase-browser', () => ({
   getBrowserSupabaseClient: () => ({
@@ -69,6 +73,7 @@ describe('trusted reconnect lifecycle', () => {
       window.dispatchEvent(new Event('online'));
     });
     expect(state.remove).toHaveBeenCalledWith({ queryKey: ['progress'] });
+    expect(state.clear).toHaveBeenCalledWith('A');
     expect(state.replay).toHaveBeenCalledTimes(1);
   });
   it('refreshes unavailable account views on disconnect without replaying offline work', async () => {

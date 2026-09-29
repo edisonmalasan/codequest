@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
+import { acceptedProgressRepository } from '@/lib/local-persistence';
 import {
   createCodequestApi,
   type JourneyProgress,
@@ -408,6 +409,38 @@ export function JourneyPageClient({
     retry: false,
   });
 
+  const [cacheError, setCacheError] = useState(false);
+  useEffect(() => {
+    if (
+      !session.ownerId ||
+      !progressQuery.data ||
+      !query.data ||
+      !hasCompleteAcceptedAvailability(query.data, progressQuery.data)
+    )
+      return;
+    let active = true;
+    const versions = query.data.chapters.flatMap(({ quests }) =>
+      quests.map((quest) => ({
+        questId: quest.id,
+        contentVersion: quest.contentVersion,
+        assessmentVersion: quest.assessmentVersion,
+      })),
+    );
+    void acceptedProgressRepository
+      .save(session.ownerId, progressQuery.data, versions)
+      .then(
+        () => {
+          if (active) setCacheError(false);
+        },
+        () => {
+          if (active) setCacheError(true);
+        },
+      );
+    return () => {
+      active = false;
+    };
+  }, [session.ownerId, progressQuery.data, query.data]);
+
   if (
     query.isPending ||
     !session.ready ||
@@ -455,6 +488,14 @@ export function JourneyPageClient({
   return model.totalQuests === 0 ? (
     <EmptyCourseMap model={model} />
   ) : (
-    <JourneyPageView model={model} />
+    <>
+      {cacheError && (
+        <p role="status" className="px-5 py-3 text-sm text-danger">
+          Accepted progress is available online, but could not be saved for
+          offline viewing.
+        </p>
+      )}
+      <JourneyPageView model={model} />
+    </>
   );
 }

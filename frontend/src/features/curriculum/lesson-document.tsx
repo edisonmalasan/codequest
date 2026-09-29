@@ -14,6 +14,7 @@ export interface LessonDocumentProps {
   readonly questSlug: string;
   readonly contentVersion: string;
   readonly apiBaseUrl?: string;
+  readonly offlineAssets?: ReadonlyMap<string, string>;
 }
 
 export function lessonAssetUrl(
@@ -182,6 +183,7 @@ export function LessonDocument({
   questSlug,
   contentVersion,
   apiBaseUrl = getConfiguredApiBaseUrl(),
+  offlineAssets,
 }: LessonDocumentProps): React.JSX.Element {
   const transformUrl = (
     url: string,
@@ -189,7 +191,9 @@ export function LessonDocument({
     node: Readonly<{ tagName?: string }>,
   ): string => {
     if (node.tagName === 'img')
-      return lessonAssetUrl(url, questSlug, contentVersion, apiBaseUrl) ?? '';
+      return offlineAssets
+        ? (offlineAssets.get(url.slice(2)) ?? '')
+        : (lessonAssetUrl(url, questSlug, contentVersion, apiBaseUrl) ?? '');
     if (node.tagName === 'a')
       return url.startsWith('#') || url.startsWith('https://')
         ? defaultUrlTransform(url)

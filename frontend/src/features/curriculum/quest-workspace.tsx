@@ -71,8 +71,10 @@ export function questValidationDefinition(
 
 export function QuestWorkspace({
   quest,
+  offline = false,
 }: {
   readonly quest: QuestDetail;
+  readonly offline?: boolean;
 }): React.JSX.Element | null {
   const [ownerId, setOwnerId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -283,9 +285,11 @@ export function QuestWorkspace({
         Practice and submit
       </h2>
       <p className="mb-5 text-sm text-muted">
-        {ownerId === null
-          ? 'Run and Check stay on this device. Passing Check is provisional until you explicitly import after signup. Clearing browser data can erase it.'
-          : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
+        {offline
+          ? 'Run and Check stay local and provisional. Account completion and rewards require backend acceptance after reconnecting.'
+          : ownerId === null
+            ? 'Run and Check stay on this device. Passing Check is provisional until you explicitly import after signup. Clearing browser data can erase it.'
+            : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
       </p>
       <EditorWorkspace
         key={ownerId ?? 'guest'}
@@ -297,7 +301,7 @@ export function QuestWorkspace({
         validationDefinition={definition}
         submitting={submission.status === 'submitting'}
         onSubmit={
-          ownerId
+          ownerId && !offline
             ? (snapshot) => {
                 void submit(snapshot);
               }

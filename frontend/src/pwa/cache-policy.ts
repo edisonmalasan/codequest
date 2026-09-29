@@ -1,17 +1,21 @@
 export const SHELL_ASSETS = [
   '/offline.html',
   '/offline.css',
+  '/assets/design-system/brand/codequest-mark.svg',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/maskable-512.png',
   '/icons/apple-touch-icon.png',
 ] as const;
 
+export const OFFLINE_LEARNING_DOCUMENT = '/offline-learning';
+
 export const MAX_SHELL_ENTRY_BYTES = 2 * 1024 * 1024;
 export const MAX_SHELL_BYTES = 12 * 1024 * 1024;
 
 export function isPublicShellPath(path: string): boolean {
   return (
+    path === OFFLINE_LEARNING_DOCUMENT ||
     SHELL_ASSETS.some((asset) => asset === path) ||
     /^\/_next\/static\/(?:chunks|css|media)\/[A-Za-z0-9_./-]+\.(?:js|css|woff2?)$/.test(
       path,
