@@ -275,7 +275,43 @@ test('explicit download opens offline with local Run Check and retained draft', 
   await editor.click();
   await offline.keyboard.press('Control+A');
   await offline.keyboard.insertText("console.log('retained offline source');");
-  await expect(offline.getByText('Saved on this device')).toBeVisible();
+  await expect(editor).toContainText('retained offline source');
+  await expect
+    .poll(() =>
+      offline.evaluate(async () => {
+        const database = await new Promise<IDBDatabase>((resolve, reject) => {
+          const opening = indexedDB.open('codequest');
+          opening.onsuccess = () => resolve(opening.result);
+          opening.onerror = () => reject(opening.error);
+        });
+        try {
+          return await new Promise<string | null>((resolve, reject) => {
+            const read = database
+              .transaction('drafts')
+              .objectStore('drafts')
+              .get('guest:Q01-1.0.0:main');
+            read.onsuccess = () => {
+              const record: unknown = read.result;
+              resolve(
+                typeof record === 'object' &&
+                  record !== null &&
+                  'source' in record &&
+                  typeof record.source === 'string'
+                  ? record.source
+                  : null,
+              );
+            };
+            read.onerror = () => reject(read.error);
+          });
+        } finally {
+          database.close();
+        }
+      }),
+    )
+    .toBe("console.log('retained offline source');");
+  await expect(
+    offline.getByText('Saved on this device', { exact: true }),
+  ).toBeVisible();
   await offline.reload();
   await offline.getByRole('button', { name: 'Open saved lesson' }).click();
   await expect(
