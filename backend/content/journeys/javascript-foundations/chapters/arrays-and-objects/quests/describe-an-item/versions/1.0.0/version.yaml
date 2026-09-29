@@ -1,0 +1,23 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Describe an item
+objective: Read and update named properties in an item record.
+outcomeId: O6
+conceptIds:
+  - js-objects
+  - js-functions
+prerequisiteQuestIds:
+  - Q20
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which property holds the existing count?
+  concept: A record is read by property name; the final count includes both old
+    stock and the addition.
+  nextStep:
+    Correct count spelling and add the old value to amount in the returned
+    record.
+caseIds:
+  - add-stock
+  - no-addition
+  - empty-stock

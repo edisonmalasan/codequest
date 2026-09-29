@@ -1,0 +1,11 @@
+id: CH06
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: arrays-and-objects
+title: Arrays & Objects
+position: 6
+objectiveSummary: Traverse sequences and describe structured records.
+questIds:
+  - Q19
+  - Q20
+  - Q21
+  - Q22

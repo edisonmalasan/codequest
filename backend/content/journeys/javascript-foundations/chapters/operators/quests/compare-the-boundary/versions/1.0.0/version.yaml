@@ -1,0 +1,18 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Compare the boundary
+objective: Use precise inclusive comparisons and strict equality at a threshold.
+outcomeId: O2
+conceptIds:
+  - js-comparisons
+prerequisiteQuestIds:
+  - Q05
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Should a value exactly at the minimum qualify?
+  concept: '>= includes equality; === compares without type coercion.'
+  nextStep: Use >= for each minimum check and === for the number/string check.
+caseIds:
+  - normal-output
+  - boundary-output

@@ -1,0 +1,10 @@
+id: CH02
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: operators
+title: Operators
+position: 2
+objectiveSummary: Calculate costs and compare precise boundaries.
+questIds:
+  - Q05
+  - Q06
+  - Q07

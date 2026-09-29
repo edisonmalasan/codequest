@@ -3,6 +3,9 @@ journeyId: JAVASCRIPT-FOUNDATIONS
 slug: variables
 title: Variables
 position: 1
-objectiveSummary: Start with a visible value and learn to inspect console feedback.
+objectiveSummary: Name values and trace changing state.
 questIds:
   - Q01
+  - Q02
+  - Q03
+  - Q04

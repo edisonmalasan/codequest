@@ -1,0 +1,20 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Combine requirements
+objective: Combine two boolean requirements and format a readable status message.
+outcomeId: O2
+conceptIds:
+  - js-logic
+  - js-strings
+prerequisiteQuestIds:
+  - Q06
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Can one requirement alone make the departure ready?
+  concept: '&& requires both booleans to be true; parentheses group the result
+    before string joining.'
+  nextStep: Change the connector and inspect the examples with one missing requirement.
+caseIds:
+  - normal-output
+  - boundary-output

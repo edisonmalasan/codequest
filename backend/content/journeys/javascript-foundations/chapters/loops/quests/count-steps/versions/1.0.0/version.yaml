@@ -1,0 +1,20 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Count steps
+objective: Run a finite counted loop and predict its first and last iterations.
+outcomeId: O4
+conceptIds:
+  - js-loops
+  - js-comparisons
+prerequisiteQuestIds:
+  - Q10
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which condition includes the final numbered step?
+  concept: <= includes a numbered endpoint; a start above the endpoint makes an
+    empty loop.
+  nextStep: Use <= 3 in the first loop and <= 0 in the second.
+caseIds:
+  - normal-output
+  - boundary-output

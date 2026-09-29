@@ -1,0 +1,19 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Update supplies
+objective: Reassign a changing supply counter while preserving an unchanged label.
+outcomeId: O1
+conceptIds:
+  - js-bindings
+  - js-state
+prerequisiteQuestIds:
+  - Q02
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which binding must hold more than one value?
+  concept: let permits reassignment; const protects a binding that stays unchanged.
+  nextStep: Change the counter declaration to let and trace the two later assignments.
+caseIds:
+  - normal-output
+  - boundary-output

@@ -1,0 +1,18 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Resource cost
+objective: Calculate resource costs with multiplication, addition and explicit grouping.
+outcomeId: O2
+conceptIds:
+  - js-arithmetic
+prerequisiteQuestIds:
+  - Q04
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which cost repeats for each item, and which applies once?
+  concept: Multiplication represents repeated unit cost; add the delivery fee after it.
+  nextStep: Write quantity * price + fee for each supplied order.
+caseIds:
+  - normal-output
+  - boundary-output

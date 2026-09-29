@@ -1,0 +1,21 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Repeat until ready
+objective: Use a condition-controlled loop whose update reaches a stopping state.
+outcomeId: O4
+conceptIds:
+  - js-loops
+  - js-state
+prerequisiteQuestIds:
+  - Q12
+difficulty: developing
+xpAward: 10
+hints:
+  question: Should the body run when energy already equals the target?
+  concept:
+    A readiness loop continues while state is below the target, then stops
+    at equality.
+  nextStep: Use < 3 for each condition and keep the + 1 update.
+caseIds:
+  - normal-output
+  - boundary-output

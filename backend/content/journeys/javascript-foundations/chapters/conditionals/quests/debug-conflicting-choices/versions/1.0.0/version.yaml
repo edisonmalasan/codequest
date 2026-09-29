@@ -1,0 +1,22 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Debug conflicting choices
+objective: Repair overlapping branches so each input produces one exclusive category.
+outcomeId: O7
+conceptIds:
+  - js-branches
+  - js-debugging
+prerequisiteQuestIds:
+  - Q09
+difficulty: developing
+xpAward: 10
+hints:
+  question: Are the decisions one chain or separate if statements?
+  concept: An if/else-if/else chain selects one category; independent if
+    statements may both run.
+  nextStep:
+    Use strict negative comparison, an equality branch for zero, then the
+    remaining positive branch.
+caseIds:
+  - normal-output
+  - boundary-output

@@ -1,0 +1,10 @@
+id: CH03
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: conditionals
+title: Conditionals
+position: 3
+objectiveSummary: Choose one result by tracing exclusive branches.
+questIds:
+  - Q08
+  - Q09
+  - Q10

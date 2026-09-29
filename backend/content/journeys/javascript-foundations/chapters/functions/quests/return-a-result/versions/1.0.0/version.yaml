@@ -1,0 +1,23 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Return a result
+objective: Return a calculated value from a function that accepts changing inputs.
+outcomeId: O5
+conceptIds:
+  - js-functions
+  - js-arithmetic
+prerequisiteQuestIds:
+  - Q14
+difficulty: developing
+xpAward: 10
+hints:
+  question: Does the caller receive the result or merely see it printed?
+  concept:
+    return passes a value back; parameters let one algorithm handle several
+    inputs.
+  nextStep: Replace the console-only operation with a return of the cost expression.
+caseIds:
+  - normal-order
+  - zero-quantity
+  - no-fee
+  - single-item

@@ -25,7 +25,7 @@ const USER_B = '00000000-0000-4000-8000-000000000002';
 
 function fixture(): string {
   const root = mkdtempSync(join(tmpdir(), 'codequest-progress-'));
-  cpSync(resolve('content'), root, { recursive: true });
+  cpSync(resolve('test/fixtures/curriculum-draft'), root, { recursive: true });
   const journey = join(root, 'journeys/javascript-foundations/journey.yaml');
   writeFileSync(
     journey,

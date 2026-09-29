@@ -1,0 +1,8 @@
+id: Q01
+chapterId: CH01
+slug: first-message
+position: 1
+kind: instructional
+guestEligible: true
+currentVersion: 1.0.0
+transitions: []

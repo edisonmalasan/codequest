@@ -12,7 +12,7 @@ import { completionIsCurrent } from './completion-compatibility';
 import { loadCurriculumCatalog } from './curriculum-catalog';
 
 const root = mkdtempSync(join(tmpdir(), 'codequest-unlock-policy-'));
-cpSync(resolve('content'), root, { recursive: true });
+cpSync(resolve('test/fixtures/curriculum-draft'), root, { recursive: true });
 const journey = join(root, 'journeys/javascript-foundations/journey.yaml');
 writeFileSync(
   journey,
