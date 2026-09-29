@@ -13,6 +13,14 @@
 
 ## 3. End-to-end integration and verification
 
-- [ ] 3.1 Extend production PWA coverage with authenticated downloaded-lesson offline Check/explicit Submit, durable pending recovery after cold reload, reconnect with uncertain response and identical retry, confirmed delivery, and unchanged cached accepted facts. Run Chromium test:pwa; qualify backend acceptance fixtures and retain existing database idempotency coverage.
-- [ ] 3.2 Run root test, lint, typecheck, build, API drift and strict OpenSpec validation; review final diff and record actual evidence and F02/F06 limits before Apply PR merge.
-- [ ] 3.3 Update roadmap implementation status and evidence without marking Phase 29 started; verify approved task coverage and prepare canonical spec sync and CLI archive only after Apply merge.
+- [x] 3.1 Extend production PWA coverage with authenticated downloaded-lesson offline Check/explicit Submit, durable pending recovery after cold reload, reconnect with uncertain response and identical retry, confirmed delivery, and unchanged cached accepted facts. Run Chromium test:pwa; qualify backend acceptance fixtures and retain existing database idempotency coverage.
+- [x] 3.2 Run root test, lint, typecheck, build, API drift and strict OpenSpec validation; review final diff and record actual evidence and F02/F06 limits before Apply PR merge.
+- [x] 3.3 Update roadmap implementation status and evidence without marking Phase 29 started; verify approved task coverage and prepare canonical spec sync and CLI archive only after Apply merge.
+
+## Verification evidence (2026-09-29)
+
+- Focused workspace/library/panel/replay suite: 21/21 passed. Root frontend suite: 370/370 across 75 files. Backend 161 tests and 3 migration-history checks reused verified Turbo cache locally; required CI independently reruns the backend.
+- `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm api:check`, strict change validation and all 26 canonical specs passed locally.
+- `pnpm --dir frontend test:pwa`: production Chromium 6/6 passed, including offline explicit saving, cold reload recovery, uncertain response and identical reconnect retry, confirmed metadata, unchanged accepted projection, and public cache exclusions. Auth/API acceptance uses explicit browser fixtures; existing backend database tests verify real event/completion/XP/streak uniqueness and acceptance time. Current publication has no live quests.
+- Proposal #122 and pre-existing draft-test durability repair #123 merged after required CI. The first proposal run exposed a stale Saved-label race; the repair waits for exact durable source and selects the draft label exactly. Apply evidence is reviewed before its PR merge.
+- F02 physical mobile/Safari/Firefox installation, spoken assistive technology, low-power/native quota/background/OS restart remain untested; F06 operational privacy/retention/consent/deletion gates remain open. No support/compliance claim or Phase 29 work.
