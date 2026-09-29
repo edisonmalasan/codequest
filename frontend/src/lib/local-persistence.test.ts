@@ -5,6 +5,7 @@ import { questFixtures } from '@/features/curriculum/journey-course-test-data';
 import { CodeQuestDatabase } from './db';
 import {
   IndexedDbGuestStateRepository,
+  IndexedDbAcceptedProgressRepository,
   IndexedDbLessonSnapshotRepository,
   IndexedDbPendingOperationRepository,
   IndexedDbWorkspacePreferenceRepository,
@@ -30,6 +31,174 @@ afterEach(async () => {
 });
 
 describe('Phase 23 local repositories', () => {
+  it('atomically stores downloaded versions and removes assets without deleting drafts', async () => {
+    const { database } = setup();
+    const lessons = new IndexedDbLessonSnapshotRepository(database);
+    const quest = questFixtures.Q01;
+    const assets = new Map([
+      ['assets/example.png', new Blob(['image'], { type: 'image/png' })],
+    ]);
+    await lessons.saveDownloaded('owner-a', quest, assets);
+    await lessons.saveDownloaded('owner-b', quest, new Map());
+    const saved = await lessons.loadDownloaded(
+      'owner-a',
+      quest.id,
+      quest.contentVersion,
+      quest.assessmentVersion,
+    );
+    expect(saved?.assets.size).toBe(1);
+    expect(
+      (await lessons.listDownloaded('owner-a')).map((row) => row.ownerId),
+    ).toEqual(['owner-a']);
+    await expect(
+      lessons.saveDownloaded(
+        'owner-a',
+        quest,
+        new Map([
+          ['assets/example.png', new Blob(['x'], { type: 'text/html' })],
+        ]),
+      ),
+    ).rejects.toMatchObject({ kind: 'invalid' });
+    expect(
+      (
+        await lessons.loadDownloaded(
+          'owner-a',
+          quest.id,
+          quest.contentVersion,
+          quest.assessmentVersion,
+        )
+      )?.assets.size,
+    ).toBe(1);
+    await database.drafts.put({
+      id: 'draft',
+      ownerId: 'owner-a',
+      workspaceId: 'Q01',
+      fileId: 'main',
+      source: 'saved source',
+      updatedAt: 1,
+    });
+    await lessons.remove(
+      'owner-a',
+      quest.id,
+      quest.contentVersion,
+      quest.assessmentVersion,
+    );
+    expect(await database.lessonAssets.count()).toBe(0);
+    expect(await database.drafts.get('draft')).toMatchObject({
+      source: 'saved source',
+    });
+    expect(await lessons.listDownloaded('owner-b')).toHaveLength(1);
+  });
+
+  it('rejects missing illustration records rather than claiming a complete download', async () => {
+    const { database } = setup();
+    const lessons = new IndexedDbLessonSnapshotRepository(database);
+    const quest = questFixtures.Q01;
+    await lessons.saveDownloaded(
+      'guest',
+      quest,
+      new Map([
+        ['assets/example.png', new Blob(['image'], { type: 'image/png' })],
+      ]),
+    );
+    await database.lessonAssets.clear();
+    await expect(
+      lessons.loadDownloaded(
+        'guest',
+        quest.id,
+        quest.contentVersion,
+        quest.assessmentVersion,
+      ),
+    ).rejects.toMatchObject({ kind: 'corrupt' });
+  });
+
+  it('rolls back a quota-denied replacement and retains the previous package and pending source', async () => {
+    const { database } = setup();
+    const lessons = new IndexedDbLessonSnapshotRepository(database);
+    const quest = questFixtures.Q01;
+    const image = new Map([
+      ['assets/example.png', new Blob(['original'], { type: 'image/png' })],
+    ]);
+    await lessons.saveDownloaded('owner-a', quest, image);
+    await database.outbox.put({
+      eventId: 'retain',
+      ownerId: 'owner-a',
+      questId: quest.id,
+      contentVersion: 1,
+      payload: 'recoverable source',
+      createdAt: 1,
+    });
+    vi.spyOn(database.lessonSnapshots, 'put').mockRejectedValueOnce(
+      new DOMException('quota', 'QuotaExceededError'),
+    );
+    await expect(
+      lessons.saveDownloaded(
+        'owner-a',
+        { ...quest, title: 'replacement' },
+        new Map(),
+      ),
+    ).rejects.toMatchObject({ kind: 'quota' });
+    const previous = await lessons.loadDownloaded(
+      'owner-a',
+      quest.id,
+      quest.contentVersion,
+      quest.assessmentVersion,
+    );
+    expect(previous?.snapshot.title).toBe(quest.title);
+    expect(previous?.assets.size).toBe(1);
+    expect((await database.outbox.get('retain'))?.payload).toBe(
+      'recoverable source',
+    );
+  });
+
+  it('persists a minimal owner-bound accepted view without raw response or source fields', async () => {
+    const { database } = setup();
+    const cache = new IndexedDbAcceptedProgressRepository(database, () => 42);
+    const fact = {
+      questId: 'Q01',
+      status: 'completed' as const,
+      availability: 'available' as const,
+      attemptCount: 2,
+      hintCount: 1,
+      startedAt: null,
+      completedAt: null,
+      lastActivityAt: null,
+      unmetPrerequisites: [],
+    };
+    const progress = {
+      journeyId: 'J01',
+      status: 'completed' as const,
+      completedQuests: 1,
+      totalQuests: 1,
+      percentage: 100,
+      availability: 'available' as const,
+      unmetPrerequisites: [],
+      chapters: [
+        {
+          chapterId: 'CH01',
+          status: 'completed' as const,
+          completedQuests: 1,
+          totalQuests: 1,
+          percentage: 100,
+          availability: 'available' as const,
+          unmetPrerequisites: [],
+          quests: [fact],
+        },
+      ],
+    };
+    await cache.save('owner-a', progress, [
+      { questId: 'Q01', contentVersion: '1.0.0', assessmentVersion: '1.0.0' },
+    ]);
+    expect(await cache.load('owner-b', 'J01')).toBeNull();
+    const saved = await cache.load('owner-a', 'J01');
+    expect(saved).toMatchObject({
+      capturedAt: 42,
+      quests: [{ status: 'completed' }],
+    });
+    expect(JSON.stringify(saved)).not.toContain('attemptCount');
+    await cache.clear('owner-a');
+    expect(await cache.load('owner-a', 'J01')).toBeNull();
+  });
   it('restores owner preferences across reopen, skips unchanged writes, and removes only one owner', async () => {
     const { name, database } = setup();
     const preferences = new IndexedDbWorkspacePreferenceRepository(

@@ -22,12 +22,18 @@ export function PwaStatus(): React.JSX.Element {
   const [online, setOnline] = useState<boolean | null>(null);
   const [update, setUpdate] = useState(false);
   const [failure, setFailure] = useState(false);
+  const [progressClearFailure, setProgressClearFailure] = useState(false);
 
   useEffect(() => {
     let active = true;
     let registration: ServiceWorkerRegistration | undefined;
     const observed = new Set<ServiceWorker>();
     const connectivity = () => setOnline(navigator.onLine);
+    const clearFailed = () => setProgressClearFailure(true);
+    window.addEventListener(
+      'codequest-offline-progress-clear-failed',
+      clearFailed,
+    );
     const inspect = () => {
       if (!active) return;
       if (registration?.waiting && navigator.serviceWorker.controller)
@@ -77,6 +83,10 @@ export function PwaStatus(): React.JSX.Element {
     }
     return () => {
       active = false;
+      window.removeEventListener(
+        'codequest-offline-progress-clear-failed',
+        clearFailed,
+      );
       window.removeEventListener('online', connectivity);
       window.removeEventListener('offline', connectivity);
       window.removeEventListener('online', check);
@@ -109,6 +119,12 @@ export function PwaStatus(): React.JSX.Element {
         <p role="status" className="mt-1">
           Offline preparation or update check failed. You can keep using this
           page; reconnect and reopen to retry.
+        </p>
+      )}
+      {progressClearFailure && (
+        <p role="alert" className="mt-1">
+          Cached progress could not be cleared from this device. Other accounts
+          cannot read it; retry when device storage is available.
         </p>
       )}
     </aside>

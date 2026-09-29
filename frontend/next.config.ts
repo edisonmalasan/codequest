@@ -1,11 +1,12 @@
 import type { NextConfig } from 'next';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import withSerwistInit from '@serwist/next';
 import {
   assertShellBudget,
   isPublicShellUrl,
+  OFFLINE_LEARNING_DOCUMENT,
   SHELL_ASSETS,
 } from './src/pwa/cache-policy';
 
@@ -180,6 +181,36 @@ const nextConfig: NextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
         ],
       },
+      {
+        source: '/runtime/offline-sw.js',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'none'; script-src 'self'; connect-src 'self'",
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
+      ...['/runtime/offline-setup.html', '/runtime/offline-setup.js'].map(
+        (source) => ({
+          source,
+          headers: [
+            {
+              key: 'Content-Security-Policy',
+              value:
+                "default-src 'none'; script-src 'self'; worker-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            },
+            { key: 'Cache-Control', value: 'no-store' },
+            { key: 'Referrer-Policy', value: 'no-referrer' },
+            { key: 'X-Content-Type-Options', value: 'nosniff' },
+          ],
+        }),
+      ),
     ];
   },
 };
@@ -187,6 +218,7 @@ const nextConfig: NextConfig = {
 const pwaEnabled =
   process.env.NODE_ENV === 'production' &&
   process.env.CODEQUEST_PREVIEW_BUILD !== '1';
+const offlineDocumentRevision = randomUUID();
 const publicEntry = (url: string) => {
   const file = path.join(process.cwd(), 'public', url);
   return {
@@ -201,7 +233,15 @@ const withSerwist = withSerwistInit({
   reloadOnOnline: false,
   cacheOnNavigation: false,
   disable: !pwaEnabled,
-  additionalPrecacheEntries: pwaEnabled ? SHELL_ASSETS.map(publicEntry) : [],
+  additionalPrecacheEntries: pwaEnabled
+    ? [
+        ...SHELL_ASSETS.map(publicEntry),
+        {
+          url: OFFLINE_LEARNING_DOCUMENT,
+          revision: offlineDocumentRevision,
+        },
+      ]
+    : [],
   // Enforce both limits ourselves rather than silently dropping large assets.
   maximumFileSizeToCacheInBytes: Number.MAX_SAFE_INTEGER,
   manifestTransforms: [
@@ -211,7 +251,9 @@ const withSerwist = withSerwistInit({
         manifest.map((entry) => ({
           size: SHELL_ASSETS.some((url) => url === entry.url)
             ? statSync(path.join(process.cwd(), 'public', entry.url)).size
-            : entry.size,
+            : entry.url === OFFLINE_LEARNING_DOCUMENT
+              ? 2 * 1024 * 1024
+              : entry.size,
         })),
       );
       return { manifest, warnings: [] };

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AccountPanel } from './account-panel';
@@ -61,14 +61,18 @@ describe('AccountPanel', () => {
   it('refreshes backend XP and streak reads on a matching reconnect notification', async () => {
     render(<AccountPanel email="learner@example.test" />);
     await screen.findByText(/235 total XP/);
+    // Flush the ready-state subscription before emitting an external event.
+    await act(async () => {});
     window.dispatchEvent(
       new CustomEvent('codequest-account-refresh', { detail: 'another-owner' }),
     );
     expect(getXp).toHaveBeenCalledTimes(1);
-    window.dispatchEvent(
-      new CustomEvent('codequest-account-refresh', {
-        detail: '00000000-0000-4000-8000-000000000001',
-      }),
+    act(() =>
+      window.dispatchEvent(
+        new CustomEvent('codequest-account-refresh', {
+          detail: '00000000-0000-4000-8000-000000000001',
+        }),
+      ),
     );
     await waitFor(() => expect(getXp).toHaveBeenCalledTimes(2));
     expect(getStreak).toHaveBeenCalledTimes(2);

@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import { getQueryClient } from '@/lib/query-client';
+import { acceptedProgressRepository } from '@/lib/local-persistence';
 import { progressReplay } from './progress-replay';
 import {
   currentSyncOwner,
@@ -46,6 +47,12 @@ export function ProgressSyncLifecycle(): null {
     const changeOwner = (next: string | null) => {
       if (!active) return;
       if (owner !== next) {
+        if (owner)
+          void acceptedProgressRepository.clear(owner).catch(() => {
+            window.dispatchEvent(
+              new Event('codequest-offline-progress-clear-failed'),
+            );
+          });
         generation++;
         getQueryClient().removeQueries({ queryKey: ['progress'] });
       }

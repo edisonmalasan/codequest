@@ -1,9 +1,15 @@
-import { isQuestDetail, type QuestDetail } from './api-client';
+import {
+  isQuestDetail,
+  type JourneyProgress,
+  type QuestDetail,
+} from './api-client';
 import {
   db,
   type CodeQuestDatabase,
   type GuestStateRecord,
   type LessonSnapshotRecord,
+  type LessonAssetRecord,
+  type AcceptedProgressRecord,
   type OutboxRecord,
   type PendingOperationRecord,
   type WorkspacePreferenceRecord,
@@ -12,12 +18,15 @@ import {
 export const LOCAL_LIMITS = {
   preferenceBytes: 4_096,
   lessonBytes: 262_144,
+  lessonAssetBytes: 524_288,
+  lessonAssetsBytes: 2_097_152,
+  progressBytes: 32_768,
   guestValueBytes: 16_384,
   pendingPayloadBytes: 65_536,
 } as const;
 
 export type LocalPersistenceErrorKind =
-  'invalid' | 'too-large' | 'unavailable' | 'conflict' | 'corrupt';
+  'invalid' | 'too-large' | 'unavailable' | 'quota' | 'conflict' | 'corrupt';
 
 export class LocalPersistenceError extends Error {
   constructor(
@@ -62,6 +71,13 @@ async function stored<T>(operation: () => Promise<T>): Promise<T> {
     return await operation();
   } catch (cause) {
     if (cause instanceof LocalPersistenceError) throw cause;
+    if (
+      typeof cause === 'object' &&
+      cause !== null &&
+      'name' in cause &&
+      cause.name === 'QuotaExceededError'
+    )
+      throw new LocalPersistenceError('quota', cause);
     throw new LocalPersistenceError('unavailable', cause);
   }
 }
@@ -196,6 +212,15 @@ export class IndexedDbLessonSnapshotRepository {
   ) {}
 
   async save(ownerId: string, snapshot: QuestDetail): Promise<void> {
+    const row = this.checkedRow(ownerId, snapshot);
+    await stored(() => this.database.lessonSnapshots.put(row));
+  }
+
+  private checkedRow(
+    ownerId: string,
+    snapshot: QuestDetail,
+    assetPaths?: string[],
+  ): LessonSnapshotRecord {
     identityPart(ownerId);
     if (!isQuestDetail(snapshot)) throw new LocalPersistenceError('invalid');
     const id = recordId(
@@ -210,7 +235,7 @@ export class IndexedDbLessonSnapshotRepository {
     );
     const parsed: unknown = JSON.parse(serialized);
     if (!isQuestDetail(parsed)) throw new LocalPersistenceError('invalid');
-    const row: LessonSnapshotRecord = {
+    return {
       id,
       ownerId,
       questId: snapshot.id,
@@ -218,8 +243,168 @@ export class IndexedDbLessonSnapshotRepository {
       assessmentVersion: snapshot.assessmentVersion,
       snapshot: parsed,
       savedAt: this.now(),
+      ...(assetPaths === undefined ? {} : { assetPaths }),
     };
-    await stored(() => this.database.lessonSnapshots.put(row));
+  }
+
+  async saveDownloaded(
+    ownerId: string,
+    snapshot: QuestDetail,
+    assets: ReadonlyMap<string, Blob>,
+  ): Promise<void> {
+    if (assets.size > 8) throw new LocalPersistenceError('too-large');
+    let bytes = 0;
+    const assetPaths = [...assets.keys()].sort();
+    const row = this.checkedRow(ownerId, snapshot, assetPaths);
+    const records: LessonAssetRecord[] = [];
+    for (const [assetPath, blob] of assets) {
+      if (
+        !/^assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)$/.test(assetPath) ||
+        !(blob instanceof Blob) ||
+        !['image/png', 'image/webp'].includes(blob.type) ||
+        blob.size === 0 ||
+        blob.size > LOCAL_LIMITS.lessonAssetBytes
+      )
+        throw new LocalPersistenceError('invalid');
+      bytes += blob.size;
+      if (bytes > LOCAL_LIMITS.lessonAssetsBytes)
+        throw new LocalPersistenceError('too-large');
+      records.push({
+        id: recordId(
+          ownerId,
+          snapshot.id,
+          snapshot.contentVersion,
+          snapshot.assessmentVersion,
+          assetPath,
+        ),
+        ownerId,
+        questId: snapshot.id,
+        contentVersion: snapshot.contentVersion,
+        assessmentVersion: snapshot.assessmentVersion,
+        path: assetPath,
+        blob,
+      });
+    }
+    await stored(() =>
+      this.database.transaction(
+        'rw',
+        this.database.lessonSnapshots,
+        this.database.lessonAssets,
+        async () => {
+          const existing = await this.database.lessonSnapshots
+            .where('ownerId')
+            .equals(ownerId)
+            .toArray();
+          if (
+            !existing.some((item) => item.id === row.id) &&
+            existing.length >= 8
+          )
+            throw new LocalPersistenceError('too-large');
+          await this.database.lessonAssets
+            .where('[ownerId+questId+contentVersion+assessmentVersion]')
+            .equals([
+              ownerId,
+              snapshot.id,
+              snapshot.contentVersion,
+              snapshot.assessmentVersion,
+            ])
+            .delete();
+          await this.database.lessonAssets.bulkPut(records);
+          await this.database.lessonSnapshots.put(row);
+        },
+      ),
+    );
+  }
+
+  async listDownloaded(ownerId: string): Promise<LessonSnapshotRecord[]> {
+    identityPart(ownerId);
+    const rows = await stored(() =>
+      this.database.lessonSnapshots.where('ownerId').equals(ownerId).toArray(),
+    );
+    for (const row of rows) {
+      if (
+        row.ownerId !== ownerId ||
+        !isQuestDetail(row.snapshot) ||
+        row.questId !== row.snapshot.id ||
+        row.contentVersion !== row.snapshot.contentVersion ||
+        row.assessmentVersion !== row.snapshot.assessmentVersion ||
+        !Number.isFinite(row.savedAt) ||
+        (row.assetPaths !== undefined &&
+          (!Array.isArray(row.assetPaths) ||
+            row.assetPaths.length > 8 ||
+            row.assetPaths.some((path) => typeof path !== 'string')))
+      )
+        throw new LocalPersistenceError('corrupt');
+      jsonText(publicLessonSnapshot(row.snapshot), LOCAL_LIMITS.lessonBytes);
+    }
+    return rows
+      .filter((row) => row.assetPaths !== undefined)
+      .sort((a, b) => b.savedAt - a.savedAt);
+  }
+
+  async loadDownloaded(
+    ownerId: string,
+    questId: string,
+    contentVersion: string,
+    assessmentVersion: string,
+  ): Promise<{
+    snapshot: QuestDetail;
+    assets: ReadonlyMap<string, Blob>;
+    savedAt: number;
+  } | null> {
+    const id = recordId(ownerId, questId, contentVersion, assessmentVersion);
+    const row = await stored(() => this.database.lessonSnapshots.get(id));
+    if (!row) return null;
+    const snapshot = await this.load(
+      ownerId,
+      questId,
+      contentVersion,
+      assessmentVersion,
+    );
+    if (
+      !snapshot ||
+      !Number.isFinite(row.savedAt) ||
+      !Array.isArray(row.assetPaths)
+    )
+      throw new LocalPersistenceError('corrupt');
+    jsonText(publicLessonSnapshot(snapshot), LOCAL_LIMITS.lessonBytes);
+    if (
+      row.assetPaths.length > 8 ||
+      new Set(row.assetPaths).size !== row.assetPaths.length ||
+      row.assetPaths.some(
+        (path) => !/^assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)$/.test(path),
+      )
+    )
+      throw new LocalPersistenceError('corrupt');
+    const records = await stored(() =>
+      this.database.lessonAssets
+        .where('[ownerId+questId+contentVersion+assessmentVersion]')
+        .equals([ownerId, questId, contentVersion, assessmentVersion])
+        .toArray(),
+    );
+    const assets = new Map<string, Blob>();
+    let bytes = 0;
+    for (const record of records) {
+      if (
+        record.ownerId !== ownerId ||
+        record.questId !== questId ||
+        record.contentVersion !== contentVersion ||
+        record.assessmentVersion !== assessmentVersion ||
+        !row.assetPaths.includes(record.path) ||
+        !(record.blob instanceof Blob) ||
+        !['image/png', 'image/webp'].includes(record.blob.type) ||
+        record.blob.size > LOCAL_LIMITS.lessonAssetBytes
+      )
+        throw new LocalPersistenceError('corrupt');
+      bytes += record.blob.size;
+      assets.set(record.path, record.blob);
+    }
+    if (
+      assets.size !== row.assetPaths.length ||
+      bytes > LOCAL_LIMITS.lessonAssetsBytes
+    )
+      throw new LocalPersistenceError('corrupt');
+    return { snapshot, assets, savedAt: row.savedAt };
   }
 
   async load(
@@ -252,7 +437,115 @@ export class IndexedDbLessonSnapshotRepository {
     assessmentVersion: string,
   ): Promise<void> {
     const id = recordId(ownerId, questId, contentVersion, assessmentVersion);
-    await stored(() => this.database.lessonSnapshots.delete(id));
+    await stored(() =>
+      this.database.transaction(
+        'rw',
+        this.database.lessonSnapshots,
+        this.database.lessonAssets,
+        async () => {
+          const row = await this.database.lessonSnapshots.get(id);
+          if (row && row.ownerId !== ownerId)
+            throw new LocalPersistenceError('conflict');
+          await this.database.lessonAssets
+            .where('[ownerId+questId+contentVersion+assessmentVersion]')
+            .equals([ownerId, questId, contentVersion, assessmentVersion])
+            .delete();
+          await this.database.lessonSnapshots.delete(id);
+        },
+      ),
+    );
+  }
+}
+
+export class IndexedDbAcceptedProgressRepository {
+  constructor(
+    private readonly database: CodeQuestDatabase = db,
+    private readonly now: () => number = Date.now,
+  ) {}
+
+  async save(
+    ownerId: string,
+    progress: JourneyProgress,
+    versions: readonly {
+      questId: string;
+      contentVersion: string;
+      assessmentVersion: string;
+    }[],
+  ): Promise<void> {
+    identityPart(ownerId);
+    if (ownerId === 'guest') throw new LocalPersistenceError('invalid');
+    identityPart(progress.journeyId);
+    const versionMap = new Map(versions.map((item) => [item.questId, item]));
+    const questFacts = progress.chapters.flatMap((chapter) => chapter.quests);
+    if (
+      questFacts.length > 128 ||
+      questFacts.length !== versions.length ||
+      versionMap.size !== versions.length
+    )
+      throw new LocalPersistenceError('invalid');
+    const quests: AcceptedProgressRecord['quests'] = questFacts.map((fact) => {
+      const version = versionMap.get(fact.questId);
+      if (
+        !version ||
+        !['not_started', 'in_progress', 'completed'].includes(fact.status) ||
+        !['available', 'locked'].includes(fact.availability)
+      )
+        throw new LocalPersistenceError('invalid');
+      identityPart(version.contentVersion);
+      identityPart(version.assessmentVersion);
+      return {
+        questId: fact.questId,
+        contentVersion: version.contentVersion,
+        assessmentVersion: version.assessmentVersion,
+        status: fact.status,
+        availability: fact.availability,
+      };
+    });
+    const row: AcceptedProgressRecord = {
+      id: recordId(ownerId, progress.journeyId),
+      ownerId,
+      journeyId: progress.journeyId,
+      capturedAt: this.now(),
+      schemaVersion: 1,
+      quests,
+    };
+    jsonText(row, LOCAL_LIMITS.progressBytes);
+    await stored(() => this.database.acceptedProgress.put(row));
+  }
+
+  async load(
+    ownerId: string,
+    journeyId: string,
+  ): Promise<AcceptedProgressRecord | null> {
+    const id = recordId(ownerId, journeyId);
+    const row = await stored(() => this.database.acceptedProgress.get(id));
+    if (!row) return null;
+    if (
+      row.ownerId !== ownerId ||
+      row.journeyId !== journeyId ||
+      row.schemaVersion !== 1 ||
+      !Number.isFinite(row.capturedAt) ||
+      !Array.isArray(row.quests) ||
+      row.quests.length > 128 ||
+      row.quests.some(
+        (quest) =>
+          typeof quest.questId !== 'string' ||
+          typeof quest.contentVersion !== 'string' ||
+          typeof quest.assessmentVersion !== 'string' ||
+          !['not_started', 'in_progress', 'completed'].includes(quest.status) ||
+          !['available', 'locked'].includes(quest.availability),
+      )
+    )
+      throw new LocalPersistenceError('corrupt');
+    jsonText(row, LOCAL_LIMITS.progressBytes);
+    return row;
+  }
+
+  async clear(ownerId: string): Promise<void> {
+    identityPart(ownerId);
+    await stored(() =>
+      this.database.acceptedProgress.where('ownerId').equals(ownerId).delete(),
+    );
   }
 }
 
@@ -461,16 +754,25 @@ export async function removeLocalOwnerData(
   await stored(() =>
     database.transaction(
       'rw',
-      database.drafts,
-      database.outbox,
-      database.preferences,
-      database.lessonSnapshots,
-      database.guestState,
+      [
+        database.drafts,
+        database.outbox,
+        database.preferences,
+        database.lessonSnapshots,
+        database.lessonAssets,
+        database.acceptedProgress,
+        database.guestState,
+      ],
       async () => {
         await database.drafts.where('ownerId').equals(ownerId).delete();
         await database.outbox.where('ownerId').equals(ownerId).delete();
         await database.preferences.where('ownerId').equals(ownerId).delete();
         await database.lessonSnapshots
+          .where('ownerId')
+          .equals(ownerId)
+          .delete();
+        await database.lessonAssets.where('ownerId').equals(ownerId).delete();
+        await database.acceptedProgress
           .where('ownerId')
           .equals(ownerId)
           .delete();
@@ -483,3 +785,6 @@ export async function removeLocalOwnerData(
 
 export const workspacePreferenceRepository =
   new IndexedDbWorkspacePreferenceRepository();
+export const lessonSnapshotRepository = new IndexedDbLessonSnapshotRepository();
+export const acceptedProgressRepository =
+  new IndexedDbAcceptedProgressRepository();

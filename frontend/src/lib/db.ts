@@ -56,6 +56,32 @@ export interface LessonSnapshotRecord {
   assessmentVersion: string;
   snapshot: QuestDetail;
   savedAt: number;
+  assetPaths?: string[];
+}
+
+export interface LessonAssetRecord {
+  id: string;
+  ownerId: string;
+  questId: string;
+  contentVersion: string;
+  assessmentVersion: string;
+  path: string;
+  blob: Blob;
+}
+
+export interface AcceptedProgressRecord {
+  id: string;
+  ownerId: string;
+  journeyId: string;
+  capturedAt: number;
+  schemaVersion: 1;
+  quests: {
+    questId: string;
+    contentVersion: string;
+    assessmentVersion: string;
+    status: 'not_started' | 'in_progress' | 'completed';
+    availability: 'available' | 'locked';
+  }[];
 }
 
 export interface GuestStateRecord {
@@ -74,6 +100,8 @@ export class CodeQuestDatabase extends Dexie {
   outbox!: Table<OutboxRecord | PendingOperationRecord, string>;
   preferences!: Table<WorkspacePreferenceRecord, string>;
   lessonSnapshots!: Table<LessonSnapshotRecord, string>;
+  lessonAssets!: Table<LessonAssetRecord, string>;
+  acceptedProgress!: Table<AcceptedProgressRecord, string>;
   guestState!: Table<GuestStateRecord, string>;
 
   constructor(name = 'codequest') {
@@ -107,6 +135,18 @@ export class CodeQuestDatabase extends Dexie {
       preferences: 'id, [ownerId+workspaceId], ownerId',
       lessonSnapshots:
         'id, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      guestState: 'id, [ownerId+key]',
+    });
+    this.version(4).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId, [ownerId+createdAt]',
+      preferences: 'id, [ownerId+workspaceId], ownerId',
+      lessonSnapshots:
+        'id, ownerId, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      lessonAssets:
+        'id, ownerId, [ownerId+questId+contentVersion+assessmentVersion]',
+      acceptedProgress: 'id, ownerId',
       guestState: 'id, [ownerId+key]',
     });
   }

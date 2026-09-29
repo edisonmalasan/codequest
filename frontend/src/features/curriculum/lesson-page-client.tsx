@@ -17,6 +17,7 @@ import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import { LessonDocument } from './lesson-document';
 import { LessonHints } from './lesson-hints';
 import { QuestWorkspace } from './quest-workspace';
+import { DownloadLessonButton } from '@/features/offline-learning/download-lesson-button';
 
 export interface LessonApi {
   getQuest(
@@ -60,9 +61,13 @@ function difficultyLabel(value: string): string {
 export function LessonPageView({
   quest,
   apiBaseUrl,
+  offline = false,
+  offlineAssets,
 }: {
   readonly quest: QuestDetail;
   readonly apiBaseUrl: string;
+  readonly offline?: boolean;
+  readonly offlineAssets?: ReadonlyMap<string, string>;
 }): React.JSX.Element {
   const [activityError, setActivityError] = useState(false);
   const progressApi = useMemo(
@@ -81,6 +86,7 @@ export function LessonPageView({
     [],
   );
   useEffect(() => {
+    if (offline || !navigator.onLine) return;
     let active = true;
     const recordStart = async () => {
       const result = await progressApi.startQuest(
@@ -111,8 +117,9 @@ export function LessonPageView({
         active = false;
       };
     }
-  }, [progressApi, quest.slug, quest.contentVersion]);
+  }, [progressApi, quest.slug, quest.contentVersion, offline]);
   const recordHint = async (hintKey: 'question' | 'concept' | 'nextStep') => {
+    if (offline || !navigator.onLine) return;
     try {
       const { data, error } =
         await getBrowserSupabaseClient().auth.getSession();
@@ -127,7 +134,9 @@ export function LessonPageView({
       setActivityError(true);
     }
   };
-  const journeyHref = `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
+  const journeyHref = offline
+    ? '/offline-learning'
+    : `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
@@ -158,7 +167,7 @@ export function LessonPageView({
           </nav>
           <header className="pixel-corners pixel-frame mt-6 bg-surface-raised p-6 sm:p-8">
             <p className="game-label text-xs text-ascent">
-              Published quest · {quest.id}
+              {offline ? 'Saved offline quest' : 'Published quest'} · {quest.id}
             </p>
             <h1 className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">
               {quest.title}
@@ -177,6 +186,9 @@ export function LessonPageView({
               <Badge variant="neutral">Version {quest.contentVersion}</Badge>
             </div>
           </header>
+          {!offline && (
+            <DownloadLessonButton quest={quest} apiBaseUrl={apiBaseUrl} />
+          )}
           <section
             aria-label="Lesson content"
             className="mt-8 max-w-[72ch] rounded-lg border border-line bg-surface-raised px-5 py-7 shadow-soft sm:px-8 sm:py-9"
@@ -186,6 +198,7 @@ export function LessonPageView({
               questSlug={quest.slug}
               contentVersion={quest.contentVersion}
               apiBaseUrl={apiBaseUrl}
+              offlineAssets={offlineAssets}
             />
           </section>
           <div className="mt-8 max-w-[72ch]">
@@ -219,7 +232,7 @@ export function LessonPageView({
           </p>
         </aside>
       </div>
-      <QuestWorkspace quest={quest} />
+      <QuestWorkspace quest={quest} offline={offline} />
     </main>
   );
 }

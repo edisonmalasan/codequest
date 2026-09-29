@@ -2,6 +2,7 @@ import 'fake-indexeddb/auto';
 import Dexie from 'dexie';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CodeQuestDatabase } from './db';
+import { questFixtures } from '@/features/curriculum/journey-course-test-data';
 
 describe('local persistence skeleton', () => {
   const databases: CodeQuestDatabase[] = [];
@@ -108,6 +109,64 @@ describe('local persistence skeleton', () => {
       .toArray();
     expect(ownerEvents).toHaveLength(1);
     expect(otherEvents).toHaveLength(0);
+  });
+
+  it('preserves version-three lessons, drafts and pending work when adding offline stores', async () => {
+    const name = `version-three-${Date.now()}`;
+    const old = new Dexie(name);
+    old.version(3).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId, [ownerId+createdAt]',
+      preferences: 'id, [ownerId+workspaceId], ownerId',
+      lessonSnapshots:
+        'id, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      guestState: 'id, [ownerId+key]',
+    });
+    const draft = {
+      id: 'retained',
+      ownerId: 'owner-a',
+      workspaceId: 'Q01',
+      fileId: 'main',
+      source: 'unsynced source',
+      updatedAt: 5,
+    };
+    const pending = {
+      eventId: 'pending',
+      ownerId: 'owner-a',
+      questId: 'Q01',
+      schemaVersion: 1,
+      operationType: 'attempt-submit',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      payload: '{}',
+      createdAt: 6,
+    };
+    const lesson = {
+      id: 'lesson',
+      ownerId: 'owner-a',
+      questId: 'Q01',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      snapshot: questFixtures.Q01,
+      savedAt: 7,
+    };
+    await old.table('drafts').put(draft);
+    await old.table('outbox').put(pending);
+    await old.table('lessonSnapshots').put(lesson);
+    old.close();
+    const database = new CodeQuestDatabase(name);
+    databases.push(database);
+    expect(await database.drafts.get('retained')).toEqual(draft);
+    expect(await database.outbox.get('pending')).toEqual(pending);
+    expect(
+      await database.lessonSnapshots
+        .where('ownerId')
+        .equals('owner-a')
+        .toArray(),
+    ).toEqual([lesson]);
+    expect(await database.lessonAssets.count()).toBe(0);
+    expect(await database.acceptedProgress.count()).toBe(0);
   });
 
   it('upgrades version-two drafts and legacy pending rows without replaying them', async () => {
