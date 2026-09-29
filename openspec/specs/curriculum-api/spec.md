@@ -91,9 +91,9 @@ The curriculum API SHALL provide a public, read-only asset operation keyed by pu
 
 ### Requirement: Curriculum delivery remains read-only and phase-bounded
 
-The curriculum API SHALL NOT add author/admin mutations, database projection or migration, enrollment, attempts, submissions, completion acceptance, progress, XP awards, levels, streaks, unlock enforcement, guest import, offline synchronization, learner execution, analytics, production content authoring, or publication of the draft Q01 fixture. Those behaviors require later approved capabilities.
+The curriculum API SHALL NOT add author/admin mutations, database projection or migration, enrollment, attempts, submissions, completion acceptance, progress, XP awards, levels, streaks, unlock enforcement, guest import, offline synchronization, learner execution, or analytics. Those behaviors SHALL remain owned by their approved capabilities. The API SHALL deliver separately approved instructional curriculum only through the existing reviewed publication selection and SHALL NOT publish the original draft Q01 1.0.0 fixture. Content authoring SHALL remain owned by the curriculum capabilities rather than API transport.
 
 #### Scenario: Completed Phase 10 diff is reviewed
 
 - **WHEN** the Apply diff and OpenAPI document are inspected
-- **THEN** they contain only publication selection, read-only curriculum delivery, generated-client integration, tests, and documentation with no Phase 11+ behavior
+- **THEN** curriculum operations remain read-only with no new learning-state authority and deliver only selected reviewed snapshots
