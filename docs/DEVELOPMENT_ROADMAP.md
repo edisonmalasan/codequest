@@ -1414,6 +1414,7 @@ Implement:
 * application shell cache
 * update UI
 * network indicator
+
 **Completed 2026-09-29:** Phase 26 adds standalone installation metadata and existing-brand icons, a bounded public Serwist precache, uncached application navigation with a script-free offline landing page, connection hints, and waiting-update guidance. Auth/API/page/RSC/source/progress responses and runtime/preview compartments are excluded; updates cannot force reload or delete local work. Verification includes production Chromium 2/2 and repository checks. See [PWA implementation](pwa.md), [canonical specification](../openspec/specs/pwa-shell/spec.md), and [archived tasks](../openspec/changes/archive/2026-09-29-add-installable-pwa-shell/tasks.md). Physical/native installation and other F02 obligations remain untested. Phase 27 offline learning is separate.
 
 ---
