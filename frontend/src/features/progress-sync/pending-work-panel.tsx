@@ -69,13 +69,14 @@ export function PendingWorkPanel({
   }, [accountId]);
 
   async function retry(): Promise<void> {
-    if (busy) return;
+    if (busy || !navigator.onLine) return;
     const token = generation.current;
     setBusy(true);
     setError('');
     try {
       if ((await currentSyncOwner()) !== accountId)
         throw new Error('Account changed');
+      if (!navigator.onLine) return;
       const result = await progressReplay.replay(
         accountId,
         ownerSyncApi(accountId),
@@ -184,7 +185,11 @@ export function PendingWorkPanel({
         );
       })}
       {rows.some((row) => row.delivery?.status !== 'confirmed') && (
-        <Button type="button" disabled={busy} onClick={() => void retry()}>
+        <Button
+          type="button"
+          disabled={busy || !online}
+          onClick={() => void retry()}
+        >
           {busy ? 'Retrying saved work…' : 'Retry saved submissions'}
         </Button>
       )}

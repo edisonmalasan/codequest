@@ -6,6 +6,7 @@ import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { Button } from '@/components/ui/button';
 import { LessonPageView } from '@/features/curriculum/lesson-page-client';
 import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
+import { PendingWorkPanel } from '@/features/progress-sync/pending-work-panel';
 import { getConfiguredApiBaseUrl } from '@/lib/api-base';
 import type { QuestDetail } from '@/lib/api-client';
 import type { AcceptedProgressRecord, LessonSnapshotRecord } from '@/lib/db';
@@ -136,6 +137,11 @@ export function OfflineLearningClient(): React.JSX.Element {
           offline
           offlineAssets={selected.assets}
         />
+        {owner && owner !== 'guest' && (
+          <div className="mx-auto max-w-6xl px-5 pb-10">
+            <PendingWorkPanel key={owner} accountId={owner} />
+          </div>
+        )}
       </>
     );
   return (
@@ -239,6 +245,11 @@ export function OfflineLearningClient(): React.JSX.Element {
                 );
               })}
             </ul>
+            {owner !== 'guest' && (
+              <div className="mt-8">
+                <PendingWorkPanel key={owner} accountId={owner} />
+              </div>
+            )}
           </>
         )}
         <p className="mt-8 text-sm text-muted">

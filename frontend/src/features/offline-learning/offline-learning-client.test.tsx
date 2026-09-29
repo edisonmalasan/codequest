@@ -46,6 +46,13 @@ vi.mock('@/lib/local-persistence', () => ({
   },
   acceptedProgressRepository: { load: mocks.progress },
 }));
+vi.mock('@/features/progress-sync/pending-work-panel', () => ({
+  PendingWorkPanel: ({ accountId }: { accountId: string }) => (
+    <section aria-label="Pending account work">
+      {accountId} pending source
+    </section>
+  ),
+}));
 vi.mock('@/features/curriculum/lesson-page-client', () => ({
   LessonPageView: ({
     quest,
@@ -105,13 +112,22 @@ describe('device-local offline library', () => {
     const user = userEvent.setup();
     render(<OfflineLearningClient />);
     await screen.findByText(/Last known accepted account status: completed/);
+    expect(screen.getByText('owner-a pending source')).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Open saved lesson' }));
     expect(await screen.findByText(/First value offline mode/)).toBeTruthy();
+    expect(screen.getByText('owner-a pending source')).toBeTruthy();
     expect(mocks.load).toHaveBeenCalledWith('owner-a', 'Q01', '1.0.0', '1.0.0');
     act(() => mocks.notify?.('owner-b'));
     await screen.findByText('No lessons are downloaded for this local owner.');
     expect(screen.queryByText(/First value offline mode/)).toBeNull();
     expect(screen.queryByText(/Last known accepted account status/)).toBeNull();
+    expect(screen.queryByText('owner-a pending source')).toBeNull();
+    expect(screen.getByText('owner-b pending source')).toBeTruthy();
+    act(() => mocks.notify?.(null));
+    await screen.findByText('Showing guest downloads on this device.');
+    expect(
+      screen.queryByRole('region', { name: 'Pending account work' }),
+    ).toBeNull();
   });
   it('reports evicted or damaged assets without discarding work or calling them ready', async () => {
     mocks.load.mockRejectedValue(new Error('missing illustration'));

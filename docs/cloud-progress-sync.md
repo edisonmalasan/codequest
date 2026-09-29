@@ -4,6 +4,10 @@ Phase 25 uses NestJS/PostgreSQL as account authority on every device. Explicit a
 
 The envelope binds originating owner, stable quest ID, UUID event ID, original content/assessment versions, source/report JSON, and local creation time. Creation time orders delivery only; backend acceptance time controls XP and streak credit. The existing 64 KiB serialized-payload bound includes report/JSON overhead. Storage failure sends nothing and preserves editable source.
 
+Phase 28 exposes this same explicit Submit in downloaded lessons and the same recovery panel in the offline library and open saved lesson. Known-offline Submit saves without transport. Offline retry is disabled and guarded; view/copy/removal still work. The local SDK session selects the originating bucket only, while the backend verifies the matching identity on reconnect. Pending work never advances last-known accepted facts. Guest import, online-only starts/hints, existing exact-version admission, and bounded foreground replay remain unchanged.
+
+The Phase 28 roadmap envelope maps to the established record fields: `event_id` -> `eventId`, `event_type` -> `operationType: attempt-submit`, `resource_id` -> `questId`, `content_version` -> `contentVersion`, `timestamp` -> `createdAt`, and `payload` -> serialized source/report. `ownerId`, `schemaVersion: 1`, and `assessmentVersion` provide isolation/schema/assessment context. The timestamp orders delivery only and is not transmitted as acceptance authority. No parallel store, renamed wire format, or new sync API is needed.
+
 ## Replay and recovery
 
 - App entry, reconnect, focus/foreground return, and explicit Submit/retry trigger sequential replay, at most 50 rows per pass. Remaining rows wait for another trigger or retry. No background timer or service worker runs.

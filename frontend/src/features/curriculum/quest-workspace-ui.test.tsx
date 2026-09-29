@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { questFixtures } from './journey-course-test-data';
 import { QuestWorkspace } from './quest-workspace';
 
@@ -100,6 +100,7 @@ vi.mock('@/features/editor', () => ({
 }));
 
 describe('guest quest presentation', () => {
+  afterEach(() => vi.restoreAllMocks());
   beforeEach(() => {
     vi.clearAllMocks();
     sync.owner = null;
@@ -142,6 +143,65 @@ describe('guest quest presentation', () => {
     await screen.findByRole('button', { name: 'Mock Submit' });
     await userEvent.click(screen.getByRole('button', { name: 'Mock Submit' }));
     await screen.findByText(/Submission storage or replay unavailable/);
+    expect(sync.replay).not.toHaveBeenCalled();
+  });
+
+  it('saves a downloaded authenticated Submit offline without auto-submitting Check or replaying', async () => {
+    sync.owner = 'A';
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+    render(<QuestWorkspace quest={questFixtures.Q01} offline />);
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Mock Check' }),
+    );
+    expect(sync.save).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('button', { name: 'Mock Submit' }));
+    await screen.findByText(/Submission saved on this device/);
+    expect(sync.save).toHaveBeenCalledWith(
+      'A',
+      'Q01',
+      expect.objectContaining({
+        source: 'account source',
+        assessmentVersion: '1.0.0',
+      }),
+    );
+    expect(sync.replay).not.toHaveBeenCalled();
+    expect(pass).not.toHaveBeenCalled();
+  });
+
+  it('retains the same offline event for retry of the captured Check', async () => {
+    sync.owner = 'A';
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+    render(<QuestWorkspace quest={questFixtures.Q01} offline />);
+    const button = await screen.findByRole('button', { name: 'Mock Submit' });
+    await userEvent.click(button);
+    await screen.findByText(/Submission saved on this device/);
+    await userEvent.click(button);
+    await waitFor(() => expect(sync.save).toHaveBeenCalledTimes(2));
+    expect(sync.save.mock.calls[1]).toEqual(sync.save.mock.calls[0]);
+    expect(sync.replay).not.toHaveBeenCalled();
+  });
+
+  it('does not persist a downloaded snapshot after the selected account changes', async () => {
+    sync.owner = 'A';
+    render(<QuestWorkspace quest={questFixtures.Q01} offline />);
+    const button = await screen.findByRole('button', { name: 'Mock Submit' });
+    sync.owner = 'B';
+    await userEvent.click(button);
+    await screen.findByText(/Sign in to the same account/);
+    expect(sync.save).not.toHaveBeenCalled();
+    expect(sync.replay).not.toHaveBeenCalled();
+  });
+
+  it('reports offline storage failure without claiming pending delivery', async () => {
+    sync.owner = 'A';
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+    sync.save.mockRejectedValue(new Error('quota'));
+    render(<QuestWorkspace quest={questFixtures.Q01} offline />);
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Mock Submit' }),
+    );
+    await screen.findByText(/Submission storage or replay unavailable/);
+    expect(screen.queryByText(/Submission saved on this device/)).toBeNull();
     expect(sync.replay).not.toHaveBeenCalled();
   });
 

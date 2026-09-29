@@ -1,6 +1,54 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type BrowserContext, type Page } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 import { questFixtures } from '../src/features/curriculum/journey-course-test-data';
+
+async function selectLocalSession(context: BrowserContext, owner: string) {
+  const expires = Math.floor(Date.now() / 1000) + 3600;
+  const payload = Buffer.from(
+    JSON.stringify({ sub: owner, exp: expires }),
+  ).toString('base64url');
+  const session = {
+    access_token: `eyJhbGciOiJIUzI1NiJ9.${payload}.local-fixture`,
+    refresh_token: 'local-fixture',
+    expires_at: expires,
+    expires_in: 3600,
+    token_type: 'bearer',
+    user: { id: owner, email: `${owner}@example.test` },
+  };
+  await context.addCookies([
+    {
+      name: 'sb-auth-auth-token',
+      value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
+      url: 'http://127.0.0.1:3200',
+    },
+  ]);
+}
+
+async function deviceRows(page: Page, store: string): Promise<unknown[]> {
+  return page.evaluate(async (storeName) => {
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const opening = indexedDB.open('codequest');
+      opening.onsuccess = () => resolve(opening.result);
+      opening.onerror = () => reject(opening.error);
+    });
+    try {
+      return await new Promise<unknown[]>((resolve, reject) => {
+        const read = database
+          .transaction(storeName)
+          .objectStore(storeName)
+          .getAll();
+        read.onsuccess = () => {
+          const records: unknown = read.result;
+          if (Array.isArray(records)) resolve(records);
+          else reject(new Error('Invalid fixture records'));
+        };
+        read.onerror = () => reject(read.error);
+      });
+    } finally {
+      database.close();
+    }
+  }, store);
+}
 
 async function control(page: Page): Promise<void> {
   await page.goto('/');
@@ -400,29 +448,8 @@ test('offline session buckets isolate downloads and last-known accepted facts', 
     });
     database.close();
   }, questFixtures.Q01);
-  const selectLocalSession = async (owner: string) => {
-    const expires = Math.floor(Date.now() / 1000) + 3600;
-    const payload = Buffer.from(
-      JSON.stringify({ sub: owner, exp: expires }),
-    ).toString('base64url');
-    const session = {
-      access_token: `eyJhbGciOiJIUzI1NiJ9.${payload}.local-fixture`,
-      refresh_token: 'local-fixture',
-      expires_at: expires,
-      expires_in: 3600,
-      token_type: 'bearer',
-      user: { id: owner, email: `${owner}@example.test` },
-    };
-    await context.addCookies([
-      {
-        name: 'sb-auth-auth-token',
-        value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
-        url: 'http://127.0.0.1:3200',
-      },
-    ]);
-  };
   await context.setOffline(true);
-  await selectLocalSession('owner-a');
+  await selectLocalSession(context, 'owner-a');
   await page.reload();
   await expect(
     page.getByRole('heading', { name: 'owner-a lesson' }),
@@ -430,7 +457,7 @@ test('offline session buckets isolate downloads and last-known accepted facts', 
   await expect(
     page.getByText(/Last known accepted account status: completed/),
   ).toBeVisible();
-  await selectLocalSession('owner-b');
+  await selectLocalSession(context, 'owner-b');
   await page.reload();
   await expect(
     page.getByRole('heading', { name: 'owner-b lesson' }),
@@ -447,6 +474,197 @@ test('offline session buckets isolate downloads and last-known accepted facts', 
     page.getByText('No lessons are downloaded for this local owner.'),
   ).toBeVisible();
   await context.setOffline(false);
+});
+
+test('offline authenticated Submit survives cold reload and uncertain reconnect without advancing accepted facts', async ({
+  page,
+  context,
+}) => {
+  const owner = '00000000-0000-4000-8000-000000000028';
+  const quest = { ...questFixtures.Q01, starterCode: 'console.log(1);' };
+  await context.route(
+    'http://127.0.0.1:3001/api/v1/quests/first-value',
+    (route) =>
+      route.fulfill({
+        json: quest,
+        headers: { 'access-control-allow-origin': '*' },
+      }),
+  );
+  const delivered: unknown[] = [];
+  let returnResponse = false;
+  // This fixture models a committed backend event whose response is lost.
+  // Database tests separately prove acceptance, reward and streak uniqueness.
+  const committed = new Map<string, unknown>();
+  await context.route(
+    'http://127.0.0.1:3001/api/v1/learning-sync/Q01',
+    async (route) => {
+      const headers = {
+        'access-control-allow-origin': '*',
+        'access-control-allow-headers': 'authorization,content-type',
+        'access-control-allow-methods': 'POST,OPTIONS',
+      };
+      if (route.request().method() === 'OPTIONS') {
+        await route.fulfill({ status: 204, headers });
+        return;
+      }
+      expect(route.request().headers().authorization).toMatch(/^Bearer /);
+      const body: unknown = route.request().postDataJSON();
+      if (
+        typeof body !== 'object' ||
+        body === null ||
+        !('clientEventId' in body) ||
+        typeof body.clientEventId !== 'string'
+      )
+        throw new Error('Invalid submission fixture');
+      delivered.push(body);
+      if (!committed.has(body.clientEventId))
+        committed.set(body.clientEventId, body);
+      expect(body).toEqual(committed.get(body.clientEventId));
+      if (!returnResponse) {
+        await route.abort('failed');
+        return;
+      }
+      await route.fulfill({
+        status: 201,
+        headers,
+        json: {
+          ...body,
+          id: 'fixture-attempt',
+          questId: 'Q01',
+          submittedAt: new Date().toISOString(),
+          attemptCount: 1,
+          reportedPassed: true,
+          accepted: true,
+          clientReported: true,
+        },
+      });
+    },
+  );
+  await control(page);
+  await page.goto('/quests/first-value');
+  await page
+    .getByRole('button', { name: 'Download lesson', exact: true })
+    .click();
+  await expect(
+    page.getByText(/Saved for offline reading and local Run and Check/),
+  ).toBeVisible({ timeout: 20000 });
+  // Seed the owner's package/projection without protected responses or an auth server.
+  await page.evaluate(
+    async ({ ownerId, snapshot }) => {
+      const database = await new Promise<IDBDatabase>((resolve, reject) => {
+        const opening = indexedDB.open('codequest');
+        opening.onsuccess = () => resolve(opening.result);
+        opening.onerror = () => reject(opening.error);
+      });
+      await new Promise<void>((resolve, reject) => {
+        const tx = database.transaction(
+          ['lessonSnapshots', 'acceptedProgress'],
+          'readwrite',
+        );
+        tx.objectStore('lessonSnapshots').put({
+          id: `${ownerId}:${snapshot.id}:${snapshot.contentVersion}:${snapshot.assessmentVersion}`,
+          ownerId,
+          questId: snapshot.id,
+          contentVersion: snapshot.contentVersion,
+          assessmentVersion: snapshot.assessmentVersion,
+          snapshot,
+          savedAt: 42,
+          assetPaths: [],
+        });
+        tx.objectStore('acceptedProgress').put({
+          id: `${ownerId}:${snapshot.hierarchy.journey.id}`,
+          ownerId,
+          journeyId: snapshot.hierarchy.journey.id,
+          schemaVersion: 1,
+          capturedAt: 42,
+          quests: [
+            {
+              questId: snapshot.id,
+              contentVersion: snapshot.contentVersion,
+              assessmentVersion: snapshot.assessmentVersion,
+              status: 'not_started',
+              availability: 'available',
+            },
+          ],
+        });
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+      database.close();
+    },
+    { ownerId: owner, snapshot: quest },
+  );
+  const acceptedBefore = await deviceRows(page, 'acceptedProgress');
+  await page.close();
+  await context.setOffline(true);
+  await selectLocalSession(context, owner);
+  const offline = await context.newPage();
+  await offline.goto('/offline-learning');
+  await expect(
+    offline.getByText(/Last known accepted account status: not_started/),
+  ).toBeVisible();
+  await offline.getByRole('button', { name: 'Open saved lesson' }).click();
+  await offline.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(offline.getByText(/Local check passed/)).toBeVisible();
+  expect(await deviceRows(offline, 'outbox')).toEqual([]);
+  await offline
+    .getByRole('button', { name: 'Submit attempt', exact: true })
+    .click();
+  const panel = offline.getByRole('region', { name: 'Pending account work' });
+  await expect(panel.getByText(/Q01: pending/)).toBeVisible();
+  await expect(
+    panel.getByRole('button', { name: 'Retry saved submissions' }),
+  ).toBeDisabled();
+  const saved = await deviceRows(offline, 'outbox');
+  expect(saved).toHaveLength(1);
+  expect(saved[0]).toMatchObject({
+    ownerId: owner,
+    questId: 'Q01',
+    operationType: 'attempt-submit',
+    schemaVersion: 1,
+  });
+  expect(delivered).toEqual([]);
+  expect(await deviceRows(offline, 'acceptedProgress')).toEqual(acceptedBefore);
+  await offline.close();
+  const reopened = await context.newPage();
+  await reopened.goto('/offline-learning');
+  const recovery = reopened.getByRole('region', {
+    name: 'Pending account work',
+  });
+  await expect(recovery.getByText(/Q01: pending/)).toBeVisible();
+  await recovery.getByText('View and copy saved submission source').click();
+  await expect(
+    recovery.getByText('console.log(1);', { exact: true }),
+  ).toBeVisible();
+  expect(await deviceRows(reopened, 'outbox')).toEqual(saved);
+  await context.setOffline(false);
+  await expect.poll(() => delivered.length).toBeGreaterThan(0);
+  await expect(recovery.getByText(/Q01: pending/)).toBeVisible();
+  returnResponse = true;
+  await recovery
+    .getByRole('button', { name: 'Retry saved submissions' })
+    .click();
+  await expect(recovery.getByText(/Q01: delivery confirmed/)).toBeVisible();
+  expect(delivered.length).toBeGreaterThanOrEqual(2);
+  expect(
+    delivered.every(
+      (body) => JSON.stringify(body) === JSON.stringify(delivered[0]),
+    ),
+  ).toBe(true);
+  expect(committed.size).toBe(1);
+  expect(await deviceRows(reopened, 'acceptedProgress')).toEqual(
+    acceptedBefore,
+  );
+  await expect(
+    reopened.getByText(/Last known accepted account status: not_started/),
+  ).toBeVisible();
+  const rows = await deviceRows(reopened, 'outbox');
+  expect(rows[0]).toMatchObject({ delivery: { status: 'confirmed' } });
+  expect(JSON.stringify(rows)).not.toContain('submittedAt');
+  expect(JSON.stringify(rows)).not.toContain('access_token');
+  expect(
+    (await cachedUrls(reopened)).some((url) => url.includes('/api/')),
+  ).toBe(false);
 });
 
 test('new release waits without reload or deleting device-local work', async ({
