@@ -24,7 +24,7 @@
 ## 4. Integration and stage verification
 
 - [x] 4.1 Run production-browser fixtures for online download, cold offline reading/editing/Run/Check, account switch, cache eviction, and reconnection; record exact browser results and F02 evidence limits.
-- [ ] 4.2 Run `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, OpenAPI drift check, and strict OpenSpec validation; review final diff and report any failed gate before the Apply PR merge.
+- [x] 4.2 Run `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, OpenAPI drift check, and strict OpenSpec validation; review final diff and report any failed gate before the Apply PR merge.
 
 ## Apply evidence
 
@@ -32,3 +32,4 @@
 - Root `pnpm test`: 357 frontend tests passed; unchanged backend checks used the verified Turbo cache (161 tests plus 3 migration-history checks). Focused coverage includes Dexie v3-to-v4 preservation, transactional quota rollback, owner/version isolation, corrupted resources, minimal accepted-progress projection, and no offline backend activity.
 - Production account-bucket testing exposed a browser public-env inlining failure; explicit static public env reads fixed it. Reconnect test now flushes the ready subscription before dispatch, and ESLint excludes generated browser traces.
 - Physical mobile/Safari, Firefox installation, assistive technology, low-power timing, native quota/background/OS restart remain untested F02 obligations. No Phase 28 sync protocol or cloud draft behavior is added.
+- Final root lint, typecheck and build passed; `pnpm api:check`, strict change validation and final diff checks passed. The earlier reconnect test race and generated-trace lint failure were resolved before opening the Apply PR. Required CI remains the merge gate.
