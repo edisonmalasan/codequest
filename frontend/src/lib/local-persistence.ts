@@ -307,7 +307,7 @@ export class IndexedDbGuestStateRepository {
 
 export type PendingOperationInput = Omit<
   PendingOperationRecord,
-  'schemaVersion'
+  'schemaVersion' | 'delivery'
 >;
 
 function isCurrentPending(
@@ -329,7 +329,14 @@ function checkedOutboxRows(
           typeof row.contentVersion !== 'string' ||
           typeof row.assessmentVersion !== 'string' ||
           typeof row.payload !== 'string' ||
-          !Number.isSafeInteger(row.createdAt)))
+          !Number.isSafeInteger(row.createdAt) ||
+          (row.delivery !== undefined &&
+            (row.delivery === null ||
+              typeof row.delivery !== 'object' ||
+              (row.delivery.status !== 'confirmed' &&
+                row.delivery.status !== 'blocked') ||
+              typeof row.delivery.message !== 'string' ||
+              row.delivery.message.length > 512))))
     )
       throw new LocalPersistenceError('corrupt');
   }
@@ -405,6 +412,30 @@ export class IndexedDbPendingOperationRepository {
       ownerId,
     );
     return rows.filter((row): row is OutboxRecord => !isCurrentPending(row));
+  }
+
+  async setDelivery(
+    ownerId: string,
+    eventId: string,
+    delivery: NonNullable<PendingOperationRecord['delivery']>,
+  ): Promise<void> {
+    identityPart(ownerId);
+    identityPart(eventId);
+    if (
+      (delivery.status !== 'confirmed' && delivery.status !== 'blocked') ||
+      typeof delivery.message !== 'string' ||
+      delivery.message.length > 512
+    )
+      throw new LocalPersistenceError('invalid');
+    await stored(() =>
+      this.database.transaction('rw', this.database.outbox, async () => {
+        const row = await this.database.outbox.get(eventId);
+        if (!row || !isCurrentPending(row) || row.ownerId !== ownerId)
+          throw new LocalPersistenceError('conflict');
+        if (row.delivery?.status === 'confirmed') return;
+        await this.database.outbox.put({ ...row, delivery });
+      }),
+    );
   }
 
   async remove(ownerId: string, eventId: string): Promise<void> {

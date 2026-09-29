@@ -380,13 +380,15 @@ export function JourneyPageClient({
           try {
             const { data, error } =
               await getBrowserSupabaseClient().auth.getSession();
-            return error ? null : (data.session?.access_token ?? null);
+            return !error && data.session?.user.id === session.ownerId
+              ? data.session.access_token
+              : null;
           } catch {
             return null;
           }
         },
       }),
-    [progressApi],
+    [progressApi, session.ownerId],
   );
   const query = useQuery({
     queryKey: journeyQueryKey(slug),
@@ -396,6 +398,7 @@ export function JourneyPageClient({
 
   const progressQuery = useQuery({
     queryKey: ['progress', 'journey', session.ownerId, slug],
+    networkMode: 'always',
     enabled: session.ready && session.ownerId !== null,
     queryFn: async ({ signal }) => {
       const result = await protectedApi.getJourneyProgress(slug, signal);

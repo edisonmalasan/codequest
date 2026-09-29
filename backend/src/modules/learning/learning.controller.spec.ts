@@ -9,6 +9,7 @@ import { REQUIRED_PERMISSIONS } from '../identity/require-permissions';
 import { CreateAttemptDto } from './attempt.dto';
 import { LearningController } from './learning.controller';
 import { GuestImportController } from './guest-import.controller';
+import { LearningSyncController } from './learning-sync.controller';
 import { LearningService } from './learning.service';
 
 const USER_ID = '00000000-0000-4000-8000-000000000001';
@@ -98,5 +99,27 @@ describe('guest import controller boundary', () => {
     expect(errors.map((error) => error.property)).toEqual(
       expect.arrayContaining(['userId', 'accepted']),
     );
+  });
+});
+
+describe('learning replay controller boundary', () => {
+  it('binds replay only to the principal and requires submission permission', async () => {
+    const replay = vi.fn().mockResolvedValue({ id: 'attempt' });
+    const module = await Test.createTestingModule({
+      controllers: [LearningSyncController],
+      providers: [
+        { provide: LearningService, useValue: { replay } },
+        { provide: AuthenticationGuard, useValue: { canActivate: () => true } },
+        { provide: PermissionGuard, useValue: { canActivate: () => true } },
+        { provide: AUTH_TOKEN_VERIFIER, useValue: { verify: vi.fn() } },
+      ],
+    }).compile();
+    const controller = module.get(LearningSyncController);
+    const body = new CreateAttemptDto();
+    await controller.replay(createAuthPrincipal(USER_ID), 'Q01', body);
+    expect(replay).toHaveBeenCalledWith(USER_ID, 'Q01', body);
+    expect(
+      Reflect.getMetadata(REQUIRED_PERMISSIONS, controller.replay),
+    ).toEqual(['learning:submit:self']);
   });
 });

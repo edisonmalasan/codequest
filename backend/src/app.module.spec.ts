@@ -57,7 +57,7 @@ describe('AppModule', () => {
     ).toHaveLength(1);
     expect(
       Reflect.getMetadata(MODULE_METADATA.CONTROLLERS, LearningModule),
-    ).toHaveLength(2);
+    ).toHaveLength(3);
   });
 
   it('registers the progress module as an active backend boundary', () => {

@@ -338,6 +338,7 @@ describe('backend HTTP foundation', () => {
       '/api/v1/journeys',
       '/api/v1/journeys/{slug}',
       '/api/v1/journeys/{slug}/progress',
+      '/api/v1/learning-sync/{questId}',
       '/api/v1/quests/{slug}',
       '/api/v1/quests/{slug}/assets/{contentVersion}',
       '/api/v1/quests/{slug}/attempts',
@@ -446,6 +447,12 @@ describe('backend HTTP foundation', () => {
       payload: { userId: '00000000-0000-4000-8000-000000000099' },
     });
     expect(guestImport.statusCode).toBe(401);
+    const replay = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/learning-sync/Q01',
+      payload: { accepted: true, userId: 'other' },
+    });
+    expect(replay.statusCode).toBe(401);
     expect(guestImport.body).not.toContain(
       '00000000-0000-4000-8000-000000000099',
     );

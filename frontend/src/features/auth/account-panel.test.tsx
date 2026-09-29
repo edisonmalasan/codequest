@@ -20,10 +20,18 @@ vi.mock('./supabase-browser', () => ({
   getBrowserSupabaseClient: () => ({
     auth: {
       getSession: async () => ({
-        data: { session: { access_token: 'test-access-token' } },
+        data: {
+          session: {
+            access_token: 'test-access-token',
+            user: { id: '00000000-0000-4000-8000-000000000001' },
+          },
+        },
         error: null,
       }),
       signOut,
+      onAuthStateChange: () => ({
+        data: { subscription: { unsubscribe: vi.fn() } },
+      }),
     },
   }),
 }));
@@ -37,6 +45,9 @@ vi.mock('./guest-import-panel', () => ({
     </button>
   ),
 }));
+vi.mock('@/features/progress-sync/pending-work-panel', () => ({
+  PendingWorkPanel: () => <span>Pending recovery</span>,
+}));
 vi.mock('@/lib/api-client', () => ({
   createCodequestApi: () => ({
     establishAccount,
@@ -47,6 +58,21 @@ vi.mock('@/lib/api-client', () => ({
 }));
 
 describe('AccountPanel', () => {
+  it('refreshes backend XP and streak reads on a matching reconnect notification', async () => {
+    render(<AccountPanel email="learner@example.test" />);
+    await screen.findByText(/235 total XP/);
+    window.dispatchEvent(
+      new CustomEvent('codequest-account-refresh', { detail: 'another-owner' }),
+    );
+    expect(getXp).toHaveBeenCalledTimes(1);
+    window.dispatchEvent(
+      new CustomEvent('codequest-account-refresh', {
+        detail: '00000000-0000-4000-8000-000000000001',
+      }),
+    );
+    await waitFor(() => expect(getXp).toHaveBeenCalledTimes(2));
+    expect(getStreak).toHaveBeenCalledTimes(2);
+  });
   beforeEach(() => {
     vi.clearAllMocks();
     signOut.mockResolvedValue({ error: null });

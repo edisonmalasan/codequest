@@ -13,6 +13,8 @@ import {
 import { getQueryClient } from '@/lib/query-client';
 import { getBrowserSupabaseClient } from './supabase-browser';
 import { GuestImportPanel } from './guest-import-panel';
+import { PendingWorkPanel } from '@/features/progress-sync/pending-work-panel';
+import { ACCOUNT_REFRESH } from '@/features/progress-sync/trusted-sync';
 
 type LoadState =
   | { readonly status: 'loading' }
@@ -27,12 +29,20 @@ type StreakLoadState =
   | { readonly status: 'ready'; readonly streak: Streak }
   | { readonly status: 'error' };
 
-function accountApi(): ReturnType<typeof createCodequestApi> {
+function accountApi(
+  ownerId: string | null,
+): ReturnType<typeof createCodequestApi> {
   const supabase = getBrowserSupabaseClient();
   return createCodequestApi({
     getAccessToken: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return error === null ? (data.session?.access_token ?? null) : null;
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        return error === null && data.session?.user.id === ownerId
+          ? (data.session?.access_token ?? null)
+          : null;
+      } catch {
+        return null;
+      }
     },
   });
 }
@@ -50,8 +60,11 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   const [signingOut, setSigningOut] = useState(false);
   const requestGeneration = useRef(0);
   const streakGeneration = useRef(0);
+  const accountOwner = useRef<string | null>(null);
 
-  async function loadStreak(api = accountApi()): Promise<void> {
+  async function loadStreak(
+    api = accountApi(accountOwner.current),
+  ): Promise<void> {
     const generation = ++streakGeneration.current;
     setStreakState({ status: 'loading' });
     const result = await api.getStreak();
@@ -63,7 +76,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
     );
   }
 
-  async function loadXp(api = accountApi()): Promise<void> {
+  async function loadXp(api = accountApi(accountOwner.current)): Promise<void> {
     const generation = ++requestGeneration.current;
     setXpState({ status: 'loading' });
     const result = await api.getXp();
@@ -76,33 +89,81 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   async function loadAccount(): Promise<void> {
     const generation = ++requestGeneration.current;
     setState({ status: 'loading' });
-    const api = accountApi();
-    const result = await api.establishAccount();
-    if (generation !== requestGeneration.current) return;
-    if (result.ok) {
-      setState({ status: 'ready', account: result.data });
-      setTimezoneInput(result.data.timezone);
-      await Promise.all([loadXp(api), loadStreak(api)]);
-      return;
+    try {
+      const { data, error } =
+        await getBrowserSupabaseClient().auth.getSession();
+      if (generation !== requestGeneration.current) return;
+      if (error || !data.session) {
+        router.replace('/login?next=%2Faccount');
+        return;
+      }
+      const owner = data.session.user.id;
+      accountOwner.current = owner;
+      const api = accountApi(owner);
+      const result = await api.establishAccount();
+      if (generation !== requestGeneration.current) return;
+      if (result.ok) {
+        if (result.data.id !== owner) {
+          setState({ status: 'error' });
+          return;
+        }
+        setState({ status: 'ready', account: result.data });
+        setTimezoneInput(result.data.timezone);
+        await Promise.all([loadXp(api), loadStreak(api)]);
+        return;
+      }
+      if (
+        result.kind === 'unauthenticated' ||
+        (result.kind === 'http' && result.status === 401)
+      ) {
+        router.replace('/login?next=%2Faccount');
+        router.refresh();
+        return;
+      }
+      setState({ status: 'error' });
+    } catch {
+      if (generation === requestGeneration.current)
+        setState({ status: 'error' });
     }
-    if (
-      result.kind === 'unauthenticated' ||
-      (result.kind === 'http' && result.status === 401)
-    ) {
-      router.replace('/login?next=%2Faccount');
-      router.refresh();
-      return;
-    }
-    setState({ status: 'error' });
   }
 
   useEffect(() => {
     void loadAccount();
+    const { data } = getBrowserSupabaseClient().auth.onAuthStateChange(
+      (_event, session) => {
+        const next = session?.user.id ?? null;
+        if (next === accountOwner.current) return;
+        accountOwner.current = next;
+        requestGeneration.current++;
+        streakGeneration.current++;
+        setState({ status: 'loading' });
+        setXpState({ status: 'loading' });
+        setStreakState({ status: 'loading' });
+        queueMicrotask(() => {
+          router.refresh();
+          void loadAccount();
+        });
+      },
+    );
     return () => {
+      data.subscription.unsubscribe();
       requestGeneration.current += 1;
       streakGeneration.current += 1;
     };
   }, []);
+
+  useEffect(() => {
+    if (state.status !== 'ready') return;
+    const accountId = state.account.id;
+    const refresh = (event: Event) => {
+      if (event instanceof CustomEvent && event.detail === accountId) {
+        void loadXp();
+        void loadStreak();
+      }
+    };
+    window.addEventListener(ACCOUNT_REFRESH, refresh);
+    return () => window.removeEventListener(ACCOUNT_REFRESH, refresh);
+  }, [state.status === 'ready' ? state.account.id : null]);
 
   async function signOut(): Promise<void> {
     if (signingOut) return;
@@ -123,7 +184,9 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
     const generation = requestGeneration.current;
     setTimezoneSaving(true);
     setTimezoneError(false);
-    const result = await accountApi().updateTimezone(timezoneInput.trim());
+    const result = await accountApi(accountOwner.current).updateTimezone(
+      timezoneInput.trim(),
+    );
     if (generation !== requestGeneration.current) return;
     setTimezoneSaving(false);
     if (result.ok) {
@@ -280,6 +343,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               </>
             )}
           </section>
+          <PendingWorkPanel accountId={state.account.id} />
           <GuestImportPanel
             accountId={state.account.id}
             onImported={() => {

@@ -1,5 +1,7 @@
 # Frontend responsibility and experience definition
 
+Phase 25 integrates explicit authenticated Submit with the existing owner-scoped outbox, reconnect replay, and account recovery UI. Drafts remain device-local; guest import remains explicit. See [cloud progress replay](cloud-progress-sync.md) for bounds, errors, and retention.
+
 Phase 17 mounts the reusable Editor Workspace on a published quest, maps public case data to isolated local Check, and offers an explicit authenticated Submit. The backend response distinguishes a recorded attempt from accepted personal-learning completion; see [Attempts and submissions](attempts-and-submissions.md).
 
 Status: approved Phase 0 documentation. Client ownership is confirmed C02–C06/C10/C11. Guest/offline/trust/device policies P01/P03/P06–P08/P11–P15 are approved in the [register](decisions.md). [Product](product.md) is canonical for scope/glossary; [architecture](architecture.md) owns the responsibility matrix.

@@ -15,7 +15,14 @@ import {
   type ValidationResult,
   type ValidationStrategy,
 } from '@/features/validation';
-import { createCodequestApi, type QuestDetail } from '@/lib/api-client';
+import type { QuestDetail } from '@/lib/api-client';
+import { progressReplay } from '@/features/progress-sync/progress-replay';
+import {
+  currentSyncOwner,
+  ownerSyncApi,
+  notifyOutbox,
+  refreshAccountFacts,
+} from '@/features/progress-sync/trusted-sync';
 import {
   guestLearningRepository,
   isGuestQuestId,
@@ -23,8 +30,8 @@ import {
 } from './guest-learning';
 
 type SubmissionState =
-  | { status: 'idle' | 'submitting' }
-  | { status: 'accepted' | 'recorded'; attemptCount: number }
+  | { status: 'idle' | 'submitting' | 'pending' }
+  | { status: 'confirmed' }
   | { status: 'error'; message: string };
 
 export function questValidationDefinition(
@@ -82,6 +89,7 @@ export function QuestWorkspace({
   const [guestSaving, setGuestSaving] = useState(false);
   const guestAllowed = quest.guestEligible && isGuestQuestId(quest.id);
   const pendingEventRef = useRef<{ key: string; id: string } | null>(null);
+  const sessionGeneration = useRef(0);
   const definition = useMemo(() => questValidationDefinition(quest), [quest]);
   const file = useMemo(
     () => [
@@ -160,18 +168,32 @@ export function QuestWorkspace({
   useEffect(() => {
     let active = true;
     try {
-      void getBrowserSupabaseClient()
-        .auth.getSession()
-        .then(
-          ({ data, error }) => {
-            if (!active) return;
-            setOwnerId(error === null ? (data.session?.user.id ?? null) : null);
-            setReady(true);
-          },
-          () => {
-            if (active) setReady(true);
-          },
-        );
+      const auth = getBrowserSupabaseClient().auth;
+      const initial = sessionGeneration.current;
+      const update = (next: string | null) => {
+        sessionGeneration.current++;
+        setOwnerId(next);
+        setSubmission({ status: 'idle' });
+        pendingEventRef.current = null;
+        setReady(true);
+      };
+      void auth.getSession().then(
+        ({ data, error }) => {
+          if (!active || sessionGeneration.current !== initial) return;
+          update(error === null ? (data.session?.user.id ?? null) : null);
+        },
+        () => {
+          if (active) setReady(true);
+        },
+      );
+      const { data: listener } = auth.onAuthStateChange((_event, session) => {
+        if (active) update(session?.user.id ?? null);
+      });
+      return () => {
+        active = false;
+        sessionGeneration.current++;
+        listener.subscription.unsubscribe();
+      };
     } catch {
       queueMicrotask(() => {
         if (active) setReady(true);
@@ -191,33 +213,51 @@ export function QuestWorkspace({
     if (pendingEventRef.current?.key !== key)
       pendingEventRef.current = { key, id: crypto.randomUUID() };
     setSubmission({ status: 'submitting' });
-    const api = createCodequestApi({
-      getAccessToken: async () => {
-        const { data, error } =
-          await getBrowserSupabaseClient().auth.getSession();
-        return error === null ? (data.session?.access_token ?? null) : null;
-      },
-    });
-    const result = await api.submitAttempt(quest.slug, {
+    const token = sessionGeneration.current;
+    const account = ownerId;
+    const body = {
       clientEventId: pendingEventRef.current.id,
       contentVersion: quest.contentVersion,
       assessmentVersion: quest.assessmentVersion,
       source: snapshot.source,
       report: { ...snapshot.validation },
-    });
-    if (result.ok) {
-      setSubmission({
-        status: result.data.accepted ? 'accepted' : 'recorded',
-        attemptCount: result.data.attemptCount,
-      });
-    } else {
-      setSubmission({
-        status: 'error',
-        message:
-          result.kind === 'http'
-            ? result.error.message
-            : 'Submission unavailable. Your local code is preserved.',
-      });
+    };
+    try {
+      if ((await currentSyncOwner()) !== account) {
+        if (token === sessionGeneration.current)
+          setSubmission({
+            status: 'error',
+            message:
+              'Sign in to the same account before saving this submission.',
+          });
+        return;
+      }
+      await progressReplay.save(account, quest.id, body);
+      if (token !== sessionGeneration.current) return;
+      notifyOutbox(account);
+      setSubmission({ status: 'pending' });
+      const summary = await progressReplay.replay(
+        account,
+        ownerSyncApi(account),
+        currentSyncOwner,
+      );
+      if (token !== sessionGeneration.current) return;
+      if (summary.confirmed) refreshAccountFacts(account);
+      const row = (await progressReplay.repository.list(account)).find(
+        (item) => item.eventId === body.clientEventId,
+      );
+      if (token !== sessionGeneration.current) return;
+      if (row?.delivery?.status === 'blocked')
+        setSubmission({ status: 'error', message: row.delivery.message });
+      else if (row?.delivery?.status === 'confirmed')
+        setSubmission({ status: 'confirmed' });
+    } catch {
+      if (token === sessionGeneration.current)
+        setSubmission({
+          status: 'error',
+          message:
+            'Submission storage or replay unavailable. Your source is editable; check saved submissions on your account before leaving.',
+        });
     }
   }
 
@@ -248,6 +288,7 @@ export function QuestWorkspace({
           : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
       </p>
       <EditorWorkspace
+        key={ownerId ?? 'guest'}
         ownerId={ownerId ?? 'guest'}
         workspaceId={`${quest.id}-${quest.contentVersion}`}
         files={file}
@@ -293,21 +334,22 @@ export function QuestWorkspace({
           unavailable.
         </p>
       )}
-      {submission.status === 'accepted' && (
+      {submission.status === 'confirmed' && (
         <p role="status" className="mt-4 text-sm">
-          Personal-learning completion accepted from your reported check.
-          Attempt {submission.attemptCount}. This is not independently graded.
-        </p>
-      )}
-      {submission.status === 'recorded' && (
-        <p role="status" className="mt-4 text-sm">
-          Attempt {submission.attemptCount} recorded. No new completion was
-          accepted.
+          Submission delivery confirmed. Read your account progress for the
+          backend acceptance decision. Checks are client-reported, not
+          independently graded.
         </p>
       )}
       {submission.status === 'error' && (
         <p role="alert" className="mt-4 text-sm">
           {submission.message}
+        </p>
+      )}
+      {submission.status === 'pending' && (
+        <p role="status" className="mt-4 text-sm">
+          Submission saved on this device; delivery is pending or uncertain. No
+          completion is claimed. Reconnect or retry from your account.
         </p>
       )}
     </section>
