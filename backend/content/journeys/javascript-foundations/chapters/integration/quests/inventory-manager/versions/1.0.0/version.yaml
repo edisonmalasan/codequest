@@ -1,0 +1,36 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Quest inventory manager
+objective: Build, debug and explain a reusable inventory manager and transfer its selection logic to a new requirement.
+outcomeId: O8
+conceptIds:
+  - js-values
+  - js-arithmetic
+  - js-comparisons
+  - js-branches
+  - js-loops
+  - js-functions
+  - js-arrays
+  - js-objects
+  - js-debugging
+prerequisiteQuestIds:
+  - Q24
+difficulty: integrative
+xpAward: 10
+hints:
+  question: Which helper owns adding units, choosing names, changing one record, and composing the final report?
+  concept: Trace one record at a time. Quantity zero, a missing ID and an empty collection have different meanings. Parameters should drive repeated calls.
+  nextStep: Write a revealing empty-input call for the defective maximum helper, then test a quantity exactly at the transfer threshold. Build the report from the adjusted records.
+caseIds:
+  - total-mixed
+  - total-empty
+  - available-boundary
+  - adjust-clamped
+  - adjust-missing
+  - report-updated
+  - report-empty
+  - largest-mixed
+  - largest-empty
+  - transfer-boundaries
+explanationPrompt: Explain each helper's responsibility, your chosen inventory and predicted result. Give the input that exposes the supplied largestQuantity defect, the expected versus observed result, and why your correction works.
+transferPrompt: Explain how lowStockNames applies the new inclusive threshold. Provide one fresh collection and threshold with your predicted names, including an equal-threshold or empty case. Presence is required; correctness of this reasoning needs later human review.

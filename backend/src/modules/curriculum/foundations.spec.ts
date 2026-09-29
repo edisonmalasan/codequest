@@ -35,16 +35,26 @@ describe('reviewed JavaScript Foundations course', () => {
       'Integration',
     ]);
     expect(journey.chapters.map((chapter) => chapter.quests.length)).toEqual([
-      4, 3, 3, 4, 4, 4, 2,
+      4, 3, 3, 4, 4, 4, 3,
     ]);
     const quests = journey.chapters.flatMap((chapter) => chapter.quests);
-    expect(quests.map((quest) => quest.metadata.id)).toEqual(ids);
+    expect(quests.map((quest) => quest.metadata.id)).toEqual([...ids, 'CAP01']);
     expect(
       quests
         .filter((quest) => quest.metadata.guestEligible)
         .map((quest) => quest.metadata.id),
     ).toEqual(ids.slice(0, 4));
     for (const [index, quest] of quests.entries()) {
+      if (quest.metadata.id === 'CAP01') {
+        expect(quest.metadata.kind).toBe('capstone');
+        expect(quest.metadata.guestEligible).toBe(false);
+        expect(quest.activeSnapshot.metadata.prerequisiteQuestIds).toEqual([
+          'Q24',
+        ]);
+        expect(quest.activeSnapshot.metadata.explanationPrompt).toBeTruthy();
+        expect(quest.activeSnapshot.metadata.transferPrompt).toBeTruthy();
+        continue;
+      }
       expect(quest.metadata.kind).toBe('instructional');
       expect(quest.activeSnapshot.metadata.prerequisiteQuestIds).toEqual(
         index === 0 ? [] : [ids[index - 1]],
@@ -152,7 +162,7 @@ describe('reviewed JavaScript Foundations course', () => {
         url: '/api/v1/journeys',
       });
       expect(list.json()).toEqual([
-        expect.objectContaining({ questCount: 24, chapterCount: 7 }),
+        expect.objectContaining({ questCount: 25, chapterCount: 7 }),
       ]);
       const catalog = loadCurriculumCatalog(root);
       for (const chapter of catalog.journeys[0].chapters) {

@@ -23,7 +23,12 @@ export class CreateAttemptDto {
   @IsString()
   source!: string;
 
-  @ApiProperty({ type: 'object', additionalProperties: true })
+  @ApiProperty({
+    type: 'object',
+    additionalProperties: true,
+    description:
+      'Bounded unverified local validation report (16 KiB maximum). Passing capstones require capstoneResponses with nonblank explanation and transfer strings, each at most 2000 characters and 4000 UTF-8 bytes. Presence is not reasoning-quality grading.',
+  })
   @IsObject()
   report!: Record<string, unknown>;
 }

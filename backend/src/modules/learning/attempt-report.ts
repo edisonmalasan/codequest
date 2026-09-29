@@ -29,10 +29,40 @@ const reportSchema = z
     failedCaseIds: z.array(z.string().min(1).max(48)).max(10),
     feedback: z.string().max(512),
     durationMs: z.number().finite().min(0).max(10_000),
+    capstoneResponses: z
+      .object({ explanation: responseText(), transfer: responseText() })
+      .strict()
+      .optional(),
   })
   .strict();
 
 export type NormalizedReport = z.infer<typeof reportSchema>;
+
+function responseText() {
+  return z
+    .string()
+    .min(1)
+    .max(2000)
+    .refine((value) => value.trim().length > 0, 'Response is blank')
+    .refine(
+      (value) => Buffer.byteLength(value, 'utf8') <= 4000,
+      'Response exceeds limit',
+    );
+}
+
+export function requireQuestResponses(
+  report: NormalizedReport,
+  kind: 'instructional' | 'capstone',
+): void {
+  if (kind === 'instructional' && report.capstoneResponses !== undefined)
+    throw new BadRequestException(
+      'Written responses are reserved for capstones',
+    );
+  if (kind === 'capstone' && report.passed && !report.capstoneResponses)
+    throw new BadRequestException(
+      'Capstone requires explanation and transfer responses',
+    );
+}
 
 export function parseStoredReport(value: unknown): NormalizedReport {
   const parsed = reportSchema.safeParse(value);
