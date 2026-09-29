@@ -95,11 +95,133 @@ describe('authoritative attempt persistence', () => {
     service = module.get(LearningService);
     xp = module.get(XpService);
     streaks = module.get(StreakService);
-  });
+  }, 45_000);
 
   afterEach(async () => {
     await client.close();
     rmSync(root, { recursive: true, force: true });
+  });
+
+  it('requires private capstone responses, settles replay and awards only once', async () => {
+    const catalog = loadCurriculumCatalog(root);
+    const chapter = catalog.journeys[0].chapters[0];
+    const base = chapter.quests[0];
+    const capstone = {
+      ...base,
+      metadata: {
+        ...base.metadata,
+        id: 'CAP01',
+        slug: 'inventory-manager',
+        kind: 'capstone' as const,
+        guestEligible: false,
+        position: 3,
+      },
+      activeSnapshot: {
+        ...base.activeSnapshot,
+        metadata: {
+          ...base.activeSnapshot.metadata,
+          prerequisiteQuestIds: ['Q01'],
+          explanationPrompt: 'Explain the defect',
+          transferPrompt: 'Explain transfer',
+        },
+      },
+    };
+    const capstoneCatalog = {
+      ...catalog,
+      journeys: [
+        {
+          ...catalog.journeys[0],
+          chapters: [{ ...chapter, quests: [...chapter.quests, capstone] }],
+        },
+      ],
+    };
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: capstoneCatalog },
+      ],
+    }).compile();
+    const capstones = module.get(LearningService);
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000301',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'private project',
+      report: REPORT,
+    };
+    await expect(
+      capstones.submit(USER_A, 'inventory-manager', body),
+    ).rejects.toMatchObject({ status: 400 });
+    expect(
+      (await client.query('select * from codequest.quest_attempts')).rows,
+    ).toHaveLength(0);
+    const responses = {
+      explanation: 'Empty records expose first-item access.',
+      transfer: 'An inclusive threshold includes equal and zero counts.',
+    };
+    const complete = {
+      ...body,
+      report: { ...REPORT, capstoneResponses: responses },
+    };
+    await expect(
+      capstones.submit(USER_A, 'inventory-manager', complete),
+    ).rejects.toMatchObject({ status: 409 });
+    await service.submit(USER_A, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000302',
+    });
+    const accepted = await capstones.submit(
+      USER_A,
+      'inventory-manager',
+      complete,
+    );
+    expect(accepted.accepted).toBe(true);
+    expect(accepted.report.capstoneResponses).toEqual(responses);
+    expect(await capstones.replay(USER_A, 'CAP01', complete)).toEqual(accepted);
+    await expect(
+      capstones.replay(USER_A, 'CAP01', {
+        ...complete,
+        report: {
+          ...complete.report,
+          capstoneResponses: { ...responses, transfer: 'Changed answer' },
+        },
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+    expect(
+      (
+        await capstones.submit(USER_A, 'inventory-manager', {
+          ...complete,
+          clientEventId: '00000000-0000-4000-8000-000000000303',
+        })
+      ).accepted,
+    ).toBe(false);
+    expect(
+      (await capstones.history(USER_A, 'inventory-manager')).attempts[0].report
+        .capstoneResponses,
+    ).toEqual(responses);
+    expect(
+      (await capstones.history(USER_B, 'inventory-manager')).attemptCount,
+    ).toBe(0);
+    expect(
+      (await client.query('select * from codequest.quest_attempts')).rows,
+    ).toHaveLength(3);
+    expect(
+      (await client.query('select * from codequest.quest_completions')).rows,
+    ).toHaveLength(2);
+    expect((await xp.total(USER_A)).totalXp).toBe(20);
+    expect(
+      (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(1);
+    await expect(
+      service.submit(USER_A, 'first-message', {
+        ...complete,
+        clientEventId: '00000000-0000-4000-8000-000000000304',
+      }),
+    ).rejects.toMatchObject({ status: 400 });
   });
 
   it('replays stable events after retirement without rewards or backdated streaks', async () => {

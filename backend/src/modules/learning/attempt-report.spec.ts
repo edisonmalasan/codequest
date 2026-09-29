@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeAttemptReport } from './attempt-report';
+import {
+  normalizeAttemptReport,
+  parseStoredReport,
+  requireQuestResponses,
+} from './attempt-report';
 import type { CurriculumCase } from '../curriculum/content/content-schema';
 
 const cases: CurriculumCase[] = [
@@ -42,6 +46,38 @@ const report = {
 };
 
 describe('submission report policy', () => {
+  it('requires responses only for new passing capstone reports and reads old reports', () => {
+    const old = parseStoredReport(report);
+    expect(() => requireQuestResponses(old, 'capstone')).toThrow();
+    expect(() => requireQuestResponses(old, 'instructional')).not.toThrow();
+    expect(() =>
+      requireQuestResponses({ ...old, passed: false }, 'capstone'),
+    ).not.toThrow();
+    const written = parseStoredReport({
+      ...report,
+      capstoneResponses: {
+        explanation: '  An empty array reveals the first-item defect.  ',
+        transfer: 'Use the inclusive threshold with a loop.',
+      },
+    });
+    expect(() => requireQuestResponses(written, 'capstone')).not.toThrow();
+    expect(() => requireQuestResponses(written, 'instructional')).toThrow();
+    expect(written.capstoneResponses?.explanation).toMatch(/^ {2}/);
+  });
+
+  it('rejects missing, blank, oversized and unknown response fields', () => {
+    for (const responses of [
+      {},
+      { explanation: 'written' },
+      { explanation: '  \n', transfer: 'written' },
+      { explanation: 'x'.repeat(2001), transfer: 'written' },
+      { explanation: '\u4e00'.repeat(1500), transfer: 'written' },
+      { explanation: 'written', transfer: 'written', reviewed: true },
+    ])
+      expect(() =>
+        parseStoredReport({ ...report, capstoneResponses: responses }),
+      ).toThrow();
+  });
   it('accepts complete published case coverage', () => {
     expect(normalizeAttemptReport(report, cases).passed).toBe(true);
   });

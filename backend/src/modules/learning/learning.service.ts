@@ -42,6 +42,7 @@ import {
   normalizeAttemptReport,
   NormalizedReport,
   parseStoredReport,
+  requireQuestResponses,
 } from './attempt-report';
 import {
   canCreditChangedTimezone,
@@ -211,6 +212,7 @@ export class LearningService {
           'Quest version changed; retry with the current version',
         );
       const report = normalizeAttemptReport(body.report, snapshot.cases);
+      requireQuestResponses(report, quest.metadata.kind);
       if (
         report.cases.some(
           (item) =>

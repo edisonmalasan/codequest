@@ -1,0 +1,74 @@
+# Quest inventory manager
+
+## Goal
+
+Build a small inventory manager that you can reuse with different records. Combine values, comparisons, branches, finite loops, functions, arrays and objects. Repair a defect, explain your revealing test and apply your selection logic to a fresh requirement. Complete Q24 first; this project is account-only.
+
+## Plan your project
+
+Choose a theme: camping supplies, library materials or something of your own. Replace the starter's sample names and quantities with at least three records. Predict the total and which names are available before Run. Include a zero quantity. Your chosen examples and predictions belong in the written explanation; Check uses its own declared inputs to test reusable behavior.
+
+The supplied Console panel is your project's display. You implement JavaScript logic; the platform supplies editing, Run, Check and textual output. No HTML, CSS, DOM, event handler, installation, package or network knowledge is needed. You can keep or adapt the supplied console calls. Logs never substitute for returned results.
+
+## Record and input contract
+
+Each record is `{ id: "rope", name: "rope", quantity: 2 }`: an ID string, name string and nonnegative integer quantity. IDs are unique within each collection; names may repeat. Functions receive arrays with zero to 20 records. Quantities, adjustment changes and transfer thresholds are integers between 0 and 100, except a change may be between -100 and 100. Valid inputs need no error validation. Arithmetic stays within safe integers. Preserve record order and all record values except the identified quantity update. Mutating or copying records is allowed; the checks assess returned behavior, not a code shape or mutation strategy.
+
+## Worked example
+
+For rope with quantity 2, map with quantity 0 and lamp with quantity 3, total units are 5 and available names are `["rope", "lamp"]`. Adding 4 maps yields total 9 and available names `["rope", "map", "lamp"]`. Removing 7 ropes clamps their quantity at 0 and leaves the other records unchanged. Updating a missing ID leaves every value unchanged.
+
+Plan a helper's inputs, returned shape and one revealing example before writing its body. Q20 taught accumulators, Q22 taught selection, and Q24 taught combining helpers. Reuse those ideas with this new record contract.
+
+## Your task and function contracts
+
+- `totalQuantity(items)` returns the sum of quantities; empty returns `0`.
+- `availableNames(items)` returns names whose quantity is greater than zero, in input order; empty returns `[]`. Preserve duplicate names when separate matching records share a name.
+- `adjustQuantity(items, id, change)` returns the whole array of records after adding change to the matching quantity, clamping a negative result to `0`. Retain every other record and order. Missing ID and empty data leave returned values unchanged.
+- `inventoryReport(items, id, change)` returns exactly `{ items: adjustedRecords, total: totalUnitsAfterAdjustment, available: availableNamesAfterAdjustment }`. Plan and combine your helpers; all fields describe the adjusted collection.
+- `largestQuantity(items)` returns the highest quantity, or `0` when empty. Repair the provided first-record defect. Write down the revealing input, observed failure and expected result in your debug explanation.
+
+Return values from every function. Console-only answers and fixed sample values do not meet these varied-input contracts. Keep loops finite; each helper must work on a new collection each call without relying on prior calls.
+
+## Fresh transfer task
+
+A restocking report must identify records whose quantity is at most a caller's threshold. Implement `lowStockNames(items, threshold)` without a supplied algorithm. Return matching names in input order, including zero, equality and repeated names; empty returns `[]`. For grain 1, water 2, fuel 3 and another grain 0 at threshold 2, return `["grain", "water", "grain"]`.
+
+In the transfer response, supply your own unfamiliar record collection and threshold, predict the result, and explain how your earlier available-record rule changes. Include an equality or empty case. Deterministic feedback checks the function; response presence does not prove the explanation is sound.
+
+## Check contract
+
+Check runs ten visible, data-only function cases in fresh isolated Workers:
+
+- **total-mixed:** rope 2, map 0, lamp 3 returns `5`.
+- **total-empty:** `[]` returns `0`.
+- **available-boundary:** rope 2, map 0, lamp 3 returns `["rope", "lamp"]`.
+- **adjust-clamped:** sample records, ID rope, change -7 returns rope 0, map 0, lamp 3 with IDs, names and order retained.
+- **adjust-missing:** sample records, unknown ID, change 4 retains every input record value.
+- **report-updated:** sample records, ID map, change 4 returns items rope 2/map 4/lamp 3, total 9, available rope/map/lamp.
+- **report-empty:** `[]`, ID none, change 1 returns `{ items: [], total: 0, available: [] }`.
+- **largest-mixed:** rope 2, map 0, lamp 3 returns `3`.
+- **largest-empty:** `[]` returns `0`.
+- **transfer-boundaries:** grain 1/water 2/fuel 3/grain 0 at threshold 2 returns `["grain", "water", "grain"]`.
+
+Object key order does not matter; types, values and array order do. The public case definition contains the exact records, IDs and expected objects. These finite examples cannot prove all valid behavior or learning. Also experiment with a single record, a zero threshold, a larger threshold, a positive adjustment and repeated calls using your own console examples.
+
+## Required completion evidence
+
+- **Values and records:** your sample inventory, predictions and independent record values.
+- **Decisions:** available/low-stock boundaries and zero-clamped update.
+- **Iteration:** finite totals, selection and maximum for ordinary and empty data.
+- **Functions:** parameter-driven returned results and explained helper responsibilities.
+- **Integration:** full report reflects an identified-record update.
+- **Debug and test reasoning:** corrected largestQuantity, revealing empty input, observed/expected result and explanation.
+- **Transfer:** fresh lowStockNames behavior, your new sample and explained threshold change.
+
+Required acceptance evidence is all ten functional criteria plus nonblank **Debug explanation** and **Transfer response** fields. Each written field allows at most 2000 characters and 4000 UTF-8 bytes. Keep response text out of source if you want it captured as required written evidence. There is no numerical pass threshold or LLM grader. Later human review/learner observation evaluates reasoning quality; submitting text is not that review.
+
+Run displays your selected data and experiments in the named Console panel. Check invokes the six functions and reports local, unverified outcomes; it does not create account completion. Submit is explicit, authenticated and backend-controlled after current version, Q24 prerequisite, report bounds, written presence and uniqueness checks. Backend acceptance is personal learning under ADR 0005, not independent proof or certification. Repeating completed work is practice with no repeat XP.
+
+Source and written drafts are device-local. Save after editing; idle, visibility and navigation saves are best effort. A failure keeps work editable: copy it before leaving and retry Save. Offline Submit stores one pending snapshot for later authenticated delivery, not accepted completion. Rejected or stale saved work remains available for copying and a separate current-version retry. Streak credit uses backend acceptance time, never your offline date. Difficulty and the 10 XP value are provisional under F04.
+
+## If something goes wrong
+
+For syntax errors, inspect the reported location and balance braces. A runtime error on empty input often means a first-record assumption. A failed case means returned types, values or boundaries differ; trace that input through your helpers. A timeout means a loop may not advance; repair it and start a fresh Check. Output-limit errors can come from noisy experimental logging. None of these failures should erase your source or responses. Missing written responses prevent Submit; a local pass still does not mean accepted account progress.

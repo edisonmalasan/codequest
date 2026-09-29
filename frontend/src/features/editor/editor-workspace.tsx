@@ -47,11 +47,24 @@ import type {
 import { WorkspaceActions } from './workspace-actions';
 
 const AUTOSAVE_DELAY_MS = 600;
+const NO_RESPONSE_FIELDS: readonly WorkspaceResponseField[] = [];
+
+export interface WorkspaceResponseField {
+  readonly id: string;
+  readonly label: string;
+  readonly prompt: string;
+  readonly maxLength: number;
+}
+
+function responseDraftId(id: string): string {
+  return `response:${id}`;
+}
 
 export interface EditorWorkspaceProps {
   ownerId: string;
   workspaceId: string;
   files: readonly WorkspaceFile[];
+  responseFields?: readonly WorkspaceResponseField[];
   draftRepository?: EditorDraftRepository;
   preferenceRepository?: WorkspacePreferenceRepository;
   consoleLines?: readonly ConsoleLine[];
@@ -69,6 +82,7 @@ export interface EditorWorkspaceProps {
   onSubmit?: (snapshot: {
     readonly source: string;
     readonly validation: ValidationResult;
+    readonly responses?: Readonly<Record<string, string>>;
   }) => void;
   submitting?: boolean;
 }
@@ -132,24 +146,36 @@ function presentExecution(result: ExecutionResult): ExecutionPresentation {
 
 function starterSources(
   files: readonly WorkspaceFile[],
+  responseFields: readonly WorkspaceResponseField[],
 ): Record<string, string> {
-  return Object.fromEntries(files.map((file) => [file.id, file.starterSource]));
+  return Object.fromEntries([
+    ...files.map((file) => [file.id, file.starterSource]),
+    ...responseFields.map((field) => [responseDraftId(field.id), '']),
+  ]);
 }
 
 function sourceEntries(
   files: readonly WorkspaceFile[],
   sources: Readonly<Record<string, string>>,
+  responseFields: readonly WorkspaceResponseField[],
 ): DraftSource[] {
-  return files.map((file) => ({
-    fileId: file.id,
-    source: sources[file.id] ?? file.starterSource,
-  }));
+  return [
+    ...files.map((file) => ({
+      fileId: file.id,
+      source: sources[file.id] ?? file.starterSource,
+    })),
+    ...responseFields.map((field) => ({
+      fileId: responseDraftId(field.id),
+      source: sources[responseDraftId(field.id)] ?? '',
+    })),
+  ];
 }
 
 export function EditorWorkspace({
   ownerId,
   workspaceId,
   files,
+  responseFields = NO_RESPONSE_FIELDS,
   draftRepository = editorDraftRepository,
   preferenceRepository = workspacePreferenceRepository,
   consoleLines,
@@ -164,14 +190,15 @@ export function EditorWorkspace({
   onCheckComplete,
   submitting,
 }: EditorWorkspaceProps): React.JSX.Element {
-  const fileDefinitionKey = JSON.stringify(
+  const fileDefinitionKey = JSON.stringify([
     files.map(({ id, name, language, starterSource }) => ({
       id,
       name,
       language,
       starterSource,
     })),
-  );
+    responseFields,
+  ]);
   const [activeFileId, setActiveFileId] = useState(files[0]?.id ?? '');
   const [validationResult, setValidationResult] = useState<ValidationResult>();
   const [checking, setChecking] = useState(false);
@@ -179,7 +206,7 @@ export function EditorWorkspace({
   const validationControllerRef = useRef<AbortController | null>(null);
   const checkedSourceRef = useRef<string | null>(null);
   const [sources, setSources] = useState<Record<string, string>>(() =>
-    starterSources(files),
+    starterSources(files, responseFields),
   );
   const sourcesRef = useRef(sources);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>(
@@ -233,7 +260,7 @@ export function EditorWorkspace({
     setValidationResult(undefined);
     checkedSourceRef.current = null;
     setChecking(false);
-    const base = starterSources(files);
+    const base = starterSources(files, responseFields);
     sourcesRef.current = base;
     setSources(base);
     setActiveFileId(files[0]?.id ?? '');
@@ -250,10 +277,10 @@ export function EditorWorkspace({
     setHydrated(false);
     setSaveStatus('loading');
     void draftRepository
-      .load(
-        identity,
-        files.map((file) => file.id),
-      )
+      .load(identity, [
+        ...files.map((file) => file.id),
+        ...responseFields.map((field) => responseDraftId(field.id)),
+      ])
       .then((drafts) => {
         if (cancelled) return;
         const restored = { ...base };
@@ -315,7 +342,7 @@ export function EditorWorkspace({
           try {
             await draftRepository.save(
               identity,
-              sourceEntries(files, next.snapshot),
+              sourceEntries(files, next.snapshot, responseFields),
             );
             if (saveGenerationRef.current !== generation) return;
             savedRevisionRef.current = next.revision;
@@ -342,7 +369,7 @@ export function EditorWorkspace({
         }
       });
     },
-    [draftRepository, files, identity],
+    [draftRepository, files, responseFields, identity],
   );
 
   const saveCurrent = useCallback((): void => {
@@ -578,6 +605,15 @@ export function EditorWorkspace({
     onSourcesChangeRef.current?.(next);
   };
 
+  const updateResponse = (id: string, value: string): void => {
+    revisionRef.current += 1;
+    const next = { ...sourcesRef.current, [responseDraftId(id)]: value };
+    sourcesRef.current = next;
+    setSources(next);
+    setSaveStatus('unsaved');
+    onSourcesChangeRef.current?.(next);
+  };
+
   const requestReset = (): void => {
     if (activeFile === undefined) return;
     if (sourcesRef.current[activeFile.id] === activeFile.starterSource) return;
@@ -695,6 +731,45 @@ export function EditorWorkspace({
               lines={executionAdapter ? execution.lines : consoleLines}
             />
           </div>
+          {responseFields.length > 0 && (
+            <section aria-label="Written responses" className="mt-5 space-y-4">
+              <h2 className="font-display text-xl font-bold">
+                Written responses
+              </h2>
+              <p className="text-sm text-muted">
+                Saved with your device-local draft. Responses are not executed
+                or graded by Check.
+              </p>
+              {responseFields.map((field) => (
+                <div key={field.id}>
+                  <label
+                    htmlFor={`${baseId}-${field.id}`}
+                    className="block font-bold"
+                  >
+                    {field.label}
+                  </label>
+                  <p
+                    id={`${baseId}-${field.id}-prompt`}
+                    className="my-2 text-sm"
+                  >
+                    {field.prompt}
+                  </p>
+                  <textarea
+                    id={`${baseId}-${field.id}`}
+                    aria-describedby={`${baseId}-${field.id}-prompt`}
+                    rows={5}
+                    maxLength={field.maxLength}
+                    disabled={!hydrated}
+                    value={sources[responseDraftId(field.id)] ?? ''}
+                    onChange={(event) =>
+                      updateResponse(field.id, event.target.value)
+                    }
+                    className="w-full rounded-md border border-line bg-surface-sunken p-3 text-sm focus-visible:outline-2 focus-visible:outline-reward"
+                  />
+                </div>
+              ))}
+            </section>
+          )}
           {previewAdapter && (
             <div className="mt-4">
               <PreviewPanel
@@ -762,6 +837,18 @@ export function EditorWorkspace({
                         onSubmit({
                           source: checkedSource,
                           validation: validationResult,
+                          ...(responseFields.length > 0
+                            ? {
+                                responses: Object.fromEntries(
+                                  responseFields.map((field) => [
+                                    field.id,
+                                    sourcesRef.current[
+                                      responseDraftId(field.id)
+                                    ] ?? '',
+                                  ]),
+                                ),
+                              }
+                            : {}),
                         });
                     }
                   : undefined

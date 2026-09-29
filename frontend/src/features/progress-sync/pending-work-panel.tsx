@@ -5,6 +5,10 @@ import { Button } from '@/components/ui';
 import type { PendingOperationRecord } from '@/lib/db';
 import { progressReplay, pendingSubmission } from './progress-replay';
 import {
+  readCapstoneResponses,
+  type CapstoneResponses,
+} from '@/features/curriculum/capstone-responses';
+import {
   currentSyncOwner,
   ownerSyncApi,
   refreshAccountFacts,
@@ -146,8 +150,11 @@ export function PendingWorkPanel({
       )}
       {rows.map((row) => {
         let source: string;
+        let responses: CapstoneResponses | null = null;
         try {
-          source = pendingSubmission(row).source;
+          const snapshot = pendingSubmission(row);
+          source = snapshot.source;
+          responses = readCapstoneResponses(snapshot.report.capstoneResponses);
         } catch {
           source = row.payload;
         }
@@ -173,6 +180,18 @@ export function PendingWorkPanel({
               <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-words">
                 {source}
               </pre>
+              {responses && (
+                <div className="mt-3 space-y-2">
+                  <p className="font-bold">Debug explanation</p>
+                  <p className="whitespace-pre-wrap break-words">
+                    {responses.explanation}
+                  </p>
+                  <p className="font-bold">Transfer response</p>
+                  <p className="whitespace-pre-wrap break-words">
+                    {responses.transfer}
+                  </p>
+                </div>
+              )}
             </details>
             <Button
               type="button"

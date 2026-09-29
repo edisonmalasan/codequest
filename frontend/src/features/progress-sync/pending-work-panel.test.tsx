@@ -61,6 +61,34 @@ describe('pending source recovery', () => {
       true,
     );
   });
+  it('shows saved capstone responses as private recoverable text', async () => {
+    mock.list.mockResolvedValue([
+      {
+        eventId: 'written',
+        ownerId: 'A',
+        questId: 'CAP01',
+        schemaVersion: 1,
+        operationType: 'attempt-submit',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        createdAt: 1,
+        payload: JSON.stringify({
+          source: 'project source',
+          report: {
+            capstoneResponses: {
+              explanation: '<script>private</script>',
+              transfer: 'Recover my threshold answer',
+            },
+          },
+        }),
+      },
+    ]);
+    render(<PendingWorkPanel accountId="A" />);
+    await screen.findByText('<script>private</script>');
+    expect(screen.getByText('Recover my threshold answer')).toBeDefined();
+    expect(document.querySelector('script')).toBeNull();
+    expect(mock.replay).not.toHaveBeenCalled();
+  });
   it('does not retry or remove old-owner source with another account', async () => {
     const view = render(<PendingWorkPanel accountId="A" />);
     await screen.findByText(/Q01: pending/);

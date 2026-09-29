@@ -76,3 +76,6 @@ journeys:
       - id: Q24
         contentVersion: 1.0.0
         assessmentVersion: 1.0.0
+      - id: CAP01
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0

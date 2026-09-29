@@ -7,3 +7,4 @@ objectiveSummary: Use edge cases and combine small helpers.
 questIds:
   - Q23
   - Q24
+  - CAP01

@@ -523,6 +523,7 @@ export interface components {
             assessmentVersion: string;
             /** @description Private source snapshot, at most 64 KiB */
             source: string;
+            /** @description Bounded unverified local validation report (16 KiB maximum). Passing capstones require capstoneResponses with nonblank explanation and transfer strings, each at most 2000 characters and 4000 UTF-8 bytes. Presence is not reasoning-quality grading. */
             report: {
                 [key: string]: unknown;
             };

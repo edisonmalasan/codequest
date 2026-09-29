@@ -53,6 +53,50 @@ afterEach(async () => {
 });
 
 describe('durable authenticated replay', () => {
+  it('retains written responses through rejection and uncertain duplicate delivery', async () => {
+    const { replay } = setup();
+    const submission = {
+      ...body(),
+      report: {
+        status: 'completed',
+        passed: true,
+        capstoneResponses: {
+          explanation: 'Private explanation',
+          transfer: 'Private transfer',
+        },
+      },
+    };
+    await replay.save('A', 'CAP01', submission);
+    const api = {
+      replayAttempt: vi
+        .fn()
+        .mockResolvedValueOnce({ ok: false, kind: 'http', status: 409 })
+        .mockResolvedValue({ ok: false, kind: 'network' }),
+    };
+    await replay.replay('A', api, async () => 'A');
+    await replay.replay('A', api, async () => 'A', true);
+    await replay.replay('B', api, async () => 'B', true);
+    expect(api.replayAttempt.mock.calls).toEqual([
+      ['CAP01', submission],
+      ['CAP01', submission],
+    ]);
+    expect((await replay.repository.list('A'))[0].payload).toContain(
+      'Private transfer',
+    );
+    expect(await replay.repository.list('B')).toEqual([]);
+    await expect(
+      replay.save('A', 'CAP01', {
+        ...submission,
+        report: {
+          ...submission.report,
+          capstoneResponses: {
+            explanation: 'Changed',
+            transfer: 'Private transfer',
+          },
+        },
+      }),
+    ).rejects.toThrow();
+  });
   it('reopens and retries the identical event after an uncertain response without persisting protected data', async () => {
     const { database, replay } = setup();
     const submission = body();

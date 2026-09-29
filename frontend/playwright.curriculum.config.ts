@@ -3,7 +3,7 @@ import pwa from './playwright.pwa.config';
 
 export default defineConfig({
   ...pwa,
-  testMatch: '**/foundations.spec.ts',
+  testMatch: ['**/foundations.spec.ts', '**/capstone.spec.ts'],
   webServer: [
     {
       command: 'pnpm --dir ../backend start',
@@ -28,6 +28,14 @@ export default defineConfig({
       ? pwa.webServer
       : pwa.webServer
         ? [pwa.webServer]
-        : []),
+        : []
+    ).map((server) => ({
+      ...server,
+      timeout: 600_000,
+      env: {
+        ...server.env,
+        NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3200',
+      },
+    })),
   ],
 });
