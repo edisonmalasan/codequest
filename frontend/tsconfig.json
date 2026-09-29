@@ -22,5 +22,5 @@
     "next-env.d.ts",
     ".next-preview/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "public/sw.js", "public/swe-worker-*.js"]
 }

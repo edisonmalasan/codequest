@@ -8,4 +8,8 @@ coverage/
 playwright-report/
 test-results/
 *.tsbuildinfo
+frontend/public/sw.js
+frontend/public/sw.js.map
+frontend/public/swe-worker-*.js
+frontend/public/swe-worker-*.js.map
 .env*

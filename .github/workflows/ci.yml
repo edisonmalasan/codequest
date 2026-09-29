@@ -50,4 +50,6 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm --filter frontend build
+      - run: pnpm --dir frontend exec playwright install --with-deps chromium
+      - run: pnpm --dir frontend test:pwa
       - run: pnpm --filter backend build

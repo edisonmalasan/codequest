@@ -1,0 +1,45 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #070a12;
+  color: #f3f4ef;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+main {
+  max-width: 36rem;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+}
+img {
+  image-rendering: pixelated;
+}
+h1 {
+  font-size: clamp(2rem, 8vw, 3rem);
+  line-height: 1.2;
+}
+.label {
+  color: #53f6a6;
+  font-weight: 700;
+}
+a {
+  display: inline-block;
+  background: #53f6a6;
+  color: #06130d;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+a:focus-visible {
+  outline: 3px solid #ffcb5c;
+  outline-offset: 5px;
+}
+.note {
+  color: #aebbd0;
+  font-size: 0.875rem;
+  margin-top: 2rem;
+}
