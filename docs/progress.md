@@ -1,5 +1,7 @@
 # Learner progress
 
+Phase 25 refreshes protected account facts on entry, reconnect, foreground return, and confirmed replay. Pending device work cannot supply accepted counts or availability, and no protected response is durably cached. See [cloud progress replay](cloud-progress-sync.md).
+
 Phase 18 exposes owner-only, backend-derived progress for published quests, chapters, and Journeys. The protected REST operations are:
 
 | Operation | Purpose |

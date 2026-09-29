@@ -37,6 +37,7 @@ export interface PendingOperationRecord {
   assessmentVersion: string;
   payload: string;
   createdAt: number;
+  delivery?: { status: 'confirmed' | 'blocked'; message: string };
 }
 
 export interface WorkspacePreferenceRecord {
@@ -66,7 +67,7 @@ export interface GuestStateRecord {
   updatedAt: number;
 }
 
-// Sync, migration and acceptance remain later capabilities. Legacy outbox
+// Legacy outbox
 // rows have no schemaVersion and are never treated as replay-ready envelopes.
 export class CodeQuestDatabase extends Dexie {
   drafts!: Table<DraftRecord, string>;
