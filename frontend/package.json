@@ -10,7 +10,8 @@
     "test:e2e": "playwright test",
     "test:pwa": "playwright test --config playwright.pwa.config.ts",
     "lint": "eslint . && prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:curriculum": "pnpm --dir ../backend build && playwright test --config playwright.curriculum.config.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",
