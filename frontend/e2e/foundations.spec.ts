@@ -102,7 +102,7 @@ test('published course and guest Q01-Q04 survive reload without account authorit
   });
   const list = await request.get(`${apiOrigin}/api/v1/journeys`);
   expect(await list.json()).toEqual([
-    expect.objectContaining({ chapterCount: 7, questCount: 24 }),
+    expect.objectContaining({ chapterCount: 7, questCount: 25 }),
   ]);
   await page.goto('/journeys/javascript-foundations');
   await expect(

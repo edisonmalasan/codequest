@@ -52,11 +52,23 @@ vi.mock('@/features/editor', () => ({
   EditorWorkspace: ({
     onCheckComplete,
     onSubmit,
+    onSourcesChange,
   }: {
     onCheckComplete?: (snapshot: unknown) => void;
     onSubmit?: (snapshot: unknown) => void;
+    onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
   }) => (
     <>
+      <button
+        onClick={() =>
+          onSourcesChange?.({
+            'response:explanation': 'Empty array reveals the defect.',
+            'response:transfer': 'Include quantities equal to the threshold.',
+          })
+        }
+      >
+        Mock written responses
+      </button>
       <button
         type="button"
         onClick={() =>
@@ -81,6 +93,10 @@ vi.mock('@/features/editor', () => ({
         onClick={() =>
           onSubmit?.({
             source: 'account source',
+            responses: {
+              explanation: 'Empty array reveals the defect.',
+              transfer: 'Include quantities equal to the threshold.',
+            },
             validation: {
               checkId: 'check',
               status: 'completed',
@@ -100,6 +116,43 @@ vi.mock('@/features/editor', () => ({
 }));
 
 describe('guest quest presentation', () => {
+  it('requires both capstone responses and captures them only on explicit Submit', async () => {
+    sync.owner = 'A';
+    render(
+      <QuestWorkspace
+        quest={{
+          ...questFixtures.Q01,
+          id: 'CAP01',
+          kind: 'capstone',
+          guestEligible: false,
+          explanationPrompt: 'Explain the repair.',
+          transferPrompt: 'Explain the fresh task.',
+        }}
+      />,
+    );
+    const submit = await screen.findByRole('button', { name: 'Mock Submit' });
+    expect(submit).toHaveProperty('disabled', true);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mock written responses' }),
+    );
+    expect(submit).toHaveProperty('disabled', false);
+    expect(sync.save).not.toHaveBeenCalled();
+    await userEvent.click(submit);
+    await waitFor(() =>
+      expect(sync.save).toHaveBeenCalledWith(
+        'A',
+        'CAP01',
+        expect.objectContaining({
+          report: expect.objectContaining({
+            capstoneResponses: {
+              explanation: 'Empty array reveals the defect.',
+              transfer: 'Include quantities equal to the threshold.',
+            },
+          }),
+        }),
+      ),
+    );
+  });
   afterEach(() => vi.restoreAllMocks());
   beforeEach(() => {
     vi.clearAllMocks();

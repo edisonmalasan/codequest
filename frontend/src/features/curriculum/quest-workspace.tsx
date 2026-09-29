@@ -16,6 +16,7 @@ import {
   type ValidationStrategy,
 } from '@/features/validation';
 import type { QuestDetail } from '@/lib/api-client';
+import { readCapstoneResponses } from './capstone-responses';
 import { progressReplay } from '@/features/progress-sync/progress-replay';
 import {
   currentSyncOwner,
@@ -78,6 +79,7 @@ export function QuestWorkspace({
 }): React.JSX.Element | null {
   const [ownerId, setOwnerId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const [responsesReady, setResponsesReady] = useState(false);
   const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
   const [validationStrategy, setValidationStrategy] =
     useState<ValidationStrategy>();
@@ -93,6 +95,30 @@ export function QuestWorkspace({
   const pendingEventRef = useRef<{ key: string; id: string } | null>(null);
   const sessionGeneration = useRef(0);
   const definition = useMemo(() => questValidationDefinition(quest), [quest]);
+  const responseFields = useMemo(
+    () =>
+      quest.kind === 'capstone'
+        ? [
+            {
+              id: 'explanation',
+              label: 'Debug explanation',
+              prompt:
+                quest.explanationPrompt ??
+                'Explain your revealing test and correction.',
+              maxLength: 2000,
+            },
+            {
+              id: 'transfer',
+              label: 'Transfer response',
+              prompt:
+                quest.transferPrompt ??
+                'Explain your new requirement and test.',
+              maxLength: 2000,
+            },
+          ]
+        : [],
+    [quest],
+  );
   const file = useMemo(
     () => [
       {
@@ -176,6 +202,7 @@ export function QuestWorkspace({
         sessionGeneration.current++;
         setOwnerId(next);
         setSubmission({ status: 'idle' });
+        setResponsesReady(false);
         pendingEventRef.current = null;
         setReady(true);
       };
@@ -209,9 +236,34 @@ export function QuestWorkspace({
   async function submit(snapshot: {
     source: string;
     validation: ValidationResult;
+    responses?: Readonly<Record<string, string>>;
   }): Promise<void> {
     if (ownerId === null || submission.status === 'submitting') return;
-    const key = `${snapshot.validation.checkId}:${snapshot.source}`;
+    const responses =
+      quest.kind === 'capstone'
+        ? readCapstoneResponses(snapshot.responses)
+        : null;
+    if (quest.kind === 'capstone' && !responses) {
+      setSubmission({
+        status: 'error',
+        message:
+          'Add both written responses: nonblank text, at most 2000 characters and 4000 UTF-8 bytes each.',
+      });
+      return;
+    }
+    const report = {
+      ...snapshot.validation,
+      ...(responses ? { capstoneResponses: responses } : {}),
+    };
+    if (new TextEncoder().encode(JSON.stringify(report)).length > 16_384) {
+      setSubmission({
+        status: 'error',
+        message:
+          'The combined report and written responses exceed 16 KiB. Shorten your responses before submitting.',
+      });
+      return;
+    }
+    const key = `${snapshot.validation.checkId}:${snapshot.source}:${JSON.stringify(responses)}`;
     if (pendingEventRef.current?.key !== key)
       pendingEventRef.current = { key, id: crypto.randomUUID() };
     setSubmission({ status: 'submitting' });
@@ -222,7 +274,7 @@ export function QuestWorkspace({
       contentVersion: quest.contentVersion,
       assessmentVersion: quest.assessmentVersion,
       source: snapshot.source,
-      report: { ...snapshot.validation },
+      report,
     };
     try {
       if ((await currentSyncOwner()) !== account) {
@@ -297,12 +349,13 @@ export function QuestWorkspace({
         ownerId={ownerId ?? 'guest'}
         workspaceId={`${quest.id}-${quest.contentVersion}`}
         files={file}
+        responseFields={responseFields}
         executionAdapter={executionAdapter}
         validationStrategy={validationStrategy}
         validationDefinition={definition}
         submitting={submission.status === 'submitting'}
         onSubmit={
-          ownerId
+          ownerId && (quest.kind !== 'capstone' || responsesReady)
             ? (snapshot) => {
                 void submit(snapshot);
               }
@@ -315,8 +368,24 @@ export function QuestWorkspace({
               }
             : undefined
         }
-        onSourcesChange={() => setSubmission({ status: 'idle' })}
+        onSourcesChange={(sources) => {
+          setSubmission({ status: 'idle' });
+          setResponsesReady(
+            readCapstoneResponses({
+              explanation: sources['response:explanation'],
+              transfer: sources['response:transfer'],
+            }) !== null,
+          );
+        }}
       />
+      {quest.kind === 'capstone' && (
+        <p className="mt-4 text-sm">
+          Submit requires both written responses and a current Check. Each
+          response allows 2000 characters and 4000 UTF-8 bytes. Presence is
+          required; Check does not grade reasoning quality. Backend acceptance
+          is personal learning, not certification.
+        </p>
+      )}
       {ownerId === null && (
         <p className="mt-4 text-sm">
           {guestSaving &&

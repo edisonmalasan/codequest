@@ -8,7 +8,7 @@ const previewOrigin = `http://localhost:${previewPort}`;
 
 export default defineConfig({
   testDir: './e2e',
-  testIgnore: ['**/pwa.spec.ts', '**/foundations.spec.ts'],
+  testIgnore: ['**/pwa.spec.ts', '**/foundations.spec.ts', '**/capstone.spec.ts'],
   fullyParallel: false,
   workers: 1,
   retries: 0,
