@@ -47,6 +47,8 @@
             }
           });
         });
+      if (ready.installing || ready.waiting)
+        throw new Error('Runtime update pending');
       const cache = await globalThis.caches.open('codequest-runtime-1');
       if ((await cache.keys()).length !== 6)
         throw new Error('Runtime cache incomplete');
@@ -95,6 +97,8 @@
         )
           throw new Error('Runtime cache mismatch');
       }
+      if (ready.installing || ready.waiting)
+        throw new Error('Runtime update pending');
       respond('ready');
     })
     .catch(() => respond('unavailable'));
