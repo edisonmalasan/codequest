@@ -103,7 +103,12 @@ export async function saveLessonForOffline(
 export async function prepareOfflineRunner(): Promise<boolean> {
   if (!navigator.onLine || !('serviceWorker' in navigator)) return false;
   const registration = await navigator.serviceWorker.getRegistration('/');
-  if (!registration?.active || !navigator.serviceWorker.controller)
+  if (
+    !registration?.active ||
+    !navigator.serviceWorker.controller ||
+    registration.installing ||
+    registration.waiting
+  )
     return false;
   const cachedDocument = await caches.match('/offline-learning', {
     ignoreSearch: true,
@@ -131,7 +136,7 @@ export async function prepareOfflineRunner(): Promise<boolean> {
       window.clearTimeout(timer);
       window.removeEventListener('message', onMessage);
       frame.remove();
-      resolve(ready);
+      resolve(ready && !registration.installing && !registration.waiting);
     };
     const onMessage = (event: MessageEvent<unknown>) => {
       if (
