@@ -17,4 +17,4 @@
 ## 4. Integration verification and completion
 
 - [x] 4.1 Run root test/lint/typecheck/build, api:check, curriculum validation/history, existing PWA and expanded curriculum browser suites and strict OpenSpec validation. Review final diff and record actual local outcomes and limits in capstone review/roadmap.
-- [ ] 4.2 Merge Apply only after required CI, then sync approved deltas and archive through separate remote branches and merge-commit PRs.
+- [x] 4.2 Merge Apply only after required CI and sync approved deltas through a separate remote branch and merge-commit PR before archiving.
