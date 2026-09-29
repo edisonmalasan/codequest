@@ -26,3 +26,5 @@
 - F02 physical mobile/Safari/Firefox installation, spoken assistive technology, low-power/native quota/background/OS restart remain untested; F06 operational privacy/retention/consent/deletion gates remain open. No support/compliance claim or Phase 29 work.
 
 - Apply #124 merged after independent required CI passed, including fresh database/backend tests and production Chromium 6/6.
+
+- Canonical spec sync #125 merged after independent required CI passed. All three approved delta blocks match their canonical requirements exactly; all 26 specs passed strict validation. The OpenSpec CLI archived the complete change after Apply and Sync merges; no active changes remain.
