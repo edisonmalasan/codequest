@@ -3,7 +3,12 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'node_modules/**', 'content/**'],
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'content/**',
+      'test/fixtures/curriculum-draft/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.strict,

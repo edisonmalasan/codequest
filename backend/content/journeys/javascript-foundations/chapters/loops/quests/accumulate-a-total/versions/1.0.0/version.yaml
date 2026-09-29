@@ -1,0 +1,20 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Accumulate a total
+objective: Accumulate a numeric sequence separately from the loop counter.
+outcomeId: O4
+conceptIds:
+  - js-loops
+  - js-arithmetic
+prerequisiteQuestIds:
+  - Q11
+difficulty: developing
+xpAward: 10
+hints:
+  question: Does the assignment keep the accumulated value?
+  concept: The sum needs both its previous value and the current loop number.
+  nextStep: Replace each accumulator assignment with old total + n; keep the
+    prints outside the loops.
+caseIds:
+  - normal-output
+  - boundary-output

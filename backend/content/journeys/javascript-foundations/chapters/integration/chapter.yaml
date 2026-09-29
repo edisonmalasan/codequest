@@ -1,0 +1,9 @@
+id: CH07
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: integration
+title: Integration
+position: 7
+objectiveSummary: Use edge cases and combine small helpers.
+questIds:
+  - Q23
+  - Q24

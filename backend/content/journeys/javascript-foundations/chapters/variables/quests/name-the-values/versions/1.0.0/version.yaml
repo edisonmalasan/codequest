@@ -1,0 +1,23 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Name the values
+objective: Bind number, string and boolean values and inspect their types.
+outcomeId: O1
+conceptIds:
+  - js-values
+  - js-bindings
+  - js-types
+prerequisiteQuestIds:
+  - Q01
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which values need quotes and which do not?
+  concept:
+    Numbers and booleans are literal values without quotes; typeof reveals
+    the distinction.
+  nextStep: Remove quotes from the numeric and boolean assignments, leaving the
+    name quoted.
+caseIds:
+  - normal-output
+  - boundary-output

@@ -1,0 +1,23 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Reusable decision
+objective: Return an exclusive score category for each function argument.
+outcomeId: O5
+conceptIds:
+  - js-functions
+  - js-branches
+prerequisiteQuestIds:
+  - Q15
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which values sit exactly on the two boundaries?
+  concept: An inclusive minimum uses >=; a returned result ends the current call.
+  nextStep: Trace scores 50 and 80 before changing the comparisons.
+caseIds:
+  - below-silver
+  - silver-start
+  - silver-end
+  - gold-start
+  - upper-score
+  - zero-score

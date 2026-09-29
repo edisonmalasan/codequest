@@ -1,0 +1,24 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Compose small helpers
+objective: Combine a numeric helper and a formatter with distinct responsibilities.
+outcomeId: O5
+conceptIds:
+  - js-functions
+  - js-loops
+  - js-strings
+prerequisiteQuestIds:
+  - Q16
+difficulty: developing
+xpAward: 10
+hints:
+  question: Is the argument to formatTotal a limit or an already-calculated total?
+  concept: Composition passes one helper result as the input to another helper.
+  nextStep: Repair stepTotal first, then the prefix, then pass its returned sum
+    into formatTotal.
+caseIds:
+  - total-four
+  - total-zero
+  - format-five
+  - report-three
+  - report-zero

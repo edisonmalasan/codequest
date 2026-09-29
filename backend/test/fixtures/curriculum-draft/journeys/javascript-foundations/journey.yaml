@@ -1,0 +1,27 @@
+id: JAVASCRIPT-FOUNDATIONS
+slug: javascript-foundations
+title: JavaScript Foundations
+position: 1
+status: draft
+entryRequirements:
+  - Read English and navigate a browser.
+  - Edit text in a browser; no prior coding or terminal use is required.
+outcomes:
+  - id: O1
+    description: Choose and predict basic values and state.
+  - id: O2
+    description: Combine expressions and explain their results.
+  - id: O3
+    description: Select branches and handle boundaries.
+  - id: O4
+    description: Build terminating loops and debug iteration.
+  - id: O5
+    description: Define and call functions with parameters and returns.
+  - id: O6
+    description: Traverse and update arrays and objects.
+  - id: O7
+    description: Interpret feedback and correct defects.
+  - id: O8
+    description: Integrate and transfer Foundations skills.
+chapterIds:
+  - CH01

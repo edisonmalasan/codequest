@@ -17,7 +17,7 @@ import {
 } from './curriculum-catalog';
 import { publicationSchema } from './content-schema';
 
-const source = resolve(process.cwd(), 'content');
+const source = resolve(process.cwd(), 'test/fixtures/curriculum-draft');
 const created: string[] = [];
 
 function fixture(): string {
@@ -91,7 +91,7 @@ describe('curriculum publication catalog', () => {
     ).toBe(false);
   });
 
-  it('accepts an empty production publication and freezes authored data', () => {
+  it('accepts an empty representative publication and freezes authored data', () => {
     const authored = loadAuthoredCurriculum(source);
     const catalog = loadCurriculumCatalog(source);
 

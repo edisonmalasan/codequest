@@ -1,0 +1,45 @@
+## Goal
+
+Construct an array, update an indexed element and read its length.
+
+## Learn
+
+An array groups ordered values inside square brackets. Indices start at 0: in `["key", "map"]`, index 0 holds key and index 1 holds map. `items.length` counts elements, so the last valid index is length minus one.
+
+Read an element with `items[index]` and update it with assignment. A const binding can refer to an array whose elements change: const prevents replacing the binding, not editing the referenced array. Empty text is still a valid element, not an absent slot.
+
+## Worked example
+
+```js
+const items = ['key', 'map'];
+items[1] = 'lamp';
+console.log(items.length);
+console.log(items[0]);
+console.log(items[1]);
+```
+
+## Your task
+
+Implement `pack(first)`. Construct three items: the parameter first, food, and water. Replace index 1 with lamp. Return a new array containing the item count followed by items at indices 0, 1 and 2. Use the supplied parameter for the first item, including when it is an empty string.
+
+## Check contract
+
+first is a string. The returned array has four elements: count 3, the unchanged first item, lamp, water. Empty string remains present. Check compares array order, length and values structurally.
+
+- `pack("rope")` returns `[3, "rope", "lamp", "water"]`.
+- `pack("")` returns `[3, "", "lamp", "water"]`.
+- `pack("key")` returns `[3, "key", "lamp", "water"]`.
+
+## Run, Check, and acceptance
+
+For Run, add a `console.log` call using one listed input. A function definition alone does not call itself. Check invokes the named functions automatically and compares returned values; console calls do not satisfy a missing return.
+
+Run executes your current code and shows console output or errors. Check compares the declared behavior and reports local, unverified feedback; it does not submit your work. Guests can save Q01-Q04 provisional progress on this device, then sign up and explicitly import. Signed-in Submit requests backend acceptance. Account progress and rewards change only after acceptance; retries and hints do not earn extra XP.
+
+## Reflect (ungraded)
+
+Why is replacing index 0 different from replacing the first fixed food item? How can a const array change? Write or say your explanation for yourself. Check does not assess this reasoning.
+
+## If you get stuck
+
+A syntax error means JavaScript could not read the program: inspect quotes, brackets and punctuation. A runtime error happens after it starts: inspect names and the failing operation. A failed check means the program ran but its behavior differs: compare the declared example with the observed result. Use the graduated hints one at a time. Keep loops bounded; a timeout stops the run and preserves your code.

@@ -1,0 +1,11 @@
+id: CH05
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: functions
+title: Functions
+position: 5
+objectiveSummary: Return reusable results with independent calls.
+questIds:
+  - Q15
+  - Q16
+  - Q17
+  - Q18

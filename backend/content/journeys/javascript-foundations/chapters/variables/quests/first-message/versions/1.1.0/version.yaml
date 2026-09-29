@@ -1,0 +1,19 @@
+contentVersion: 1.1.0
+assessmentVersion: 1.0.0
+title: First message
+objective: Edit a supplied string and use Run to inspect its exact console output.
+outcomeId: O1
+conceptIds:
+  - js-values
+  - js-console-output
+prerequisiteQuestIds: []
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Where is the text passed to console.log?
+  concept: Quoted text is a string; quotes delimit it but are not part of the
+    printed value.
+  nextStep: Replace the words inside the existing quotes, then Run before Check.
+caseIds:
+  - normal-message
+  - boundary-exact-output

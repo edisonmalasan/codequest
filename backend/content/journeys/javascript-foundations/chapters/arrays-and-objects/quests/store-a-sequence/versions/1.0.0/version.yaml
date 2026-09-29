@@ -1,0 +1,21 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Store a sequence
+objective: Construct an array, update an indexed element and read its length.
+outcomeId: O6
+conceptIds:
+  - js-arrays
+  - js-functions
+prerequisiteQuestIds:
+  - Q18
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which index contains food?
+  concept: Indices start at zero; length counts all present elements, including
+    empty text.
+  nextStep: Update items[1], then inspect all three indices in the returned summary.
+caseIds:
+  - rope-pack
+  - empty-first
+  - key-pack

@@ -1,0 +1,20 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Predict and repair state
+objective: Trace assignment order and repair a variable-name and stale-output defect.
+outcomeId: O7
+conceptIds:
+  - js-state
+  - js-debugging
+prerequisiteQuestIds:
+  - Q03
+difficulty: introductory
+xpAward: 10
+hints:
+  question: At the middle print, has the value changed yet?
+  concept: Statements run in order and variable names must match exactly.
+  nextStep: Move the middle print below supplies = 2 and compare the spelling of
+    the last name.
+caseIds:
+  - normal-output
+  - boundary-output

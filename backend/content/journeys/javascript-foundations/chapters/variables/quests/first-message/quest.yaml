@@ -4,5 +4,15 @@ slug: first-message
 position: 1
 kind: instructional
 guestEligible: true
-currentVersion: 1.0.0
-transitions: []
+currentVersion: 1.1.0
+transitions:
+  - to: 1.1.0
+    fromAssessment: 1.0.0
+    toAssessment: 1.0.0
+    compatibility: compatible
+    pendingWork: accept-new
+    reason: Editorial beginner guidance; exact output, case IDs and assessment
+      remain unchanged.
+    curriculumReview: approved
+    technicalReview: approved
+    from: 1.0.0

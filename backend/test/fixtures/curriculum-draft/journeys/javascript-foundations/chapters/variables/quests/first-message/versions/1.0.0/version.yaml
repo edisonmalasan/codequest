@@ -1,0 +1,18 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: First message
+objective: Edit a supplied string and use Run to inspect the exact console output.
+outcomeId: O1
+conceptIds:
+  - js-values
+  - js-console-output
+prerequisiteQuestIds: []
+difficulty: introductory
+xpAward: 10
+hints:
+  question: What words appear inside the quotation marks, and what should appear after Run?
+  concept: A quoted string is a value. console.log displays that value in the console.
+  nextStep: Change only the words inside the supplied quotes, then press Run and compare the output.
+caseIds:
+  - normal-message
+  - boundary-exact-output

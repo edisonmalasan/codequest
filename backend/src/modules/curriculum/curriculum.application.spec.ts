@@ -19,7 +19,7 @@ import {
 import { createOpenApiDocument } from '../../infrastructure/openapi/setup-openapi';
 import { loadCurriculumCatalog } from './content/curriculum-catalog';
 
-const source = resolve(process.cwd(), 'content');
+const source = resolve(process.cwd(), 'test/fixtures/curriculum-draft');
 const roots: string[] = [];
 const applications: NestFastifyApplication[] = [];
 
@@ -96,8 +96,8 @@ afterEach(async () => {
 });
 
 describe('public curriculum API', () => {
-  it('keeps draft source out of the empty production catalog', async () => {
-    const app = await application();
+  it('keeps draft source out of the empty representative catalog', async () => {
+    const app = await application(source);
     const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
 
     expect(

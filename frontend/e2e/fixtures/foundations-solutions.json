@@ -1,0 +1,170 @@
+[
+  {
+    "id": "Q01",
+    "slug": "first-message",
+    "reference": "console.log(\"I am ready to code!\");",
+    "alternative": "const greeting = 'I am ready to code!'; console.log(greeting);",
+    "defective": "console.log(\"Hello!\");"
+  },
+  {
+    "id": "Q02",
+    "slug": "name-the-values",
+    "reference": "const supplies = 12; const name = \"Mira\"; const ready = true; const reserve = 0; console.log(supplies); console.log(typeof supplies); console.log(name); console.log(typeof name); console.log(ready); console.log(typeof ready); console.log(reserve); console.log(typeof reserve);",
+    "alternative": "const supplies = 6 + 6; const name = \"Mi\" + \"ra\"; const ready = 1 === 1; const reserve = 1 - 1; console.log(supplies); console.log(typeof supplies); console.log(name); console.log(typeof name); console.log(ready); console.log(typeof ready); console.log(reserve); console.log(typeof reserve);",
+    "defective": "const supplies = \"12\";\nconst name = \"Mira\";\nconst ready = \"true\";\nconst reserve = \"0\";\nconsole.log(supplies);\nconsole.log(typeof supplies);\nconsole.log(name);\nconsole.log(typeof name);\nconsole.log(ready);\nconsole.log(typeof ready);\nconsole.log(reserve);\nconsole.log(typeof reserve);"
+  },
+  {
+    "id": "Q03",
+    "slug": "update-supplies",
+    "reference": "const camp = \"North\"; let supplies = 5; console.log(supplies); supplies = 3; console.log(supplies); supplies = 0; console.log(supplies); console.log(camp);",
+    "alternative": "let stock = 5; const location = \"North\"; console.log(stock); stock = 3; console.log(stock); stock = 0; console.log(stock); console.log(location);",
+    "defective": "const camp = \"North\";\nconst supplies = 5;\nconsole.log(supplies);\nsupplies = 5;\nconsole.log(supplies);\nsupplies = 5;\nconsole.log(supplies);\nconsole.log(camp);"
+  },
+  {
+    "id": "Q04",
+    "slug": "predict-and-repair-state",
+    "reference": "let supplies = 4; console.log(supplies); supplies = 2; console.log(supplies); supplies = 0; console.log(supplies);",
+    "alternative": "let remaining = 4; console.log(remaining); remaining = 2; console.log(remaining); remaining = 0; console.log(remaining);",
+    "defective": "let supplies = 4;\nconsole.log(supplies);\nconsole.log(supplies);\nsupplies = 2;\nsupplies = 0;\nconsole.log(suplies);"
+  },
+  {
+    "id": "Q05",
+    "slug": "resource-cost",
+    "reference": "console.log(3 * 4 + 2); console.log(0 * 4 + 2); console.log(2 * 5 + 0);",
+    "alternative": "const first = 4 + 4 + 4 + 2; const empty = 2; const second = 5 + 5; console.log(first); console.log(empty); console.log(second);",
+    "defective": "console.log(3 + 4 + 2);\nconsole.log(0 + 4 + 2);\nconsole.log(2 + 5 + 0);"
+  },
+  {
+    "id": "Q06",
+    "slug": "compare-the-boundary",
+    "reference": "console.log(9 >= 10); console.log(10 >= 10); console.log(11 >= 10); console.log(10 === \"10\");",
+    "alternative": "console.log(10 <= 9); console.log(10 <= 10); console.log(10 <= 11); console.log(\"10\" === 10);",
+    "defective": "console.log(9 > 10);\nconsole.log(10 > 10);\nconsole.log(11 > 10);\nconsole.log(10 == \"10\");"
+  },
+  {
+    "id": "Q07",
+    "slug": "combine-requirements",
+    "reference": "console.log(\"Ready: \" + (2 >= 2 && true)); console.log(\"Ready: \" + (1 >= 2 && true)); console.log(\"Ready: \" + (2 >= 2 && false));",
+    "alternative": "const first = true && 2 >= 2; const second = true && 1 >= 2; const third = false && 2 >= 2; console.log(\"Ready: \" + first); console.log(\"Ready: \" + second); console.log(\"Ready: \" + third);",
+    "defective": "console.log(\"Ready: \" + (2 >= 2 || true));\nconsole.log(\"Ready: \" + (1 >= 2 || true));\nconsole.log(\"Ready: \" + (2 >= 2 || false));"
+  },
+  {
+    "id": "Q08",
+    "slug": "choose-a-path",
+    "reference": "let hasMap = true; if (hasMap) { console.log(\"Explore\"); } else { console.log(\"Stay\"); } hasMap = false; if (hasMap) { console.log(\"Explore\"); } else { console.log(\"Stay\"); }",
+    "alternative": "let hasMap = true; if (!hasMap) { console.log(\"Stay\"); } else { console.log(\"Explore\"); } hasMap = false; if (!hasMap) { console.log(\"Stay\"); } else { console.log(\"Explore\"); }",
+    "defective": "let hasMap = true;\nif (hasMap) { console.log(\"Stay\"); } else { console.log(\"Explore\"); }\nhasMap = false;\nif (hasMap) { console.log(\"Stay\"); } else { console.log(\"Explore\"); }"
+  },
+  {
+    "id": "Q09",
+    "slug": "classify-a-score",
+    "reference": "const score0 = 49;\nif (score0 >= 80) { console.log(\"Gold\"); } else if (score0 >= 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score1 = 50;\nif (score1 >= 80) { console.log(\"Gold\"); } else if (score1 >= 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score2 = 79;\nif (score2 >= 80) { console.log(\"Gold\"); } else if (score2 >= 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score3 = 80;\nif (score3 >= 80) { console.log(\"Gold\"); } else if (score3 >= 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score4 = 81;\nif (score4 >= 80) { console.log(\"Gold\"); } else if (score4 >= 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }",
+    "alternative": "const points0 = 49;\nif (points0 < 50) { console.log(\"Practice\"); } else if (points0 < 80) { console.log(\"Silver\"); } else { console.log(\"Gold\"); }\nconst points1 = 50;\nif (points1 < 50) { console.log(\"Practice\"); } else if (points1 < 80) { console.log(\"Silver\"); } else { console.log(\"Gold\"); }\nconst points2 = 79;\nif (points2 < 50) { console.log(\"Practice\"); } else if (points2 < 80) { console.log(\"Silver\"); } else { console.log(\"Gold\"); }\nconst points3 = 80;\nif (points3 < 50) { console.log(\"Practice\"); } else if (points3 < 80) { console.log(\"Silver\"); } else { console.log(\"Gold\"); }\nconst points4 = 81;\nif (points4 < 50) { console.log(\"Practice\"); } else if (points4 < 80) { console.log(\"Silver\"); } else { console.log(\"Gold\"); }",
+    "defective": "const score0 = 49;\nif (score0 > 80) { console.log(\"Gold\"); } else if (score0 > 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score1 = 50;\nif (score1 > 80) { console.log(\"Gold\"); } else if (score1 > 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score2 = 79;\nif (score2 > 80) { console.log(\"Gold\"); } else if (score2 > 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score3 = 80;\nif (score3 > 80) { console.log(\"Gold\"); } else if (score3 > 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }\nconst score4 = 81;\nif (score4 > 80) { console.log(\"Gold\"); } else if (score4 > 50) { console.log(\"Silver\"); } else { console.log(\"Practice\"); }"
+  },
+  {
+    "id": "Q10",
+    "slug": "debug-conflicting-choices",
+    "reference": "const count0 = -1;\nif (count0 < 0) { console.log(\"Debt\"); } else if (count0 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }\nconst count1 = 0;\nif (count1 < 0) { console.log(\"Debt\"); } else if (count1 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }\nconst count2 = 1;\nif (count2 < 0) { console.log(\"Debt\"); } else if (count2 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }",
+    "alternative": "const value0 = -1;\nif (value0 > 0) { console.log(\"Stock\"); } else if (value0 === 0) { console.log(\"Empty\"); } else { console.log(\"Debt\"); }\nconst value1 = 0;\nif (value1 > 0) { console.log(\"Stock\"); } else if (value1 === 0) { console.log(\"Empty\"); } else { console.log(\"Debt\"); }\nconst value2 = 1;\nif (value2 > 0) { console.log(\"Stock\"); } else if (value2 === 0) { console.log(\"Empty\"); } else { console.log(\"Debt\"); }",
+    "defective": "const count0 = -1;\nif (count0 <= 0) { console.log(\"Debt\"); }\nif (count0 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }\nconst count1 = 0;\nif (count1 <= 0) { console.log(\"Debt\"); }\nif (count1 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }\nconst count2 = 1;\nif (count2 <= 0) { console.log(\"Debt\"); }\nif (count2 === 0) { console.log(\"Empty\"); } else { console.log(\"Stock\"); }"
+  },
+  {
+    "id": "Q11",
+    "slug": "count-steps",
+    "reference": "for (let step = 1; step <= 3; step = step + 1) { console.log(step); } for (let step = 1; step <= 0; step = step + 1) { console.log(step); }",
+    "alternative": "let step = 1; while (step < 4) { console.log(step); step = step + 1; }",
+    "defective": "for (let step = 1; step < 3; step = step + 1) { console.log(step); }\nfor (let step = 1; step <= 1; step = step + 1) { console.log(step); }"
+  },
+  {
+    "id": "Q12",
+    "slug": "accumulate-a-total",
+    "reference": "let empty = 0; for (let n = 1; n <= 0; n = n + 1) { empty = empty + n; } console.log(empty); let single = 0; for (let n = 1; n <= 1; n = n + 1) { single = single + n; } console.log(single); let total = 0; for (let n = 1; n <= 4; n = n + 1) { total = total + n; } console.log(total);",
+    "alternative": "console.log(0); console.log(1); let total = 0; for (let n = 4; n >= 1; n = n - 1) { total = total + n; } console.log(total);",
+    "defective": "let empty = 0; for (let n = 1; n <= 0; n = n + 1) { empty = n; } console.log(empty);\nlet single = 0; for (let n = 1; n <= 1; n = n + 1) { single = n; } console.log(single);\nlet total = 0; for (let n = 1; n <= 4; n = n + 1) { total = n; } console.log(total);"
+  },
+  {
+    "id": "Q13",
+    "slug": "repeat-until-ready",
+    "reference": "let energy = 0; while (energy < 3) { energy = energy + 1; } console.log(energy); let readyEnergy = 3; while (readyEnergy < 3) { readyEnergy = readyEnergy + 1; } console.log(readyEnergy);",
+    "alternative": "let energy = 0; for (; energy < 3; energy = energy + 1) {} console.log(energy); let ready = 3; if (ready < 3) { ready = ready + 1; } console.log(ready);",
+    "defective": "let energy = 0; while (energy <= 3) { energy = energy + 1; } console.log(energy);\nlet readyEnergy = 3; while (readyEnergy <= 3) { readyEnergy = readyEnergy + 1; } console.log(readyEnergy);"
+  },
+  {
+    "id": "Q14",
+    "slug": "repair-an-off-by-one",
+    "reference": "let empty = 0; for (let n = 1; n <= 0; n = n + 1) { empty = empty + n; } console.log(empty); let single = 0; for (let n = 1; n <= 1; n = n + 1) { single = single + n; } console.log(single); let total = 0; for (let n = 1; n <= 4; n = n + 1) { total = total + n; } console.log(total);",
+    "alternative": "let a = 0; let n = 1; while (n <= 0) { a = a + n; n = n + 1; } console.log(a); let b = 0; n = 1; while (n <= 1) { b = b + n; n = n + 1; } console.log(b); let c = 0; n = 1; while (n <= 4) { c = c + n; n = n + 1; } console.log(c);",
+    "defective": "let empty = 0; for (let n = 1; n < 0; n = n + 1) { empty = empty + n; } console.log(empty);\nlet single = 0; for (let n = 1; n < 1; n = n + 1) { single = single + n; } console.log(single);\nlet total = 0; for (let n = 1; n < 4; n = n + 1) { total = total + n; } console.log(total);"
+  },
+  {
+    "id": "Q15",
+    "slug": "return-a-result",
+    "reference": "function resourceCost(quantity, price, fee) { return quantity * price + fee; }",
+    "alternative": "function resourceCost(quantity, price, fee) { let cost = fee; for (let n = 0; n < quantity; n = n + 1) { cost = cost + price; } return cost; }",
+    "defective": "function resourceCost(quantity, price, fee) {\n  console.log(quantity * price + fee);\n}"
+  },
+  {
+    "id": "Q16",
+    "slug": "reusable-decision",
+    "reference": "function scoreCategory(score) { if (score >= 80) { return \"Gold\"; } if (score >= 50) { return \"Silver\"; } return \"Practice\"; }",
+    "alternative": "function scoreCategory(score) { if (score < 50) { return \"Practice\"; } else if (score < 80) { return \"Silver\"; } else { return \"Gold\"; } }",
+    "defective": "function scoreCategory(score) {\n  if (score > 80) { return \"Gold\"; }\n  if (score > 50) { return \"Silver\"; }\n  return \"Practice\";\n}"
+  },
+  {
+    "id": "Q17",
+    "slug": "compose-small-helpers",
+    "reference": "function stepTotal(limit) { let sum = 0; for (let n = 1; n <= limit; n = n + 1) { sum = sum + n; } return sum; } function formatTotal(total) { return \"Total: \" + total; } function journeyReport(limit) { return formatTotal(stepTotal(limit)); }",
+    "alternative": "function stepTotal(limit) { return limit * (limit + 1) / 2; } function formatTotal(total) { return \"Total: \" + total; } function journeyReport(limit) { const count = stepTotal(limit); return formatTotal(count); }",
+    "defective": "function stepTotal(limit) { return limit; }\nfunction formatTotal(total) { return \"Total:\" + total; }\nfunction journeyReport(limit) { return formatTotal(limit); }"
+  },
+  {
+    "id": "Q18",
+    "slug": "debug-return-and-scope",
+    "reference": "function sumSteps(limit) { let total = 0; for (let n = 1; n <= limit; n = n + 1) { total = total + n; } return total; } function repeatTotals(limit) { return sumSteps(limit) + sumSteps(limit); }",
+    "alternative": "function sumSteps(limit) { return limit * (limit + 1) / 2; } function repeatTotals(limit) { const first = sumSteps(limit); const second = sumSteps(limit); return first + second; }",
+    "defective": "let total = 0;\nfunction sumSteps(limit) {\n  for (let n = 1; n <= limit; n = n + 1) { total = total + n; }\n}\nfunction repeatTotals(limit) { return sumSteps(limit) + sumSteps(limit); }"
+  },
+  {
+    "id": "Q19",
+    "slug": "store-a-sequence",
+    "reference": "function pack(first) { const items = [first, \"food\", \"water\"]; items[1] = \"lamp\"; return [items.length, items[0], items[1], items[2]]; }",
+    "alternative": "function pack(first) { const items = [first, \"lamp\", \"water\"]; return [3, items[0], items[1], items[2]]; }",
+    "defective": "function pack(first) {\n  const items = [first, \"food\", \"water\"];\n  items[0] = \"lamp\";\n  return [items.length, items[0], items[1], items[2]];\n}"
+  },
+  {
+    "id": "Q20",
+    "slug": "traverse-a-collection",
+    "reference": "function sumNumbers(numbers) { let total = 0; for (let i = 0; i < numbers.length; i = i + 1) { total = total + numbers[i]; } return total; }",
+    "alternative": "function sumNumbers(numbers) { let total = 0; for (let i = numbers.length - 1; i >= 0; i = i - 1) { total = total + numbers[i]; } return total; }",
+    "defective": "function sumNumbers(numbers) {\n  let total = 0;\n  for (let i = 0; i < numbers.length; i = i + 1) { total = total + i; }\n  return total;\n}"
+  },
+  {
+    "id": "Q21",
+    "slug": "describe-an-item",
+    "reference": "function restock(item, amount) { const result = { name: item.name, count: item.count }; result.count = result.count + amount; return result; }",
+    "alternative": "function restock(item, amount) { return { count: amount + item.count, name: item.name }; }",
+    "defective": "function restock(item, amount) {\n  const result = { name: item.name, count: item.cout };\n  result.count = amount;\n  return result;\n}"
+  },
+  {
+    "id": "Q22",
+    "slug": "select-useful-records",
+    "reference": "function availableNames(items) { const selected = []; for (let i = 0; i < items.length; i = i + 1) { if (items[i].quantity > 0) { selected.push(items[i].name); } } return selected; }",
+    "alternative": "function availableNames(items) { const names = []; let i = 0; while (i < items.length) { const record = items[i]; if (record.quantity !== 0) { names.push(record.name); } i = i + 1; } return names; }",
+    "defective": "function availableNames(items) {\n  const selected = [];\n  for (let i = 0; i < items.length; i = i + 1) {\n    if (items[i].quantity >= 0) { selected.push(items[i].name); }\n  }\n  return selected;\n}"
+  },
+  {
+    "id": "Q23",
+    "slug": "test-the-edge-case",
+    "reference": "function largestStock(counts) { let largest = 0; for (let i = 0; i < counts.length; i = i + 1) { if (counts[i] > largest) { largest = counts[i]; } } return largest; }",
+    "alternative": "function largestStock(counts) { if (counts.length === 0) { return 0; } let greatest = counts[0]; for (let i = 1; i < counts.length; i = i + 1) { if (greatest < counts[i]) { greatest = counts[i]; } } return greatest; }",
+    "defective": "function largestStock(counts) {\n  let largest = counts[0];\n  for (let i = 1; i < counts.length; i = i + 1) {\n    if (counts[i] > largest) { largest = counts[i]; }\n  }\n  return largest;\n}"
+  },
+  {
+    "id": "Q24",
+    "slug": "plan-and-combine",
+    "reference": "function stockTotal(items) { let total = 0; for (let i = 0; i < items.length; i = i + 1) { total = total + items[i].quantity; } return total; } function availableCount(items) { let count = 0; for (let i = 0; i < items.length; i = i + 1) { if (items[i].quantity > 0) { count = count + 1; } } return count; } function inventorySummary(items) { return { total: stockTotal(items), available: availableCount(items) }; }",
+    "alternative": "function stockTotal(items) { let units = 0; let i = 0; while (i < items.length) { units = units + items[i].quantity; i = i + 1; } return units; } function availableCount(items) { let available = 0; for (let i = items.length - 1; i >= 0; i = i - 1) { if (items[i].quantity !== 0) { available = available + 1; } } return available; } function inventorySummary(items) { const total = stockTotal(items); const available = availableCount(items); return { available: available, total: total }; }",
+    "defective": "function stockTotal(items) { return items.length; }\nfunction availableCount(items) { return items.length; }\nfunction inventorySummary(items) {\n  return { total: stockTotal(items), available: availableCount(items) };\n}"
+  }
+]

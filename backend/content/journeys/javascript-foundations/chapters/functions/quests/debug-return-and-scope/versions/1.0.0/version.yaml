@@ -1,0 +1,24 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Debug return and scope
+objective: Keep an accumulator local to each function call and return its final result.
+outcomeId: O7
+conceptIds:
+  - js-functions
+  - js-state
+  - js-debugging
+prerequisiteQuestIds:
+  - Q17
+difficulty: developing
+xpAward: 10
+hints:
+  question: Where is the total initialized, and what value reaches the caller?
+  concept: Each call needs its own local total and a return after the loop.
+  nextStep: Move let total = 0 into sumSteps, then return it; leave the
+    repeated-call helper intact.
+caseIds:
+  - sum-three
+  - sum-empty
+  - repeat-three
+  - repeat-empty
+  - repeat-one

@@ -2,7 +2,7 @@ id: JAVASCRIPT-FOUNDATIONS
 slug: javascript-foundations
 title: JavaScript Foundations
 position: 1
-status: draft
+status: reviewed
 entryRequirements:
   - Read English and navigate a browser.
   - Edit text in a browser; no prior coding or terminal use is required.
@@ -25,3 +25,9 @@ outcomes:
     description: Integrate and transfer Foundations skills.
 chapterIds:
   - CH01
+  - CH02
+  - CH03
+  - CH04
+  - CH05
+  - CH06
+  - CH07

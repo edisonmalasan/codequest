@@ -1,0 +1,21 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Repair an off-by-one
+objective: Diagnose an excluded endpoint using empty, single-step and multi-step examples.
+outcomeId: O7
+conceptIds:
+  - js-loops
+  - js-debugging
+prerequisiteQuestIds:
+  - Q13
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which last value never enters the loop?
+  concept: An inclusive endpoint requires admitting n equal to the limit.
+  nextStep:
+    Trace limit 1 first, then adjust the endpoint comparison in all three
+    examples.
+caseIds:
+  - normal-output
+  - boundary-output

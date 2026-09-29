@@ -3,3 +3,29 @@ concepts:
     title: JavaScript values
   - id: js-console-output
     title: Console output and checking
+  - id: js-bindings
+    title: Named bindings
+  - id: js-types
+    title: Primitive value types
+  - id: js-state
+    title: State and assignment order
+  - id: js-debugging
+    title: Tracing and revealing tests
+  - id: js-arithmetic
+    title: Numeric expressions
+  - id: js-comparisons
+    title: Equality and boundaries
+  - id: js-logic
+    title: Boolean requirements
+  - id: js-strings
+    title: String messages
+  - id: js-branches
+    title: Exclusive decisions
+  - id: js-loops
+    title: Bounded repetition
+  - id: js-functions
+    title: Parameters, returns and composition
+  - id: js-arrays
+    title: Ordered collections
+  - id: js-objects
+    title: Named record properties

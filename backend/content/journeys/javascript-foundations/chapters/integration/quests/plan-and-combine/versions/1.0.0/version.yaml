@@ -1,0 +1,29 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Plan and combine
+objective: Decompose an inventory summary into independently testable helpers.
+outcomeId: O8
+conceptIds:
+  - js-functions
+  - js-objects
+  - js-loops
+  - js-branches
+  - js-debugging
+prerequisiteQuestIds:
+  - Q23
+difficulty: integrative
+xpAward: 10
+hints:
+  question: Are you counting records or adding units?
+  concept: The sum adds quantity; the availability count adds one only when
+    quantity is positive.
+  nextStep: Repair and Run each helper independently, then pass their returned
+    numbers into the summary object.
+caseIds:
+  - total-mixed
+  - total-empty
+  - count-mixed
+  - count-zero
+  - summary-mixed
+  - summary-empty
+  - summary-single

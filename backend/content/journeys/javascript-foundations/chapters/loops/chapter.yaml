@@ -1,0 +1,11 @@
+id: CH04
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: loops
+title: Loops
+position: 4
+objectiveSummary: Repeat bounded work and inspect endpoints.
+questIds:
+  - Q11
+  - Q12
+  - Q13
+  - Q14

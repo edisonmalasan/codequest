@@ -1,0 +1,12 @@
+const supplies = '12';
+const name = 'Mira';
+const ready = 'true';
+const reserve = '0';
+console.log(supplies);
+console.log(typeof supplies);
+console.log(name);
+console.log(typeof name);
+console.log(ready);
+console.log(typeof ready);
+console.log(reserve);
+console.log(typeof reserve);

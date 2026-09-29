@@ -18,7 +18,7 @@ import {
 import { validateCurriculum } from './validate-curriculum';
 import { safeFile } from './static-files';
 
-const source = resolve(process.cwd(), 'content');
+const source = resolve(process.cwd(), 'test/fixtures/curriculum-draft');
 const quest =
   'journeys/javascript-foundations/chapters/variables/quests/first-message';
 const snapshot = `${quest}/versions/1.0.0`;

@@ -1,2 +1,78 @@
 schemaVersion: 1
-journeys: []
+journeys:
+  - id: JAVASCRIPT-FOUNDATIONS
+    curriculumReview: approved
+    technicalReview: approved
+    quests:
+      - id: Q01
+        contentVersion: 1.1.0
+        assessmentVersion: 1.0.0
+      - id: Q02
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q03
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q04
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q05
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q06
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q07
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q08
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q09
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q10
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q11
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q12
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q13
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q14
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q15
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q16
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q17
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q18
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q19
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q20
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q21
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q22
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q23
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
+      - id: Q24
+        contentVersion: 1.0.0
+        assessmentVersion: 1.0.0
