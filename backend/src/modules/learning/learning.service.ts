@@ -95,8 +95,29 @@ export class LearningService {
     body: CreateAttemptDto,
   ): Promise<AttemptResponseDto> {
     const located = this.locate(slug);
-    const { journey, chapter, quest } = located;
-    const snapshot = quest.activeSnapshot;
+    return this.submitLocated(userId, located.quest.metadata.id, body, located);
+  }
+
+  async replay(
+    userId: string,
+    questId: string,
+    body: CreateAttemptDto,
+  ): Promise<AttemptResponseDto> {
+    let located: LocatedQuest | undefined;
+    for (const journey of this.catalog.journeys)
+      for (const chapter of journey.chapters)
+        for (const quest of chapter.quests)
+          if (quest.metadata.id === questId)
+            located = { journey, chapter, quest };
+    return this.submitLocated(userId, questId, body, located);
+  }
+
+  private async submitLocated(
+    userId: string,
+    questId: string,
+    body: CreateAttemptDto,
+    located: LocatedQuest | undefined,
+  ): Promise<AttemptResponseDto> {
     if (Buffer.byteLength(body.source, 'utf8') > 65_536)
       throw new BadRequestException('Source exceeds limit');
     if (Buffer.byteLength(JSON.stringify(body.report), 'utf8') > 16_384)
@@ -139,7 +160,7 @@ export class LearningService {
           .where(eq(questVersions.id, row.questVersionId))
           .limit(1);
         if (
-          row.questId !== quest.metadata.id ||
+          row.questId !== questId ||
           row.source !== body.source ||
           !isDeepStrictEqual(row.report, body.report) ||
           version[0]?.contentVersion !== body.contentVersion ||
@@ -179,6 +200,9 @@ export class LearningService {
         );
       }
 
+      if (!located) throw new NotFoundException('Published quest not found');
+      const { journey, chapter, quest } = located;
+      const snapshot = quest.activeSnapshot;
       if (
         body.contentVersion !== snapshot.metadata.contentVersion ||
         body.assessmentVersion !== snapshot.metadata.assessmentVersion

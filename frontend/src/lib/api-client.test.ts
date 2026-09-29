@@ -356,6 +356,19 @@ describe('CodeQuest typed API client', () => {
       url: expect.stringContaining('/api/v1/guest-import/Q01'),
       authorization: 'Bearer current-token',
     });
+    await expect(
+      client.replayAttempt('Q01', {
+        clientEventId: '00000000-0000-4000-8000-000000000301',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        source: 'print()',
+        report: {},
+      }),
+    ).resolves.toMatchObject({ ok: true });
+    expect(calls[2]).toMatchObject({
+      url: expect.stringContaining('/api/v1/learning-sync/Q01'),
+      authorization: 'Bearer current-token',
+    });
   });
   it('uses the generated health path and configured base URL without credentials', async () => {
     expectTypeOf<keyof paths>().toEqualTypeOf<
@@ -366,6 +379,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'
       | '/api/v1/guest-import/{questId}'
+      | '/api/v1/learning-sync/{questId}'
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'
@@ -430,6 +444,7 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/courses/{slug}'
       | '/api/v1/health'
       | '/api/v1/guest-import/{questId}'
+      | '/api/v1/learning-sync/{questId}'
       | '/api/v1/journeys'
       | '/api/v1/journeys/{slug}'
       | '/api/v1/quests/{slug}'

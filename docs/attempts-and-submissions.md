@@ -1,5 +1,7 @@
 # Attempts and submissions
 
+Phase 25 adds protected stable-quest replay through `POST /api/v1/learning-sync/:questId`. Recorded owner/event outcomes resolve before requiring current publication; new events obey normal acceptance. See [cloud progress replay](cloud-progress-sync.md) for durable Submit and source recovery.
+
 Phase 17 adds authenticated `POST /api/v1/quests/:slug/attempts` and owner-only `GET /api/v1/quests/:slug/attempts`. The frontend runs JavaScript and Check in the separate credential-free browser Worker origin, then offers explicit Submit for the current captured source and local report. Local Check alone writes no learning record.
 
 NestJS derives the owner from a verified bearer token. It resolves the published quest and exact content/assessment version, checks the bounded source and complete published case-ID report, and computes the pass from the individual statuses. It stores one private source/result snapshot per owner-scoped event ID, a server timestamp, and an attempt count. Repeating the same event and payload returns the original attempt; changing the payload with the same event ID is rejected. Only the owner can read their bounded history.

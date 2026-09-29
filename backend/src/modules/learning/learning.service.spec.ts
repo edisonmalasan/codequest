@@ -102,6 +102,89 @@ describe('authoritative attempt persistence', () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  it('replays stable events after retirement without rewards or backdated streaks', async () => {
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000290',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'saved offline source',
+      report: REPORT,
+    };
+    const accepted = await service.replay(USER_A, 'Q01', body);
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        {
+          provide: CURRICULUM_CATALOG,
+          useValue: { ...loadCurriculumCatalog(root), journeys: [] },
+        },
+      ],
+    }).compile();
+    const retired = module.get(LearningService);
+    expect(await retired.replay(USER_A, 'Q01', body)).toEqual(accepted);
+    await expect(
+      retired.replay(USER_A, 'Q01', { ...body, source: 'altered' }),
+    ).rejects.toMatchObject({ status: 409 });
+    await expect(retired.replay(USER_A, 'Q02', body)).rejects.toMatchObject({
+      status: 409,
+    });
+    await expect(retired.replay(USER_B, 'Q01', body)).rejects.toMatchObject({
+      status: 404,
+    });
+    await expect(
+      retired.replay(USER_A, 'Q01', {
+        ...body,
+        clientEventId: '00000000-0000-4000-8000-000000000291',
+      }),
+    ).rejects.toMatchObject({ status: 404 });
+    expect(
+      (await client.query('select * from codequest.quest_attempts')).rows,
+    ).toHaveLength(1);
+    expect(
+      (await client.query('select * from codequest.xp_events')).rows,
+    ).toHaveLength(1);
+    const days = await client.query<{ accepted_at: Date }>(
+      'select accepted_at from codequest.streak_activity_days',
+    );
+    expect(days.rows).toHaveLength(1);
+    expect(days.rows[0].accepted_at.toISOString()).toBe(accepted.submittedAt);
+  });
+
+  it('settles duplicate device events and new practice events by stable identity', async () => {
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000292',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'source',
+      report: REPORT,
+    };
+    const first = await service.replay(USER_A, 'Q01', body);
+    expect(await service.replay(USER_A, 'Q01', body)).toEqual(first);
+    expect(
+      await service.replay(USER_A, 'Q01', {
+        ...body,
+        clientEventId: '00000000-0000-4000-8000-000000000293',
+      }),
+    ).toMatchObject({ accepted: false, attemptCount: 2 });
+    await expect(
+      service.replay(USER_A, 'Q01', {
+        ...body,
+        clientEventId: '00000000-0000-4000-8000-000000000294',
+        assessmentVersion: '2.0.0',
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+    expect(
+      (await client.query('select * from codequest.xp_events')).rows,
+    ).toHaveLength(1);
+    expect(
+      (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(1);
+  });
+
   it('stores private source, returns owner-only history, and accepts once', async () => {
     const body = {
       clientEventId: '00000000-0000-4000-8000-000000000201',
@@ -571,6 +654,9 @@ describe('authoritative attempt persistence', () => {
     await expect(
       guarded.submit(USER_A, 'first-message', body),
     ).rejects.toMatchObject({ status: 409 });
+    await expect(guarded.replay(USER_A, 'Q01', body)).rejects.toMatchObject({
+      status: 409,
+    });
     expect((await service.history(USER_A, 'first-message')).attemptCount).toBe(
       0,
     );

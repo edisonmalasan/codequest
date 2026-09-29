@@ -2,8 +2,8 @@
 
 ## 1. Protected stable-quest replay
 
-- [ ] 1.1 Add stable-quest replay to the existing learning module and resolve recorded events before publication checks; verify protected HTTP/DTO/permission and PostgreSQL integration tests for duplicate/altered events, retirement, versions, prerequisites, owner isolation, XP uniqueness, and acceptance-day streaks.
-- [ ] 1.2 Regenerate OpenAPI/client, add trusted replay transport, and document API/learning replay policy; verify API drift and token-bound transport tests.
+- [x] 1.1 Add stable-quest replay to the existing learning module and resolve recorded events before publication checks; verify protected HTTP/DTO/permission and PostgreSQL integration tests for duplicate/altered events, retirement, versions, prerequisites, owner isolation, XP uniqueness, and acceptance-day streaks.
+- [x] 1.2 Regenerate OpenAPI/client, add trusted replay transport, and document API/learning replay policy; verify API drift and token-bound transport tests.
 
 ## 2. Durable owner replay
 

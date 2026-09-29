@@ -639,6 +639,24 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
         signal,
       );
     },
+    replayAttempt(
+      questId: string,
+      body: CreateAttemptRequest,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<AttemptResponse>> {
+      return learningRequest(
+        (token) =>
+          client.POST('/api/v1/learning-sync/{questId}', {
+            params: { path: { questId } },
+            body,
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isAttemptResponse,
+        signal,
+      );
+    },
+
     importGuestAttempt(
       questId: string,
       body: CreateAttemptRequest,
