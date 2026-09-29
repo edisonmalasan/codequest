@@ -1,4 +1,13 @@
 import type { NextConfig } from 'next';
+import { createHash } from 'node:crypto';
+import { readFileSync, statSync } from 'node:fs';
+import path from 'node:path';
+import withSerwistInit from '@serwist/next';
+import {
+  assertShellBudget,
+  isPublicShellUrl,
+  SHELL_ASSETS,
+} from './src/pwa/cache-policy';
 
 const bootstrapPolicy = [
   "default-src 'none'",
@@ -73,6 +82,31 @@ const nextConfig: NextConfig = {
     process.env.CODEQUEST_PREVIEW_BUILD === '1' ? '.next-preview' : '.next',
   async headers() {
     return [
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'none'; script-src 'self'; connect-src 'self'",
+          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
+      {
+        source: '/offline.html',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
       {
         source: '/editor-workspace',
         headers: [
@@ -150,4 +184,39 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const pwaEnabled =
+  process.env.NODE_ENV === 'production' &&
+  process.env.CODEQUEST_PREVIEW_BUILD !== '1';
+const publicEntry = (url: string) => {
+  const file = path.join(process.cwd(), 'public', url);
+  return {
+    url,
+    revision: createHash('sha256').update(readFileSync(file)).digest('hex'),
+  };
+};
+const withSerwist = withSerwistInit({
+  swSrc: 'src/pwa/sw.ts',
+  swDest: 'public/sw.js',
+  register: false,
+  reloadOnOnline: false,
+  cacheOnNavigation: false,
+  disable: !pwaEnabled,
+  additionalPrecacheEntries: pwaEnabled ? SHELL_ASSETS.map(publicEntry) : [],
+  // Enforce both limits ourselves rather than silently dropping large assets.
+  maximumFileSizeToCacheInBytes: Number.MAX_SAFE_INTEGER,
+  manifestTransforms: [
+    async (entries) => {
+      const manifest = entries.filter((entry) => isPublicShellUrl(entry.url));
+      assertShellBudget(
+        manifest.map((entry) => ({
+          size: SHELL_ASSETS.some((url) => url === entry.url)
+            ? statSync(path.join(process.cwd(), 'public', entry.url)).size
+            : entry.size,
+        })),
+      );
+      return { manifest, warnings: [] };
+    },
+  ],
+});
+
+export default withSerwist(nextConfig);

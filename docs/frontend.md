@@ -1,5 +1,7 @@
 # Frontend responsibility and experience definition
 
+Phase 26 adds an installable [public PWA shell](pwa.md), production-only registration, uncached navigation with a public offline fallback, network hints, and waiting-update guidance. Authenticated pages/API responses and learner compartments are excluded from shell caching. Offline downloaded learning remains Phase 27.
+
 Phase 25 integrates explicit authenticated Submit with the existing owner-scoped outbox, reconnect replay, and account recovery UI. Drafts remain device-local; guest import remains explicit. See [cloud progress replay](cloud-progress-sync.md) for bounds, errors, and retention.
 
 Phase 17 mounts the reusable Editor Workspace on a published quest, maps public case data to isolated local Check, and offers an explicit authenticated Submit. The backend response distinguishes a recorded attempt from accepted personal-learning completion; see [Attempts and submissions](attempts-and-submissions.md).

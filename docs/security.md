@@ -58,6 +58,8 @@ Direct Supabase Auth is the approved permitted client integration; CodeQuest tab
 
 ## Source, cache and telemetry handling
 
+Phase 26 [PWA shell caching](pwa.md) uses a bounded public build allowlist with credential-free precache fetches. It never stores page HTML, auth callbacks, protected/API responses, RSC/data, learner source, or runtime/preview resources. Client cache/activation messages are ignored; updates wait without reloading editors and never open or remove IndexedDB records. Dedicated learner hosts continue to deny application shell/worker paths.
+
 P12 establishes private learner code/submissions: accessible to their owner and only authorized bounded operators for an explicit support/content-review purpose, with access traceability. No public sharing, model-provider transfer, or raw-source analytics by default. Snapshot storage supports learning records; it is not an indefinite code-archive promise.
 
 | Data | Purpose / minimization | Local/cloud and deletion principle |

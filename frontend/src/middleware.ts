@@ -45,6 +45,13 @@ export async function middleware(request: NextRequest) {
     }
   }
   const path = request.nextUrl.pathname;
+  if (
+    path === '/sw.js' &&
+    (process.env.NODE_ENV !== 'production' ||
+      process.env.CODEQUEST_PREVIEW_BUILD === '1')
+  ) {
+    return new NextResponse(null, { status: 404 });
+  }
   if (path.startsWith('/runtime/')) {
     return new NextResponse(null, { status: 404 });
   }
@@ -55,6 +62,13 @@ export async function middleware(request: NextRequest) {
     path.startsWith('/_next/static/') ||
     path.startsWith('/_next/image') ||
     path === '/icon.svg' ||
+    path === '/manifest.webmanifest' ||
+    path === '/sw.js' ||
+    path === '/offline.html' ||
+    path === '/offline.css' ||
+    /^\/icons\/(?:icon-192|icon-512|maskable-512|apple-touch-icon)\.png$/.test(
+      path,
+    ) ||
     path.startsWith('/assets/')
   ) {
     return NextResponse.next();

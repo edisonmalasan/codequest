@@ -4,3 +4,7 @@ next-env.d.ts
 src/lib/api/generated/
 playwright-report/
 test-results/
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+public/swe-worker-*.js.map

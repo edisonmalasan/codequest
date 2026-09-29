@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { useState, type ReactNode } from 'react';
 import { getQueryClient } from '@/lib/query-client';
 import { ProgressSyncLifecycle } from '@/features/progress-sync/sync-provider';
+import { PwaStatus } from '@/pwa/pwa-status';
 
 export function AppProviders({
   children,
@@ -14,6 +15,7 @@ export function AppProviders({
   return (
     <QueryClientProvider client={client}>
       <ProgressSyncLifecycle />
+      <PwaStatus />
       {children}
     </QueryClientProvider>
   );
