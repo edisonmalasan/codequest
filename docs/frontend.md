@@ -38,6 +38,8 @@ Phase 16 adds an optional [local validation strategy](validation-engine.md) and 
 
 Distinguish source editing, Run experimentation, local Check, submitted snapshot, pending acceptance, and accepted completion. Show syntax/runtime/check/time/output-limit failures separately with next-action feedback. Correlate output to a specific run/version; stale messages cannot overwrite current results. Runtime reset/termination cannot erase draft or accepted progress. Resetting source requires an explicit destructive-edit action; preserve the prior draft where practical and never reset account completion.
 
+Phase 30 adds optional labeled written response fields to the reusable workspace. They share the existing owner/workspace/version draft save queue, idle/explicit Save and best-effort lifecycle flush; text stays editable on failure and never enters Run or Check. CAP01 requires bounded nonblank debug and transfer responses for explicit Submit. The pending snapshot includes them in its private report, while device-local drafts remain device-local. Written presence is not reasoning-quality grading; see [capstone review](inventory-capstone.md).
+
 A passing run is not necessarily a passing check, and a passing local check is not accepted account progress. Submit captures a versioned snapshot so later edits do not alter the pending attempt. Failure preserves source and permits hints/retry without XP punishment (P09). Rerunning accepted work is practice, not repeat rewards.
 
 ## Guest/offline and account separation
