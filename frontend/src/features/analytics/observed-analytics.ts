@@ -147,6 +147,8 @@ export class ObservedAnalytics {
     try {
       const guestId = event.ownerId ?? (this.guestId ??= crypto.randomUUID());
       const payload = observedPayload(event, guestId);
+      if (this.config.projectKey === 'local_fixture_key')
+        console.error('Analytics fixture dispatch', event.name, this.endpoint);
       void this.transport(this.endpoint, {
         method: 'POST',
         mode: 'cors',
@@ -155,7 +157,10 @@ export class ObservedAnalytics {
         cache: 'no-store',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ ...payload, api_key: this.config.projectKey }),
-      }).catch(() => undefined);
+      }).catch((error: unknown) => {
+        if (this.config.projectKey === 'local_fixture_key')
+          console.error('Analytics fixture transport', String(error));
+      });
     } catch (error) {
       if (this.config.projectKey === 'local_fixture_key')
         console.error('Analytics fixture rejected', event.name, String(error));
