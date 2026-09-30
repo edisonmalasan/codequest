@@ -4,12 +4,12 @@
 
 - [x] 1.1 Validate a bounded `SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS` with a provider-aligned default; test invalid values and safe configuration errors.
 - [x] 1.2 Require present, current `iat` and `exp` claims and a positive lifetime within that bound in the existing Supabase verifier; cover missing, future, overlong, expired, and valid tokens with focused tests and safe `401` behavior.
-- [ ] 1.3 Reject plaintext production CORS origins before listening while preserving explicit development/test origins; cover both paths with configuration and HTTP tests.
+- [x] 1.3 Reject plaintext production CORS origins before listening while preserving explicit development/test origins; cover both paths with configuration and HTTP tests.
 
 ## 2. Browser boundary
 
 - [x] 2.1 Add defensive response headers to trusted application responses through existing middleware, leaving dedicated runtime and preview host paths separate; add middleware regressions for each surface.
-- [ ] 2.2 Exercise application headers and isolated Worker/preview bootstrap behavior in the existing browser security/PWA suite.
+- [x] 2.2 Exercise application headers and isolated Worker/preview bootstrap behavior in the existing browser security/PWA suite.
 
 ## 3. Security review
 
@@ -18,4 +18,4 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Run root tests, lint, typecheck, build, API/content drift and targeted browser checks; validate the OpenSpec change strictly, review the final diff, and record actual results and remaining limitations.
+- [x] 4.1 Run root tests, lint, typecheck, build, API/content drift and targeted browser checks; validate the OpenSpec change strictly, review the final diff, and record actual results and remaining limitations.
