@@ -86,7 +86,9 @@ test('production Quest defers editor and measures isolated cold/subsequent Run a
   ).toBeVisible();
   const loadEditor = page.getByRole('button', { name: 'Load code editor' });
   await expect(loadEditor).toBeVisible();
-  await loadEditor.click();
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
