@@ -206,6 +206,9 @@ test('guest can check published quest locally without creating a submission', as
     'href',
     '/register?next=%2Faccount',
   );
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });

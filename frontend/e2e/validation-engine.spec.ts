@@ -2,6 +2,9 @@ import { expect, test } from '@playwright/test';
 import { runtimeOrigin } from './test-origins';
 
 async function edit(page: import('@playwright/test').Page, source: string) {
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });

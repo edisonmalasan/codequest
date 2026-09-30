@@ -36,6 +36,9 @@ async function interceptCollector(
 }
 
 async function edit(page: Page, source: string) {
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });

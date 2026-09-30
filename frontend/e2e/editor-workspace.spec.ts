@@ -43,6 +43,9 @@ test('workspace executes isolated JavaScript, recovers, persists, and reflows', 
     "script-src 'unsafe-eval'",
   );
 
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
