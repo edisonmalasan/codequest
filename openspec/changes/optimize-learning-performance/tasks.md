@@ -19,4 +19,4 @@
 
 ## 4. Integration
 
-- [ ] 4.1 Run root `pnpm test`, `pnpm lint`, `pnpm typecheck`, production build, focused learning/offline/accessibility browser gates, the byte gate, and strict OpenSpec validation; review the final diff and record exact results and F02 untested device limits.
+- [x] 4.1 Run root `pnpm test`, `pnpm lint`, `pnpm typecheck`, production build, focused learning/offline/accessibility browser gates, the byte gate, and strict OpenSpec validation; review the final diff and record exact results and F02 untested device limits.
