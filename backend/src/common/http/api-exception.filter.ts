@@ -76,10 +76,6 @@ export class ApiExceptionFilter implements ExceptionFilter {
     const details = validationDetails(response);
 
     if (!isHttpException) {
-      if (process.env.CODEQUEST_ANALYTICS_FIXTURE_PATH)
-        process.stderr.write(
-          `Analytics fixture exception: ${exception instanceof Error ? exception.stack : String(exception)}\n`,
-        );
       this.logger.unexpectedError({
         event: 'request.failed',
         service: 'codequest-api',

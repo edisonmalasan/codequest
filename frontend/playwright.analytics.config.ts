@@ -18,7 +18,7 @@ export default defineConfig({
       ? {
           ...server,
           command:
-            'pnpm --dir ../backend exec tsx test/analytics-fixture-server.ts',
+            'pnpm --dir ../backend build && node ../backend/test/analytics-fixture-server.mjs',
           env: {
             ...server.env,
             DATABASE_URL:
