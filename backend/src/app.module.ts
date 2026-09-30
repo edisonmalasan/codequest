@@ -10,6 +10,7 @@ import { HealthModule } from './modules/health/health.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { LearningModule } from './modules/learning/learning.module';
 import { ProgressModule } from './modules/progress/progress.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 export const BACKEND_CONFIG = Symbol('BACKEND_CONFIG');
 
@@ -26,6 +27,7 @@ export class AppModule {
     return {
       module: AppModule,
       imports: [
+        AnalyticsModule.register(config.analytics ?? {}),
         DatabaseModule.register(config.databaseUrl),
         ThrottlerModule.forRoot([
           {

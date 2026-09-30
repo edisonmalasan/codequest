@@ -3,6 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { EditorWorkspace } from '@/features/editor';
+import {
+  captureFirstRun,
+  captureGuestFirstStart,
+  captureObserved,
+  updateObservedOwner,
+} from '@/features/analytics/observed-analytics';
 import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import {
   JavaScriptWorkerAdapter,
@@ -151,9 +157,16 @@ export function QuestWorkspace({
   useEffect(() => {
     if (!ready || ownerId !== null || !guestAllowed) return;
     let active = true;
+    captureGuestFirstStart(quest.id, {
+      quest_id: quest.id,
+      content_version: quest.contentVersion,
+      assessment_version: quest.assessmentVersion,
+    });
     void guestLearningRepository.start(quest.id).then(
       (progress) => {
-        if (active) setGuestProgress(progress);
+        if (active) {
+          setGuestProgress(progress);
+        }
       },
       () => {
         if (active) setGuestStorageError(true);
@@ -162,7 +175,14 @@ export function QuestWorkspace({
     return () => {
       active = false;
     };
-  }, [ready, ownerId, guestAllowed, quest.id]);
+  }, [
+    ready,
+    ownerId,
+    guestAllowed,
+    quest.id,
+    quest.contentVersion,
+    quest.assessmentVersion,
+  ]);
 
   async function recordGuestCheck(snapshot: {
     source: string;
@@ -193,12 +213,19 @@ export function QuestWorkspace({
     }
   }
 
+  const analyticsProperties = {
+    quest_id: quest.id,
+    content_version: quest.contentVersion,
+    assessment_version: quest.assessmentVersion,
+  };
+
   useEffect(() => {
     let active = true;
     try {
       const auth = getBrowserSupabaseClient().auth;
       const initial = sessionGeneration.current;
       const update = (next: string | null) => {
+        updateObservedOwner(next);
         sessionGeneration.current++;
         setOwnerId(next);
         setSubmission({ status: 'idle' });
@@ -361,13 +388,57 @@ export function QuestWorkspace({
               }
             : undefined
         }
-        onCheckComplete={
-          ownerId === null
-            ? (snapshot) => {
-                void recordGuestCheck(snapshot);
-              }
-            : undefined
-        }
+        onCheckComplete={(snapshot) => {
+          if (snapshot.validation.status === 'completed')
+            captureObserved({
+              name: 'validation_checked',
+              ownerId,
+              eventId: crypto.randomUUID(),
+              properties: {
+                ...analyticsProperties,
+                outcome_category: snapshot.validation.passed
+                  ? 'passed'
+                  : 'failed',
+              },
+            });
+          if (
+            snapshot.validation.status === 'completed' &&
+            !snapshot.validation.passed
+          )
+            captureObserved({
+              name: 'validation_failed',
+              ownerId,
+              eventId: crypto.randomUUID(),
+              properties: {
+                ...analyticsProperties,
+                outcome_category: 'failed',
+              },
+            });
+          if (ownerId === null) void recordGuestCheck(snapshot);
+        }}
+        onRunComplete={(outcome) => {
+          if (outcome.status === 'cancelled') return;
+          captureObserved({
+            name: 'code_run',
+            ownerId,
+            eventId: crypto.randomUUID(),
+            properties: {
+              ...analyticsProperties,
+              outcome_category: outcome.status,
+            },
+          });
+          captureFirstRun(ownerId, analyticsProperties);
+          if (outcome.status !== 'success')
+            captureObserved({
+              name: 'execution_error',
+              ownerId,
+              eventId: crypto.randomUUID(),
+              properties: {
+                ...analyticsProperties,
+                error_category: outcome.status,
+              },
+            });
+        }}
         onSourcesChange={(sources) => {
           setSubmission({ status: 'idle' });
           setResponsesReady(

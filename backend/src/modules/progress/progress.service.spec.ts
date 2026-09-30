@@ -19,6 +19,10 @@ import {
 } from '../curriculum/content/curriculum-catalog';
 import { LearningService } from '../learning/learning.service';
 import { ProgressService } from './progress.service';
+import {
+  AnalyticsService,
+  type AnalyticsFact,
+} from '../analytics/analytics.service';
 
 const USER_A = '00000000-0000-4000-8000-000000000001';
 const USER_B = '00000000-0000-4000-8000-000000000002';
@@ -52,8 +56,10 @@ describe('derived owner progress', () => {
   let root: string;
   let progress: ProgressService;
   let learning: LearningService;
+  let analyticsFacts: AnalyticsFact[];
 
   beforeEach(async () => {
+    analyticsFacts = [];
     root = fixture();
     client = await PGlite.create();
     const database = drizzle(client);
@@ -62,6 +68,14 @@ describe('derived owner progress', () => {
       providers: [
         ProgressService,
         LearningService,
+        {
+          provide: AnalyticsService,
+          useValue: {
+            capture: async (fact: AnalyticsFact) => {
+              analyticsFacts.push(fact);
+            },
+          },
+        },
         { provide: DatabaseConnectionService, useValue: { database } },
         { provide: CURRICULUM_CATALOG, useValue: loadCurriculumCatalog(root) },
       ],
@@ -99,6 +113,9 @@ describe('derived owner progress', () => {
     expect(
       concurrentStarts.every((item) => item.occurredAt === first.occurredAt),
     ).toBe(true);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'first_quest_started'),
+    ).toHaveLength(1);
     const hint = await progress.useHint(USER_A, 'first-message', {
       contentVersion: '1.0.0',
       hintKey: 'question',
@@ -120,6 +137,9 @@ describe('derived owner progress', () => {
     expect(
       concurrentHints.every((item) => item.occurredAt === hint.occurredAt),
     ).toBe(true);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'hint_used'),
+    ).toHaveLength(1);
     await progress.useHint(USER_A, 'first-message', {
       contentVersion: '1.0.0',
       hintKey: 'concept',
@@ -141,6 +161,109 @@ describe('derived owner progress', () => {
     await expect(
       progress.start(USER_A, 'first-message', { contentVersion: '2.0.0' }),
     ).rejects.toMatchObject({ status: 409 });
+  });
+
+  it('emits a capstone start only after a new eligible owner start commits', async () => {
+    const catalog = loadCurriculumCatalog(root);
+    const chapter = catalog.journeys[0].chapters[0];
+    const base = chapter.quests[0];
+    const capstone = {
+      ...base,
+      metadata: {
+        ...base.metadata,
+        id: 'CAP01',
+        slug: 'inventory-manager',
+        kind: 'capstone' as const,
+        guestEligible: false,
+        position: 3,
+      },
+      activeSnapshot: {
+        ...base.activeSnapshot,
+        metadata: {
+          ...base.activeSnapshot.metadata,
+          prerequisiteQuestIds: ['Q01'],
+        },
+      },
+    };
+    const capstoneCatalog = {
+      ...catalog,
+      journeys: [
+        {
+          ...catalog.journeys[0],
+          chapters: [{ ...chapter, quests: [...chapter.quests, capstone] }],
+        },
+      ],
+    };
+    const module = await Test.createTestingModule({
+      providers: [
+        ProgressService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: capstoneCatalog },
+        {
+          provide: AnalyticsService,
+          useValue: {
+            capture: async (fact: AnalyticsFact) => {
+              analyticsFacts.push(fact);
+            },
+          },
+        },
+      ],
+    }).compile();
+    const capstoneProgress = module.get(ProgressService);
+    await expect(
+      capstoneProgress.start(USER_B, 'inventory-manager', {
+        contentVersion: '1.0.0',
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+    expect(analyticsFacts).toHaveLength(0);
+    await learning.submit(USER_A, 'first-message', {
+      clientEventId: '00000000-0000-4000-8000-000000000501',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'fixture',
+      report: {
+        checkId: '00000000-0000-4000-8000-000000000502',
+        status: 'completed',
+        passed: true,
+        cases: [
+          {
+            id: 'normal-message',
+            label: 'Normal',
+            status: 'passed',
+            message: 'Passed',
+          },
+          {
+            id: 'boundary-exact-output',
+            label: 'Boundary',
+            status: 'passed',
+            message: 'Passed',
+          },
+        ],
+        failedCaseIds: [],
+        feedback: 'Passed',
+        durationMs: 1,
+      },
+    });
+    const started = await capstoneProgress.start(USER_A, 'inventory-manager', {
+      contentVersion: '1.0.0',
+    });
+    expect(
+      await capstoneProgress.start(USER_A, 'inventory-manager', {
+        contentVersion: '1.0.0',
+      }),
+    ).toEqual(started);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'capstone_started'),
+    ).toEqual([
+      expect.objectContaining({
+        ownerId: USER_A,
+        factId: 'CAP01',
+        properties: expect.objectContaining({ quest_id: 'CAP01' }),
+      }),
+    ]);
   });
 
   it('derives legacy attempt, accepted completion, and identical Course alias data', async () => {

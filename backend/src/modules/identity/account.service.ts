@@ -1,4 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  Optional,
+} from '@nestjs/common';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { AccountResponseDto } from './account-response.dto';
 import { validateTimezone } from '../gamification/streak-policy';
 import {
@@ -20,10 +26,21 @@ function toResponse(account: AccountRecord): AccountResponseDto {
 export class AccountService {
   constructor(
     @Inject(ACCOUNT_STORE) private readonly repository: AccountStore,
+    @Optional()
+    @Inject(AnalyticsService)
+    private readonly analytics?: AnalyticsService,
   ) {}
 
   async establish(userId: string): Promise<AccountResponseDto> {
-    return toResponse(await this.repository.establish(userId));
+    const account = await this.repository.establish(userId);
+    if (account.newlyCreated)
+      await this.analytics?.capture({
+        name: 'signup_completed',
+        ownerId: userId,
+        factId: userId,
+        occurredAt: account.createdAt,
+      });
+    return toResponse(account);
   }
 
   async findCurrent(userId: string): Promise<AccountResponseDto> {

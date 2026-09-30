@@ -8,6 +8,7 @@ export interface AccountRecord {
   readonly timezone: string;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly newlyCreated?: boolean;
 }
 
 export interface AccountStore {
@@ -30,10 +31,11 @@ export class AccountRepository implements AccountStore {
 
   async establish(userId: string): Promise<AccountRecord> {
     return this.connection.database.transaction(async (transaction) => {
-      await transaction
+      const inserted = await transaction
         .insert(users)
         .values({ id: userId })
-        .onConflictDoNothing();
+        .onConflictDoNothing()
+        .returning({ id: users.id });
       await transaction
         .insert(profiles)
         .values({ userId })
@@ -52,7 +54,7 @@ export class AccountRepository implements AccountStore {
       if (account[0] === undefined) {
         throw new Error('Account establishment failed');
       }
-      return account[0];
+      return { ...account[0], newlyCreated: inserted.length > 0 };
     });
   }
 

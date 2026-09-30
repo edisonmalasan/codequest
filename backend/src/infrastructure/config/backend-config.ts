@@ -12,6 +12,9 @@ export interface BackendEnvironment {
   SUPABASE_AUTH_ISSUER?: string;
   SUPABASE_AUTH_AUDIENCE?: string;
   SUPABASE_AUTH_JWKS_URL?: string;
+  ANALYTICS_CAPTURE_APPROVED?: string;
+  POSTHOG_PROJECT_KEY?: string;
+  POSTHOG_HOST?: string;
 }
 
 export interface SupabaseAuthConfig {
@@ -30,6 +33,11 @@ export interface BackendConfig {
   readonly rateLimitMax: number;
   readonly databaseUrl: string;
   readonly auth: SupabaseAuthConfig;
+  readonly analytics?: {
+    readonly approved?: string;
+    readonly projectKey?: string;
+    readonly host?: string;
+  };
 }
 
 const DEFAULT_CORS_ORIGINS = [
@@ -254,5 +262,16 @@ export function loadBackendConfig(
     ),
     databaseUrl: parseDatabaseUrl(env.DATABASE_URL),
     auth: parseAuthConfig(env, environment),
+    ...(env.ANALYTICS_CAPTURE_APPROVED ||
+    env.POSTHOG_PROJECT_KEY ||
+    env.POSTHOG_HOST
+      ? {
+          analytics: {
+            approved: env.ANALYTICS_CAPTURE_APPROVED,
+            projectKey: env.POSTHOG_PROJECT_KEY,
+            host: env.POSTHOG_HOST,
+          },
+        }
+      : {}),
   });
 }

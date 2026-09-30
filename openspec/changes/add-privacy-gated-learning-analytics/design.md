@@ -28,7 +28,7 @@ Account establishment, progress start/hint and learning submission paths expose 
 
 ### 4. Keep local interactions observational
 
-The reusable Editor Workspace exposes a parent callback for bounded Run outcomes, matching its Check seam. Quest pages capture `first_code_run`, `execution_error` and `validation_failed` without source, output or report. Guest Q01-Q04 start/hint events stay `client_observed`; account start/hint come from NestJS only, avoiding two asserted sources for the same durable action. Browser event identities are session-scoped and are not queued offline. Auth owner switches reset account analytics context; no guest-to-account merge happens automatically.
+The reusable Editor Workspace exposes a parent callback for bounded Run outcomes, matching its Check seam. Quest pages capture `first_code_run`, every non-cancelled `code_run`, every completed `validation_checked`, `execution_error` and `validation_failed` without source, output or report. The two additional observed events are required because first-run and failure-only events cannot measure later successful Run/Check activity in the D1/D7 windows. They never represent backend acceptance. Guest Q01-Q04 start/hint events stay `client_observed`; account start/hint come from NestJS only, avoiding two asserted sources for the same durable action. Browser event identities are session-scoped and are not queued offline. Auth owner switches reset account analytics context; no guest-to-account merge happens automatically.
 
 ### 5. Define reports from events, not counters
 

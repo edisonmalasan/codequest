@@ -17,6 +17,7 @@ import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import { LessonDocument } from './lesson-document';
 import { LessonHints } from './lesson-hints';
 import { QuestWorkspace } from './quest-workspace';
+import { captureObserved } from '@/features/analytics/observed-analytics';
 import { DownloadLessonButton } from '@/features/offline-learning/download-lesson-button';
 
 export interface LessonApi {
@@ -123,7 +124,20 @@ export function LessonPageView({
     try {
       const { data, error } =
         await getBrowserSupabaseClient().auth.getSession();
-      if (error || !data.session) return;
+      if (error || !data.session) {
+        if (!error && quest.guestEligible)
+          captureObserved({
+            name: 'hint_used',
+            ownerId: null,
+            eventId: crypto.randomUUID(),
+            properties: {
+              quest_id: quest.id,
+              content_version: quest.contentVersion,
+              assessment_version: quest.assessmentVersion,
+            },
+          });
+        return;
+      }
       const result = await progressApi.useQuestHint(
         quest.slug,
         quest.contentVersion,

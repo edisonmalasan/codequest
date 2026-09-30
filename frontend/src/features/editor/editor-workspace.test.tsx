@@ -644,6 +644,7 @@ describe('EditorWorkspace', () => {
 
   it('runs an immutable source snapshot through the runtime presentation seams', async () => {
     const adapter = new ControlledExecutionAdapter();
+    const onRunComplete = vi.fn();
     const user = userEvent.setup();
     render(
       <EditorWorkspace
@@ -652,6 +653,7 @@ describe('EditorWorkspace', () => {
         files={files}
         draftRepository={new MemoryDraftRepository()}
         executionAdapter={adapter}
+        onRunComplete={onRunComplete}
       />,
     );
     await screen.findByText('Starter source ready');
@@ -680,6 +682,9 @@ describe('EditorWorkspace', () => {
     expect(screen.getByText('Completed in 0.05 seconds')).toBeDefined();
     expect(screen.getByRole('textbox').textContent).toContain('snapshot');
     expect(screen.getByText(/Checks are unavailable/)).toBeDefined();
+    expect(onRunComplete).toHaveBeenCalledExactlyOnceWith({
+      status: 'success',
+    });
   });
 
   it('cancels execution without changing source and supports the scoped Run shortcut', async () => {
