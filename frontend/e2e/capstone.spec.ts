@@ -139,14 +139,14 @@ test('CAP01 keeps written work on device and captures explicit offline Submit', 
   await page
     .getByRole('heading', { name: 'Editor Workspace' })
     .scrollIntoViewIfNeeded();
-  expect(
-    (
-      await page
-        .getByRole('textbox', { name: 'main.js code editor (javascript)' })
-        .locator('.cm-line')
-        .allTextContents()
-    ).join('\n'),
-  ).toBe(solutions.reference);
+  const restoredEditor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await expect
+    .poll(async () =>
+      (await restoredEditor.locator('.cm-line').allTextContents()).join('\n'),
+    )
+    .toBe(solutions.reference);
   await check(page, true);
   await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission saved on this device/)).toBeVisible();
