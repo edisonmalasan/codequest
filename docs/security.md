@@ -1,5 +1,7 @@
 # Security and privacy boundaries
 
+Phase 33 source and test evidence, with deployment-only checks, is recorded in the [security review](security-review.md). It does not close the F06 gate for real learner data.
+
 Phase 25 replay binds every request token to its originating account, isolates old-owner source and results on session changes, and persists no protected response or credential. Delivery markers are not completion authority. Stable event replay preserves backend uniqueness and acceptance-day streaks; see [cloud progress replay](cloud-progress-sync.md).
 
 Phase 17 stores private code snapshots through the protected backend only. See [Attempts and submissions](attempts-and-submissions.md) for owner-only history, bounded client-reported checks, and backend personal-learning acceptance. This is not independent grading; F06 still gates real learner data collection.

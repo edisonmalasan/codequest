@@ -12,6 +12,7 @@ export interface BackendEnvironment {
   SUPABASE_AUTH_ISSUER?: string;
   SUPABASE_AUTH_AUDIENCE?: string;
   SUPABASE_AUTH_JWKS_URL?: string;
+  SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS?: string;
   ANALYTICS_CAPTURE_APPROVED?: string;
   POSTHOG_PROJECT_KEY?: string;
   POSTHOG_HOST?: string;
@@ -25,6 +26,7 @@ export interface SupabaseAuthConfig {
   readonly issuer: string;
   readonly audience: string;
   readonly jwksUrl: string;
+  readonly maxTokenAgeSeconds: number;
 }
 
 export interface BackendConfig {
@@ -186,10 +188,20 @@ function parseAuthConfig(
     issuer: `${issuer.origin}${issuerPath}`,
     audience: parseAudience(env.SUPABASE_AUTH_AUDIENCE),
     jwksUrl: jwks.toString(),
+    maxTokenAgeSeconds: parseInteger(
+      'SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS',
+      env.SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS,
+      3_600,
+      300,
+      86_400,
+    ),
   });
 }
 
-function normalizeOrigin(value: string): string {
+function normalizeOrigin(
+  value: string,
+  environment: RuntimeEnvironment,
+): string {
   if (value === '*') {
     throw new Error('Invalid CORS_ORIGINS: wildcard origins are not allowed');
   }
@@ -202,7 +214,8 @@ function normalizeOrigin(value: string): string {
   }
 
   if (
-    (url.protocol !== 'http:' && url.protocol !== 'https:') ||
+    (url.protocol !== 'https:' &&
+      !(environment !== 'production' && url.protocol === 'http:')) ||
     url.username !== '' ||
     url.password !== '' ||
     url.pathname !== '/' ||
@@ -232,7 +245,7 @@ function parseCorsOrigins(
     .split(',')
     .map((origin) => origin.trim())
     .filter((origin) => origin !== '')
-    .map(normalizeOrigin);
+    .map((origin) => normalizeOrigin(origin, environment));
 
   if (origins.length === 0) {
     throw new Error('Invalid CORS_ORIGINS: provide at least one origin');

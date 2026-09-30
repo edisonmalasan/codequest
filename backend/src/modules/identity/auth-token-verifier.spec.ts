@@ -15,12 +15,14 @@ const CONFIG: SupabaseAuthConfig = {
   issuer: 'https://project.supabase.co/auth/v1',
   audience: 'authenticated',
   jwksUrl: 'https://project.supabase.co/auth/v1/.well-known/jwks.json',
+  maxTokenAgeSeconds: 3600,
 };
 
 describe('SupabaseTokenVerifier', () => {
   let verifier: SupabaseTokenVerifier;
   let privateKey: KeyLike;
   let rotatedPrivateKey: KeyLike;
+  let localJwks: JSONWebKeySet;
 
   beforeAll(async () => {
     const keys = await generateKeyPair('RS256');
@@ -35,6 +37,7 @@ describe('SupabaseTokenVerifier', () => {
         { ...rotatedPublicJwk, alg: 'RS256', kid: 'rotated-signing-key' },
       ],
     };
+    localJwks = jwks;
     verifier = new SupabaseTokenVerifier(CONFIG, createLocalJWKSet(jwks));
   });
 
@@ -110,6 +113,56 @@ describe('SupabaseTokenVerifier', () => {
       .sign(rotatedPrivateKey);
 
     await expect(verifier.verify(token)).resolves.toMatchObject({
+      userId: USER_ID,
+    });
+  });
+
+  it.each([
+    ['missing expiration', undefined, Math.floor(Date.now() / 1000)],
+    ['missing issuance', Math.floor(Date.now() / 1000) + 300, undefined],
+    [
+      'future issuance',
+      Math.floor(Date.now() / 1000) + 600,
+      Math.floor(Date.now() / 1000) + 300,
+    ],
+    [
+      'nonpositive lifetime',
+      Math.floor(Date.now() / 1000),
+      Math.floor(Date.now() / 1000),
+    ],
+    [
+      'overlong lifetime',
+      Math.floor(Date.now() / 1000) + 3601,
+      Math.floor(Date.now() / 1000),
+    ],
+  ])('rejects %s', async (_name, expiration, issuance) => {
+    let builder = new SignJWT({ sub: USER_ID })
+      .setProtectedHeader({ alg: 'RS256', kid: 'test-signing-key' })
+      .setIssuer(CONFIG.issuer)
+      .setAudience(CONFIG.audience);
+    if (issuance !== undefined) builder = builder.setIssuedAt(issuance);
+    if (expiration !== undefined)
+      builder = builder.setExpirationTime(expiration);
+    await expect(
+      verifier.verify(await builder.sign(privateKey)),
+    ).rejects.toBeDefined();
+  });
+
+  it('accepts a provider-aligned custom maximum lifetime', async () => {
+    const now = Math.floor(Date.now() / 1000);
+    const token = await new SignJWT({ sub: USER_ID })
+      .setProtectedHeader({ alg: 'RS256', kid: 'test-signing-key' })
+      .setIssuer(CONFIG.issuer)
+      .setAudience(CONFIG.audience)
+      .setIssuedAt(now)
+      .setExpirationTime(now + 7200)
+      .sign(privateKey);
+    await expect(verifier.verify(token)).rejects.toBeDefined();
+    const customVerifier = new SupabaseTokenVerifier(
+      { ...CONFIG, maxTokenAgeSeconds: 7200 },
+      createLocalJWKSet(localJwks),
+    );
+    await expect(customVerifier.verify(token)).resolves.toMatchObject({
       userId: USER_ID,
     });
   });

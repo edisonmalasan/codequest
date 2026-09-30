@@ -389,6 +389,39 @@ describe('backend HTTP foundation', () => {
     expect(denied.headers['access-control-allow-origin']).toBeUndefined();
   });
 
+  it('serves only the validated HTTPS origin in production configuration', async () => {
+    const config = loadBackendConfig({
+      NODE_ENV: 'production',
+      DATABASE_URL,
+      CORS_ORIGINS: 'https://app.codequest.example',
+      SUPABASE_AUTH_ISSUER: 'https://auth.codequest.example/auth/v1',
+      SUPABASE_AUTH_AUDIENCE: 'authenticated',
+      SUPABASE_AUTH_JWKS_URL:
+        'https://auth.codequest.example/auth/v1/.well-known/jwks.json',
+    });
+    const app = await createApplication(config, {
+      foundationLogger: new CapturingFoundationLogger(),
+      nestLogger: false,
+      enableShutdownHooks: false,
+    });
+    applications.push(app);
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+    const allowed = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/health',
+      headers: { origin: 'https://app.codequest.example' },
+    });
+    expect(allowed.headers['access-control-allow-origin']).toBe(
+      'https://app.codequest.example',
+    );
+    const plaintext = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/health',
+      headers: { origin: 'http://app.codequest.example' },
+    });
+    expect(plaintext.headers['access-control-allow-origin']).toBeUndefined();
+  });
+
   it('publishes OpenAPI for the implemented public and account surfaces', async () => {
     const app = await createApplication(configuration(), {
       foundationLogger: new CapturingFoundationLogger(),

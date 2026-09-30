@@ -80,6 +80,25 @@ test('public installation and offline shell preserve cache and origin boundaries
   await control(page);
   const manifest = await request.get('/manifest.webmanifest');
   expect(manifest.status()).toBe(200);
+  const appHeaders = (await request.get('/offline-learning')).headers();
+  expect(appHeaders['x-frame-options']).toBe('DENY');
+  expect(appHeaders['referrer-policy']).toBe('no-referrer');
+  expect(appHeaders['x-content-type-options']).toBe('nosniff');
+  expect(appHeaders['permissions-policy']).toContain('camera=()');
+  for (const [host, bootstrap] of [
+    ['localhost:3200', '/runtime/bootstrap.html'],
+    ['127.0.0.2:3200', '/preview/bootstrap.html'],
+  ]) {
+    const response = await request.get(bootstrap, { headers: { host } });
+    expect(response.status()).toBe(200);
+    expect(response.headers()['x-frame-options']).toBeUndefined();
+    expect(response.headers()['content-security-policy']).toContain(
+      "default-src 'none'",
+    );
+    expect(
+      (await request.get('/account', { headers: { host } })).status(),
+    ).toBe(404);
+  }
   expect(await manifest.json()).toMatchObject({
     display: 'standalone',
     start_url: '/',
