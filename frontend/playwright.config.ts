@@ -13,6 +13,7 @@ export default defineConfig({
     '**/foundations.spec.ts',
     '**/capstone.spec.ts',
     '**/analytics.spec.ts',
+    '**/learning-journey.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,
