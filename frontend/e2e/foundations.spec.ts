@@ -4,6 +4,9 @@ import solutions from './fixtures/foundations-solutions.json';
 const apiOrigin = 'http://127.0.0.1:3001';
 
 async function edit(page: Page, source: string) {
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });

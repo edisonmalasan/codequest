@@ -27,6 +27,9 @@ async function session(context: BrowserContext): Promise<void> {
 }
 
 async function edit(page: Page, source: string): Promise<void> {
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
@@ -133,6 +136,9 @@ test('CAP01 keeps written work on device and captures explicit offline Submit', 
   await expect(
     page.getByRole('textbox', { name: 'Transfer response' }),
   ).toHaveValue(/equality is included/);
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   expect(
     (
       await page
