@@ -18,4 +18,4 @@
 ## 4. Integration and release evidence
 
 - [x] 4.1 Verify an enabled synthetic browser/backend flow with a local fake Sentry sink and release label, no external service traffic, and no change to learner execution boundaries; record the exact result in `docs/monitoring.md`.
-- [ ] 4.2 Run root test/lint/typecheck/build, API/content/drift checks, existing browser suites and strict OpenSpec validation; inspect the final diff and record actual results.
+- [x] 4.2 Run root test/lint/typecheck/build, API/content/drift checks, existing browser suites and strict OpenSpec validation; inspect the final diff and record actual results.
