@@ -109,6 +109,22 @@ describe('bounded observed analytics', () => {
     expect(request?.body).not.toContain('private code');
   });
 
+  it('invokes the default browser transport with its required global receiver', () => {
+    vi.stubGlobal('navigator', { onLine: true });
+    const fetcher = vi.fn(function (this: typeof globalThis) {
+      if (this !== globalThis) throw new TypeError('Illegal invocation');
+      return Promise.resolve(new Response(null, { status: 200 }));
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const adapter = new ObservedAnalytics({
+      approved: 'true',
+      projectKey: 'fixture_key_123',
+      host: 'https://capture.example.test',
+    });
+    adapter.capture({ name: 'code_run', ownerId: OWNER, eventId: EVENT });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
   it('keeps guest identities separate across owner switches and sends nothing offline', () => {
     vi.stubGlobal('navigator', { onLine: true });
     const fetcher = vi
