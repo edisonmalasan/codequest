@@ -48,3 +48,7 @@ Daily and weekly meaningful activity are **derived views**, not events sent on a
 The funnel order is **signup → first Run → first accepted quest → five distinct accepted quests → first completed chapter → capstone start → accepted capstone completion**. The first Run is a client observation, while the later acceptance steps come from backend facts. Stage counts use unique account IDs that have all earlier stages in order; a replayed attempt does not create a second stage. Signup before a guest Run is a separate account funnel because no automatic guest identity stitching is approved.
 
 The deterministic [measurement fixture](../backend/src/modules/analytics/measurement-fixture.spec.ts) uses three synthetic accounts. A duplicate Q01 event for A leaves A at two distinct accepted quests; C has five. At a 50-hour cutoff, A and C have a qualified D1 action and B has only an app open, so D1 is **2/3**. At a 200-hour cutoff, only C has a qualified D7 action, so D7 is **1/3**. A 180-hour cutoff excludes all three from the D7 denominator because the full 192-hour window has not elapsed.
+
+## Verification
+
+The [Apply CI run](https://github.com/edisonmalasan/codequest/actions/runs/36675331509) passed root test, lint, typecheck and build; API and database drift checks; curriculum validation and history; and PWA, curriculum and analytics Playwright suites. The analytics suite used synthetic guest and authenticated activity with a local fake collector. No real PostHog traffic or project key was used. Strict OpenSpec validation passed for the active change.

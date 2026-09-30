@@ -12,10 +12,10 @@
 
 ## 3. Observed browser events
 
-- [ ] 3.1 Add trusted quest/workspace seams for guest first start/hint and guest/account first run, each non-cancelled `code_run`, each completed `validation_checked`, execution error and validation failure. Verify later successful Run/Check retention evidence, Run/Check snapshot exclusion, client-observed labels, session/owner reset, guest separation, offline/no-network and unaffected editor behavior with focused frontend tests; document no automatic identity merge or completion authority.
-- [ ] 3.2 Cover a representative browser flow with a local fake collector: guest start/run and authenticated accepted work remain separate source/cohort records, while runtime/preview origins cannot call the application analytics adapter. Verify in Playwright without external PostHog traffic or project credentials.
+- [x] 3.1 Add trusted quest/workspace seams for guest first start/hint and guest/account first run, each non-cancelled `code_run`, each completed `validation_checked`, execution error and validation failure. Verify later successful Run/Check retention evidence, Run/Check snapshot exclusion, client-observed labels, session/owner reset, guest separation, offline/no-network and unaffected editor behavior with focused frontend tests; document no automatic identity merge or completion authority.
+- [x] 3.2 Cover a representative browser flow with a local fake collector: guest start/run and authenticated accepted work remain separate source/cohort records, while runtime/preview origins cannot call the application analytics adapter. Verify in Playwright without external PostHog traffic or project credentials.
 
 ## 4. Measurement definitions and integration gates
 
 - [x] 4.1 Document exact PostHog event filters and signup-to-capstone funnel, five-distinct-quest/chapter derivation, daily/weekly meaningful activity and elapsed D1/D7 windows, including denominators, stable-ID deduplication, incomplete windows, client/backend trust, F05 targets and F06 policy gate. Verify examples against a small deterministic event fixture.
-- [ ] 4.2 Run root test/lint/typecheck/build, API/content/history drift, PWA/curriculum browser suites and strict OpenSpec validation; inspect the final diff and record actual outcomes. Merge Apply after required CI, then sync and archive through separate remote branches and merge-commit PRs.
+- [x] 4.2 Run root test/lint/typecheck/build, API/content/history drift, PWA/curriculum/analytics browser suites and strict OpenSpec validation; inspect the final diff and record actual outcomes.
