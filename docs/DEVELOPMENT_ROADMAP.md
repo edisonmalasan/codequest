@@ -4,18 +4,18 @@
 
 Status snapshot: 2026-09-30. Update this section when the phase or OpenSpec stage changes; planned work is not completed work.
 
-| Item                                                       | Current status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Current phase                                              | Phase 34 — Testing (Apply)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Completed phases                                           | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change; Phase 10 — Curriculum Backend: reviewed publication catalog, public curriculum REST/OpenAPI contract, generated frontend reads, canonical specs, and archived change; Phase 11 — Journey and Course UI: typed curriculum navigation, prerequisite-aware Course map, accessible states, canonical spec, and archived change; Phase 12 — Lesson Renderer: safe published lesson reading, selected-snapshot illustrations, accessible hints, canonical specs, and archived change; Phase 13 — Editor Workspace: reusable editor shell, owner-isolated local drafts, accessible responsive interactions, canonical spec, and archived change; Phase 14 — JavaScript Runtime: isolated browser execution, bounded results, hostile-code recovery, canonical specs, and archived change; Phase 15 — Web Preview Runtime: dedicated static preview origin, script-disabled HTML/CSS display, separate JavaScript Worker computation, canonical specs, and archived change; Phase 16 — Validation Engine: reusable deterministic local Check, isolated fresh-Worker cases, canonical specs, and archived change; Phase 17 — Attempts and Submissions: protected backend learning loop, owner-only snapshots/history, personal-learning acceptance, canonical specs, and archived change; Phase 18 — Progress System: owner-scoped starts/hints, derived quest/chapter/Journey progress, trusted views, canonical specs, and archived change; Phase 19 — XP System: atomic first-completion awards, unique owner-bound XP ledger, derived total XP, canonical specs, and archived change; Phase 20 — Levels: provisional curve, backend-derived level boundaries, authenticated account presentation, canonical spec, and archived change; Phase 21 — Streaks: accepted first-completion days, validated prospective timezones, derived current/longest streaks, account presentation, canonical spec, and archived change; Phase 22 — Unlock System: owner-bound completion prerequisite availability, version-compatible gates, protected explanations, trusted map, canonical specs, and archived change; Phase 23 — Local Persistence: Dexie v3 owner-scoped records, resilient editor drafts and preferences, bounded lesson/guest/pending storage, canonical specs, and archived change; Phase 24 — Guest Learning: device-local provisional Q01-Q04 Checks, explicit protected import, canonical specs, and archived change; Phase 25 — Cloud Progress Sync: owner-bound durable replay, stable-quest idempotency, source recovery, trusted-view refresh, canonical specs, and archived change; Phase 26 — PWA: installable public shell, bounded Serwist precache, offline navigation, network/update notices, canonical spec, and archived change; Phase 27 — Offline Learning: explicit downloaded lessons, isolated offline Run/Check, owner-scoped last-known progress, canonical specs, and archived change; Phase 28 — Offline Sync: explicit authenticated offline submissions, owner-scoped in-library recovery, stable reconnect replay, canonical specs, and archived change; Phase 29 — First Full Curriculum: 24 reviewed instructional quests, seven chapters, selected publication, immutable Q01 history, isolated behavioral verification, canonical specs and archived change; Phase 30 — Capstone Project: reviewed inventory capstone, required private written responses, reusable device drafts, isolated behavioral checks, canonical specs, and archived change; Phase 31 — Analytics: privacy-gated bounded events, trusted backend facts, observed browser actions, qualified measurement definitions, canonical spec, and archived change; Phase 32 — Monitoring: privacy-gated Sentry application and API signals, canonical spec, and archived change; Phase 33 — Security Hardening: bounded token verification, HTTPS production origins, trusted-app headers, cross-boundary review, canonical specs, and archived change |
-| Current OpenSpec change                                    | [Phase 34 core learning testing](../openspec/changes/test-core-learning-workflows/proposal.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Current OpenSpec stage                                     | Phase 34 Apply in [PR #149](https://github.com/edisonmalasan/codequest/pull/149)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Next execution step                                        | Verify the cross-browser learning gate, then merge Apply and sync specifications                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Next phase                                                 | Phase 34 — Testing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| Validation evidence                                        | Phase 29: 370 frontend tests, 165 backend tests plus 3 history checks, root lint/typecheck/build, API drift, curriculum/history and strict change/spec validation, production Chromium curriculum 25/25 and existing PWA 6/6. Proposal #127 independently passed required CI. Apply #128 and spec sync #129 independently passed all required CI, including both browser gates; all 27 canonical specs validate and 7/7 tasks are archived. Phase 30 local Apply: 376 frontend tests, 168 backend tests plus 3 history checks; root lint/typecheck/build, API drift and curriculum/history; Chromium curriculum 28/28 and PWA 6/6; strict OpenSpec 28/28; all 28 canonical specs validate after archive. Proposal #131, Apply #132 and spec sync #133 each passed required CI. [Capstone review](inventory-capstone.md) records scope and open beta obligations. Phase 31 proposal #135, Apply #136 and spec sync #137 passed required CI; the analytics browser suite used a fake collector and all 29 canonical specs validate. Phase 32 proposal #139, Apply #140 and spec sync #141 passed required CI, including PostgreSQL-backed browser suites; all 30 canonical specs validate. Phase 33 proposal #144, Apply #145 and spec sync #146 passed required CI, including root checks and browser suites; all 31 canonical specs validate, and the eight Apply tasks are archived. [Security review](security-review.md) records deployment-only checks and F06 obligations.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Current repository                                         | Phases 0–33 complete and archived. JavaScript Foundations publishes 24 instructional quests plus CAP01 inventory capstone as a separate non-guest 25th quest after Q24. CAP01 requires bounded private debug and transfer responses for a passing explicit submission; local Check remains unverified and backend personal-learning acceptance follows ADR 0005. Device drafts and pending responses use the existing owner-scoped persistence/outbox. Proposal #131, Apply #132 and spec sync #133 merged after required CI; the capstone OpenSpec change is archived with canonical specs. [Review and remaining beta obligations](inventory-capstone.md). Phase 31 analytics is implemented, synced and archived with PostHog capture disabled pending F06 approval. Phase 32 monitoring is implemented, synced and archived with Sentry delivery disabled pending F06 approval. Phase 33 security hardening is implemented, synced and archived; [security review](security-review.md) retains deployment and F06 release obligations.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Decision baseline                                          | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Item | Current status |
+| --- | --- |
+| Current phase | Phase 34 — Testing (Apply) |
+| Completed phases | Phase 0 — Product Definition: documentation delivered, decisions approved, change archived; Phase 1 — Technical Risk Validation: 34/34 tasks, F01/F02 selected, change archived; Phase 2 — Repository Foundation: workspace + toolchain + CI + bootable apps, change archived; Phase 3 — Frontend Foundation: directory structure + styling/theme base + providers + client-state primitive + Dexie skeleton + CodeMirror proof-of-render, 14 tests green, change archived; revised Phase 4 — Design System: scalable pixel-game identity implemented, verified, synced, and archived; Phase 5 — Backend Foundation: modular NestJS/Fastify baseline implemented, verified, synced, and archived; Phase 6 — Database Foundation: backend-owned PostgreSQL/Drizzle schema, migration discipline, relational constraints, verification, canonical spec, and archived change; Phase 7 — API Contract Generation: backend OpenAPI export, frontend-local generated client, drift enforcement, transport boundaries, canonical spec, and archived change; Phase 8 — Authentication: Supabase session flows, backend identity and account ownership, generated account client, verification, canonical specs, and archived change; Phase 9 — Curriculum Content Architecture: backend-owned Git authoring source, validation, canonical spec, and archived change; Phase 10 — Curriculum Backend: reviewed publication catalog, public curriculum REST/OpenAPI contract, generated frontend reads, canonical specs, and archived change; Phase 11 — Journey and Course UI: typed curriculum navigation, prerequisite-aware Course map, accessible states, canonical spec, and archived change; Phase 12 — Lesson Renderer: safe published lesson reading, selected-snapshot illustrations, accessible hints, canonical specs, and archived change; Phase 13 — Editor Workspace: reusable editor shell, owner-isolated local drafts, accessible responsive interactions, canonical spec, and archived change; Phase 14 — JavaScript Runtime: isolated browser execution, bounded results, hostile-code recovery, canonical specs, and archived change; Phase 15 — Web Preview Runtime: dedicated static preview origin, script-disabled HTML/CSS display, separate JavaScript Worker computation, canonical specs, and archived change; Phase 16 — Validation Engine: reusable deterministic local Check, isolated fresh-Worker cases, canonical specs, and archived change; Phase 17 — Attempts and Submissions: protected backend learning loop, owner-only snapshots/history, personal-learning acceptance, canonical specs, and archived change; Phase 18 — Progress System: owner-scoped starts/hints, derived quest/chapter/Journey progress, trusted views, canonical specs, and archived change; Phase 19 — XP System: atomic first-completion awards, unique owner-bound XP ledger, derived total XP, canonical specs, and archived change; Phase 20 — Levels: provisional curve, backend-derived level boundaries, authenticated account presentation, canonical spec, and archived change; Phase 21 — Streaks: accepted first-completion days, validated prospective timezones, derived current/longest streaks, account presentation, canonical spec, and archived change; Phase 22 — Unlock System: owner-bound completion prerequisite availability, version-compatible gates, protected explanations, trusted map, canonical specs, and archived change; Phase 23 — Local Persistence: Dexie v3 owner-scoped records, resilient editor drafts and preferences, bounded lesson/guest/pending storage, canonical specs, and archived change; Phase 24 — Guest Learning: device-local provisional Q01-Q04 Checks, explicit protected import, canonical specs, and archived change; Phase 25 — Cloud Progress Sync: owner-bound durable replay, stable-quest idempotency, source recovery, trusted-view refresh, canonical specs, and archived change; Phase 26 — PWA: installable public shell, bounded Serwist precache, offline navigation, network/update notices, canonical spec, and archived change; Phase 27 — Offline Learning: explicit downloaded lessons, isolated offline Run/Check, owner-scoped last-known progress, canonical specs, and archived change; Phase 28 — Offline Sync: explicit authenticated offline submissions, owner-scoped in-library recovery, stable reconnect replay, canonical specs, and archived change; Phase 29 — First Full Curriculum: 24 reviewed instructional quests, seven chapters, selected publication, immutable Q01 history, isolated behavioral verification, canonical specs and archived change; Phase 30 — Capstone Project: reviewed inventory capstone, required private written responses, reusable device drafts, isolated behavioral checks, canonical specs, and archived change; Phase 31 — Analytics: privacy-gated bounded events, trusted backend facts, observed browser actions, qualified measurement definitions, canonical spec, and archived change; Phase 32 — Monitoring: privacy-gated Sentry application and API signals, canonical spec, and archived change; Phase 33 — Security Hardening: bounded token verification, HTTPS production origins, trusted-app headers, cross-boundary review, canonical specs, and archived change |
+| Current OpenSpec change | [Phase 34 core learning testing](../openspec/changes/test-core-learning-workflows/proposal.md) |
+| Current OpenSpec stage | Phase 34 Apply in [PR #149](https://github.com/edisonmalasan/codequest/pull/149) |
+| Next execution step | Verify the cross-browser learning gate, then merge Apply and sync specifications |
+| Next phase | Phase 34 — Testing |
+| Validation evidence | Phase 29: 370 frontend tests, 165 backend tests plus 3 history checks, root lint/typecheck/build, API drift, curriculum/history and strict change/spec validation, production Chromium curriculum 25/25 and existing PWA 6/6. Proposal #127 independently passed required CI. Apply #128 and spec sync #129 independently passed all required CI, including both browser gates; all 27 canonical specs validate and 7/7 tasks are archived. Phase 30 local Apply: 376 frontend tests, 168 backend tests plus 3 history checks; root lint/typecheck/build, API drift and curriculum/history; Chromium curriculum 28/28 and PWA 6/6; strict OpenSpec 28/28; all 28 canonical specs validate after archive. Proposal #131, Apply #132 and spec sync #133 each passed required CI. [Capstone review](inventory-capstone.md) records scope and open beta obligations. Phase 31 proposal #135, Apply #136 and spec sync #137 passed required CI; the analytics browser suite used a fake collector and all 29 canonical specs validate. Phase 32 proposal #139, Apply #140 and spec sync #141 passed required CI, including PostgreSQL-backed browser suites; all 30 canonical specs validate. Phase 33 proposal #144, Apply #145 and spec sync #146 passed required CI, including root checks and browser suites; all 31 canonical specs validate, and the eight Apply tasks are archived. [Security review](security-review.md) records deployment-only checks and F06 obligations. |
+| Pre-beta release obligations (untested, no support claims) | Physical mobile/Safari/Firefox-install, NVDA/VoiceOver, low-power-device timing, native quota/background/OS-restart |
+| Current repository | Phases 0–33 complete and archived. JavaScript Foundations publishes 24 instructional quests plus CAP01 inventory capstone as a separate non-guest 25th quest after Q24. CAP01 requires bounded private debug and transfer responses for a passing explicit submission; local Check remains unverified and backend personal-learning acceptance follows ADR 0005. Device drafts and pending responses use the existing owner-scoped persistence/outbox. Proposal #131, Apply #132 and spec sync #133 merged after required CI; the capstone OpenSpec change is archived with canonical specs. [Review and remaining beta obligations](inventory-capstone.md). Phase 31 analytics is implemented, synced and archived with PostHog capture disabled pending F06 approval. Phase 32 monitoring is implemented, synced and archived with Sentry delivery disabled pending F06 approval. Phase 33 security hardening is implemented, synced and archived; [security review](security-review.md) retains deployment and F06 release obligations. |
+| Decision baseline | [Approved Phase 0 register](decisions.md) and [architecture/ADRs](architecture.md) control historical roadmap conflicts; delegated 2026-09-18 final review Proceed (development gate); F01 dedicated mechanism recommended; F02 desktop-first validated scope; no production selection |
 
 ## 1. Product Goal
 
@@ -36,11 +36,11 @@ Learn
 
 The MVP must prove that users:
 
-- enjoy the learning loop
-- understand the material
-- complete multiple quests
-- return to continue
-- complete at least one meaningful project
+* enjoy the learning loop
+* understand the material
+* complete multiple quests
+* return to continue
+* complete at least one meaningful project
 
 The first release should **not** try to become Codecademy + Replit + GitHub + Cursor + Discord at once.
 
@@ -78,41 +78,41 @@ codequest/
 
 Responsible for:
 
-- Next.js routing/rendering
-- UI
-- PWA
-- CodeMirror
-- local browser execution
-- IndexedDB
-- offline experience
-- animations
-- client state 
-- API consumption
-- responsive/mobile behavior
+* Next.js routing/rendering
+* UI
+* PWA
+* CodeMirror
+* local browser execution
+* IndexedDB
+* offline experience
+* animations
+* client state 
+* API consumption
+* responsive/mobile behavior
 
 ## Backend
 
 Responsible for:
 
-- authentication verification
-- authorization
-- users/profiles
-- curriculum
-- learning state
-- submissions
-- progress
-- XP
-- levels
-- streaks
-- achievements
-- unlocks
-- projects
-- leaderboards
-- analytics events
-- AI orchestration
-- remote execution orchestration
-- rate limiting
-- future integrations
+* authentication verification
+* authorization
+* users/profiles
+* curriculum
+* learning state
+* submissions
+* progress
+* XP
+* levels
+* streaks
+* achievements
+* unlocks
+* projects
+* leaderboards
+* analytics events
+* AI orchestration
+* remote execution orchestration
+* rate limiting
+* future integrations
 
 ## Core rule
 
@@ -227,80 +227,80 @@ These should remain fixed unless an ADR explicitly changes them.
 
 Required before public release.
 
-- authentication
-- profiles
-- JavaScript learning journey
-- 20–30 quests
-- course/chapter map
-- lessons
-- CodeMirror
-- JS execution
-- code validation
-- hints
-- submissions
-- progress
-- XP
-- levels
-- streaks
-- unlocks
-- one capstone
-- PWA installation
-- local code persistence
-- limited offline support
-- analytics
-- monitoring
-- accessibility
-- security
+* authentication
+* profiles
+* JavaScript learning journey
+* 20–30 quests
+* course/chapter map
+* lessons
+* CodeMirror
+* JS execution
+* code validation
+* hints
+* submissions
+* progress
+* XP
+* levels
+* streaks
+* unlocks
+* one capstone
+* PWA installation
+* local code persistence
+* limited offline support
+* analytics
+* monitoring
+* accessibility
+* security
 
 ---
 
 # P1 — Early Post-MVP
 
-- AI tutor
-- Python
-- Pyodide
-- Daily Challenge
-- practice system
-- achievements
-- leaderboards
-- public portfolio
-- improved content tools
-- notifications
+* AI tutor
+* Python
+* Pyodide
+* Daily Challenge
+* practice system
+* achievements
+* leaderboards
+* public portfolio
+* improved content tools
+* notifications
 
 ---
 
 # P2 — Growth
 
-- pixel avatars
-- cosmetics
-- skill trees
-- adaptive learning
-- TypeScript track
-- React track
-- Git/GitHub track
-- project sharing
-- community
-- certificates
-- mentors
-- project remixing
+* pixel avatars
+* cosmetics
+* skill trees
+* adaptive learning
+* TypeScript track
+* React track
+* Git/GitHub track
+* project sharing
+* community
+* certificates
+* mentors
+* project remixing
 
 ---
 
 # P3 — Advanced
 
-- WebContainers
-- browser terminal
-- npm/package management
-- remote Linux execution
-- compiled languages
-- GitHub integration
-- pull requests
-- AI code diffs
-- AI pair programming
-- coding agents
-- MCP
-- collaborative projects
-- public deployment
+* WebContainers
+* browser terminal
+* npm/package management
+* remote Linux execution
+* compiled languages
+* GitHub integration
+* pull requests
+* AI code diffs
+* AI pair programming
+* coding agents
+* MCP
+* collaborative projects
+* public deployment
 
 ---
 
@@ -326,15 +326,15 @@ docs/
 
 ## Define
 
-- target user
-- product positioning
-- MVP boundaries
-- explicit non-goals
-- learning loop
-- terminology
-- first journey
-- success metrics
-- architecture boundaries
+* target user
+* product positioning
+* MVP boundaries
+* explicit non-goals
+* learning loop
+* terminology
+* first journey
+* success metrics
+* architecture boundaries
 
 ## Initial curriculum
 
@@ -351,10 +351,10 @@ JavaScript Foundations
 
 You can clearly answer:
 
-- what are we building?
-- what are we not building?
-- who owns each system?
-- what is required for MVP?
+* what are we building?
+* what are we not building?
+* who owns each system?
+* what is required for MVP?
 
 ---
 
@@ -370,13 +370,13 @@ Test risky architecture decisions before building production infrastructure.
 
 Verify:
 
-- desktop experience
-- mobile typing
-- selection
-- syntax highlighting
-- resizing
-- keyboard behavior
-- touch behavior
+* desktop experience
+* mobile typing
+* selection
+* syntax highlighting
+* resizing
+* keyboard behavior
+* touch behavior
 
 ---
 
@@ -400,11 +400,11 @@ Terminate worker
 
 Test:
 
-- successful code
-- syntax errors
-- runtime errors
-- infinite loops
-- huge output
+* successful code
+* syntax errors
+* runtime errors
+* infinite loops
+* huge output
 
 ---
 
@@ -426,11 +426,11 @@ Validate safe iframe communication.
 
 Test:
 
-- installation
-- offline page
-- cached lesson
-- saved code
-- local JS execution
+* installation
+* offline page
+* cached lesson
+* saved code
+* local JS execution
 
 ---
 
@@ -460,14 +460,14 @@ codequest/
 
 ## Configure
 
-- pnpm workspace
-- Turborepo
-- strict TypeScript
-- ESLint
-- Prettier
-- Git hooks if desired
-- environment validation
-- GitHub Actions
+* pnpm workspace
+* Turborepo
+* strict TypeScript
+* ESLint
+* Prettier
+* Git hooks if desired
+* environment validation
+* GitHub Actions
 
 ## CI
 
@@ -500,16 +500,16 @@ Create the Next.js application foundation.
 
 ## Configure
 
-- App Router
-- Tailwind
-- shadcn/ui
-- Base UI
-- Motion
-- Lucide
-- TanStack Query
-- Zustand
-- Dexie
-- CodeMirror
+* App Router
+* Tailwind
+* shadcn/ui
+* Base UI
+* Motion
+* Lucide
+* TanStack Query
+* Zustand
+* Dexie
+* CodeMirror
 
 ## Create base structure
 
@@ -551,66 +551,66 @@ Create a scalable pixel-game identity.
 
 ## Define
 
-- color tokens
-- typography
-- spacing
-- borders
-- shadows
-- states
-- animation rules
-- responsive breakpoints
+* color tokens
+* typography
+* spacing
+* borders
+* shadows
+* states
+* animation rules
+* responsive breakpoints
 
 ## Use pixel styling for
 
-- logo
-- maps
-- avatars
-- badges
-- XP
-- chapter art
-- achievements
-- decorative elements
+* logo
+* maps
+* avatars
+* badges
+* XP
+* chapter art
+* achievements
+* decorative elements
 
 ## Use conventional UI for
 
-- forms
-- dialogs
-- settings
-- editor
-- console
-- menus
-- navigation
-- tables
+* forms
+* dialogs
+* settings
+* editor
+* console
+* menus
+* navigation
+* tables
 
 ## Core components
 
 Build:
 
-- Button
-- Input
-- Select
-- Dialog
-- Drawer
-- Tabs
-- Tooltip
-- Toast
-- Card
-- Badge
-- Progress
-- Skeleton
-- Dropdown
+* Button
+* Input
+* Select
+* Dialog
+* Drawer
+* Tabs
+* Tooltip
+* Toast
+* Card
+* Badge
+* Progress
+* Skeleton
+* Dropdown
 
 ## Game components
 
 Build:
 
-- XPBar
-- LevelBadge
-- QuestNode
-- QuestPath
-- ChapterCard
-- AchievementCard
-- RewardPopup
+* XPBar
+* LevelBadge
+* QuestNode
+* QuestPath
+* ChapterCard
+* AchievementCard
+* RewardPopup
 
 ## Revised Phase 4 completion
 
@@ -663,19 +663,19 @@ BillingModule
 
 ## Configure
 
-- NestJS
-- Fastify
-- REST
-- global validation
-- exception filters
-- request IDs
-- logging
-- CORS
-- API versioning
-- Swagger/OpenAPI
-- configuration validation
-- rate-limit foundation
-- health endpoint
+* NestJS
+* Fastify
+* REST
+* global validation
+* exception filters
+* request IDs
+* logging
+* CORS
+* API versioning
+* Swagger/OpenAPI
+* configuration validation
+* rate-limit foundation
+* health endpoint
 
 ## API prefix
 
@@ -758,12 +758,12 @@ Unlock
 
 Use:
 
-- foreign keys
-- unique constraints
-- indexes
-- migrations
-- timestamps
-- explicit ownership
+* foreign keys
+* unique constraints
+* indexes
+* migrations
+* timestamps
+* explicit ownership
 
 Avoid storing values that can easily be derived.
 
@@ -835,9 +835,9 @@ Supabase Auth.
 
 Support initially:
 
-- email/password
-- Google
-- GitHub
+* email/password
+* Google
+* GitHub
 
 ## Frontend
 
@@ -854,10 +854,10 @@ Build:
 
 NestJS must:
 
-- verify token
-- derive user identity
-- enforce ownership
-- enforce permissions
+* verify token
+* derive user identity
+* enforce ownership
+* enforce permissions
 
 ## Important
 
@@ -896,19 +896,19 @@ tests.ts
 
 Include:
 
-- ID
-- version
-- title
-- slug
-- concepts
-- objectives
-- prerequisites
-- difficulty
-- XP
-- starter code
-- validation
-- hints
-- unlock conditions
+* ID
+* version
+* title
+* slug
+* concepts
+* objectives
+* prerequisites
+* difficulty
+* XP
+* starter code
+* validation
+* hints
+* unlock conditions
 
 ## Validate with Zod
 
@@ -926,12 +926,12 @@ Expose curriculum through NestJS.
 
 ## CurriculumModule handles
 
-- journeys
-- courses
-- chapters
-- quests
-- concepts
-- prerequisites
+* journeys
+* courses
+* chapters
+* quests
+* concepts
+* prerequisites
 
 ## Initial endpoints
 
@@ -963,20 +963,20 @@ Create the primary learning navigation.
 
 Displays:
 
-- journey description
-- overall progress
-- chapters
-- unlock state
+* journey description
+* overall progress
+* chapters
+* unlock state
 
 ### Course map
 
 Displays:
 
-- quest nodes
-- completed state
-- active state
-- locked state
-- chapter progression
+* quest nodes
+* completed state
+* active state
+* locked state
+* chapter progression
 
 Completion status (2026-09-23): implemented, verified, synced to the canonical `journey-course-ui` specification, and [archived](../openspec/changes/archive/2026-09-23-build-journey-course-map-ui/proposal.md). The canonical `/journeys/[slug]` page consumes the generated public curriculum client, builds a prerequisite-aware display model, and presents Journey context, overall progress, ordered chapters, and completed/current/available/locked quest states with explicit loading, empty, failure, accessibility, reduced-motion, and responsive behavior. Because no approved progress source exists yet, the production route supplies an empty completion snapshot and states that saved progress is not loaded; accepted progress and unlock authority remain backend-owned. No curriculum publication, backend/OpenAPI/generated-client change, lesson rendering, editor/runtime, or Phase 12+ behavior was added.
 
@@ -990,14 +990,14 @@ Render real instructional content.
 
 ## Support
 
-- text
-- headings
-- examples
-- code blocks
-- callouts
-- hints
-- instructions
-- embedded illustrations
+* text
+* headings
+* examples
+* code blocks
+* callouts
+* hints
+* instructions
+* embedded illustrations
 
 ## Mobile support
 
@@ -1028,15 +1028,15 @@ EditorWorkspace
 
 ## MVP features
 
-- CodeMirror
-- syntax highlighting
-- line numbers
-- indentation
-- autocomplete
-- reset
-- autosave
-- shortcuts
-- responsive layout
+* CodeMirror
+* syntax highlighting
+* line numbers
+* indentation
+* autocomplete
+* reset
+* autosave
+* shortcuts
+* responsive layout
 
 ## Rule
 
@@ -1056,7 +1056,7 @@ Safely execute beginner JavaScript.
 
 ```ts
 interface ExecutionAdapter {
-  execute(input: ExecutionRequest): Promise<ExecutionResult>;
+  execute(input: ExecutionRequest): Promise<ExecutionResult>
 }
 ```
 
@@ -1068,22 +1068,22 @@ JavaScriptWorkerAdapter
 
 ## Handle
 
-- output capture
-- errors
-- syntax errors
-- timeouts
-- worker restart
-- large output
-- execution duration
+* output capture
+* errors
+* syntax errors
+* timeouts
+* worker restart
+* large output
+* execution duration
 
 ## Security
 
 Worker receives no:
 
-- JWTs
-- API keys
-- database details
-- application secrets
+* JWTs
+* API keys
+* database details
+* application secrets
 
 Completion status (2026-09-25): implemented, verified, synced to the canonical [`javascript-runtime`](../openspec/specs/javascript-runtime/spec.md) and [`editor-workspace`](../openspec/specs/editor-workspace/spec.md) specifications, and [archived](../openspec/changes/archive/2026-09-25-add-isolated-javascript-runtime/proposal.md). A lesson-independent `ExecutionAdapter` and distinct-origin `JavaScriptWorkerAdapter` execute one immutable active-file snapshot in a fresh literal-URL Worker per run. The trusted bootstrap uses a private correlated channel, fixed response CSP, bounded result validation, termination-before-delivery, a two-second deadline, cancellation, and one-second recovery. The Editor Workspace exposes accessible Run/Cancel and presents bounded console/status output while preserving source and drafts. Unit and Chromium coverage verifies success, syntax/runtime errors, output floods, tight loops and proxy traps, cancellation, fresh globals, sub-second recovery, denied authority, source persistence, keyboard behavior, and responsive reflow. Phase 15 preview, checking, submissions, progress, and rewards remain absent.
 
@@ -1105,10 +1105,10 @@ sandboxed iframe
 
 Add:
 
-- preview generation
-- secure `postMessage`
-- restricted sandbox permissions
-- safe CSP
+* preview generation
+* secure `postMessage`
+* restricted sandbox permissions
+* safe CSP
 
 Do not expose the authenticated application origin.
 
@@ -1125,7 +1125,7 @@ Determine whether learner code is correct.
 ## Create abstraction
 
 ```ts
-ValidationStrategy;
+ValidationStrategy
 ```
 
 ## MVP validators
@@ -1180,12 +1180,12 @@ Accepted personal-learning completion fact
 
 Store:
 
-- quest
-- user
-- code snapshot
-- result
-- timestamp
-- attempt count
+* quest
+* user
+* code snapshot
+* result
+* timestamp
+* attempt count
 
 ---
 
@@ -1207,19 +1207,19 @@ completed
 
 Track:
 
-- started time
-- completion time
-- attempts
-- hints
-- last activity
+* started time
+* completion time
+* attempts
+* hints
+* last activity
 
 ## Derived progress
 
 Calculate:
 
-- chapter %
-- course %
-- journey %
+* chapter %
+* course %
+* journey %
 
 rather than making percentages primary source-of-truth values.
 
@@ -1286,14 +1286,14 @@ A streak increases only when meaningful learning occurs.
 
 Examples:
 
-- quest completion
-- daily challenge
-- project milestone
+* quest completion
+* daily challenge
+* project milestone
 
 Not:
 
-- opening the app
-- viewing dashboard
+* opening the app
+* viewing dashboard
 
 Store learner timezone carefully.
 
@@ -1301,7 +1301,9 @@ Store learner timezone carefully.
 
 # Phase 22 — Unlock System
 
+
 Completion status (2026-09-28): the [archived change](../openspec/changes/archive/2026-09-28-add-completion-prerequisite-unlocks/proposal.md) derives quest, chapter, and Journey/Course availability from owner-bound accepted completion prerequisites and reviewed version compatibility. [Apply PR #98](https://github.com/edisonmalasan/codequest/pull/98) added protected availability/explanations, locked activity gates, exact replay preservation, and authenticated map presentation; [spec sync PR #99](https://github.com/edisonmalasan/codequest/pull/99) established the canonical [learner-unlocks](../openspec/specs/learner-unlocks/spec.md) contract. Guest navigation remains provisional; F08 mastery, XP, and achievement gates remain deferred. Phase 23+ work is out of scope.
+
 
 ## Objective
 
@@ -1332,17 +1334,17 @@ Prevent code loss.
 
 Use IndexedDB + Dexie for:
 
-- editor drafts
-- workspace preferences
-- downloaded lessons
-- guest state
-- pending sync operations
+* editor drafts
+* workspace preferences
+* downloaded lessons
+* guest state
+* pending sync operations
 
 Autosave:
 
-- after idle
-- before navigation
-- on visibility change
+* after idle
+* before navigation
+* on visibility change
 
 ---
 
@@ -1386,10 +1388,10 @@ PostgreSQL
 
 Handle:
 
-- duplicate requests
-- stale changes
-- reconnects
-- local/cloud merge
+* duplicate requests
+* stale changes
+* reconnects
+* local/cloud merge
 
 Completion status (2026-09-29): the [archived change](../openspec/changes/archive/2026-09-29-add-cloud-progress-replay/proposal.md) implements explicit authenticated Submit through the existing owner-scoped outbox, bounded reconnect/foreground replay, safe stable-event recovery, and source retention. [Apply PR #110](https://github.com/edisonmalasan/codequest/pull/110) added protected stable-quest replay before current-publication checks for recorded events, account isolation, and refresh of backend progress/unlock/XP/streak views; [spec sync PR #111](https://github.com/edisonmalasan/codequest/pull/111) established the canonical [cloud-progress-sync](../openspec/specs/cloud-progress-sync/spec.md) contract. Uncertain and rejected work stays recoverable, while backend acceptance time controls streak credit. Drafts remain device-local under F07; guest import remains explicit. No raw protected-response cache, cloud draft merge, or Phase 26 service worker is implemented. Live curriculum still requires separately reviewed publication.
 
@@ -1403,15 +1405,15 @@ Make CodeQuest installable.
 
 Implement:
 
-- manifest
-- icons
-- standalone display
-- Serwist
-- service worker
-- offline page
-- application shell cache
-- update UI
-- network indicator
+* manifest
+* icons
+* standalone display
+* Serwist
+* service worker
+* offline page
+* application shell cache
+* update UI
+* network indicator
 
 **Completed 2026-09-29:** Phase 26 adds standalone installation metadata and existing-brand icons, a bounded public Serwist precache, uncached application navigation with a script-free offline landing page, connection hints, and waiting-update guidance. Auth/API/page/RSC/source/progress responses and runtime/preview compartments are excluded; updates cannot force reload or delete local work. Verification includes production Chromium 2/2 and repository checks. See [PWA implementation](pwa.md), [canonical specification](../openspec/specs/pwa-shell/spec.md), and [archived tasks](../openspec/changes/archive/2026-09-29-add-installable-pwa-shell/tasks.md). Physical/native installation and other F02 obligations remain untested. Phase 27 offline learning is separate.
 
@@ -1427,21 +1429,21 @@ Support useful—not unlimited—offline usage.
 
 Allow:
 
-- downloaded lessons
-- reading content
-- editing code
-- JavaScript execution
-- deterministic local exercises
-- viewing cached progress
+* downloaded lessons
+* reading content
+* editing code
+* JavaScript execution
+* deterministic local exercises
+* viewing cached progress
 
 Do not support offline:
 
-- AI
-- leaderboards
-- community
-- remote sandboxes
-- account changes
-- publishing
+* AI
+* leaderboards
+* community
+* remote sandboxes
+* account changes
+* publishing
 
 ---
 
@@ -1512,14 +1514,14 @@ Target:
 
 Every quest contains:
 
-- clear objective
-- explanation
-- examples
-- task
-- starter code
-- tests
-- hints
-- reward
+* clear objective
+* explanation
+* examples
+* task
+* starter code
+* tests
+* hints
+* reward
 
 ---
 
@@ -1535,12 +1537,12 @@ Build one polished JavaScript project.
 
 The capstone should require combining:
 
-- variables
-- functions
-- loops
-- collections
-- conditionals
-- event handling where relevant
+* variables
+* functions
+* loops
+* collections
+* conditionals
+* event handling where relevant
 
 Do not build a full IDE.
 
@@ -1623,18 +1625,18 @@ Use Sentry.
 
 Monitor:
 
-- frontend errors
-- backend exceptions
-- API latency
-- failed requests
-- releases
+* frontend errors
+* backend exceptions
+* API latency
+* failed requests
+* releases
 
 Backend logs should include:
 
-- request ID
-- route
-- duration
-- response status
+* request ID
+* route
+* duration
+* response status
 
 Never log secrets.
 
@@ -1650,41 +1652,41 @@ Review:
 
 ### Authentication
 
-- token verification
-- session expiration
+* token verification
+* session expiration
 
 ### Authorization
 
-- resource ownership
-- privileged roles
+* resource ownership
+* privileged roles
 
 ### API
 
-- validation
-- request limits
-- rate limits
+* validation
+* request limits
+* rate limits
 
 ### Runtime
 
-- Worker isolation
-- iframe sandbox
-- timeout
-- output limits
+* Worker isolation
+* iframe sandbox
+* timeout
+* output limits
 
 ### Database
 
-- least privilege
-- migration safety
+* least privilege
+* migration safety
 
 ### Storage
 
-- file permissions
-- upload validation
+* file permissions
+* upload validation
 
 ### Secrets
 
-- backend-only access
-- environment separation
+* backend-only access
+* environment separation
 
 **Completed 2026-09-30:** Phase 33 closes the timeless/overlong access-token and plaintext production CORS gaps and adds trusted-application response headers without changing the dedicated learner compartments. Proposal [#144](https://github.com/edisonmalasan/codequest/pull/144), Apply [#145](https://github.com/edisonmalasan/codequest/pull/145), and spec sync [#146](https://github.com/edisonmalasan/codequest/pull/146) passed required CI. See the [dated security review](security-review.md), [canonical specification](../openspec/specs/production-security/spec.md), and [archived tasks](../openspec/changes/archive/2026-09-30-harden-production-security/tasks.md). Hosted database grants, ingress controls, deployment host behavior, and F06 policies remain pre-beta obligations; this review is not a production security certification.
 
@@ -1700,12 +1702,12 @@ Build confidence in core workflows.
 
 Prioritize:
 
-- validation
-- progression
-- XP
-- streaks
-- unlocks
-- content parser
+* validation
+* progression
+* XP
+* streaks
+* unlocks
+* content parser
 
 ## Integration
 
@@ -1734,10 +1736,10 @@ guest starts quest
 
 Also test:
 
-- Chrome
-- Firefox
-- WebKit
-- mobile viewport
+* Chrome
+* Firefox
+* WebKit
+* mobile viewport
 
 ---
 
@@ -1749,14 +1751,14 @@ Ensure the theme does not harm usability.
 
 Test:
 
-- keyboard navigation
-- focus order
-- screen readers
-- color contrast
-- reduced motion
-- zoom
-- touch targets
-- editor accessibility
+* keyboard navigation
+* focus order
+* screen readers
+* color contrast
+* reduced motion
+* zoom
+* touch targets
+* editor accessibility
 
 ---
 
@@ -1768,14 +1770,14 @@ Keep CodeQuest usable on low-end devices.
 
 Optimize:
 
-- route bundles
-- fonts
-- sprites
-- images
-- editor loading
-- content payloads
-- worker boot
-- service worker cache size
+* route bundles
+* fonts
+* sprites
+* images
+* editor loading
+* content payloads
+* worker boot
+* service worker cache size
 
 ---
 
@@ -1808,17 +1810,17 @@ Git remains source-of-truth for curriculum initially.
 
 Before inviting users, complete:
 
-- onboarding
-- account settings
-- recovery
-- terms
-- privacy
-- feedback form
-- analytics
-- monitoring
-- backups
-- security review
-- migration process
+* onboarding
+* account settings
+* recovery
+* terms
+* privacy
+* feedback form
+* analytics
+* monitoring
+* backups
+* security review
+* migration process
 
 ---
 
@@ -1830,14 +1832,14 @@ Validate the learning experience.
 
 Focus on:
 
-- lesson clarity
-- exercise difficulty
-- validation accuracy
-- editor usability
-- mobile friction
-- retention
-- hint usage
-- capstone completion
+* lesson clarity
+* exercise difficulty
+* validation accuracy
+* editor usability
+* mobile friction
+* retention
+* hint usage
+* capstone completion
 
 Do not immediately build requested features.
 
@@ -1891,12 +1893,12 @@ This is enough.
 
 Before new major features:
 
-- fix confusing lessons
-- fix validation
-- improve mobile
-- improve onboarding
-- optimize performance
-- analyze retention
+* fix confusing lessons
+* fix validation
+* improve mobile
+* improve onboarding
+* optimize performance
+* analyze retention
 
 Do not immediately add five programming languages.
 
@@ -1923,16 +1925,16 @@ AiModule
 
 Allow:
 
-- explain concept
-- explain error
-- provide hint
-- ask guiding question
+* explain concept
+* explain error
+* provide hint
+* ask guiding question
 
 Do not allow:
 
-- automatically solving graded quests
-- arbitrary code editing
-- autonomous actions
+* automatically solving graded quests
+* arbitrary code editing
+* autonomous actions
 
 ---
 
@@ -1966,10 +1968,10 @@ Then create the Python learning journey.
 
 Build:
 
-- Daily Challenge
-- concept review
-- random practice
-- weak-skill practice
+* Daily Challenge
+* concept review
+* random practice
+* weak-skill practice
 
 Start tracking concept mastery.
 
@@ -1979,12 +1981,12 @@ Start tracking concept mastery.
 
 Reward meaningful accomplishments:
 
-- chapter completion
-- course completion
-- capstone completion
-- consistency
-- debugging
-- mastery
+* chapter completion
+* course completion
+* capstone completion
+* consistency
+* debugging
+* mastery
 
 ---
 
@@ -1994,8 +1996,8 @@ Begin simple.
 
 Use:
 
-- weekly XP
-- verified activity
+* weekly XP
+* verified activity
 
 Keep leaderboards optional.
 
@@ -2013,11 +2015,11 @@ Create public profile capability:
 
 Show:
 
-- courses
-- projects
-- achievements
-- badges
-- optional XP/level
+* courses
+* projects
+* achievements
+* badges
+* optional XP/level
 
 ---
 
@@ -2025,10 +2027,10 @@ Show:
 
 Introduce:
 
-- pixel avatar
-- equipment
-- cosmetics
-- achievement-based unlocks
+* pixel avatar
+* equipment
+* cosmetics
+* achievement-based unlocks
 
 Do not introduce monetized loot systems.
 
@@ -2058,12 +2060,12 @@ Tie it to concept mastery rather than only XP.
 
 Teach:
 
-- repositories
-- commits
-- branches
-- merges
-- pull requests
-- conflicts
+* repositories
+* commits
+* branches
+* merges
+* pull requests
+* conflicts
 
 Then add GitHub integration.
 
@@ -2077,16 +2079,16 @@ Only build after enough active users exist.
 
 Start with:
 
-- public projects
-- reactions
-- comments
+* public projects
+* reactions
+* comments
 
 Later:
 
-- discussions
-- mentorship
-- guilds
-- collaborative challenges
+* discussions
+* mentorship
+* guilds
+* collaborative challenges
 
 Plan moderation first.
 
@@ -2098,9 +2100,9 @@ Require stronger proof than ordinary completion.
 
 Potential requirements:
 
-- final assessment
-- capstone
-- mastery threshold
+* final assessment
+* capstone
+* mastery threshold
 
 ---
 
@@ -2144,21 +2146,21 @@ isolated sandbox
 
 Support later:
 
-- Java
-- C++
-- Go
-- Rust
-- shell
+* Java
+* C++
+* Go
+* Rust
+* shell
 
 Enforce:
 
-- CPU limits
-- memory limits
-- disk limits
-- process limits
-- network restrictions
-- output limits
-- timeouts
+* CPU limits
+* memory limits
+* disk limits
+* process limits
+* network restrictions
+* output limits
+* timeouts
 
 This may eventually be extracted from the modular monolith.
 
@@ -2168,17 +2170,17 @@ This may eventually be extracted from the modular monolith.
 
 Allow AI to:
 
-- propose code
-- generate small patches
-- generate tests
-- explain diffs
+* propose code
+* generate small patches
+* generate tests
+* explain diffs
 
 Learner must:
 
-- inspect
-- approve
-- test
-- reject bad changes
+* inspect
+* approve
+* test
+* reject bad changes
 
 ---
 
@@ -2208,12 +2210,12 @@ Accept / Reject
 
 Teach:
 
-- scope
-- permissions
-- validation
-- context
-- hallucination detection
-- review discipline
+* scope
+* permissions
+* validation
+* context
+* hallucination detection
+* review discipline
 
 ---
 
@@ -2221,19 +2223,19 @@ Teach:
 
 Introduce MCP only when the platform already teaches:
 
-- terminal
-- Git
-- testing
-- AI
-- tool permissions
+* terminal
+* Git
+* testing
+* AI
+* tool permissions
 
 Teach MCP for connecting agents to:
 
-- repositories
-- databases
-- documentation
-- APIs
-- external developer tools
+* repositories
+* databases
+* documentation
+* APIs
+* external developer tools
 
 ---
 
@@ -2271,7 +2273,7 @@ Do not create separate services until scaling/security demands it.
 ## Execution
 
 ```ts
-ExecutionAdapter;
+ExecutionAdapter
 ```
 
 Possible adapters:
@@ -2288,7 +2290,7 @@ RemoteSandbox
 ## Validation
 
 ```ts
-ValidationStrategy;
+ValidationStrategy
 ```
 
 Implementations:
@@ -2305,7 +2307,7 @@ RemoteValidator
 ## AI
 
 ```ts
-TutorProvider;
+TutorProvider
 ```
 
 Avoid model/provider lock-in.
