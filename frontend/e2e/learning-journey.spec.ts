@@ -190,7 +190,8 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
   expect(submittedAuthorization).toMatch(/^Bearer /);
-  if (!submittedAuthorization) throw new Error('Q02 request was not authorized');
+  if (!submittedAuthorization)
+    throw new Error('Q02 request was not authorized');
   const progress = await request.get(
     `${apiOrigin}/api/v1/quests/${q02.slug}/progress`,
     { headers: { Authorization: submittedAuthorization } },
