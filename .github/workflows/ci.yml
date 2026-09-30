@@ -50,8 +50,10 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm --filter frontend build
+      - run: pnpm --dir frontend test:performance-budget
       - run: pnpm --dir frontend exec playwright install --with-deps chromium firefox webkit
       - run: pnpm --dir frontend test:pwa
+      - run: pnpm --dir frontend test:performance
       - run: pnpm --dir frontend test:curriculum
       - run: pnpm --dir frontend test:analytics
       - run: pnpm --dir frontend test:learning

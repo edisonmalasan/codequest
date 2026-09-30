@@ -213,6 +213,9 @@ test('Journey, lesson, and editor preserve semantic and keyboard access', async 
   await page.keyboard.press('Enter');
   await expect(hint.locator('..')).toHaveAttribute('open', '');
 
+  await page
+    .getByRole('heading', { name: 'Editor Workspace', level: 2 })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
