@@ -24,4 +24,4 @@ None. The change verifies current behavior and does not change product contracts
 
 ## Impact
 
-Backend and frontend test fixtures, Playwright configuration, CI, and testing documentation are affected. The local Auth fixture uses generated test keys and no production credentials. No REST schema, migration, learner runtime, independent grading, production Auth integration, or Phase 35 accessibility implementation is added.
+Backend and frontend test fixtures, Playwright configuration, CI, and testing documentation are affected. The browser gate also repairs the signup form's existing public environment lookup so its configured callback reaches Supabase Auth. The local Auth fixture uses generated test keys and no production credentials. No REST schema, migration, learner runtime, independent grading, new production Auth policy, or Phase 35 accessibility implementation is added.
