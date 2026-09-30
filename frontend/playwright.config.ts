@@ -12,6 +12,7 @@ export default defineConfig({
     '**/pwa.spec.ts',
     '**/foundations.spec.ts',
     '**/capstone.spec.ts',
+    '**/analytics.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,

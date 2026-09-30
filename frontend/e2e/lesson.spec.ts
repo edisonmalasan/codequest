@@ -202,7 +202,10 @@ test('guest can check published quest locally without creating a submission', as
   await expect(
     page.getByRole('button', { name: 'Submit attempt' }),
   ).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Sign in' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Sign up' })).toHaveAttribute(
+    'href',
+    '/register?next=%2Faccount',
+  );
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
