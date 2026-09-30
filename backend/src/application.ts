@@ -18,12 +18,18 @@ import {
 import { BackendConfig } from './infrastructure/config/backend-config';
 import { setupOpenApi } from './infrastructure/openapi/setup-openapi';
 import { CurriculumCatalog } from './modules/curriculum/content/curriculum-catalog';
+import {
+  BackendMonitoring,
+  createBackendMonitoring,
+  safeRoute,
+} from './infrastructure/monitoring/monitoring';
 
 export interface ApplicationOptions {
   readonly foundationLogger?: FoundationLogger;
   readonly nestLogger?: false | LoggerService;
   readonly enableShutdownHooks?: boolean;
   readonly curriculumCatalog?: CurriculumCatalog;
+  readonly monitoring?: BackendMonitoring;
 }
 
 function pathname(url: string): string {
@@ -36,6 +42,7 @@ export async function configureApplication(
   options: ApplicationOptions = {},
 ): Promise<void> {
   const logger = options.foundationLogger ?? new JsonFoundationLogger();
+  const monitoring = options.monitoring ?? createBackendMonitoring(config);
   const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
 
   fastify.addHook('onRequest', (request, reply, done) => {
@@ -46,6 +53,8 @@ export async function configureApplication(
   fastify.addHook('onResponse', (request, reply, done) => {
     const context = getRequestContext(request);
     if (context !== undefined) {
+      const durationMs =
+        Number(process.hrtime.bigint() - context.startedAt) / 1_000_000;
       logger.requestCompleted({
         event: 'request.completed',
         service: 'codequest-api',
@@ -53,9 +62,19 @@ export async function configureApplication(
         method: request.method,
         path: pathname(request.url),
         status: reply.statusCode,
-        durationMs:
-          Number(process.hrtime.bigint() - context.startedAt) / 1_000_000,
+        durationMs,
       });
+      try {
+        monitoring?.completed({
+          requestId: context.requestId,
+          method: request.method,
+          route: safeRoute(request.routeOptions.url),
+          status: reply.statusCode,
+          durationMs,
+        });
+      } catch {
+        /* Monitoring must not affect the response. */
+      }
     }
     done();
   });
@@ -70,7 +89,7 @@ export async function configureApplication(
       forbidNonWhitelisted: true,
     }),
   );
-  app.useGlobalFilters(new ApiExceptionFilter(logger));
+  app.useGlobalFilters(new ApiExceptionFilter(logger, monitoring));
   app.enableCors({
     origin(origin, callback) {
       callback(
