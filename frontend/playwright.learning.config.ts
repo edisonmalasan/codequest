@@ -11,7 +11,11 @@ export default defineConfig({
   workers: 1,
   retries: 0,
   reporter: 'line',
-  use: { baseURL: appOrigin, trace: 'retain-on-failure', actionTimeout: 10_000 },
+  use: {
+    baseURL: appOrigin,
+    trace: 'retain-on-failure',
+    actionTimeout: 10_000,
+  },
   webServer: [
     {
       command: 'node scripts/learning-auth-fixture.mjs',
