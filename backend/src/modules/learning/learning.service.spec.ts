@@ -11,7 +11,7 @@ import { PGlite } from '@electric-sql/pglite';
 import { Test } from '@nestjs/testing';
 import { drizzle } from 'drizzle-orm/pglite';
 import { migrate } from 'drizzle-orm/pglite/migrator';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
 import {
   CURRICULUM_CATALOG,
@@ -21,6 +21,10 @@ import { LearningService } from './learning.service';
 import { XpService } from '../gamification/xp.service';
 import { localDate } from '../gamification/streak-policy';
 import { StreakService } from '../gamification/streak.service';
+import {
+  AnalyticsService,
+  type AnalyticsFact,
+} from '../analytics/analytics.service';
 
 const USER_A = '00000000-0000-4000-8000-000000000001';
 const USER_B = '00000000-0000-4000-8000-000000000002';
@@ -77,8 +81,10 @@ describe('authoritative attempt persistence', () => {
   let xp: XpService;
   let streaks: StreakService;
   let root: string;
+  let analyticsFacts: AnalyticsFact[];
 
   beforeEach(async () => {
+    analyticsFacts = [];
     root = contentFixture();
     client = await PGlite.create();
     const database = drizzle(client);
@@ -88,6 +94,14 @@ describe('authoritative attempt persistence', () => {
         LearningService,
         XpService,
         StreakService,
+        {
+          provide: AnalyticsService,
+          useValue: {
+            capture: async (fact: AnalyticsFact) => {
+              analyticsFacts.push(fact);
+            },
+          },
+        },
         { provide: DatabaseConnectionService, useValue: { database } },
         { provide: CURRICULUM_CATALOG, useValue: loadCurriculumCatalog(root) },
       ],
@@ -139,6 +153,14 @@ describe('authoritative attempt persistence', () => {
       providers: [
         LearningService,
         {
+          provide: AnalyticsService,
+          useValue: {
+            capture: async (fact: AnalyticsFact) => {
+              analyticsFacts.push(fact);
+            },
+          },
+        },
+        {
           provide: DatabaseConnectionService,
           useValue: { database: drizzle(client) },
         },
@@ -180,6 +202,22 @@ describe('authoritative attempt persistence', () => {
       complete,
     );
     expect(accepted.accepted).toBe(true);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'capstone_completed'),
+    ).toEqual([
+      {
+        name: 'capstone_completed',
+        ownerId: USER_A,
+        factId: accepted.id,
+        occurredAt: new Date(accepted.submittedAt),
+        properties: {
+          quest_id: 'CAP01',
+          chapter_id: chapter.metadata.id,
+          content_version: '1.0.0',
+          assessment_version: '1.0.0',
+        },
+      },
+    ]);
     expect(accepted.report.capstoneResponses).toEqual(responses);
     expect(await capstones.replay(USER_A, 'CAP01', complete)).toEqual(accepted);
     await expect(
@@ -304,6 +342,195 @@ describe('authoritative attempt persistence', () => {
     ).toHaveLength(1);
     expect(
       (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(1);
+  });
+
+  it('emits only committed owner facts with stable IDs across replay and practice', async () => {
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000401',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'private source never sent to analytics',
+      report: REPORT,
+    };
+    const first = await service.submit(USER_A, 'first-message', body);
+    expect(first.accepted).toBe(true);
+    expect(analyticsFacts.map((fact) => fact.name)).toEqual([
+      'signup_completed',
+      'quest_attempted',
+      'quest_completed',
+      'first_quest_completed',
+    ]);
+    expect(new Set(analyticsFacts.map((fact) => fact.factId))).toEqual(
+      new Set([USER_A, first.id]),
+    );
+    expect(JSON.stringify(analyticsFacts)).not.toContain(body.source);
+    expect(JSON.stringify(analyticsFacts)).not.toContain(REPORT.feedback);
+    await service.submit(USER_A, 'first-message', body);
+    expect(analyticsFacts).toHaveLength(4);
+    await service.submit(USER_A, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000402',
+    });
+    expect(analyticsFacts.map((fact) => fact.name)).toEqual([
+      'signup_completed',
+      'quest_attempted',
+      'quest_completed',
+      'first_quest_completed',
+      'quest_attempted',
+    ]);
+    const failed = {
+      ...REPORT,
+      passed: false,
+      cases: [REPORT.cases[0], { ...REPORT.cases[1], status: 'failed' }],
+      failedCaseIds: ['boundary-exact-output'],
+      feedback: 'Private failure',
+    };
+    await service.submit(USER_B, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000403',
+      report: failed,
+    });
+    expect(analyticsFacts.slice(-2).map((fact) => fact.name)).toEqual([
+      'quest_attempted',
+      'quest_failed',
+    ]);
+    expect(analyticsFacts.at(-1)?.ownerId).toBe(USER_B);
+    expect(JSON.stringify(analyticsFacts)).not.toContain('Private failure');
+    await expect(
+      service.submit(USER_B, 'first-message', {
+        ...body,
+        clientEventId: '00000000-0000-4000-8000-000000000404',
+        contentVersion: '9.9.9',
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'signup_completed'),
+    ).toHaveLength(2);
+    expect(analyticsFacts).toHaveLength(8);
+  });
+
+  it('emits a continued streak only for a newly credited next day', async () => {
+    const firstBody = {
+      clientEventId: '00000000-0000-4000-8000-000000000601',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'first fixture',
+      report: REPORT,
+    };
+    await service.submit(USER_A, 'first-message', firstBody);
+    const yesterday = new Date(Date.now() - 86_400_000);
+    await client.query(
+      'update codequest.streak_activity_days set activity_date = $1, accepted_at = $2 where user_id = $3',
+      [yesterday.toISOString().slice(0, 10), yesterday.toISOString(), USER_A],
+    );
+    const catalog = loadCurriculumCatalog(root);
+    const chapter = catalog.journeys[0].chapters[0];
+    const base = chapter.quests[0];
+    const second = {
+      ...base,
+      metadata: {
+        ...base.metadata,
+        id: 'Q02',
+        slug: 'second-message',
+        position: 2,
+      },
+      activeSnapshot: {
+        ...base.activeSnapshot,
+        metadata: {
+          ...base.activeSnapshot.metadata,
+          prerequisiteQuestIds: ['Q01'],
+        },
+      },
+    };
+    const secondCatalog = {
+      ...catalog,
+      journeys: [
+        {
+          ...catalog.journeys[0],
+          chapters: [{ ...chapter, quests: [...chapter.quests, second] }],
+        },
+      ],
+    };
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: secondCatalog },
+        {
+          provide: AnalyticsService,
+          useValue: {
+            capture: async (fact: AnalyticsFact) => {
+              analyticsFacts.push(fact);
+            },
+          },
+        },
+      ],
+    }).compile();
+    const secondService = module.get(LearningService);
+    const body = {
+      ...firstBody,
+      clientEventId: '00000000-0000-4000-8000-000000000602',
+    };
+    const accepted = await secondService.submit(USER_A, 'second-message', body);
+    expect(accepted.accepted).toBe(true);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'streak_continued'),
+    ).toEqual([
+      expect.objectContaining({ ownerId: USER_A, factId: accepted.id }),
+    ]);
+    expect(await secondService.submit(USER_A, 'second-message', body)).toEqual(
+      accepted,
+    );
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'streak_continued'),
+    ).toHaveLength(1);
+    expect(
+      (await client.query('select * from codequest.streak_activity_days')).rows,
+    ).toHaveLength(2);
+  });
+
+  it('keeps accepted facts when the analytics provider fails', async () => {
+    const transport = vi.fn().mockRejectedValue(new Error('fixture outage'));
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: loadCurriculumCatalog(root) },
+        {
+          provide: AnalyticsService,
+          useValue: new AnalyticsService(
+            {
+              approved: 'true',
+              projectKey: 'local_fixture_key',
+              host: 'https://capture.example.test',
+            },
+            transport,
+          ),
+        },
+      ],
+    }).compile();
+    const failingAnalytics = module.get(LearningService);
+    const accepted = await failingAnalytics.submit(USER_A, 'first-message', {
+      clientEventId: '00000000-0000-4000-8000-000000000603',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'private fixture',
+      report: REPORT,
+    });
+    expect(accepted.accepted).toBe(true);
+    expect(transport).toHaveBeenCalled();
+    expect(
+      (await client.query('select * from codequest.quest_completions')).rows,
+    ).toHaveLength(1);
+    expect(
+      (await client.query('select * from codequest.xp_events')).rows,
     ).toHaveLength(1);
   });
 

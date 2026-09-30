@@ -6,7 +6,7 @@ Phase 31 needs trustworthy activation, learning, retention and capstone measurem
 
 ## What Changes
 
-- Define a small, versioned allowlist for the Phase 31 event names, safe properties, event identities, source trust and guest/account cohorts.
+- Define a small, versioned allowlist for the Phase 31 event names, plus `code_run` and `validation_checked` observations needed to measure later successful Run/Check activity, safe properties, event identities, source trust and guest/account cohorts.
 - Capture browser-observed quest starts, runs, hints and local failures only from trusted application seams; derive accepted attempts, completions and capstone transitions from newly committed backend facts. Replays and repeated actions do not become new authoritative milestones.
 - Add a bounded PostHog capture adapter that is inert by default. External delivery requires explicit deployment configuration after the F06 consent, retention and deletion decisions; tests use a local fake collector. No live learner data is collected by this change.
 - Document PostHog funnel and D1/D7 query definitions, source limitations, deduplication by stable event identity, and F05 target-setting obligations.

@@ -3,8 +3,10 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, count, eq, inArray } from 'drizzle-orm';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
 import {
   chapters,
@@ -80,6 +82,9 @@ export class ProgressService {
     @Inject(DatabaseConnectionService)
     private readonly connection: DatabaseConnectionService,
     @Inject(CURRICULUM_CATALOG) private readonly catalog: CurriculumCatalog,
+    @Optional()
+    @Inject(AnalyticsService)
+    private readonly analytics?: AnalyticsService,
   ) {}
 
   private locateQuest(slug: string): {
@@ -123,7 +128,11 @@ export class ProgressService {
     quest: PublishedQuest,
   ) {
     const db = this.connection.database;
-    await db.insert(users).values({ id: userId }).onConflictDoNothing();
+    const insertedUser = await db
+      .insert(users)
+      .values({ id: userId })
+      .onConflictDoNothing()
+      .returning({ createdAt: users.createdAt });
     await db
       .insert(journeys)
       .values({ id: journey.metadata.id, position: journey.metadata.position })
@@ -167,7 +176,7 @@ export class ProgressService {
       .limit(1);
     if (!version[0])
       throw new ConflictException('Assessment version is unavailable');
-    return version[0].id;
+    return { id: version[0].id, accountCreatedAt: insertedUser[0]?.createdAt };
   }
 
   async start(
@@ -178,12 +187,40 @@ export class ProgressService {
     const { journey, chapter, quest } = this.locateQuest(slug);
     this.checkVersion(quest, body.contentVersion);
     await this.requireAvailable(userId, quest.metadata.id);
-    const versionId = await this.ensureVersion(userId, journey, chapter, quest);
+    const version = await this.ensureVersion(userId, journey, chapter, quest);
+    if (version.accountCreatedAt)
+      await this.analytics?.capture({
+        name: 'signup_completed',
+        ownerId: userId,
+        factId: userId,
+        occurredAt: version.accountCreatedAt,
+      });
+    const versionId = version.id;
     const db = this.connection.database;
-    await db
-      .insert(questStarts)
-      .values({ userId, questId: quest.metadata.id, questVersionId: versionId })
-      .onConflictDoNothing();
+    const result = await db.transaction(async (tx) => {
+      await tx
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.id, userId))
+        .for('update');
+      const inserted = await tx
+        .insert(questStarts)
+        .values({
+          userId,
+          questId: quest.metadata.id,
+          questVersionId: versionId,
+        })
+        .onConflictDoNothing()
+        .returning({ startedAt: questStarts.startedAt });
+      const [total] = await tx
+        .select({ value: count() })
+        .from(questStarts)
+        .where(eq(questStarts.userId, userId));
+      return {
+        inserted,
+        firstForOwner: inserted.length > 0 && total.value === 1,
+      };
+    });
     const rows = await db
       .select({ startedAt: questStarts.startedAt })
       .from(questStarts)
@@ -194,6 +231,32 @@ export class ProgressService {
         ),
       )
       .limit(1);
+    if (result.inserted.length) {
+      if (result.firstForOwner)
+        await this.analytics?.capture({
+          name: 'first_quest_started',
+          ownerId: userId,
+          factId: quest.metadata.id,
+          occurredAt: result.inserted[0].startedAt,
+          properties: {
+            quest_id: quest.metadata.id,
+            chapter_id: chapter.metadata.id,
+            content_version: body.contentVersion,
+          },
+        });
+      if (quest.metadata.kind === 'capstone')
+        await this.analytics?.capture({
+          name: 'capstone_started',
+          ownerId: userId,
+          factId: quest.metadata.id,
+          occurredAt: result.inserted[0].startedAt,
+          properties: {
+            quest_id: quest.metadata.id,
+            chapter_id: chapter.metadata.id,
+            content_version: body.contentVersion,
+          },
+        });
+    }
     return {
       questId: quest.metadata.id,
       occurredAt: rows[0].startedAt.toISOString(),
@@ -210,9 +273,17 @@ export class ProgressService {
     if (!['question', 'concept', 'nextStep'].includes(body.hintKey))
       throw new ConflictException('Published hint not found');
     await this.requireAvailable(userId, quest.metadata.id);
-    const versionId = await this.ensureVersion(userId, journey, chapter, quest);
+    const version = await this.ensureVersion(userId, journey, chapter, quest);
+    if (version.accountCreatedAt)
+      await this.analytics?.capture({
+        name: 'signup_completed',
+        ownerId: userId,
+        factId: userId,
+        occurredAt: version.accountCreatedAt,
+      });
+    const versionId = version.id;
     const db = this.connection.database;
-    await db
+    const inserted = await db
       .insert(questHintUses)
       .values({
         userId,
@@ -220,7 +291,8 @@ export class ProgressService {
         questVersionId: versionId,
         hintKey: body.hintKey,
       })
-      .onConflictDoNothing();
+      .onConflictDoNothing()
+      .returning({ usedAt: questHintUses.usedAt });
     const rows = await db
       .select({ usedAt: questHintUses.usedAt })
       .from(questHintUses)
@@ -233,6 +305,18 @@ export class ProgressService {
         ),
       )
       .limit(1);
+    if (inserted.length)
+      await this.analytics?.capture({
+        name: 'hint_used',
+        ownerId: userId,
+        factId: `${quest.metadata.id}:${versionId}:${body.hintKey}`,
+        occurredAt: inserted[0].usedAt,
+        properties: {
+          quest_id: quest.metadata.id,
+          chapter_id: chapter.metadata.id,
+          content_version: body.contentVersion,
+        },
+      });
     return {
       questId: quest.metadata.id,
       occurredAt: rows[0].usedAt.toISOString(),

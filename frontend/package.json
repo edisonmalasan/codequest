@@ -11,7 +11,8 @@
     "test:pwa": "playwright test --config playwright.pwa.config.ts",
     "lint": "eslint . && prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test:curriculum": "pnpm --dir ../backend build && playwright test --config playwright.curriculum.config.ts"
+    "test:curriculum": "pnpm --dir ../backend build && playwright test --config playwright.curriculum.config.ts",
+    "test:analytics": "playwright test --config playwright.analytics.config.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

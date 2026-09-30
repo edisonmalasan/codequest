@@ -4,10 +4,15 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
 import { isDeepStrictEqual } from 'node:util';
 import { and, count, desc, eq, inArray } from 'drizzle-orm';
 import { DatabaseConnectionService } from '../../infrastructure/database/database-connection';
+import {
+  AnalyticsService,
+  type AnalyticsFact,
+} from '../analytics/analytics.service';
 import {
   chapters,
   journeys,
@@ -65,6 +70,9 @@ export class LearningService {
     @Inject(DatabaseConnectionService)
     private readonly connection: DatabaseConnectionService,
     @Inject(CURRICULUM_CATALOG) private readonly catalog: CurriculumCatalog,
+    @Optional()
+    @Inject(AnalyticsService)
+    private readonly analytics?: AnalyticsService,
   ) {}
 
   private locate(slug: string): LocatedQuest {
@@ -124,8 +132,12 @@ export class LearningService {
     if (Buffer.byteLength(JSON.stringify(body.report), 'utf8') > 16_384)
       throw new BadRequestException('Validation report exceeds limit');
 
-    return this.connection.database.transaction(async (tx) => {
-      await tx.insert(users).values({ id: userId }).onConflictDoNothing();
+    const committed = await this.connection.database.transaction(async (tx) => {
+      const insertedUser = await tx
+        .insert(users)
+        .values({ id: userId })
+        .onConflictDoNothing()
+        .returning({ createdAt: users.createdAt });
       await tx
         .select({ id: users.id })
         .from(users)
@@ -189,16 +201,19 @@ export class LearningService {
             ),
           )
           .limit(1);
-        return this.response(
-          row.id,
-          row.questId,
-          body.clientEventId,
-          body,
-          parseStoredReport(row.report),
-          row.submittedAt,
-          attemptCount,
-          completion[0]?.id === row.id,
-        );
+        return {
+          response: this.response(
+            row.id,
+            row.questId,
+            body.clientEventId,
+            body,
+            parseStoredReport(row.report),
+            row.submittedAt,
+            attemptCount,
+            completion[0]?.id === row.id,
+          ),
+          facts: [] as AnalyticsFact[],
+        };
       }
 
       if (!located) throw new NotFoundException('Published quest not found');
@@ -342,6 +357,8 @@ export class LearningService {
         reportedResult: report,
       });
       let accepted = false;
+      let firstCompletion = false;
+      let continuedStreak = false;
       if (report.passed) {
         const inserted = await tx
           .insert(questCompletions)
@@ -354,6 +371,11 @@ export class LearningService {
           .returning({ id: questCompletions.acceptedAttemptId });
         accepted = inserted.length > 0;
         if (accepted) {
+          const [completionTotal] = await tx
+            .select({ value: count() })
+            .from(questCompletions)
+            .where(eq(questCompletions.userId, userId));
+          firstCompletion = completionTotal.value === 1;
           await tx.insert(xpEvents).values({
             userId,
             questId: quest.metadata.id,
@@ -372,6 +394,7 @@ export class LearningService {
             .select({
               timezone: streakActivityDays.timezone,
               acceptedAt: streakActivityDays.acceptedAt,
+              activityDate: streakActivityDays.activityDate,
             })
             .from(streakActivityDays)
             .where(eq(streakActivityDays.userId, userId))
@@ -385,7 +408,7 @@ export class LearningService {
               attempt.submittedAt,
             )
           ) {
-            await tx
+            const credited = await tx
               .insert(streakActivityDays)
               .values({
                 userId,
@@ -394,7 +417,14 @@ export class LearningService {
                 qualifyingQuestId: quest.metadata.id,
                 acceptedAt: attempt.submittedAt,
               })
-              .onConflictDoNothing();
+              .onConflictDoNothing()
+              .returning({ activityDate: streakActivityDays.activityDate });
+            continuedStreak =
+              credited.length > 0 &&
+              !!latest &&
+              Date.parse(`${date}T00:00:00Z`) -
+                Date.parse(`${latest.activityDate}T00:00:00Z`) ===
+                86_400_000;
           }
         }
       }
@@ -407,17 +437,58 @@ export class LearningService {
             eq(questAttempts.questId, quest.metadata.id),
           ),
         );
-      return this.response(
-        attempt.id,
-        quest.metadata.id,
-        body.clientEventId,
-        body,
-        report,
-        attempt.submittedAt,
-        attemptCount,
-        accepted,
-      );
+      const properties = {
+        quest_id: quest.metadata.id,
+        chapter_id: chapter.metadata.id,
+        content_version: body.contentVersion,
+        assessment_version: body.assessmentVersion,
+      };
+      const fact = (
+        name: AnalyticsFact['name'],
+        factId: string,
+      ): AnalyticsFact => ({
+        name,
+        ownerId: userId,
+        factId,
+        occurredAt: attempt.submittedAt,
+        properties,
+      });
+      const facts: AnalyticsFact[] = insertedUser.length
+        ? [
+            {
+              name: 'signup_completed',
+              ownerId: userId,
+              factId: userId,
+              occurredAt: insertedUser[0].createdAt,
+            },
+          ]
+        : [];
+      facts.push(fact('quest_attempted', attempt.id));
+      if (!report.passed) facts.push(fact('quest_failed', attempt.id));
+      if (accepted) {
+        facts.push(fact('quest_completed', attempt.id));
+        if (firstCompletion)
+          facts.push(fact('first_quest_completed', attempt.id));
+        if (quest.metadata.kind === 'capstone')
+          facts.push(fact('capstone_completed', attempt.id));
+        if (continuedStreak) facts.push(fact('streak_continued', attempt.id));
+      }
+      return {
+        response: this.response(
+          attempt.id,
+          quest.metadata.id,
+          body.clientEventId,
+          body,
+          report,
+          attempt.submittedAt,
+          attemptCount,
+          accepted,
+        ),
+        facts,
+      };
     });
+    for (const fact of committed.facts) await this.analytics?.capture(fact);
+    return committed.response;
   }
 
   async history(userId: string, slug: string): Promise<AttemptHistoryDto> {

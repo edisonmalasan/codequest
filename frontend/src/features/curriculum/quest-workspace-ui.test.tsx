@@ -11,6 +11,13 @@ const sync = vi.hoisted(() => ({
   replay: vi.fn(),
   list: vi.fn(),
 }));
+const analytics = vi.hoisted(() => ({
+  captureObserved: vi.fn(),
+  captureFirstRun: vi.fn(),
+  captureGuestFirstStart: vi.fn(),
+  updateObservedOwner: vi.fn(),
+}));
+vi.mock('@/features/analytics/observed-analytics', () => analytics);
 vi.mock('@/features/progress-sync/progress-replay', () => ({
   progressReplay: {
     save: sync.save,
@@ -51,14 +58,43 @@ vi.mock('@/features/validation', () => ({
 vi.mock('@/features/editor', () => ({
   EditorWorkspace: ({
     onCheckComplete,
+    onRunComplete,
     onSubmit,
     onSourcesChange,
   }: {
     onCheckComplete?: (snapshot: unknown) => void;
+    onRunComplete?: (outcome: { status: string }) => void;
     onSubmit?: (snapshot: unknown) => void;
     onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
   }) => (
     <>
+      <button
+        type="button"
+        onClick={() => onRunComplete?.({ status: 'success' })}
+      >
+        Mock Run
+      </button>
+      <button
+        type="button"
+        onClick={() => onRunComplete?.({ status: 'runtime-error' })}
+      >
+        Mock Run error
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          onCheckComplete?.({
+            source: 'private failed source',
+            validation: {
+              checkId: 'failed-check',
+              status: 'completed',
+              passed: false,
+            },
+          })
+        }
+      >
+        Mock Failed Check
+      </button>
       <button
         onClick={() =>
           onSourcesChange?.({
@@ -278,6 +314,33 @@ describe('guest quest presentation', () => {
     expect(
       screen.getByRole('link', { name: 'Sign up' }).getAttribute('href'),
     ).toContain('/register');
+  });
+
+  it('observes later successful Run/Check and failure categories without source', async () => {
+    const user = userEvent.setup();
+    render(<QuestWorkspace quest={questFixtures.Q01} />);
+    await screen.findByRole('button', { name: /^Mock Run$/ });
+    await user.click(screen.getByRole('button', { name: /^Mock Run$/ }));
+    await user.click(screen.getByRole('button', { name: /^Mock Check$/ }));
+    await user.click(screen.getByRole('button', { name: 'Mock Run error' }));
+    await user.click(screen.getByRole('button', { name: 'Mock Failed Check' }));
+    expect(analytics.captureFirstRun).toHaveBeenCalledTimes(2);
+    expect(
+      analytics.captureObserved.mock.calls.map(([event]) => event.name),
+    ).toEqual([
+      'code_run',
+      'validation_checked',
+      'code_run',
+      'execution_error',
+      'validation_checked',
+      'validation_failed',
+    ]);
+    expect(JSON.stringify(analytics.captureObserved.mock.calls)).not.toContain(
+      'private failed source',
+    );
+    expect(JSON.stringify(analytics.captureObserved.mock.calls)).not.toContain(
+      'guest source',
+    );
   });
 
   it('reports failed device storage without claiming durable completion', async () => {

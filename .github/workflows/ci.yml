@@ -53,4 +53,4 @@ jobs:
       - run: pnpm --dir frontend exec playwright install --with-deps chromium
       - run: pnpm --dir frontend test:pwa
       - run: pnpm --dir frontend test:curriculum
-      - run: pnpm --filter backend build
+      - run: pnpm --dir frontend test:analytics

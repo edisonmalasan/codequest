@@ -75,6 +75,9 @@ export interface EditorWorkspaceProps {
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+  onRunComplete?: (outcome: {
+    readonly status: ExecutionResult['status'];
+  }) => void;
   onCheckComplete?: (snapshot: {
     readonly source: string;
     readonly validation: ValidationResult;
@@ -186,6 +189,7 @@ export function EditorWorkspace({
   validationStrategy,
   validationDefinition,
   onSourcesChange,
+  onRunComplete,
   onSubmit,
   onCheckComplete,
   submitting,
@@ -510,6 +514,7 @@ export function EditorWorkspace({
         if (executionTokenRef.current !== token) return;
         executionControllerRef.current = null;
         setExecution(presentExecution(result));
+        onRunComplete?.({ status: result.status });
       },
       () => {
         if (executionTokenRef.current !== token) return;
@@ -525,9 +530,10 @@ export function EditorWorkspace({
           running: false,
           state: { kind: 'error', label: 'Runtime unavailable' },
         });
+        onRunComplete?.({ status: 'internal-error' });
       },
     );
-  }, [activeFile, executionAdapter]);
+  }, [activeFile, executionAdapter, onRunComplete]);
 
   const cancelExecution = useCallback((): void => {
     executionControllerRef.current?.abort();
