@@ -184,7 +184,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await edit(page, q02.reference);
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   await expect(page.getByText(/Local check passed/)).toBeVisible();
-  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
   const response = await request.get(`${apiOrigin}/api/v1/quests/${q02.slug}`);
   expect(response.status()).toBe(200);
