@@ -11,6 +11,9 @@ test('static preview filters active content, preserves source, and isolates Work
   });
   await page.goto('/editor-workspace');
   const preview = page.getByRole('region', { name: 'Web preview' });
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const htmlTab = page.getByRole('tab', { name: 'index.html' });
   await htmlTab.click();
   const htmlEditor = page.getByRole('textbox', {
@@ -129,6 +132,9 @@ test('preview Worker recovers after a loop and remains independent of Run', asyn
   page,
 }) => {
   await page.goto('/editor-workspace');
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const preview = page.getByRole('region', { name: 'Web preview' });
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',

@@ -331,6 +331,9 @@ test('explicit download opens offline with local Run Check and retained draft', 
   const editor = offline.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
+  const loadEditor = offline.getByRole('button', { name: 'Load code editor' });
+  await expect(loadEditor).toBeVisible();
+  await loadEditor.click();
   await expect(editor).toBeVisible();
   await offline.getByRole('button', { name: 'Run', exact: true }).click();
   await expect(offline.getByText(/Completed in .* seconds/)).toBeVisible();
@@ -381,6 +384,11 @@ test('explicit download opens offline with local Run Check and retained draft', 
   ).toBeVisible();
   await offline.reload();
   await offline.getByRole('button', { name: 'Open saved lesson' }).click();
+  const reloadEditor = offline.getByRole('button', {
+    name: 'Load code editor',
+  });
+  await expect(reloadEditor).toBeVisible();
+  await reloadEditor.click();
   await expect(
     offline.getByRole('textbox', { name: 'main.js code editor (javascript)' }),
   ).toContainText('retained offline source');

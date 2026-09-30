@@ -27,6 +27,9 @@ async function session(context: BrowserContext): Promise<void> {
 }
 
 async function edit(page: Page, source: string): Promise<void> {
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
@@ -133,14 +136,17 @@ test('CAP01 keeps written work on device and captures explicit offline Submit', 
   await expect(
     page.getByRole('textbox', { name: 'Transfer response' }),
   ).toHaveValue(/equality is included/);
-  expect(
-    (
-      await page
-        .getByRole('textbox', { name: 'main.js code editor (javascript)' })
-        .locator('.cm-line')
-        .allTextContents()
-    ).join('\n'),
-  ).toBe(solutions.reference);
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
+  const restoredEditor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await expect
+    .poll(async () =>
+      (await restoredEditor.locator('.cm-line').allTextContents()).join('\n'),
+    )
+    .toBe(solutions.reference);
   await check(page, true);
   await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission saved on this device/)).toBeVisible();

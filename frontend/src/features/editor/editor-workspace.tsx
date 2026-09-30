@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { CodeEditor } from '@/components/editor/code-editor';
+import { DeferredCodeEditor } from './deferred-code-editor';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import type { ExecutionAdapter, ExecutionResult } from '@/features/runtime';
@@ -731,7 +731,7 @@ export function EditorWorkspace({
             Tab indents code. Press Ctrl+M to let Tab move focus out of the
             editor (Option+Shift+M on Mac).
           </p>
-          <CodeEditor
+          <DeferredCodeEditor
             value={sources[activeFile.id] ?? activeFile.starterSource}
             language={activeFile.language}
             label={`${activeFile.name} code editor`}

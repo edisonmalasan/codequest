@@ -34,6 +34,11 @@ import { RuntimeStatus } from './runtime-status';
 import { TestResults } from './test-results';
 import type { WorkspaceFile } from './editor-workspace-types';
 
+vi.mock('./deferred-code-editor', async () => {
+  const { CodeEditor } = await import('@/components/editor/code-editor');
+  return { DeferredCodeEditor: CodeEditor };
+});
+
 const files: readonly WorkspaceFile[] = [
   {
     id: 'main',
