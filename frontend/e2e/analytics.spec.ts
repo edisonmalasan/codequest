@@ -91,6 +91,20 @@ test('guest observations and accepted account facts reach only the fake collecto
   const guest = await browser.newContext({ baseURL: 'http://127.0.0.1:3200' });
   await interceptCollector(guest, browserRecords);
   const guestPage = await guest.newPage();
+  const browserDiagnostics: string[] = [];
+  guestPage.on('console', (message) => {
+    if (message.type() === 'error') browserDiagnostics.push(message.text());
+  });
+  guestPage.on('pageerror', (error) => browserDiagnostics.push(error.message));
+  guestPage.on('requestfailed', (request) =>
+    browserDiagnostics.push(
+      `${request.method()} ${request.url()} ${request.failure()?.errorText}`,
+    ),
+  );
+  guestPage.on('request', (request) => {
+    if (request.url().includes('capture.example.test'))
+      browserDiagnostics.push(`${request.method()} ${request.url()}`);
+  });
   await guestPage.goto('/quests/first-message');
   await expect(
     guestPage.getByRole('region', { name: 'Quest workspace' }),
@@ -100,6 +114,15 @@ test('guest observations and accepted account facts reach only the fake collecto
   await guestPage.getByRole('button', { name: 'Run', exact: true }).click();
   await expect(guestPage.getByText(/Completed in/)).toBeVisible({
     timeout: 15_000,
+  });
+  console.log('Analytics browser state', {
+    browser: await guestPage.evaluate(() => ({
+      online: navigator.onLine,
+      secure: isSecureContext,
+      randomUUID: typeof crypto.randomUUID,
+    })),
+    diagnostics: browserDiagnostics,
+    eventNames: browserRecords.map((event) => event.event),
   });
   await expect
     .poll(() => browserRecords.map((event) => event.event), {
