@@ -18,6 +18,11 @@ import {
   loadBackendConfig,
 } from './infrastructure/config/backend-config';
 import { createOpenApiDocument } from './infrastructure/openapi/setup-openapi';
+import {
+  BackendMonitoring,
+  ApiCompletionSignal,
+  ApiExceptionSignal,
+} from './infrastructure/monitoring/monitoring';
 
 interface ErrorResponse {
   readonly error: {
@@ -91,6 +96,7 @@ function configuration(overrides: Partial<BackendConfig> = {}): BackendConfig {
 
 async function createTestApplication(
   logger: FoundationLogger,
+  monitoring?: BackendMonitoring,
 ): Promise<NestFastifyApplication> {
   const config = configuration();
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -102,6 +108,7 @@ async function createTestApplication(
     foundationLogger: logger,
     nestLogger: false,
     enableShutdownHooks: false,
+    monitoring,
   });
   await app.init();
   const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
@@ -114,6 +121,82 @@ describe('backend HTTP foundation', () => {
 
   afterEach(async () => {
     await Promise.all(applications.splice(0).map((app) => app.close()));
+  });
+
+  it('correlates safe completion and exception signals without changing responses', async () => {
+    const completions: ApiCompletionSignal[] = [];
+    const exceptions: ApiExceptionSignal[] = [];
+    const monitoring: BackendMonitoring = {
+      completed: (signal) => {
+        completions.push(signal);
+      },
+      unexpected: (signal) => {
+        exceptions.push(signal);
+      },
+    };
+    const app = await createTestApplication(
+      new CapturingFoundationLogger(),
+      monitoring,
+    );
+    applications.push(app);
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+    await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/echo?token=canary',
+      payload: { value: 1 },
+    });
+    const failed = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/failure?token=canary',
+      headers: { 'x-request-id': 'correlated' },
+    });
+    await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/unmatched?token=canary',
+    });
+    expect(failed.statusCode).toBe(500);
+    expect(exceptions).toEqual([
+      {
+        requestId: 'correlated',
+        route: '/api/v1/failure',
+        errorClass: 'Error',
+      },
+    ]);
+    expect(completions.map(({ status, route }) => ({ status, route }))).toEqual(
+      [
+        { status: 400, route: '/api/v1/echo' },
+        { status: 500, route: '/api/v1/failure' },
+        { status: 404, route: 'unmatched' },
+      ],
+    );
+    expect(JSON.stringify([completions, exceptions])).not.toContain('canary');
+    expect(completions[1]?.requestId).toBe('correlated');
+    expect(completions.every(({ durationMs }) => durationMs >= 0)).toBe(true);
+  });
+
+  it('ignores monitoring delivery failure without changing the 500 response', async () => {
+    const monitoring: BackendMonitoring = {
+      completed() {
+        throw new Error('sink unavailable');
+      },
+      unexpected() {
+        throw new Error('sink unavailable');
+      },
+    };
+    const app = await createTestApplication(
+      new CapturingFoundationLogger(),
+      monitoring,
+    );
+    applications.push(app);
+    const fastify: FastifyInstance = app.getHttpAdapter().getInstance();
+    const response = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/failure',
+    });
+    expect(response.statusCode).toBe(500);
+    expect(response.json<ErrorResponse>().error.message).toBe(
+      'Internal server error',
+    );
   });
 
   it('serves the versioned health contract and normalizes missing routes', async () => {

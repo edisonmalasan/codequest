@@ -8,6 +8,11 @@ import {
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { FoundationLogger } from './foundation-logger';
 import { getRequestId } from './request-context';
+import {
+  BackendMonitoring,
+  safeErrorClass,
+  safeRoute,
+} from '../../infrastructure/monitoring/monitoring';
 
 interface ErrorBody {
   readonly error: {
@@ -61,7 +66,10 @@ function validationDetails(response: unknown): readonly string[] | undefined {
 
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
-  constructor(private readonly logger: FoundationLogger) {}
+  constructor(
+    private readonly logger: FoundationLogger,
+    private readonly monitoring: BackendMonitoring | null = null,
+  ) {}
 
   catch(exception: unknown, host: ArgumentsHost): void {
     const http = host.switchToHttp();
@@ -85,6 +93,15 @@ export class ApiExceptionFilter implements ExceptionFilter {
             ? exception.name
             : 'UnknownApplicationError',
       });
+      try {
+        this.monitoring?.unexpected({
+          requestId,
+          route: safeRoute(request.routeOptions.url),
+          errorClass: safeErrorClass(exception),
+        });
+      } catch {
+        /* Monitoring must not affect the response. */
+      }
     }
 
     const body: ErrorBody = {

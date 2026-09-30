@@ -15,6 +15,10 @@ export interface BackendEnvironment {
   ANALYTICS_CAPTURE_APPROVED?: string;
   POSTHOG_PROJECT_KEY?: string;
   POSTHOG_HOST?: string;
+  MONITORING_CAPTURE_APPROVED?: string;
+  SENTRY_DSN?: string;
+  CODEQUEST_RELEASE?: string;
+  MONITORING_SLOW_MS?: string;
 }
 
 export interface SupabaseAuthConfig {
@@ -37,6 +41,12 @@ export interface BackendConfig {
     readonly approved?: string;
     readonly projectKey?: string;
     readonly host?: string;
+  };
+  readonly monitoring?: {
+    readonly approved?: string;
+    readonly dsn?: string;
+    readonly release?: string;
+    readonly slowMs?: string;
   };
 }
 
@@ -270,6 +280,19 @@ export function loadBackendConfig(
             approved: env.ANALYTICS_CAPTURE_APPROVED,
             projectKey: env.POSTHOG_PROJECT_KEY,
             host: env.POSTHOG_HOST,
+          },
+        }
+      : {}),
+    ...(env.MONITORING_CAPTURE_APPROVED ||
+    env.SENTRY_DSN ||
+    env.CODEQUEST_RELEASE ||
+    env.MONITORING_SLOW_MS
+      ? {
+          monitoring: {
+            approved: env.MONITORING_CAPTURE_APPROVED,
+            dsn: env.SENTRY_DSN,
+            release: env.CODEQUEST_RELEASE,
+            slowMs: env.MONITORING_SLOW_MS,
           },
         }
       : {}),
