@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthForm } from './auth-form';
+import { loadFrontendAuthConfig } from './auth-config';
 
 const replace = vi.fn();
 const refresh = vi.fn();
@@ -13,9 +14,9 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace, refresh }),
 }));
 vi.mock('./auth-config', () => ({
-  loadFrontendAuthConfig: () => ({
+  loadFrontendAuthConfig: vi.fn(() => ({
     callbackUrl: 'http://localhost:3000/auth/callback',
-  }),
+  })),
 }));
 vi.mock('./supabase-browser', () => ({
   getBrowserSupabaseClient: () => ({
@@ -51,6 +52,12 @@ describe('AuthForm', () => {
     await user.type(screen.getByLabelText('Email'), 'learner@example.test');
     await user.type(screen.getByLabelText('Password'), 'password123');
     await user.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(loadFrontendAuthConfig).toHaveBeenCalledWith(
+      expect.objectContaining({
+        NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+        NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+      }),
+    );
     expect((await screen.findByRole('status')).textContent).toContain(
       'Check your email',
     );

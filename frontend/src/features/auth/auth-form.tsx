@@ -11,6 +11,16 @@ import { getBrowserSupabaseClient } from './supabase-browser';
 type AuthMode = 'login' | 'register';
 type OAuthProvider = 'google' | 'github';
 
+function browserAuthConfig() {
+  return loadFrontendAuthConfig({
+    NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  });
+}
+
 export function AuthForm({
   mode,
   nextPath,
@@ -43,7 +53,7 @@ export function AuthForm({
 
     try {
       if (mode === 'register') {
-        const config = loadFrontendAuthConfig();
+        const config = browserAuthConfig();
         const callback = new URL(config.callbackUrl);
         callback.searchParams.set('next', destination);
         const { data, error: authError } = await supabase.auth.signUp({
@@ -81,7 +91,7 @@ export function AuthForm({
     setPending(true);
     setError('');
     try {
-      const config = loadFrontendAuthConfig();
+      const config = browserAuthConfig();
       const callback = new URL(config.callbackUrl);
       callback.searchParams.set('next', destination);
       const { error: authError } =

@@ -20,7 +20,7 @@ function respond(response, status, body) {
     'cache-control': 'no-store',
     'access-control-allow-origin': 'http://127.0.0.1:3200',
     'access-control-allow-headers':
-      'apikey, authorization, content-type, x-client-info',
+      'apikey, authorization, content-type, x-client-info, x-supabase-api-version',
     'access-control-allow-methods': 'GET, POST, OPTIONS',
   });
   response.end(JSON.stringify(body));

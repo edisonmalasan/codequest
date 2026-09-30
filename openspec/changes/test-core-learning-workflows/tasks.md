@@ -7,7 +7,7 @@
 
 ## 2. Controlled browser journey
 
-- [ ] 2.1 Add a test-only local Auth/JWKS fixture with ephemeral signing key, registration/session responses, and failure-on-unavailable behavior; verify a signed token is accepted by the real backend and wrong ownership is denied.
+- [ ] 2.1 Add a test-only local Auth/JWKS fixture with ephemeral signing key, registration/session responses, and failure-on-unavailable behavior; repair the existing signup form's public environment lookup and fixture CORS preflight as needed; verify a signed token is accepted by the real backend and wrong ownership is denied.
 - [ ] 2.2 Add a dedicated Playwright config and guest-to-account journey using real API/PostgreSQL state: guest Run/Check, signup UI, explicit import, trusted fact refresh, Q02 Check/Submit, and preserved source; verify locally or in CI with fixture services.
 - [ ] 2.3 Run the journey on Chromium, Firefox, WebKit and a mobile viewport; keep shared database execution serial, add the named command to CI, and verify engine-specific results with no skips.
 

@@ -8,7 +8,7 @@ See [proposal.md](proposal.md). The existing Vitest suites cover each domain and
 
 **Goals:** Exercise the accepted-fact chain and the complete published guest-to-account journey through real CodeQuest API/database boundaries; make browser-engine and mobile-emulation results visible in CI; keep test Auth inputs reproducible and disposable.
 
-**Non-Goals:** Add production identity behavior, external Supabase project credentials, a remote grader, new learning authority, broad snapshot tests, physical mobile or assistive-technology support claims, or Phase 35 accessibility implementation.
+**Non-Goals:** Add a new production identity policy, external Supabase project credentials, a remote grader, new learning authority, broad snapshot tests, physical mobile or assistive-technology support claims, or Phase 35 accessibility implementation. Repairing the existing signup form's public environment lookup is in scope when the browser gate exposes it.
 
 ## Decisions
 
@@ -19,6 +19,8 @@ Audit current unit suites first and add only cases that close observed gaps, esp
 ### Run a local test identity provider, not a mock backend
 
 Use a test-only local HTTP Auth fixture with a generated asymmetric key and JWKS endpoint. It returns a short-lived signed session for the registration UI and a matching user response for session refresh. NestJS retains its real JWT verifier, owner guards, controllers and PostgreSQL connection. The fixture starts only in the dedicated Playwright gate and never writes a key to the repository. The browser still performs the signup form action; a seeded cookie alone would not cover that transition. A real hosted Supabase project was rejected because the CI gate must be deterministic and credential-free.
+
+The signup form must read each public environment variable explicitly for Next.js browser inlining, as the existing browser Supabase client does. The test fixture must answer the Supabase client's CORS preflight, including its API-version header. These are narrow repairs revealed by running the browser transition; the production identity contract does not change.
 
 ### Isolate the browser scenario and verify backend reads
 
