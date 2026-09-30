@@ -14,6 +14,7 @@ export default defineConfig({
     '**/capstone.spec.ts',
     '**/analytics.spec.ts',
     '**/learning-journey.spec.ts',
+    '**/accessibility.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,

@@ -154,7 +154,11 @@ export function LessonPageView({
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
-        <Link href="/" aria-label="CodeQuest home" className="rounded-sm">
+        <Link
+          href="/"
+          aria-label="CodeQuest home"
+          className="inline-flex min-h-11 items-center rounded-sm"
+        >
           <CodeQuestLogo />
         </Link>
         <Badge variant="outline">Lesson</Badge>

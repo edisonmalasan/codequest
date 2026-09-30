@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "test:curriculum": "pnpm --dir ../backend build && playwright test --config playwright.curriculum.config.ts",
     "test:analytics": "playwright test --config playwright.analytics.config.ts",
-    "test:learning": "playwright test --config playwright.learning.config.ts"
+    "test:learning": "playwright test --config playwright.learning.config.ts",
+    "test:accessibility": "playwright test --config playwright.accessibility.config.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

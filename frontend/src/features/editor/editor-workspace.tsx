@@ -244,6 +244,7 @@ export function EditorWorkspace({
   const baseId = useId();
   const titleId = `${baseId}-title`;
   const panelId = `${baseId}-panel`;
+  const editorHelpId = `${baseId}-editor-help`;
 
   onSourcesChangeRef.current = onSourcesChange;
 
@@ -672,9 +673,9 @@ export function EditorWorkspace({
         aria-labelledby={titleId}
         className="rounded-lg border border-line bg-surface-raised p-6 text-ink"
       >
-        <h1 id={titleId} className="font-display text-2xl font-bold">
+        <h2 id={titleId} className="font-display text-2xl font-bold">
           Editor Workspace
-        </h1>
+        </h2>
         <p className="mt-3 text-muted">No editable files are available.</p>
       </section>
     );
@@ -689,9 +690,9 @@ export function EditorWorkspace({
     >
       <div className="border-b border-line bg-surface-raised px-4 py-4 sm:px-5">
         <p className="game-label text-xs text-discovery">Local coding space</p>
-        <h1 id={titleId} className="mt-1 font-display text-2xl font-bold">
+        <h2 id={titleId} className="mt-1 font-display text-2xl font-bold">
           Editor Workspace
-        </h1>
+        </h2>
       </div>
       <EditorToolbar
         fileName={activeFile.name}
@@ -726,10 +727,15 @@ export function EditorWorkspace({
       )}
       <div className="grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div id={panelId} role="tabpanel" className="min-w-0">
+          <p id={editorHelpId} className="mb-2 text-xs leading-5 text-muted">
+            Tab indents code. Press Ctrl+M to let Tab move focus out of the
+            editor (Option+Shift+M on Mac).
+          </p>
           <CodeEditor
             value={sources[activeFile.id] ?? activeFile.starterSource}
             language={activeFile.language}
             label={`${activeFile.name} code editor`}
+            descriptionId={editorHelpId}
             onChange={updateSource}
           />
           <div className="mt-4">
