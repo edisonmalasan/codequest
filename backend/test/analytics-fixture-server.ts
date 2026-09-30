@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { Test } from '@nestjs/testing';
+import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -14,6 +15,23 @@ import { loadBackendConfig } from '../src/infrastructure/config/backend-config';
 import { AnalyticsService } from '../src/modules/analytics/analytics.service';
 import { AUTH_TOKEN_VERIFIER } from '../src/modules/identity/auth-token-verifier';
 import { createAuthPrincipal } from '../src/modules/identity/auth-principal';
+import { catchError, Observable, throwError } from 'rxjs';
+
+class FixtureErrorTrace implements NestInterceptor {
+  intercept(
+    _context: ExecutionContext,
+    next: CallHandler,
+  ): Observable<unknown> {
+    return next.handle().pipe(
+      catchError((error: unknown) => {
+        process.stderr.write(
+          `Fixture request error: ${error instanceof Error ? error.stack : String(error)}\n`,
+        );
+        return throwError(() => error);
+      }),
+    );
+  }
+}
 
 const ownerId = randomUUID();
 writeFileSync(join(tmpdir(), 'codequest-analytics-owner.txt'), ownerId, 'utf8');
@@ -47,6 +65,7 @@ async function main(): Promise<void> {
     new FastifyAdapter({ bodyLimit: config.bodyLimitBytes }),
   );
   await configureApplication(app, config, { nestLogger: false });
+  app.useGlobalInterceptors(new FixtureErrorTrace());
   await app.init();
   await app.listen(config.port, config.host);
 }
