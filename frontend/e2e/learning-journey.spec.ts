@@ -134,12 +134,15 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
 }) => {
   test.setTimeout(120_000);
   const prematureWrites: string[] = [];
+  let submittedAuthorization: string | undefined;
   page.on('request', (request) => {
     if (
       request.url().startsWith(`${apiOrigin}/api/v1/`) &&
       request.method() !== 'GET'
     )
       prematureWrites.push(request.url());
+    if (request.url().endsWith('/api/v1/learning-sync/Q02'))
+      submittedAuthorization = request.headers().authorization;
   });
   await page.goto(`/quests/${q01.slug}`);
   await expect(
@@ -172,7 +175,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(
     page.getByText(/accepted/, { exact: false }).last(),
   ).toBeVisible();
-  await expect(page.getByText(/total XP/)).toBeVisible();
+  await expect(page.getByText(/[1-9]\d* total XP/)).toBeVisible();
   await expect(page.getByText(/Current streak: 1 days/)).toBeVisible();
   await page.getByText('View and copy saved guest source').click();
   await expect(page.getByText(q01.reference, { exact: true })).toBeVisible();
@@ -186,8 +189,24 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(page.getByText(/Local check passed/)).toBeVisible();
   await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
-  const response = await request.get(`${apiOrigin}/api/v1/quests/${q02.slug}`);
-  expect(response.status()).toBe(200);
+  expect(submittedAuthorization).toMatch(/^Bearer /);
+  if (!submittedAuthorization) throw new Error('Q02 request was not authorized');
+  const progress = await request.get(
+    `${apiOrigin}/api/v1/quests/${q02.slug}/progress`,
+    { headers: { Authorization: submittedAuthorization } },
+  );
+  expect(progress.status()).toBe(200);
+  expect(await progress.json()).toMatchObject({ status: 'completed' });
+  const history = await request.get(
+    `${apiOrigin}/api/v1/quests/${q02.slug}/attempts`,
+    { headers: { Authorization: submittedAuthorization } },
+  );
+  expect(await history.json()).toMatchObject({
+    attemptCount: 1,
+    attempts: [
+      expect.objectContaining({ accepted: true, source: q02.reference }),
+    ],
+  });
   await page.goto('/account');
   await expect(page.getByText('Q01: provisional Check saved')).toBeVisible();
 });
