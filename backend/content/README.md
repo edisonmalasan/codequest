@@ -4,6 +4,30 @@ This is the Git-owned, backend-local source of curriculum. It is **not published
 
 Run `pnpm --dir backend curriculum:validate` from the repository root. CI runs the same command. It requires no database, Supabase credentials, running API, or learner-code execution. Backend unit tests exercise invalid temporary content trees. The command checks authored file structure and previously merged snapshots against `origin/main`; keep full Git history available. It fails closed when the base cannot be resolved.
 
+## Local authoring tools
+
+Run these commands from the repository root. `content:validate` is an alias for the full curriculum and immutable-history gate; every preview and candidate run performs that gate before reading its selection. IDs accept a stable Quest/Journey ID or an unambiguous slug. A Quest version is always explicit: use `current` to intentionally select `quest.yaml`'s current authored version, or supply an exact content version. Outputs must be new absolute `.html` paths outside `backend/content/`; remove them after review. The tools never update snapshots or `publication.yaml`.
+
+```text
+pnpm --dir backend content:validate
+pnpm --dir backend content:preview:quest --id Q01 --version current --out <absolute-new-q01.html>
+pnpm --dir backend content:preview:quest --id Q01 --version 1.0.0 --out <absolute-new-historical.html>
+pnpm --dir backend content:preview:course --id JAVASCRIPT-FOUNDATIONS --out <absolute-new-course.html>
+```
+
+The self-contained previews render safe static lesson text and bounded local images with scripts and network loads disabled. Quest previews show selected content and assessment versions, starter, hints, cases, prerequisites, and their exact published comparison. Course previews show the ordered authored inventory, review status, and manifest-selected versions. An unselected snapshot is visibly unpublished; previewing it does not make it available to learners. The Course outline does not calculate learner progress or unlocks.
+
+Save each candidate in a regular local `.js` file, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check at the dedicated Worker origin, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
+
+```text
+pnpm --dir backend content:test --id Q01 --version current --source <absolute-reference.js> --expect pass
+pnpm --dir backend content:test --id Q01 --version current --source <absolute-alternative.js> --expect pass
+pnpm --dir backend content:test --id Q01 --version current --source <absolute-defect.js> --expect fail
+pnpm --dir backend content:test --id Q01 --version 1.0.0 --source <absolute-reference.js> --expect pass
+```
+
+The same commands can target an unselected draft after it passes structural validation. The browser test does not submit attempts or alter account records. A looping candidate fails within the runtime bound; the harness checks that a later finite Check recovers on a fresh Worker. Keep candidate files and generated previews outside Git unless they are reviewed authored content, and delete local outputs when finished.
+
 ## Tree and identity
 
 ```text
