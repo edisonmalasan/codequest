@@ -122,6 +122,8 @@ export class ObservedAnalytics {
     private readonly transport: typeof fetch = fetch,
   ) {
     this.endpoint = observedEndpoint(config);
+    if (config.projectKey === 'local_fixture_key')
+      console.error('Analytics fixture endpoint', this.endpoint);
   }
 
   ownerChanged(nextOwner: string | null): void {
@@ -133,8 +135,15 @@ export class ObservedAnalytics {
   }
 
   capture(event: ObservedEvent): void {
-    if (!this.endpoint || typeof navigator === 'undefined' || !navigator.onLine)
+    if (
+      !this.endpoint ||
+      typeof navigator === 'undefined' ||
+      !navigator.onLine
+    ) {
+      if (this.config.projectKey === 'local_fixture_key')
+        console.error('Analytics fixture skipped', event.name, this.endpoint);
       return;
+    }
     try {
       const guestId = event.ownerId ?? (this.guestId ??= crypto.randomUUID());
       const payload = observedPayload(event, guestId);
@@ -147,7 +156,9 @@ export class ObservedAnalytics {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ ...payload, api_key: this.config.projectKey }),
       }).catch(() => undefined);
-    } catch {
+    } catch (error) {
+      if (this.config.projectKey === 'local_fixture_key')
+        console.error('Analytics fixture rejected', event.name, String(error));
       // Analytics is optional; a malformed event cannot interrupt learning.
     }
   }
