@@ -2,7 +2,7 @@
 
 ## 1. Domain and acceptance chain
 
-- [ ] 1.1 Inventory existing validation, content, progress, XP, streak, and unlock tests; add focused deterministic cases only for observed gaps and verify them with targeted Vitest runs.
+- [x] 1.1 Inventory existing validation, content, progress, XP, streak, and unlock tests; add focused deterministic cases only for observed gaps and verify them with targeted Vitest runs.
 - [ ] 1.2 Add a migration-backed PostgreSQL integration case that submits a client-reported passing Q01 attempt and checks owner-only attempt, progress, XP, acceptance-day streak, and Q02 unlock facts; verify exact replay and another owner in the same test run.
 
 ## 2. Controlled browser journey

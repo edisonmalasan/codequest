@@ -1,0 +1,11 @@
+# Core learning test gate
+
+Phase 34 adds a serial browser gate for the first accepted learning journey. In a workspace with migrated PostgreSQL available as `DATABASE_TEST_URL` (or `DATABASE_URL`), run `pnpm --dir backend build` and then `pnpm --dir frontend test:learning`. CI supplies PostgreSQL, runs migrations, builds the backend through `pnpm api:check`, installs Chromium, Firefox, and WebKit, and runs the same command. The Playwright config starts the local Auth/JWKS fixture, the real NestJS API, and the Next.js client. Unavailable services fail the gate.
+
+The fixture signs one-hour JWTs using an ephemeral in-process RS256 key. Registration occurs through the real signup form in the browser journey. The backend uses its normal issuer, audience, lifetime, JWKS, guard, and owner checks. Each test creates new account IDs; the tests run serially against migrated PostgreSQL. The fixture is limited to this test command and is not a replacement for hosted Supabase Auth.
+
+The API test submits a bounded, client-reported passing Q01 result and reads back owner attempt history, completion, XP, streak, and Q02 availability. It replays the same event and confirms a different account has no access to the first account's facts. The browser test runs and Checks Q01 as a guest, signs up, explicitly imports, observes trusted account facts, Checks and submits Q02, and confirms the guest source remains available. The gate runs both tests in desktop Chromium, Firefox, WebKit, and a mobile Chromium viewport.
+
+This verifies the **ADR 0005 personal-learning policy**: the backend checks identity, publication, versions, prerequisites, report shape, replay, and reward uniqueness, then accepts a client-reported pass. It does not independently grade learner code. The browser viewport is not a physical device or assistive technology check. F02's physical mobile and assistive technology gates remain outstanding.
+
+Existing focused suites remain the deterministic rule coverage: frontend validation worker/definition tests, backend curriculum schema/history tests, learning service persistence and replay tests, progress/unlock integration tests, and XP/streak policy tests. Phase 34's added gate covers the cross-service and full journey gap those suites did not exercise together.

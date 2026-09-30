@@ -40,7 +40,7 @@ export default defineConfig({
       },
     },
     {
-      command: 'pnpm exec next dev --hostname 127.0.0.1 --port 3200',
+      command: 'pnpm exec next dev --hostname 0.0.0.0 --port 3200',
       url: `${appOrigin}/register`,
       reuseExistingServer: false,
       timeout: 180_000,
@@ -50,8 +50,8 @@ export default defineConfig({
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
           'publishable-local-browser-fixture',
         NEXT_PUBLIC_SITE_URL: appOrigin,
-        NEXT_PUBLIC_RUNTIME_ORIGIN: appOrigin,
-        NEXT_PUBLIC_PREVIEW_ORIGIN: 'http://127.0.0.2:3200',
+        NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3200',
+        NEXT_PUBLIC_PREVIEW_ORIGIN: 'http://localhost:3200',
       },
     },
   ],
