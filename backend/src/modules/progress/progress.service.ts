@@ -128,7 +128,11 @@ export class ProgressService {
     quest: PublishedQuest,
   ) {
     const db = this.connection.database;
-    await db.insert(users).values({ id: userId }).onConflictDoNothing();
+    const insertedUser = await db
+      .insert(users)
+      .values({ id: userId })
+      .onConflictDoNothing()
+      .returning({ createdAt: users.createdAt });
     await db
       .insert(journeys)
       .values({ id: journey.metadata.id, position: journey.metadata.position })
@@ -172,7 +176,7 @@ export class ProgressService {
       .limit(1);
     if (!version[0])
       throw new ConflictException('Assessment version is unavailable');
-    return version[0].id;
+    return { id: version[0].id, accountCreatedAt: insertedUser[0]?.createdAt };
   }
 
   async start(
@@ -183,7 +187,15 @@ export class ProgressService {
     const { journey, chapter, quest } = this.locateQuest(slug);
     this.checkVersion(quest, body.contentVersion);
     await this.requireAvailable(userId, quest.metadata.id);
-    const versionId = await this.ensureVersion(userId, journey, chapter, quest);
+    const version = await this.ensureVersion(userId, journey, chapter, quest);
+    if (version.accountCreatedAt)
+      await this.analytics?.capture({
+        name: 'signup_completed',
+        ownerId: userId,
+        factId: userId,
+        occurredAt: version.accountCreatedAt,
+      });
+    const versionId = version.id;
     const db = this.connection.database;
     const result = await db.transaction(async (tx) => {
       await tx
@@ -261,7 +273,15 @@ export class ProgressService {
     if (!['question', 'concept', 'nextStep'].includes(body.hintKey))
       throw new ConflictException('Published hint not found');
     await this.requireAvailable(userId, quest.metadata.id);
-    const versionId = await this.ensureVersion(userId, journey, chapter, quest);
+    const version = await this.ensureVersion(userId, journey, chapter, quest);
+    if (version.accountCreatedAt)
+      await this.analytics?.capture({
+        name: 'signup_completed',
+        ownerId: userId,
+        factId: userId,
+        occurredAt: version.accountCreatedAt,
+      });
+    const versionId = version.id;
     const db = this.connection.database;
     const inserted = await db
       .insert(questHintUses)

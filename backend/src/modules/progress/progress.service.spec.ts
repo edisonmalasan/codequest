@@ -116,6 +116,9 @@ describe('derived owner progress', () => {
     expect(
       analyticsFacts.filter((fact) => fact.name === 'first_quest_started'),
     ).toHaveLength(1);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'signup_completed'),
+    ).toHaveLength(1);
     const hint = await progress.useHint(USER_A, 'first-message', {
       contentVersion: '1.0.0',
       hintKey: 'question',

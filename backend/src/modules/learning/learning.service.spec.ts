@@ -356,22 +356,24 @@ describe('authoritative attempt persistence', () => {
     const first = await service.submit(USER_A, 'first-message', body);
     expect(first.accepted).toBe(true);
     expect(analyticsFacts.map((fact) => fact.name)).toEqual([
+      'signup_completed',
       'quest_attempted',
       'quest_completed',
       'first_quest_completed',
     ]);
     expect(new Set(analyticsFacts.map((fact) => fact.factId))).toEqual(
-      new Set([first.id]),
+      new Set([USER_A, first.id]),
     );
     expect(JSON.stringify(analyticsFacts)).not.toContain(body.source);
     expect(JSON.stringify(analyticsFacts)).not.toContain(REPORT.feedback);
     await service.submit(USER_A, 'first-message', body);
-    expect(analyticsFacts).toHaveLength(3);
+    expect(analyticsFacts).toHaveLength(4);
     await service.submit(USER_A, 'first-message', {
       ...body,
       clientEventId: '00000000-0000-4000-8000-000000000402',
     });
     expect(analyticsFacts.map((fact) => fact.name)).toEqual([
+      'signup_completed',
       'quest_attempted',
       'quest_completed',
       'first_quest_completed',
@@ -402,7 +404,10 @@ describe('authoritative attempt persistence', () => {
         contentVersion: '9.9.9',
       }),
     ).rejects.toMatchObject({ status: 409 });
-    expect(analyticsFacts).toHaveLength(6);
+    expect(
+      analyticsFacts.filter((fact) => fact.name === 'signup_completed'),
+    ).toHaveLength(2);
+    expect(analyticsFacts).toHaveLength(8);
   });
 
   it('emits a continued streak only for a newly credited next day', async () => {

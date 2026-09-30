@@ -133,7 +133,11 @@ export class LearningService {
       throw new BadRequestException('Validation report exceeds limit');
 
     const committed = await this.connection.database.transaction(async (tx) => {
-      await tx.insert(users).values({ id: userId }).onConflictDoNothing();
+      const insertedUser = await tx
+        .insert(users)
+        .values({ id: userId })
+        .onConflictDoNothing()
+        .returning({ createdAt: users.createdAt });
       await tx
         .select({ id: users.id })
         .from(users)
@@ -449,7 +453,17 @@ export class LearningService {
         occurredAt: attempt.submittedAt,
         properties,
       });
-      const facts: AnalyticsFact[] = [fact('quest_attempted', attempt.id)];
+      const facts: AnalyticsFact[] = insertedUser.length
+        ? [
+            {
+              name: 'signup_completed',
+              ownerId: userId,
+              factId: userId,
+              occurredAt: insertedUser[0].createdAt,
+            },
+          ]
+        : [];
+      facts.push(fact('quest_attempted', attempt.id));
       if (!report.passed) facts.push(fact('quest_failed', attempt.id));
       if (accepted) {
         facts.push(fact('quest_completed', attempt.id));

@@ -8,7 +8,7 @@ The capture boundary accepts only contract version `1`, `event_id`, `source_trus
 
 | Event                   | Source                                            | Meaning and event identity                                                                             |
 | ----------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `signup_completed`      | Backend fact, account                             | First account row established; owner ID                                                                |
+| `signup_completed`      | Backend fact, account                             | First CodeQuest owner row from an authenticated account or learning write; owner ID                    |
 | `first_quest_started`   | Backend fact, account; browser observation, guest | First account quest-start fact or first guest start in a tab; account quest ID or ephemeral browser ID |
 | `first_code_run`        | Browser observation, guest/account                | First non-cancelled Run observed in the current tab; random event ID                                   |
 | `code_run`              | Browser observation, guest/account                | Every non-cancelled Run, including later successful work; status category only, random ID              |
@@ -24,7 +24,7 @@ The capture boundary accepts only contract version `1`, `event_id`, `source_trus
 | `capstone_completed`    | Backend fact, account                             | First accepted capstone completion; attempt ID                                                         |
 | `streak_continued`      | Backend fact, account                             | First credited consecutive local streak day from an accepted completion; attempt ID                    |
 
-Backend event timestamps come from persisted facts and are emitted only after their transaction resolves. Account and guest cohorts never merge automatically, including on guest import. Guest identifiers are ephemeral to the enabled browser tab, so browser clearing and multiple devices cause known gaps. Exact submission replay emits no new fact event; passing practice on an already completed quest emits an attempt but no second accepted milestone. Provider failure cannot change completion, XP, streaks or unlocks. PostHog delivery is best effort, so reports deduplicate `event_id` and stable quest identities; the provider is not treated as an exactly-once ledger.
+Backend event timestamps come from persisted facts and are emitted only after their transaction resolves. `signup_completed` is the first verified CodeQuest owner-row write, a backend-observable proxy for account activation; it is not the Supabase registration instant. An authenticated learner who only reads public content has no CodeQuest signup event yet, and funnel reports must disclose that gap. Account and guest cohorts never merge automatically, including on guest import. Guest identifiers are ephemeral to the enabled browser tab, so browser clearing and multiple devices cause known gaps. Exact submission replay emits no new fact event; passing practice on an already completed quest emits an attempt but no second accepted milestone. Provider failure cannot change completion, XP, streaks or unlocks. PostHog delivery is best effort, so reports deduplicate `event_id` and stable quest identities; the provider is not treated as an exactly-once ledger.
 
 ## Enabling policy and transport
 

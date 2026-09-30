@@ -32,6 +32,7 @@ export default defineConfig({
           ...server,
           env: {
             ...server.env,
+            CODEQUEST_PREVIEW_BUILD: '1',
             NEXT_PUBLIC_ANALYTICS_CAPTURE_APPROVED: 'true',
             NEXT_PUBLIC_POSTHOG_PROJECT_KEY: 'local_fixture_key',
             NEXT_PUBLIC_POSTHOG_HOST: 'https://capture.example.test',

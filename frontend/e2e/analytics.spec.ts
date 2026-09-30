@@ -98,15 +98,18 @@ test('guest observations and accepted account facts reach only the fake collecto
   await edit(guestPage, solutions[0].reference);
   await guestPage.getByText('Question hint').click();
   await guestPage.getByRole('button', { name: 'Run', exact: true }).click();
+  await expect(guestPage.getByText(/Completed in/)).toBeVisible({
+    timeout: 15_000,
+  });
   await expect
-    .poll(() =>
-      browserRecords.some(
-        (event) =>
-          event.event === 'first_code_run' &&
-          event.properties.cohort === 'guest',
-      ),
-    )
-    .toBe(true);
+    .poll(() => browserRecords.map((event) => event.event), {
+      timeout: 15_000,
+    })
+    .toContain('first_code_run');
+  expect(
+    browserRecords.find((event) => event.event === 'first_code_run')
+      ?.properties,
+  ).toMatchObject({ cohort: 'guest', source_trust: 'client_observed' });
   expect(
     browserRecords.some(
       (event) =>
