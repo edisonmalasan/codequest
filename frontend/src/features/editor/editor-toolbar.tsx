@@ -27,9 +27,9 @@ export function EditorToolbar({
           className="h-5 w-5 shrink-0 text-discovery"
         />
         <div className="min-w-0">
-          <h2 className="truncate font-sans text-sm font-bold text-ink">
+          <h3 className="truncate font-sans text-sm font-bold text-ink">
             {fileName}
-          </h2>
+          </h3>
           <p className="font-mono text-xs text-muted">{language}</p>
         </div>
       </div>

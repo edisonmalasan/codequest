@@ -19,7 +19,7 @@ export function AuthFrame({
       <div className="relative z-10 w-full max-w-md">
         <Link
           href="/"
-          className="mb-8 inline-flex text-ink transition-colors hover:text-ascent"
+          className="mb-8 inline-flex min-h-11 items-center text-ink transition-colors hover:text-ascent"
           aria-label="CodeQuest home"
         >
           <CodeQuestLogo />

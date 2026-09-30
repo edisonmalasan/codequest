@@ -27,6 +27,7 @@ export interface CodeEditorProps {
   value?: string;
   language?: 'javascript' | 'html' | 'css';
   label?: string;
+  descriptionId?: string;
   className?: string;
   onChange?: (value: string) => void;
 }
@@ -62,6 +63,7 @@ export function CodeEditor({
   value,
   language = 'javascript',
   label = 'Code editor',
+  descriptionId,
   className,
   onChange,
 }: CodeEditorProps): React.JSX.Element {
@@ -99,6 +101,7 @@ export function CodeEditor({
           labelCompartment.of(
             EditorView.contentAttributes.of({
               'aria-label': `${label} (${language})`,
+              ...(descriptionId ? { 'aria-describedby': descriptionId } : {}),
               'aria-multiline': 'true',
               spellcheck: 'false',
             }),
@@ -137,6 +140,7 @@ export function CodeEditor({
         labelCompartmentRef.current.reconfigure(
           EditorView.contentAttributes.of({
             'aria-label': `${label} (${language})`,
+            ...(descriptionId ? { 'aria-describedby': descriptionId } : {}),
             'aria-multiline': 'true',
             spellcheck: 'false',
           }),
@@ -150,7 +154,7 @@ export function CodeEditor({
         ),
       ],
     });
-  }, [label, language]);
+  }, [descriptionId, label, language]);
 
   return (
     <div

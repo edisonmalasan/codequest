@@ -78,7 +78,7 @@ export function JourneyPageView({
         <Link
           href="/"
           aria-label="CodeQuest home"
-          className="rounded-sm outline-none"
+          className="inline-flex min-h-11 items-center rounded-sm outline-none"
         >
           <CodeQuestLogo />
         </Link>
@@ -311,7 +311,11 @@ function EmptyCourseMap({ model }: { readonly model: JourneyCourseMap }) {
   return (
     <main className="min-h-screen bg-canvas px-5 py-8 text-ink sm:px-8">
       <div className="mx-auto w-full max-w-4xl">
-        <Link href="/" aria-label="CodeQuest home" className="rounded-sm">
+        <Link
+          href="/"
+          aria-label="CodeQuest home"
+          className="inline-flex min-h-11 items-center rounded-sm"
+        >
           <CodeQuestLogo />
         </Link>
         <section className="pixel-corners pixel-frame mt-12 bg-surface-raised p-7">

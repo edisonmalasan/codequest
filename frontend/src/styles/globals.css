@@ -83,7 +83,7 @@ body {
   color: var(--color-ascent-ink);
 }
 
-:where(button, a, input, select, [tabindex]):focus-visible {
+:where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--color-reward);
   outline-offset: 3px;
 }
