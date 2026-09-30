@@ -133,6 +133,14 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   request,
 }) => {
   test.setTimeout(120_000);
+  const prematureWrites: string[] = [];
+  page.on('request', (request) => {
+    if (
+      request.url().startsWith(`${apiOrigin}/api/v1/`) &&
+      request.method() !== 'GET'
+    )
+      prematureWrites.push(request.url());
+  });
   await page.goto(`/quests/${q01.slug}`);
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
@@ -145,6 +153,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(
     page.getByText(/Provisional completion saved on this device/),
   ).toBeVisible();
+  expect(prematureWrites).toEqual([]);
 
   await page.getByRole('link', { name: 'Sign up' }).last().click();
   await expect(
