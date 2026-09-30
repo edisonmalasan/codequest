@@ -1,6 +1,6 @@
 # Phase 35 accessibility review
 
-Status: Phase 35 Apply review, 2026-09-30. The final local focused matrix passed 12/12 checks across the four configured browser projects. This is a code and automated browser review of the core learning path, not a spoken screen-reader or physical-device certification.
+Status: Phase 35 complete and archived, 2026-09-30. The focused matrix passed 12/12 checks across the four configured browser projects locally and in required CI for [Apply PR #153](https://github.com/edisonmalasan/codequest/pull/153). This is a code and automated browser review of the core learning path, not a spoken screen-reader or physical-device certification.
 
 ## Method and scope
 
@@ -12,7 +12,7 @@ Reflow checks use 1280, 640, 390, and 320 CSS-pixel viewports; 640 and 320 are 2
 
 The initial code review found native hint summaries missing the shared focus-ring selector, a second page-level heading when the reusable workspace is embedded in a lesson, and an editor Tab-escape shortcut that was available through CodeMirror but not explained to learners. The frontend change adds a summary focus ring, nests workspace and file headings under the lesson, and places a visible, editor-associated Ctrl+M/Option+Shift+M instruction next to CodeMirror. The home placeholder also lacked a learning navigation path; it now offers named Journey and sign-in links. Home-logo links receive a 44 CSS-pixel minimum height on the auth, Journey, and lesson routes.
 
-The first full local browser run passed 7 of 12 checks. Four failures were caused by an incorrect test-text expectation; the remaining WebKit home-link focus case exposed the runner's Tab preference. After correcting the expectation and making home-link focus explicit for that WebKit check, the final local matrix passed **12/12**. A separate local run also confirmed the lesson's Check failure is announced as local and unverified after source editing, keyboard reset cancellation, and a fresh Check. The browser gate is wired into CI after the Phase 34 learning gate; the Apply PR must pass that required run before merge.
+The first full local browser run passed 7 of 12 checks. Four failures were caused by an incorrect test-text expectation; the remaining WebKit home-link focus case exposed the runner's Tab preference. After correcting the expectation and making home-link focus explicit for that WebKit check, the final local matrix passed **12/12**. A separate local run also confirmed the lesson's Check failure is announced as local and unverified after source editing, keyboard reset cancellation, and a fresh Check. The browser gate is wired into CI after the Phase 34 learning gate; Apply PR #153 passed the required run, including normal `pnpm test` and all 12 accessibility checks.
 
 ## Remaining evidence limits
 
@@ -34,4 +34,4 @@ No completion, XP, streak, unlock, validation, or account authority changed in t
 | `pnpm lint`, `pnpm typecheck`, `pnpm build` | Passed after formatting the new browser test |
 | `pnpm exec openspec validate improve-learning-accessibility --strict` | Passed |
 
-The normal CI `pnpm test` result and the new browser gate are required before the Apply PR merges; the constrained local rerun does not replace them.
+The normal CI `pnpm test` result and the new browser gate passed before Apply PR #153 merged; the constrained local rerun was additional diagnostic evidence. The approved requirements are in the [canonical specification](../openspec/specs/learning-accessibility/spec.md), and the [archived change](../openspec/changes/archive/2026-09-30-improve-learning-accessibility/tasks.md) retains all eight completed tasks.
