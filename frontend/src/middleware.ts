@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateAuthSession } from '@/features/auth/update-session';
 
+function secureApplicationResponse(response: NextResponse): NextResponse {
+  response.headers.set('Referrer-Policy', 'no-referrer');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), payment=()',
+  );
+  response.headers.set('X-Frame-Options', 'DENY');
+  return response;
+}
+
 export async function middleware(request: NextRequest) {
   const configuredRuntimeOrigin = process.env.NEXT_PUBLIC_RUNTIME_ORIGIN;
   if (configuredRuntimeOrigin) {
@@ -75,9 +86,9 @@ export async function middleware(request: NextRequest) {
     ) ||
     path.startsWith('/assets/')
   ) {
-    return NextResponse.next();
+    return secureApplicationResponse(NextResponse.next());
   }
-  return updateAuthSession(request);
+  return secureApplicationResponse(await updateAuthSession(request));
 }
 
 export const config = {

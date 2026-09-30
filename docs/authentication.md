@@ -21,9 +21,12 @@ Backend verification configuration:
 SUPABASE_AUTH_ISSUER=http://127.0.0.1:54321/auth/v1
 SUPABASE_AUTH_AUDIENCE=authenticated
 SUPABASE_AUTH_JWKS_URL=http://127.0.0.1:54321/auth/v1/.well-known/jwks.json
+SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS=3600
 ```
 
 Production origins must use HTTPS. The JWKS URL must share the issuer origin and equal `<issuer>/.well-known/jwks.json`. Only asymmetric `RS256` and `ES256` access tokens are accepted. Never place a Supabase secret or service-role key in a `NEXT_PUBLIC_*` variable, committed file, browser bundle, test fixture, or log.
+
+Production `CORS_ORIGINS` must also use HTTPS. Verified access tokens must carry `iat` and `exp` with a positive signed lifetime no longer than `SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS`. This setting defaults to 3600 seconds and accepts 300–86400 seconds; match it to the reviewed Supabase access-token lifetime before deployment.
 
 Configure these allowed redirect URLs in Supabase Auth for each environment:
 

@@ -25,6 +25,7 @@ describe('loadBackendConfig', () => {
         issuer: 'http://127.0.0.1:54321/auth/v1',
         audience: 'authenticated',
         jwksUrl: 'http://127.0.0.1:54321/auth/v1/.well-known/jwks.json',
+        maxTokenAgeSeconds: 3600,
       },
     });
   });
@@ -44,6 +45,7 @@ describe('loadBackendConfig', () => {
       BODY_LIMIT_BYTES: '4096',
       RATE_LIMIT_TTL_MS: '10000',
       RATE_LIMIT_MAX: '50',
+      SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS: '7200',
       DATABASE_URL,
       ...productionAuth,
     });
@@ -61,6 +63,7 @@ describe('loadBackendConfig', () => {
         issuer: 'https://auth.codequest.example/auth/v1',
         audience: 'authenticated',
         jwksUrl: 'https://auth.codequest.example/auth/v1/.well-known/jwks.json',
+        maxTokenAgeSeconds: 7200,
       },
     });
   });
@@ -81,6 +84,31 @@ describe('loadBackendConfig', () => {
         ...AUTH_ENV,
       }),
     ).toThrow('wildcard origins are not allowed');
+  });
+
+  it('refuses plaintext production origins while allowing explicit local origins', () => {
+    const productionAuth = {
+      SUPABASE_AUTH_ISSUER: 'https://auth.codequest.example/auth/v1',
+      SUPABASE_AUTH_AUDIENCE: 'authenticated',
+      SUPABASE_AUTH_JWKS_URL:
+        'https://auth.codequest.example/auth/v1/.well-known/jwks.json',
+    };
+    expect(() =>
+      loadBackendConfig({
+        NODE_ENV: 'production',
+        CORS_ORIGINS: 'http://localhost:3000',
+        DATABASE_URL,
+        ...productionAuth,
+      }),
+    ).toThrow('Invalid CORS_ORIGINS entry');
+    expect(
+      loadBackendConfig({
+        NODE_ENV: 'test',
+        CORS_ORIGINS: 'http://localhost:3000',
+        DATABASE_URL,
+        ...AUTH_ENV,
+      }).corsOrigins,
+    ).toEqual(['http://localhost:3000']);
   });
 
   it('does not expose a credential-like invalid origin in startup error text', () => {
@@ -153,6 +181,22 @@ describe('loadBackendConfig', () => {
       'RATE_LIMIT_TTL_MS',
     ],
     [{ RATE_LIMIT_MAX: '0', DATABASE_URL, ...AUTH_ENV }, 'RATE_LIMIT_MAX'],
+    [
+      { SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS: '299', DATABASE_URL, ...AUTH_ENV },
+      'SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS',
+    ],
+    [
+      {
+        SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS: '86401',
+        DATABASE_URL,
+        ...AUTH_ENV,
+      },
+      'SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS',
+    ],
+    [
+      { SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS: '1e3', DATABASE_URL, ...AUTH_ENV },
+      'SUPABASE_AUTH_MAX_TOKEN_AGE_SECONDS',
+    ],
     [{ DATABASE_URL: 'not-a-url', ...AUTH_ENV }, 'DATABASE_URL'],
   ])('rejects invalid configuration %o', (env, setting) => {
     expect(() => loadBackendConfig(env)).toThrow(setting);

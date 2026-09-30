@@ -34,7 +34,19 @@ export class SupabaseTokenVerifier implements AuthTokenVerifier {
       algorithms: ['RS256', 'ES256'],
       issuer: this.config.issuer,
       audience: this.config.audience,
+      requiredClaims: ['exp', 'iat'],
+      maxTokenAge: this.config.maxTokenAgeSeconds,
     });
+    const now = Math.floor(Date.now() / 1_000);
+    if (
+      typeof payload.iat !== 'number' ||
+      typeof payload.exp !== 'number' ||
+      payload.iat > now ||
+      payload.exp <= payload.iat ||
+      payload.exp - payload.iat > this.config.maxTokenAgeSeconds
+    ) {
+      throw new Error('Invalid authentication lifetime');
+    }
     if (typeof payload.sub !== 'string' || !UUID_PATTERN.test(payload.sub)) {
       throw new Error('Invalid authentication subject');
     }
