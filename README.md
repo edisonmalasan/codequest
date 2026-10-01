@@ -32,29 +32,74 @@ pnpm install
 
 ## Environment setup
 
-The backend requires a PostgreSQL connection URL. Other local variables have built-in defaults:
+Use a separate local file for each application. Turborepo starts both processes;
+do not use a root `.env` or pass backend secrets to the frontend process.
 
-| Variable              | Used by  | Default/requirement                        |
-| --------------------- | -------- | ------------------------------------------ |
-| `DATABASE_URL`        | backend  | Required PostgreSQL URL; keep backend-only |
-| `PORT`                | backend  | `3001`                                     |
-| `NEXT_PUBLIC_API_URL` | frontend | `http://127.0.0.1:3001`                    |
-
-Set them in your shell when you need non-default values:
+```powershell
+# Windows (PowerShell)
+Copy-Item frontend/.env.example frontend/.env.local
+Copy-Item backend/.env.example backend/.env.local
+```
 
 ```bash
-# Windows (PowerShell)
-$env:PORT = "3001"
-$env:DATABASE_URL = "postgresql://codequest:local-password@127.0.0.1:5432/codequest"
-
 # macOS / Linux
-export PORT=3001
-export DATABASE_URL='postgresql://codequest:local-password@127.0.0.1:5432/codequest'
+cp frontend/.env.example frontend/.env.local
+cp backend/.env.example backend/.env.local
 ```
+
+Fill both `.env.local` files before starting the apps. Next.js automatically
+loads `frontend/.env.local`. The backend loads `backend/.env.local` for local
+dev/start and database commands; supplied shell or CI variables take precedence,
+and the file is not required in CI. Both real files are ignored by Git.
+
+From the Supabase dashboard, copy the **Project URL** and **publishable key**
+into the frontend file. The publishable key is safe to expose to the frontend;
+the Supabase secret and service-role keys are not. Set the backend Auth issuer
+and JWKS URLs using that project's reference as shown in the backend template.
+Copy the project's PostgreSQL connection URI into backend `DATABASE_URL` and
+replace every placeholder. `DATABASE_URL` is backend-only: never put it in a
+`NEXT_PUBLIC_*` variable or the frontend file. Configure Supabase Auth's local
+redirect allowlist to include `http://localhost:3000/auth/callback`.
+
+The templates also show optional PostHog and Sentry settings. Keep analytics
+and monitoring disabled until the beta privacy, consent, provider, and telemetry
+gates explicitly approve them. Do not uncomment their approval switches for
+ordinary local setup.
+
+After filling both files, run these from the repository root:
+
+```bash
+pnpm --dir backend db:check
+pnpm --dir backend db:drift
+pnpm --dir backend db:migrate
+pnpm dev
+```
+
+`pnpm dev` runs frontend and backend together through Turborepo. The frontend
+development server binds all local interfaces so these three distinct loopback
+origins reach the same Next.js process:
+
+| Purpose | Local origin |
+| --- | --- |
+| Authenticated application | `http://localhost:3000` |
+| Isolated JavaScript runtime | `http://127.0.0.1:3000` |
+| Static web preview | `http://127.0.0.2:3000` |
+
+The app origin denies `/runtime/*` and `/preview/*`. The runtime and preview
+hosts serve only their fixed allowlisted resources. Keep the local development
+server on a trusted network; production still requires separate secure origins.
+
+Verify the backend at `http://127.0.0.1:3001/api/v1/health` and load
+`http://localhost:3000/login` without a missing Supabase configuration error.
+Check origin isolation: `/runtime/bootstrap.html` must return 200 only from the
+runtime origin, `/preview/bootstrap.html` must return 200 only from the preview
+origin, and application pages must return 404 from both isolated origins. Then
+run `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build`. Run
+`pnpm api:check` when API or OpenAPI output is affected.
 
 ## Development
 
-Start both apps together from the repository root:
+Start both apps together from the repository root after environment setup:
 
 ```bash
 pnpm dev
