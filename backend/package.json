@@ -14,6 +14,10 @@
     "db:check": "drizzle-kit check --config drizzle.config.ts",
     "db:drift": "node scripts/check-migration-drift.mjs",
     "curriculum:validate": "tsx src/modules/curriculum/content/validate-cli.ts && node scripts/check-curriculum-history.mjs",
+    "content:validate": "pnpm curriculum:validate",
+    "content:preview:quest": "tsx src/modules/curriculum/content/author-cli.ts quest",
+    "content:preview:course": "tsx src/modules/curriculum/content/author-cli.ts course",
+    "content:test": "tsx src/modules/curriculum/content/author-cli.ts test",
     "content:bytes": "node scripts/content-payload.mjs"
   },
   "dependencies": {
