@@ -30,4 +30,3 @@ The repository SHALL record for each Phase 38 obligation its owner, repeatable e
 #### Scenario: Repository checks pass without hosted evidence
 - **WHEN** CI passes but F06 or hosted restore evidence is absent
 - **THEN** the readiness record still says no go and names the missing owner action
-

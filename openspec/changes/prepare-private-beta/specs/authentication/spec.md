@@ -20,4 +20,3 @@ The frontend SHALL offer a recovery request for email learners with a generic su
 #### Scenario: Signed-in learner changes password
 - **WHEN** a signed-in email learner submits a valid new password
 - **THEN** the approved identity provider handles the change and the UI reports success without persisting password material in CodeQuest tables
-
