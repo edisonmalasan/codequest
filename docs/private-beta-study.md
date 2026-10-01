@@ -1,18 +1,18 @@
 # Private beta study protocol
 
-**Status: preparation only — NO GO for invitations or real learner data.** This guide is a reviewable Phase 39 study plan. The [Phase 38 readiness record](beta-readiness.md) remains the release authority. F06 legal, privacy, consent, retention, deletion and operator-access decisions, hosted controls, physical-device evidence, F04 balancing and F05 recruitment/targets are still open. No participant recruitment or observation is documented here; repository PostHog/Sentry delivery remains disabled by default. Completing this guide does not start or complete the private beta.
+**Status: preparation only — NO GO for invitations or real learner data.** This guide is a reviewable Phase 39 study plan. The [Phase 38 readiness record](beta-readiness.md) remains the release authority. The project owner's F04 experimental baseline and F05 exploratory preregistration are recorded in the [gate-closure worksheet](beta-gate-closure-checklist.md); final F06 policy, hosted controls, physical-device evidence and release approval remain open. No participant recruitment or observation is documented here; repository PostHog/Sentry delivery remains disabled by default. Completing this guide does not start or complete the private beta.
 
 ## Decisions required before invitations
 
-Product, content, security and operations owners must attach a dated decision and evidence link for every blocking row in [beta readiness](beta-readiness.md). Record the release candidate and environment actually reviewed. In particular, F05 must name recruitment eligibility, sample size, contact method, observation windows, metric thresholds, stop criteria and how nonrespondents are handled **before** looking at participant outcomes. F04 must approve or explicitly disclose the provisional XP curve and review quest timing/difficulty. F06 must approve actual policy text and collection mechanics, including feedback and observation handling. These values are intentionally unset here.
+Product, content, security and operations owners must attach dated decisions and evidence for every blocking row in [beta readiness](beta-readiness.md), tied to the release candidate and environment actually reviewed. The F05 preregistration must be frozen before invitations; its contact channel and approved storage still depend on F06. The F04 experiment does not establish balance, and Phase 39 timing/difficulty observations do not yet exist. F06 must approve actual policy text and collection mechanics, including feedback and observation handling.
 
 | Decision field | Owner | Approved value / link | Date |
 | --- | --- | --- | --- |
-| F06 policy, consent, retention, deletion and operator access | Product / security | Unset | Unset |
+| F06 policy, consent, retention, deletion and operator access | Product / security | [Direction and proposed retention recorded](beta-gate-closure-checklist.md#f06--externally-supplied-policy-and-operations-decisions); final legal/policy approval open | 2026-10-01 direction only |
 | Hosted recovery, backup restore, migrations and security evidence | Identity / operations / security | Unset | Unset |
 | F02 supported physical devices, browsers and assistive technology | Product / frontend | Unset | Unset |
-| F04 quest timing, difficulty, hints and provisional XP treatment | Product / content | Unset | Unset |
-| F05 recruitment, sample size, targets, windows and stop rules | Product | Unset | Unset |
+| F04 quest timing, difficulty, hints and provisional XP treatment | Product / content | [Experimental baseline approved](beta-gate-closure-checklist.md#f04--learning-and-xp-balance); release/version review and learner observations open | 2026-10-01 |
+| F05 recruitment, sample size, targets, windows and stop rules | Product | [Exploratory preregistration approved](beta-gate-closure-checklist.md#f05--preregistered-beta-evaluation); F06 contact/storage and pre-invitation freeze open | 2026-10-01 |
 | Release candidate, environment and final go decision | Product / security / operations | **NO GO** | Unset |
 
 ## Study questions and evidence
