@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Card } from '@/components/ui';
 import { XPBar } from '@/components/game/xp-bar';
@@ -352,6 +353,12 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               router.refresh();
             }}
           />
+          <Link
+            href="/account/password"
+            className="inline-block font-bold text-ascent underline"
+          >
+            Update email password
+          </Link>
         </>
       )}
       <Button

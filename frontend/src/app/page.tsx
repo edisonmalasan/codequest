@@ -12,6 +12,12 @@ export default function Home(): React.JSX.Element {
         className="flex flex-wrap justify-center gap-3"
       >
         <Link
+          href="/onboarding"
+          className="inline-flex min-h-11 items-center rounded-md border border-line-strong px-4 font-bold text-ink"
+        >
+          How learning works
+        </Link>
+        <Link
           href="/journeys/javascript-foundations"
           className="inline-flex min-h-11 items-center rounded-md border border-ascent bg-ascent px-4 font-bold text-ascent-ink"
         >
@@ -24,6 +30,9 @@ export default function Home(): React.JSX.Element {
           Sign in
         </Link>
       </nav>
+      <Link className="text-sm text-muted underline" href="/feedback">
+        Draft feedback on this device
+      </Link>
     </main>
   );
 }

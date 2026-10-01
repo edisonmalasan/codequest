@@ -36,6 +36,18 @@ describe('authentication callback', () => {
     );
   });
 
+  it('redirects a recovery exchange to the local password page without a code', async () => {
+    const response = await GET(
+      new NextRequest(
+        'http://localhost:3000/auth/callback?code=recovery-once&next=%2Faccount%2Fpassword',
+      ),
+    );
+    expect(exchangeCodeForSession).toHaveBeenCalledWith('recovery-once');
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/account/password',
+    );
+  });
+
   it('rejects missing codes and external return destinations', async () => {
     const response = await GET(
       new NextRequest(
