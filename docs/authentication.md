@@ -42,6 +42,8 @@ Enable email/password, Google, and GitHub in the Supabase dashboard. Google and 
 - `/register` supports email/password registration, confirmation-required registration, and Google/GitHub redirects.
 - `/login` supports email/password and Google/GitHub sign-in.
 - `/auth/callback` exchanges a one-time code and redirects only to a validated local path.
+- `/recover` requests email password recovery with the same generic acknowledgement for eligible, unknown, and provider-failed addresses. Supabase sends the one-time code to `/auth/callback?next=/account/password`; the callback exchanges it and strips it from the destination URL.
+- `/account/password` requires a trusted current session, then changes an email password through Supabase Auth. Google and GitHub sign-in remain available for provider accounts. Provider errors are not rendered verbatim.
 - `/account` requires a verified session, idempotently establishes the matching application user/profile through `PUT /api/v1/account`, and supports sign-out.
 - `PUT /api/v1/account/timezone` validates an authenticated learner's IANA timezone and updates only that principal's profile. It affects future accepted streak days; past days retain their recorded timezone and local date. The account page explains this and the 24-hour changed-zone credit guard.
 
@@ -51,4 +53,4 @@ Sign-out clears Supabase session state and protected TanStack Query state. Owner
 
 Unit and integration tests use local generated signing keys, controlled Supabase adapters, PGlite/PostgreSQL migrations, and browser fixtures. They require no production Supabase project or live Google/GitHub credentials. Run the normal repository commands plus `pnpm --dir frontend test:e2e` for the practical Chromium route checks.
 
-Production provider provisioning, email delivery, password recovery, MFA, account linking/deletion, guest-data import, and curriculum behavior remain deferred. The project dependency audit currently reports existing advisories through Next.js/PostCSS and Fastify; Phase 8 did not upgrade unrelated packages.
+Before exposing recovery to real learners, allowlist the deployed `/auth/callback` origin in Supabase Auth, configure the recovery email template and delivery, then test valid, expired, reused and malformed links, session refresh and rate limiting on the hosted environment. Local tests use controlled Auth adapters and do not prove email delivery. F06 still blocks real learner collection. Production provider provisioning, MFA, account linking/deletion and hosted recovery verification remain open. The project dependency audit currently reports existing advisories through Next.js/PostCSS and Fastify; Phase 8 did not upgrade unrelated packages.
