@@ -7,11 +7,22 @@ Define how CodeQuest selects its V1 product boundary and advances each advertise
 ## ADDED Requirements
 
 ### Requirement: Explicit V1 inclusion contract
-The product plan SHALL name every capability advertised for V1 and record whether it is required, conditional on an explicit founder decision, or deferred. Public reference-product feature categories SHALL NOT become CodeQuest V1 commitments merely because they appear in a reference inventory. Every included capability SHALL have user-visible scope, dependencies, automated and integrated verification, founder acceptance criteria, non-goals, and an owner.
+The product plan SHALL name every capability advertised for V1 and record whether it is required, conditional on an explicit founder decision, or deferred. The founder-approved broad public-product categories and original reference-equivalent course/topic families SHALL be recorded as required V1 scope; unresolved implementation, security, trust, privacy, and pricing decisions SHALL NOT silently demote those categories. Every included capability SHALL have user-visible scope, dependencies, automated and integrated verification, founder acceptance criteria, non-goals, and an owner.
 
 #### Scenario: Reference feature has no founder scope decision
 - **WHEN** a Codédex-inspired category is inventoried but its V1 inclusion is undecided
 - **THEN** the roadmap labels it conditional and CodeQuest does not advertise it as a working V1 feature
+
+#### Scenario: Required category has an unresolved safety design
+- **WHEN** an approved V1 category needs a new runtime, grading, privacy or commercial design
+- **THEN** it remains required and blocks beta until its design, implementation, integration and founder acceptance are complete
+
+### Requirement: Advertised V1 courses are complete original learning paths
+Every CodeQuest course advertised as V1 SHALL have independently authored coherent objectives, prerequisite sequence, complete lessons, exercises, assessments, hints, and projects appropriate to its topic and runtime. A catalog card or partial chapter SHALL NOT satisfy course completion. Each language or tool track SHALL have an approved bounded execution or non-executable assessment model before publication.
+
+#### Scenario: Catalog card has no complete course
+- **WHEN** a V1 topic appears in discovery but its original lessons, assessments or projects are incomplete
+- **THEN** that topic is not feature complete and the V1 product cannot advance to Founder Acceptance
 
 ### Requirement: Readiness states require distinct evidence
 The project SHALL track `TECHNICALLY IMPLEMENTED`, `FEATURE COMPLETE`, `INTEGRATED`, `FOUNDER ACCEPTED`, `RELEASE READY`, `PRIVATE BETA`, `BETA ACCEPTED`, and `PRODUCTION READY` as distinct ordered states. Passing CI or archiving an engineering change SHALL NOT alone establish feature completion, integration, founder acceptance, or release readiness. Every capability advertised for V1 SHALL be feature complete, integrated, and founder accepted before private beta.

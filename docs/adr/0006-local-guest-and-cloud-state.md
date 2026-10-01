@@ -4,6 +4,8 @@
 
 **Accepted** detailed authority/import/replay/date policy. Limited offline/draft direction is confirmed C10; policy approval evidence is [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [P03/P07/P08/P09/P10/P14/F03/F07](../decisions.md); design D7/D8. Owners: product/technical owners; named assignees unassigned.
 
+[AP05](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires durable owner-bound Builds/projects and explicitly designed offline behavior for V1 surfaces. That is a new project data model, not a promise to cloud-merge exercise drafts or backdate guest/offline streaks. Existing owner separation, backend completion authority and source-recovery rules remain in force.
+
 ## Context
 
 Roadmap includes guest migration, cloud progress, local persistence and offline outbox before launch, but abbreviated MVP inventories omit some of them. Client passing reports and timestamps are untrusted; account switching and retries can create duplication/leakage unless policy is explicit.

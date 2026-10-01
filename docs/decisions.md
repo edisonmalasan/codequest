@@ -1,6 +1,6 @@
 # CodeQuest decision register
 
-This register preserves Phase 0 approvals and later decisions. The user explicitly clarified that archiving `define-codequest-product-and-architecture` also approved P01–P15 and the applicable U01 baseline through AP01. The founder's 2026-10-02 product-completion direction is recorded separately as AP04; it changes the forward release standard without erasing historical decisions or approving every deferred feature.
+This register preserves Phase 0 approvals and later decisions. The user explicitly clarified that archiving `define-codequest-product-and-architecture` also approved P01–P15 and the applicable U01 baseline through AP01. AP04 established the product-completion gate; the founder's 2026-10-02 Apply instruction, recorded as AP05, explicitly makes the major reference-product categories V1 requirements. Historical rows remain visible with their original meaning.
 
 ## Sources and statuses
 
@@ -12,6 +12,7 @@ This register preserves Phase 0 approvals and later decisions. The user explicit
 - **AP01:** [explicit Phase 0 approval](#ap01-explicit-phase-0-approval), this user's clarification of the archive instruction.
 - **AP02:** [reviewed Phase 1 no-go](#ap02-reviewed-phase-1-no-go), explicit approval of the measured preview failure outcome.
 - **AP04:** [founder product-completion direction](#ap04-founder-product-completion-direction), explicit approval of the new V1 quality and sequencing standard, with feature breadth still requiring choices.
+- **AP05:** [founder-approved broad V1 boundary](#ap05-founder-approved-broad-v1-boundary), explicit approval that the listed product and curriculum categories are required for V1, subject to safe designs and full acceptance.
 
 ### AP04: Founder Product Completion direction
 
@@ -21,7 +22,7 @@ AP04 supersedes the old assumption that completing Phase 38 technical preparatio
 
 The states are **TECHNICALLY IMPLEMENTED → FEATURE COMPLETE → INTEGRATED → FOUNDER ACCEPTED → RELEASE READY → PRIVATE BETA → BETA ACCEPTED → PRODUCTION READY**. A CI pass or archived change cannot skip integration or personal founder review. Every advertised V1 capability must be feature complete, integrated and founder accepted before beta; any founder-critical failure blocks release readiness. The current homepage and stacked lesson/workspace are non-final. Desktop requires a persistent lesson/editor/output-preview three-pane shell, with intentional tablet/mobile alternatives. Real configured Supabase email signup, confirmation, login/logout, recovery and Google/GitHub OAuth must be demonstrated; the founder reports current local email and OAuth flows failing.
 
-AP04 confirms the **completion standard and reference direction**, not the exact inclusion of all reference-product feature categories. The following decision groups remain pending R01 founder selection. A selected group requires a superseding record for any conflicting P/C/F decision or ADR, its own OpenSpec capability proposal and a full acceptance path. Until selected, its prior deferral remains in force.
+AP04 confirmed the **completion standard and reference direction** but left breadth undecided at that date. The following table is the historical R01 question set; AP05 below resolves inclusion of its major product categories. Remaining mechanism, trust, policy and numeric choices are implementation prerequisites, not permission to drop required scope.
 
 | ID | V1 boundary decision needed from founder | Current status and affected historical decisions |
 | --- | --- | --- |
@@ -36,6 +37,29 @@ AP04 confirms the **completion standard and reference direction**, not the exact
 | RB09 | Exact supported device/browser/AT matrix and mobile coding promise | **Unresolved**; P01/U01/F02 remain desktop-first with physical evidence open |
 
 AP04 does not change the 2026-10-01 F04 private-beta-only 10 XP and `provisional-linear-100-v1` experiment, the approved F05 exploratory preregistration, or the unapproved F06 policy and retention proposals. Those remain governed by the [gate-closure worksheet](beta-gate-closure-checklist.md).
+
+### AP05: Founder-approved broad V1 boundary
+
+Recorded from the founder's 2026-10-02 Apply instruction for `rebaseline-codequest-product-roadmap`. The [V1 boundary matrix](v1-product-boundary.md) is the exhaustive product-category inventory for this approval. **Required for V1:** multi-course journeys/catalog/discovery; original HTML, CSS, JavaScript and DOM learning plus broad public-reference-equivalent course/topic families; integrated three-pane desktop learning and intentional tablet/mobile layouts; editor/files/Run/output/preview/Check/hints/submission/navigation; trusted progress, XP, levels/ranks, streaks, unlocks, badges and avatars; Practice, daily challenges, fair leaderboards, Builds/saving/publishing, profiles/portfolio, Community and events, AI/help, certificates, mentors, notifications, PWA/offline where designed, accessibility, analytics/monitoring, privacy/deletion, backup/deployment/operations, and an original commercial/pricing/subscription/entitlement surface. Every advertised course must be complete and original; a catalog card is not a delivered course. AP05 approves **scope**, not a production-ready implementation, certification claim, pricing value, policy text or release GO.
+
+AP05 supersedes the *V1 exclusion or deferral* of these categories in the historical rows below. It does not retroactively change published quest IDs, accepted completions, XP ledger entries, old assessment results or archived phase evidence. All listed required categories must pass the eight readiness states and founder acceptance before beta. The new [roadmap](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) splits their work into dependent phases.
+
+| Superseding record | Historical decision affected | New V1 decision and remaining design gate |
+| --- | --- | --- |
+| S01 | C01/C07, P04, RB01 | Multiple distinct Courses within Journeys and a real searchable catalog are **required**. R05 must select stable `Journey > Course > Chapter > Quest/Exercise` identities and migration/compatibility before code or content restructuring. The existing one-journey publication is historical, not discarded. |
+| S02 | P05, RB02 | Original HTML/CSS/DOM/browser interaction and multi-file projects are **required**. The current inventory capstone/logic curriculum remains valid history; new content and safe execution must be separately specified. No retroactive regrading. |
+| S03 | P06, C08, RB04/RB07, ADR 0005 | Practice, competitive leaderboards/ranks and certificates are **required product categories**; the current authenticated client-reported pass remains only personal-learning authority. Independent grading/fairness and certificate claim rules must be approved before competitive or credential presentation. AI assistance is required, but LLM grading for normal correctness remains unapproved. |
+| S04 | P11/C06, RB02, ADR 0004 | Interactive web learning/Builds are **required**; no existing Worker or script-disabled iframe permission is relaxed. R07A must prove a separately isolated, bounded DOM/project capability with recovery and explicit network/storage rules before adoption. Arbitrary learner code never runs in NestJS. |
+| S05 | F07, P12, RB05 | Project saving, publishing, portfolio and Community are **required**, subject to approved privacy, moderation, deletion and abuse controls. Cloud merge of exercise drafts remains deferred; durable saved projects are a separate owner-bound product model. |
+| S06 | F08, C01/C07/C08, RB03/RB04/RB06/RB07/RB08 | Previously post-MVP practice/challenges, badges, avatars, additional tracks, AI/help, public profiles, leaderboard, notifications, mentoring and certificates are **required V1 scope**. Exact course/art/reward/claim/service designs follow in later phase specs. |
+| S07 | F09, RB06 | Required additional tracks trigger concrete runtime/assessment design for Python/data, terminal/Git, Node/React, creative/game and compiled-language topics. No speculative shared package, microservice, WebContainer or remote runner is approved by this planning decision; safe simulations or isolated execution require their own evidence. |
+| S08 | P01/U01/F02, RB09 | V1 requires intentional mobile/tablet learning layouts and a declared, tested responsive/mobile support matrix. Exact devices, installed browsers, AT and performance budgets remain F02 decisions; no physical pass is invented. |
+| S09 | P09/F04, RB04 | Levels, ranks, badges and avatars are required presentation/reward categories. The approved experimental 10 XP and provisional curve remain unchanged; new award sources or balanced thresholds require separate decisions and cannot alter recorded XP history. |
+| S10 | F06, RB05/RB08 | Public projects, Community, AI, mentor/contact, notifications and commercial account data require approved jurisdictional privacy, consent, moderation, retention, deletion, operator and payment policies before collection. F06 remains open; no legal wording or numeric policy is inferred. |
+
+**Design choices still open inside required scope:** exact original course titles, lesson counts and projects; safe DOM and language runtimes; independently defensible leaderboard/certificate trust; public-data moderation and deletion operations; AI provider and privacy boundary; mentor service model; notification channels; original commercial tiers, prices, entitlements, billing/refund/tax treatment; exact mobile/browser/AT matrix. These decisions block their dependent implementations and beta if unresolved. They do **not** demote the required parent capability to conditional or deferred.
+
+AP05 preserves the F04 private-beta-only experimental XP baseline and F05 exploratory preregistration exactly as recorded. It does not resolve F06, provide hosted or physical evidence, select a beta release candidate, authorize real telemetry, recruit learners, mark Phase 38 GO, or restart `review-beta-gate-closure`.
 
 ### AP01: Explicit Phase 0 approval
 
