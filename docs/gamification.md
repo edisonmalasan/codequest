@@ -12,7 +12,7 @@ The backend writes a durable `streak_activity_days` fact only in the transaction
 
 The protected `GET /api/v1/xp` response now derives level and next-level progress from the same owner-bound XP ledger total. The current policy is **`provisional-linear-100-v1`**: level 1 starts at 0 XP and each 100 XP starts the next level. For example, 0/99 XP are level 1 with 100/1 XP remaining; 100 XP is level 2 with 0/100 XP within that level; 235 XP is level 3 with 35/100 XP within it and a 300 XP next boundary. The response supplies `level`, `levelStartXp`, `nextLevelAtXp`, `xpIntoLevel`, `xpToNextLevel`, `curveId`, and `curveProvisional`. No level row or client level input exists.
 
-This is a provisional implementation policy, **not F04 approval** of names, thresholds, or XP values. Product and curriculum owners still need to balance the curve and reward amounts with final content and learner evidence before beta. A reviewed policy change will rederive displayed levels from historical XP; it will not change earned ledger amounts. XP and level are progress displays, not mastery or certification. The account page labels the curve as provisional and shows unavailable feedback if the protected read fails.
+The project owner approved this curve and 10 XP per first accepted stable quest, including CAP01, as an **experimental private-beta F04 baseline on 2026-10-01**, not as balanced final values. Current published difficulty labels and hints remain for initial beta; quest timing, difficulty and hint effects still need Phase 39 observation. No level names or mastery, certification, ability or job-readiness claim is approved. A later reviewed policy change will rederive displayed levels from historical XP without changing earned ledger amounts. The account page labels the curve as provisional and shows unavailable feedback if the protected read fails. See the [gate-closure decision record](beta-gate-closure-checklist.md#f04--learning-and-xp-balance).
 
 ## Phase 19 implemented XP
 
@@ -48,7 +48,7 @@ Confirmed ledger direction: XP events carry source identity/amount/time and rewa
 
 Accepted completion/progress/XP/unlock effects form a consistent logical backend operation; retry recovers the outcome instead of silently adding/losing effects. Reset only edits source; accepted completion/history/XP remain. Incompatible content pending actions do not earn rewards by pretending to use current tests. Accepted historical rewards remain after retirement/wording edits; a new materially distinct quest/reward needs explicit stable identity review (P15).
 
-Level derives from total accepted XP with simple understandable math; no separately editable client level authority. Names/thresholds/numeric quest values are F04 balancing decisions before beta, not implementation constants chosen here. No negative hint/failure XP and no level-based mastery gate.
+Level derives from total accepted XP with simple understandable math; no separately editable client level authority. This Phase 0 text did not choose names, thresholds or numeric quest values; the later 2026-10-01 F04 decision above approves only the experimental private-beta baseline. Final balance remains open. No negative hint/failure XP and no level-based mastery gate.
 
 ## Streak dates and timezone
 

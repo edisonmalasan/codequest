@@ -1,12 +1,14 @@
 # Tasks
 
-The [proposal-stage worksheet](../../../docs/beta-gate-closure-checklist.md) is ready for owner input. These tasks remain open; this proposal does not authorize real-learner collection or a GO decision.
+The [worksheet](../../../docs/beta-gate-closure-checklist.md) records the project owner's 2026-10-01 F04/F05 decisions. Decision-recording tasks are complete; selected-release, operational, legal, hosted and physical evidence tasks remain open. This change does not authorize real-learner collection or a GO decision.
 
 ## 1. Owner decisions
 
-- [ ] 1.1 Obtain product/content F04 approval or rejection of the experimental 10 XP and `provisional-linear-100-v1` baseline, with publication versions, timing/difficulty review and dated evidence; verify the signed decision distinguishes experiment from balance.
-- [ ] 1.2 Obtain product F05 preregistration before outcome review, filling recruitment, sample, contact, D1/D7 operational cutoffs, numeric targets, stop rules, nonresponse and cadence; verify every target has a cohort and denominator.
-- [ ] 1.3 Obtain product/security F06 approved policy text and operating decisions for consent, numeric retention, deletion, access, feedback, analytics and monitoring; verify document versions, approvers and jurisdiction/audience scope are recorded without secrets or learner data in Git.
+- [x] 1.1 Record the project owner's dated F04 approval of 10 XP, `provisional-linear-100-v1`, current labels/hints and the Phase 39 review plan as a private-beta experiment; verify the worksheet and decision register distinguish experiment from balance.
+- [ ] 1.2 Verify the F04 baseline against the exact selected release's published quest/capstone versions, learner-facing provisional disclosure and future timing/difficulty observation plan; record the reviewed release and any mismatch without claiming balance.
+- [x] 1.3 Record the project owner's dated F05 exploratory preregistration with eligibility, recruitment/sample, D1/D7 windows, numeric targets and denominators, stop rules, missing-data treatment and cadence; verify the worksheet keeps existing analytics definitions and labels targets as exploratory.
+- [ ] 1.4 Resolve the F05 invitation/contact channel, consent/storage/withdrawal mechanics and preregistration freeze for the selected release under approved F06 policy; verify these are recorded before any real invitation.
+- [ ] 1.5 Obtain product/security F06 approved policy text and operating decisions for consent, numeric retention, deletion, access, feedback, analytics, monitoring and study data; verify document versions, approvers and jurisdiction/audience scope are recorded without secrets or learner data in Git.
 
 ## 2. Hosted evidence on the selected beta release
 

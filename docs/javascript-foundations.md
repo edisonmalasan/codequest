@@ -61,7 +61,7 @@ After both reviews pass, `publication.yaml` selects the complete 24-quest invent
 
 ## Remaining release obligations
 
-- **F04:** 10 XP per first accepted quest and introductory/developing/integrative labels are explicitly provisional. No duration or difficulty claim has been measured; PO/CO must balance against learner feedback before beta. No repeat rewards or hint penalties are added.
+- **F04:** 10 XP per first accepted quest and introductory/developing/integrative labels are explicitly provisional. No duration or difficulty claim has been measured. The later [2026-10-01 owner decision](beta-gate-closure-checklist.md#f04--learning-and-xp-balance) approves current values/labels only as an experimental private-beta baseline; final balance awaits learner evidence. No repeat rewards or hint penalties are added.
 - **Instructional evidence:** Observe beginners attempting the course, revise clarity/hints in new immutable snapshots, and assess explanation/transfer quality separately. Automated reference success does not prove effective instruction.
 - **F02:** Physical mobile/Safari/Firefox, spoken assistive technology, low-power timing and native quota/background/OS-restart evidence remain pre-beta obligations. Chromium reading/reflow evidence does not establish device parity.
 - **F06:** Repository/API publication does not deploy the course or authorize real-learner collection. Privacy, retention, consent, operator access and deletion policies must be resolved before such beta activity.

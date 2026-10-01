@@ -1,6 +1,6 @@
 # Phase 31 learning analytics
 
-Phase 31 defines minimized learning measurement. Both applications leave PostHog capture **off by default**. No project key, external destination or real learner collection is configured in this repository. [F06](decisions.md) requires approved consent, retention, deletion, backup and operator-access policies before any real learner data is sent, including during beta. [F05](decisions.md) still owns numerical targets, recruitment, sample size and review windows; the definitions below are not efficacy claims.
+Phase 31 defines minimized learning measurement. Both applications leave PostHog capture **off by default**. No project key, external destination or real learner collection is configured in this repository. [F06](decisions.md) requires approved consent, retention, deletion, backup and operator-access policies before any real learner data is sent, including during beta. The project owner's 2026-10-01 [F05 exploratory preregistration](beta-gate-closure-checklist.md#f05--preregistered-beta-evaluation) now sets private-beta recruitment, sample and numeric targets without changing the definitions below or making an efficacy claim. F06 and hosted measurement checks remain open.
 
 ## Event dictionary and trust
 
