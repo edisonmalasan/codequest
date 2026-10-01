@@ -149,7 +149,7 @@ The change SHALL include deterministic automated coverage for frontend auth stat
 
 ### Requirement: Later account and product capabilities remain excluded
 
-The change SHALL NOT add password recovery, MFA, provider-account linking or merging, account deletion and retention orchestration, admin/author management, direct application-table access from the frontend, direct Storage uploads, guest-progress import, offline sync, curriculum publication, submissions, progress, rewards, learner execution, analytics, or production identity-provider provisioning. Those behaviors require their later roadmap phase or a separately approved specification.
+The Phase 8 change SHALL NOT add password recovery, MFA, provider-account linking or merging, account deletion and retention orchestration, admin/author management, direct application-table access from the frontend, direct Storage uploads, guest-progress import, offline sync, curriculum publication, submissions, progress, rewards, learner execution, analytics, or production identity-provider provisioning. This is a historical Phase 8 scope boundary; later separately approved specifications can add those behaviors.
 
 #### Scenario: Scope is reviewed
 
@@ -171,3 +171,22 @@ The backend SHALL offer a protected versioned self-only account operation to set
 #### Scenario: Another owner is supplied
 - **WHEN** a client attempts to select another user's account while changing timezone
 - **THEN** the verified principal still exclusively determines the updated account
+
+### Requirement: Email learners can recover and update a password safely
+The frontend SHALL offer a recovery request for email learners with a generic success response that does not reveal whether an account exists. Recovery links SHALL use the configured trusted application origin and a bounded one-time code exchange before presenting the password update form. The update form SHALL require a current trusted session, validate the new password locally, report provider failures safely, and avoid placing email, password, code or tokens in logs, telemetry, or the destination URL. OAuth-only users SHALL retain their provider sign-in route.
+
+#### Scenario: Recovery request is accepted
+- **WHEN** a visitor requests recovery for an email address
+- **THEN** the UI reports that an email will arrive if the account is eligible, without disclosing account existence
+
+#### Scenario: Recovery callback succeeds
+- **WHEN** a valid one-time recovery code is exchanged through the trusted callback
+- **THEN** the learner reaches a session-protected password update form with no code in its URL
+
+#### Scenario: Recovery callback fails
+- **WHEN** the code is missing, invalid or expired
+- **THEN** the learner receives a safe retry path and no password update is attempted
+
+#### Scenario: Signed-in learner changes password
+- **WHEN** a signed-in email learner submits a valid new password
+- **THEN** the approved identity provider handles the change and the UI reports success without persisting password material in CodeQuest tables
