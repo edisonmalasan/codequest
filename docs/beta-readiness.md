@@ -2,6 +2,8 @@
 
 **Decision: NO GO.** This repository prepares technical flows, but it does not authorize private-beta invitations or collection of real learner data. The product/security owners must close F06 before any real account, submission, feedback or telemetry collection. A passing CI build is not hosted or legal evidence.
 
+Repository evidence: Phase 38 proposal [#164](https://github.com/edisonmalasan/codequest/pull/164), implementation [#165](https://github.com/edisonmalasan/codequest/pull/165), and spec sync [#166](https://github.com/edisonmalasan/codequest/pull/166) passed required CI. The final implementation run passed the existing PWA, performance, curriculum, analytics, learning and four-browser accessibility gates after repairing the home keyboard order. The [archived tasks](../openspec/changes/archive/2026-10-01-prepare-private-beta/tasks.md) record technical completion only.
+
 Record the reviewer, date, environment and link to the actual evidence beside each gate before changing this decision. Never put credentials, raw learner code or private response payloads in the record. Reassess all gates after a release candidate changes.
 
 | Gate | Owner | Current evidence / verification action | Status |
