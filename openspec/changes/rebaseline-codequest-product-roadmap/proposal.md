@@ -12,7 +12,7 @@ Phases 0–37 established substantial engineering foundations, but their archive
 - Make the current homepage and lesson/workspace composition explicitly non-final. Specify a persistent lesson/editor/output-preview desktop learning shell and intentional tablet/mobile alternatives as future product requirements, without implementing them in this change.
 - Require real-environment verification of email signup, confirmation, login, logout, recovery, Google OAuth, and GitHub OAuth. Record the founder's report that current local/Supabase flows do not work; do not present their earlier implementation or test fixtures as product completion.
 - Define a mandatory founder-run acceptance journey and make any founder-critical failure block beta. Keep Phase 38 **NO GO** and pause its release-gate execution while product completion proceeds; leave `review-beta-gate-closure` and its evidence open and unchanged.
-- Reconcile previously deferred practice, achievements, leaderboards, profiles/portfolio, avatars, tracks, React, Git/GitHub, Builds, community, AI, certificates, mentors, notifications, and related reference surfaces as explicit V1-boundary decisions. Their inclusion is not silently approved by adopting a reference product.
+- Record the founder's subsequent Apply-stage approval that practice, achievements, leaderboards, profiles/portfolio, avatars, broad original course tracks, React, Git/GitHub, Builds, community, AI, certificates, mentors, notifications and an original commercial product role are **required V1 categories**. Their architectures, trust/claim models, policies and exact designs remain dependent decisions; none is silently delivered by naming it.
 
 ## Capabilities
 
@@ -26,4 +26,4 @@ Phases 0–37 established substantial engineering foundations, but their archive
 
 ## Impact
 
-This proposal updates planning artifacts, `docs/DEVELOPMENT_ROADMAP.md`, `docs/product.md`, `docs/decisions.md`, and directly affected planning/ADR references. It does not change application code, APIs, migrations, dependencies, provider configuration, live telemetry, learner recruitment, existing beta-gate task results, or the F04/F05/F06 approval state. The later Apply stage is limited to finalizing the founder's exact V1 boundary and acceptance records; each product implementation phase needs its own reviewed OpenSpec change and tests.
+The Apply stage updates planning artifacts, `docs/DEVELOPMENT_ROADMAP.md`, `docs/product.md`, `docs/decisions.md`, V1 boundary/readiness and founder-acceptance worksheets, and directly affected planning/ADR references. It does not change application code, APIs, migrations, dependencies, provider configuration, live telemetry, learner recruitment, existing beta-gate task results, or the F04/F05/F06 approval state. Each product implementation phase needs its own reviewed OpenSpec change and tests.

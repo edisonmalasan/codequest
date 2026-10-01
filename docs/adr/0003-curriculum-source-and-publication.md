@@ -4,6 +4,8 @@
 
 Accepted ownership/source commitment; exact publication mechanism deferred and not selected. Evidence: AGENTS.md Architecture boundaries; roadmap Phases 9/10/37 Git-first curriculum. Register: [C05/P15/F03/F07](../decisions.md). Owners: technical/curriculum owners; named assignees unassigned.
 
+[AP05](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires multiple distinct original Courses and broad topic coverage. It supersedes the old one-course V1 scope, not backend-owned Git-first source or API delivery. R05 must approve stable Journey/Course/Chapter/Exercise identities and migration/compatibility before publication changes; a catalog card alone is not a complete course.
+
 ## Context
 
 Educational material must be reviewable/versioned and delivered without client coupling to authored files. Root `content/` in roadmap trees conflicts with AGENTS.md's `backend/content/`. No authored/executable content exists today.

@@ -4,6 +4,8 @@
 
 **Accepted** Auth transport/Storage/privacy policy; backend-owned application tables/verification are confirmed C03. Approval evidence for accepted details: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Sources: AGENTS.md, roadmap Auth/Security phases, exploration, design D9. Register: [C03/P01/P12/P13/U01/F03/F06](../decisions.md). Owners: technical/security/product owners; named assignees unassigned.
 
+[AP05](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires public projects/profiles, Community, notifications and commercial entitlements, but does not permit direct frontend writes to CodeQuest application tables or learner-runtime access to Auth/session data. Separate policies and backend authorization, moderation, deletion and payment boundaries must be approved before those surfaces collect or expose data. F06 remains open.
+
 ## Context
 
 Supabase Auth/Storage are stack directions, not permission for frontend application-table access. Browser runtime must not receive sessions. Audience/privacy/retention choices and exact transport implementation are not yet selected.

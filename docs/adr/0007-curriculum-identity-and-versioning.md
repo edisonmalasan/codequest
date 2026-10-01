@@ -4,6 +4,8 @@
 
 **Accepted** compatibility/history/reward policy. Stable identity/version direction is documented in roadmap; detailed approval evidence is [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C05/P09/P15/F03](../decisions.md); design D5/D7. Owners: curriculum/technical owners; named assignees unassigned.
 
+[AP05](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires distinct Courses within Journeys and complete original course breadth. R05 must specify stable course/exercise identity, publication and migration without rewriting accepted quest history, compatibility decisions or recorded XP amounts. This ADR's identity and history guarantees remain the starting constraint.
+
 ## Context
 
 Learners may submit cached/guest source after authored material changes. Identity based only on slug/title or treating each version as a new XP source risks lost history/duplicate rewards. No implementation exists.

@@ -4,7 +4,7 @@
 
 **Accepted**, product/security risk acceptance recorded. Evidence of approval: [AP01 — explicit user instruction](../decisions.md#ap01-explicit-phase-0-approval). Sources: roadmap local execution/authoritative submission flow/no LLM grading/no NestJS arbitrary execution; exploration identified unresolved verification. Register: [C06/C08/P06/P14](../decisions.md); design D6. Owners: product/security owners; technical owner recommends mechanism. Named assignees unassigned.
 
-The [AP04 product rebaseline](../decisions.md#ap04-founder-product-completion-direction) requires founder decisions for competitive leaderboards, ranks and certificates. It does not upgrade personal-learning client-reported completion into independent proof. Any selected verified or competitive claim must revisit this ADR and grading architecture before implementation.
+The [AP05 broad V1 boundary](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires competitive leaderboards/ranks and certificates as V1 product categories. It does not upgrade personal-learning client-reported completion into independent proof. R10C and R12F must approve a separate grading/fairness and certificate-claim model before verified or competitive results are presented; this ADR's personal-learning acceptance remains valid for its limited purpose.
 
 ## Context
 

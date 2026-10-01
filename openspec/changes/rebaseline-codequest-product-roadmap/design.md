@@ -31,9 +31,9 @@ The roadmap retains Phases 0–37 as completed engineering history, Phase 38 as 
 
 The roadmap defines an ordered state model. `TECHNICALLY IMPLEMENTED` means code and focused checks exist; `FEATURE COMPLETE` means all approved user-visible behavior exists; `INTEGRATED` means connected flows work with real configured dependencies; `FOUNDER ACCEPTED` means the founder personally verifies the actual V1 app; `RELEASE READY` means the exact candidate passes legal, hosted, physical, security and operational gates. Private Beta, Beta Accepted, and Production Ready follow distinct decisions. A capability cannot skip a state through CI, archive status, or a mock. Alternative: one “done” marker; rejected because it hides the current Auth and learning-shell gaps.
 
-### 3. Resolve breadth before architecture
+### 3. Founder-approved breadth precedes dependent architecture
 
-R01 records `required`, `conditional pending founder decision`, or `deferred` for each candidate surface. R10–R12 are conditional expansion groups and do not become promises until the founder selects the exact V1 subset. If selected, each group is split into implementable OpenSpec changes with independent security/content/operational acceptance. This preserves P04/P05/P06/P11/F07/F08 constraints until a superseding decision is approved. Alternative: promote every public Codédex category to V1; rejected because reference inventory is not scope approval and would imply unsupported runtime, grading, privacy and moderation promises.
+The founder's 2026-10-02 Apply instruction makes the listed major public-product categories and broad original topic coverage **required V1 scope**. R01 records them in a capability matrix, supersedes old V1 exclusions through AP05, and separates required parent categories from unresolved implementations. R10–R12 are split into dependency-ordered subphases; no required category may be omitted because its security, grading, privacy or runtime design is hard. Exact mechanisms receive separate OpenSpec decisions and verification before dependent work. Alternative: assume current browser grading, static preview or old content hierarchy can simply support the broader product; rejected because that would make unsafe or false promises.
 
 ### 4. Redesign composition around existing boundaries
 
@@ -49,7 +49,7 @@ The active `review-beta-gate-closure` artifacts are not edited by this change. F
 
 ## Risks / Trade-offs
 
-- **Reference-product breadth expands V1 beyond capacity** → R01 requires exact inclusions and allows explicit deferral; advertise only approved complete surfaces.
+- **Approved reference-product breadth is much larger than the former MVP** → split into coherent subphases and advertise each required course/surface only when fully usable; beta cannot start while a required V1 category remains incomplete.
 - **Multi-course or interactive Builds requirements change architecture** → make hierarchy, runtime, grading, publishing, moderation and privacy decisions before implementation; preserve current trust boundaries until superseded.
 - **Founder's Auth report is misdiagnosed as only configuration or only code** → reproduce on the real configured environment and retain expected/observed provider evidence before choosing a fix.
 - **Roadmap labels imply readiness** → put evidence state alongside phase status; keep Phase 38 `NO GO` until the existing worksheet closes.
@@ -62,4 +62,4 @@ This is a planning migration. During this proposal stage, update roadmap/product
 
 ## Open Questions
 
-The founder must choose exact V1 scope for separate courses, practice/challenges, badges/ranks/avatars, Builds/public profiles/community, additional tracks, AI/help/mentors/certificates, notifications, and any commercial surface before those conditional phases become implementation commitments. These choices do not change this planning-only change's readiness or sequencing contract; they determine later capability proposals.
+The founder has resolved inclusion of the listed broad V1 categories. Later phase proposals still need exact original course outlines, runtime containment, independent competitive/certificate grading, public moderation/deletion, AI and mentor service models, notification channels, commercial terms/prices/entitlements, and exact device support. These choices affect later implementations and block beta while unresolved; they do not make the parent categories optional.

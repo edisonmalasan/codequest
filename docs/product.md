@@ -1,12 +1,12 @@
 # CodeQuest product definition
 
-Status: approved Phase 0 definition and proposed 2026-10-02 Product Completion rebaseline. Phase 0 source commitments remain historical; the [decision register](decisions.md) records the founder's new release standard and unresolved V1 breadth decisions. This document retains the original MVP definitions for traceability. The [forward roadmap](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) controls the proposed sequence. [Architecture](architecture.md) defines ownership; [curriculum](curriculum.md) defines current instructional outcomes.
+Status: approved Phase 0 historical definition plus founder-approved 2026-10-02 Product Completion and broad V1 boundary (AP04/AP05). The [V1 capability matrix](v1-product-boundary.md) controls required scope and current evidence; the [forward roadmap](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) controls sequence. Historical MVP definitions below remain for traceability. [Architecture](architecture.md) defines ownership; [curriculum](curriculum.md) defines current published instructional outcomes.
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
 ## Product Completion / Founder Alpha rebaseline
 
-The founder has approved a higher V1 completion standard: CodeQuest must be a fully working, polished, integrated application **before** private beta or production. The public [Codédex product](https://www.codedex.io/) is the primary reference for product structure, navigation, homepage, discovery, learning flows, workspace composition, gamification, profiles, practice, projects, breadth, responsiveness and quality. CodeQuest must use original branding, artwork, lesson writing, exercises, examples, solutions, validation tests and implementation. A public reference feature is not automatically an approved CodeQuest V1 commitment; private and paid reference content is not a source.
+The founder has approved a higher V1 completion standard: CodeQuest must be a fully working, polished, integrated application **before** private beta or production. The public [Codédex product](https://www.codedex.io/) is the primary reference for product structure, navigation, homepage, discovery, learning flows, workspace composition, gamification, profiles, practice, projects, breadth, responsiveness and quality. AP05 explicitly makes the major categories in the [V1 boundary](v1-product-boundary.md) required, while their exact original designs and safe architectures are later decisions. CodeQuest must use original branding, artwork, lesson writing, exercises, examples, solutions, validation tests and implementation; private and paid reference content is not a source.
 
 Product state advances through **TECHNICALLY IMPLEMENTED → FEATURE COMPLETE → INTEGRATED → FOUNDER ACCEPTED → RELEASE READY → PRIVATE BETA → BETA ACCEPTED → PRODUCTION READY**. CI and archived engineering changes establish technical evidence only. A feature included in V1 must expose the complete intended behavior, work with real dependencies, and pass the founder's real-app journey before beta. A founder-critical failure blocks release readiness.
 
@@ -16,13 +16,13 @@ Email signup, email confirmation, login, logout, recovery, Google OAuth and GitH
 
 Phase 38 release-gate execution is **PAUSED** and [beta readiness](beta-readiness.md) remains **NO GO** during Product Completion. The active [gate-closure change](../openspec/changes/review-beta-gate-closure/tasks.md), approved experimental F04 baseline and exploratory F05 preregistration, open F06 decisions, and missing hosted/physical evidence are preserved. Real Private Beta follows product completion, integration, founder acceptance and resumed Phase 38 gates; the synthetic Phase 39 study protocol is not recruitment.
 
-Before V1 breadth is fixed, the founder must explicitly choose which of practice, daily challenges, achievements, leaderboards, public profiles/portfolio, avatars, Builds, community, additional courses/languages including React and Git/GitHub, AI assistance, certificates, mentors, notifications and other reference surfaces are included or deferred. The [rebaseline decision table](decisions.md#ap04-founder-product-completion-direction) records this distinction. Every included surface gains its own full implementation, integrated verification and founder-acceptance criteria; no deferred item is silently promoted.
+The founder now requires a real multi-course catalog, original broad HTML/CSS/JavaScript/DOM and additional reference-equivalent tracks, Practice, daily challenges, badges/avatars/ranks, fair leaderboards, Builds and project publishing, profiles/portfolio, Community, AI/help, certificates, mentors, notifications, responsive/PWA/offline support, privacy/operations and an original commercial/entitlement role. The exhaustive [matrix](v1-product-boundary.md#required-v1-capability-matrix) and [AP05 supersessions](decisions.md#ap05-founder-approved-broad-v1-boundary) define these as **required V1 categories**. Their trust, safety, privacy and commercial designs remain prerequisites, not deferrals. Each advertised course must contain a complete original coherent path; a catalog card alone is insufficient.
 
 Minimum Founder Acceptance: Home → browse courses → choose journey/course → supported guest learning → signup → email confirmation → login → Google and GitHub OAuth → course and lesson → three-pane editing → Run → output/preview → Check → hint → submit/complete → backend progress/XP/level/streak/unlock effects → Next → updated map → refresh → close/reopen → logout/login → retained progress → recovery → account/profile. Use distinct synthetic accounts as needed for provider flows and record build/environment/results. Extend this journey for every added V1 capability.
 
 ## Product and audience
 
-CodeQuest is a pixel-themed coding education platform whose first release helps learners read, write, run, debug, check, and combine JavaScript into a meaningful project. Learning comes before rewards; one polished course comes before more languages; manual learning comes before AI. These are roadmap commitments (C01/C07/C08).
+Historically, CodeQuest was scoped as a pixel-themed first JavaScript course: learners read, write, run, debug, check, and combine JavaScript into a meaningful project. The one-course-before-breadth and AI-post-MVP parts of C01/C07/C08 are **superseded for V1 inclusion by AP05**. The still-valid principle is that every course must teach and assess coherently, and AI must not replace normal deterministic correctness grading without a separate approved decision.
 
 Approved audience (P01/U01): self-directed adults starting with little or no programming knowledge, able to read English and use a browser/keyboard. Their problem is moving from explanations to code they can inspect, correct, and apply. The MVP should support a first useful coding experience without tool installation. Desktop-first coding and mobile reading/short exercises are approved; full mobile coding parity is not claimed. Minors/classrooms, experienced interview-practice users, localization, and mobile-only coding are alternatives requiring a different approved promise.
 
@@ -30,7 +30,7 @@ Approved positioning (P02): guided coding with deterministic, actionable feedbac
 
 ## Historical Phase 0 MVP release inventory
 
-The inventory below records the approved Phase 0 baseline. Its required core remains the starting point for R01, while its post-MVP classifications are subject to explicit founder V1-boundary decisions under AP04. It is not evidence that the current application meets the new product-completion gate.
+The inventory below records the approved Phase 0 baseline. Its required core remains part of V1, while its post-MVP classifications are superseded where AP05 requires the [broad V1 boundary](v1-product-boundary.md). It is not evidence that the current application meets the new product-completion gate.
 
 **Phase 0** means product definition. **P0** means features required for public MVP. Numbered development phases/steps are sequencing, not feature priority. A required release feature below is not implemented by this documentation change.
 
@@ -59,7 +59,9 @@ The inventory below records the approved Phase 0 baseline. Its required core rem
 
 There are no optional launch features silently awaiting implementation. AP01 approves the cumulative guest/sync/preview/provider scope. A feature may be moved to optional/deferred only by a later explicit product decision recorded in the register.
 
-### Historical exclusions and post-MVP scope pending R01 decisions
+### Historical exclusions and post-MVP scope superseded where AP05 requires V1 inclusion
+
+The list below records the original Phase 0 tiering only. It is **not** the current V1 exclusion list; AP05 and the V1 boundary matrix supersede the listed practice, projects, community, tracks, AI/help, certificates, notifications and commercial surfaces where approved. Boundaries such as no learner code inside NestJS and no current client-pass proof for verified competition remain in force until a separately approved safer design replaces them.
 
 - P1: AI tutor, Python/Pyodide, daily challenge/practice/mastery tracking, achievements, leaderboards, public portfolio, expanded content tools, notifications.
 - P2: cosmetics/avatars/skill trees/adaptive learning, TypeScript/React/Git tracks, sharing/remixing/community/mentors, certificates.

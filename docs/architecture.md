@@ -4,7 +4,7 @@ Status: intended architecture, not implemented infrastructure. C02–C06 are con
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
-The proposed [Product Completion rebaseline](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) changes product sequencing and acceptance, not the frontend/backend ownership or learner execution trust boundaries here. Multi-course hierarchy, interactive Builds, new language runtimes, public sharing and verified competitive or certificate claims need explicit decisions and affected ADR/spec updates before implementation. The old Phase 0 current-state prose below is historical and does not inventory today's implemented modules.
+The [AP05 broad V1 boundary](decisions.md#ap05-founder-approved-broad-v1-boundary) requires multi-course learning, interactive Builds, new language tracks, public project/community surfaces and competitive/certificate product roles. Their **inclusion** is approved; their hierarchy migration, isolated runtimes, independently defensible assessment, privacy/moderation and claim policies need separate reviewed designs before implementation. This rebaseline does not change frontend/backend ownership, direct table access or learner execution trust boundaries. The old Phase 0 current-state prose below is historical and does not inventory today's implemented modules.
 
 ## Current and intended state
 

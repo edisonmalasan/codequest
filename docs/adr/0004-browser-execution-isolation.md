@@ -4,7 +4,7 @@
 
 **Accepted** isolation policy. Legacy executable-HTML preview feasibility is **reviewed no-go** (AP02); Worker-backed supplied-shell subsets pass, but current native recovery is **no-go/incomplete** and the recommendation is **pending review** and overall production selection remains **blocked**. Browser Worker/iframe direction and no NestJS execution are confirmed C06 from AGENTS.md/roadmap. Approval evidence for P11 capabilities: [AP01](../decisions.md#ap01-explicit-phase-0-approval). Register: [C06/P11/F01/F02](../decisions.md); design D6/D9. Owners: technical/security owners, product owner for experience promise; Phase 1 named reviewer: Edison, project owner (technical/product/security self-review).
 
-The [AP04 product rebaseline](../decisions.md#ap04-founder-product-completion-direction) makes interactive Builds and wider web learning explicit future scope decisions. It does not authorize DOM scripting, network access, origin sharing or a weaker learner compartment. This ADR's historical test checkpoints remain evidence of their dates; the current [web preview spec](../../openspec/specs/web-preview-runtime/spec.md) defines the implemented restricted preview.
+The [AP05 broad V1 boundary](../decisions.md#ap05-founder-approved-broad-v1-boundary) requires interactive DOM learning and Builds. It does not authorize DOM scripting in the current script-disabled preview, network access, origin sharing or a weaker learner compartment. R07A needs a separate reviewed and proven safe capability before those required surfaces can run. This ADR's historical test checkpoints remain evidence of their dates; the current [web preview spec](../../openspec/specs/web-preview-runtime/spec.md) defines the implemented restricted preview.
 
 ## Context
 
