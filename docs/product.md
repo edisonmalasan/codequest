@@ -1,8 +1,24 @@
 # CodeQuest product definition
 
-Status: approved Phase 0 definition. Source commitments are confirmed only where stated; concrete recommendations are **approved** and tracked in the [decision register](decisions.md). This is the canonical product scope/glossary/measurement document. [Architecture](architecture.md) defines ownership; [curriculum](curriculum.md) defines instructional outcomes.
+Status: approved Phase 0 definition and proposed 2026-10-02 Product Completion rebaseline. Phase 0 source commitments remain historical; the [decision register](decisions.md) records the founder's new release standard and unresolved V1 breadth decisions. This document retains the original MVP definitions for traceability. The [forward roadmap](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) controls the proposed sequence. [Architecture](architecture.md) defines ownership; [curriculum](curriculum.md) defines current instructional outcomes.
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
+
+## Product Completion / Founder Alpha rebaseline
+
+The founder has approved a higher V1 completion standard: CodeQuest must be a fully working, polished, integrated application **before** private beta or production. The public [Codédex product](https://www.codedex.io/) is the primary reference for product structure, navigation, homepage, discovery, learning flows, workspace composition, gamification, profiles, practice, projects, breadth, responsiveness and quality. CodeQuest must use original branding, artwork, lesson writing, exercises, examples, solutions, validation tests and implementation. A public reference feature is not automatically an approved CodeQuest V1 commitment; private and paid reference content is not a source.
+
+Product state advances through **TECHNICALLY IMPLEMENTED → FEATURE COMPLETE → INTEGRATED → FOUNDER ACCEPTED → RELEASE READY → PRIVATE BETA → BETA ACCEPTED → PRODUCTION READY**. CI and archived engineering changes establish technical evidence only. A feature included in V1 must expose the complete intended behavior, work with real dependencies, and pass the founder's real-app journey before beta. A founder-critical failure blocks release readiness.
+
+The current homepage and vertically separated lesson/`QuestWorkspace` layout are **not final**. The intended desktop learning screen keeps lesson, code editor and output/preview in three persistent panes with a clear exercise action/navigation bar. Tablet/mobile require purpose-designed alternate layouts. Existing Worker isolation, static preview restrictions, deterministic Check and backend account authority remain the starting boundaries. Interactive DOM scripting, public Builds, or verified competitive claims require separate decisions and designs.
+
+Email signup, email confirmation, login, logout, recovery, Google OAuth and GitHub OAuth are not product complete until they work against the real configured Supabase environment. The founder reports that actual local email signup and Google/GitHub login currently fail. Existing Auth code and controlled test adapters are useful engineering work, not real-integration or founder-acceptance evidence.
+
+Phase 38 release-gate execution is **PAUSED** and [beta readiness](beta-readiness.md) remains **NO GO** during Product Completion. The active [gate-closure change](../openspec/changes/review-beta-gate-closure/tasks.md), approved experimental F04 baseline and exploratory F05 preregistration, open F06 decisions, and missing hosted/physical evidence are preserved. Real Private Beta follows product completion, integration, founder acceptance and resumed Phase 38 gates; the synthetic Phase 39 study protocol is not recruitment.
+
+Before V1 breadth is fixed, the founder must explicitly choose which of practice, daily challenges, achievements, leaderboards, public profiles/portfolio, avatars, Builds, community, additional courses/languages including React and Git/GitHub, AI assistance, certificates, mentors, notifications and other reference surfaces are included or deferred. The [rebaseline decision table](decisions.md#ap04-founder-product-completion-direction) records this distinction. Every included surface gains its own full implementation, integrated verification and founder-acceptance criteria; no deferred item is silently promoted.
+
+Minimum Founder Acceptance: Home → browse courses → choose journey/course → supported guest learning → signup → email confirmation → login → Google and GitHub OAuth → course and lesson → three-pane editing → Run → output/preview → Check → hint → submit/complete → backend progress/XP/level/streak/unlock effects → Next → updated map → refresh → close/reopen → logout/login → retained progress → recovery → account/profile. Use distinct synthetic accounts as needed for provider flows and record build/environment/results. Extend this journey for every added V1 capability.
 
 ## Product and audience
 
@@ -12,7 +28,9 @@ Approved audience (P01/U01): self-directed adults starting with little or no pro
 
 Approved positioning (P02): guided coding with deterministic, actionable feedback and a visible path toward application. Pixel art gives context/motivation; it must not reduce readability, focus, accessibility, or editor usability. Foundations does not promise job readiness, comprehensive JavaScript mastery, portfolio credentials, or coding-agent proficiency. Enjoyment, comprehension, repeated learning, meaningful return, and project application are hypotheses to validate, not established results.
 
-## Canonical MVP release inventory
+## Historical Phase 0 MVP release inventory
+
+The inventory below records the approved Phase 0 baseline. Its required core remains the starting point for R01, while its post-MVP classifications are subject to explicit founder V1-boundary decisions under AP04. It is not evidence that the current application meets the new product-completion gate.
 
 **Phase 0** means product definition. **P0** means features required for public MVP. Numbered development phases/steps are sequencing, not feature priority. A required release feature below is not implemented by this documentation change.
 
@@ -41,7 +59,7 @@ Approved positioning (P02): guided coding with deterministic, actionable feedbac
 
 There are no optional launch features silently awaiting implementation. AP01 approves the cumulative guest/sync/preview/provider scope. A feature may be moved to optional/deferred only by a later explicit product decision recorded in the register.
 
-### Explicit exclusions and post-MVP scope
+### Historical exclusions and post-MVP scope pending R01 decisions
 
 - P1: AI tutor, Python/Pyodide, daily challenge/practice/mastery tracking, achievements, leaderboards, public portfolio, expanded content tools, notifications.
 - P2: cosmetics/avatars/skill trees/adaptive learning, TypeScript/React/Git tracks, sharing/remixing/community/mentors, certificates.

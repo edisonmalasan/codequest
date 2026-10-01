@@ -1,6 +1,6 @@
 # CodeQuest decision register
 
-This is the approval record for Phase 0. The user explicitly clarified that the instruction to archive `define-codequest-product-and-architecture` also approved its proposed product and architecture decisions. P01–P15 and the applicable U01 baseline are confirmed by AP01 below. This consistency correction does not reopen the archived change or authorize Phase 1 implementation.
+This register preserves Phase 0 approvals and later decisions. The user explicitly clarified that archiving `define-codequest-product-and-architecture` also approved P01–P15 and the applicable U01 baseline through AP01. The founder's 2026-10-02 product-completion direction is recorded separately as AP04; it changes the forward release standard without erasing historical decisions or approving every deferred feature.
 
 ## Sources and statuses
 
@@ -11,6 +11,31 @@ This is the approval record for Phase 0. The user explicitly clarified that the 
 - **U:** user's proposal/apply requests: documentation-only execution scope; technical branch naming; no production infrastructure.
 - **AP01:** [explicit Phase 0 approval](#ap01-explicit-phase-0-approval), this user's clarification of the archive instruction.
 - **AP02:** [reviewed Phase 1 no-go](#ap02-reviewed-phase-1-no-go), explicit approval of the measured preview failure outcome.
+- **AP04:** [founder product-completion direction](#ap04-founder-product-completion-direction), explicit approval of the new V1 quality and sequencing standard, with feature breadth still requiring choices.
+
+### AP04: Founder Product Completion direction
+
+Recorded from the founder's 2026-10-02 instruction to propose a complete product and roadmap rebaseline. **Confirmed direction:** CodeQuest must be fully working, polished, integrated and founder accepted before private beta or production. The public Codédex product is the primary reference for general information architecture, workflows, visual quality, topic breadth and polish; CodeQuest must use original branding, art, lesson prose, exercises, examples, solutions, tests and implementation. This is not authorization to copy private/paid content or proprietary assets.
+
+AP04 supersedes the old assumption that completing Phase 38 technical preparation permits the next real-learner phase. Phase 38 release-gate execution is **PAUSED**, readiness remains **NO GO**, and the active `review-beta-gate-closure` evidence stays open. The historical Phase 39 synthetic study preparation is not a real beta. Product Completion R01–R15 must precede resumed release readiness R16, real Private Beta R17, beta corrections R18 and a separate production decision R19. Phases 0–37 remain completed engineering history, not product acceptance.
+
+The states are **TECHNICALLY IMPLEMENTED → FEATURE COMPLETE → INTEGRATED → FOUNDER ACCEPTED → RELEASE READY → PRIVATE BETA → BETA ACCEPTED → PRODUCTION READY**. A CI pass or archived change cannot skip integration or personal founder review. Every advertised V1 capability must be feature complete, integrated and founder accepted before beta; any founder-critical failure blocks release readiness. The current homepage and stacked lesson/workspace are non-final. Desktop requires a persistent lesson/editor/output-preview three-pane shell, with intentional tablet/mobile alternatives. Real configured Supabase email signup, confirmation, login/logout, recovery and Google/GitHub OAuth must be demonstrated; the founder reports current local email and OAuth flows failing.
+
+AP04 confirms the **completion standard and reference direction**, not the exact inclusion of all reference-product feature categories. The following decision groups remain pending R01 founder selection. A selected group requires a superseding record for any conflicting P/C/F decision or ADR, its own OpenSpec capability proposal and a full acceptance path. Until selected, its prior deferral remains in force.
+
+| ID | V1 boundary decision needed from founder | Current status and affected historical decisions |
+| --- | --- | --- |
+| RB01 | One polished Journey versus multiple distinct courses and `Journey > Course > Chapter > Quest`; exact published V1 courses | **Unresolved**; P04/C07/F07 remain current until explicit hierarchy/content decision |
+| RB02 | HTML/CSS/DOM/events and interactive web preview/build execution versus current static preview and logic curriculum | **Unresolved**; P05/P11 and ADR 0004 remain current security/outcome bounds |
+| RB03 | Separate practice and daily challenges; eligibility, repeat and reward policies | **Unresolved**; F08/P09 remain current |
+| RB04 | Achievements/badges, ranks/leaderboards, avatars, skill trees and other reward presentation | **Unresolved**; F04 experimental curve and P06/ADR 0005 prevent unverified competitive claims by implication |
+| RB05 | Private versus public profile, portfolio, Builds/projects, sharing/remix and community | **Unresolved**; F07/F08/P12 and F06 privacy/moderation needs remain current |
+| RB06 | Additional language/course tracks including Python, TypeScript, React, Git/GitHub, command line and other catalog topics | **Unresolved**; C01/C07/F08/F09 remain current; each selected track needs content/runtime scope |
+| RB07 | AI assistance, human mentors, certificates and any verified achievement claim | **Unresolved**; C08/P06/F08 and ADR 0005 remain current; normal correctness is deterministic |
+| RB08 | Notifications, search beyond catalog, commercial tiers and other significant public reference surfaces | **Unresolved**; no V1 approval or operations/privacy model follows from reference inventory |
+| RB09 | Exact supported device/browser/AT matrix and mobile coding promise | **Unresolved**; P01/U01/F02 remain desktop-first with physical evidence open |
+
+AP04 does not change the 2026-10-01 F04 private-beta-only 10 XP and `provisional-linear-100-v1` experiment, the approved F05 exploratory preregistration, or the unapproved F06 policy and retention proposals. Those remain governed by the [gate-closure worksheet](beta-gate-closure-checklist.md).
 
 ### AP01: Explicit Phase 0 approval
 

@@ -4,6 +4,8 @@ Status: intended architecture, not implemented infrastructure. C02–C06 are con
 
 Approval evidence: [AP01 — explicit user approval](decisions.md#ap01-explicit-phase-0-approval).
 
+The proposed [Product Completion rebaseline](DEVELOPMENT_ROADMAP.md#product-completion--founder-alpha-rebaseline--proposed-forward-order) changes product sequencing and acceptance, not the frontend/backend ownership or learner execution trust boundaries here. Multi-course hierarchy, interactive Builds, new language runtimes, public sharing and verified competitive or certificate claims need explicit decisions and affected ADR/spec updates before implementation. The old Phase 0 current-state prose below is historical and does not inventory today's implemented modules.
+
 ## Current and intended state
 
 The current repository has documentation, engineering instructions, installed skills, OpenSpec planning artifacts, and the Phase 2 production workspace (`frontend/`, `backend/`, pnpm/Turborepo toolchain, CI); no database, generated client, content engine, or runtime exists. Future paths below describe ownership rather than directories created by Phase 0.
