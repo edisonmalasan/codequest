@@ -154,6 +154,15 @@ export function AuthForm({
         </Button>
       </form>
 
+      {mode === 'login' && (
+        <Link
+          href="/recover"
+          className="inline-block font-bold text-ascent underline"
+        >
+          Forgot password?
+        </Link>
+      )}
+
       <div className="flex items-center gap-3" aria-hidden="true">
         <span className="h-px flex-1 bg-line" />
         <span className="font-mono text-xs uppercase tracking-widest text-muted">

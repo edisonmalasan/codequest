@@ -23,7 +23,16 @@ export default function Home(): React.JSX.Element {
         >
           Sign in
         </Link>
+        <Link
+          href="/onboarding"
+          className="inline-flex min-h-11 items-center rounded-md border border-line-strong px-4 font-bold text-ink"
+        >
+          How learning works
+        </Link>
       </nav>
+      <Link className="text-sm text-muted underline" href="/feedback">
+        Draft feedback on this device
+      </Link>
     </main>
   );
 }
