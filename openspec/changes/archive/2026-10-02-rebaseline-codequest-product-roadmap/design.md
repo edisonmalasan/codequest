@@ -2,7 +2,7 @@
 
 ## Context
 
-See [proposal.md](proposal.md). Phases 0–37 are archived engineering work. Phase 38 technical preparation and Phase 39 synthetic study preparation exist, while the active [gate-closure change](../review-beta-gate-closure/tasks.md) has only its F04/F05 decision-recording tasks checked. The existing product definition approves one `Journey > Chapter > Quest` path, with Course as a display synonym, and deliberately defers many Codédex-inspired surfaces. Those decisions remain historical evidence until explicitly superseded.
+See [proposal.md](proposal.md). Phases 0–37 are archived engineering work. Phase 38 technical preparation and Phase 39 synthetic study preparation exist, while the active [gate-closure change](../../review-beta-gate-closure/tasks.md) has only its F04/F05 decision-recording tasks checked. The existing product definition approves one `Journey > Chapter > Quest` path, with Course as a display synonym, and deliberately defers many Codédex-inspired surfaces. Those decisions remain historical evidence until explicitly superseded.
 
 The real product gap is cross-surface integration: the current home is a simple entry page; the quest page places reading above `QuestWorkspace`; reusable `EditorWorkspace`/Worker/validation/preview seams and backend authority exist, but the intended persistent lesson/editor/output-preview composition does not. The founder reports real Supabase local email and OAuth flows failing, so test fixtures cannot be promoted to integrated evidence.
 
