@@ -144,6 +144,24 @@ describe('AccountPanel', () => {
     expect(replace).toHaveBeenCalledWith('/login');
   });
 
+  it('keeps the account visible and allows retry when sign-out fails', async () => {
+    signOut.mockResolvedValueOnce({
+      error: new Error('private provider error'),
+    });
+    const user = userEvent.setup();
+    render(<AccountPanel email="learner@example.test" />);
+    await screen.findByText('UTC');
+    await user.click(screen.getByRole('button', { name: 'Sign out' }));
+    expect((await screen.findByRole('alert')).textContent).toContain(
+      'Sign out could not be completed. Please try again.',
+    );
+    expect(screen.getByText('UTC')).toBeDefined();
+    expect(clear).not.toHaveBeenCalled();
+    expect(replace).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Sign out' }));
+    await waitFor(() => expect(replace).toHaveBeenCalledWith('/login'));
+  });
+
   it('saves the timezone and explains the prospective day rule', async () => {
     const user = userEvent.setup();
     render(<AccountPanel email="learner@example.test" />);

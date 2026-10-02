@@ -37,6 +37,18 @@ https://<production-origin>/auth/callback
 
 Enable email/password, Google, and GitHub in the Supabase dashboard. Google and GitHub provider credentials stay in Supabase. CodeQuest requests authentication only and does not request, retain, or expose provider API tokens.
 
+The frontend checks the public Supabase Auth settings before starting Google or GitHub sign-in. If a provider is disabled in the configured project, the learner stays on the CodeQuest sign-in page and can use email or retry later. A passing settings check is only an availability hint; it does not prove a provider redirect, callback, session, or backend account. Configure each provider in Supabase and its upstream provider console, then verify the complete synthetic flow separately. Provider client secrets must remain in those consoles or their protected secret stores.
+
+### Local integration troubleshooting
+
+1. Start both apps with `pnpm dev` and wait for the frontend ready message and `http://127.0.0.1:3001/api/v1/health` to return HTTP 200. A health request during the initial backend watch startup can fail before the process is ready. Do not change the watch script based only on that early result.
+2. Check that `http://localhost:3000/login`, `/register`, and `/recover` load. If they report missing public configuration, check only the presence and shape of values in `frontend/.env.local`; keep the backend connection, token-verification values, and secrets in `backend/.env.local`.
+3. Confirm the selected Supabase project has email sign-in enabled and the application callback `http://localhost:3000/auth/callback` in its redirect allowlist. For Google and GitHub, enable and configure each provider there and register the Supabase Auth callback in the corresponding provider console. A disabled provider now yields a safe email alternative on the login page; no frontend change can substitute for provider setup.
+4. For confirmation and recovery, inspect the project's approved email delivery/template configuration and test with an inbox controlled for synthetic verification. A registration confirmation message means there is no signed-in session yet. Recovery intentionally shows the same acknowledgement whether an address is eligible or delivery fails; investigate delivery through approved operator tools without exposing account existence to the learner.
+5. If sign-in succeeds but `/account` reports that account data could not be loaded, check backend availability, the configured issuer/JWKS/token lifetime, and the protected account request. Retry on the account page after the underlying issue is resolved. Never paste bearer tokens, cookies, full provider responses, learner source, or credentials into an issue or verification record.
+
+The [R04 verification record](r04-auth-verification.md) tracks which local checks have actually run. It does not replace per-method synthetic integration or founder acceptance.
+
 ## Routes and account establishment
 
 - `/register` supports email/password registration, confirmation-required registration, and Google/GitHub redirects.
