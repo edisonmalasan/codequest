@@ -1,12 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
-import {
-  createCodequestApi,
-  type JourneySummary,
-  type PublicApiResult,
-} from '@/lib/api-client';
+import { useEffect, useState } from 'react';
+import type { JourneySummary, PublicApiResult } from '@/lib/api-client';
 import styles from '@/app/homepage.module.css';
 
 interface HomeLearningApi {
@@ -23,31 +19,33 @@ export function HomeLearning({
 }: {
   readonly api?: HomeLearningApi;
 }): React.JSX.Element {
-  const curriculumApi = useMemo(() => api ?? createCodequestApi(), [api]);
   const [retryCount, setRetryCount] = useState(0);
   const [state, setState] = useState<LearningState>({ status: 'loading' });
 
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
-    curriculumApi.getJourneys(controller.signal).then(
-      (result) => {
+    async function loadJourneys(): Promise<void> {
+      try {
+        const curriculumApi =
+          api ?? (await import('@/lib/api-client')).createCodequestApi();
+        const result = await curriculumApi.getJourneys(controller.signal);
         if (!active) return;
         setState(
           result.ok
             ? { status: 'ready', journeys: result.data }
             : { status: 'error' },
         );
-      },
-      () => {
+      } catch {
         if (active) setState({ status: 'error' });
-      },
-    );
+      }
+    }
+    void loadJourneys();
     return () => {
       active = false;
       controller.abort();
     };
-  }, [curriculumApi, retryCount]);
+  }, [api, retryCount]);
 
   if (state.status === 'loading') {
     return (
