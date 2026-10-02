@@ -1,0 +1,121 @@
+.shell {
+  min-height: 100vh;
+  min-width: 0;
+  background: var(--color-canvas);
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 100;
+  top: 8px;
+  left: 8px;
+  padding: 10px 14px;
+  transform: translateY(-150%);
+  background: var(--color-ascent);
+  color: var(--color-ascent-ink);
+  font-weight: 700;
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px clamp(20px, 4vw, 76px);
+  border-bottom: 1px solid var(--color-line);
+  background: #090d18;
+}
+
+.brand {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.desktopNav {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(4px, 1vw, 20px);
+  align-self: stretch;
+}
+
+.navLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 13px;
+  border-bottom: 2px solid transparent;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navLink:hover,
+.navLink[aria-current='page'] {
+  color: var(--color-ink);
+}
+
+.navLink[aria-current='page'] {
+  border-bottom-color: var(--color-ascent);
+}
+
+.menuButton {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.mobileNav[hidden] {
+  display: none;
+}
+
+.mobileNav {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  padding: 8px 20px 16px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.mobileNav .navLink {
+  padding: 8px 12px;
+  border-bottom-width: 1px;
+}
+
+.content {
+  min-width: 0;
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  .header {
+    min-height: 72px;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+}

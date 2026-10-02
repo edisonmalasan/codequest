@@ -115,20 +115,23 @@ test('home and authentication have a named keyboard path with visible focus', as
 }) => {
   await page.goto('/');
   await expect(page.getByRole('main')).toHaveCount(1);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodeQuest');
-  const journeyLink = page.getByRole('link', {
-    name: 'Explore JavaScript Foundations',
-  });
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Your next world starts with one line.',
+  );
+  const skipLink = page.getByRole('link', { name: 'Skip to main content' });
   if (browserName === 'webkit') {
-    await journeyLink.focus();
+    await skipLink.focus();
   } else {
     await page.keyboard.press('Tab');
   }
-  await expect(journeyLink).toBeFocused();
-  const homeOutline = await journeyLink.evaluate(
+  await expect(skipLink).toBeFocused();
+  const learningLink = page.getByRole('link', { name: 'Explore learning' });
+  await learningLink.focus();
+  await expect(learningLink).toBeFocused();
+  const homeOutline = await learningLink.evaluate(
     (element) => getComputedStyle(element).outlineWidth,
   );
-  expect(homeOutline, 'home Journey link focus ring').toBe('2px');
+  expect(homeOutline, 'home learning link focus ring').toBe('2px');
   await page.setViewportSize({ width: 320, height: 900 });
   await expectNoPageOverflow(page, '/');
 

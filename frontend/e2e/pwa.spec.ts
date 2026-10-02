@@ -773,7 +773,9 @@ test('new release waits without reload or deleting device-local work', async ({
       await page.evaluate(() => navigator.serviceWorker.controller?.scriptURL),
     ).toBe(identity);
     await expect(
-      page.getByRole('heading', { name: 'CodeQuest', exact: true }),
+      page.getByRole('heading', {
+        name: 'Your next world starts with one line.',
+      }),
     ).toBeVisible();
     await expect(page.getByLabel('Unsaved update fixture')).toHaveValue(
       'unsaved in-memory source',
