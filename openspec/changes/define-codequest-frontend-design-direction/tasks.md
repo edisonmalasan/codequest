@@ -19,4 +19,4 @@
 ## 4. Integrated review
 
 - [x] 4.1 Run strict OpenSpec validation, root lint/typecheck/test/build, and installed-browser desktop/tablet/mobile review of the development preview; record exact viewport results, console errors, image loading, focus, overflow, and production-route absence in the R02 design record.
-- [ ] 4.2 Present the actual preview to the founder and record an explicit dated visual acceptance or defect/revision decision for the reviewed build; verify R02 remains below `FOUNDER ACCEPTED` while this decision is absent.
+- [x] 4.2 Present the actual preview to the founder and record an explicit dated visual acceptance or defect/revision decision for the reviewed build; verify R02 remains below `FOUNDER ACCEPTED` while this decision is absent.
