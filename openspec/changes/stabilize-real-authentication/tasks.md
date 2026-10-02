@@ -17,5 +17,5 @@
 
 - [ ] 3.1 Run synthetic email signup, delivered confirmation, login/logout, refresh/relogin, recovery/password change, and self-owned backend account on the exact candidate commit and environment; record dated pass/fail and retest for every path.
 - [ ] 3.2 Run synthetic Google and GitHub OAuth journeys, including real redirect/callback and backend account read, on the exact candidate commit and environment; record separate dated pass/fail and external provider blockers.
-- [ ] 3.3 Run root lint, typecheck, tests, build, focused browser Auth coverage, strict OpenSpec validation, and API drift if affected; record exact commands and results.
+- [x] 3.3 Run root lint, typecheck, tests, build, focused browser Auth coverage, strict OpenSpec validation, and API drift if affected; record exact commands and results.
 - [ ] 3.4 Have the founder walk through every R04 Auth method on the intended real environment and record individual acceptance or defects; keep R04 below founder accepted while any critical path fails.

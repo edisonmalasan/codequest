@@ -35,6 +35,8 @@ Focused frontend component/session/callback tests passed 19/19, and the controll
 | `pnpm api:check` | Passed; no OpenAPI contract changed. |
 | `openspec validate stabilize-real-authentication --strict` | Passed. |
 
+The required [PR #192 CI run](https://github.com/edisonmalasan/codequest/actions/runs/37004979431) passed on application commit `7d69e8294329a49cc65db70d6b41b42805af9420`, including the standard root lint, typecheck, tests, build, and browser gates. This closes the repository verification task for that code revision. It does not verify real Supabase email delivery, OAuth callbacks, or a protected signed-in account.
+
 The public Auth settings endpoint does not expose the redirect allowlist, email template/delivery configuration, or provider credentials. Those settings require a dashboard review or a completed synthetic flow. The local Supabase project was not classified as a hosted beta deployment. No hosted readiness row is closed by this record.
 
 ## Required journey evidence still open
