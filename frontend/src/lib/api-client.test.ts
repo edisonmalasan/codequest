@@ -37,6 +37,19 @@ const journey: JourneyDetail = {
   entryRequirements: ['Use a browser'],
   outcomes: [{ id: 'O1', description: 'Read values' }],
   chapters: [chapterSummary],
+  courses: [],
+};
+const publishedCourse = {
+  id: 'COURSE-JS-FOUNDATIONS',
+  slug: 'javascript-foundations',
+  journeyId: 'JAVASCRIPT-FOUNDATIONS',
+  journeySlug: 'javascript-foundations',
+  title: 'JavaScript Foundations',
+  summary: 'Learn through exercises.',
+  position: 1,
+  topics: ['javascript'],
+  chapterCount: 1,
+  questCount: 1,
 };
 const questSummary = {
   id: 'Q01',
@@ -377,6 +390,9 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/streaks'
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
+      | '/api/v1/catalog/courses'
+      | '/api/v1/catalog/courses/{slug}'
+      | '/api/v1/catalog/courses/{slug}/progress'
       | '/api/v1/health'
       | '/api/v1/guest-import/{questId}'
       | '/api/v1/learning-sync/{questId}'
@@ -442,6 +458,9 @@ describe('CodeQuest typed API client', () => {
       | '/api/v1/streaks'
       | '/api/v1/chapters/{slug}'
       | '/api/v1/courses/{slug}'
+      | '/api/v1/catalog/courses'
+      | '/api/v1/catalog/courses/{slug}'
+      | '/api/v1/catalog/courses/{slug}/progress'
       | '/api/v1/health'
       | '/api/v1/guest-import/{questId}'
       | '/api/v1/learning-sync/{questId}'
@@ -596,6 +615,14 @@ describe('CodeQuest typed API client', () => {
         });
         if (request.url.endsWith('/journeys'))
           return jsonResponse([journeySummary]);
+        if (request.url.endsWith('/catalog/courses'))
+          return jsonResponse([publishedCourse]);
+        if (request.url.includes('/catalog/courses/'))
+          return jsonResponse({
+            ...publishedCourse,
+            outcomes: [],
+            chapters: [chapterSummary],
+          });
         if (request.url.includes('/courses/')) return jsonResponse(journey);
         if (request.url.includes('/journeys/')) return jsonResponse(journey);
         if (request.url.includes('/chapters/')) return jsonResponse(chapter);
@@ -604,6 +631,10 @@ describe('CodeQuest typed API client', () => {
     });
 
     await expect(client.getJourneys()).resolves.toMatchObject({ ok: true });
+    await expect(client.getCourses()).resolves.toMatchObject({ ok: true });
+    await expect(
+      client.getPublishedCourse('javascript-foundations'),
+    ).resolves.toMatchObject({ ok: true });
     await expect(
       client.getJourney('javascript foundations'),
     ).resolves.toMatchObject({ ok: true });
@@ -622,8 +653,10 @@ describe('CodeQuest typed API client', () => {
       null,
       null,
       null,
+      null,
+      null,
     ]);
-    expect(calls[1].url).toContain('/journeys/javascript%20foundations');
+    expect(calls[3].url).toContain('/journeys/javascript%20foundations');
   });
 
   it('rejects malformed curriculum success data and preserves failure taxonomy', async () => {

@@ -10,12 +10,14 @@ export type QuestStatus =
   | 'in_progress'
   | 'current'
   | 'completed'
-  | 'locked';
+  | 'locked'
+  | 'unavailable';
 
 export interface QuestNodeProps {
   status: QuestStatus;
   label: string;
   description?: string;
+  statusText?: string;
   href?: string;
   onSelect?: () => void;
   className?: string;
@@ -28,17 +30,20 @@ const statusMeta: Record<QuestStatus, { text: string; Icon: typeof Check }> = {
   current: { text: 'Current quest', Icon: Play },
   completed: { text: 'Completed', Icon: Check },
   locked: { text: 'Locked', Icon: Lock },
+  unavailable: { text: 'Availability unavailable', Icon: Circle },
 };
 
 export function QuestNode({
   status,
   label,
   description,
+  statusText,
   href,
   onSelect,
   className,
 }: QuestNodeProps): React.JSX.Element {
-  const { text, Icon } = statusMeta[status];
+  const { text: defaultText, Icon } = statusMeta[status];
+  const text = statusText ?? defaultText;
   const inner = (
     <>
       <span
@@ -50,7 +55,7 @@ export function QuestNode({
             'border-reward bg-surface-sunken text-reward shadow-hard-amber',
           (status === 'not_started' || status === 'available') &&
             'border-discovery bg-surface-sunken text-discovery',
-          status === 'locked' &&
+          (status === 'locked' || status === 'unavailable') &&
             'border-line bg-surface-sunken text-muted opacity-80',
         )}
       >
@@ -68,8 +73,12 @@ export function QuestNode({
     </>
   );
 
-  if (status === 'locked' || onSelect === undefined) {
-    if (status !== 'locked' && href !== undefined) {
+  if (
+    status === 'locked' ||
+    status === 'unavailable' ||
+    onSelect === undefined
+  ) {
+    if (status !== 'locked' && status !== 'unavailable' && href !== undefined) {
       return (
         <li className={cn('relative z-10 flex', className)}>
           <Link
@@ -84,7 +93,9 @@ export function QuestNode({
     }
     return (
       <li
-        aria-disabled={status === 'locked' || undefined}
+        aria-disabled={
+          status === 'locked' || status === 'unavailable' || undefined
+        }
         className={cn('relative z-10 flex items-center gap-3', className)}
       >
         {inner}

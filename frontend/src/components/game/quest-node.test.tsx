@@ -50,4 +50,20 @@ describe('QuestNode', () => {
         .getAttribute('href'),
     ).toBe('/quests/first-message');
   });
+
+  it('keeps unknown protected availability inert without calling it locked', () => {
+    render(
+      <ul>
+        <QuestNode
+          status="unavailable"
+          statusText="Availability unavailable"
+          label="First value"
+          href="/quests/first-value"
+        />
+      </ul>,
+    );
+    expect(screen.queryByRole('link')).toBeNull();
+    expect(screen.getByText('Availability unavailable')).toBeDefined();
+    expect(screen.queryByText('Locked')).toBeNull();
+  });
 });

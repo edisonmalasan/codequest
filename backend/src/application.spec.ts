@@ -445,6 +445,9 @@ describe('backend HTTP foundation', () => {
     expect(Object.keys(document.paths).sort()).toEqual([
       '/api/v1/account',
       '/api/v1/account/timezone',
+      '/api/v1/catalog/courses',
+      '/api/v1/catalog/courses/{slug}',
+      '/api/v1/catalog/courses/{slug}/progress',
       '/api/v1/chapters/{slug}',
       '/api/v1/chapters/{slug}/progress',
       '/api/v1/courses/{slug}',

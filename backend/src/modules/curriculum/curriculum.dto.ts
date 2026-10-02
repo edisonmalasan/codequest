@@ -47,10 +47,30 @@ export class JourneySummaryDto {
   @ApiProperty({ type: Number }) questCount!: number;
 }
 
+export class CourseSummaryDto {
+  @ApiProperty({ type: String, example: 'COURSE-JS-FOUNDATIONS' }) id!: string;
+  @ApiProperty({ type: String, example: 'javascript-foundations' })
+  slug!: string;
+  @ApiProperty({ type: String }) journeyId!: string;
+  @ApiProperty({ type: String }) journeySlug!: string;
+  @ApiProperty({ type: String }) title!: string;
+  @ApiProperty({ type: String }) summary!: string;
+  @ApiProperty({ type: Number }) position!: number;
+  @ApiProperty({ type: [String] }) topics!: string[];
+  @ApiProperty({ type: Number }) chapterCount!: number;
+  @ApiProperty({ type: Number }) questCount!: number;
+}
+
+export class CourseDetailDto extends CourseSummaryDto {
+  @ApiProperty({ type: [OutcomeDto] }) outcomes!: OutcomeDto[];
+  @ApiProperty({ type: [ChapterSummaryDto] }) chapters!: ChapterSummaryDto[];
+}
+
 export class JourneyDetailDto extends JourneySummaryDto {
   @ApiProperty({ type: [String] }) entryRequirements!: string[];
   @ApiProperty({ type: [OutcomeDto] }) outcomes!: OutcomeDto[];
   @ApiProperty({ type: [ChapterSummaryDto] }) chapters!: ChapterSummaryDto[];
+  @ApiProperty({ type: [CourseSummaryDto] }) courses!: CourseSummaryDto[];
 }
 
 export class ChapterDetailDto extends ChapterSummaryDto {

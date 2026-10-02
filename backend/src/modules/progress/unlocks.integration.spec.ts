@@ -56,17 +56,29 @@ function fixture(): string {
     journey,
     readFileSync(journey, 'utf8').replace('status: draft', 'status: reviewed'),
   );
+  const course = join(
+    root,
+    'journeys/javascript-foundations/courses/javascript-foundations/course.yaml',
+  );
+  writeFileSync(
+    course,
+    readFileSync(course, 'utf8').replace('status: draft', 'status: reviewed'),
+  );
   writeFileSync(
     join(root, 'publication.yaml'),
-    `schemaVersion: 1
+    `schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
     technicalReview: approved
-    quests:
-      - id: Q01
-        contentVersion: 1.0.0
-        assessmentVersion: 1.0.0
+    courses:
+      - id: COURSE-JS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: Q01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
 `,
   );
   return root;
@@ -113,8 +125,16 @@ function twoQuestCatalog(root: string): CurriculumCatalog {
         ...journey,
         metadata: {
           ...journey.metadata,
-          chapterIds: [...journey.metadata.chapterIds, 'CH02'],
+          courseIds: journey.metadata.courseIds,
         },
+        courses: journey.courses.map((course) => ({
+          ...course,
+          metadata: {
+            ...course.metadata,
+            chapterIds: [...course.metadata.chapterIds, 'CH02'],
+          },
+          chapters: [firstChapter, secondChapter],
+        })),
         chapters: [firstChapter, secondChapter],
       },
     ],

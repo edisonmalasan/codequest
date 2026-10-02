@@ -1,4 +1,4 @@
-import {
+﻿import {
   cpSync,
   mkdirSync,
   mkdtempSync,
@@ -28,25 +28,35 @@ function fixture(): string {
 }
 
 function reviewed(root: string): void {
-  const file = join(root, 'journeys/javascript-foundations/journey.yaml');
-  writeFileSync(
-    file,
-    readFileSync(file, 'utf8').replace('status: draft', 'status: reviewed'),
-  );
+  for (const file of [
+    join(root, 'journeys/javascript-foundations/journey.yaml'),
+    join(
+      root,
+      'journeys/javascript-foundations/courses/javascript-foundations/course.yaml',
+    ),
+  ])
+    writeFileSync(
+      file,
+      readFileSync(file, 'utf8').replace('status: draft', 'status: reviewed'),
+    );
 }
 
 function publish(root: string, overrides = ''): void {
   writeFileSync(
     join(root, 'publication.yaml'),
-    `schemaVersion: 1
+    `schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
     technicalReview: approved
-    quests:
-      - id: Q01
-        contentVersion: 1.0.0
-        assessmentVersion: 1.0.0
+    courses:
+      - id: COURSE-JS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: Q01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
 ${overrides}`,
   );
 }
@@ -59,17 +69,24 @@ afterEach(() => {
 describe('curriculum publication catalog', () => {
   it('rejects unknown publication fields and duplicate stable IDs', () => {
     const reviewedSelection = {
-      schemaVersion: 1,
+      schemaVersion: 2,
       journeys: [
         {
           id: 'JAVASCRIPT-FOUNDATIONS',
           curriculumReview: 'approved',
           technicalReview: 'approved',
-          quests: [
+          courses: [
             {
-              id: 'Q01',
-              contentVersion: '1.0.0',
-              assessmentVersion: '1.0.0',
+              id: 'COURSE-JS-FOUNDATIONS',
+              curriculumReview: 'approved',
+              technicalReview: 'approved',
+              quests: [
+                {
+                  id: 'Q01',
+                  contentVersion: '1.0.0',
+                  assessmentVersion: '1.0.0',
+                },
+              ],
             },
           ],
         },
@@ -111,7 +128,7 @@ describe('curriculum publication catalog', () => {
     publish(root);
     const snapshot = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
     );
     mkdirSync(join(snapshot, 'assets'), { recursive: true });
     writeFileSync(join(snapshot, 'assets/scope.png'), Buffer.from('png-data'));
@@ -137,13 +154,56 @@ describe('curriculum publication catalog', () => {
     expect(Object.isFrozen(quest.activeSnapshot)).toBe(true);
   });
 
+  it('keeps an authored draft Course out of the published catalog', () => {
+    const root = fixture();
+    reviewed(root);
+    const journeyFile = join(
+      root,
+      'journeys/javascript-foundations/journey.yaml',
+    );
+    writeFileSync(
+      journeyFile,
+      `${readFileSync(journeyFile, 'utf8')}  - COURSE-FUTURE\n`,
+    );
+    const draftPath = join(
+      root,
+      'journeys/javascript-foundations/courses/future-course',
+    );
+    mkdirSync(draftPath, { recursive: true });
+    mkdirSync(join(draftPath, 'chapters'));
+    writeFileSync(
+      join(draftPath, 'course.yaml'),
+      `id: COURSE-FUTURE
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: future-course
+title: Future Course
+summary: An unpublished course draft.
+position: 2
+status: draft
+topics:
+  - javascript
+outcomes:
+  - id: C2
+    description: Explore a later topic.
+chapterIds: []
+`,
+    );
+    publish(root);
+
+    const catalog = loadCurriculumCatalog(root);
+    expect(
+      catalog.journeys[0].courses.map((course) => course.metadata.id),
+    ).toEqual(['COURSE-JS-FOUNDATIONS']);
+    expect(catalog.journeys[0].chapters).toHaveLength(1);
+  });
+
   it('rejects an oversized selected-snapshot asset', () => {
     const root = fixture();
     reviewed(root);
     publish(root);
     const snapshot = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
     );
     mkdirSync(join(snapshot, 'assets'), { recursive: true });
     writeFileSync(
@@ -164,7 +224,7 @@ describe('curriculum publication catalog', () => {
     writeFileSync(join(outside, 'outside.png'), Buffer.from('outside'));
     const snapshot = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
     );
     symlinkSync(outside, join(snapshot, 'assets'), 'junction');
     expect(() => loadCurriculumCatalog(root)).toThrow(
@@ -206,7 +266,7 @@ describe('curriculum publication catalog', () => {
     reviewed(root);
     writeFileSync(
       join(root, 'publication.yaml'),
-      'schemaVersion: 1\njourneys:\n  - id: credential-private-value\n    curriculumReview: approved\n    technicalReview: approved\n    quests: []\n',
+      'schemaVersion: 2\njourneys:\n  - id: credential-private-value\n    curriculumReview: approved\n    technicalReview: approved\n    courses: []\n',
     );
     try {
       loadCurriculumCatalog(root);
@@ -222,7 +282,7 @@ describe('curriculum publication catalog', () => {
       file,
       readFileSync(file, 'utf8').replace(
         'assessmentVersion: 1.0.0',
-        'assessmentVersion: 1.0.0\n      - id: Q01\n        contentVersion: 1.0.0\n        assessmentVersion: 1.0.0',
+        'assessmentVersion: 1.0.0\n          - id: Q01\n            contentVersion: 1.0.0\n            assessmentVersion: 1.0.0',
       ),
     );
     expect(() => loadCurriculumCatalog(root)).toThrow('Invalid publication');
@@ -233,25 +293,29 @@ describe('curriculum publication catalog', () => {
     reviewed(root);
     writeFileSync(
       join(root, 'publication.yaml'),
-      `schemaVersion: 1
+      `schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
     technicalReview: approved
-    quests: []
+    courses:
+      - id: COURSE-JS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests: []
 `,
     );
     expect(() => loadCurriculumCatalog(root)).toThrow(
-      'Published journey inventory is incomplete',
+      'Published Course inventory is incomplete',
     );
 
     const oldQuest = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message',
     );
     const collidingQuest = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/variables',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/variables',
     );
     renameSync(oldQuest, collidingQuest);
     const questFile = join(collidingQuest, 'quest.yaml');
@@ -264,7 +328,7 @@ journeys:
     );
     publish(root);
     expect(() => loadCurriculumCatalog(root)).toThrow(
-      'Published slug is ambiguous',
+      'Published quest slug is ambiguous',
     );
   });
 
@@ -274,7 +338,7 @@ journeys:
     publish(root);
     const versionFile = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/version.yaml',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/version.yaml',
     );
     writeFileSync(
       versionFile,

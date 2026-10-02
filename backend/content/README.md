@@ -35,19 +35,20 @@ backend/content/
   concepts.yaml
   publication.yaml
   journeys/<journey-slug>/journey.yaml
-    chapters/<chapter-slug>/chapter.yaml
-      quests/<quest-slug>/quest.yaml
-        versions/<content-version>/
-          version.yaml
-          lesson.mdx
-          starter.js
-          tests.ts
-          assets/ (optional, local images only)
+    courses/<course-slug>/course.yaml
+      chapters/<chapter-slug>/chapter.yaml
+        quests/<quest-slug>/quest.yaml
+          versions/<content-version>/
+            version.yaml
+            lesson.mdx
+            starter.js
+            tests.ts
+            assets/ (optional, local images only)
 ```
 
-`Journey → Chapter → Quest` is the hierarchy; “Course” is a display synonym for Journey. Every concept, journey, chapter, and quest has a stable ID. IDs are not slugs, titles, directory names, database UUIDs, or version numbers. The database already has separate identity and version records; this phase does not populate them. Parent manifests list child IDs. Position is unique among siblings. The path segment must match the slug, but a slug can change without replacing stable identity. Do not change a stable quest ID to reissue XP for an editorial update.
+Journey > Course > Chapter > Quest is the published hierarchy. Each concept, Journey, Course, Chapter, and Quest has a stable ID distinct from its slug, title, directory path, and version. Parent manifests list child IDs in unique position order. Moving the existing immutable Quest snapshots beneath the new Course path does not change their bytes or stable identities.
 
-`journey.yaml` records entry requirements, approved outcome IDs/descriptions, ordered chapter IDs, and `status: draft` or `status: reviewed`. `chapter.yaml` records its journey ID, objective summary, and quest IDs. `quest.yaml` records its chapter ID, `instructional` or `capstone` kind, `guestEligible`, current content version, and review transitions. Q01–Q24 are instructional in the approved seven-chapter order; the final capstone is a separate quest. Only Q01–Q04 are guest eligible, and a numbered Foundations quest after Q01 requires its immediate predecessor. The test-only one-quest draft is preserved under `backend/test/fixtures/curriculum-draft`; it is not product publication.
+journey.yaml records entry requirements, outcomes, ordered Course IDs, and draft/reviewed status. course.yaml records its Journey ID, summary, topics, outcomes, ordered Chapter IDs, and draft/reviewed status. chapter.yaml records its Course ID, objective summary, and Quest IDs. quest.yaml records its Chapter ID, kind, guest eligibility, versions, and transitions. Only Q01-Q04 in the existing Foundations Course are guest eligible.
 
 Each immutable `versions/<semver>/version.yaml` records the same `contentVersion` as the directory, an independent `assessmentVersion`, title, one primary objective, one Foundations outcome ID, concept IDs, completion-prerequisite quest IDs, editorial difficulty, positive XP award candidate, three graduated hints, and case IDs. A capstone additionally needs separate explanation and transfer prompts. Those prompts record responses for later review; deterministic cases cannot prove reasoning quality. `lesson.mdx` carries the task and examples. `starter.js` carries editable starter source. `tests.ts` must contain exactly one exported `const cases = [...]` literal; it is parsed, never imported or evaluated. Cases use `console` expected output or named `function` arguments/expected JSON values, with normal and boundary examples and actionable feedback. The schema and the focused tests in `backend/src/modules/curriculum/content/` are the definitive syntax reference.
 
@@ -55,6 +56,6 @@ Lesson markup is limited to static Markdown: headings, paragraphs, lists, emphas
 
 ## Review and versions
 
-Create a new content snapshot for any changed lesson, starter, objective, prerequisite, hint, or case. Never edit or delete a previously merged `versions/` file. If deterministic criteria change, increment `assessmentVersion` as well. Point `currentVersion` to the latest snapshot and append one adjacent old→new transition in `quest.yaml`, recording the old/new assessment versions, `compatible` or `incompatible`, an explanation, pending-work action (`accept-new` or `retry-current`), and curriculum/technical review states. Compatible decisions must accept pending work under the new contract; incompatible decisions require `retryGuidance` for a current-version retry. A draft may keep review state `pending`; validation is not publication approval. CO reviews pedagogy and accessibility; TO reviews deterministic contracts, alternatives, bounds, and runtime assumptions. To activate a complete reviewed Journey, set its status to `reviewed` and add one ordered entry to `publication.yaml` with exact quest content/assessment versions plus `curriculumReview: approved` and `technicalReview: approved`. The selection must include the Journey's full authored inventory and prerequisite closure. Validation rejects partial, stale, draft, unreviewed, ambiguous, or dangling selections. Roll back by restoring the prior reviewed manifest selection; never rewrite a merged snapshot. An empty manifest is valid and serves an empty Journey list. Course remains only the API/display alias for Journey.
+Create a new content snapshot for any changed lesson, starter, objective, prerequisite, hint, or case. Never edit or delete a previously merged versions/ file. For publication, review the Journey and each selected Course, then include the complete Quest inventory of each selected Course in publication.yaml with exact content and assessment versions and both approvals. Authored draft Courses may remain outside the manifest. Selected Courses must be complete and reviewed; invalid, stale, partial, ambiguous, or dangling selections fail closed. The legacy /api/v1/courses/:slug path remains a Journey alias for saved clients; new Course resources live under /api/v1/catalog/courses.
 
 All Phase 29 `xpAward: 10` values and difficulty labels are provisional candidates. F04 still owns numeric XP and difficulty/timing balance. This tree does not calculate XP, unlocks, progress, or active availability. Unlock references are completion prerequisites only; do not add XP thresholds or stored unlock state. Historical completions and one-reward-per-stable-quest policy are governed by [curriculum decisions](../../docs/curriculum.md) and [ADR 0007](../../docs/adr/0007-curriculum-identity-and-versioning.md). Phase 10 serves only manifest-selected snapshots. Phase 12 renders their static lesson markup and serves selected local illustrations; existing completion acceptance remains owned by the learning module.

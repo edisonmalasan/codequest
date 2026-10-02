@@ -1,0 +1,136 @@
+.page {
+  min-height: 100dvh;
+  padding: 2rem 1.25rem 6rem;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+.inner {
+  max-width: 78rem;
+  margin-inline: auto;
+}
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+.crumbs a {
+  color: var(--color-discovery);
+}
+.hero {
+  max-width: 60rem;
+  padding-block: clamp(2rem, 6vw, 6rem);
+}
+.eyebrow,
+.chapterHeading > span {
+  color: var(--color-ascent);
+  font: 700 0.75rem var(--font-mono);
+  letter-spacing: 0.12em;
+}
+.hero h1 {
+  margin: 0.75rem 0 1.25rem;
+  font: 700 clamp(3rem, 6vw, 5.5rem)/1.05 var(--font-display);
+}
+.hero > p:not(.eyebrow) {
+  max-width: 45rem;
+  color: var(--color-muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+.hero > span {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: var(--color-discovery);
+  font-weight: 700;
+}
+.notice {
+  max-width: 60rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-raised);
+  line-height: 1.5;
+}
+.next {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-ascent);
+  color: var(--color-ascent-ink);
+  font-weight: 700;
+}
+.outcomes {
+  max-width: 60rem;
+  margin-block: clamp(3rem, 6vw, 5rem);
+}
+.outcomes h2 {
+  margin-block: 0.75rem 1rem;
+  font: 700 clamp(1.6rem, 3vw, 2.4rem)/1.2 var(--font-display);
+}
+.outcomes li {
+  margin-top: 0.6rem;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+.chapters {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+.chapter {
+  display: grid;
+  grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.2fr);
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+.chapterHeading {
+  padding: 2rem;
+  border-right: 1px solid var(--color-line);
+}
+.chapterHeading h3 {
+  margin: 0.75rem 0;
+  font: 700 clamp(1.5rem, 2.2vw, 2.1rem)/1.15 var(--font-display);
+}
+.chapterHeading p {
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+.chapterHeading small {
+  display: block;
+  margin-top: 1.3rem;
+  color: var(--color-discovery);
+}
+.quests {
+  display: grid;
+  align-content: start;
+  padding: 0;
+  list-style: none;
+}
+.quest {
+  display: flex;
+  align-items: center;
+  min-height: 5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.quest:last-child {
+  border-bottom: 0;
+}
+.page :is(a, button):focus-visible {
+  outline: 3px solid var(--color-reward);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .chapter {
+    grid-template-columns: 1fr;
+  }
+  .chapterHeading {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+}

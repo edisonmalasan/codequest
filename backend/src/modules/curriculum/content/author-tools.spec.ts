@@ -1,4 +1,4 @@
-import {
+﻿import {
   cpSync,
   mkdirSync,
   mkdtempSync,
@@ -75,7 +75,7 @@ describe('local author selection and previews', () => {
     const root = fixture();
     const versionFile = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/version.yaml',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/version.yaml',
     );
     const snapshotRoot = resolve(versionFile, '..');
     const lessonFile = join(snapshotRoot, 'lesson.mdx');
@@ -130,7 +130,7 @@ describe('local author selection and previews', () => {
     const root = fixture();
     const file = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/tests.ts',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/tests.ts',
     );
     rmSync(file);
     expect(() => loadAuthorCatalog(root)).toThrow('tests.ts');
@@ -140,7 +140,7 @@ describe('local author selection and previews', () => {
     const root = fixture();
     const file = join(
       root,
-      'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/lesson.mdx',
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/lesson.mdx',
     );
     writeFileSync(
       file,

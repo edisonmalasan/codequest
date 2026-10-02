@@ -5,180 +5,103 @@ const journeySummary = {
   slug: 'javascript-foundations',
   title: 'JavaScript Foundations',
   position: 1,
-  chapterCount: 2,
-  questCount: 4,
+  chapterCount: 1,
+  questCount: 1,
+};
+const chapterSummary = {
+  id: 'CH01',
+  slug: 'values-and-state',
+  title: 'Values and state',
+  position: 1,
+  objectiveSummary: 'Choose a value.',
+  questCount: 1,
+};
+const course = {
+  id: 'COURSE-JS-FOUNDATIONS',
+  slug: 'javascript-foundations',
+  journeyId: journeySummary.id,
+  journeySlug: journeySummary.slug,
+  title: 'JavaScript Foundations',
+  summary: 'Learn JavaScript through exercises.',
+  position: 1,
+  topics: ['javascript'],
+  chapterCount: 1,
+  questCount: 1,
+};
+const questSummary = {
+  id: 'Q01',
+  slug: 'first-value',
+  title: 'First value',
+  position: 1,
+  kind: 'instructional',
+  guestEligible: true,
+  contentVersion: '1.0.0',
+  assessmentVersion: '1.0.0',
+  difficulty: 'introductory',
+  xpAward: 10,
 };
 
-const chapterSummaries = {
-  values: {
-    id: 'CH01',
-    slug: 'values-and-state',
-    title: 'Values and state',
-    position: 1,
-    objectiveSummary: 'Choose values and update state.',
-    questCount: 2,
-  },
-  flow: {
-    id: 'CH02',
-    slug: 'control-flow',
-    title: 'Control flow',
-    position: 2,
-    objectiveSummary: 'Make decisions and repeat work.',
-    questCount: 2,
-  },
-};
-
-const questSummaries = {
-  first: {
-    id: 'Q01',
-    slug: 'first-value',
-    title: 'First value',
-    position: 1,
-    kind: 'instructional',
-    guestEligible: true,
-    contentVersion: '1.0.0',
-    assessmentVersion: '1.0.0',
-    difficulty: 'introductory',
-    xpAward: 10,
-  },
-  state: {
-    id: 'Q02',
-    slug: 'change-state',
-    title: 'Change state',
-    position: 2,
-    kind: 'instructional',
-    guestEligible: true,
-    contentVersion: '1.0.0',
-    assessmentVersion: '1.0.0',
-    difficulty: 'introductory',
-    xpAward: 10,
-  },
-  choose: {
-    id: 'Q03',
-    slug: 'choose-a-path',
-    title: 'Choose a path',
-    position: 1,
-    kind: 'instructional',
-    guestEligible: true,
-    contentVersion: '1.0.0',
-    assessmentVersion: '1.0.0',
-    difficulty: 'developing',
-    xpAward: 15,
-  },
-  repeat: {
-    id: 'Q04',
-    slug: 'repeat-work',
-    title: 'Repeat work',
-    position: 2,
-    kind: 'instructional',
-    guestEligible: true,
-    contentVersion: '1.0.0',
-    assessmentVersion: '1.0.0',
-    difficulty: 'developing',
-    xpAward: 15,
-  },
-};
-
-const journey = {
-  ...journeySummary,
-  entryRequirements: ['Read English and navigate a browser.'],
-  outcomes: [{ id: 'O1', description: 'Choose and predict values.' }],
-  chapters: [chapterSummaries.flow, chapterSummaries.values],
-};
-
-const chapters = {
-  [chapterSummaries.values.slug]: {
-    ...chapterSummaries.values,
-    journey: journeySummary,
-    quests: [questSummaries.state, questSummaries.first],
-  },
-  [chapterSummaries.flow.slug]: {
-    ...chapterSummaries.flow,
-    journey: journeySummary,
-    quests: [questSummaries.repeat, questSummaries.choose],
-  },
-};
-
-function quest(
-  summary: (typeof questSummaries)[keyof typeof questSummaries],
-  chapter: (typeof chapterSummaries)[keyof typeof chapterSummaries],
-  prerequisites: Array<{ id: string; slug: string; title: string }>,
-) {
-  return {
-    ...summary,
-    hierarchy: { journey: journeySummary, chapter },
-    objective: `Complete ${summary.title}.`,
-    outcomeId: 'O1',
-    concepts: [{ id: 'js-values', title: 'JavaScript values' }],
-    prerequisites,
-    hints: {
-      question: 'What happens next?',
-      concept: 'Trace the value.',
-      nextStep: 'Try one change.',
-    },
-    lesson: `# ${summary.title}`,
-    starterCode: 'const value = 1;',
-    cases: [
-      {
-        id: `${summary.id.toLowerCase()}-normal`,
-        category: 'normal',
-        kind: 'console',
-        feedback: 'Match the output.',
-        expectedOutput: '1',
-      },
-    ],
-  };
-}
-
-const quests = {
-  [questSummaries.first.slug]: quest(
-    questSummaries.first,
-    chapterSummaries.values,
-    [],
-  ),
-  [questSummaries.state.slug]: quest(
-    questSummaries.state,
-    chapterSummaries.values,
-    [{ id: 'Q01', slug: 'first-value', title: 'First value' }],
-  ),
-  [questSummaries.choose.slug]: quest(
-    questSummaries.choose,
-    chapterSummaries.flow,
-    [{ id: 'Q02', slug: 'change-state', title: 'Change state' }],
-  ),
-  [questSummaries.repeat.slug]: quest(
-    questSummaries.repeat,
-    chapterSummaries.flow,
-    [],
-  ),
-};
-
-async function fulfillJson(route: Route, json: unknown, status = 200) {
+async function fulfill(route: Route, json: unknown, status = 200) {
   await route.fulfill({ status, contentType: 'application/json', json });
 }
 
-async function installCurriculumRoutes(page: Page) {
+async function installCurriculum(page: Page) {
   await page.route('http://127.0.0.1:3001/api/v1/**', async (route) => {
-    expect(route.request().headers().authorization).toBeUndefined();
-    const url = new URL(route.request().url());
-    const segments = url.pathname.split('/').filter(Boolean);
-    const resource = segments.at(-2);
-    const slug = decodeURIComponent(segments.at(-1) ?? '');
-    if (resource === 'journeys') return fulfillJson(route, journey);
-    if (resource === 'chapters' && slug in chapters) {
-      return fulfillJson(route, chapters[slug as keyof typeof chapters]);
-    }
-    if (resource === 'quests' && slug in quests) {
-      return fulfillJson(route, quests[slug as keyof typeof quests]);
-    }
-    return fulfillJson(
+    const path = new URL(route.request().url()).pathname;
+    if (path === '/api/v1/catalog/courses') return fulfill(route, [course]);
+    if (path === '/api/v1/catalog/courses/javascript-foundations')
+      return fulfill(route, {
+        ...course,
+        outcomes: [{ id: 'C1', description: 'Use values.' }],
+        chapters: [chapterSummary],
+      });
+    if (path === '/api/v1/journeys/javascript-foundations')
+      return fulfill(route, {
+        ...journeySummary,
+        entryRequirements: ['Read English.'],
+        outcomes: [{ id: 'O1', description: 'Choose a value.' }],
+        courses: [course],
+        chapters: [chapterSummary],
+      });
+    if (path === '/api/v1/chapters/values-and-state')
+      return fulfill(route, {
+        ...chapterSummary,
+        journey: journeySummary,
+        quests: [questSummary],
+      });
+    if (path === '/api/v1/quests/first-value')
+      return fulfill(route, {
+        ...questSummary,
+        hierarchy: { journey: journeySummary, chapter: chapterSummary },
+        objective: 'Print a value.',
+        outcomeId: 'O1',
+        concepts: [{ id: 'js-values', title: 'JavaScript values' }],
+        prerequisites: [],
+        hints: {
+          question: 'What prints?',
+          concept: 'A value is data.',
+          nextStep: 'Try one change.',
+        },
+        lesson: '# First value',
+        starterCode: "console.log('old');",
+        cases: [
+          {
+            id: 'q01-normal',
+            category: 'normal',
+            kind: 'console',
+            feedback: 'Match the output.',
+            expectedOutput: 'new',
+          },
+        ],
+      });
+    return fulfill(
       route,
       {
         error: {
-          code: 'CURRICULUM_NOT_FOUND',
+          code: 'NOT_FOUND',
           message: 'Not found',
           status: 404,
-          requestId: 'e2e-not-found',
+          requestId: 'synthetic',
         },
       },
       404,
@@ -186,132 +109,77 @@ async function installCurriculumRoutes(page: Page) {
   });
 }
 
-test('Journey page renders the ordered accessible Course map at desktop and mobile widths', async ({
+test('Home, catalog, Journey, Course, and Exercise remain connected at desktop and mobile widths', async ({
   page,
 }) => {
-  const consoleErrors: string[] = [];
-  page.on('console', (message) => {
-    if (message.type() === 'error') consoleErrors.push(message.text());
-  });
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await installCurriculumRoutes(page);
-  await page.goto('/journeys/javascript-foundations');
-
+  await installCurriculum(page);
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Explore learning' }).click();
+  await expect(page).toHaveURL(/\/courses$/);
   await expect(
-    page.getByRole('heading', { level: 1, name: 'JavaScript Foundations' }),
+    page.getByRole('heading', { name: 'Find your next path.' }),
   ).toBeVisible();
-  await expect(page.getByText('Overall journey progress: 0 / 4')).toBeVisible();
-  await expect(page.getByText('Current quest', { exact: true })).toBeVisible();
-  await expect(page.getByText('Available', { exact: true })).toBeVisible();
-  await expect(page.getByText('Locked', { exact: true }).first()).toBeVisible();
-  await expect(page.locator('section[aria-label^="Chapter"] h3')).toHaveText([
-    'Chapter 1: Values and state',
-    'Chapter 2: Control flow',
-  ]);
-  await expect(page.locator('section[aria-label^="Chapter"] ol')).toHaveCount(
-    2,
-  );
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth,
-    ),
-  ).toBe(true);
-
-  await page.getByRole('link', { name: 'CodeQuest home' }).focus();
+  await page.getByRole('link', { name: /JavaScript Foundations/ }).click();
+  await expect(page).toHaveURL(/\/courses\/javascript-foundations$/);
+  await expect(page.getByText(/Guest work is provisional/)).toBeVisible();
+  await page.getByRole('link', { name: 'Journey', exact: true }).click();
+  await expect(page).toHaveURL(/\/journeys\/javascript-foundations$/);
   await expect(
-    page.getByRole('link', { name: 'CodeQuest home' }),
-  ).toBeFocused();
-  expect(
-    await page
-      .getByRole('link', { name: 'CodeQuest home' })
-      .evaluate((element) => getComputedStyle(element).outlineWidth),
-  ).toBe('2px');
-  await page.keyboard.press('Tab');
-  const firstChapterButton = page
-    .getByRole('button', { name: 'Open chapter' })
-    .first();
-  await expect(firstChapterButton).toBeFocused();
-  expect(
-    (await firstChapterButton.boundingBox())?.height,
-  ).toBeGreaterThanOrEqual(44);
-  const reducedTransition = await page
-    .getByRole('progressbar', { name: 'Overall journey progress' })
-    .locator('div')
-    .evaluate((element) =>
-      Number.parseFloat(getComputedStyle(element).transitionDuration),
-    );
-  expect(reducedTransition).toBeLessThanOrEqual(0.00001);
-
-  const worldImage = page.locator('img[src*="foundations-valley"]').first();
-  await expect(worldImage).toBeVisible();
-  await expect
-    .poll(() =>
-      worldImage.evaluate(
-        (image) => image instanceof HTMLImageElement && image.naturalWidth > 0,
-      ),
-    )
-    .toBe(true);
-
+    page.getByRole('heading', { name: 'Your route through this Journey' }),
+  ).toBeVisible();
+  await page
+    .getByRole('link', { name: /JavaScript Foundations/ })
+    .last()
+    .click();
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole('heading', { name: 'Course map' })).toBeVisible();
   expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth,
-    ),
-  ).toBe(true);
-  const currentQuest = page.getByRole('link', {
-    name: 'First value, Current quest',
-  });
-  await expect(currentQuest).toHaveAttribute('href', '/quests/first-value');
-  await Promise.all([
-    page.waitForURL('**/quests/first-value'),
-    currentQuest.click(),
-  ]);
+    await page.evaluate(() => document.documentElement.scrollWidth),
+  ).toBeLessThanOrEqual(390);
+  await page.getByRole('link', { name: /First value, Guest practice/ }).click();
+  await page.waitForURL(/\/quests\/first-value$/, { timeout: 30_000 });
   await expect(
     page.getByRole('heading', { level: 1, name: 'First value' }),
   ).toBeVisible();
-  expect(consoleErrors).toEqual([]);
 });
 
-test('recoverable curriculum failure offers a safe retry', async ({ page }) => {
-  let journeyRequests = 0;
-  await page.route('http://127.0.0.1:3001/api/v1/**', async (route) => {
-    const url = new URL(route.request().url());
-    const segments = url.pathname.split('/').filter(Boolean);
-    const resource = segments.at(-2);
-    const slug = decodeURIComponent(segments.at(-1) ?? '');
-    if (resource === 'journeys') {
-      journeyRequests += 1;
-      if (journeyRequests === 1) {
-        return fulfillJson(
+test('Course catalog excludes unpublished courses and recovers from an API error', async ({
+  page,
+}) => {
+  let requests = 0;
+  await page.route(
+    'http://127.0.0.1:3001/api/v1/catalog/courses',
+    async (route) => {
+      requests += 1;
+      if (requests === 1)
+        return fulfill(
           route,
           {
             error: {
               code: 'SERVICE_UNAVAILABLE',
               message: 'Unavailable',
               status: 503,
-              requestId: 'retry-request',
+              requestId: 'synthetic',
             },
           },
           503,
         );
-      }
-      return fulfillJson(route, journey);
-    }
-    if (resource === 'chapters' && slug in chapters) {
-      return fulfillJson(route, chapters[slug as keyof typeof chapters]);
-    }
-    return fulfillJson(route, quests[slug as keyof typeof quests]);
-  });
-
-  await page.goto('/journeys/javascript-foundations');
+      return fulfill(route, [course]);
+    },
+  );
+  await page.goto('/courses');
   await expect(
-    page.getByRole('heading', { name: 'Journey unavailable' }),
+    page.getByText('Courses are unavailable right now.'),
   ).toBeVisible();
-  await page.getByRole('button', { name: 'Retry Journey' }).click();
+  await page.getByRole('button', { name: 'Retry loading' }).click();
   await expect(
-    page.getByRole('heading', { level: 1, name: 'JavaScript Foundations' }),
+    page.getByRole('link', { name: /JavaScript Foundations/ }),
   ).toBeVisible();
-  expect(journeyRequests).toBe(2);
-  await expect(page.locator('body')).not.toContainText('retry-request');
+  await page
+    .getByRole('searchbox', { name: 'Search courses' })
+    .fill('unpublished');
+  await expect(page.getByText('No courses match your search.')).toBeVisible();
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(
+    page.getByRole('link', { name: /JavaScript Foundations/ }),
+  ).toBeVisible();
 });

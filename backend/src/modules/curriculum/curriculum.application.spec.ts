@@ -1,4 +1,4 @@
-import {
+﻿import {
   cpSync,
   mkdirSync,
   mkdtempSync,
@@ -32,9 +32,17 @@ function publishedFixture(): string {
     journey,
     readFileSync(journey, 'utf8').replace('status: draft', 'status: reviewed'),
   );
+  const course = join(
+    root,
+    'journeys/javascript-foundations/courses/javascript-foundations/course.yaml',
+  );
+  writeFileSync(
+    course,
+    readFileSync(course, 'utf8').replace('status: draft', 'status: reviewed'),
+  );
   const snapshot = join(
     root,
-    'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
   );
   mkdirSync(join(snapshot, 'assets'), { recursive: true });
   writeFileSync(
@@ -47,15 +55,19 @@ function publishedFixture(): string {
   );
   writeFileSync(
     join(root, 'publication.yaml'),
-    `schemaVersion: 1
+    `schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
     technicalReview: approved
-    quests:
-      - id: Q01
-        contentVersion: 1.0.0
-        assessmentVersion: 1.0.0
+    courses:
+      - id: COURSE-JS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: Q01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
 `,
   );
   return root;
@@ -152,6 +164,32 @@ describe('public curriculum API', () => {
     });
     expect(alias.json()).toEqual(journey.json());
     expect(journey.json().chapters[0].slug).toBe('variables');
+    expect(journey.json().courses).toEqual([
+      expect.objectContaining({ id: 'COURSE-JS-FOUNDATIONS', questCount: 1 }),
+    ]);
+    const courses = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/catalog/courses',
+    });
+    expect(courses.statusCode).toBe(200);
+    expect(courses.json()).toEqual([
+      expect.objectContaining({
+        id: 'COURSE-JS-FOUNDATIONS',
+        journeyId: 'JAVASCRIPT-FOUNDATIONS',
+      }),
+    ]);
+    const course = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/catalog/courses/javascript-foundations',
+    });
+    expect(course.statusCode).toBe(200);
+    expect(course.json().chapters[0].slug).toBe('variables');
+    const unpublished = await fastify.inject({
+      method: 'GET',
+      url: '/api/v1/catalog/courses/unpublished-course',
+    });
+    expect(unpublished.statusCode).toBe(404);
+    expect(unpublished.json()).not.toHaveProperty('title');
 
     const chapter = await fastify.inject({
       method: 'GET',

@@ -3,12 +3,15 @@ import {
   CURRICULUM_CATALOG,
   CurriculumCatalog,
   PublishedChapter,
+  PublishedCourse,
   PublishedJourney,
   PublishedQuest,
 } from './content/curriculum-catalog';
 import {
   ChapterDetailDto,
   ChapterSummaryDto,
+  CourseDetailDto,
+  CourseSummaryDto,
   JourneyDetailDto,
   JourneySummaryDto,
   QuestCaseDto,
@@ -32,6 +35,29 @@ export class CurriculumService {
     return this.catalog.journeys.map((journey) => this.journeySummary(journey));
   }
 
+  listCourses(): CourseSummaryDto[] {
+    return this.catalog.journeys.flatMap((journey) =>
+      journey.courses.map((course) => this.courseSummary(journey, course)),
+    );
+  }
+
+  findCourse(slug: string): CourseDetailDto {
+    for (const journey of this.catalog.journeys) {
+      const course = journey.courses.find(
+        (item) => item.metadata.slug === slug,
+      );
+      if (course)
+        return {
+          ...this.courseSummary(journey, course),
+          outcomes: course.metadata.outcomes.map((outcome) => ({ ...outcome })),
+          chapters: course.chapters.map((chapter) =>
+            this.chapterSummary(chapter),
+          ),
+        };
+    }
+    throw new NotFoundException();
+  }
+
   findJourney(slug: string): JourneyDetailDto {
     const journey = this.catalog.journeys.find(
       (item) => item.metadata.slug === slug,
@@ -42,6 +68,9 @@ export class CurriculumService {
       entryRequirements: [...journey.metadata.entryRequirements],
       outcomes: journey.metadata.outcomes.map((outcome) => ({ ...outcome })),
       chapters: journey.chapters.map((chapter) => this.chapterSummary(chapter)),
+      courses: journey.courses.map((course) =>
+        this.courseSummary(journey, course),
+      ),
     };
   }
 
@@ -131,6 +160,27 @@ export class CurriculumService {
     };
   }
 
+  private courseSummary(
+    journey: PublishedJourney,
+    course: PublishedCourse,
+  ): CourseSummaryDto {
+    return {
+      id: course.metadata.id,
+      slug: course.metadata.slug,
+      journeyId: journey.metadata.id,
+      journeySlug: journey.metadata.slug,
+      title: course.metadata.title,
+      summary: course.metadata.summary,
+      position: course.metadata.position,
+      topics: [...course.metadata.topics],
+      chapterCount: course.chapters.length,
+      questCount: course.chapters.reduce(
+        (total, chapter) => total + chapter.quests.length,
+        0,
+      ),
+    };
+  }
+
   private chapterSummary(chapter: PublishedChapter): ChapterSummaryDto {
     return {
       id: chapter.metadata.id,
@@ -169,12 +219,13 @@ export class CurriculumService {
 
   private locateQuest(slug: string) {
     for (const journey of this.catalog.journeys)
-      for (const chapter of journey.chapters) {
-        const quest = chapter.quests.find(
-          (item) => item.metadata.slug === slug,
-        );
-        if (quest) return { journey, chapter, quest };
-      }
+      for (const course of journey.courses)
+        for (const chapter of course.chapters) {
+          const quest = chapter.quests.find(
+            (item) => item.metadata.slug === slug,
+          );
+          if (quest) return { journey, course, chapter, quest };
+        }
     return undefined;
   }
 

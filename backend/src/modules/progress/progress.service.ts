@@ -23,6 +23,7 @@ import {
   CURRICULUM_CATALOG,
   CurriculumCatalog,
   PublishedChapter,
+  PublishedCourse,
   PublishedJourney,
   PublishedQuest,
 } from '../curriculum/content/curriculum-catalog';
@@ -34,6 +35,7 @@ import {
 import {
   ActivityResponseDto,
   ChapterProgressDto,
+  CourseProgressDto,
   JourneyProgressDto,
   QuestProgressDto,
   StartQuestDto,
@@ -112,6 +114,16 @@ export class ProgressService {
     );
     if (!journey) throw new NotFoundException('Published Journey not found');
     return journey;
+  }
+
+  private locateCourse(slug: string): PublishedCourse {
+    for (const journey of this.catalog.journeys) {
+      const course = journey.courses.find(
+        (item) => item.metadata.slug === slug,
+      );
+      if (course) return course;
+    }
+    throw new NotFoundException('Published Course not found');
   }
 
   private checkVersion(quest: PublishedQuest, version: string): void {
@@ -532,6 +544,34 @@ export class ProgressService {
     });
     return {
       journeyId: journey.metadata.id,
+      ...aggregate(all),
+      chapters: chaptersProgress,
+    };
+  }
+
+  async course(userId: string, slug: string): Promise<CourseProgressDto> {
+    const course = this.locateCourse(slug);
+    const ids = new Set(
+      course.chapters.flatMap((chapter) =>
+        chapter.quests.map((quest) => quest.metadata.id),
+      ),
+    );
+    const all = (await this.allProgress(userId)).filter((quest) =>
+      ids.has(quest.questId),
+    );
+    const chaptersProgress = course.chapters.map((chapter) => {
+      const chapterIds = new Set(
+        chapter.quests.map((quest) => quest.metadata.id),
+      );
+      const progress = all.filter((quest) => chapterIds.has(quest.questId));
+      return {
+        chapterId: chapter.metadata.id,
+        ...aggregate(progress),
+        quests: progress,
+      };
+    });
+    return {
+      courseId: course.metadata.id,
       ...aggregate(all),
       chapters: chaptersProgress,
     };

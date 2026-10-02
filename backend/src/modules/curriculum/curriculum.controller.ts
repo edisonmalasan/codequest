@@ -23,6 +23,8 @@ import type { FastifyReply } from 'fastify';
 import { ApiErrorResponseDto } from '../../common/http/api-error-response.dto';
 import {
   ChapterDetailDto,
+  CourseDetailDto,
+  CourseSummaryDto,
   JourneyDetailDto,
   JourneySummaryDto,
   QuestDetailDto,
@@ -38,6 +40,7 @@ const headers = {
 
 @ApiTags('curriculum')
 @ApiExtraModels(JourneySummaryDto)
+@ApiExtraModels(CourseSummaryDto)
 @ApiHeader({ name: 'x-request-id', required: false })
 @Controller()
 export class CurriculumController {
@@ -60,6 +63,26 @@ export class CurriculumController {
   @ApiResponse({ status: 500, type: ApiErrorResponseDto, headers })
   listJourneys(): JourneySummaryDto[] {
     return this.curriculum.listJourneys();
+  }
+
+  @Get('catalog/courses')
+  @Version('1')
+  @ApiOperation({ summary: 'List complete published Courses' })
+  @ApiOkResponse({
+    schema: { type: 'array', items: { $ref: getSchemaPath(CourseSummaryDto) } },
+    headers,
+  })
+  listCourses(): CourseSummaryDto[] {
+    return this.curriculum.listCourses();
+  }
+
+  @Get('catalog/courses/:slug')
+  @Version('1')
+  @ApiOperation({ summary: 'Read one distinct published Course' })
+  @ApiOkResponse({ type: CourseDetailDto, headers })
+  @ApiNotFoundResponse({ type: ApiErrorResponseDto, headers })
+  findCourse(@Param('slug') slug: string): CourseDetailDto {
+    return this.curriculum.findCourse(slug);
   }
 
   @Get('journeys/:slug')

@@ -9,7 +9,7 @@ import styles from './application-shell.module.css';
 
 const destinations = [
   { label: 'Home', href: '/', section: 'home' },
-  { label: 'Learning', href: '/#learning', section: 'learning' },
+  { label: 'Courses', href: '/courses', section: 'learning' },
   { label: 'How it works', href: '/onboarding', section: 'onboarding' },
   { label: 'Account', href: '/account', section: 'account' },
 ] as const;
@@ -20,13 +20,20 @@ function usesProductionShell(pathname: string): boolean {
     pathname === '/onboarding' ||
     pathname === '/account' ||
     pathname === '/feedback' ||
+    pathname === '/courses' ||
+    pathname.startsWith('/courses/') ||
     pathname.startsWith('/journeys/')
   );
 }
 
 function currentSection(pathname: string): string | undefined {
   if (pathname === '/') return 'home';
-  if (pathname.startsWith('/journeys/')) return 'learning';
+  if (
+    pathname === '/courses' ||
+    pathname.startsWith('/courses/') ||
+    pathname.startsWith('/journeys/')
+  )
+    return 'learning';
   if (pathname === '/onboarding') return 'onboarding';
   if (pathname === '/account') return 'account';
   return undefined;

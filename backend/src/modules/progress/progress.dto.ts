@@ -71,3 +71,18 @@ export class JourneyProgressDto {
   @ApiProperty({ type: [UnmetPrerequisiteDto] })
   unmetPrerequisites!: UnmetPrerequisiteDto[];
 }
+
+export class CourseProgressDto {
+  @ApiProperty({ type: String, example: 'COURSE-JS-FOUNDATIONS' })
+  courseId!: string;
+  @ApiProperty({ enum: ['not_started', 'in_progress', 'completed'] })
+  status!: QuestProgressDto['status'];
+  @ApiProperty({ type: Number }) completedQuests!: number;
+  @ApiProperty({ type: Number }) totalQuests!: number;
+  @ApiProperty({ type: Number }) percentage!: number;
+  @ApiProperty({ type: [ChapterProgressDto] }) chapters!: ChapterProgressDto[];
+  @ApiProperty({ enum: ['available', 'locked'] }) availability!:
+    'available' | 'locked';
+  @ApiProperty({ type: [UnmetPrerequisiteDto] })
+  unmetPrerequisites!: UnmetPrerequisiteDto[];
+}

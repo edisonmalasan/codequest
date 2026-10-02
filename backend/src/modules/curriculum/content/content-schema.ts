@@ -45,13 +45,30 @@ export const journeySchema = z
       )
       .min(1)
       .max(8),
+    courseIds: ids,
+  })
+  .strict();
+export const courseSchema = z
+  .object({
+    id,
+    journeyId: id,
+    slug,
+    title: text,
+    summary: text,
+    position,
+    status: z.enum(['draft', 'reviewed']),
+    topics: z.array(slug).min(1).max(12),
+    outcomes: z
+      .array(z.object({ id, description: text }).strict())
+      .min(1)
+      .max(20),
     chapterIds: ids,
   })
   .strict();
 export const chapterSchema = z
   .object({
     id,
-    journeyId: id,
+    courseId: id,
     slug,
     title: text,
     position,
@@ -159,7 +176,7 @@ const publicationQuestSchema = z
 
 export const publicationSchema = z
   .object({
-    schemaVersion: z.literal(1),
+    schemaVersion: z.literal(2),
     journeys: z
       .array(
         z
@@ -167,7 +184,18 @@ export const publicationSchema = z
             id,
             curriculumReview: z.literal('approved'),
             technicalReview: z.literal('approved'),
-            quests: z.array(publicationQuestSchema).max(500),
+            courses: z
+              .array(
+                z
+                  .object({
+                    id,
+                    curriculumReview: z.literal('approved'),
+                    technicalReview: z.literal('approved'),
+                    quests: z.array(publicationQuestSchema).max(500),
+                  })
+                  .strict(),
+              )
+              .max(50),
           })
           .strict(),
       )
@@ -182,20 +210,31 @@ export const publicationSchema = z
       context.addIssue({ code: 'custom', message: 'Duplicate journey ID' });
     for (const [index, journey] of value.journeys.entries()) {
       if (
-        new Set(journey.quests.map((item) => item.id)).size !==
-        journey.quests.length
+        new Set(journey.courses.map((item) => item.id)).size !==
+        journey.courses.length
       )
         context.addIssue({
           code: 'custom',
-          path: ['journeys', index, 'quests'],
-          message: 'Duplicate quest ID',
+          path: ['journeys', index, 'courses'],
+          message: 'Duplicate course ID',
         });
+      for (const [courseIndex, course] of journey.courses.entries())
+        if (
+          new Set(course.quests.map((item) => item.id)).size !==
+          course.quests.length
+        )
+          context.addIssue({
+            code: 'custom',
+            path: ['journeys', index, 'courses', courseIndex, 'quests'],
+            message: 'Duplicate quest ID',
+          });
     }
   });
 
 export type Quest = z.infer<typeof questSchema>;
 export type QuestVersion = z.infer<typeof versionSchema>;
 export type Journey = z.infer<typeof journeySchema>;
+export type Course = z.infer<typeof courseSchema>;
 export type Chapter = z.infer<typeof chapterSchema>;
 export type CurriculumCase = z.infer<typeof caseSchema>;
 export type Publication = z.infer<typeof publicationSchema>;

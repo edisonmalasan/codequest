@@ -5,6 +5,7 @@ import {
   casesSchema,
   chapterSchema,
   conceptsSchema,
+  courseSchema,
   journeySchema,
   questSchema,
   versionSchema,
@@ -94,9 +95,9 @@ export function validateCurriculum(contentRoot: string): void {
   const root = resolve(contentRoot);
   let visitedFiles = 0;
   const authoredFile =
-    /^(?:README\.md|concepts\.yaml|publication\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.js|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
+    /^(?:README\.md|concepts\.yaml|publication\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/courses\/[^/]+\/course\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.js|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
   function scan(folder: string, depth: number): void {
-    if (depth > 16)
+    if (depth > 18)
       throw new ContentError(
         relativePath(folder),
         'Content tree exceeds depth limit',
@@ -134,7 +135,9 @@ export function validateCurriculum(contentRoot: string): void {
   const journeyIds: string[] = [],
     journeySlugs: string[] = [],
     journeyPositions: string[] = [];
-  const chapterIds: string[] = [],
+  const courseIds: string[] = [],
+    courseSlugs: string[] = [],
+    chapterIds: string[] = [],
     questIds: string[] = [];
   const quests = new Map<string, AuthoredQuest>();
   for (const journeyDir of directories(root, 'journeys')) {
@@ -159,199 +162,237 @@ export function validateCurriculum(contentRoot: string): void {
       journey.outcomes.length !== 8
     )
       throw new ContentError(journeyPath, 'Foundations must declare O1–O8');
-    const authoredChapters: string[] = [],
-      chapterSlugs: string[] = [],
-      chapterPositions: string[] = [];
-    for (const chapterDir of directories(root, join(journeyPath, 'chapters'))) {
-      const chapterPath = join(journeyPath, 'chapters', chapterDir);
-      const chapter = metadata(
+    const authoredCourses: string[] = [],
+      coursePositions: string[] = [];
+    for (const courseDir of directories(root, join(journeyPath, 'courses'))) {
+      const coursePath = join(journeyPath, 'courses', courseDir);
+      const course = metadata(
         root,
-        join(chapterPath, 'chapter.yaml'),
-        chapterSchema,
+        join(coursePath, 'course.yaml'),
+        courseSchema,
       );
-      if (chapter.slug !== chapterDir || chapter.journeyId !== journey.id)
+      if (course.slug !== courseDir || course.journeyId !== journey.id)
         throw new ContentError(
-          chapterPath,
-          'Chapter slug or parent does not match',
+          coursePath,
+          'Course slug or parent does not match',
         );
-      if (
-        journey.id === 'JAVASCRIPT-FOUNDATIONS' &&
-        chapter.id !== `CH${String(chapter.position).padStart(2, '0')}`
-      )
-        throw new ContentError(
-          chapterPath,
-          'Foundations chapter order is invalid',
-        );
-      chapterIds.push(chapter.id);
-      authoredChapters.push(chapter.id);
-      chapterSlugs.push(chapter.slug);
-      chapterPositions.push(String(chapter.position));
-      const authoredQuests: string[] = [],
-        questSlugs: string[] = [],
-        questPositions: string[] = [];
-      for (const questDir of directories(root, join(chapterPath, 'quests'))) {
-        const questPath = join(chapterPath, 'quests', questDir);
-        const quest = metadata(
+      courseIds.push(course.id);
+      courseSlugs.push(course.slug);
+      authoredCourses.push(course.id);
+      coursePositions.push(String(course.position));
+      unique(course.topics, coursePath, 'course topic');
+      unique(
+        course.outcomes.map((outcome) => outcome.id),
+        coursePath,
+        'course outcome ID',
+      );
+      const authoredChapters: string[] = [],
+        chapterSlugs: string[] = [],
+        chapterPositions: string[] = [];
+      for (const chapterDir of directories(
+        root,
+        join(coursePath, 'chapters'),
+      )) {
+        const chapterPath = join(coursePath, 'chapters', chapterDir);
+        const chapter = metadata(
           root,
-          join(questPath, 'quest.yaml'),
-          questSchema,
+          join(chapterPath, 'chapter.yaml'),
+          chapterSchema,
         );
-        if (quest.slug !== questDir || quest.chapterId !== chapter.id)
+        if (chapter.slug !== chapterDir || chapter.courseId !== course.id)
           throw new ContentError(
-            questPath,
-            'Quest slug or parent does not match',
+            chapterPath,
+            'Chapter slug or parent does not match',
           );
         if (
           journey.id === 'JAVASCRIPT-FOUNDATIONS' &&
-          /^Q(0[1-9]|1\d|2[0-4])$/.test(quest.id)
-        ) {
-          const number = Number(quest.id.slice(1));
-          const expectedChapter =
-            number <= 4
-              ? 1
-              : number <= 7
-                ? 2
-                : number <= 10
-                  ? 3
-                  : number <= 14
-                    ? 4
-                    : number <= 18
-                      ? 5
-                      : number <= 22
-                        ? 6
-                        : 7;
-          const firstInChapter = [0, 1, 5, 8, 11, 15, 19, 23][expectedChapter];
-          if (
-            chapter.id !== `CH${String(expectedChapter).padStart(2, '0')}` ||
-            quest.position !== number - firstInChapter + 1
-          )
-            throw new ContentError(
-              questPath,
-              'Foundations quest chapter or sequence is invalid',
-            );
-          if (quest.guestEligible !== number <= 4)
-            throw new ContentError(
-              questPath,
-              'Foundations guest subset must be Q01–Q04',
-            );
-        } else if (
-          journey.id === 'JAVASCRIPT-FOUNDATIONS' &&
-          quest.guestEligible
-        ) {
+          chapter.id !== `CH${String(chapter.position).padStart(2, '0')}`
+        )
           throw new ContentError(
-            questPath,
-            'Only Q01–Q04 may be guest eligible',
+            chapterPath,
+            'Foundations chapter order is invalid',
           );
-        }
-        questIds.push(quest.id);
-        authoredQuests.push(quest.id);
-        questSlugs.push(quest.slug);
-        questPositions.push(String(quest.position));
-        const snapshots = new Map<string, Snapshot>();
-        for (const versionDir of directories(
-          root,
-          join(questPath, 'versions'),
-        )) {
-          const versionPath = join(questPath, 'versions', versionDir);
-          const version = metadata(
+        chapterIds.push(chapter.id);
+        authoredChapters.push(chapter.id);
+        chapterSlugs.push(chapter.slug);
+        chapterPositions.push(String(chapter.position));
+        const authoredQuests: string[] = [],
+          questSlugs: string[] = [],
+          questPositions: string[] = [];
+        for (const questDir of directories(root, join(chapterPath, 'quests'))) {
+          const questPath = join(chapterPath, 'quests', questDir);
+          const quest = metadata(
             root,
-            join(versionPath, 'version.yaml'),
-            versionSchema,
+            join(questPath, 'quest.yaml'),
+            questSchema,
           );
-          if (version.contentVersion !== versionDir)
+          if (quest.slug !== questDir || quest.chapterId !== chapter.id)
             throw new ContentError(
-              versionPath,
-              'Snapshot directory must match content version',
-            );
-          const lesson = join(versionPath, 'lesson.mdx');
-          checkLesson(root, lesson);
-          checkStarter(root, join(versionPath, 'starter.js'));
-          const cases = readCases(root, join(versionPath, 'tests.ts'));
-          exactInventory(
-            version.caseIds,
-            cases.map((item) => item.id),
-            join(versionPath, 'version.yaml'),
-          );
-          if (
-            !version.conceptIds.length ||
-            version.conceptIds.some((id) => !conceptIds.has(id))
-          )
-            throw new ContentError(
-              versionPath,
-              'Unknown or missing concept ID',
-            );
-          if (!journey.outcomes.some((item) => item.id === version.outcomeId))
-            throw new ContentError(versionPath, 'Unknown outcome ID');
-          if (
-            quest.kind === 'capstone' &&
-            (!version.explanationPrompt || !version.transferPrompt)
-          )
-            throw new ContentError(
-              versionPath,
-              'Capstone requires separate explanation and transfer prompts',
+              questPath,
+              'Quest slug or parent does not match',
             );
           if (
-            quest.kind === 'instructional' &&
-            (version.explanationPrompt || version.transferPrompt)
-          )
+            journey.id === 'JAVASCRIPT-FOUNDATIONS' &&
+            /^Q(0[1-9]|1\d|2[0-4])$/.test(quest.id)
+          ) {
+            const number = Number(quest.id.slice(1));
+            const expectedChapter =
+              number <= 4
+                ? 1
+                : number <= 7
+                  ? 2
+                  : number <= 10
+                    ? 3
+                    : number <= 14
+                      ? 4
+                      : number <= 18
+                        ? 5
+                        : number <= 22
+                          ? 6
+                          : 7;
+            const firstInChapter = [0, 1, 5, 8, 11, 15, 19, 23][
+              expectedChapter
+            ];
+            if (
+              chapter.id !== `CH${String(expectedChapter).padStart(2, '0')}` ||
+              quest.position !== number - firstInChapter + 1
+            )
+              throw new ContentError(
+                questPath,
+                'Foundations quest chapter or sequence is invalid',
+              );
+            if (quest.guestEligible !== number <= 4)
+              throw new ContentError(
+                questPath,
+                'Foundations guest subset must be Q01–Q04',
+              );
+          } else if (
+            journey.id === 'JAVASCRIPT-FOUNDATIONS' &&
+            quest.guestEligible
+          ) {
             throw new ContentError(
-              versionPath,
-              'Reasoning prompts are reserved for capstone',
+              questPath,
+              'Only Q01–Q04 may be guest eligible',
             );
-          snapshots.set(versionDir, {
-            metadata: version,
-            cases,
-            path: versionPath,
+          }
+          questIds.push(quest.id);
+          authoredQuests.push(quest.id);
+          questSlugs.push(quest.slug);
+          questPositions.push(String(quest.position));
+          const snapshots = new Map<string, Snapshot>();
+          for (const versionDir of directories(
+            root,
+            join(questPath, 'versions'),
+          )) {
+            const versionPath = join(questPath, 'versions', versionDir);
+            const version = metadata(
+              root,
+              join(versionPath, 'version.yaml'),
+              versionSchema,
+            );
+            if (version.contentVersion !== versionDir)
+              throw new ContentError(
+                versionPath,
+                'Snapshot directory must match content version',
+              );
+            const lesson = join(versionPath, 'lesson.mdx');
+            checkLesson(root, lesson);
+            checkStarter(root, join(versionPath, 'starter.js'));
+            const cases = readCases(root, join(versionPath, 'tests.ts'));
+            exactInventory(
+              version.caseIds,
+              cases.map((item) => item.id),
+              join(versionPath, 'version.yaml'),
+            );
+            if (
+              !version.conceptIds.length ||
+              version.conceptIds.some((id) => !conceptIds.has(id))
+            )
+              throw new ContentError(
+                versionPath,
+                'Unknown or missing concept ID',
+              );
+            if (!journey.outcomes.some((item) => item.id === version.outcomeId))
+              throw new ContentError(versionPath, 'Unknown outcome ID');
+            if (
+              quest.kind === 'capstone' &&
+              (!version.explanationPrompt || !version.transferPrompt)
+            )
+              throw new ContentError(
+                versionPath,
+                'Capstone requires separate explanation and transfer prompts',
+              );
+            if (
+              quest.kind === 'instructional' &&
+              (version.explanationPrompt || version.transferPrompt)
+            )
+              throw new ContentError(
+                versionPath,
+                'Reasoning prompts are reserved for capstone',
+              );
+            snapshots.set(versionDir, {
+              metadata: version,
+              cases,
+              path: versionPath,
+            });
+          }
+          if (!snapshots.has(quest.currentVersion))
+            throw new ContentError(
+              questPath,
+              'Current content version is missing',
+            );
+          if (journey.id === 'JAVASCRIPT-FOUNDATIONS') {
+            const numbered = /^Q(0[1-9]|1\d|2[0-4])$/.test(quest.id);
+            if (numbered !== (quest.kind === 'instructional'))
+              throw new ContentError(
+                questPath,
+                'Foundations Q01–Q24 are instructional; final quest is capstone',
+              );
+            if (!numbered && (chapter.id !== 'CH07' || quest.position !== 3))
+              throw new ContentError(
+                questPath,
+                'Foundations capstone must close chapter seven',
+              );
+          }
+          quests.set(quest.id, {
+            metadata: quest,
+            journeyId: journey.id,
+            snapshots,
+            path: questPath,
           });
         }
-        if (!snapshots.has(quest.currentVersion))
-          throw new ContentError(
-            questPath,
-            'Current content version is missing',
-          );
-        if (journey.id === 'JAVASCRIPT-FOUNDATIONS') {
-          const numbered = /^Q(0[1-9]|1\d|2[0-4])$/.test(quest.id);
-          if (numbered !== (quest.kind === 'instructional'))
-            throw new ContentError(
-              questPath,
-              'Foundations Q01–Q24 are instructional; final quest is capstone',
-            );
-          if (!numbered && (chapter.id !== 'CH07' || quest.position !== 3))
-            throw new ContentError(
-              questPath,
-              'Foundations capstone must close chapter seven',
-            );
-        }
-        quests.set(quest.id, {
-          metadata: quest,
-          journeyId: journey.id,
-          snapshots,
-          path: questPath,
-        });
+        unique(questSlugs, chapterPath, 'quest slug');
+        unique(questPositions, chapterPath, 'quest position');
+        exactInventory(
+          chapter.questIds,
+          authoredQuests,
+          join(chapterPath, 'chapter.yaml'),
+        );
       }
-      unique(questSlugs, chapterPath, 'quest slug');
-      unique(questPositions, chapterPath, 'quest position');
+      unique(chapterSlugs, coursePath, 'chapter slug');
+      unique(chapterPositions, coursePath, 'chapter position');
       exactInventory(
-        chapter.questIds,
-        authoredQuests,
-        join(chapterPath, 'chapter.yaml'),
+        course.chapterIds,
+        authoredChapters,
+        join(coursePath, 'course.yaml'),
       );
     }
-    unique(chapterSlugs, journeyPath, 'chapter slug');
-    unique(chapterPositions, journeyPath, 'chapter position');
+    unique(coursePositions, journeyPath, 'course position');
     exactInventory(
-      journey.chapterIds,
-      authoredChapters,
+      journey.courseIds,
+      authoredCourses,
       join(journeyPath, 'journey.yaml'),
     );
   }
   unique(journeyIds, 'journeys', 'journey ID');
   unique(journeySlugs, 'journeys', 'journey slug');
   unique(journeyPositions, 'journeys', 'journey position');
+  unique(courseIds, 'journeys', 'course ID');
+  unique(courseSlugs, 'journeys', 'course slug');
   unique(chapterIds, 'journeys', 'chapter ID');
   unique(questIds, 'journeys', 'quest ID');
   unique(
-    [...conceptIds, ...journeyIds, ...chapterIds, ...questIds],
+    [...conceptIds, ...journeyIds, ...courseIds, ...chapterIds, ...questIds],
     'content',
     'stable ID',
   );

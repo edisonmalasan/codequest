@@ -35,17 +35,29 @@ function fixture(): string {
     journey,
     readFileSync(journey, 'utf8').replace('status: draft', 'status: reviewed'),
   );
+  const course = join(
+    root,
+    'journeys/javascript-foundations/courses/javascript-foundations/course.yaml',
+  );
+  writeFileSync(
+    course,
+    readFileSync(course, 'utf8').replace('status: draft', 'status: reviewed'),
+  );
   writeFileSync(
     join(root, 'publication.yaml'),
-    `schemaVersion: 1
+    `schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
     technicalReview: approved
-    quests:
-      - id: Q01
-        contentVersion: 1.0.0
-        assessmentVersion: 1.0.0
+    courses:
+      - id: COURSE-JS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: Q01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
 `,
   );
   return root;
@@ -340,6 +352,19 @@ describe('derived owner progress', () => {
     expect(await progress.chapter(USER_A, 'variables')).toEqual(
       journey.chapters[0],
     );
+    expect(await progress.course(USER_A, 'javascript-foundations')).toEqual({
+      courseId: 'COURSE-JS-FOUNDATIONS',
+      completedQuests: journey.completedQuests,
+      totalQuests: journey.totalQuests,
+      percentage: journey.percentage,
+      status: journey.status,
+      availability: journey.availability,
+      unmetPrerequisites: journey.unmetPrerequisites,
+      chapters: journey.chapters,
+    });
+    expect(
+      (await progress.course(USER_B, 'javascript-foundations')).completedQuests,
+    ).toBe(0);
     expect(
       (await progress.journey(USER_B, 'javascript-foundations'))
         .completedQuests,

@@ -64,15 +64,30 @@ async function installCurriculum(page: Page): Promise<void> {
             outcomes: [{ id: 'O1', description: 'Choose a value.' }],
             chapters: [chapterSummary],
           }
-        : path === '/api/v1/chapters/values-and-state'
+        : path === '/api/v1/catalog/courses/javascript-foundations'
           ? {
-              ...chapterSummary,
-              journey: journeySummary,
-              quests: [questSummary],
+              id: 'COURSE-JS-FOUNDATIONS',
+              slug: 'javascript-foundations',
+              journeyId: journeySummary.id,
+              journeySlug: journeySummary.slug,
+              title: journeySummary.title,
+              summary: 'Learn JavaScript through exercises.',
+              position: 1,
+              topics: ['javascript'],
+              chapterCount: 1,
+              questCount: 1,
+              outcomes: [{ id: 'C1', description: 'Choose a value.' }],
+              chapters: [chapterSummary],
             }
-          : path === '/api/v1/quests/first-value'
-            ? quest
-            : null;
+          : path === '/api/v1/chapters/values-and-state'
+            ? {
+                ...chapterSummary,
+                journey: journeySummary,
+                quests: [questSummary],
+              }
+            : path === '/api/v1/quests/first-value'
+              ? quest
+              : null;
     await route.fulfill({
       status: json ? 200 : 404,
       contentType: 'application/json',
@@ -101,11 +116,11 @@ function contrast(foreground: string, background: string): number {
 }
 
 async function expectNoPageOverflow(page: Page, route: string): Promise<void> {
-  const width = await page.evaluate(() => document.documentElement.scrollWidth);
-  expect(
-    width,
-    `${route} overflows at ${page.viewportSize()?.width}px`,
-  ).toBeLessThanOrEqual(page.viewportSize()?.width ?? 0);
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth), {
+      message: `${route} overflows at ${page.viewportSize()?.width}px`,
+    })
+    .toBeLessThanOrEqual(page.viewportSize()?.width ?? 0);
 }
 
 test('home and authentication have a named keyboard path with visible focus', async ({
@@ -170,24 +185,24 @@ test('Journey, lesson, and editor preserve semantic and keyboard access', async 
 }) => {
   await installCurriculum(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/journeys/javascript-foundations');
+  await page.goto('/courses/javascript-foundations');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'JavaScript Foundations',
   );
   expect(
     (await page.getByRole('link', { name: 'CodeQuest home' }).boundingBox())
       ?.height,
-    'Journey home target height',
+    'Course home target height',
   ).toBeGreaterThanOrEqual(44);
   await expect(
-    page.getByRole('region', { name: 'Chapter 1: Values and state' }),
+    page.getByRole('region', { name: 'Chapters and exercises' }),
   ).toBeVisible();
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 900 });
-    await expectNoPageOverflow(page, '/journeys/javascript-foundations');
+    await expectNoPageOverflow(page, '/courses/javascript-foundations');
   }
   const questLink = page.getByRole('link', {
-    name: /First value, Current quest/,
+    name: /First value, Guest practice/,
   });
   await expect(questLink).toBeVisible();
   await questLink.focus();

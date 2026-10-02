@@ -12,6 +12,19 @@ export function authorQuestFixture(
     concepts: catalog.authored.concepts,
     journeys: catalog.authored.journeys.map((journey) => ({
       metadata: journey.metadata,
+      courses: journey.courses.map((course) => ({
+        metadata: course.metadata,
+        chapters: course.chapters.map((chapter) => ({
+          metadata: chapter.metadata,
+          quests: chapter.quests.map((quest) => ({
+            metadata: quest.metadata,
+            activeSnapshot:
+              quest.metadata.id === selection.quest.metadata.id
+                ? selection.snapshot
+                : quest.snapshots[quest.metadata.currentVersion],
+          })),
+        })),
+      })),
       chapters: journey.chapters.map((chapter) => ({
         metadata: chapter.metadata,
         quests: chapter.quests.map((quest) => ({

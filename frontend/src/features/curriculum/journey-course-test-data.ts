@@ -91,6 +91,7 @@ export const journeyFixture: JourneyDetail = {
     { id: 'O2', description: 'Select branches and handle boundaries.' },
   ],
   chapters: [flowChapterSummary, valuesChapterSummary],
+  courses: [],
 };
 
 export const valuesChapterFixture: ChapterDetail = {
