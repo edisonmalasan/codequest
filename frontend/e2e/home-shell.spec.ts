@@ -39,7 +39,11 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
   expect((await page.request.get('/onboarding')).ok()).toBe(true);
   expect((await page.request.get('/login')).ok()).toBe(true);
   const pageErrors: string[] = [];
+  const consoleErrors: string[] = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(
     page.getByRole('heading', {
@@ -86,6 +90,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
     timeout: 30_000,
   });
   expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
 });
 
 for (const width of [1280, 820, 390, 320]) {
