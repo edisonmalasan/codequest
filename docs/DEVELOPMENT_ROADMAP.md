@@ -4,6 +4,8 @@
 
 Status snapshot: 2026-10-03. Update this section when the phase or OpenSpec stage changes; planned work is not completed work. The product rebaseline below supersedes the old forward execution order without changing archived engineering history.
 
+**Visual revision in progress (2026-10-03):** The founder requested a creative revision across the production frontend and withdrew the earlier R05 visual acceptance. The archived R02/R03 approvals remain evidence for their exact earlier builds, not approval of the revised Home, navigation, catalog, or learning presentation. [The active visual redesign proposal](../openspec/changes/reimagine-codequest-frontend-visuals/proposal.md) covers the real routes; its Apply and exact-build founder review are still ahead. R05's current visual gate remains open, and the [R06 learning-shell Apply](../openspec/changes/compose-integrated-learning-shell/tasks.md) remains gated on that review. R04 real-provider gates and Phase 38 **PAUSED / NO GO** status are unchanged.
+
 | Item | Current status |
 | --- | --- |
 | Local developer environment | [Scoped frontend/backend setup](../openspec/changes/archive/2026-10-01-scoped-local-environment/proposal.md) implemented, synced, and archived; root `pnpm dev` and loopback origin isolation verified with synthetic local configuration. Beta release gates remain open. |

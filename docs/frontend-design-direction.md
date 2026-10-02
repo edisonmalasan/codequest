@@ -1,5 +1,7 @@
 # R02 frontend design direction
 
+**Later visual revision:** The founder requested a new creative treatment for all current production frontend surfaces on 2026-10-03. The R02 acceptance below remains historical evidence for the development preview and its exact build; it does not approve the revised production design proposed in [the active visual redesign change](../openspec/changes/reimagine-codequest-frontend-visuals/proposal.md).
+
 **Status:** R02 visual direction **FOUNDER ACCEPTED** for production design handoff; the preview remains development-only. This record does not certify production journeys, auth, progress, course publication, device support, or release readiness. Phase 38 remains paused and `NO GO`.
 
 ## Visual and screen hierarchy

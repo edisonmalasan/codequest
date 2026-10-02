@@ -1,5 +1,7 @@
 # Production shell and home review
 
+**Later visual revision:** The founder requested a new production frontend direction on 2026-10-03. The acceptance below remains a record for the exact R03 build; the revised Home and shell require a new exact-build founder review under [the active visual redesign change](../openspec/changes/reimagine-codequest-frontend-visuals/proposal.md).
+
 ## Route audit
 
 The root layout provides shared providers. The production shell sits inside those providers and wraps `/`, `/onboarding`, `/account`, `/feedback`, and `/journeys/*`. Its skip link targets the focusable `#main-content` wrapper immediately before each route's single `main` landmark. Home, learning, onboarding, and account links point to `/`, `/#learning`, `/onboarding`, and `/account`; the learning anchor is useful even when the public curriculum API is unavailable. The protected account page retains its existing redirect to login for anonymous visitors.
