@@ -8,40 +8,40 @@ Define the accessible learner-facing Journey overview and Course map that turn p
 
 ### Requirement: Published Journeys have one canonical learner page
 
-The frontend SHALL expose `/journeys/:slug` as the canonical learner page for a published Journey. It SHALL read Journey, Chapter, and Quest information only through the existing generated curriculum API boundary, preserve backend ordering, and SHALL NOT import backend source, authored content files, or application-table data. Course SHALL remain a display synonym used for the map, not a separate route-owned entity or hierarchy level.
+The frontend SHALL expose `/journeys/:slug` as the canonical learner overview for a published Journey. It SHALL read Journey, Course, Chapter, and Quest information only through the generated curriculum API boundary, preserve backend ordering, and SHALL NOT import backend source, authored content files, or application-table data. Course SHALL be a distinct stable curriculum identity with its own canonical `/courses/:slug` learner map; existing Journey URLs SHALL remain useful and link to their published Courses.
 
 #### Scenario: Published Journey loads
 
 - **WHEN** a learner opens the canonical route for a published Journey
-- **THEN** the page displays that Journey and its ordered chapters and quests using data returned by the generated frontend curriculum client
+- **THEN** the page displays that Journey and its ordered published Courses using data returned by the generated frontend curriculum client
 
 #### Scenario: Course terminology is displayed
 
-- **WHEN** the page labels its primary map as a Course map
-- **THEN** the page keeps the Journey identity and canonical route and does not create a second Course model or fetch a divergent representation
+- **WHEN** the page labels a Course map
+- **THEN** the page uses the Course identity and canonical Course route rather than deriving a second model from the Journey alias
 
 ### Requirement: Journey overview explains the learning route from available metadata
 
-The Journey page SHALL display the Journey title, a concise description derived from its existing title and chapter/quest counts, its entry requirements, learning outcomes, and overall completed-versus-total quest progress. It SHALL NOT fabricate authored descriptive curriculum that the API does not provide, and progress text SHALL remain understandable without relying on a percentage or color alone.
+The Journey page SHALL display its published title, authored summary, entry requirements, outcomes, ordered Courses, and overall completed-versus-total quest progress where the backend supplies a trusted snapshot. It SHALL NOT fabricate descriptive curriculum absent from the API, and progress text SHALL remain understandable without relying on a percentage or color alone.
 
 #### Scenario: Journey metadata is presented
 
-- **WHEN** the API returns a Journey with entry requirements, outcomes, chapter count, and quest count
-- **THEN** the page presents those values in a readable overview with a textual completed-quest count and progress indicator
+- **WHEN** the API returns a Journey with entry requirements, outcomes, Course count, and Quest count
+- **THEN** the page presents those values in a readable overview with each published Course and a textual completed-quest count when authoritative progress is available
 
 #### Scenario: Journey has no supplied completions
 
 - **WHEN** no authoritative or provisional completion snapshot is available
-- **THEN** the page reports zero completed quests and explains that progress is not yet being restored rather than implying account progress was fetched
+- **THEN** the page explains that progress is not yet restored rather than implying account progress was fetched
 
 ### Requirement: Course map preserves curriculum order and chapter structure
 
-The Course map SHALL render chapters in Journey position order and each chapter's quests in chapter position order. Each chapter SHALL expose its objective, completed and total quest counts, chapter status, and an ordered semantic quest list, using the existing CodeQuest game-map visual language without hiding the hierarchy in decoration.
+The Course map SHALL render only the selected Course's chapters in published position order and each chapter's quests in chapter position order. Each chapter SHALL expose its objective, completed and total quest counts, chapter status, and an ordered semantic quest list, using the existing visual language without hiding the hierarchy in decoration.
 
 #### Scenario: Ordered curriculum becomes a map
 
 - **WHEN** chapters and quests arrive in an arbitrary response order
-- **THEN** the rendered Course map orders them by their published positions and keeps every quest associated with its owning chapter
+- **THEN** the rendered Course map orders them by published positions, keeps every quest with its owning chapter, and excludes chapters belonging to another Course
 
 #### Scenario: Chapter progression is displayed
 
@@ -50,31 +50,31 @@ The Course map SHALL render chapters in Journey position order and each chapter'
 
 ### Requirement: Quest states are derived without inventing authority
 
-For an authenticated learner, the frontend SHALL render quest locks and prerequisite explanations from the protected backend availability response, and completion from protected backend progress; it SHALL NOT recompute accepted eligibility from browser completion IDs. A currently completed published quest SHALL render `completed`; an incomplete backend-locked quest SHALL render `locked`; the earliest ordered backend-available incomplete quest SHALL render as the active/current navigation cue; any other backend-available incomplete quest SHALL render `available`. Active/current SHALL be map emphasis, not a stored learning status. For a guest, the map MAY derive navigation from published prerequisites and clearly labeled provisional device facts, without claiming accepted unlock authority. A failed protected read SHALL not become an authoritative empty or unlocked state.
+For an authenticated learner, the Course map SHALL render quest locks and prerequisite explanations from the protected backend Course availability response, and completion from protected backend progress; it SHALL NOT recompute accepted eligibility from browser completion IDs. A currently completed published quest SHALL render `completed`; an incomplete backend-locked quest SHALL render `locked`; the earliest ordered backend-available incomplete quest SHALL render as the active/current navigation cue; any other backend-available incomplete quest SHALL render `available`. Active/current SHALL be map emphasis, not a stored learning status. For a guest, the map MAY derive navigation from published prerequisites and clearly labeled provisional device facts, without claiming accepted unlock authority. A failed protected read SHALL not become an authoritative empty or unlocked state.
 
 #### Scenario: Prerequisites determine availability
 
 - **WHEN** the protected response marks a quest locked and names an unmet published prerequisite
-- **THEN** the map shows a non-interactive locked node with that explanation even if browser state claims completion
+- **THEN** the Course map shows a non-interactive locked node with that explanation even if browser state claims completion
 
 #### Scenario: One eligible quest is emphasized
 
-- **WHEN** multiple incomplete quests are backend-available
-- **THEN** only the earliest in Journey, Chapter, and Quest order is labeled active/current and the other eligible quests are labeled available
+- **WHEN** multiple incomplete quests are backend-available in a Course
+- **THEN** only the earliest in Course, Chapter, and Quest order is labeled active/current and the other eligible quests are labeled available
 
 #### Scenario: Completed state comes from supplied evidence
 
 - **WHEN** backend progress marks a published quest currently completed
-- **THEN** its node and chapter/Journey counts show completion without awarding XP or persisting progress in the client
+- **THEN** its node and chapter/Course counts show completion without awarding XP or persisting progress in the client
 
 #### Scenario: Protected progress is unavailable
 
-- **WHEN** an authenticated Journey's protected progress or availability read fails
+- **WHEN** an authenticated Course's protected progress or availability read fails
 - **THEN** the page shows a recoverable unavailable state instead of asserting zero saved completion or local unlocks
 
 ### Requirement: Map nodes enter only approved lesson reading behavior
 
-Quest nodes SHALL communicate title, sequence, difficulty, reward metadata, guest eligibility, and map state where available. An active/current, available, or completed published node SHALL be a semantic link to `/quests/[slug]`; a locked node SHALL remain non-interactive. Following an enabled node SHALL enter only the Phase 12 lesson-reading experience and SHALL NOT edit starter code, run learner code, perform checks, submit attempts, accept completion, award XP, or change unlock state.
+Quest nodes SHALL communicate title, sequence, difficulty, reward metadata, guest eligibility, and map state where available. An active/current, available, or completed published node SHALL be a semantic link to `/quests/[slug]`; a locked node SHALL remain non-interactive. Following an enabled node SHALL enter the published Quest lesson and its already approved workspace behavior. The map link itself SHALL NOT write a start, attempt, completion, XP, or unlock fact; those actions remain governed by their own authenticated and guest-learning contracts.
 
 #### Scenario: Learner opens an eligible Quest
 
@@ -88,7 +88,7 @@ Quest nodes SHALL communicate title, sequence, difficulty, reward metadata, gues
 
 ### Requirement: Loading and failure states remain truthful and recoverable
 
-The Journey page SHALL provide accessible loading feedback and distinct experiences for an unpublished or unknown Journey, an empty published Journey, and recoverable network, HTTP, or malformed-response failures. A failed or partial curriculum graph SHALL NOT be used to infer unlock state. Recoverable failures SHALL offer a retry, and user-visible messages SHALL not expose raw response bodies, request URLs, tokens, or implementation details.
+The Journey overview and Course map SHALL provide accessible loading feedback and distinct experiences for unpublished or unknown content, an empty published scope, and recoverable network, HTTP, or malformed-response failures. A failed or partial curriculum graph SHALL NOT be used to infer unlock state. Recoverable failures SHALL offer a retry, and user-visible messages SHALL not expose raw response bodies, request URLs, tokens, or implementation details.
 
 #### Scenario: Journey is not published
 
@@ -98,11 +98,11 @@ The Journey page SHALL provide accessible loading feedback and distinct experien
 #### Scenario: Nested curriculum request fails
 
 - **WHEN** a Chapter or Quest request needed for the Course map fails
-- **THEN** the page withholds derived map states, describes that the route could not be loaded, and offers a retry for recoverable failures
+- **THEN** the Course page withholds derived map states, describes that the route could not be loaded, and offers a retry for recoverable failures
 
 #### Scenario: Publication contains no quests
 
-- **WHEN** a published Journey contains no renderable quests
+- **WHEN** a published Course contains no renderable quests
 - **THEN** the page shows an explicit empty Course-map state and does not divide by zero or invent an active node
 
 ### Requirement: Journey navigation is accessible and responsive
@@ -121,9 +121,21 @@ The page SHALL preserve logical heading and chapter/quest list structure, visibl
 
 ### Requirement: Phase 11 remains inside frontend presentation boundaries
 
-The change SHALL NOT add or change backend endpoints, OpenAPI schemas, generated client files, database tables, authentication behavior, production curriculum publication, accepted progress, persisted unlocks, guest import, offline synchronization, XP/level/streak computation, lesson rendering, editor/runtime behavior, assessments, submissions, analytics, or PWA behavior. Automated verification SHALL cover the page model and states, API loading/failure behavior, accessibility semantics, responsive layout, and the existing repository checks.
+The completed Phase 11 change was confined to frontend Journey/Course-map presentation and tests; it did not add or change backend endpoints, OpenAPI schemas, generated client files, database tables, authentication behavior, production curriculum publication, accepted progress, persisted unlocks, guest import, offline synchronization, XP/level/streak computation, lesson rendering, editor/runtime behavior, assessments, submissions, analytics, or PWA behavior. Phase 11 verification covered the page model and states, API loading/failure behavior, accessibility semantics, responsive layout, and the existing repository checks. Later approved changes may extend these capabilities under their own contracts.
 
 #### Scenario: Phase boundary is reviewed
 
 - **WHEN** the completed Phase 11 diff and generated contract are inspected
 - **THEN** all product changes are confined to frontend Journey/Course-map presentation and tests, the generated API contract is unchanged, and no Phase 12 or later behavior is present
+
+### Requirement: Course routes preserve map authority and navigation
+
+The Course route SHALL load the published Course graph, use backend owner-bound progress and availability for authenticated map state, and clearly mark guest-local provisional state. A failed protected read SHALL not be replaced by a client-inferred unlocked map. The Course map SHALL link enabled quests to existing lesson routes and provide an understandable return path to its Journey and catalog.
+
+#### Scenario: Account Course map loads
+- **WHEN** an authenticated learner opens a Course
+- **THEN** quest states and Course counts come from a complete owner-scoped backend snapshot
+
+#### Scenario: Course progress is unavailable
+- **WHEN** protected Course progress fails
+- **THEN** the public outline remains readable but saved status and unlock actions are not falsely asserted
