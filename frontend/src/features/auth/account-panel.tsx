@@ -59,6 +59,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   const [timezoneSaving, setTimezoneSaving] = useState(false);
   const [timezoneError, setTimezoneError] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState(false);
   const requestGeneration = useRef(0);
   const streakGeneration = useRef(0);
   const accountOwner = useRef<string | null>(null);
@@ -169,15 +170,22 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   async function signOut(): Promise<void> {
     if (signingOut) return;
     setSigningOut(true);
-    requestGeneration.current += 1;
-    streakGeneration.current += 1;
-    setState({ status: 'loading' });
-    setXpState({ status: 'loading' });
-    setStreakState({ status: 'loading' });
-    await getBrowserSupabaseClient().auth.signOut();
-    getQueryClient().clear();
-    router.replace('/login');
-    router.refresh();
+    setSignOutError(false);
+    try {
+      const { error } = await getBrowserSupabaseClient().auth.signOut();
+      if (error !== null) throw error;
+      requestGeneration.current += 1;
+      streakGeneration.current += 1;
+      setState({ status: 'loading' });
+      setXpState({ status: 'loading' });
+      setStreakState({ status: 'loading' });
+      getQueryClient().clear();
+      router.replace('/login');
+      router.refresh();
+    } catch {
+      setSignOutError(true);
+      setSigningOut(false);
+    }
   }
 
   async function saveTimezone(): Promise<void> {
@@ -369,6 +377,11 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
       >
         Sign out
       </Button>
+      {signOutError && (
+        <p role="alert" className="text-sm text-danger">
+          Sign out could not be completed. Please try again.
+        </p>
+      )}
     </Card>
   );
 }

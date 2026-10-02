@@ -7,17 +7,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const applicationOrigin = loadFrontendAuthConfig().siteUrl;
   const code = request.nextUrl.searchParams.get('code');
   const destination = safeReturnPath(request.nextUrl.searchParams.get('next'));
+  const failureDestination = new URL(
+    '/login?error=callback',
+    applicationOrigin,
+  );
+  if (destination !== '/account')
+    failureDestination.searchParams.set('next', destination);
   if (code === null || code.length === 0 || code.length > 2_048) {
-    return NextResponse.redirect(
-      new URL('/login?error=callback', applicationOrigin),
-    );
+    return NextResponse.redirect(failureDestination);
   }
 
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   return NextResponse.redirect(
     new URL(
-      error === null ? destination : '/login?error=callback',
+      error === null ? destination : failureDestination,
       applicationOrigin,
     ),
   );

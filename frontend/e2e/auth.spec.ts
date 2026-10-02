@@ -42,3 +42,21 @@ test('callback failure and protected account routing recover without leaking val
   await page.goto('/account');
   await expect(page).toHaveURL(/\/login\?next=%2Faccount$/);
 });
+
+test('disabled provider keeps the learner on a recoverable login route', async ({
+  page,
+}) => {
+  await page.route('**/auth/v1/settings', async (route) => {
+    await route.fulfill({
+      json: { external: { email: true, google: false, github: false } },
+    });
+  });
+  await page.goto('/login?next=%2Fjourneys');
+  await page.getByRole('button', { name: 'Google' }).click();
+  await expect(
+    page.getByText(
+      'Google sign-in is unavailable here. Use email sign-in or try later.',
+    ),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/\/login\?next=%2Fjourneys$/);
+});

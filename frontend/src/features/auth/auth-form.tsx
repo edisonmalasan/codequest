@@ -4,12 +4,40 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { Button, Input } from '@/components/ui';
-import { loadFrontendAuthConfig } from './auth-config';
+import { FrontendAuthConfig, loadFrontendAuthConfig } from './auth-config';
 import { safeReturnPath } from './return-path';
 import { getBrowserSupabaseClient } from './supabase-browser';
 
 type AuthMode = 'login' | 'register';
 type OAuthProvider = 'google' | 'github';
+
+async function providerIsEnabled(
+  config: FrontendAuthConfig,
+  provider: OAuthProvider,
+): Promise<boolean> {
+  const response = await fetch(
+    new URL('/auth/v1/settings', config.supabaseUrl),
+    {
+      headers: { apikey: config.publishableKey },
+      cache: 'no-store',
+      signal: AbortSignal.timeout(5_000),
+    },
+  );
+  if (!response.ok) throw new Error('Auth settings unavailable');
+  const settings: unknown = await response.json();
+  if (
+    settings === null ||
+    typeof settings !== 'object' ||
+    !('external' in settings) ||
+    settings.external === null ||
+    typeof settings.external !== 'object'
+  ) {
+    throw new Error('Invalid Auth settings');
+  }
+  if (provider === 'google')
+    return 'google' in settings.external && settings.external.google === true;
+  return 'github' in settings.external && settings.external.github === true;
+}
 
 function browserAuthConfig() {
   return loadFrontendAuthConfig({
@@ -49,9 +77,8 @@ export function AuthForm({
     const form = new FormData(event.currentTarget);
     const email = String(form.get('email') ?? '');
     const password = String(form.get('password') ?? '');
-    const supabase = getBrowserSupabaseClient();
-
     try {
+      const supabase = getBrowserSupabaseClient();
       if (mode === 'register') {
         const config = browserAuthConfig();
         const callback = new URL(config.callbackUrl);
@@ -67,11 +94,10 @@ export function AuthForm({
           return;
         }
       } else {
-        const { error: authError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { data, error: authError } =
+          await supabase.auth.signInWithPassword({ email, password });
         if (authError !== null) throw authError;
+        if (data.session === null) throw new Error('No session after sign-in');
       }
       router.replace(destination);
       router.refresh();
@@ -92,6 +118,13 @@ export function AuthForm({
     setError('');
     try {
       const config = browserAuthConfig();
+      if (!(await providerIsEnabled(config, provider))) {
+        setError(
+          `${provider === 'google' ? 'Google' : 'GitHub'} sign-in is unavailable here. Use email sign-in or try later.`,
+        );
+        setPending(false);
+        return;
+      }
       const callback = new URL(config.callbackUrl);
       callback.searchParams.set('next', destination);
       const { error: authError } =

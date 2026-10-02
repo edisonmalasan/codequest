@@ -60,6 +60,18 @@ describe('authentication callback', () => {
     );
   });
 
+  it('preserves a safe return path after a failed provider callback without leaking its error', async () => {
+    const response = await GET(
+      new NextRequest(
+        'http://localhost:3000/auth/callback?next=%2Fjourneys&error=access_denied&error_description=private-provider-value',
+      ),
+    );
+    expect(exchangeCodeForSession).not.toHaveBeenCalled();
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/login?error=callback&next=%2Fjourneys',
+    );
+  });
+
   it('redirects to the configured app origin when the request URL uses the runner host', async () => {
     const response = await GET(
       new NextRequest('http://localhost:3100/auth/callback'),
