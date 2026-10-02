@@ -21,4 +21,19 @@ Implementation: `4ec97fb4eb985249b6e66e032a257eaaf5124460`; browser console asse
 
 Review images: [desktop Home](frontend-evidence/r03-home-desktop.png) and [mobile Home](frontend-evidence/r03-home-mobile.png). Both use the synthetic published Journey response and show layout, not real curriculum availability or account integration.
 
-Founder acceptance is open. The founder has not yet reviewed this exact production Home and shell build or recorded an R03 acceptance/revision decision. R04 real-provider authentication, R05 multi-course discovery, R06/R07 integrated learning workflow, and Phase 38 hosted/physical beta evidence remain separate work.
+## Founder decision
+
+| Field | Record |
+| --- | --- |
+| Capability/scenario | R03 production Home and shared visual/navigation shell |
+| Reviewed implementation | `8fabaa7454094a8036d4ed83205950428e3ea41c` (Home and shell application code from `4ec97fb4eb985249b6e66e032a257eaaf5124460`) |
+| Environment/evidence | Local Windows Chromium screenshots above, with synthetic published Journey response; no hosted or real account-provider evidence |
+| Tester/decision maker | Founder, via explicit response to the R03 review request |
+| Date | 2026-10-02, Asia/Manila |
+| Expected behavior | Original production visual hierarchy and usable shared navigation at desktop and mobile sizes |
+| Observed behavior | Founder reviewed the desktop and mobile review images and replied: “Accept R03 visual/navigation build.” No independent physical-device observations were supplied. |
+| Pass/fail | Accepted for the R03 visual/navigation build only |
+| Defect/retest | No defect reported in the decision; no retest decision requested |
+| Final founder acceptance | R03 visual/navigation build accepted. This does not certify real-provider auth, backend curriculum availability, the integrated lesson workspace, or beta release readiness. |
+
+R04 real-provider authentication, R05 multi-course discovery, R06/R07 integrated learning workflow, and Phase 38 hosted/physical beta evidence remain separate work.

@@ -15,4 +15,4 @@
 ## 3. Integration and review
 
 - [x] 3.1 Run strict OpenSpec validation and root lint/typecheck/test/build; inspect installed-browser Home → published Journey and Home → onboarding/account flows at desktop, tablet, mobile, and narrow reflow, recording focus, console, images, and overflow against the implementation commit.
-- [ ] 3.2 Present the real production Home and shared shell to the founder and record an explicit dated acceptance or revision decision for the reviewed build; leave R03 below `FOUNDER ACCEPTED` until that decision exists.
+- [x] 3.2 Present the real production Home and shared shell to the founder and record an explicit dated acceptance or revision decision for the reviewed build; leave R03 below `FOUNDER ACCEPTED` until that decision exists.
