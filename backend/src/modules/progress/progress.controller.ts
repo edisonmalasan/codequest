@@ -26,6 +26,7 @@ import { RequirePermissions } from '../identity/require-permissions';
 import {
   ActivityResponseDto,
   ChapterProgressDto,
+  CourseProgressDto,
   JourneyProgressDto,
   QuestProgressDto,
   StartQuestDto,
@@ -114,6 +115,21 @@ export class ProgressController {
     @Param('slug') slug: string,
   ): Promise<ChapterProgressDto> {
     return this.progress.chapter(principal.userId, slug);
+  }
+
+  @Get('catalog/courses/:slug/progress')
+  @Version('1')
+  @RequirePermissions('progress:read:self')
+  @ApiOperation({ summary: 'Read own distinct Course progress' })
+  @ApiOkResponse({ type: CourseProgressDto, headers })
+  @ApiResponse({ status: 401, type: ApiErrorResponseDto, headers })
+  @ApiResponse({ status: 403, type: ApiErrorResponseDto, headers })
+  @ApiResponse({ status: 404, type: ApiErrorResponseDto, headers })
+  courseProgress(
+    @CurrentPrincipal() principal: AuthPrincipal,
+    @Param('slug') slug: string,
+  ): Promise<CourseProgressDto> {
+    return this.progress.course(principal.userId, slug);
   }
 
   @Get('journeys/:slug/progress')

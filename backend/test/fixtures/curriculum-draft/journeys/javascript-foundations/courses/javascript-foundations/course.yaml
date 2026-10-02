@@ -1,0 +1,14 @@
+id: COURSE-JS-FOUNDATIONS
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: javascript-foundations
+title: JavaScript Foundations
+summary: Learn JavaScript through short lessons and exercises.
+position: 1
+status: draft
+topics:
+  - javascript
+outcomes:
+  - id: C1
+    description: Use values and variables in a small program.
+chapterIds:
+  - CH01

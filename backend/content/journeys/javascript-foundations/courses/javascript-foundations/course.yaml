@@ -1,0 +1,25 @@
+id: COURSE-JS-FOUNDATIONS
+journeyId: JAVASCRIPT-FOUNDATIONS
+slug: javascript-foundations
+title: JavaScript Foundations
+summary: Learn the building blocks of JavaScript through short lessons, hands-on exercises, and a final integrated project.
+position: 1
+status: reviewed
+topics:
+  - javascript
+  - programming-foundations
+outcomes:
+  - id: C1
+    description: Use values, variables, expressions, and branches to solve small problems.
+  - id: C2
+    description: Write terminating loops and reusable functions with testable results.
+  - id: C3
+    description: Work with arrays and objects, debug feedback, and combine concepts in a project.
+chapterIds:
+  - CH01
+  - CH02
+  - CH03
+  - CH04
+  - CH05
+  - CH06
+  - CH07

@@ -15,7 +15,7 @@ export default function Home(): React.JSX.Element {
             a path you can see.
           </p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryAction} href="#learning">
+            <Link className={styles.primaryAction} href="/courses">
               Explore learning <span aria-hidden="true">↗</span>
             </Link>
             <Link className={styles.secondaryAction} href="/onboarding">

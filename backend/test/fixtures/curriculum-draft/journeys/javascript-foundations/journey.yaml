@@ -23,5 +23,5 @@ outcomes:
     description: Interpret feedback and correct defects.
   - id: O8
     description: Integrate and transfer Foundations skills.
-chapterIds:
-  - CH01
+courseIds:
+  - COURSE-JS-FOUNDATIONS

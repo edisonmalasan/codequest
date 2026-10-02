@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+﻿import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { FastifyInstance } from 'fastify';
@@ -14,7 +14,7 @@ import { CurriculumService } from './curriculum.service';
 
 const root = resolve('content');
 const questPath =
-  'journeys/javascript-foundations/chapters/variables/quests/first-message';
+  'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message';
 const ids = Array.from(
   { length: 24 },
   (_, i) => `Q${String(i + 1).padStart(2, '0')}`,

@@ -1,4 +1,4 @@
-import { JourneyPageClient } from '@/features/curriculum/journey-page-client';
+import { JourneyOverview } from '@/features/curriculum/journey-overview';
 
 export default async function JourneyPage({
   params,
@@ -6,5 +6,5 @@ export default async function JourneyPage({
   readonly params: Promise<{ slug: string }>;
 }): Promise<React.JSX.Element> {
   const { slug } = await params;
-  return <JourneyPageClient slug={slug} />;
+  return <JourneyOverview slug={slug} />;
 }

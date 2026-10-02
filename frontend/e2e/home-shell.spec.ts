@@ -23,7 +23,13 @@ async function mockPublishedJourney(page: Page): Promise<void> {
       route.fulfill({
         status: 200,
         contentType: 'application/json',
-        json: { ...journey, entryRequirements: [], outcomes: [], chapters: [] },
+        json: {
+          ...journey,
+          entryRequirements: [],
+          outcomes: [],
+          chapters: [],
+          courses: [],
+        },
       }),
   );
 }

@@ -36,9 +36,9 @@ describe('ApplicationShell', () => {
     ).toBe('/');
     expect(
       within(navigation)
-        .getByRole('link', { name: 'Learning' })
+        .getByRole('link', { name: 'Courses' })
         .getAttribute('href'),
-    ).toBe('/#learning');
+    ).toBe('/courses');
     expect(
       within(navigation)
         .getByRole('link', { name: 'How it works' })
@@ -51,7 +51,7 @@ describe('ApplicationShell', () => {
     ).toBe('/account');
     expect(
       within(navigation)
-        .getByRole('link', { name: 'Learning' })
+        .getByRole('link', { name: 'Courses' })
         .getAttribute('aria-current'),
     ).toBe('page');
     expect(

@@ -1,4 +1,4 @@
-import {
+﻿import {
   cpSync,
   existsSync,
   mkdtempSync,
@@ -90,7 +90,7 @@ describe('author CLI', () => {
     rmSync(
       join(
         root,
-        'journeys/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/tests.ts',
+        'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0/tests.ts',
       ),
     );
     const result = spawnSync(

@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import process from 'node:process';
 
 function git(directory, ...args) {
@@ -50,7 +52,31 @@ export function checkHistory(directory = process.cwd()) {
   const records = [];
   for (let index = 0; index < fields.length; index += 2)
     records.push([fields[index], fields[index + 1]]);
-  const rewrites = rewrittenSnapshots(oldPaths, records);
+  const relocatedSnapshot = ([status, oldPath]) => {
+    if (status !== 'D') return false;
+    const prefix = 'backend/content/journeys/javascript-foundations/chapters/';
+    if (!oldPath.startsWith(prefix)) return false;
+    const newPath = oldPath.replace(
+      prefix,
+      'backend/content/journeys/javascript-foundations/courses/javascript-foundations/chapters/',
+    );
+    if (
+      !records.some(
+        ([newStatus, path]) => newStatus === 'A' && path === newPath,
+      )
+    )
+      return false;
+    const destination = join(directory, newPath);
+    if (!existsSync(destination)) return false;
+    const original = execFileSync('git', ['show', `${base}:${oldPath}`], {
+      cwd: directory,
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    return original.equals(readFileSync(destination));
+  };
+  const rewrites = rewrittenSnapshots(oldPaths, records).filter(
+    (record) => !relocatedSnapshot(record),
+  );
   if (rewrites.length)
     throw new Error(
       `Previously merged curriculum snapshots must not change: ${rewrites.map(([, path]) => path).join(', ')}`,

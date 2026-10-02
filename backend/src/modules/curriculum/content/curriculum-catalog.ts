@@ -4,11 +4,13 @@ import { z } from 'zod';
 import {
   chapterSchema,
   conceptsSchema,
+  courseSchema,
   journeySchema,
   publicationSchema,
   questSchema,
   versionSchema,
   type Chapter,
+  type Course,
   type CurriculumCase,
   type Journey,
   type Quest,
@@ -55,6 +57,12 @@ export interface CatalogChapter {
 
 export interface CatalogJourney {
   readonly metadata: Journey;
+  readonly courses: readonly CatalogCourse[];
+  readonly chapters: readonly CatalogChapter[];
+}
+
+export interface CatalogCourse {
+  readonly metadata: Course;
   readonly chapters: readonly CatalogChapter[];
 }
 
@@ -72,7 +80,13 @@ export interface PublishedChapter extends Omit<CatalogChapter, 'quests'> {
   readonly quests: readonly PublishedQuest[];
 }
 
-export interface PublishedJourney extends Omit<CatalogJourney, 'chapters'> {
+export interface PublishedJourney {
+  readonly metadata: Journey;
+  readonly courses: readonly PublishedCourse[];
+  readonly chapters: readonly PublishedChapter[];
+}
+
+export interface PublishedCourse extends Omit<CatalogCourse, 'chapters'> {
   readonly chapters: readonly PublishedChapter[];
 }
 
@@ -155,56 +169,78 @@ export function loadAuthoredCurriculum(
       join(journeyPath, 'journey.yaml'),
       journeySchema,
     );
-    const chapters = folders(join(root, journeyPath, 'chapters')).map(
-      (chapterSlug) => {
-        const chapterPath = join(journeyPath, 'chapters', chapterSlug);
-        const chapter = parse(
+    const courses = folders(join(root, journeyPath, 'courses')).map(
+      (courseSlug) => {
+        const coursePath = join(journeyPath, 'courses', courseSlug);
+        const course = parse(
           root,
-          join(chapterPath, 'chapter.yaml'),
-          chapterSchema,
+          join(coursePath, 'course.yaml'),
+          courseSchema,
         );
-        const quests = folders(join(root, chapterPath, 'quests')).map(
-          (questSlug) => {
-            const questPath = join(chapterPath, 'quests', questSlug);
-            const quest = parse(
+        const chapters = folders(join(root, coursePath, 'chapters')).map(
+          (chapterSlug) => {
+            const chapterPath = join(coursePath, 'chapters', chapterSlug);
+            const chapter = parse(
               root,
-              join(questPath, 'quest.yaml'),
-              questSchema,
+              join(chapterPath, 'chapter.yaml'),
+              chapterSchema,
             );
-            const snapshots: Record<string, CatalogQuestSnapshot> = {};
-            for (const snapshotVersion of folders(
-              join(root, questPath, 'versions'),
-            )) {
-              const snapshotPath = join(questPath, 'versions', snapshotVersion);
-              const lessonFile = join(snapshotPath, 'lesson.mdx');
-              const starterFile = join(snapshotPath, 'starter.js');
-              checkLesson(root, lessonFile);
-              checkStarter(root, starterFile);
-              snapshots[snapshotVersion] = {
-                metadata: parse(
+            const quests = folders(join(root, chapterPath, 'quests')).map(
+              (questSlug) => {
+                const questPath = join(chapterPath, 'quests', questSlug);
+                const quest = parse(
                   root,
-                  join(snapshotPath, 'version.yaml'),
-                  versionSchema,
-                ),
-                lesson: safeFile(root, lessonFile, 65_536),
-                starterCode: safeFile(root, starterFile, 32_768),
-                cases: readCases(root, join(snapshotPath, 'tests.ts')),
-                assets: loadAssets(root, snapshotPath),
-              };
-            }
-            return { metadata: quest, snapshots };
+                  join(questPath, 'quest.yaml'),
+                  questSchema,
+                );
+                const snapshots: Record<string, CatalogQuestSnapshot> = {};
+                for (const snapshotVersion of folders(
+                  join(root, questPath, 'versions'),
+                )) {
+                  const snapshotPath = join(
+                    questPath,
+                    'versions',
+                    snapshotVersion,
+                  );
+                  const lessonFile = join(snapshotPath, 'lesson.mdx');
+                  const starterFile = join(snapshotPath, 'starter.js');
+                  checkLesson(root, lessonFile);
+                  checkStarter(root, starterFile);
+                  snapshots[snapshotVersion] = {
+                    metadata: parse(
+                      root,
+                      join(snapshotPath, 'version.yaml'),
+                      versionSchema,
+                    ),
+                    lesson: safeFile(root, lessonFile, 65_536),
+                    starterCode: safeFile(root, starterFile, 32_768),
+                    cases: readCases(root, join(snapshotPath, 'tests.ts')),
+                    assets: loadAssets(root, snapshotPath),
+                  };
+                }
+                return { metadata: quest, snapshots };
+              },
+            );
+            quests.sort(
+              (left, right) => left.metadata.position - right.metadata.position,
+            );
+            return { metadata: chapter, quests };
           },
         );
-        quests.sort(
+        chapters.sort(
           (left, right) => left.metadata.position - right.metadata.position,
         );
-        return { metadata: chapter, quests };
+        return { metadata: course, chapters };
       },
     );
-    chapters.sort(
+    courses.sort(
       (left, right) => left.metadata.position - right.metadata.position,
     );
-    return { metadata: journey, chapters };
+    return {
+      metadata: journey,
+      courses,
+      chapters: courses.flatMap((course) => course.chapters),
+    };
   });
   journeys.sort(
     (left, right) => left.metadata.position - right.metadata.position,
@@ -234,7 +270,8 @@ export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
     );
 
   const publishedQuestIds = new Set<string>();
-  const slugs = new Set<string>();
+  const routeSlugs = new Set<string>();
+  const courseSlugs = new Set<string>();
   const journeys: PublishedJourney[] = publicationResult.data.journeys.map(
     (selection, journeyIndex) => {
       const path = `publication.yaml:journeys.${journeyIndex}`;
@@ -244,56 +281,92 @@ export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
       if (!journey) throw new ContentError(path, 'Unknown journey selection');
       if (journey.metadata.status !== 'reviewed')
         throw new ContentError(path, 'Selected journey is not reviewed');
-      const authoredQuests = journey.chapters.flatMap(
-        (chapter) => chapter.quests,
-      );
-      if (
-        !sameInventory(
-          authoredQuests.map((quest) => quest.metadata.id),
-          selection.quests.map((quest) => quest.id),
-        )
-      )
-        throw new ContentError(
-          path,
-          'Published journey inventory is incomplete',
-        );
-      const publishedChapters = journey.chapters.map((chapter) => ({
-        metadata: chapter.metadata,
-        quests: chapter.quests.map((quest) => {
-          const questIndex = selection.quests.findIndex(
-            (candidate) => candidate.id === quest.metadata.id,
+      if (routeSlugs.has(journey.metadata.slug))
+        throw new ContentError(path, 'Published journey slug is ambiguous');
+      routeSlugs.add(journey.metadata.slug);
+      const publishedCourses: PublishedCourse[] = selection.courses.map(
+        (courseSelection, courseIndex) => {
+          const coursePath = `${path}.courses.${courseIndex}`;
+          const course = journey.courses.find(
+            (candidate) => candidate.metadata.id === courseSelection.id,
           );
-          const questSelection = selection.quests[questIndex];
-          const questPath = `${path}.quests.${questIndex}`;
-          if (!questSelection)
-            throw new ContentError(questPath, 'Missing quest selection');
-          const snapshot = quest.snapshots[questSelection.contentVersion];
+          if (!course || course.metadata.status !== 'reviewed')
+            throw new ContentError(
+              coursePath,
+              'Selected Course is missing or unreviewed',
+            );
+          if (courseSlugs.has(course.metadata.slug))
+            throw new ContentError(
+              coursePath,
+              'Published Course slug is ambiguous',
+            );
+          courseSlugs.add(course.metadata.slug);
+          const authoredQuests = course.chapters.flatMap(
+            (chapter) => chapter.quests,
+          );
           if (
-            !snapshot ||
-            snapshot.metadata.assessmentVersion !==
-              questSelection.assessmentVersion
+            !sameInventory(
+              authoredQuests.map((quest) => quest.metadata.id),
+              courseSelection.quests.map((quest) => quest.id),
+            )
           )
             throw new ContentError(
-              questPath,
-              'Selected quest version is stale',
+              coursePath,
+              'Published Course inventory is incomplete',
             );
-          publishedQuestIds.add(quest.metadata.id);
-          return { metadata: quest.metadata, activeSnapshot: snapshot };
-        }),
-      }));
-      const selectedSlugs = [
-        journey.metadata.slug,
-        ...publishedChapters.flatMap((chapter) => [
-          chapter.metadata.slug,
-          ...chapter.quests.map((quest) => quest.metadata.slug),
-        ]),
-      ];
-      for (const slug of selectedSlugs) {
-        if (slugs.has(slug))
-          throw new ContentError(path, 'Published slug is ambiguous');
-        slugs.add(slug);
-      }
-      return { metadata: journey.metadata, chapters: publishedChapters };
+          const chapters: PublishedChapter[] = course.chapters.map(
+            (chapter) => ({
+              metadata: chapter.metadata,
+              quests: chapter.quests.map((quest) => {
+                const questIndex = courseSelection.quests.findIndex(
+                  (candidate) => candidate.id === quest.metadata.id,
+                );
+                const questSelection = courseSelection.quests[questIndex];
+                const questPath = `${coursePath}.quests.${questIndex}`;
+                if (!questSelection)
+                  throw new ContentError(questPath, 'Missing quest selection');
+                const snapshot = quest.snapshots[questSelection.contentVersion];
+                if (
+                  !snapshot ||
+                  snapshot.metadata.assessmentVersion !==
+                    questSelection.assessmentVersion
+                )
+                  throw new ContentError(
+                    questPath,
+                    'Selected quest version is stale',
+                  );
+                publishedQuestIds.add(quest.metadata.id);
+                return { metadata: quest.metadata, activeSnapshot: snapshot };
+              }),
+            }),
+          );
+          for (const chapter of chapters) {
+            if (routeSlugs.has(chapter.metadata.slug))
+              throw new ContentError(
+                coursePath,
+                'Published chapter slug is ambiguous',
+              );
+            routeSlugs.add(chapter.metadata.slug);
+            for (const quest of chapter.quests) {
+              if (routeSlugs.has(quest.metadata.slug))
+                throw new ContentError(
+                  coursePath,
+                  'Published quest slug is ambiguous',
+                );
+              routeSlugs.add(quest.metadata.slug);
+            }
+          }
+          return { metadata: course.metadata, chapters };
+        },
+      );
+      publishedCourses.sort(
+        (left, right) => left.metadata.position - right.metadata.position,
+      );
+      return {
+        metadata: journey.metadata,
+        courses: publishedCourses,
+        chapters: publishedCourses.flatMap((course) => course.chapters),
+      };
     },
   );
 

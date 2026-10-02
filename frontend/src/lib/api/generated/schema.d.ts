@@ -56,6 +56,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/catalog/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List complete published Courses */
+        get: operations["CurriculumController_listCourses_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/courses/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one distinct published Course */
+        get: operations["CurriculumController_findCourse_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/journeys/{slug}": {
         parameters: {
             query?: never;
@@ -261,6 +295,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/catalog/courses/{slug}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read own distinct Course progress */
+        get: operations["ProgressController_courseProgress_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/journeys/{slug}/progress": {
         parameters: {
             query?: never;
@@ -385,6 +436,20 @@ export interface components {
         ApiErrorResponseDto: {
             error: components["schemas"]["ApiErrorDto"];
         };
+        CourseSummaryDto: {
+            /** @example COURSE-JS-FOUNDATIONS */
+            id: string;
+            /** @example javascript-foundations */
+            slug: string;
+            journeyId: string;
+            journeySlug: string;
+            title: string;
+            summary: string;
+            position: number;
+            topics: string[];
+            chapterCount: number;
+            questCount: number;
+        };
         JourneySummaryDto: {
             /** @example JAVASCRIPT-FOUNDATIONS */
             id: string;
@@ -410,6 +475,22 @@ export interface components {
             objectiveSummary: string;
             questCount: number;
         };
+        CourseDetailDto: {
+            /** @example COURSE-JS-FOUNDATIONS */
+            id: string;
+            /** @example javascript-foundations */
+            slug: string;
+            journeyId: string;
+            journeySlug: string;
+            title: string;
+            summary: string;
+            position: number;
+            topics: string[];
+            chapterCount: number;
+            questCount: number;
+            outcomes: components["schemas"]["OutcomeDto"][];
+            chapters: components["schemas"]["ChapterSummaryDto"][];
+        };
         JourneyDetailDto: {
             /** @example JAVASCRIPT-FOUNDATIONS */
             id: string;
@@ -422,6 +503,7 @@ export interface components {
             entryRequirements: string[];
             outcomes: components["schemas"]["OutcomeDto"][];
             chapters: components["schemas"]["ChapterSummaryDto"][];
+            courses: components["schemas"]["CourseSummaryDto"][];
         };
         QuestSummaryDto: {
             /** @example Q01 */
@@ -605,6 +687,19 @@ export interface components {
             totalQuests: number;
             percentage: number;
             quests: components["schemas"]["QuestProgressDto"][];
+            /** @enum {string} */
+            availability: "available" | "locked";
+            unmetPrerequisites: components["schemas"]["UnmetPrerequisiteDto"][];
+        };
+        CourseProgressDto: {
+            /** @example COURSE-JS-FOUNDATIONS */
+            courseId: string;
+            /** @enum {string} */
+            status: "not_started" | "in_progress" | "completed";
+            completedQuests: number;
+            totalQuests: number;
+            percentage: number;
+            chapters: components["schemas"]["ChapterProgressDto"][];
             /** @enum {string} */
             availability: "available" | "locked";
             unmetPrerequisites: components["schemas"]["UnmetPrerequisiteDto"][];
@@ -873,6 +968,64 @@ export interface operations {
                 };
             };
             500: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    CurriculumController_listCourses_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseSummaryDto"][];
+                };
+            };
+        };
+    };
+    CurriculumController_findCourse_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseDetailDto"];
+                };
+            };
+            404: {
                 headers: {
                     /** @description Correlated request ID */
                     "x-request-id"?: string;
@@ -1772,6 +1925,61 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ChapterProgressDto"];
+                };
+            };
+            401: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProgressController_courseProgress_v1: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-request-id"?: string;
+            };
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    /** @description Correlated request ID */
+                    "x-request-id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseProgressDto"];
                 };
             };
             401: {

@@ -6,6 +6,8 @@ export type HealthResponse = components['schemas']['HealthResponseDto'];
 export type AccountResponse = components['schemas']['AccountResponseDto'];
 export type JourneySummary = components['schemas']['JourneySummaryDto'];
 export type JourneyDetail = components['schemas']['JourneyDetailDto'];
+export type CourseSummary = components['schemas']['CourseSummaryDto'];
+export type CourseDetail = components['schemas']['CourseDetailDto'];
 export type ChapterDetail = components['schemas']['ChapterDetailDto'];
 export type QuestDetail = components['schemas']['QuestDetailDto'];
 export type CreateAttemptRequest = components['schemas']['CreateAttemptDto'];
@@ -15,6 +17,7 @@ export type ActivityResponse = components['schemas']['ActivityResponseDto'];
 export type QuestProgress = components['schemas']['QuestProgressDto'];
 export type ChapterProgress = components['schemas']['ChapterProgressDto'];
 export type JourneyProgress = components['schemas']['JourneyProgressDto'];
+export type CourseProgress = components['schemas']['CourseProgressDto'];
 export type XpTotal = components['schemas']['XpTotalDto'];
 export type Streak = components['schemas']['StreakDto'];
 type ErrorResponse = components['schemas']['ApiErrorResponseDto'];
@@ -197,6 +200,24 @@ function isJourneyProgress(value: unknown): value is JourneyProgress {
   );
 }
 
+function isCourseProgress(value: unknown): value is CourseProgress {
+  return (
+    isRecord(value) &&
+    typeof value.courseId === 'string' &&
+    (value.availability === 'available' || value.availability === 'locked') &&
+    Array.isArray(value.unmetPrerequisites) &&
+    value.unmetPrerequisites.every(isUnmetPrerequisite) &&
+    ['not_started', 'in_progress', 'completed'].includes(
+      String(value.status),
+    ) &&
+    Number.isSafeInteger(value.completedQuests) &&
+    Number.isSafeInteger(value.totalQuests) &&
+    Number.isSafeInteger(value.percentage) &&
+    Array.isArray(value.chapters) &&
+    value.chapters.every(isChapterProgress)
+  );
+}
+
 function isUnmetPrerequisite(value: unknown): boolean {
   return (
     isRecord(value) &&
@@ -295,6 +316,38 @@ function isChapterSummary(value: unknown): boolean {
   );
 }
 
+function isCourseSummary(value: unknown): value is CourseSummary {
+  return (
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    typeof value.slug === 'string' &&
+    typeof value.journeyId === 'string' &&
+    typeof value.journeySlug === 'string' &&
+    typeof value.title === 'string' &&
+    typeof value.summary === 'string' &&
+    typeof value.position === 'number' &&
+    isStringArray(value.topics) &&
+    Number.isSafeInteger(value.chapterCount) &&
+    Number.isSafeInteger(value.questCount)
+  );
+}
+
+function isCourseDetail(value: unknown): value is CourseDetail {
+  if (!isRecord(value) || !isCourseSummary(value)) return false;
+  const record: Record<string, unknown> = value;
+  return (
+    Array.isArray(record.outcomes) &&
+    record.outcomes.every(
+      (item: unknown) =>
+        isRecord(item) &&
+        typeof item.id === 'string' &&
+        typeof item.description === 'string',
+    ) &&
+    Array.isArray(record.chapters) &&
+    record.chapters.every(isChapterSummary)
+  );
+}
+
 function isJourneyDetail(value: unknown): value is JourneyDetail {
   if (!isRecord(value) || !isJourneySummary(value)) return false;
   const record: Record<string, unknown> = value;
@@ -308,7 +361,9 @@ function isJourneyDetail(value: unknown): value is JourneyDetail {
         typeof item.description === 'string',
     ) &&
     Array.isArray(record.chapters) &&
-    record.chapters.every(isChapterSummary)
+    record.chapters.every(isChapterSummary) &&
+    Array.isArray(record.courses) &&
+    record.courses.every(isCourseSummary)
   );
 }
 
@@ -566,6 +621,30 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
         signal,
       );
     },
+    getCourses(
+      signal?: AbortSignal,
+    ): Promise<PublicApiResult<CourseSummary[]>> {
+      return publicRequest(
+        () => client.GET('/api/v1/catalog/courses', { signal }),
+        (value): value is CourseSummary[] =>
+          Array.isArray(value) && value.every(isCourseSummary),
+        signal,
+      );
+    },
+    getPublishedCourse(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<PublicApiResult<CourseDetail>> {
+      return publicRequest(
+        () =>
+          client.GET('/api/v1/catalog/courses/{slug}', {
+            params: { path: { slug } },
+            signal,
+          }),
+        isCourseDetail,
+        signal,
+      );
+    },
     getJourney(
       slug: string,
       signal?: AbortSignal,
@@ -781,6 +860,21 @@ export function createCodequestApi(options: ApiClientOptions = {}) {
             signal,
           }),
         isJourneyProgress,
+        signal,
+      );
+    },
+    getPublishedCourseProgress(
+      slug: string,
+      signal?: AbortSignal,
+    ): Promise<ProtectedApiResult<CourseProgress>> {
+      return learningRequest(
+        (token) =>
+          client.GET('/api/v1/catalog/courses/{slug}/progress', {
+            params: { path: { slug } },
+            headers: { Authorization: `Bearer ${token}` },
+            signal,
+          }),
+        isCourseProgress,
         signal,
       );
     },

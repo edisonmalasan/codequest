@@ -16,6 +16,7 @@ export default defineConfig({
     '**/learning-journey.spec.ts',
     '**/accessibility.spec.ts',
     '**/performance.spec.ts',
+    '**/content-authoring.spec.ts',
   ],
   fullyParallel: false,
   workers: 1,

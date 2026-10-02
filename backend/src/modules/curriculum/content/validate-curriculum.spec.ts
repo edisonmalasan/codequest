@@ -1,4 +1,4 @@
-import {
+﻿import {
   cpSync,
   mkdtempSync,
   readFileSync,
@@ -20,7 +20,7 @@ import { safeFile } from './static-files';
 
 const source = resolve(process.cwd(), 'test/fixtures/curriculum-draft');
 const quest =
-  'journeys/javascript-foundations/chapters/variables/quests/first-message';
+  'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message';
 const snapshot = `${quest}/versions/1.0.0`;
 const created: string[] = [];
 function fixture(): string {
@@ -60,6 +60,34 @@ describe('Git curriculum authoring validation', () => {
     );
     expect(() => validateCurriculum(root)).toThrow('journey.yaml');
     expect(versionSchema.safeParse({ xpAward: 1001 }).success).toBe(false);
+  });
+
+  it('rejects duplicate Course identities, wrong parents, and invalid positions', () => {
+    const courseFile =
+      'journeys/javascript-foundations/courses/javascript-foundations/course.yaml';
+    const cases = [
+      [
+        'journeys/javascript-foundations/journey.yaml',
+        '  - COURSE-JS-FOUNDATIONS',
+        '  - COURSE-JS-FOUNDATIONS\n  - COURSE-JS-FOUNDATIONS',
+      ],
+      [
+        courseFile,
+        'journeyId: JAVASCRIPT-FOUNDATIONS',
+        'journeyId: OTHER-JOURNEY',
+      ],
+      [courseFile, 'position: 1', 'position: 0'],
+      [
+        'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/chapter.yaml',
+        'courseId: COURSE-JS-FOUNDATIONS',
+        'courseId: OTHER-COURSE',
+      ],
+    ] as const;
+    for (const [file, before, after] of cases) {
+      const root = fixture();
+      replace(root, file, before, after);
+      expect(() => validateCurriculum(root)).toThrow();
+    }
   });
 
   it('rejects missing and oversized required files', () => {
@@ -162,7 +190,11 @@ describe('Git curriculum authoring validation', () => {
       [`${snapshot}/version.yaml`, 'js-values', 'unknown-concept'],
       [`${snapshot}/version.yaml`, 'outcomeId: O1', 'outcomeId: O9'],
       [`${quest}/quest.yaml`, 'currentVersion: 1.0.0', 'currentVersion: 2.0.0'],
-      ['journeys/javascript-foundations/journey.yaml', '  - CH01', '  - CH99'],
+      [
+        'journeys/javascript-foundations/courses/javascript-foundations/course.yaml',
+        '  - CH01',
+        '  - CH99',
+      ],
     ]) {
       const root = fixture();
       replace(root, file, before, after);
@@ -193,7 +225,8 @@ describe('Git curriculum authoring validation', () => {
 
   it('rejects duplicate stable quest IDs and prerequisite cycles', () => {
     const root = fixture();
-    const chapter = 'journeys/javascript-foundations/chapters/variables';
+    const chapter =
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables';
     const addQuest = (
       slug: string,
       id: string,

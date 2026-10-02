@@ -1,5 +1,9 @@
 # Frontend responsibility and experience definition
 
+## Course discovery (R05)
+
+The Home learning action and global Courses navigation open `/courses`. Its search and topic filter use only the published public Course collection; failures show Retry and never substitute draft cards. A Course card links to `/courses/:slug`, with a separate owning Journey link to `/journeys/:slug`. The Journey overview lists its published Courses; the Course page lists authored outcomes, chapters, exercises, and a first eligible path. Existing `/quests/:slug` bookmarks still work. Account progress and availability on a Course require a complete owner-scoped protected response. Guest work shown on the Course page comes only from device-local records and is labeled provisional. The UI does not treat a public catalog count or a local Check as accepted account progress.
+
 Phase 26 adds an installable [public PWA shell](pwa.md), production-only registration, uncached navigation with a public offline fallback, network hints, and waiting-update guidance. Authenticated pages/API responses and learner compartments are excluded from shell caching. Offline downloaded learning remains Phase 27.
 
 Phase 25 integrates explicit authenticated Submit with the existing owner-scoped outbox, reconnect replay, and account recovery UI. Drafts remain device-local; guest import remains explicit. See [cloud progress replay](cloud-progress-sync.md) for bounds, errors, and retention.
@@ -54,16 +58,16 @@ Phase 24 uses those stores for guest Q01–Q04 local start and passing Check sna
 
 Use an outbox concept for pending submitted learning snapshots with stable event/content IDs; implementation/schema is deferred F03. Pending actions belong to the guest/account that created them. On reconnect/authentication, send eligible pending actions idempotently, surface accepted/rejected/retry-required outcomes and refresh authoritative state. Expired identity pauses protected sync; re-authentication does not silently reassign events.
 
-| Transition/failure | Approved client behavior |
-| --- | --- |
-| Network failure after submit | Keep snapshot/event ID; show pending; retry without a new reward identity |
-| Account switch | Stop old sync/runtime; clear protected in-memory state; isolate drafts/outbox/cache by owner; never send old events as new account |
-| Logout | Clear session/protected cache and account UI; retain owner-isolated drafts/pending work only under disclosed local retention policy; offer local removal |
-| Stale/unsupported content | Show reason/current version, preserve source, request explicit retry; do not silently change task/version |
-| Import meets existing completion | Show reconciled accepted state; do not overwrite accepted history or repeat XP |
-| Browser storage unavailable/full/cleared | Report save failure/limitation; keep edits in memory where possible and provide copy/recovery action; never claim saved when save failed |
-| PWA update | Disclose available update, protect drafts/pending work, avoid mixing incompatible cached assessment versions |
-| Reset/navigation | Save before leaving where feasible, distinguish actual persistence success from request, warn before discarding unsaved source |
+| Transition/failure                       | Approved client behavior                                                                                                                                 |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Network failure after submit             | Keep snapshot/event ID; show pending; retry without a new reward identity                                                                                |
+| Account switch                           | Stop old sync/runtime; clear protected in-memory state; isolate drafts/outbox/cache by owner; never send old events as new account                       |
+| Logout                                   | Clear session/protected cache and account UI; retain owner-isolated drafts/pending work only under disclosed local retention policy; offer local removal |
+| Stale/unsupported content                | Show reason/current version, preserve source, request explicit retry; do not silently change task/version                                                |
+| Import meets existing completion         | Show reconciled accepted state; do not overwrite accepted history or repeat XP                                                                           |
+| Browser storage unavailable/full/cleared | Report save failure/limitation; keep edits in memory where possible and provide copy/recovery action; never claim saved when save failed                 |
+| PWA update                               | Disclose available update, protect drafts/pending work, avoid mixing incompatible cached assessment versions                                             |
+| Reset/navigation                         | Save before leaving where feasible, distinguish actual persistence success from request, warn before discarding unsaved source                           |
 
 Drafts are device-local; account cloud progress does not promise source-draft cloud backup or automatic simultaneous code merging (F07). Approved P10 gives no backdated streak credit for guest/offline imports; display this limit clearly and do not promise offline streak preservation.
 
@@ -89,18 +93,15 @@ Phase 1 evidence must demonstrate editor/device usability, runtime containment/t
 
 The [Worker-backed supplied-shell preview](technical-risk-validation/report.md#worker-preview-redesign-continuation---2026-09-13) passes core automated recovery/containment checks in all three downloaded engines. Learner logic stays in the restricted Worker; fixed script-disabled iframe output and its text equivalent receive bounded escaped data. The historical executable-HTML no-go remains AP02 evidence. WebKit simulated-offline integration fails, physical/accessibility evidence remains untested, and review of the new F01 recommendation is pending. Production selection and Phase 2 stay blocked; accepted architecture, P11 and all acceptance criteria remain unchanged.
 
-
 ## Native Chrome evidence checkpoint - 2026-09-14
 
 The [installed-Chrome evidence](technical-risk-validation/report.md#installed-windows-chrome-continuation---2026-09-14) adds actual Windows Chrome interaction, browser zoom, storage-denial recovery, isolated PWA installation and process-cold diagnostics. Native valid-run startup and fresh-preview timing failures remain a redesign/no-go; earlier downloaded-engine passes do not establish the installed-browser gate. Source/save synchronization defects were corrected with focused regression coverage. Native full-storage, physical mobile/Safari, spoken assistive technology and OS restart evidence remain inconclusive/untested. Proposed progression scope adjustments are review recommendations only, not approved exceptions. F01 remains unselected and F02 incomplete; AP01/AP02 and P11 remain unchanged. The current results need dated project-owner technical/product/security self-review. No Phase 2, Sync or Archive begins.
-
 
 ## Authorized bootstrap experiment checkpoint - 2026-09-14
 
 The project owner explicitly approved the persistent trusted opaque bootstrap/fresh-per-run Worker experiment and D3/charter revision, preserving P11 and all numerical limits. It is implemented through `e9e8436`, including private cleanup control and generation-bound untrusted output. This approval is not S01-S06 approval, F01 production selection, F02 support acceptance or Proceed. See the [current evidence report](technical-risk-validation/report.md#authorized-persistent-bootstrap-checkpoint---2026-09-14). Final installed Chrome: **45 passed / 4 failed**; independent native cycles: **96/100 valid Worker successes, four timeouts, next fresh success 1101.9ms**; 10 witnessed loop recoveries/100 preview cycles and native zoom/PWA/20 persistence cycles pass. Bundled affected retest: **111 passed / 5 failed / 4 skipped**; replay passes all three engines, target-lifetime/WebKit offline failures retained, isolated focus retest passes without erasing the prior failure. Chrome ten-cold-trial probe fails before any completed trial; WebKit single cold-origin control passes.
 
 **Phase 1 remains 22/34 and Redesign/no-go**. Missing physical macOS/Android/iPhone, installed Firefox and NVDA/VoiceOver remain untested; native background/full quota/OS restart and total resource bounds remain unverified. Scope adjustment and dated owner product/technical/security self-review are pending. Security review is self-review, not an independent audit. AP01/AP02, approved Phase 0 policy and required recovery limits remain unchanged. No Phase 2, Sync or Archive.
-
 
 ## Latest Apply continuation - 2026-09-15
 
