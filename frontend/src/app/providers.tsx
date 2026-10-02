@@ -7,6 +7,7 @@ import { getQueryClient } from '@/lib/query-client';
 import { ProgressSyncLifecycle } from '@/features/progress-sync/sync-provider';
 import { PwaStatus } from '@/pwa/pwa-status';
 import { MonitoringLifecycle } from '@/features/monitoring/monitoring-lifecycle';
+import { ApplicationShell } from '@/components/shell/application-shell';
 
 export function AppProviders({
   children,
@@ -20,7 +21,7 @@ export function AppProviders({
       {!designPreview && <ProgressSyncLifecycle />}
       {!designPreview && <MonitoringLifecycle />}
       <PwaStatus />
-      {children}
+      <ApplicationShell>{children}</ApplicationShell>
     </QueryClientProvider>
   );
 }

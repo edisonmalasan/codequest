@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { ChapterCard } from '@/components/game/chapter-card';
 import { QuestNode } from '@/components/game/quest-node';
 import { QuestPath } from '@/components/game/quest-path';
@@ -74,18 +73,10 @@ export function JourneyPageView({
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
-        <Link
-          href="/"
-          aria-label="CodeQuest home"
-          className="inline-flex min-h-11 items-center rounded-sm outline-none"
-        >
-          <CodeQuestLogo />
-        </Link>
-        <Badge variant="ascent">Journey map</Badge>
-      </header>
-
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-16 sm:px-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 py-8 pb-16 sm:px-8">
+        <Badge variant="ascent" className="self-start">
+          Journey map
+        </Badge>
         <section className="pixel-corners pixel-frame relative isolate overflow-hidden p-6 sm:p-10">
           <Image
             src={WORLD_ART}
@@ -251,9 +242,8 @@ function JourneyLoading(): React.JSX.Element {
   return (
     <main className="min-h-screen bg-canvas px-5 py-8 text-ink sm:px-8">
       <div className="mx-auto w-full max-w-6xl" aria-busy="true">
-        <CodeQuestLogo />
         <div
-          className="mt-12 space-y-5"
+          className="mt-4 space-y-5"
           role="status"
           aria-label="Loading Journey"
         >
@@ -279,8 +269,7 @@ function JourneyFailure({
   return (
     <main className="flex min-h-screen items-center justify-center bg-canvas px-5 py-12 text-ink">
       <section className="pixel-corners pixel-frame w-full max-w-xl bg-surface-raised p-7">
-        <CodeQuestLogo />
-        <p className="game-label mt-10 text-xs text-danger">
+        <p className="game-label text-xs text-danger">
           {notFound ? 'Route not found' : 'Map signal interrupted'}
         </p>
         <h1 className="mt-2 font-display text-3xl font-bold">
@@ -311,14 +300,7 @@ function EmptyCourseMap({ model }: { readonly model: JourneyCourseMap }) {
   return (
     <main className="min-h-screen bg-canvas px-5 py-8 text-ink sm:px-8">
       <div className="mx-auto w-full max-w-4xl">
-        <Link
-          href="/"
-          aria-label="CodeQuest home"
-          className="inline-flex min-h-11 items-center rounded-sm"
-        >
-          <CodeQuestLogo />
-        </Link>
-        <section className="pixel-corners pixel-frame mt-12 bg-surface-raised p-7">
+        <section className="pixel-corners pixel-frame mt-4 bg-surface-raised p-7">
           <p className="game-label text-xs text-discovery">Course map</p>
           <h1 className="mt-2 font-display text-3xl font-bold">
             {model.journey.title}

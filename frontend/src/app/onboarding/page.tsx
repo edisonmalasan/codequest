@@ -1,12 +1,8 @@
 import Link from 'next/link';
-import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 
 export default function OnboardingPage(): React.JSX.Element {
   return (
     <main className="mx-auto min-h-screen max-w-3xl space-y-8 px-5 py-10 text-ink sm:px-8">
-      <Link href="/" aria-label="CodeQuest home">
-        <CodeQuestLogo />
-      </Link>
       <header className="space-y-3">
         <h1 className="font-display text-3xl">Start your learning journey</h1>
         <p className="leading-7 text-muted">
