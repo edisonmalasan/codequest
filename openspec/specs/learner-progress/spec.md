@@ -44,11 +44,15 @@ The backend SHALL expose a protected owner-only progress read for each published
 
 ### Requirement: Hierarchy progress is derived from current publication
 
-Protected chapter and Journey progress reads SHALL use the current published catalog as the ordered denominator and the owner's current-equivalent accepted stable-quest completions as the numerator. Each read SHALL return completed and total quest counts, a percentage derived as `floor(100 * completed / total)` (zero for an empty denominator), status, and ordered nested progress. Aggregate status SHALL be `completed` only when the nonempty scope is fully completed, `in_progress` when any contained quest has durable activity, and `not_started` otherwise. The Course route SHALL be a read-only alias for the identical Journey representation; it SHALL NOT create a separate Course identity or stored aggregate. Obsolete/unpublished quest history SHALL remain durable but SHALL NOT inflate current published counts.
+Protected Chapter, distinct Course, and Journey progress reads SHALL use the current published catalog as the ordered denominator and the owner's current-equivalent accepted stable-quest completions as the numerator. Each read SHALL return completed and total quest counts, a percentage derived as `floor(100 * completed / total)` (zero for an empty denominator), status, and ordered nested progress appropriate to its scope. Aggregate status SHALL be `completed` only when the nonempty scope is fully completed, `in_progress` when any contained quest has durable activity, and `not_started` otherwise. The legacy `/api/v1/courses/:slug/progress` route SHALL remain a read-only alias for the identical Journey representation during migration; the distinct Course progress route SHALL be `/api/v1/catalog/courses/:slug/progress`. No separate mutable Course aggregate SHALL be stored. Obsolete/unpublished quest history SHALL remain durable but SHALL NOT inflate current published counts.
 
 #### Scenario: Partial chapter
 - **WHEN** one of four currently published chapter quests is accepted as complete
 - **THEN** chapter counts are 1/4, percentage is 25, and status is `in_progress`
+
+#### Scenario: Course with multiple chapters
+- **WHEN** a Course contains accepted and unfinished current quests across chapters
+- **THEN** its owner-only Course progress derives the sum from only those published chapters and is `in_progress`
 
 #### Scenario: Empty published Journey
 - **WHEN** a published Journey has no quests
@@ -58,9 +62,13 @@ Protected chapter and Journey progress reads SHALL use the current published cat
 - **WHEN** another learner's accepted completion exists for the same quest
 - **THEN** the current learner's progress remains unaffected
 
+#### Scenario: Legacy progress alias
+- **WHEN** an existing client reads `/api/v1/courses/:slug/progress` with a Journey slug
+- **THEN** it receives the same Journey progress representation as before
+
 ### Requirement: Progress API and trusted frontend preserve authority
 
-Implemented progress operations SHALL appear in backend OpenAPI and the regenerated frontend client. Protected quest, chapter, and Journey/Course progress reads SHALL also return owner-bound, backend-derived availability and published unmet-prerequisite explanations under `learner-unlocks`, separately from learning status and counts. The authenticated Journey page SHALL use the protected Journey progress and availability response as its accepted snapshot and identify accepted personal-learning completion as client-reported under ADR 0005. The lesson page SHALL record current-version start and hint use through trusted authenticated transport only when unlocked; failed recording SHALL not hide public lesson content or claim saved progress. Guest presentation SHALL remain clearly provisional and SHALL not send credentials or progress authority to learner execution or preview origins. No progress read or write SHALL award XP, levels, rewards, streaks, or stored unlocks.
+Implemented progress operations SHALL appear in backend OpenAPI and the regenerated frontend client. Protected Quest, Chapter, distinct Course, and Journey progress reads SHALL also return owner-bound, backend-derived availability and published unmet-prerequisite explanations under `learner-unlocks`, separately from learning status and counts. The authenticated Journey page SHALL use the protected Journey progress and availability response as its accepted snapshot and identify accepted personal-learning completion as client-reported under ADR 0005. The lesson page SHALL record current-version start and hint use through trusted authenticated transport only when unlocked; failed recording SHALL not hide public lesson content or claim saved progress. Guest presentation SHALL remain clearly provisional and SHALL not send credentials or progress authority to learner execution or preview origins. No progress read or write SHALL award XP, levels, rewards, streaks, or stored unlocks.
 
 #### Scenario: Authenticated Journey opens
 - **WHEN** a signed-in learner opens a published Journey

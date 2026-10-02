@@ -8,16 +8,21 @@ Define a reviewable, backend-owned Git curriculum source and validation contract
 
 ### Requirement: Curriculum source follows the approved hierarchy and ownership
 
-Authored curriculum SHALL live under `backend/content/` as ordered Journey, Chapter, and Quest records. Course SHALL remain a display synonym for Journey, not a fourth hierarchy level. The authored tree SHALL identify its owning journey and chapter for each quest and SHALL NOT require frontend imports, direct application-table access, or a root `content/` source.
+Authored curriculum SHALL live under `backend/content/` as ordered Journey, Course, Chapter, and Quest records. Each Course SHALL have one stable owning Journey; each Chapter SHALL have one stable owning Course; each Quest SHALL retain its stable owning Chapter. The authored tree SHALL identify these parents without frontend imports, direct application-table access, or a root `content/` source. The existing JavaScript Foundations Journey, Chapters, and Quests SHALL keep their stable IDs and reviewed snapshots when its chapters are assigned to one distinct Course.
 
 #### Scenario: Authored hierarchy is inspected
 
 - **WHEN** the repository content tree is reviewed
-- **THEN** journey, chapter, and quest metadata have one unambiguous parent and order under `backend/content/`, with no separate Course entity or frontend copy
+- **THEN** Journey, Course, Chapter, and Quest metadata have one unambiguous parent and order under `backend/content/`, with separate stable Course identity and no frontend copy
+
+#### Scenario: Existing Foundations content is migrated
+
+- **WHEN** the published Foundations chapters are assigned to their new Course
+- **THEN** existing Journey, Chapter, Quest, content-version, and assessment-version identities remain unchanged and the publication still resolves every selected quest
 
 ### Requirement: Stable identity is separate from presentation and versions
 
-Every journey, chapter, concept, and quest SHALL have a stable, unique ID independent of title, slug, and directory name. Quest content snapshots SHALL declare a content version and assessment version; a new snapshot SHALL NOT overwrite an older authored snapshot. A quest's current authored version SHALL resolve to exactly one snapshot, while historical snapshots remain reviewable. The authoring model SHALL distinguish an instructional quest from the final capstone without counting the capstone among the 24 instructional quests.
+Every Journey, Course, Chapter, concept, and Quest SHALL have a stable, unique ID independent of title, slug, and directory name. Quest content snapshots SHALL declare a content version and assessment version; a new snapshot SHALL NOT overwrite an older authored snapshot. A quest's current authored version SHALL resolve to exactly one snapshot, while historical snapshots remain reviewable. The authoring model SHALL distinguish an instructional quest from the final capstone without counting the capstone among the 24 instructional quests.
 
 #### Scenario: Quest title or lesson wording changes
 
@@ -105,7 +110,7 @@ The curriculum-content capability SHALL own authored content structure, schema/v
 
 ### Requirement: Publication selection is explicit, reviewed, and separate from drafts
 
-The authored curriculum tree SHALL include one backend-owned publication manifest that selects active Journey and quest snapshot versions by stable identity. Selection SHALL require explicit curriculum and technical approval, SHALL preserve Git as the authored source of truth, and SHALL NOT make unselected or draft material API-visible. The manifest SHALL be deterministic, bounded, versioned, validated with the authored tree in CI, and unable to introduce hierarchy, content, assessment, prerequisite, or reward metadata not already present in selected authored snapshots.
+The authored curriculum tree SHALL include one backend-owned publication manifest that selects active Journey, Course, and Quest snapshot versions by stable identity. Selection SHALL require explicit curriculum and technical approval, SHALL preserve Git as the authored source of truth, and SHALL NOT make unselected or draft material API-visible. The manifest SHALL be deterministic, bounded, versioned, validated with the authored tree in CI, and unable to introduce hierarchy, content, assessment, prerequisite, or reward metadata not already present in selected authored snapshots.
 
 #### Scenario: Reviewed snapshot is selected
 
@@ -116,3 +121,15 @@ The authored curriculum tree SHALL include one backend-owned publication manifes
 
 - **WHEN** valid draft content exists without an approved publication entry
 - **THEN** authoring validation can pass while publication delivers none of that content
+
+### Requirement: Course publication is complete and reviewable
+
+A Course SHALL declare a stable unique ID, owning Journey ID, slug, position, original title and summary, topic metadata, outcomes, ordered Chapter IDs, and reviewed state. Publication SHALL select Courses explicitly and reject a selected Course with missing, unreviewed, duplicate, or inconsistent chapters, quests, versions, or parent links. Slugs SHALL be unambiguous within their public route scope; stable IDs SHALL be globally unique. Draft Courses MAY be authored without appearing publicly.
+
+#### Scenario: Incomplete Course is selected
+- **WHEN** publication selects a Course with a missing chapter, unreviewed snapshot, or duplicate identity
+- **THEN** curriculum validation fails before the public catalog can serve that Course
+
+#### Scenario: Draft Course exists
+- **WHEN** valid draft Course metadata is not selected for publication
+- **THEN** authoring may validate it but the public catalog reveals no draft title or identity
