@@ -1,6 +1,6 @@
 # R05 Course discovery verification
 
-**Review dates:** 2026-10-02 to 2026-10-03 (Asia/Manila). **Status:** technical implementation under review; founder acceptance open. This local result is not a beta release candidate or hosted evidence.
+**Review dates:** 2026-10-02 to 2026-10-03 (Asia/Manila). **Status:** technical implementation and local integration verified; founder acceptance open. This local result is not a beta release candidate or hosted evidence.
 
 ## Identity and publication review
 
@@ -24,7 +24,7 @@ Course progress for an account is displayed only after a complete owner-scoped p
 
 | Gate                                                | Result                                                                                              |
 | --------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Technical implementation and automated verification | Pending final branch CI and exact commands below                                                    |
+| Technical implementation and automated verification | Passed on Apply PR #194; exact local command results below                                                    |
 | Local integrated public discovery path              | Passed on the local app/API pair; no real Auth claim                                                |
 | Founder visual/navigation acceptance for R05        | **OPEN** — founder review of this exact implementation and screenshots is required                  |
 | Real email and OAuth integration (R04)              | **OPEN** — controlled synthetic inbox/provider identities and configured providers were unavailable |
@@ -32,7 +32,7 @@ Course progress for an account is displayed only after a complete owner-scoped p
 
 ## Command record
 
-Fill exact final results before merge. A passing automated command is evidence of technical behavior, not founder acceptance.
+These are the recorded Apply command results. A passing automated command is evidence of technical behavior, not founder acceptance.
 
 | Command                                                           | Result                                                                                                                                                                      |
 | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,3 +47,5 @@ Fill exact final results before merge. A passing automated command is evidence o
 | `pnpm --dir frontend test:e2e`                                    | PASS, 22 browser tests across Chromium, Firefox and WebKit                                                                                                                  |
 | Chromium accessibility browser suite                              | PASS, 3 browser tests                                                                                                                                                       |
 | `pnpm test`                                                       | PASS on final rerun: 425 frontend tests, 207 backend Vitest tests and 7 Node tests. The earlier parallel timing failure passed when rerun alone and in this final root run. |
+
+The approved specifications were synchronized in PR #195 and the completed OpenSpec change was archived. Both PRs passed required CI. The R05 founder visual/navigation gate remains open.
