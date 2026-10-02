@@ -33,10 +33,22 @@
   --color-danger: #ff7777;
   --color-danger-ink: #1c0709;
 
+  /* Production learning surfaces: editorial reading beside focused code work. */
+  --color-world-night: #080f20;
+  --color-world-panel: #111c32;
+  --color-reading-surface: #f2efe4;
+  --color-reading-ink: #182437;
+  --color-reading-muted: #455268;
+  --color-work-surface: #0c1424;
+  --color-work-line: #3b5070;
+
   --font-sans:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', sans-serif;
   --font-display: 'Pixelify Sans', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-heading:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
 
   /* The 4px utility unit supports the 8px identity grid and half-step exceptions. */

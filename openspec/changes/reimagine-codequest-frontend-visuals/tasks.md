@@ -2,9 +2,9 @@
 
 ## 1. Visual foundation and shared shell
 
-- [ ] 1.1 Audit current production route screenshots, semantic tokens, assets, and copy; record the chosen visual roles, route inventory, asset placements, and acceptance viewports in a frontend design record; verify the record covers Home, onboarding, catalog, Journey, Course, auth, account, offline learning, feedback, errors, and lesson.
-- [ ] 1.2 Add the revised semantic surface/type/action roles and original placement-specific artwork with provenance; verify token/asset checks, contrast calculations, image loading, and existing design-system tests.
-- [ ] 1.3 Recompose the shared production navigation and mobile menu without changing destinations or semantics; verify keyboard/Escape/focus tests and browser navigation at 320, 390, 820, and 1440 CSS pixels.
+- [x] 1.1 Audit current production route screenshots, semantic tokens, assets, and copy; record the chosen visual roles, route inventory, asset placements, and acceptance viewports in a frontend design record; verify the record covers Home, onboarding, catalog, Journey, Course, auth, account, offline learning, feedback, errors, and lesson.
+- [x] 1.2 Add the revised semantic surface/type/action roles and original placement-specific artwork with provenance; verify token/asset checks, contrast calculations, image loading, and existing design-system tests.
+- [x] 1.3 Recompose the shared production navigation and mobile menu without changing destinations or semantics; verify keyboard/Escape/focus tests and browser navigation at 320, 390, 820, and 1440 CSS pixels.
 
 ## 2. Home and course discovery
 
