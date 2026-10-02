@@ -56,3 +56,11 @@ The first token and art pass was checked locally in Chromium at 1440 and 390 CSS
 ## Review contract
 
 Inspect the real local app at 1440 and 1280 desktop, 820 tablet, 390 and 320 mobile CSS pixels, plus zoom-equivalent narrow reflow. Include keyboard/focus, reduced motion, image loading, browser errors, and page overflow. Capture exact commit and environment for Home, catalog, Journey, Course, auth, account, Quest, offline, feedback, and shared error states. Automated results establish integration evidence; founder acceptance requires a separate explicit review of the final build. R05 visual acceptance remains open and R06 Apply remains gated.
+
+### Home and discovery copy
+
+Home's first action opens `/courses`; the featured Journey entry comes from the public curriculum response, and its world art is applied only to the stable published Foundations identity. The catalog's single-Course layout remains a real result, not a placeholder for future tracks. Search, topic filtering, loading, empty, error, and retry states keep their existing semantics. Guest work is described as device-local and import remains an explicit later action.
+
+### Course map interaction
+
+The Course hero identifies the published Course and its authored summary. Below it, the progress notice reports only the available owner-scoped or provisional device facts, followed by a first eligible practice link when the existing model supplies one. Chapter landmarks retain published order and objectives. Exercise rows retain semantic ordered lists, a readable title, textual status, sequence number, and unmet prerequisite names. Available/completed rows remain links; locked or unavailable rows remain inert. A visual route or illustration never supplies an unlock decision. The same chapter and exercise information stacks into one column at narrow widths without horizontal page scrolling.

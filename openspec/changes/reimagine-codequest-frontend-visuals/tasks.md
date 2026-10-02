@@ -8,15 +8,15 @@
 
 ## 2. Home and course discovery
 
-- [ ] 2.1 Rebuild Home around its real published-learning entry and original art; preserve loading/empty/error/guest truth; verify focused Home tests and desktop/mobile browser screenshots.
-- [ ] 2.2 Recompose the catalog for one published Course and future multi-Course results without invented cards; verify published-only search/filter, empty/error/retry tests and browser checks at desktop/mobile widths.
-- [ ] 2.3 Update Home/catalog copy and design documentation for accurate product claims; verify all visible links, labels, images, and responsive states in an installed browser.
+- [x] 2.1 Rebuild Home around its real published-learning entry and original art; preserve loading/empty/error/guest truth; verify focused Home tests and desktop/mobile browser screenshots.
+- [x] 2.2 Recompose the catalog for one published Course and future multi-Course results without invented cards; verify published-only search/filter, empty/error/retry tests and browser checks at desktop/mobile widths.
+- [x] 2.3 Update Home/catalog copy and design documentation for accurate product claims; verify all visible links, labels, images, and responsive states in an installed browser.
 
 ## 3. Journey and Course map
 
-- [ ] 3.1 Recompose Journey overview and ordered Course entries with readable outcomes and a direct next step; verify existing public/owner-state tests and desktop/mobile browser captures.
-- [ ] 3.2 Recompose the Course map into legible chapter landmarks and substantial quest rows while retaining backend availability and guest provisional rules; verify locked/available/completed tests, keyboard use, and scans at 320, 390, 820, and 1440 CSS pixels.
-- [ ] 3.3 Record the map's interaction, accessibility, and visual rules in frontend documentation; verify text labels, prerequisite explanations, target size, and no page overflow in the real local Course route.
+- [x] 3.1 Recompose Journey overview and ordered Course entries with readable outcomes and a direct next step; verify existing public/owner-state tests and desktop/mobile browser captures.
+- [x] 3.2 Recompose the Course map into legible chapter landmarks and substantial quest rows while retaining backend availability and guest provisional rules; verify locked/available/completed tests, keyboard use, and scans at 320, 390, 820, and 1440 CSS pixels.
+- [x] 3.3 Record the map's interaction, accessibility, and visual rules in frontend documentation; verify text labels, prerequisite explanations, target size, and no page overflow in the real local Course route.
 
 ## 4. Auth, account, and supporting routes
 

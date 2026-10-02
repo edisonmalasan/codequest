@@ -46,7 +46,6 @@ export default function Home(): React.JSX.Element {
         aria-labelledby="learning-title"
       >
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Your starting point</p>
           <h2 id="learning-title">Choose a route. Start making.</h2>
           <p>Open a published path to see its chapters and exercises.</p>
         </div>
@@ -55,7 +54,6 @@ export default function Home(): React.JSX.Element {
 
       <section className={styles.how} aria-labelledby="how-title">
         <div className={styles.howIntro}>
-          <p className={styles.eyebrow}>Inside a quest</p>
           <h2 id="how-title">Learn it, test it, make it yours.</h2>
           <p>
             Each exercise gives you a place to try code, inspect the result, and

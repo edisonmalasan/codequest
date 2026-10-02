@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { QuestNode, type QuestStatus } from '@/components/game/quest-node';
 import { useQuery } from '@tanstack/react-query';
@@ -239,8 +240,19 @@ export function CoursePageClient({
           <span aria-current="page">{course.title}</span>
         </nav>
         <header className={styles.hero}>
+          {course.id === 'COURSE-JS-FOUNDATIONS' && (
+            <span className={styles.heroArt} aria-hidden="true">
+              <Image
+                src="/assets/design-system/worlds/beacon-city.webp"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 760px) 100vw, 80vw"
+              />
+            </span>
+          )}
           <p className={styles.eyebrow}>
-            COURSE / {String(course.position).padStart(2, '0')}
+            Course {String(course.position).padStart(2, '0')}
           </p>
           <h1>{course.title}</h1>
           <p>{course.summary}</p>
@@ -280,7 +292,6 @@ export function CoursePageClient({
           </Link>
         )}
         <section className={styles.outcomes} aria-labelledby="course-outcomes">
-          <p className={styles.eyebrow}>WHAT YOU WILL LEARN</p>
           <h2 id="course-outcomes">Course outcomes</h2>
           <ul>
             {course.outcomes.map((outcome) => (
@@ -289,7 +300,7 @@ export function CoursePageClient({
           </ul>
         </section>
         <section aria-labelledby="course-chapters">
-          <p className={styles.eyebrow}>YOUR ROUTE</p>
+          <p className={styles.eyebrow}>Your route</p>
           <h2 id="course-chapters">Chapters and exercises</h2>
           <ol className={styles.chapters}>
             {chapters.map((chapter) => {
