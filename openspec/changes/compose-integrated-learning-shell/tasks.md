@@ -2,7 +2,7 @@
 
 ## 1. R05 entry gate and composition seam
 
-- [ ] 1.1 Confirm the exact R05 Home-to-Course build has explicit founder acceptance recorded before starting R06 Apply; verify the acceptance worksheet identifies build, environment, date, observed behavior, and any defects.
+- [x] 1.1 Confirm the exact R05 Home-to-Course build has explicit founder acceptance recorded before starting R06 Apply; verify the acceptance worksheet identifies build, environment, date, observed behavior, and any defects.
 - [ ] 1.2 Add an optional Editor Workspace presentation seam for distinct editor and result regions while keeping one controller and its standalone default; verify focused tests retain source, active file, draft status, Run/Check correlation, and action count during region changes.
 - [ ] 1.3 Document the reusable composition seam and its ownership boundary in `docs/frontend.md`; verify standalone workspace tests and documentation links still pass.
 
