@@ -2,8 +2,8 @@
 
 ## 1. Visual baseline and original asset plan
 
-- [ ] 1.1 Audit current Home, catalog, Journey, and Course captures against the founder's public visual direction; document concrete composition, density, illustration, and interaction gaps without committing external reference images, and verify all four routes and target viewports are covered.
-- [ ] 1.2 Select or create placement-specific original CodeQuest art and update provenance, dimensions, role, and fallback documentation; verify optimized assets load, remain decorative, and do not carry external artwork or text.
+- [x] 1.1 Audit current Home, catalog, Journey, and Course captures against the founder's public visual direction; document concrete composition, density, illustration, and interaction gaps without committing external reference images, and verify all four routes and target viewports are covered.
+- [x] 1.2 Select or create placement-specific original CodeQuest art and update provenance, dimensions, role, and fallback documentation; verify optimized assets load, remain decorative, and do not carry external artwork or text.
 
 ## 2. Home and shared entry
 
