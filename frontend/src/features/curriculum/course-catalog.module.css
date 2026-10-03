@@ -5,9 +5,9 @@
 }
 
 .inner {
-  width: min(100% - 2.5rem, 84rem);
+  width: min(100% - 2.5rem, 92rem);
   margin-inline: auto;
-  padding-block: 2rem 6rem;
+  padding-block: 1rem 6rem;
 }
 
 .back {
@@ -20,8 +20,43 @@
 }
 
 .header {
-  max-width: 46rem;
-  padding-block: clamp(2rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: clamp(15rem, 22vw, 21rem);
+  align-content: center;
+  justify-items: start;
+  overflow: hidden;
+  margin: 0.5rem 0 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: #14395a;
+}
+
+.headerArt {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+}
+
+.headerArt img {
+  object-fit: cover;
+  object-position: center 54%;
+  image-rendering: pixelated;
+}
+
+.header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(7 19 38 / 94%),
+    rgb(7 19 38 / 82%) 38%,
+    rgb(7 19 38 / 10%) 82%
+  );
+  content: '';
 }
 
 .eyebrow,
@@ -38,17 +73,17 @@
 }
 
 .header h1 {
-  max-width: 15ch;
-  margin: 0.9rem 0 1rem;
+  max-width: 17ch;
+  margin: 0.6rem 0 0.8rem;
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-size: clamp(2.6rem, 4.6vw, 4.6rem);
   font-weight: 840;
   letter-spacing: -0.07em;
   line-height: 1.03;
 }
 
 .header > p:last-child {
-  max-width: 39rem;
+  max-width: 32rem;
   margin: 0;
   color: var(--color-muted);
   font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -57,13 +92,10 @@
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.34fr);
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.3fr);
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1.25rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
-  background: var(--color-world-panel);
+  margin-bottom: 1.25rem;
+  padding: 0;
 }
 
 .controls label {
@@ -131,7 +163,7 @@
   position: relative;
   isolation: isolate;
   display: flex;
-  min-height: 22rem;
+  min-height: 17rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
@@ -146,6 +178,11 @@
   transition:
     border-color var(--duration-base),
     transform var(--duration-base) var(--ease-ui);
+}
+
+.singleList .course {
+  min-height: 20rem;
+  padding-left: clamp(1.5rem, 4vw, 4rem);
 }
 
 .course:hover {
@@ -257,7 +294,17 @@
   }
 
   .header {
-    padding-block: 1.5rem 2rem;
+    min-height: 19rem;
+    padding: 1.5rem;
+  }
+
+  .header::before {
+    background: linear-gradient(
+      0deg,
+      rgb(7 19 38 / 94%),
+      rgb(7 19 38 / 72%) 55%,
+      rgb(7 19 38 / 12%)
+    );
   }
 
   .controls,

@@ -67,35 +67,39 @@ export function JourneyOverview({
           <span aria-hidden="true">/</span>
           <span aria-current="page">{journey.title}</span>
         </nav>
-        <header className={styles.hero}>
-          {journey.slug === 'javascript-foundations' && (
-            <span className={styles.heroArt} aria-hidden="true">
-              <Image
-                src="/assets/design-system/worlds/signal-road.webp"
-                alt=""
-                fill
-                priority
-                sizes="(max-width: 760px) 100vw, 80vw"
-              />
-            </span>
-          )}
-          <p className={styles.eyebrow}>Learning Journey</p>
-          <h1>{journey.title}</h1>
-          <p>
-            {journey.courses.length}{' '}
-            {journey.courses.length === 1 ? 'course' : 'courses'} ·{' '}
-            {journey.questCount} exercises
-          </p>
-        </header>
-        <section className={styles.info} aria-labelledby="journey-outcomes">
-          <h2 id="journey-outcomes">What you will learn</h2>
-          <ul>
-            {journey.outcomes.map((outcome) => (
-              <li key={outcome.id}>{outcome.description}</li>
-            ))}
-          </ul>
-        </section>
+        <div className={styles.worldIntro}>
+          <header className={styles.hero}>
+            {journey.slug === 'javascript-foundations' && (
+              <span className={styles.heroArt} aria-hidden="true">
+                <Image
+                  src="/assets/design-system/worlds/signal-road.webp"
+                  alt=""
+                  fill
+                  priority
+                  sizes="(max-width: 760px) 100vw, 80vw"
+                />
+              </span>
+            )}
+            <p className={styles.eyebrow}>Learning Journey</p>
+            <h1>{journey.title}</h1>
+            <p>
+              {journey.courses.length}{' '}
+              {journey.courses.length === 1 ? 'course' : 'courses'} ·{' '}
+              {journey.questCount} exercises
+            </p>
+          </header>
+          <section className={styles.info} aria-labelledby="journey-outcomes">
+            <p className={styles.eyebrow}>The route ahead</p>
+            <h2 id="journey-outcomes">What you will learn</h2>
+            <ul>
+              {journey.outcomes.map((outcome) => (
+                <li key={outcome.id}>{outcome.description}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
         <section aria-labelledby="journey-courses">
+          <p className={styles.eyebrow}>Course map</p>
           <h2 id="journey-courses">Your route through this Journey</h2>
           {journey.courses.length ? (
             <ol

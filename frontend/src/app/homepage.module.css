@@ -1,7 +1,6 @@
 .page {
-  width: min(100% - 2.5rem, 92rem);
-  margin-inline: auto;
-  padding-block: clamp(1.25rem, 2.5vw, 2.5rem) 6rem;
+  width: 100%;
+  padding-bottom: 6rem;
 }
 
 .eyebrow {
@@ -16,12 +15,11 @@
   position: relative;
   isolation: isolate;
   display: flex;
-  min-height: clamp(31rem, 43vw, 39rem);
+  min-height: clamp(34rem, 46vw, 43rem);
   align-items: center;
+  justify-content: center;
   overflow: hidden;
-  border: 1px solid var(--color-line-strong);
-  border-radius: var(--radius-lg);
-  background: var(--color-world-night);
+  background: #14395a;
 }
 
 .heroArt,
@@ -36,41 +34,47 @@
 
 .heroArt::after {
   background: linear-gradient(
-    90deg,
-    var(--color-world-night) 0%,
-    rgb(8 15 32 / 96%) 22%,
-    rgb(8 15 32 / 64%) 47%,
-    transparent 76%
+    180deg,
+    rgb(8 15 32 / 12%) 0%,
+    transparent 52%,
+    rgb(8 15 32 / 50%) 100%
   );
   content: '';
 }
 
 .worldImage {
   object-fit: cover;
-  object-position: center;
+  object-position: center 52%;
+  image-rendering: pixelated;
 }
 
 .heroCopy {
   position: relative;
   z-index: 1;
-  width: min(58%, 43rem);
-  padding: clamp(2rem, 5vw, 5.5rem);
+  width: min(100% - 2.5rem, 42rem);
+  margin: 2.5rem auto;
+  padding: clamp(1.7rem, 3vw, 3rem);
+  border: 1px solid rgb(189 220 245 / 60%);
+  border-radius: var(--radius-md);
+  background: rgb(7 19 38 / 87%);
+  box-shadow: 0 1.3rem 4rem rgb(3 13 28 / 28%);
+  text-align: center;
 }
 
 .hero h1 {
-  max-width: 10ch;
-  margin: 1.3rem 0 0;
+  max-width: 15ch;
+  margin: 1rem auto 0;
   color: var(--color-ink);
   font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-size: clamp(3.1rem, 5.3vw, 5.5rem);
   font-weight: 850;
   letter-spacing: -0.075em;
   line-height: 0.98;
 }
 
 .lead {
-  max-width: 29rem;
-  margin: 1.7rem 0 0;
+  max-width: 31rem;
+  margin: 1.2rem auto 0;
   color: var(--color-ink);
   font-size: clamp(1.05rem, 1.4vw, 1.3rem);
   line-height: 1.55;
@@ -85,7 +89,14 @@
 }
 
 .heroActions {
+  justify-content: center;
   margin-top: 2rem;
+}
+
+.hero .primaryAction {
+  border-color: var(--color-reward);
+  background: var(--color-reward);
+  color: var(--color-reward-ink);
 }
 
 .primaryAction,
@@ -133,23 +144,27 @@
 }
 
 .heroNote {
-  margin: 0;
-  padding: 0.9rem 0.25rem;
+  width: min(100% - 2.5rem, 92rem);
+  margin: 0 auto;
+  padding: 0.9rem 0;
   color: var(--color-muted);
   font-size: 0.82rem;
   line-height: 1.55;
 }
 
 .learning {
-  padding-top: clamp(3.5rem, 6vw, 6rem);
+  width: min(100% - 2.5rem, 92rem);
+  margin-inline: auto;
+  padding-top: clamp(3rem, 5vw, 5rem);
   scroll-margin-top: 1.5rem;
 }
 
 .sectionHeading {
   display: grid;
-  justify-items: start;
+  justify-items: center;
   gap: 0.75rem;
   margin-bottom: 1.75rem;
+  text-align: center;
 }
 
 .sectionHeading h2,
@@ -198,6 +213,20 @@
     transform var(--duration-base) var(--ease-ui);
 }
 
+.journeyCardFeatured {
+  min-height: 20rem;
+  justify-content: center;
+  padding-left: calc(50% + clamp(1.5rem, 4vw, 4rem));
+}
+
+.journeyCardFeatured .journeyArt {
+  right: 50%;
+}
+
+.journeyCardFeatured::before {
+  display: none;
+}
+
 .journeyCard:hover {
   border-color: var(--color-ascent);
   transform: translateY(-2px);
@@ -215,16 +244,7 @@
 }
 
 .journeyCardFeatured::before {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background: linear-gradient(
-    0deg,
-    var(--color-world-night),
-    rgb(8 15 32 / 90%) 20%,
-    rgb(8 15 32 / 14%) 78%
-  );
-  content: '';
+  display: none;
 }
 
 .journeyCard > :not(.journeyArt) {
@@ -313,10 +333,11 @@
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(2rem, 5vw, 5rem);
-  margin-top: clamp(4rem, 7vw, 7rem);
-  padding: clamp(2rem, 5vw, 5rem);
-  border-radius: var(--radius-lg);
-  background: var(--color-world-panel);
+  width: min(100% - 2.5rem, 92rem);
+  margin: clamp(4rem, 7vw, 7rem) auto 0;
+  padding: clamp(2rem, 5vw, 5rem) 0;
+  border-top: 1px solid var(--color-line-strong);
+  border-bottom: 1px solid var(--color-line-strong);
 }
 
 .howIntro {
@@ -383,7 +404,8 @@
   align-items: end;
   justify-content: space-between;
   gap: 2.5rem;
-  margin-top: clamp(4rem, 7vw, 7rem);
+  width: min(100% - 2.5rem, 92rem);
+  margin: clamp(4rem, 7vw, 7rem) auto 0;
   padding: clamp(2rem, 5vw, 4.5rem);
   border-radius: var(--radius-lg);
   background: var(--color-reading-surface);
@@ -407,10 +429,6 @@
 }
 
 @media (max-width: 900px) {
-  .heroCopy {
-    width: min(68%, 42rem);
-  }
-
   .how {
     grid-template-columns: 1fr;
   }
@@ -422,37 +440,22 @@
 }
 
 @media (max-width: 640px) {
-  .page {
-    width: min(100% - 1.5rem, 92rem);
-    padding-bottom: 4rem;
-  }
-
   .hero {
-    display: flex;
-    min-height: 0;
-    flex-direction: column;
-    align-items: stretch;
+    min-height: 35rem;
   }
 
   .heroArt {
-    position: relative;
-    z-index: 0;
-    order: 2;
-    height: 13rem;
-  }
-
-  .heroArt::after {
-    display: none;
+    position: absolute;
+    inset: 0;
   }
 
   .worldImage {
-    object-position: 66% center;
+    object-position: 67% center;
   }
 
   .heroCopy {
-    order: 1;
-    width: 100%;
-    padding: 2rem 1.35rem 2.2rem;
+    width: min(100% - 1.5rem, 42rem);
+    padding: 1.8rem 1.25rem;
   }
 
   .hero h1 {
@@ -478,9 +481,20 @@
     min-height: 17rem;
   }
 
+  .journeyCardFeatured {
+    justify-content: end;
+    padding: 13rem 1.3rem 1.5rem;
+  }
+
+  .journeyCardFeatured .journeyArt {
+    right: 0;
+    bottom: auto;
+    height: 11.5rem;
+  }
+
   .how {
     margin-top: 4rem;
-    padding: 1.75rem 1.3rem;
+    padding: 1.75rem 0;
   }
 
   .steps li {

@@ -6,8 +6,17 @@
 }
 
 .inner {
-  width: min(100% - 2.5rem, 84rem);
+  width: min(100% - 2.5rem, 92rem);
   margin-inline: auto;
+}
+
+.worldIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(19rem, 0.65fr);
+  overflow: hidden;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
 }
 
 .crumbs {
@@ -29,13 +38,12 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  min-height: 23rem;
+  min-height: 29rem;
   align-content: end;
   justify-items: start;
   overflow: hidden;
   padding: clamp(2rem, 5vw, 4rem);
-  border: 1px solid var(--color-line-strong);
-  border-radius: var(--radius-lg);
+  border-right: 1px solid var(--color-line-strong);
   background: var(--color-world-panel);
 }
 
@@ -94,11 +102,16 @@
 }
 
 .info {
-  margin-block: clamp(2.5rem, 4vw, 4rem);
-  padding: clamp(1.8rem, 4vw, 3.5rem);
-  border-radius: var(--radius-lg);
+  display: grid;
+  align-content: center;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 3rem);
   background: var(--color-reading-surface);
   color: var(--color-reading-ink);
+}
+
+.info .eyebrow {
+  color: #245b43;
 }
 
 .info h2,
@@ -112,10 +125,15 @@
   line-height: 1.1;
 }
 
+.info h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.7rem, 2.5vw, 2.6rem);
+}
+
 .info ul {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem 2rem;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
   margin: 0;
   padding-left: 1.5rem;
 }
@@ -128,7 +146,7 @@
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem;
+  gap: 1rem;
   margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
@@ -141,7 +159,7 @@
 .list a {
   position: relative;
   display: flex;
-  min-height: 16rem;
+  min-height: 14rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -155,6 +173,10 @@
   transition:
     transform var(--duration-base) var(--ease-ui),
     border-color var(--duration-base);
+}
+
+.singleList a {
+  max-width: 54rem;
 }
 
 .list a:hover {
@@ -208,9 +230,14 @@
     width: min(100% - 1.5rem, 84rem);
   }
 
+  .worldIntro {
+    grid-template-columns: 1fr;
+  }
+
   .hero {
     min-height: 23rem;
     padding: 1.8rem;
+    border-right: 0;
   }
 
   .hero::before {

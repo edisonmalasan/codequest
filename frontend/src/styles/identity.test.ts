@@ -71,6 +71,7 @@ describe('CodeQuest identity contract', () => {
       'emblems/pathfinder-flag.svg',
       'frames/avatar-circuit.svg',
       'worlds/foundations-valley.webp',
+      'worlds/daybreak-frontier.webp',
     ];
     for (const asset of visualAssets) {
       expect(statSync(resolve(assetRoot, asset)).size).toBeLessThan(250_000);

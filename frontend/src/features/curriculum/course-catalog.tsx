@@ -76,11 +76,20 @@ export function CourseCatalog({
           ← Home
         </Link>
         <header className={styles.header}>
+          <span className={styles.headerArt} aria-hidden="true">
+            <Image
+              src="/assets/design-system/worlds/daybreak-frontier.webp"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 720px) 100vw, 55vw"
+            />
+          </span>
           <p className={styles.eyebrow}>Courses</p>
-          <h1>Find what you will build next.</h1>
+          <h1>Choose your next world.</h1>
           <p>
-            Explore published courses with real chapters and exercises you can
-            start now.
+            Follow a course from first idea to finished exercise. Every course
+            here is published and ready to explore.
           </p>
         </header>
         {state.status === 'loading' && (
