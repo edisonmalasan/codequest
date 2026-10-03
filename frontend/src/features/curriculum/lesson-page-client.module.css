@@ -1,0 +1,83 @@
+.page {
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--color-world-night);
+  color: var(--color-ink);
+}
+
+.layout {
+  display: grid;
+  width: min(100%, 84rem);
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 19rem);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-inline: auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem) 4rem;
+}
+
+.layout > article {
+  min-width: 0;
+}
+
+.questHeader {
+  margin-top: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
+}
+
+.questTitle {
+  max-width: 18ch;
+  margin-top: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 830;
+  letter-spacing: -0.06em;
+  line-height: 1.06;
+}
+
+.reading {
+  max-width: 76ch;
+  margin-top: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-reading-surface);
+  color: var(--color-reading-ink);
+}
+
+.reading :global(.lesson-document) :is(h2, h3, h4, h5, h6, p, li, strong) {
+  color: var(--color-reading-ink);
+}
+
+.reading :global(.lesson-document) :is(h2, h3) {
+  font-family: var(--font-heading);
+  letter-spacing: -0.035em;
+}
+
+.reading :global(.lesson-document) :is(ul, ol, li)::marker {
+  color: var(--color-reading-muted);
+}
+
+.reading :global(.lesson-document) a {
+  color: #174e8a;
+}
+
+.briefing {
+  position: sticky;
+  top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .briefing {
+    position: static;
+  }
+}

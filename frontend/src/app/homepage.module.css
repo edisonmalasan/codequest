@@ -1,85 +1,125 @@
 .page {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: clamp(24px, 3vw, 48px) clamp(20px, 4vw, 76px) 100px;
-  overflow: hidden;
+  width: min(100% - 2.5rem, 92rem);
+  margin-inline: auto;
+  padding-block: clamp(1.25rem, 2.5vw, 2.5rem) 6rem;
 }
 
 .eyebrow {
-  margin: 0 0 16px;
+  margin: 0;
   color: var(--color-ascent);
-  font: 700 11px var(--font-mono);
-  letter-spacing: 0.18em;
+  font: 700 0.75rem var(--font-mono);
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
 .hero {
-  display: grid;
-  min-height: 490px;
-  grid-template-columns: 46% 54%;
-  border: 1px solid var(--color-line);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-hard);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: clamp(31rem, 43vw, 39rem);
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-night);
+}
+
+.heroArt,
+.heroArt::after {
+  position: absolute;
+  inset: 0;
+}
+
+.heroArt {
+  z-index: 0;
+}
+
+.heroArt::after {
+  background: linear-gradient(
+    90deg,
+    var(--color-world-night) 0%,
+    rgb(8 15 32 / 96%) 22%,
+    rgb(8 15 32 / 64%) 47%,
+    transparent 76%
+  );
+  content: '';
+}
+
+.worldImage {
+  object-fit: cover;
+  object-position: center;
 }
 
 .heroCopy {
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: clamp(28px, 4.5vw, 72px);
+  width: min(58%, 43rem);
+  padding: clamp(2rem, 5vw, 5.5rem);
 }
 
 .hero h1 {
-  max-width: 640px;
-  margin: 0;
-  font: 700 clamp(42px, 4.7vw, 76px) / 0.98 var(--font-display);
-  letter-spacing: -0.045em;
+  max-width: 10ch;
+  margin: 1.3rem 0 0;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-weight: 850;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
 }
 
 .lead {
-  max-width: 500px;
-  margin: 26px 0 0;
-  color: var(--color-muted);
-  font-size: clamp(16px, 1.4vw, 19px);
-  line-height: 1.65;
+  max-width: 29rem;
+  margin: 1.7rem 0 0;
+  color: var(--color-ink);
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.heroActions,
+.accountActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
 }
 
 .heroActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 32px;
+  margin-top: 2rem;
 }
 
 .primaryAction,
 .secondaryAction,
 .textAction {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 3rem;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 13px;
-  font-weight: 700;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 750;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .primaryAction {
-  padding: 0 20px;
+  padding: 0.75rem 1.2rem;
+  border: 1px solid var(--color-ascent);
+  border-radius: var(--radius-sm);
   background: var(--color-ascent);
   color: var(--color-ascent-ink);
-  box-shadow: 4px 4px 0 #155b3e;
+  transition: transform var(--duration-base) var(--ease-ui);
 }
 
 .primaryAction:hover {
-  background: #91ffc4;
+  transform: translateY(-2px);
 }
 
-.secondaryAction,
-.textAction {
+.secondaryAction {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: rgb(8 15 32 / 82%);
   color: var(--color-ink);
 }
 
@@ -88,97 +128,74 @@
   color: var(--color-ascent);
 }
 
+.textAction {
+  color: var(--color-ink);
+}
+
 .heroNote {
-  max-width: 480px;
-  margin: 30px 0 0;
+  margin: 0;
+  padding: 0.9rem 0.25rem;
   color: var(--color-muted);
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.heroArt {
-  position: relative;
-  min-height: 420px;
-  overflow: hidden;
-  background: #142035;
-}
-
-.worldImage {
-  object-fit: cover;
-  image-rendering: pixelated;
-}
-
-.heroArt::after {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, var(--color-surface), transparent 35%),
-    linear-gradient(0deg, #070a12a8, transparent 45%);
-  content: '';
-  pointer-events: none;
-}
-
-.artCaption {
-  position: absolute;
-  z-index: 1;
-  right: 24px;
-  bottom: 20px;
-  color: white;
-  font: 700 11px var(--font-mono);
-  letter-spacing: 0.15em;
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .learning {
-  padding-top: 78px;
-  scroll-margin-top: 20px;
+  padding-top: clamp(3.5rem, 6vw, 6rem);
+  scroll-margin-top: 1.5rem;
 }
 
 .sectionHeading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 32px;
-  margin-bottom: 24px;
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
 }
 
 .sectionHeading h2,
 .how h2,
 .accountCallout h2 {
-  max-width: 650px;
+  max-width: 18ch;
   margin: 0;
-  font: 700 clamp(30px, 3.2vw, 48px) / 1.05 var(--font-display);
+  font-family: var(--font-heading);
+  font-size: clamp(2.15rem, 4vw, 4rem);
+  font-weight: 820;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
 }
 
-.sectionHeading > p {
-  max-width: 350px;
-  margin: 0 0 3px;
+.sectionHeading > p:last-child {
+  margin: 0;
   color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .journeyGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+  gap: 1rem;
 }
 
 .journeyCard {
   position: relative;
+  isolation: isolate;
   display: flex;
-  min-height: 248px;
-  min-width: 0;
+  min-height: 19rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  padding: 24px;
-  border: 1px solid var(--color-line);
-  background: var(--color-surface);
+  justify-content: flex-end;
+  gap: 0.9rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-world-panel);
   color: var(--color-muted);
   text-decoration: none;
   transition:
-    border-color 160ms,
-    transform 160ms;
+    border-color var(--duration-base),
+    transform var(--duration-base) var(--ease-ui);
 }
 
 .journeyCard:hover {
@@ -186,46 +203,83 @@
   transform: translateY(-2px);
 }
 
+.journeyArt {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+}
+
+.journeyArt img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.journeyCardFeatured::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    var(--color-world-night),
+    rgb(8 15 32 / 90%) 20%,
+    rgb(8 15 32 / 14%) 78%
+  );
+  content: '';
+}
+
+.journeyCard > :not(.journeyArt) {
+  z-index: 2;
+}
+
 .journeyCard strong {
+  max-width: 25ch;
   color: var(--color-ink);
-  font: 700 24px var(--font-display);
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
 }
 
 .journeyIndex {
-  font: 700 10px var(--font-mono);
-  letter-spacing: 0.13em;
-}
-
-.journeyGlyph {
   color: var(--color-ascent);
-  font-size: 52px;
-  line-height: 1;
+  font: 700 0.73rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .journeyArrow {
   position: absolute;
-  top: 20px;
-  right: 22px;
-  color: var(--color-ink);
-  font-size: 20px;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-world-night);
+  color: var(--color-ascent);
+  font-size: 1.2rem;
 }
 
 .learningStatus {
-  display: flex;
-  min-height: 184px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 10px;
-  padding: 28px;
+  display: grid;
+  min-height: 11rem;
+  justify-items: start;
+  align-content: center;
+  gap: 0.7rem;
+  padding: 1.75rem;
   border: 1px solid var(--color-line);
-  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  background: var(--color-world-panel);
   color: var(--color-muted);
 }
 
 .learningStatus strong {
   color: var(--color-ink);
-  font: 700 23px var(--font-display);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
 }
 
 .learningStatus p {
@@ -241,14 +295,14 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 18px;
-  margin-top: 10px;
+  gap: 1rem;
 }
 
 .statusActions button {
-  min-height: 44px;
-  padding: 0 16px;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
   border: 1px solid var(--color-ascent);
+  border-radius: var(--radius-sm);
   background: var(--color-ascent);
   color: var(--color-ascent-ink);
   font-weight: 700;
@@ -258,90 +312,107 @@
 .how {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(40px, 6vw, 96px);
-  padding: 112px 0;
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(4rem, 7vw, 7rem);
+  padding: clamp(2rem, 5vw, 5rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
 }
 
-.howIntro > p:not(.eyebrow),
-.accountCallout p:not(.eyebrow) {
-  max-width: 500px;
+.howIntro {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 1.25rem;
+}
+
+.howIntro > p:not(.eyebrow) {
+  max-width: 35rem;
+  margin: 0;
   color: var(--color-muted);
-  line-height: 1.7;
-}
-
-.howIntro .textAction {
-  margin-top: 12px;
+  line-height: 1.65;
 }
 
 .steps {
+  display: grid;
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .steps li {
-  padding: 24px 0;
-  border-top: 1px solid var(--color-line);
-}
-
-.steps li:last-child {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-content: center;
+  column-gap: 1rem;
+  padding: 1.25rem 0;
   border-bottom: 1px solid var(--color-line);
 }
 
+.steps li:first-child {
+  padding-top: 0;
+}
+
+.steps li:last-child {
+  border-bottom: 0;
+}
+
 .steps span {
-  display: block;
-  margin-bottom: 10px;
+  grid-row: span 2;
   color: var(--color-ascent);
-  font: 700 11px var(--font-mono);
-  letter-spacing: 0.14em;
+  font: 700 0.72rem var(--font-mono);
+  letter-spacing: 0.05em;
 }
 
 .steps strong {
   color: var(--color-ink);
-  font: 700 24px var(--font-display);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 780;
 }
 
 .steps p {
-  margin: 10px 0 0;
+  margin: 0.4rem 0 0;
   color: var(--color-muted);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .accountCallout {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 36px;
-  padding: clamp(28px, 4vw, 56px);
-  border: 1px solid var(--color-line-strong);
-  background: var(--color-surface-raised);
+  gap: 2.5rem;
+  margin-top: clamp(4rem, 7vw, 7rem);
+  padding: clamp(2rem, 5vw, 4.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-reading-surface);
+  color: var(--color-reading-ink);
 }
 
-.accountActions {
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 18px;
+.accountCallout .eyebrow {
+  color: #245b43;
+  margin-bottom: 0.8rem;
+}
+
+.accountCallout p:not(.eyebrow) {
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--color-reading-muted);
+  line-height: 1.6;
+}
+
+.accountCallout .textAction {
+  color: var(--color-reading-ink);
 }
 
 @media (max-width: 900px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .heroArt {
-    min-height: 330px;
-    grid-row: 1;
-  }
-
-  .heroArt::after {
-    background: linear-gradient(0deg, var(--color-surface), transparent 40%);
+  .heroCopy {
+    width: min(68%, 42rem);
   }
 
   .how {
     grid-template-columns: 1fr;
-    gap: 28px;
   }
 
   .accountCallout {
@@ -352,32 +423,84 @@
 
 @media (max-width: 640px) {
   .page {
-    padding-bottom: 64px;
+    width: min(100% - 1.5rem, 92rem);
+    padding-bottom: 4rem;
+  }
+
+  .hero {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .heroArt {
-    min-height: 260px;
+    position: relative;
+    z-index: 0;
+    order: 2;
+    height: 13rem;
+  }
+
+  .heroArt::after {
+    display: none;
+  }
+
+  .worldImage {
+    object-position: 66% center;
   }
 
   .heroCopy {
-    padding: 28px 22px 34px;
+    order: 1;
+    width: 100%;
+    padding: 2rem 1.35rem 2.2rem;
   }
 
   .hero h1 {
-    font-size: clamp(39px, 11vw, 56px);
+    max-width: 12ch;
+    font-size: clamp(2.9rem, 12vw, 4.3rem);
   }
 
-  .sectionHeading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
+  .lead {
+    margin-top: 1.1rem;
+    font-size: 1rem;
   }
 
-  .learning {
-    padding-top: 64px;
+  .heroActions {
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .heroActions :is(.primaryAction, .secondaryAction) {
+    padding-inline: 0.85rem;
+  }
+
+  .journeyCard {
+    min-height: 17rem;
   }
 
   .how {
-    padding: 84px 0;
+    margin-top: 4rem;
+    padding: 1.75rem 1.3rem;
+  }
+
+  .steps li {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .steps span {
+    grid-row: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryAction,
+  .journeyCard {
+    transition: none;
+  }
+
+  .primaryAction:hover,
+  .journeyCard:hover {
+    transform: none;
   }
 }

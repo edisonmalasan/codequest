@@ -19,6 +19,10 @@ See `proposal.md` for motivation. `LessonPageView` currently renders a two-colum
 
 ## Decisions
 
+### Visual contract inherited from the frontend refresh
+
+The revised production visual roles are recorded in `docs/frontend-visual-refresh.md`. R06 should put lesson prose on the warm reading surface, the single editor and results on bounded dark work surfaces, and the shared context/action strip on the midnight world canvas. Use readable sans for lesson and exercise headings; reserve the pixel face for compact game labels. The original world images belong to discovery and should not compete with long lesson prose or editor output. Desktop shows lesson, editor, and results together. Tablet preserves the lesson/editor relationship while giving results a direct named control. Narrow layouts use explicit Lesson, Code, and Results access without remounting CodeMirror or losing source, output, focus, or status. CSS reflow must not imply that a local Check is backend accepted. This contract is a design handoff; current production Quest presentation is still vertically separated and R05 founder acceptance remains the R06 Apply entry gate.
+
 ### 1. Use a Quest-owned composition shell and workspace presentation seam
 
 The Quest route owns curriculum context, lesson reading, hints, breadcrumbs, guest labels, and error/loading states. The existing Editor Workspace continues to own files, source, autosave, Run, Check, preview, and current results. Add an optional presentation mode or render-region seam inside Editor Workspace so a parent can place editor and result regions separately without creating a second controller. Keep its default standalone layout intact. Avoid duplicating source and validation state in the Quest parent; that would create stale result and autosave races.

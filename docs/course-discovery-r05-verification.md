@@ -2,6 +2,8 @@
 
 **Review dates:** 2026-10-02 to 2026-10-03 (Asia/Manila). **Status:** technical implementation and local integration verified; founder acceptance open. This local result is not a beta release candidate or hosted evidence.
 
+**Visual revision:** The founder requested a broader frontend redesign after this original R05 record. The original implementation and screenshots remain historical evidence. The revised Home, catalog, Journey, and Course views are linked from [frontend visual refresh verification](frontend-visual-refresh-verification.md). Founder acceptance must be recorded against the revised implementation and environment; the earlier R05 visual review request does not count as acceptance of the revised build.
+
 ## Identity and publication review
 
 The migration places the existing Foundations content beneath one stable Course (`COURSE-JS-FOUNDATIONS`). It retains the Journey ID, seven Chapter IDs, 25 Quest IDs, and selected content/assessment versions. Against the pre-Apply `origin/main` tree, all 25 Quest manifest IDs match and all 104 relocated immutable snapshot files have identical Git blob hashes. The history guard allows only this exact byte-identical path relocation; changed relocated bytes fail its regression test. The backend content validator and public API expose one reviewed Course with seven chapters and 25 exercises. An authored draft Course is excluded from publication and public reads.

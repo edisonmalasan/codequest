@@ -7,38 +7,38 @@ export default function Home(): React.JSX.Element {
   return (
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="home-title">
+        <div className={styles.heroArt} aria-hidden="true">
+          <Image
+            src="/assets/design-system/worlds/signal-road.webp"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 800px) 100vw, 100vw"
+            className={styles.worldImage}
+          />
+        </div>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>A new path through code</p>
-          <h1 id="home-title">Your next world starts with one line.</h1>
+          <p className={styles.eyebrow}>Learn by building</p>
+          <h1 id="home-title">Make code work.</h1>
           <p className={styles.lead}>
-            Learn to build for the web through short lessons, hands-on code, and
-            a path you can see.
+            Read a little. Try it yourself. See what changed, then take the next
+            step.
           </p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryAction} href="/courses">
-              Explore learning <span aria-hidden="true">↗</span>
+              Explore courses <span aria-hidden="true">↗</span>
             </Link>
             <Link className={styles.secondaryAction} href="/onboarding">
               How it works <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <p className={styles.heroNote}>
-            Start as a guest where supported. Guest work stays on this device
-            until you choose to import it into an account.
-          </p>
-        </div>
-        <div className={styles.heroArt} aria-hidden="true">
-          <Image
-            src="/assets/design-system/worlds/foundations-valley.webp"
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 800px) 100vw, 54vw"
-            className={styles.worldImage}
-          />
-          <span className={styles.artCaption}>01 / FOUNDATIONS VALLEY</span>
         </div>
       </section>
+
+      <p className={styles.heroNote}>
+        Guest lessons are available where supported. Guest work stays on this
+        device until you choose to import it into an account.
+      </p>
 
       <section
         id="learning"
@@ -46,22 +46,15 @@ export default function Home(): React.JSX.Element {
         aria-labelledby="learning-title"
       >
         <div className={styles.sectionHeading}>
-          <div>
-            <p className={styles.eyebrow}>Choose a direction</p>
-            <h2 id="learning-title">A route for every first step.</h2>
-          </div>
-          <p>
-            These learning paths come from the published curriculum. Open one to
-            see its real chapters and exercises.
-          </p>
+          <h2 id="learning-title">Choose a route. Start making.</h2>
+          <p>Open a published path to see its chapters and exercises.</p>
         </div>
         <HomeLearning />
       </section>
 
       <section className={styles.how} aria-labelledby="how-title">
         <div className={styles.howIntro}>
-          <p className={styles.eyebrow}>The way forward</p>
-          <h2 id="how-title">Read it. Write it. See what happens.</h2>
+          <h2 id="how-title">Learn it, test it, make it yours.</h2>
           <p>
             Each exercise gives you a place to try code, inspect the result, and
             use feedback to find your next move.

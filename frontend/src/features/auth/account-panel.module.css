@@ -1,0 +1,58 @@
+.record {
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border-color: var(--color-line-strong);
+  background: var(--color-world-panel);
+}
+
+.record > h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  letter-spacing: -0.035em;
+}
+
+.email {
+  overflow-wrap: anywhere;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.identity {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-world-night);
+  font-size: 0.9rem;
+}
+
+.identity dd {
+  overflow-wrap: anywhere;
+}
+
+.settings,
+.fact {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.settings input {
+  max-width: 28rem;
+  background: var(--color-world-night);
+}
+
+.fact h2,
+.fact p:first-child {
+  font-family: var(--font-heading);
+}
+
+@media (max-width: 520px) {
+  .settings,
+  .fact {
+    padding-inline: 0;
+  }
+}

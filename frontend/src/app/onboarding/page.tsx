@@ -1,16 +1,18 @@
 import Link from 'next/link';
+import styles from '../supporting-page.module.css';
 
 export default function OnboardingPage(): React.JSX.Element {
   return (
-    <main className="mx-auto min-h-screen max-w-3xl space-y-8 px-5 py-10 text-ink sm:px-8">
-      <header className="space-y-3">
-        <h1 className="font-display text-3xl">Start your learning journey</h1>
-        <p className="leading-7 text-muted">
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <p className={styles.kicker}>Your first steps</p>
+        <h1>Start with a small win.</h1>
+        <p>
           Practice JavaScript in short quests. Run and Check give immediate
           local feedback; accepted account progress is handled by the backend.
         </p>
       </header>
-      <ol className="list-inside list-decimal space-y-5 leading-7">
+      <ol className={styles.steps}>
         <li>
           Explore JavaScript Foundations and try guest quests Q01–Q04. Guest
           work is provisional and stays on this device.
@@ -25,7 +27,7 @@ export default function OnboardingPage(): React.JSX.Element {
           rejected work remains on this device for recovery.
         </li>
       </ol>
-      <nav aria-label="Next steps" className="flex flex-wrap gap-4">
+      <nav aria-label="Next steps" className={styles.actions}>
         <Link
           className="font-bold text-ascent underline"
           href="/journeys/javascript-foundations"

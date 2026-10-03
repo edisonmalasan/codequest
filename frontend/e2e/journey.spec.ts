@@ -114,10 +114,10 @@ test('Home, catalog, Journey, Course, and Exercise remain connected at desktop a
 }) => {
   await installCurriculum(page);
   await page.goto('/');
-  await page.getByRole('link', { name: 'Explore learning' }).click();
+  await page.getByRole('link', { name: /Explore courses/ }).click();
   await expect(page).toHaveURL(/\/courses$/);
   await expect(
-    page.getByRole('heading', { name: 'Find your next path.' }),
+    page.getByRole('heading', { name: 'Find what you will build next.' }),
   ).toBeVisible();
   await page.getByRole('link', { name: /JavaScript Foundations/ }).click();
   await expect(page).toHaveURL(/\/courses\/javascript-foundations$/);

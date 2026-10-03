@@ -1,0 +1,32 @@
+.page {
+  width: min(100%, 72rem);
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  color: var(--color-ink);
+}
+
+.library {
+  margin-top: clamp(2rem, 5vw, 4rem);
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
+}
+
+.library h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.3rem, 5vw, 4.4rem);
+  font-weight: 830;
+  letter-spacing: -0.06em;
+  line-height: 1.08;
+}
+
+.lesson {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-world-night);
+}

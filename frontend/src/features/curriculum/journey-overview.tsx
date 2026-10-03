@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
@@ -67,7 +68,18 @@ export function JourneyOverview({
           <span aria-current="page">{journey.title}</span>
         </nav>
         <header className={styles.hero}>
-          <p className={styles.eyebrow}>LEARNING JOURNEY</p>
+          {journey.slug === 'javascript-foundations' && (
+            <span className={styles.heroArt} aria-hidden="true">
+              <Image
+                src="/assets/design-system/worlds/signal-road.webp"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 760px) 100vw, 80vw"
+              />
+            </span>
+          )}
+          <p className={styles.eyebrow}>Learning Journey</p>
           <h1>{journey.title}</h1>
           <p>
             {journey.courses.length}{' '}
@@ -84,10 +96,11 @@ export function JourneyOverview({
           </ul>
         </section>
         <section aria-labelledby="journey-courses">
-          <p className={styles.eyebrow}>CHOOSE A COURSE</p>
           <h2 id="journey-courses">Your route through this Journey</h2>
           {journey.courses.length ? (
-            <ol className={styles.list}>
+            <ol
+              className={`${styles.list} ${journey.courses.length === 1 ? styles.singleList : ''}`}
+            >
               {[...journey.courses]
                 .sort((a, b) => a.position - b.position)
                 .map((course) => (
@@ -102,6 +115,9 @@ export function JourneyOverview({
                         {course.chapterCount} chapters · {course.questCount}{' '}
                         exercises
                       </small>
+                      <span className={styles.courseArrow} aria-hidden="true">
+                        ↗
+                      </span>
                     </Link>
                   </li>
                 ))}

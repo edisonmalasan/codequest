@@ -145,7 +145,7 @@ export function GuestImportPanel({
       aria-label="Guest learning import"
       className="space-y-3 border-t border-line pt-5"
     >
-      <h2 className="font-display text-xl font-bold">
+      <h2 className="font-sans text-xl font-bold tracking-tight">
         Guest learning on this device
       </h2>
       <p className="text-sm text-muted">
@@ -167,7 +167,7 @@ export function GuestImportPanel({
       {records.map((record) => (
         <div
           key={record.questId}
-          className="rounded-md border border-line p-3 text-sm"
+          className="rounded-md border border-line bg-surface-sunken p-4 text-sm"
         >
           <p className="font-bold">
             {record.questId}:{' '}

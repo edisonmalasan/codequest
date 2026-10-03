@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import type { JourneySummary, PublicApiResult } from '@/lib/api-client';
 import styles from '@/app/homepage.module.css';
@@ -88,27 +89,37 @@ export function HomeLearning({
 
   return (
     <div className={styles.journeyGrid}>
-      {state.journeys.map((journey, index) => (
-        <Link
-          key={journey.id}
-          href={`/journeys/${encodeURIComponent(journey.slug)}`}
-          className={styles.journeyCard}
-        >
-          <span className={styles.journeyIndex}>
-            {String(index + 1).padStart(2, '0')} / PUBLISHED JOURNEY
-          </span>
-          <span className={styles.journeyGlyph} aria-hidden="true">
-            ◇
-          </span>
-          <strong>{journey.title}</strong>
-          <span>
-            {journey.chapterCount} chapters · {journey.questCount} exercises
-          </span>
-          <span className={styles.journeyArrow} aria-hidden="true">
-            ↗
-          </span>
-        </Link>
-      ))}
+      {state.journeys.map((journey, index) => {
+        const hasWorldArt = journey.slug === 'javascript-foundations';
+        return (
+          <Link
+            key={journey.id}
+            href={`/journeys/${encodeURIComponent(journey.slug)}`}
+            className={`${styles.journeyCard} ${hasWorldArt ? styles.journeyCardFeatured : ''}`}
+          >
+            {hasWorldArt && (
+              <span className={styles.journeyArt} aria-hidden="true">
+                <Image
+                  src="/assets/design-system/worlds/beacon-city.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 800px) 100vw, 80vw"
+                />
+              </span>
+            )}
+            <span className={styles.journeyIndex}>
+              Published journey {String(index + 1).padStart(2, '0')}
+            </span>
+            <strong>{journey.title}</strong>
+            <span>
+              {journey.chapterCount} chapters · {journey.questCount} exercises
+            </span>
+            <span className={styles.journeyArrow} aria-hidden="true">
+              ↗
+            </span>
+          </Link>
+        );
+      })}
     </div>
   );
 }

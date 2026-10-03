@@ -1,0 +1,41 @@
+.page {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 1.25rem;
+  background: var(--color-world-night);
+  color: var(--color-ink);
+}
+
+.panel {
+  width: min(100%, 35rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
+}
+
+.panel h1 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 5vw, 3.3rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.1;
+}
+
+.panel p {
+  margin: 1rem 0 2rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.panel button {
+  min-height: 2.75rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-ascent);
+  color: var(--color-ascent-ink);
+  font-weight: 750;
+  cursor: pointer;
+}

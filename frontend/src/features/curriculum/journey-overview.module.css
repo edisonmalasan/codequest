@@ -1,88 +1,244 @@
 .page {
   min-height: 100dvh;
-  padding: 2rem 1.25rem 6rem;
+  padding: 1.25rem 0 6rem;
+  background: var(--color-world-night);
   color: var(--color-ink);
-  background: var(--color-canvas);
 }
+
 .inner {
-  max-width: 75rem;
+  width: min(100% - 2.5rem, 84rem);
   margin-inline: auto;
 }
+
 .crumbs {
   display: flex;
+  min-height: 2.75rem;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.6rem;
-  min-height: 2.75rem;
+  margin-bottom: 1.5rem;
   color: var(--color-muted);
+  font-size: 0.85rem;
 }
+
 .crumbs a {
   color: var(--color-discovery);
 }
+
 .hero {
-  padding-block: clamp(3rem, 7vw, 7rem);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 23rem;
+  align-content: end;
+  justify-items: start;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-world-panel);
 }
+
+.heroArt {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+}
+
+.heroArt img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-world-night),
+    rgb(8 15 32 / 92%) 35%,
+    rgb(8 15 32 / 18%) 82%
+  );
+  content: '';
+}
+
+.hero > :not(.heroArt) {
+  position: relative;
+  z-index: 2;
+}
+
 .eyebrow,
-.list span {
+.list span:not(.courseArrow) {
   color: var(--color-ascent);
   font: 700 0.75rem var(--font-mono);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
+
 .hero h1 {
-  max-width: 62rem;
+  max-width: 15ch;
   margin: 0.8rem 0 1rem;
-  font: 700 clamp(3rem, 7vw, 6rem)/1.04 var(--font-display);
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 840;
+  letter-spacing: -0.07em;
+  line-height: 1.03;
 }
+
 .hero > p:last-child {
+  margin: 0;
   color: var(--color-muted);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
 }
+
 .info {
-  max-width: 54rem;
-  margin-bottom: 5rem;
-  padding: 2rem;
-  border-left: 3px solid var(--color-discovery);
-  background: var(--color-surface-raised);
+  margin-block: clamp(2.5rem, 4vw, 4rem);
+  padding: clamp(1.8rem, 4vw, 3.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-reading-surface);
+  color: var(--color-reading-ink);
 }
+
 .info h2,
 .page section > h2 {
-  font: 700 clamp(1.6rem, 3vw, 2.4rem)/1.2 var(--font-display);
+  max-width: 26ch;
+  margin: 0 0 1.4rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-weight: 810;
+  letter-spacing: -0.055em;
+  line-height: 1.1;
 }
+
+.info ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem 2rem;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
 .info li {
-  margin-top: 0.65rem;
-  color: var(--color-muted);
+  color: var(--color-reading-muted);
   line-height: 1.55;
 }
+
 .list {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
-.list a {
-  display: grid;
-  gap: 0.75rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  min-height: 13rem;
-  border: 1px solid var(--color-line-strong);
-  background: var(--color-surface);
+
+.singleList {
+  grid-template-columns: 1fr;
 }
+
+.list a {
+  position: relative;
+  display: flex;
+  min-height: 16rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-world-panel);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition:
+    transform var(--duration-base) var(--ease-ui),
+    border-color var(--duration-base);
+}
+
 .list a:hover {
   border-color: var(--color-ascent);
+  transform: translateY(-2px);
 }
+
 .list strong {
-  font: 700 clamp(1.6rem, 3vw, 2.5rem)/1.15 var(--font-display);
+  max-width: 24ch;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 810;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
 }
+
 .list p {
   max-width: 45rem;
+  margin: 0;
   color: var(--color-muted);
   line-height: 1.6;
 }
+
 .list small {
   color: var(--color-discovery);
+  font-size: 0.85rem;
   font-weight: 700;
 }
+
+.courseArrow {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--color-ascent);
+  font-size: 1.2rem;
+}
+
 .page :is(a, button):focus-visible {
   outline: 3px solid var(--color-reward);
   outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .inner {
+    width: min(100% - 1.5rem, 84rem);
+  }
+
+  .hero {
+    min-height: 23rem;
+    padding: 1.8rem;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      0deg,
+      var(--color-world-night),
+      rgb(8 15 32 / 90%) 45%,
+      rgb(8 15 32 / 15%) 100%
+    );
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 10vw, 4rem);
+  }
+
+  .info ul,
+  .list,
+  .singleList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list a {
+    transition: none;
+  }
+
+  .list a:hover {
+    transform: none;
+  }
 }

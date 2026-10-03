@@ -131,7 +131,7 @@ test('home and authentication have a named keyboard path with visible focus', as
   await page.goto('/');
   await expect(page.getByRole('main')).toHaveCount(1);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Your next world starts with one line.',
+    'Make code work.',
   );
   const skipLink = page.getByRole('link', { name: 'Skip to main content' });
   if (browserName === 'webkit') {
@@ -140,7 +140,7 @@ test('home and authentication have a named keyboard path with visible focus', as
     await page.keyboard.press('Tab');
   }
   await expect(skipLink).toBeFocused();
-  const learningLink = page.getByRole('link', { name: 'Explore learning' });
+  const learningLink = page.getByRole('link', { name: /Explore courses/ });
   await learningLink.focus();
   await expect(learningLink).toBeFocused();
   const homeOutline = await learningLink.evaluate(

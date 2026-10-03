@@ -10,7 +10,7 @@
 
 - [ ] 2.1 Compose the existing lesson document, hints, Quest context, Editor Workspace, output/results, and working actions into one desktop learning shell; verify a component test shows three simultaneous named regions and one active workspace controller.
 - [ ] 2.2 Preserve current Quest loading, not-found, retry, guest restriction, offline, pending submission, and failed local-save messaging in the new shell; verify focused state tests and existing lesson/workspace tests pass.
-- [ ] 2.3 Align visual tokens, typography, pane dimensions, scroll boundaries, and action placement with the approved original design direction; verify real desktop screenshots at 1280 and 1440 CSS pixels show lesson, code, and output together without page-level overflow.
+- [ ] 2.3 Align visual tokens, typography, pane dimensions, scroll boundaries, and action placement with the frontend visual contract in `docs/frontend-visual-refresh.md` and this change's design; verify real desktop screenshots at 1280 and 1440 CSS pixels show lesson, code, and output together without page-level overflow.
 
 ## 3. Tablet, mobile, and accessibility behavior
 

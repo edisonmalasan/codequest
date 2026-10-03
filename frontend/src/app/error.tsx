@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { getBrowserMonitoring } from '@/features/monitoring/browser-monitoring';
+import styles from './error.module.css';
 
 const reportedErrors = new WeakSet<Error>();
 
@@ -18,12 +19,14 @@ export default function RouteError({
     getBrowserMonitoring()?.capture('route_render', error);
   }, [error]);
   return (
-    <main role="alert" className="mx-auto max-w-xl p-8">
-      <h1>Something went wrong</h1>
-      <p>Your work is still on this device. Try loading this view again.</p>
-      <button type="button" onClick={reset}>
-        Try again
-      </button>
+    <main role="alert" className={styles.page}>
+      <div className={styles.panel}>
+        <h1>Something went wrong</h1>
+        <p>Your work is still on this device. Try loading this view again.</p>
+        <button type="button" onClick={reset}>
+          Try again
+        </button>
+      </div>
     </main>
   );
 }

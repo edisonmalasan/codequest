@@ -16,6 +16,7 @@ import { getBrowserSupabaseClient } from './supabase-browser';
 import { GuestImportPanel } from './guest-import-panel';
 import { PendingWorkPanel } from '@/features/progress-sync/pending-work-panel';
 import { ACCOUNT_REFRESH } from '@/features/progress-sync/trusted-sync';
+import styles from './account-panel.module.css';
 
 type LoadState =
   | { readonly status: 'loading' }
@@ -208,8 +209,8 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
   }
 
   return (
-    <Card title="Current account" className="space-y-5">
-      <p className="text-sm text-muted">Signed in as {email}</p>
+    <Card title="Learning record" className={styles.record}>
+      <p className={styles.email}>Signed in as {email}</p>
       {state.status === 'loading' && (
         <p role="status" className="text-sm text-muted">
           Establishing your account…
@@ -231,7 +232,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
       )}
       {state.status === 'ready' && (
         <>
-          <dl className="grid gap-2 text-sm">
+          <dl className={styles.identity}>
             <div>
               <dt className="font-bold text-muted">Player ID</dt>
               <dd className="font-mono text-ink">{state.account.id}</dd>
@@ -242,7 +243,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
             </div>
           </dl>
           <form
-            className="space-y-2"
+            className={styles.settings}
             onSubmit={(event) => {
               event.preventDefault();
               void saveTimezone();
@@ -277,7 +278,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               Save timezone
             </Button>
           </form>
-          <section aria-label="Learner streak" className="space-y-2 text-sm">
+          <section aria-label="Learner streak" className={styles.fact}>
             <h2 className="font-display text-lg text-ink">Learning streak</h2>
             {streakState.status === 'loading' && (
               <p role="status">Loading streak…</p>
@@ -305,7 +306,7 @@ export function AccountPanel({ email }: { email: string }): React.JSX.Element {
               </>
             )}
           </section>
-          <section aria-label="Level progress" className="space-y-3">
+          <section aria-label="Level progress" className={styles.fact}>
             {xpState.status === 'loading' && (
               <p role="status" className="text-sm text-muted">
                 Loading level progress…

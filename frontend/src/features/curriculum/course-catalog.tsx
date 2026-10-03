@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import {
   createCodequestApi,
@@ -75,11 +76,11 @@ export function CourseCatalog({
           ← Home
         </Link>
         <header className={styles.header}>
-          <p className={styles.eyebrow}>THE COURSE LIBRARY</p>
-          <h1>Find your next path.</h1>
+          <p className={styles.eyebrow}>Courses</p>
+          <h1>Find what you will build next.</h1>
           <p>
-            Choose from complete, published courses. Each path opens real
-            chapters and exercises you can work through now.
+            Explore published courses with real chapters and exercises you can
+            start now.
           </p>
         </header>
         {state.status === 'loading' && (
@@ -156,24 +157,43 @@ export function CourseCatalog({
                   {visible.length} published{' '}
                   {visible.length === 1 ? 'course' : 'courses'}
                 </p>
-                <ol className={styles.list}>
+                <ol
+                  className={`${styles.list} ${visible.length === 1 ? styles.singleList : ''}`}
+                >
                   {visible.map((course, index) => (
                     <li key={course.id}>
                       <Link
                         className={styles.journey}
                         href={`/journeys/${encodeURIComponent(course.journeySlug)}`}
                       >
-                        View Journey
+                        Explore the Journey <span aria-hidden="true">→</span>
                       </Link>
                       <Link
                         href={`/courses/${encodeURIComponent(course.slug)}`}
-                        className={styles.course}
+                        className={`${styles.course} ${course.id === 'COURSE-JS-FOUNDATIONS' ? styles.courseFeatured : ''}`}
                       >
+                        {course.id === 'COURSE-JS-FOUNDATIONS' && (
+                          <span className={styles.courseArt} aria-hidden="true">
+                            <Image
+                              src="/assets/design-system/worlds/beacon-city.webp"
+                              alt=""
+                              fill
+                              sizes="(max-width: 720px) 100vw, 80vw"
+                            />
+                          </span>
+                        )}
                         <span className={styles.number}>
-                          {String(index + 1).padStart(2, '0')} / COURSE
+                          Course {String(index + 1).padStart(2, '0')}
                         </span>
                         <strong>{course.title}</strong>
                         <span className={styles.summary}>{course.summary}</span>
+                        {course.topics.length > 0 && (
+                          <span className={styles.topics}>
+                            {course.topics
+                              .map((item) => item.replaceAll('-', ' '))
+                              .join(' · ')}
+                          </span>
+                        )}
                         <span className={styles.meta}>
                           {course.chapterCount} chapters · {course.questCount}{' '}
                           exercises
