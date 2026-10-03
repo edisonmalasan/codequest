@@ -48,6 +48,7 @@ async function fulfill(route: Route, json: unknown, status = 200) {
 async function installCurriculum(page: Page) {
   await page.route('http://127.0.0.1:3001/api/v1/**', async (route) => {
     const path = new URL(route.request().url()).pathname;
+    if (path === '/api/v1/journeys') return fulfill(route, [journeySummary]);
     if (path === '/api/v1/catalog/courses') return fulfill(route, [course]);
     if (path === '/api/v1/catalog/courses/javascript-foundations')
       return fulfill(route, {
@@ -187,6 +188,12 @@ test('Course catalog excludes unpublished courses and recovers from an API error
 test('discovery screens reflow across review widths', async ({ page }) => {
   test.setTimeout(180_000);
   await installCurriculum(page);
+  const pageErrors: string[] = [];
+  const consoleErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
   const routes = [
     { name: 'home', path: '/', heading: 'Write code. Open worlds.' },
     { name: 'catalog', path: '/courses', heading: 'Choose your next world.' },
@@ -205,16 +212,56 @@ test('discovery screens reflow across review widths', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {
       await page.goto(route.path);
-      await expect(page.getByRole('heading', { level: 1, name: route.heading })).toBeVisible();
-      await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
+      await expect(
+        page.getByRole('heading', { level: 1, name: route.heading }),
+      ).toBeVisible();
+      await page.addStyleTag({
+        content: 'nextjs-portal { display: none !important; }',
+      });
       await page.screenshot({
         path: `test-results/composition-${route.name}-${width}.png`,
         fullPage: true,
       });
+      await expect
+        .poll(() =>
+          page
+            .locator('img')
+            .first()
+            .evaluate(
+              (image: HTMLImageElement) =>
+                image.complete && image.naturalWidth > 0,
+            ),
+        )
+        .toBe(true);
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth),
         `${route.name} at ${width}px`,
       ).toBeLessThanOrEqual(width);
     }
   }
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test('world image failure keeps discovery text and actions available', async ({
+  page,
+}) => {
+  await installCurriculum(page);
+  await page.route('**/assets/design-system/worlds/*.webp', (route) =>
+    route.abort(),
+  );
+  await page.goto('/');
+  await expect(
+    page.getByRole('heading', { name: 'Write code. Open worlds.' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: /Start learning/ }),
+  ).toBeVisible();
+  await page.goto('/courses');
+  await expect(
+    page.getByRole('heading', { name: 'Choose your next world.' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('searchbox', { name: 'Search courses' }),
+  ).toBeVisible();
 });
