@@ -2,7 +2,7 @@
 
 ## Course discovery (R05)
 
-The active [production visual refresh](frontend-visual-refresh.md) revises the shared Home-to-Course presentation while preserving the published-content, owner-state, and route contracts below. Its [local verification record](frontend-visual-refresh-verification.md) links the browser screenshots and open evidence rows; revised founder visual acceptance remains a separate gate.
+The [production visual refresh](frontend-visual-refresh.md) is technically integrated and archived. Its [local verification record](frontend-visual-refresh-verification.md) links browser screenshots and checks; revised founder visual acceptance remains a separate gate. The published-content, owner-state, and route contracts below remain in force.
 
 The Home learning action and global Courses navigation open `/courses`. Its search and topic filter use only the published public Course collection; failures show Retry and never substitute draft cards. A Course card links to `/courses/:slug`, with a separate owning Journey link to `/journeys/:slug`. The Journey overview lists its published Courses; the Course page lists authored outcomes, chapters, exercises, and a first eligible path. Existing `/quests/:slug` bookmarks still work. Account progress and availability on a Course require a complete owner-scoped protected response. Guest work shown on the Course page comes only from device-local records and is labeled provisional. The UI does not treat a public catalog count or a local Check as accepted account progress.
 
