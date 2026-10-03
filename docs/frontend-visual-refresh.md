@@ -1,6 +1,6 @@
 # Production frontend visual refresh
 
-**Status:** Apply work in progress. This is a design and route audit for the real frontend, not founder acceptance or release evidence. Phase 38 remains paused and `NO GO`.
+**Status:** Implemented, verified locally and in CI, synced, and archived. This design record is technical evidence; the revised Home-to-Course founder acceptance gate remains open. Phase 38 remains paused and `NO GO`.
 
 ## Design read
 

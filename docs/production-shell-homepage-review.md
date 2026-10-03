@@ -1,6 +1,6 @@
 # Production shell and home review
 
-**Later visual revision:** The founder requested a new production frontend direction on 2026-10-03. The acceptance below remains a record for the exact R03 build; the revised Home and shell require a new exact-build founder review under [the active visual redesign change](../openspec/changes/reimagine-codequest-frontend-visuals/proposal.md).
+**Later visual revision:** The founder requested a new production frontend direction on 2026-10-03. The acceptance below remains a record for the exact R03 build; the revised Home and shell implemented under [the archived production visual revision](../openspec/changes/archive/2026-10-03-reimagine-codequest-frontend-visuals/proposal.md) require a new exact-build founder review.
 
 ## Route audit
 
