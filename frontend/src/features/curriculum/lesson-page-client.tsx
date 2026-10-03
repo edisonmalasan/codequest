@@ -72,6 +72,9 @@ export function LessonPageView({
   readonly offlineAssets?: ReadonlyMap<string, string>;
 }): React.JSX.Element {
   const [activityError, setActivityError] = useState(false);
+  const [activePanel, setActivePanel] = useState<'lesson' | 'code' | 'results'>(
+    'lesson',
+  );
   const progressApi = useMemo(
     () =>
       createCodequestApi({
@@ -164,8 +167,29 @@ export function LessonPageView({
         </Link>
         <Badge variant="outline">Lesson</Badge>
       </header>
-      <div className={styles.layout}>
-        <article className="min-w-0">
+      <div
+        className={styles.panelControls}
+        role="group"
+        aria-label="Learning regions"
+      >
+        {(['lesson', 'code', 'results'] as const).map((panel) => (
+          <button
+            key={panel}
+            type="button"
+            aria-pressed={activePanel === panel}
+            onClick={() => setActivePanel(panel)}
+            className={styles.panelButton}
+          >
+            {panel === 'lesson'
+              ? 'Lesson'
+              : panel === 'code'
+                ? 'Code'
+                : 'Results'}
+          </button>
+        ))}
+      </div>
+      <div className={styles.learningShell} data-active-panel={activePanel}>
+        <article aria-label="Lesson region" className={styles.lessonRegion}>
           <nav
             aria-label="Lesson breadcrumb"
             className="flex flex-wrap items-center gap-2 text-sm text-muted"
@@ -203,9 +227,6 @@ export function LessonPageView({
               <Badge variant="neutral">Version {quest.contentVersion}</Badge>
             </div>
           </header>
-          {!offline && (
-            <DownloadLessonButton quest={quest} apiBaseUrl={apiBaseUrl} />
-          )}
           <section aria-label="Lesson content" className={styles.reading}>
             <LessonDocument
               markdown={quest.lesson}
@@ -228,25 +249,34 @@ export function LessonPageView({
               </p>
             )}
           </div>
+          {!offline && (
+            <div className="mt-5">
+              <DownloadLessonButton quest={quest} apiBaseUrl={apiBaseUrl} />
+            </div>
+          )}
+          <aside className={styles.briefing}>
+            <p className="game-label text-xs text-discovery">Quest briefing</p>
+            <h2 className="mt-2 font-sans text-xl font-bold">Concepts</h2>
+            <ul className="mt-4 space-y-2 text-sm leading-6 text-muted">
+              {quest.concepts.map((concept) => (
+                <li key={concept.id}>
+                  <span className="font-mono text-discovery">{concept.id}</span>{' '}
+                  · {concept.title}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 border-t border-line pt-5 text-sm leading-6 text-muted">
+              Local checks give feedback; the backend decides personal-learning
+              acceptance.
+            </p>
+          </aside>
         </article>
-        <aside className={styles.briefing}>
-          <p className="game-label text-xs text-discovery">Quest briefing</p>
-          <h2 className="mt-2 font-sans text-xl font-bold">Concepts</h2>
-          <ul className="mt-4 space-y-2 text-sm leading-6 text-muted">
-            {quest.concepts.map((concept) => (
-              <li key={concept.id}>
-                <span className="font-mono text-discovery">{concept.id}</span> ·{' '}
-                {concept.title}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 border-t border-line pt-5 text-sm leading-6 text-muted">
-            Practice below. Local checks give feedback; the backend decides
-            personal-learning acceptance.
-          </p>
-        </aside>
+        <QuestWorkspace
+          quest={quest}
+          offline={offline}
+          activePanel={activePanel}
+        />
       </div>
-      <QuestWorkspace quest={quest} offline={offline} />
     </main>
   );
 }

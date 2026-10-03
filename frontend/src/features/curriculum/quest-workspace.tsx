@@ -79,9 +79,11 @@ export function questValidationDefinition(
 export function QuestWorkspace({
   quest,
   offline = false,
+  activePanel,
 }: {
   readonly quest: QuestDetail;
   readonly offline?: boolean;
+  readonly activePanel?: 'lesson' | 'code' | 'results';
 }): React.JSX.Element | null {
   const [ownerId, setOwnerId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -357,14 +359,9 @@ export function QuestWorkspace({
   if (!definition)
     return <p role="status">This quest has no supported local assessment.</p>;
   return (
-    <section
-      aria-label="Quest workspace"
-      className="mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8"
-    >
-      <h2 className="mb-4 font-display text-2xl font-bold">
-        Practice and submit
-      </h2>
-      <p className="mb-5 text-sm text-muted">
+    <section aria-label="Quest workspace" className="min-w-0">
+      <h2 className="sr-only">Practice and submit</h2>
+      <p className="mb-3 text-sm leading-6 text-muted">
         {offline
           ? 'Run and Check stay local and provisional. Signed-in Submit saves a snapshot on this device for delivery after reconnecting. Account completion and rewards require backend acceptance.'
           : ownerId === null
@@ -372,6 +369,8 @@ export function QuestWorkspace({
             : 'Run and Check stay local. Submit sends your source and check report to CodeQuest for a personal-learning decision.'}
       </p>
       <EditorWorkspace
+        presentation={activePanel ? 'integrated' : 'standalone'}
+        activePanel={activePanel}
         key={ownerId ?? 'guest'}
         ownerId={ownerId ?? 'guest'}
         workspaceId={`${quest.id}-${quest.contentVersion}`}

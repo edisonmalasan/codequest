@@ -116,10 +116,23 @@ test('selected authored cases run through isolated browser Check', async ({
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible();
-  await page.getByRole('button', { name: 'Load code editor' }).click();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
+  const loadEditor = page.getByRole('button', { name: 'Load code editor' });
+  await expect
+    .poll(
+      async () => (await editor.isVisible()) || (await loadEditor.isVisible()),
+    )
+    .toBe(true);
+  if (!(await editor.isVisible())) {
+    try {
+      await loadEditor.click({ timeout: 2_000 });
+    } catch (error) {
+      if (!(await editor.isVisible())) throw error;
+    }
+  }
+  await expect(editor).toBeVisible();
   await editor.click();
   await page.keyboard.press('Control+A');
   await page.keyboard.insertText(fixture.source);

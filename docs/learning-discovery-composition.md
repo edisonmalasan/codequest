@@ -1,6 +1,6 @@
 # Learning discovery composition
 
-This record guides the production Home, catalog, Journey, and Course revision under `refine-learning-discovery-composition`. The current visual-refresh screenshots are the before state. Public-product research informed general density, illustrated-world, and course-path principles; no external screenshot or asset is included here. The R05 founder gate remains open.
+This record guides the production Home, catalog, Journey, and Course revision under `refine-learning-discovery-composition`. The current visual-refresh screenshots are the before state. Public-product research informed general density, illustrated-world, and course-path principles; no external screenshot or asset is included here.
 
 | Route                                                        | Current composition                                                                                                     | Revision target                                                                                                                                                                           | Review widths                    |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
@@ -44,4 +44,20 @@ The browser reflow sweep also captured all four routes at 1280, 820, and 320 CSS
 
 On 2026-10-03 the Apply branch passed `pnpm test` (including 426 frontend tests), `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm api:check`, and `openspec validate refine-learning-discovery-composition --strict`. The Home and Journey Chromium browser suites passed after selectors were updated for the new visible copy. The Chromium accessibility suite's keyboard, contrast, reduced-motion, target-size, and reflow checks passed; one initial run failed solely on the retired Home link label and the focused rerun passed after correction. The 20-route-width capture test passed with no horizontal document overflow. No API contract or backend application behavior changed.
 
-The founder visual acceptance row for R05 remains **open**. These local captures use synthetic curriculum and cannot prove live published-content density, real Auth, or hosted behavior. R06 implementation remains gated by the existing acceptance workflow.
+## R05 founder acceptance
+
+| Field | Record |
+| --- | --- |
+| Capability/scenario | R05 Home-to-Course visual and navigation build shown in this record |
+| Release/build/commit | Apply implementation `97d168c`; merge PR #204 (`416cf46`); archived main `10f48f5` |
+| Environment | Local browser review with synthetic published curriculum; 1440 and 390 CSS-pixel screenshots linked above |
+| Tester | CodeQuest founder (decision); implementation and browser checks by development agent |
+| Date | 2026-10-04 (Asia/Manila) |
+| Expected behavior | Home, catalog, Journey, and Course expose a coherent published path and responsive navigation |
+| Observed behavior | The founder reviewed the exact PR #204 build represented by this record and replied: “Accept this exact R05 build.” The technical observations and capture limits are recorded above; the founder supplied no separate observation notes. |
+| Pass/fail | **Pass for the R05 visual/navigation entry gate into R06** |
+| Defect | None reported in the founder decision; this does not assert that real Auth or hosted integration works. |
+| Retest | Required if the accepted R05 visual/navigation build is materially changed. |
+| Final founder acceptance | Explicit acceptance of this exact R05 build for the R06 entry gate. This is not R06 acceptance or full V1 Founder Acceptance. |
+
+These local captures use synthetic curriculum and cannot prove live published-content density, real Auth, or hosted behavior. Those separate gates remain open.

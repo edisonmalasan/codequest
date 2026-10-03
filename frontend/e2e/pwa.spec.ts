@@ -332,8 +332,18 @@ test('explicit download opens offline with local Run Check and retained draft', 
     name: 'main.js code editor (javascript)',
   });
   const loadEditor = offline.getByRole('button', { name: 'Load code editor' });
-  await expect(loadEditor).toBeVisible();
-  await loadEditor.click();
+  await expect
+    .poll(
+      async () => (await editor.isVisible()) || (await loadEditor.isVisible()),
+    )
+    .toBe(true);
+  if (!(await editor.isVisible())) {
+    try {
+      await loadEditor.click({ timeout: 2_000 });
+    } catch (error) {
+      if (!(await editor.isVisible())) throw error;
+    }
+  }
   await expect(editor).toBeVisible();
   await offline.getByRole('button', { name: 'Run', exact: true }).click();
   await expect(offline.getByText(/Completed in .* seconds/)).toBeVisible();
@@ -387,8 +397,19 @@ test('explicit download opens offline with local Run Check and retained draft', 
   const reloadEditor = offline.getByRole('button', {
     name: 'Load code editor',
   });
-  await expect(reloadEditor).toBeVisible();
-  await reloadEditor.click();
+  await expect
+    .poll(
+      async () =>
+        (await editor.isVisible()) || (await reloadEditor.isVisible()),
+    )
+    .toBe(true);
+  if (!(await editor.isVisible())) {
+    try {
+      await reloadEditor.click({ timeout: 2_000 });
+    } catch (error) {
+      if (!(await editor.isVisible())) throw error;
+    }
+  }
   await expect(
     offline.getByRole('textbox', { name: 'main.js code editor (javascript)' }),
   ).toContainText('retained offline source');

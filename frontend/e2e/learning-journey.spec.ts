@@ -40,6 +40,15 @@ async function edit(page: Page, source: string) {
   await page.keyboard.insertText(source);
 }
 
+async function showLearningPanel(
+  page: Page,
+  panel: 'Code' | 'Results',
+): Promise<void> {
+  if ((page.viewportSize()?.width ?? 1280) <= 1100) {
+    await page.getByRole('button', { name: panel, exact: true }).click();
+  }
+}
+
 test('accepted Q01 links owner attempt, progress, XP, streak and Q02 unlock exactly once', async ({
   request,
 }) => {
@@ -148,13 +157,17 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
       submittedAuthorization = request.headers().authorization;
   });
   await page.goto(`/quests/${q01.slug}`);
+  await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible();
   await edit(page, q01.reference);
   await page.getByRole('button', { name: 'Run', exact: true }).click();
+  await showLearningPanel(page, 'Results');
   await expect(page.getByText('I am ready to code!').last()).toBeVisible();
+  await showLearningPanel(page, 'Code');
   await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
   await expect(page.getByText(/Local check passed/)).toBeVisible();
   await expect(
     page.getByText(/Provisional completion saved on this device/),
@@ -184,11 +197,13 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(page.getByText(q01.reference, { exact: true })).toBeVisible();
 
   await page.goto(`/quests/${q02.slug}`);
+  await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible();
   await edit(page, q02.reference);
   await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
   await expect(page.getByText(/Local check passed/)).toBeVisible();
   await page.getByRole('button', { name: 'Submit attempt' }).click();
   await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();

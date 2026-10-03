@@ -88,6 +88,8 @@ export interface EditorWorkspaceProps {
     readonly responses?: Readonly<Record<string, string>>;
   }) => void;
   submitting?: boolean;
+  presentation?: 'standalone' | 'integrated';
+  activePanel?: 'lesson' | 'code' | 'results';
 }
 
 interface ExecutionPresentation {
@@ -193,6 +195,8 @@ export function EditorWorkspace({
   onSubmit,
   onCheckComplete,
   submitting,
+  presentation = 'standalone',
+  activePanel,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify([
     files.map(({ id, name, language, starterSource }) => ({
@@ -681,12 +685,91 @@ export function EditorWorkspace({
     );
   }
 
+  const actionBar = (
+    <div className="learning-actions rounded-md border border-line bg-surface-raised p-4">
+      <WorkspaceActions
+        onSave={saveCurrent}
+        onReset={requestReset}
+        onRun={
+          executionAdapter && activeFile.language === 'javascript'
+            ? runCurrent
+            : undefined
+        }
+        onCancel={
+          executionAdapter && activeFile.language === 'javascript'
+            ? cancelExecution
+            : undefined
+        }
+        onCheck={
+          validationStrategy &&
+          validationDefinition &&
+          activeFile.language === 'javascript'
+            ? checkCurrent
+            : undefined
+        }
+        onCancelCheck={
+          validationStrategy
+            ? () => validationControllerRef.current?.abort()
+            : undefined
+        }
+        onSubmit={
+          onSubmit &&
+          validationResult &&
+          checkedSourceRef.current !== null &&
+          checkedSourceRef.current ===
+            (sources[activeFile.id] ?? activeFile.starterSource)
+            ? () => {
+                const checkedSource = checkedSourceRef.current;
+                if (
+                  checkedSource !== null &&
+                  checkedSource ===
+                    (sourcesRef.current[activeFile.id] ??
+                      activeFile.starterSource)
+                )
+                  onSubmit({
+                    source: checkedSource,
+                    validation: validationResult,
+                    ...(responseFields.length > 0
+                      ? {
+                          responses: Object.fromEntries(
+                            responseFields.map((field) => [
+                              field.id,
+                              sourcesRef.current[responseDraftId(field.id)] ??
+                                '',
+                            ]),
+                          ),
+                        }
+                      : {}),
+                  });
+              }
+            : undefined
+        }
+        submitting={submitting}
+        checking={checking}
+        onPreview={previewAdapter ? () => showPreview(false) : undefined}
+        onReload={
+          previewAdapter && previewResult ? () => showPreview(true) : undefined
+        }
+        onCancelPreview={
+          previewAdapter
+            ? () => previewControllerRef.current?.abort()
+            : undefined
+        }
+        previewRunning={previewRunning}
+        running={execution.running}
+        disabled={!hydrated || saveStatus === 'saving'}
+      />
+    </div>
+  );
+
   return (
     <section
       ref={workspaceRef}
       aria-labelledby={titleId}
       onKeyDown={onWorkspaceKeyDown}
-      className="min-w-0 overflow-hidden rounded-lg border border-line-strong bg-surface text-ink shadow-soft"
+      data-presentation={presentation}
+      data-active-panel={activePanel}
+      className="learning-workspace min-w-0 overflow-hidden rounded-lg border border-line-strong bg-surface text-ink shadow-soft"
     >
       <div className="border-b border-line bg-surface-raised px-4 py-4 sm:px-5">
         <p className="game-label text-xs text-discovery">Local coding space</p>
@@ -720,13 +803,19 @@ export function EditorWorkspace({
         }}
         panelId={panelId}
       />
+      {presentation === 'integrated' && actionBar}
       {preferenceError && (
         <p role="status" className="px-4 text-sm text-danger sm:px-5">
           File selection could not be saved on this device.
         </p>
       )}
-      <div className="grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
-        <div id={panelId} role="tabpanel" className="min-w-0">
+      <div className="learning-workspace-grid grid min-w-0 gap-4 p-3 sm:p-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div
+          id={panelId}
+          role="tabpanel"
+          aria-label="Code editor"
+          className="learning-code-region min-w-0"
+        >
           <p id={editorHelpId} className="mb-2 text-xs leading-5 text-muted">
             Tab indents code. Press Ctrl+M to let Tab move focus out of the
             editor (Option+Shift+M on Mac).
@@ -738,11 +827,13 @@ export function EditorWorkspace({
             descriptionId={editorHelpId}
             onChange={updateSource}
           />
-          <div className="mt-4">
-            <ConsolePanel
-              lines={executionAdapter ? execution.lines : consoleLines}
-            />
-          </div>
+          {presentation === 'standalone' && (
+            <div className="mt-4">
+              <ConsolePanel
+                lines={executionAdapter ? execution.lines : consoleLines}
+              />
+            </div>
+          )}
           {responseFields.length > 0 && (
             <section aria-label="Written responses" className="mt-5 space-y-4">
               <h2 className="font-display text-xl font-bold">
@@ -782,7 +873,7 @@ export function EditorWorkspace({
               ))}
             </section>
           )}
-          {previewAdapter && (
+          {presentation === 'standalone' && previewAdapter && (
             <div className="mt-4">
               <PreviewPanel
                 hostRef={previewHostRef}
@@ -793,9 +884,25 @@ export function EditorWorkspace({
           )}
         </div>
         <aside
-          aria-label="Workspace information"
-          className="grid content-start gap-4"
+          aria-label={
+            presentation === 'integrated'
+              ? 'Results region'
+              : 'Workspace information'
+          }
+          className="learning-results-region grid min-w-0 content-start gap-4"
         >
+          {presentation === 'integrated' && (
+            <ConsolePanel
+              lines={executionAdapter ? execution.lines : consoleLines}
+            />
+          )}
+          {presentation === 'integrated' && previewAdapter && (
+            <PreviewPanel
+              hostRef={previewHostRef}
+              result={previewResult}
+              running={previewRunning}
+            />
+          )}
           <RuntimeStatus
             state={executionAdapter ? execution.state : runtimeState}
           />
@@ -806,83 +913,7 @@ export function EditorWorkspace({
             validation={validationResult}
             checking={checking}
           />
-          <div className="rounded-md border border-line bg-surface-raised p-4">
-            <WorkspaceActions
-              onSave={saveCurrent}
-              onReset={requestReset}
-              onRun={
-                executionAdapter && activeFile.language === 'javascript'
-                  ? runCurrent
-                  : undefined
-              }
-              onCancel={
-                executionAdapter && activeFile.language === 'javascript'
-                  ? cancelExecution
-                  : undefined
-              }
-              onCheck={
-                validationStrategy &&
-                validationDefinition &&
-                activeFile.language === 'javascript'
-                  ? checkCurrent
-                  : undefined
-              }
-              onCancelCheck={
-                validationStrategy
-                  ? () => validationControllerRef.current?.abort()
-                  : undefined
-              }
-              onSubmit={
-                onSubmit &&
-                validationResult &&
-                checkedSourceRef.current !== null &&
-                checkedSourceRef.current ===
-                  (sources[activeFile.id] ?? activeFile.starterSource)
-                  ? () => {
-                      const checkedSource = checkedSourceRef.current;
-                      if (
-                        checkedSource !== null &&
-                        checkedSource ===
-                          (sourcesRef.current[activeFile.id] ??
-                            activeFile.starterSource)
-                      )
-                        onSubmit({
-                          source: checkedSource,
-                          validation: validationResult,
-                          ...(responseFields.length > 0
-                            ? {
-                                responses: Object.fromEntries(
-                                  responseFields.map((field) => [
-                                    field.id,
-                                    sourcesRef.current[
-                                      responseDraftId(field.id)
-                                    ] ?? '',
-                                  ]),
-                                ),
-                              }
-                            : {}),
-                        });
-                    }
-                  : undefined
-              }
-              submitting={submitting}
-              checking={checking}
-              onPreview={previewAdapter ? () => showPreview(false) : undefined}
-              onReload={
-                previewAdapter && previewResult
-                  ? () => showPreview(true)
-                  : undefined
-              }
-              onCancelPreview={
-                previewAdapter
-                  ? () => previewControllerRef.current?.abort()
-                  : undefined
-              }
-              previewRunning={previewRunning}
-              running={execution.running}
-              disabled={!hydrated || saveStatus === 'saving'}
-            />
-          </div>
+          {presentation === 'standalone' && actionBar}
           <p className="text-xs leading-5 text-muted">
             Drafts stay in this browser. They are not cloud backups and do not
             record progress.
