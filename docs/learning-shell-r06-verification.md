@@ -31,6 +31,7 @@ The same browser test checked 640 and 320 CSS pixels without document overflow. 
 - Chromium Playwright accessibility/reflow: 3 tests passed.
 - Chromium Playwright published lesson and standalone workspace: 3 tests passed.
 - Focused production PWA offline-download/Run/Check/draft recovery path: 1 test passed after the test accepted either a lazy-load button or an already-mounted editor.
+- Focused production cold/subsequent Run and Check performance path: 1 test passed with the visible editor loading either automatically or through its explicit button.
 - Impeccable mechanical design detector: no findings on changed UI files.
 
 ## Boundaries and remaining acceptance

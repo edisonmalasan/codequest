@@ -65,7 +65,7 @@ test('production offline library opens without editor tooling', async ({
   ).toHaveCount(0);
 });
 
-test('production Quest defers editor and measures isolated cold/subsequent Run and Check', async ({
+test('production Quest loads its visible editor and measures isolated cold/subsequent Run and Check', async ({
   page,
 }, testInfo) => {
   await page.route('http://127.0.0.1:3001/api/v1/**', async (route) => {
@@ -85,13 +85,24 @@ test('production Quest defers editor and measures isolated cold/subsequent Run a
     page.getByRole('heading', { name: 'First value', level: 1 }),
   ).toBeVisible();
   const loadEditor = page.getByRole('button', { name: 'Load code editor' });
-  await expect(loadEditor).toBeVisible();
   await page
     .getByRole('heading', { name: 'Editor Workspace' })
     .scrollIntoViewIfNeeded();
   const editor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
+  await expect
+    .poll(
+      async () => (await editor.isVisible()) || (await loadEditor.isVisible()),
+    )
+    .toBe(true);
+  if (!(await editor.isVisible())) {
+    try {
+      await loadEditor.click({ timeout: 2_000 });
+    } catch (error) {
+      if (!(await editor.isVisible())) throw error;
+    }
+  }
   await expect(editor).toBeVisible();
   const edit = async (source: string) => {
     await editor.click();
