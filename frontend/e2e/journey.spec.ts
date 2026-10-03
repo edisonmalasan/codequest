@@ -114,10 +114,10 @@ test('Home, catalog, Journey, Course, and Exercise remain connected at desktop a
 }) => {
   await installCurriculum(page);
   await page.goto('/');
-  await page.getByRole('link', { name: /Explore courses/ }).click();
+  await page.getByRole('link', { name: /Start learning/ }).click();
   await expect(page).toHaveURL(/\/courses$/);
   await expect(
-    page.getByRole('heading', { name: 'Find what you will build next.' }),
+    page.getByRole('heading', { name: 'Choose your next world.' }),
   ).toBeVisible();
   await page.getByRole('link', { name: /JavaScript Foundations/ }).click();
   await expect(page).toHaveURL(/\/courses\/javascript-foundations$/);
@@ -182,4 +182,39 @@ test('Course catalog excludes unpublished courses and recovers from an API error
   await expect(
     page.getByRole('link', { name: /JavaScript Foundations/ }),
   ).toBeVisible();
+});
+
+test('discovery screens reflow across review widths', async ({ page }) => {
+  test.setTimeout(180_000);
+  await installCurriculum(page);
+  const routes = [
+    { name: 'home', path: '/', heading: 'Write code. Open worlds.' },
+    { name: 'catalog', path: '/courses', heading: 'Choose your next world.' },
+    {
+      name: 'journey',
+      path: '/journeys/javascript-foundations',
+      heading: 'JavaScript Foundations',
+    },
+    {
+      name: 'course',
+      path: '/courses/javascript-foundations',
+      heading: 'JavaScript Foundations',
+    },
+  ];
+  for (const width of [1440, 1280, 820, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of routes) {
+      await page.goto(route.path);
+      await expect(page.getByRole('heading', { level: 1, name: route.heading })).toBeVisible();
+      await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
+      await page.screenshot({
+        path: `test-results/composition-${route.name}-${width}.png`,
+        fullPage: true,
+      });
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+        `${route.name} at ${width}px`,
+      ).toBeLessThanOrEqual(width);
+    }
+  }
 });

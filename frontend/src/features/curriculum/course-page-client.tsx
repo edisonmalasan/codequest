@@ -260,136 +260,144 @@ export function CoursePageClient({
             {course.chapterCount} chapters · {course.questCount} exercises
           </span>
         </header>
-        {owner.id ? (
-          !complete ? (
-            <p role="alert" className={styles.notice}>
-              Saved progress is unavailable. The outline remains visible;
-              exercise availability cannot be confirmed right now.
-            </p>
-          ) : (
-            <p role="status" className={styles.notice}>
-              {trusted.completedQuests} of {trusted.totalQuests} exercises
-              completed from your account.
-            </p>
-          )
-        ) : (
-          <p
-            role={guestFacts === null ? 'alert' : 'status'}
-            className={styles.notice}
-          >
-            {guestFacts === null
-              ? 'Device progress is unavailable. Exercises remain available, but provisional completion cannot be confirmed.'
-              : 'Guest work is provisional on this device. Sign in to see backend-accepted progress.'}
-          </p>
-        )}
-        {nextQuest && (
-          <Link
-            className={styles.next}
-            href={`/quests/${encodeURIComponent(nextQuest.slug)}`}
-          >
-            {complete ? 'Continue learning' : 'Start guest practice'}:{' '}
-            {nextQuest.title}
-          </Link>
-        )}
-        <section className={styles.outcomes} aria-labelledby="course-outcomes">
-          <h2 id="course-outcomes">Course outcomes</h2>
-          <ul>
-            {course.outcomes.map((outcome) => (
-              <li key={outcome.id}>{outcome.description}</li>
-            ))}
-          </ul>
-        </section>
-        <section aria-labelledby="course-chapters">
-          <p className={styles.eyebrow}>Your route</p>
-          <h2 id="course-chapters">Chapters and exercises</h2>
-          <ol className={styles.chapters}>
-            {chapters.map((chapter) => {
-              const saved = complete
-                ? trustedChapters.get(chapter.id)
-                : undefined;
-              const savedQuests = new Map(
-                saved?.quests.map((quest) => [quest.questId, quest]),
-              );
-              return (
-                <li key={chapter.id} className={styles.chapter}>
-                  <div className={styles.chapterHeading}>
-                    <span>
-                      CHAPTER {String(chapter.position).padStart(2, '0')}
-                    </span>
-                    <h3>{chapter.title}</h3>
-                    <p>{chapter.objectiveSummary}</p>
-                    {saved && (
-                      <small>
-                        {saved.completedQuests} / {saved.totalQuests} complete
-                      </small>
-                    )}
-                  </div>
-                  <ol className={styles.quests}>
-                    {[...chapter.quests]
-                      .sort((a, b) => a.position - b.position)
-                      .map((quest) => {
-                        const fact = savedQuests.get(quest.id);
-                        const guestFact = guestFacts?.find(
-                          (item) => item.questId === quest.id,
-                        );
-                        const guestComplete =
-                          guestFact?.submission?.contentVersion ===
-                            quest.contentVersion &&
-                          guestFact.submission.assessmentVersion ===
-                            quest.assessmentVersion;
-                        const status = complete
-                          ? fact?.status === 'completed'
-                            ? 'Completed'
-                            : fact?.availability === 'locked'
-                              ? 'Locked'
-                              : 'Available'
-                          : owner.id
-                            ? 'Availability unavailable'
-                            : !quest.guestEligible
-                              ? 'Sign in to practice'
-                              : guestComplete
-                                ? 'Completed on this device · provisional'
-                                : guestFact
-                                  ? 'Started on this device · provisional'
-                                  : 'Guest practice · provisional';
-                        const nodeStatus: QuestStatus = complete
-                          ? fact?.status === 'completed'
-                            ? 'completed'
-                            : fact?.availability === 'locked'
-                              ? 'locked'
-                              : 'available'
-                          : owner.id
-                            ? 'unavailable'
-                            : !quest.guestEligible
-                              ? 'locked'
-                              : guestComplete
-                                ? 'completed'
-                                : guestFact
-                                  ? 'in_progress'
-                                  : 'available';
-                        return (
-                          <QuestNode
-                            key={quest.id}
-                            className={styles.quest}
-                            label={quest.title}
-                            status={nodeStatus}
-                            statusText={status}
-                            description={`Exercise ${String(quest.position).padStart(2, '0')}${fact?.unmetPrerequisites.length ? ` · Requires ${fact.unmetPrerequisites.map((item) => item.title).join(', ')}` : ''}`}
-                            href={
-                              nodeStatus === 'locked' ||
-                              nodeStatus === 'unavailable'
-                                ? undefined
-                                : `/quests/${encodeURIComponent(quest.slug)}`
-                            }
-                          />
-                        );
-                      })}
-                  </ol>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
+        <div className={styles.learningLayout}>
+          <aside className={styles.context} aria-label="Your course context">
+            <p className={styles.eyebrow}>Your place</p>
+            {owner.id ? (
+              !complete ? (
+                <p role="alert" className={styles.notice}>
+                  Saved progress is unavailable. The outline remains visible;
+                  exercise availability cannot be confirmed right now.
+                </p>
+              ) : (
+                <p role="status" className={styles.notice}>
+                  {trusted.completedQuests} of {trusted.totalQuests} exercises
+                  completed from your account.
+                </p>
+              )
+            ) : (
+              <p
+                role={guestFacts === null ? 'alert' : 'status'}
+                className={styles.notice}
+              >
+                {guestFacts === null
+                  ? 'Device progress is unavailable. Exercises remain available, but provisional completion cannot be confirmed.'
+                  : 'Guest work is provisional on this device. Sign in to see backend-accepted progress.'}
+              </p>
+            )}
+            {nextQuest && (
+              <Link
+                className={styles.next}
+                href={`/quests/${encodeURIComponent(nextQuest.slug)}`}
+              >
+                {complete ? 'Continue learning' : 'Start guest practice'}:{' '}
+                {nextQuest.title}
+              </Link>
+            )}
+            <section
+              className={styles.outcomes}
+              aria-labelledby="course-outcomes"
+            >
+              <h2 id="course-outcomes">Course outcomes</h2>
+              <ul>
+                {course.outcomes.map((outcome) => (
+                  <li key={outcome.id}>{outcome.description}</li>
+                ))}
+              </ul>
+            </section>
+          </aside>
+          <section aria-labelledby="course-chapters">
+            <p className={styles.eyebrow}>Your route</p>
+            <h2 id="course-chapters">Chapters and exercises</h2>
+            <ol className={styles.chapters}>
+              {chapters.map((chapter) => {
+                const saved = complete
+                  ? trustedChapters.get(chapter.id)
+                  : undefined;
+                const savedQuests = new Map(
+                  saved?.quests.map((quest) => [quest.questId, quest]),
+                );
+                return (
+                  <li key={chapter.id} className={styles.chapter}>
+                    <div className={styles.chapterHeading}>
+                      <span>
+                        CHAPTER {String(chapter.position).padStart(2, '0')}
+                      </span>
+                      <h3>{chapter.title}</h3>
+                      <p>{chapter.objectiveSummary}</p>
+                      {saved && (
+                        <small>
+                          {saved.completedQuests} / {saved.totalQuests} complete
+                        </small>
+                      )}
+                    </div>
+                    <ol className={styles.quests}>
+                      {[...chapter.quests]
+                        .sort((a, b) => a.position - b.position)
+                        .map((quest) => {
+                          const fact = savedQuests.get(quest.id);
+                          const guestFact = guestFacts?.find(
+                            (item) => item.questId === quest.id,
+                          );
+                          const guestComplete =
+                            guestFact?.submission?.contentVersion ===
+                              quest.contentVersion &&
+                            guestFact.submission.assessmentVersion ===
+                              quest.assessmentVersion;
+                          const status = complete
+                            ? fact?.status === 'completed'
+                              ? 'Completed'
+                              : fact?.availability === 'locked'
+                                ? 'Locked'
+                                : 'Available'
+                            : owner.id
+                              ? 'Availability unavailable'
+                              : !quest.guestEligible
+                                ? 'Sign in to practice'
+                                : guestComplete
+                                  ? 'Completed on this device · provisional'
+                                  : guestFact
+                                    ? 'Started on this device · provisional'
+                                    : 'Guest practice · provisional';
+                          const nodeStatus: QuestStatus = complete
+                            ? fact?.status === 'completed'
+                              ? 'completed'
+                              : fact?.availability === 'locked'
+                                ? 'locked'
+                                : 'available'
+                            : owner.id
+                              ? 'unavailable'
+                              : !quest.guestEligible
+                                ? 'locked'
+                                : guestComplete
+                                  ? 'completed'
+                                  : guestFact
+                                    ? 'in_progress'
+                                    : 'available';
+                          return (
+                            <QuestNode
+                              key={quest.id}
+                              className={styles.quest}
+                              label={quest.title}
+                              status={nodeStatus}
+                              statusText={status}
+                              description={`Exercise ${String(quest.position).padStart(2, '0')}${fact?.unmetPrerequisites.length ? ` · Requires ${fact.unmetPrerequisites.map((item) => item.title).join(', ')}` : ''}`}
+                              href={
+                                nodeStatus === 'locked' ||
+                                nodeStatus === 'unavailable'
+                                  ? undefined
+                                  : `/quests/${encodeURIComponent(quest.slug)}`
+                              }
+                            />
+                          );
+                        })}
+                    </ol>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        </div>
       </div>
     </main>
   );

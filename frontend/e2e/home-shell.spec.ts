@@ -53,7 +53,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(
     page.getByRole('heading', {
-      name: 'Make code work.',
+      name: 'Write code. Open worlds.',
     }),
   ).toBeVisible();
   await expect(
@@ -66,7 +66,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
   await expect
     .poll(() =>
       page
-        .locator('img[src*="signal-road"]')
+        .locator('img[src*="daybreak-frontier"]')
         .evaluate(
           (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
         ),
@@ -108,7 +108,7 @@ for (const width of [1280, 820, 390, 320]) {
     await page.goto('/');
     await expect(
       page.getByRole('heading', {
-        name: 'Make code work.',
+        name: 'Write code. Open worlds.',
       }),
     ).toBeVisible();
     await expect(

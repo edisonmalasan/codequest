@@ -9,7 +9,7 @@ export default function Home(): React.JSX.Element {
       <section className={styles.hero} aria-labelledby="home-title">
         <div className={styles.heroArt} aria-hidden="true">
           <Image
-            src="/assets/design-system/worlds/signal-road.webp"
+            src="/assets/design-system/worlds/daybreak-frontier.webp"
             alt=""
             fill
             priority
@@ -18,15 +18,14 @@ export default function Home(): React.JSX.Element {
           />
         </div>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Learn by building</p>
-          <h1 id="home-title">Make code work.</h1>
+          <p className={styles.eyebrow}>Welcome to CodeQuest</p>
+          <h1 id="home-title">Write code. Open worlds.</h1>
           <p className={styles.lead}>
-            Read a little. Try it yourself. See what changed, then take the next
-            step.
+            Learn one idea, try it in the editor, and see what your code can do.
           </p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryAction} href="/courses">
-              Explore courses <span aria-hidden="true">↗</span>
+              Start learning <span aria-hidden="true">↗</span>
             </Link>
             <Link className={styles.secondaryAction} href="/onboarding">
               How it works <span aria-hidden="true">→</span>
@@ -46,8 +45,11 @@ export default function Home(): React.JSX.Element {
         aria-labelledby="learning-title"
       >
         <div className={styles.sectionHeading}>
-          <h2 id="learning-title">Choose a route. Start making.</h2>
-          <p>Open a published path to see its chapters and exercises.</p>
+          <h2 id="learning-title">Your path starts here.</h2>
+          <p>
+            Explore the learning path available now, with real chapters and
+            exercises.
+          </p>
         </div>
         <HomeLearning />
       </section>
