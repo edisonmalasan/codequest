@@ -14,6 +14,7 @@ import {
   acceptedProgressRepository,
   lessonSnapshotRepository,
 } from '@/lib/local-persistence';
+import styles from './offline-learning-client.module.css';
 
 export function OfflineLearningClient(): React.JSX.Element {
   const [owner, setOwner] = useState<string | null>(null);
@@ -145,13 +146,13 @@ export function OfflineLearningClient(): React.JSX.Element {
       </>
     );
   return (
-    <main className="mx-auto min-h-screen max-w-5xl px-5 py-8 text-ink">
+    <main className={styles.page}>
       <header className="flex items-center justify-between gap-4">
         <CodeQuestLogo />
         <span className="game-label text-sm">Offline learning</span>
       </header>
-      <section className="pixel-corners pixel-frame mt-10 bg-surface-raised p-7">
-        <h1 className="font-display text-3xl font-bold">Downloaded lessons</h1>
+      <section className={styles.library}>
+        <h1>Downloaded lessons</h1>
         <p className="mt-4 text-muted">
           Saved lessons and drafts stay on this device. Clearing browser data
           can remove them. Local Checks are provisional; cached account progress
@@ -194,11 +195,8 @@ export function OfflineLearningClient(): React.JSX.Element {
                     item.assessmentVersion === row.assessmentVersion,
                 );
                 return (
-                  <li
-                    key={row.id}
-                    className="rounded-md border border-line bg-surface-sunken p-4"
-                  >
-                    <h2 className="font-display text-xl font-bold">
+                  <li key={row.id} className={styles.lesson}>
+                    <h2 className="font-sans text-xl font-bold">
                       {row.snapshot.title}
                     </h2>
                     <p className="mt-2 text-sm text-muted">

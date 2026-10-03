@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { AccountPanel } from '@/features/auth/account-panel';
 import { getTrustedAuthSession } from '@/features/auth/auth-session';
+import styles from '../supporting-page.module.css';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,12 +10,11 @@ export default async function AccountPage(): Promise<React.JSX.Element> {
   if (session === undefined) redirect('/login?next=%2Faccount');
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl space-y-8 px-5 py-10 sm:px-8">
-      <header className="space-y-2">
-        <p className="font-mono text-xs uppercase tracking-widest text-ascent">
-          Secure checkpoint
-        </p>
-        <h1 className="font-display text-3xl text-ink">Your account</h1>
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <p className={styles.kicker}>Your space</p>
+        <h1>Your account</h1>
+        <p>Manage your profile, learning record, and saved work.</p>
       </header>
       <AccountPanel email={session.user.email ?? 'Verified learner'} />
     </main>

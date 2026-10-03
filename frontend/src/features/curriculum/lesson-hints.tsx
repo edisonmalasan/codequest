@@ -18,12 +18,12 @@ export function LessonHints({
   return (
     <section
       aria-labelledby="lesson-hints-heading"
-      className="rounded-lg border border-line bg-surface-raised p-5 sm:p-6"
+      className="rounded-lg border border-line-strong bg-surface-raised p-5 sm:p-6"
     >
       <p className="game-label text-xs text-reward">Need a signal?</p>
       <h2
         id="lesson-hints-heading"
-        className="mt-2 font-display text-2xl font-bold"
+        className="mt-2 font-sans text-2xl font-bold tracking-tight"
       >
         Graduated hints
       </h2>

@@ -125,7 +125,7 @@ export function PendingWorkPanel({
       aria-label="Pending account work"
       className="space-y-3 border-t border-line pt-5"
     >
-      <h2 className="font-display text-xl font-bold">
+      <h2 className="font-sans text-xl font-bold tracking-tight">
         Submissions on this device
       </h2>
       <p className="text-sm text-muted">
@@ -161,7 +161,7 @@ export function PendingWorkPanel({
         return (
           <div
             key={row.eventId}
-            className="rounded-md border border-line p-3 text-sm"
+            className="rounded-md border border-line bg-surface-sunken p-4 text-sm"
           >
             <p className="font-bold">
               {row.questId}:{' '}

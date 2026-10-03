@@ -20,16 +20,16 @@
 
 ## 4. Auth, account, and supporting routes
 
-- [ ] 4.1 Apply the shared visual language to login, register, recovery, password update, and onboarding without changing form fields or auth actions; verify form-state tests and local browser layouts with synthetic/no-account states only.
+- [x] 4.1 Apply the shared visual language to login, register, recovery, password update, and onboarding without changing form fields or auth actions; verify form-state tests and local browser layouts with synthetic/no-account states only.
 - [ ] 4.2 Recompose account, guest import, pending work, and feedback presentation without changing owner authority, pending state, or local-only feedback behavior; verify focused state tests and browser captures with controlled fixtures.
 - [ ] 4.3 Align offline-learning and shared error/recovery routes with the new visual language while preserving offline and retry behavior; verify existing offline/error tests and responsive browser checks.
 - [ ] 4.4 Record consistent error/loading/empty/status treatment for these routes; verify no protected payload, secret, or false account claim appears in screenshots or documentation.
 
 ## 5. Published lesson presentation and R06 handoff
 
-- [ ] 5.1 Refresh current published lesson typography, hints, and workspace framing in the revised visual language without adding a second editor controller or changing Run/Check/Submit authority; verify existing lesson/workspace tests and local desktop/mobile browser behavior.
-- [ ] 5.2 Reconcile the active R06 design/tasks with the accepted visual roles before its Apply, keeping its R05 founder gate explicit; verify strict validation of both active changes and inspect their diff.
-- [ ] 5.3 Document the visual contract for the future persistent lesson/editor/results shell, including desktop/tablet/mobile hierarchy and source-safe panel behavior; verify the handoff matches the existing R06 specification and does not claim R06 implementation.
+- [x] 5.1 Refresh current published lesson typography, hints, and workspace framing in the revised visual language without adding a second editor controller or changing Run/Check/Submit authority; verify existing lesson/workspace tests and local desktop/mobile browser behavior.
+- [x] 5.2 Reconcile the active R06 design/tasks with the accepted visual roles before its Apply, keeping its R05 founder gate explicit; verify strict validation of both active changes and inspect their diff.
+- [x] 5.3 Document the visual contract for the future persistent lesson/editor/results shell, including desktop/tablet/mobile hierarchy and source-safe panel behavior; verify the handoff matches the existing R06 specification and does not claim R06 implementation.
 
 ## 6. Integrated visual review and founder gate
 

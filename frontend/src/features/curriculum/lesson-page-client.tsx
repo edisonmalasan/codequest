@@ -19,6 +19,7 @@ import { LessonHints } from './lesson-hints';
 import { QuestWorkspace } from './quest-workspace';
 import { captureObserved } from '@/features/analytics/observed-analytics';
 import { DownloadLessonButton } from '@/features/offline-learning/download-lesson-button';
+import styles from './lesson-page-client.module.css';
 
 export interface LessonApi {
   getQuest(
@@ -152,7 +153,7 @@ export function LessonPageView({
     ? '/offline-learning'
     : `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
   return (
-    <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
+    <main className={styles.page}>
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
         <Link
           href="/"
@@ -163,7 +164,7 @@ export function LessonPageView({
         </Link>
         <Badge variant="outline">Lesson</Badge>
       </header>
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 pb-16 sm:px-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+      <div className={styles.layout}>
         <article className="min-w-0">
           <nav
             aria-label="Lesson breadcrumb"
@@ -183,13 +184,11 @@ export function LessonPageView({
               {quest.hierarchy.chapter.title}
             </Link>
           </nav>
-          <header className="pixel-corners pixel-frame mt-6 bg-surface-raised p-6 sm:p-8">
+          <header className={styles.questHeader}>
             <p className="game-label text-xs text-ascent">
               {offline ? 'Saved offline quest' : 'Published quest'} · {quest.id}
             </p>
-            <h1 className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">
-              {quest.title}
-            </h1>
+            <h1 className={styles.questTitle}>{quest.title}</h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
               {quest.objective}
             </p>
@@ -207,10 +206,7 @@ export function LessonPageView({
           {!offline && (
             <DownloadLessonButton quest={quest} apiBaseUrl={apiBaseUrl} />
           )}
-          <section
-            aria-label="Lesson content"
-            className="mt-8 max-w-[72ch] rounded-lg border border-line bg-surface-raised px-5 py-7 shadow-soft sm:px-8 sm:py-9"
-          >
+          <section aria-label="Lesson content" className={styles.reading}>
             <LessonDocument
               markdown={quest.lesson}
               questSlug={quest.slug}
@@ -233,9 +229,9 @@ export function LessonPageView({
             )}
           </div>
         </article>
-        <aside className="rounded-lg border border-line bg-surface-raised p-5 lg:sticky lg:top-6">
+        <aside className={styles.briefing}>
           <p className="game-label text-xs text-discovery">Quest briefing</p>
-          <h2 className="mt-2 font-display text-xl font-bold">Concepts</h2>
+          <h2 className="mt-2 font-sans text-xl font-bold">Concepts</h2>
           <ul className="mt-4 space-y-2 text-sm leading-6 text-muted">
             {quest.concepts.map((concept) => (
               <li key={concept.id}>
