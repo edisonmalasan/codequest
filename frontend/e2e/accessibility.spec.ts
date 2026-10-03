@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { join } from 'node:path';
 
 const journeySummary = {
   id: 'JAVASCRIPT-FOUNDATIONS',
@@ -215,10 +216,6 @@ test('Journey, lesson, and editor preserve semantic and keyboard access', async 
       ?.height,
     'lesson home target height',
   ).toBeGreaterThanOrEqual(44);
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'Editor Workspace' }),
-  ).toBeVisible();
-
   const hint = page.locator('summary').filter({ hasText: '1. Question hint' });
   await hint.focus();
   await expect(hint).toBeFocused();
@@ -230,6 +227,11 @@ test('Journey, lesson, and editor preserve semantic and keyboard access', async 
   ).toBeGreaterThanOrEqual(2);
   await page.keyboard.press('Enter');
   await expect(hint.locator('..')).toHaveAttribute('open', '');
+
+  await page.getByRole('button', { name: 'Code', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'Editor Workspace' }),
+  ).toBeVisible();
 
   await page
     .getByRole('heading', { name: 'Editor Workspace', level: 2 })
@@ -260,11 +262,69 @@ test('Journey, lesson, and editor preserve semantic and keyboard access', async 
   await expect(reset).toBeFocused();
   await expect(editor).toContainText('keep this draft');
   await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await page.getByRole('button', { name: 'Results', exact: true }).click();
   await expect(
     page
       .getByRole('status')
       .filter({ hasText: /Local check failed.*unverified/ }),
   ).toBeVisible({ timeout: 10_000 });
+});
+
+test('learning regions reflow without losing the mounted editor or local result', async ({
+  page,
+}, testInfo) => {
+  await installCurriculum(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/quests/first-value');
+  const lesson = page.getByRole('article', { name: 'Lesson region' });
+  const code = page.getByRole('tabpanel', { name: 'Code editor' });
+  const results = page.getByRole('complementary', { name: 'Results region' });
+  await expect(lesson).toBeVisible();
+  for (const width of [1440, 1280, 820, 640, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expectNoPageOverflow(page, '/quests/first-value');
+    if (width <= 1100) {
+      await page.getByRole('button', { name: 'Code', exact: true }).click();
+    }
+    await expect(code).toBeVisible();
+    if (width > 1100) await expect(results).toBeVisible();
+    if (width <= 1100) {
+      await page.getByRole('button', { name: 'Results', exact: true }).click();
+      await expect(results).toBeVisible();
+      await expect(code).toBeHidden();
+      await page.getByRole('button', { name: 'Code', exact: true }).click();
+    }
+    if (
+      process.env.CODEQUEST_CAPTURE_R06 === '1' &&
+      testInfo.project.name === 'chromium' &&
+      [1440, 1280, 820, 390].includes(width)
+    ) {
+      await expect(
+        page.getByRole('textbox', { name: 'main.js code editor (javascript)' }),
+      ).toBeVisible();
+      await page.screenshot({
+        path: join('..', 'docs', 'frontend-evidence', `r06-shell-${width}.png`),
+      });
+    }
+  }
+  expect(
+    await page.getByRole('heading', { name: 'Editor Workspace' }).count(),
+  ).toBe(1);
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await editor.focus();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText("console.log('kept across panels');");
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await page.getByRole('button', { name: 'Results', exact: true }).click();
+  await expect(
+    page
+      .getByRole('status')
+      .filter({ hasText: /Local check failed.*unverified/ }),
+  ).toBeVisible({ timeout: 10_000 });
+  await page.getByRole('button', { name: 'Code', exact: true }).click();
+  await expect(editor).toContainText('kept across panels');
 });
 
 test('contrast, reduced motion, target size, and reflow hold at reviewed widths', async ({
@@ -328,6 +388,14 @@ test('contrast, reduced motion, target size, and reflow hold at reviewed widths'
   for (const width of [1280, 640, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await expectNoPageOverflow(page, '/quests/first-value');
+    const hintBox = await hint.boundingBox();
+    expect(
+      hintBox?.height,
+      `hint target height at ${width}px`,
+    ).toBeGreaterThanOrEqual(44);
+    if (width <= 700) {
+      await page.getByRole('button', { name: 'Code', exact: true }).click();
+    }
     for (const name of ['Check', 'Save locally', 'Reset file']) {
       const box = await page
         .getByRole('button', { name, exact: true })
@@ -347,10 +415,8 @@ test('contrast, reduced motion, target size, and reflow hold at reviewed widths'
         `${name} right edge at ${width}px`,
       ).toBeLessThanOrEqual(width);
     }
-    const hintBox = await hint.boundingBox();
-    expect(
-      hintBox?.height,
-      `hint target height at ${width}px`,
-    ).toBeGreaterThanOrEqual(44);
+    if (width <= 700) {
+      await page.getByRole('button', { name: 'Lesson', exact: true }).click();
+    }
   }
 });

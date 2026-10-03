@@ -199,6 +199,47 @@ describe('workspace presentation components', () => {
 });
 
 describe('EditorWorkspace', () => {
+  it('keeps source and result state while integrated regions change', async () => {
+    const repository = new MemoryDraftRepository();
+    const { rerender } = render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="integrated-regions"
+        files={files}
+        draftRepository={repository}
+        consoleLines={[
+          { id: 'line-1', kind: 'output', text: 'Earlier output' },
+        ]}
+        presentation="integrated"
+        activePanel="code"
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    editActiveSource("console.log('kept');");
+    rerender(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="integrated-regions"
+        files={files}
+        draftRepository={repository}
+        consoleLines={[
+          { id: 'line-1', kind: 'output', text: 'Earlier output' },
+        ]}
+        presentation="integrated"
+        activePanel="results"
+      />,
+    );
+    expect(screen.getByRole('textbox').textContent).toContain(
+      "console.log('kept');",
+    );
+    expect(screen.getByText('Earlier output')).toBeDefined();
+    expect(
+      screen.getAllByRole('button', { name: 'Save locally' }),
+    ).toHaveLength(1);
+    expect(
+      screen.getByRole('complementary', { name: 'Results region' }),
+    ).toBeDefined();
+  });
   it('shows no preview controls without an adapter and announces a preview timeout', async () => {
     const user = userEvent.setup();
     const webFiles: readonly WorkspaceFile[] = [

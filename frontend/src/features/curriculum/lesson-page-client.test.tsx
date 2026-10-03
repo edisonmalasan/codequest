@@ -82,6 +82,31 @@ it('offline reading and hints never record backend activity', async () => {
   expect(screen.queryByRole('button', { name: 'Download lesson' })).toBeNull();
 });
 
+it('composes lesson, code, and results around one mounted workspace', async () => {
+  authState.ownerId = 'current-owner';
+  render(
+    <LessonPageView quest={quest} apiBaseUrl="https://api.test" offline />,
+  );
+  expect(screen.getByRole('article', { name: 'Lesson region' })).toBeDefined();
+  expect(
+    await screen.findByRole('tabpanel', { name: 'Code editor' }),
+  ).toBeDefined();
+  expect(
+    screen.getByRole('complementary', { name: 'Results region' }),
+  ).toBeDefined();
+  expect(
+    screen.getAllByRole('heading', { name: 'Editor Workspace' }),
+  ).toHaveLength(1);
+  await userEvent.click(screen.getByRole('button', { name: 'Results' }));
+  expect(
+    screen
+      .getByRole('button', { name: 'Results' })
+      .getAttribute('aria-pressed'),
+  ).toBe('true');
+  expect(screen.getByRole('article', { name: 'Lesson region' })).toBeDefined();
+  expect(screen.getByRole('tabpanel', { name: 'Code editor' })).toBeDefined();
+});
+
 describe('LessonPageClient', () => {
   it('keeps lesson reading available when activity recording fails', async () => {
     authState.ownerId = 'current-owner';
