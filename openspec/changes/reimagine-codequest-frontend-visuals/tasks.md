@@ -33,6 +33,6 @@
 
 ## 6. Integrated visual review and founder gate
 
-- [ ] 6.1 Run root `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, relevant Playwright learning/accessibility flows, API drift if touched, and strict OpenSpec validation; record exact command results and implementation commit.
-- [ ] 6.2 Capture real production-route desktop/tablet/mobile evidence, inspect focus, reduced motion, image loads, console errors, and overflow, then correct defects and record the final build/environment; verify the evidence links resolve.
+- [x] 6.1 Run root `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, relevant Playwright learning/accessibility flows, API drift if touched, and strict OpenSpec validation; record exact command results and implementation commit.
+- [x] 6.2 Capture real production-route desktop/tablet/mobile evidence, inspect focus, reduced motion, image loads, console errors, and overflow, then correct defects and record the final build/environment; verify the evidence links resolve.
 - [x] 6.3 Review the complete diff for route stability, original asset provenance, guest/account truth, Worker/preview boundaries, and Phase 38 status; leave revised R03/R05 founder acceptance open until an explicit review of the final build.
