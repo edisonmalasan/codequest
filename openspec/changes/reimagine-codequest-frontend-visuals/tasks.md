@@ -21,9 +21,9 @@
 ## 4. Auth, account, and supporting routes
 
 - [x] 4.1 Apply the shared visual language to login, register, recovery, password update, and onboarding without changing form fields or auth actions; verify form-state tests and local browser layouts with synthetic/no-account states only.
-- [ ] 4.2 Recompose account, guest import, pending work, and feedback presentation without changing owner authority, pending state, or local-only feedback behavior; verify focused state tests and browser captures with controlled fixtures.
-- [ ] 4.3 Align offline-learning and shared error/recovery routes with the new visual language while preserving offline and retry behavior; verify existing offline/error tests and responsive browser checks.
-- [ ] 4.4 Record consistent error/loading/empty/status treatment for these routes; verify no protected payload, secret, or false account claim appears in screenshots or documentation.
+- [x] 4.2 Recompose account, guest import, pending work, and feedback presentation without changing owner authority, pending state, or local-only feedback behavior; verify focused state tests and browser captures with controlled fixtures.
+- [x] 4.3 Align offline-learning and shared error/recovery routes with the new visual language while preserving offline and retry behavior; verify existing offline/error tests and responsive browser checks.
+- [x] 4.4 Record consistent error/loading/empty/status treatment for these routes; verify no protected payload, secret, or false account claim appears in screenshots or documentation.
 
 ## 5. Published lesson presentation and R06 handoff
 
@@ -35,4 +35,4 @@
 
 - [ ] 6.1 Run root `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, relevant Playwright learning/accessibility flows, API drift if touched, and strict OpenSpec validation; record exact command results and implementation commit.
 - [ ] 6.2 Capture real production-route desktop/tablet/mobile evidence, inspect focus, reduced motion, image loads, console errors, and overflow, then correct defects and record the final build/environment; verify the evidence links resolve.
-- [ ] 6.3 Review the complete diff for route stability, original asset provenance, guest/account truth, Worker/preview boundaries, and Phase 38 status; leave revised R03/R05 founder acceptance open until an explicit review of the final build.
+- [x] 6.3 Review the complete diff for route stability, original asset provenance, guest/account truth, Worker/preview boundaries, and Phase 38 status; leave revised R03/R05 founder acceptance open until an explicit review of the final build.

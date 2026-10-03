@@ -53,7 +53,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(
     page.getByRole('heading', {
-      name: 'Your next world starts with one line.',
+      name: 'Make code work.',
     }),
   ).toBeVisible();
   await expect(
@@ -66,7 +66,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
   await expect
     .poll(() =>
       page
-        .locator('img[src*="foundations-valley"]')
+        .locator('img[src*="signal-road"]')
         .evaluate(
           (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
         ),
@@ -86,7 +86,7 @@ test('home leads to a published Journey, onboarding, and safe account entry', as
     .click();
   await expect(page).toHaveURL(/\/onboarding$/, { timeout: 30_000 });
   await expect(
-    page.getByRole('heading', { name: 'Start your learning journey' }),
+    page.getByRole('heading', { name: 'Start with a small win.' }),
   ).toBeVisible();
   await page
     .getByRole('navigation', { name: 'Main navigation' })
@@ -108,7 +108,7 @@ for (const width of [1280, 820, 390, 320]) {
     await page.goto('/');
     await expect(
       page.getByRole('heading', {
-        name: 'Your next world starts with one line.',
+        name: 'Make code work.',
       }),
     ).toBeVisible();
     await expect(

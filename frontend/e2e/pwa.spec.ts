@@ -774,7 +774,7 @@ test('new release waits without reload or deleting device-local work', async ({
     ).toBe(identity);
     await expect(
       page.getByRole('heading', {
-        name: 'Your next world starts with one line.',
+        name: 'Make code work.',
       }),
     ).toBeVisible();
     await expect(page.getByLabel('Unsaved update fixture')).toHaveValue(
