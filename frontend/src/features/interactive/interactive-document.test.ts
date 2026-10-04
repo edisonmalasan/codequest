@@ -49,4 +49,10 @@ describe('interactive display document', () => {
       InteractiveSourceError,
     );
   });
+
+  it('rejects deeply nested markup before creating a display', () => {
+    expect(() =>
+      documentFrom('<div>'.repeat(34) + 'deep' + '</div>'.repeat(34)),
+    ).toThrow(InteractiveSourceError);
+  });
 });

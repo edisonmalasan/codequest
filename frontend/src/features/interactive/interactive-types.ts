@@ -14,6 +14,7 @@ export const INTERACTIVE_LIMITS = {
   outputEntries: 200,
   outputBytes: 12_288,
   deadlineMs: 2_000,
+  handshakeMs: 5_000,
   recoveryMs: 1_000,
   sessionMs: 300_000,
 } as const;
@@ -47,6 +48,7 @@ export interface InteractiveResult {
   readonly output: readonly string[];
   readonly filteredActiveContent: boolean;
   readonly description: string;
+  readonly durationMs: number;
 }
 
 export interface InteractiveWebAdapter {

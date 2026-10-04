@@ -15,6 +15,7 @@ import {
 import {
   captureInteractiveSnapshot,
   InteractiveSourceError,
+  resolveInteractiveOrigins,
 } from './interactive-snapshot';
 import {
   INTERACTIVE_LIMITS,
@@ -36,6 +37,8 @@ interface Session {
   eventCount: number;
   ready: boolean;
   busy: boolean;
+  description: string;
+  startedAt: number;
 }
 
 function result(
@@ -50,7 +53,10 @@ function result(
     message,
     output,
     filteredActiveContent: session?.document.filteredActiveContent ?? false,
-    description: session?.document.description ?? '',
+    description: session?.description ?? '',
+    durationMs: session
+      ? Math.max(0, performance.now() - session.startedAt)
+      : 0,
   };
 }
 
@@ -101,15 +107,23 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
   private session?: Session;
   private readonly listeners = new Set<(value: InteractiveResult) => void>();
   private unsubscribePreview?: () => void;
+  private unsubscribeRunner?: () => void;
   private operation = 0;
   private disposed = false;
 
   constructor(runnerOrigin: string, previewOrigin: string) {
+    const origins =
+      typeof window === 'undefined'
+        ? null
+        : resolveInteractiveOrigins(
+            window.location.origin,
+            runnerOrigin,
+            previewOrigin,
+          );
     if (
-      typeof window === 'undefined' ||
-      [window.location.origin, runnerOrigin, previewOrigin].some(
-        (origin, index, origins) => origins.indexOf(origin) !== index,
-      )
+      !origins ||
+      origins.runnerOrigin !== runnerOrigin ||
+      origins.previewOrigin !== previewOrigin
     ) {
       throw new Error('Interactive mode requires three distinct origins');
     }
@@ -161,6 +175,10 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
     try {
       await Promise.all([this.runner.ready, this.preview.ready]);
     } catch (error) {
+      this.unsubscribeRunner?.();
+      this.unsubscribePreview?.();
+      this.unsubscribeRunner = undefined;
+      this.unsubscribePreview = undefined;
       this.runner.dispose();
       this.preview.dispose();
       this.runner = undefined;
@@ -176,6 +194,16 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
           current.generationId,
           new Set(current.document.nodes.map((node) => node.nodeId)),
         );
+        if (display?.type === 'invalid' || display?.type === 'error') {
+          const failed = result(
+            current,
+            'internal-error',
+            'Interactive display rejected an update',
+          );
+          this.stop();
+          this.emit(failed);
+          return;
+        }
         if (
           display?.type !== 'interaction' ||
           current.seenEvents.has(display.eventId)
@@ -183,6 +211,35 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
           return;
         current.seenEvents.add(display.eventId);
         void this.dispatch(display.event).then((value) => this.emit(value));
+      });
+    }
+    if (!this.unsubscribeRunner) {
+      this.unsubscribeRunner = this.runner.subscribe((packet) => {
+        const current = this.session;
+        if (
+          !current ||
+          typeof packet !== 'object' ||
+          packet === null ||
+          Array.isArray(packet)
+        )
+          return;
+        if (
+          !('type' in packet) ||
+          packet.type !== 'session-ended' ||
+          !('sessionId' in packet) ||
+          packet.sessionId !== current.sessionId ||
+          !('status' in packet) ||
+          packet.status !== 'cancelled' ||
+          Object.keys(packet).length !== 4
+        )
+          return;
+        const ended = result(
+          current,
+          'cancelled',
+          'Interactive session expired',
+        );
+        this.stop();
+        this.emit(ended);
       });
     }
     return { runner: this.runner, preview: this.preview };
@@ -230,6 +287,8 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
       eventCount: 0,
       ready: false,
       busy: false,
+      description: document.description,
+      startedAt: performance.now(),
     };
     this.session = session;
     const operation = this.operation;
@@ -338,6 +397,16 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
       mutations,
     });
     await applied;
+    const text = mutations
+      .filter((mutation) => mutation.kind === 'text')
+      .map((mutation) => mutation.value.trim())
+      .filter(Boolean)
+      .slice(-5)
+      .join(' · ');
+    session.description = (
+      text ||
+      `Updated ${mutations.length} page element${mutations.length === 1 ? '' : 's'}`
+    ).slice(0, 2_048);
   }
 
   async dispatch(
@@ -379,6 +448,7 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
     if (signal?.aborted) session.controller.abort();
     session.eventCount += 1;
     session.busy = true;
+    session.startedAt = performance.now();
     try {
       const nodeIds = new Set(
         session.document.nodes.map((node) => node.nodeId),
@@ -446,6 +516,8 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
     this.disposed = true;
     this.unsubscribePreview?.();
     this.unsubscribePreview = undefined;
+    this.unsubscribeRunner?.();
+    this.unsubscribeRunner = undefined;
     this.preview?.dispose();
     this.runner?.dispose();
     this.preview = undefined;

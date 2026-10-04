@@ -1,9 +1,9 @@
 'use strict';
 
 (() => {
-  const trustedSend = globalThis.postMessage.bind(globalThis);
+  let trustedSend;
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-  const encoder = new TextEncoder();
+  const encoder = new globalThis.TextEncoder();
   const LIMITS = {
     nodes: 512,
     mutations: 256,
@@ -13,7 +13,11 @@
   };
   const SELECTOR = /^(?:#[a-zA-Z][\w-]*|\.[a-zA-Z][\w-]*|[a-z][a-z0-9-]*)$/;
   const CLASS_TOKEN = /^[a-zA-Z_][a-zA-Z0-9_-]{0,63}$/;
-  const SAFE_TEXT = /^[^<>\u0000-\u001f]{0,256}$/;
+  const safeText = (value) =>
+    value.length <= 256 &&
+    !value.includes('<') &&
+    !value.includes('>') &&
+    [...value].every((character) => (character.codePointAt(0) ?? 0) >= 32);
   const STYLE_VALUES = {
     color: /^(?:#[a-fA-F0-9]{3,8}|[a-zA-Z]{1,24})$/,
     backgroundColor: /^(?:#[a-fA-F0-9]{3,8}|[a-zA-Z]{1,24})$/,
@@ -111,6 +115,7 @@
   }
 
   function emitMutation(record, kind, value, name) {
+    if (record.removed) rejectUnsupported('Detached element mutation');
     if (!session || session.mutations.length >= LIMITS.mutations) {
       throw new OutputLimitError('DOM mutation limit exceeded');
     }
@@ -221,7 +226,7 @@
           if (
             !['title', 'aria-label'].includes(name) ||
             typeof value !== 'string' ||
-            !SAFE_TEXT.test(value)
+            !safeText(value)
           )
             rejectUnsupported('Attribute');
           record.attributes.set(name, value);
@@ -333,7 +338,7 @@
         mutations: [],
       });
     }
-    trustedSend(raw);
+    trustedSend?.(raw);
   }
 
   async function run(command) {
@@ -417,8 +422,15 @@
 
   globalThis.addEventListener('message', ({ data }) => {
     if (!data || typeof data !== 'object') return;
-    if (!session && data.type === 'start') void run(data);
-    else if (session && data.type === 'event') void dispatch(data);
+    if (!session && data.type === 'start' && data.privatePort) {
+      const privatePort = data.privatePort;
+      trustedSend = privatePort.postMessage.bind(privatePort);
+      privatePort.onmessage = ({ data: command }) => {
+        if (session && command?.type === 'event') void dispatch(command);
+      };
+      privatePort.start();
+      void run(data);
+    }
   });
   for (const name of [
     'addEventListener',

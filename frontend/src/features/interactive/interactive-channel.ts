@@ -87,7 +87,7 @@ export function createInteractiveChannel(
 
   const timer = window.setTimeout(() => {
     if (!settled) dispose();
-  }, INTERACTIVE_LIMITS.recoveryMs);
+  }, INTERACTIVE_LIMITS.handshakeMs);
 
   messageChannel.port1.onmessage = (event: MessageEvent<unknown>) => {
     if (disposed) return;

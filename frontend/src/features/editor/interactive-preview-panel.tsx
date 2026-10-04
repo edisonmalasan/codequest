@@ -24,6 +24,7 @@ export function InteractivePreviewPanel({
   const host = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<InteractiveResult>();
   const [running, setRunning] = useState(false);
+  const [stale, setStale] = useState(false);
   const [revision, setRevision] = useState(0);
   const token = useRef(0);
   const disposeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -52,10 +53,19 @@ export function InteractivePreviewPanel({
     void adapter.cancel();
   }, [adapter, ownerId, workspaceId]);
 
+  useEffect(() => {
+    token.current += 1;
+    void adapter.cancel();
+    setValue(undefined);
+    setRunning(false);
+    setStale(true);
+  }, [adapter, sources]);
+
   function start(reload: boolean): void {
     const current = ++token.current;
     setRunning(true);
     setValue(undefined);
+    setStale(false);
     const operation = reload
       ? adapter.reload()
       : adapter.start({
@@ -83,6 +93,7 @@ export function InteractivePreviewPanel({
           output: [],
           filteredActiveContent: false,
           description: '',
+          durationMs: 0,
         });
       },
     );
@@ -90,7 +101,7 @@ export function InteractivePreviewPanel({
 
   return (
     <section
-      aria-label="Interactive web preview"
+      aria-label="Interactive result"
       className="min-w-0 overflow-hidden rounded-md border border-line bg-surface-raised"
     >
       <div className="border-b border-line px-4 py-3">
@@ -107,7 +118,7 @@ export function InteractivePreviewPanel({
             type="button"
             variant="secondary"
             onClick={() => start(true)}
-            disabled={running || !value}
+            disabled={running || !value || stale}
           >
             Reload interactive
           </Button>
@@ -119,6 +130,15 @@ export function InteractivePreviewPanel({
                 token.current += 1;
                 void adapter.cancel();
                 setRunning(false);
+                setValue({
+                  generationId: crypto.randomUUID(),
+                  status: 'cancelled',
+                  message: 'Interactive preview cancelled',
+                  output: [],
+                  filteredActiveContent: false,
+                  description: '',
+                  durationMs: 0,
+                });
               }}
             >
               Cancel interactive
@@ -128,8 +148,10 @@ export function InteractivePreviewPanel({
         <p role="status" aria-live="polite" className="mt-3 text-xs text-muted">
           {running
             ? 'Running interactive preview'
-            : (value?.message ??
-              'Select Start interactive to render the current files.')}
+            : stale
+              ? 'Source changed. Start interactive again to update the preview.'
+              : (value?.message ??
+                'Select Start interactive to render the current files.')}
         </p>
         {value?.filteredActiveContent && (
           <p className="mt-1 text-xs text-muted">
@@ -140,6 +162,13 @@ export function InteractivePreviewPanel({
       <div ref={host} className="h-80 min-w-0 overflow-hidden bg-white" />
       {value && (
         <div className="border-t border-line px-4 py-3 text-xs">
+          <p
+            data-interactive-duration-ms={Math.round(value.durationMs)}
+            className="sr-only"
+          >
+            Interactive run finished in {Math.round(value.durationMs)}{' '}
+            milliseconds.
+          </p>
           <p aria-label="Interactive preview description">
             {value.description}
           </p>

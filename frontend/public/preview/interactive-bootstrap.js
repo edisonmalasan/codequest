@@ -6,7 +6,6 @@
   const parentOrigin = new globalThis.URLSearchParams(
     globalThis.location.search,
   ).get('parentOrigin');
-  const previewOrigin = globalThis.location.origin;
   const encoder = new globalThis.TextEncoder();
   const bytes = (value) => encoder.encode(value).byteLength;
   let port;
@@ -14,6 +13,7 @@
   let childNonce;
   let activeGeneration;
   let allowedNodes = new Set();
+  let lastEventSequence = 0;
 
   function clearChild() {
     if (child) {
@@ -25,6 +25,7 @@
     childNonce = undefined;
     activeGeneration = undefined;
     allowedNodes = new Set();
+    lastEventSequence = 0;
   }
 
   function report(type, generationId, stepId) {
@@ -120,7 +121,7 @@
       !packet.mutations.every(validMutation) ||
       bytes(JSON.stringify(packet)) > 16384
     ) {
-      report('invalid', packet.generationId, packet.stepId);
+      report('invalid', packet.generationId);
       return;
     }
     child.contentWindow?.postMessage(
@@ -152,23 +153,33 @@
       report('rendered', activeGeneration);
     } else if (
       data.type === 'interaction' &&
-      Object.keys(data).length === 6 &&
+      Object.keys(data).length === 7 &&
+      Number.isSafeInteger(data.sequence) &&
+      data.sequence > lastEventSequence &&
+      data.sequence <= 64 &&
       allowedNodes.has(data.targetId) &&
       ['click', 'input', 'change'].includes(data.eventType) &&
       (data.value === undefined ||
         (typeof data.value === 'string' && bytes(data.value) <= 256)) &&
       bytes(JSON.stringify(data)) <= 1024
     ) {
+      lastEventSequence = data.sequence;
       port?.postMessage({
         type: 'interaction',
         generationId: activeGeneration,
-        eventId: globalThis.crypto.randomUUID(),
+        eventId: `${activeGeneration}:${data.sequence}`,
         event: {
           type: data.eventType,
           targetId: data.targetId,
           ...(data.value === undefined ? {} : { value: data.value }),
         },
       });
+    } else if (
+      data.type === 'interaction' &&
+      Number.isSafeInteger(data.sequence) &&
+      data.sequence > 64
+    ) {
+      report('invalid', activeGeneration);
     } else if (
       data.type === 'applied' &&
       Object.keys(data).length === 4 &&

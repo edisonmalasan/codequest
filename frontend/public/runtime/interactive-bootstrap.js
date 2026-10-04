@@ -26,6 +26,7 @@
     active = undefined;
     globalThis.clearTimeout(previous.stepTimer);
     globalThis.clearTimeout(previous.sessionTimer);
+    previous.privatePort.close();
     previous.worker.terminate();
     return previous;
   }
@@ -161,8 +162,10 @@
     if (size > LIMITS.inputPacket) return;
     if (active) fail('cancelled', 'Interactive session replaced');
     let worker;
+    let privateChannel;
     try {
       worker = new globalThis.Worker('/runtime/interactive-worker.js');
+      privateChannel = new globalThis.MessageChannel();
     } catch {
       port.postMessage({
         type: 'step',
@@ -179,6 +182,7 @@
       sessionId: command.sessionId,
       stepId: command.stepId,
       worker,
+      privatePort: privateChannel.port1,
       stepTimer: undefined,
       sessionTimer: globalThis.setTimeout(() => {
         const previous = release();
@@ -194,25 +198,35 @@
       mutationCount: 0,
       mutationBytes: 0,
     };
-    worker.onmessage = (event) => forward(event.data);
+    privateChannel.port1.onmessage = (event) => forward(event.data);
+    privateChannel.port1.start();
+    worker.onmessage = () =>
+      fail('internal-error', 'Untrusted global result channel used');
     worker.onerror = () =>
       fail('internal-error', 'Interactive runner unavailable');
     beginStep(command.stepId);
-    worker.postMessage({
-      type: 'start',
-      sessionId: command.sessionId,
-      stepId: command.stepId,
-      source: command.source,
-      nodes: command.nodes,
-    });
+    worker.postMessage(
+      {
+        type: 'start',
+        sessionId: command.sessionId,
+        stepId: command.stepId,
+        source: command.source,
+        nodes: command.nodes,
+        privatePort: privateChannel.port2,
+      },
+      [privateChannel.port2],
+    );
   }
 
   function dispatch(command) {
+    if (active && active.eventCount >= LIMITS.events) {
+      fail('output-limit', 'Interactive event limit reached');
+      return;
+    }
     if (
       !active ||
       command.sessionId !== active.sessionId ||
       active.stepTimer ||
-      active.eventCount >= LIMITS.events ||
       !command.event ||
       !['click', 'input', 'change'].includes(command.event.type) ||
       typeof command.event.targetId !== 'string' ||
@@ -224,7 +238,7 @@
       return;
     if (!beginStep(command.stepId)) return;
     active.eventCount += 1;
-    active.worker.postMessage({
+    active.privatePort.postMessage({
       type: 'event',
       sessionId: active.sessionId,
       stepId: command.stepId,

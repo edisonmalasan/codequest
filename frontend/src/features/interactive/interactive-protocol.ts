@@ -91,6 +91,15 @@ function bytes(value: string): number {
   return new TextEncoder().encode(value).byteLength;
 }
 
+function safeAttributeText(value: string): boolean {
+  return (
+    value.length <= 256 &&
+    !value.includes('<') &&
+    !value.includes('>') &&
+    [...value].every((character) => (character.codePointAt(0) ?? 0) >= 32)
+  );
+}
+
 function packetSize(value: unknown): number {
   try {
     return bytes(JSON.stringify(value));
@@ -130,7 +139,7 @@ export function validInteractiveMutation(
     return (
       typeof value.name === 'string' &&
       ['title', 'aria-label'].includes(value.name) &&
-      /^[^<>\u0000-\u001f]{0,256}$/.test(value.value)
+      safeAttributeText(value.value)
     );
   }
   if (typeof value.name !== 'string') return false;
