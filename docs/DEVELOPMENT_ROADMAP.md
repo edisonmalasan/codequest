@@ -8,6 +8,8 @@ Status snapshot: 2026-10-04. Update this section when the phase or OpenSpec stag
 
 **R07A development boundary (2026-10-04):** Apply [#212](https://github.com/edisonmalasan/codequest/pull/212) and spec Sync [#213](https://github.com/edisonmalasan/codequest/pull/213) passed required CI and merged. The [qualified local evidence](interactive-web-execution.md) supports a synthetic review surface only. Published interactive lessons, hosted and physical verification, independent security review, and broader founder acceptance remain open. Phase 38 stays **PAUSED / NO GO**.
 
+**R07 proposal:** [Published Quest workflow integration](../openspec/changes/integrate-published-quest-workflow/proposal.md) scopes reviewed exercise descriptors, reusable multi-file workspace integration, local checks, explicit backend submission, navigation, and exact-build interactive publication gates. It is planning only; no new course or interactive Quest is published by this proposal.
+
 | Item | Current status |
 | --- | --- |
 | Local developer environment | [Scoped frontend/backend setup](../openspec/changes/archive/2026-10-01-scoped-local-environment/proposal.md) implemented, synced, and archived; root `pnpm dev` and loopback origin isolation verified with synthetic local configuration. Beta release gates remain open. |
