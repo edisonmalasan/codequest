@@ -1,4 +1,4 @@
-import { resolvePreviewOrigin } from '@/features/preview';
+import { resolvePreviewOrigin } from '@/features/preview/preview-origin';
 import { resolveRunnerOrigin } from '@/features/runtime';
 import {
   INTERACTIVE_LIMITS,

@@ -7,16 +7,10 @@ import {
   type SaveStatus,
   type WorkspaceFile,
 } from '@/features/editor';
-import {
-  IsolatedInteractiveWebAdapter,
-  resolveInteractiveOrigins,
-  type InteractiveWebAdapter,
-} from '@/features/interactive';
-import {
-  resolvePreviewOrigin,
-  StaticPreviewAdapter,
-  type PreviewAdapter,
-} from '@/features/preview';
+import { resolveInteractiveOrigins } from '@/features/interactive/interactive-snapshot';
+import type { InteractiveWebAdapter } from '@/features/interactive/interactive-types';
+import { resolvePreviewOrigin } from '@/features/preview/preview-origin';
+import type { PreviewAdapter } from '@/features/preview/preview-types';
 import {
   captureFirstRun,
   captureGuestFirstStart,
@@ -30,15 +24,13 @@ import {
   resolveRunnerOrigin,
   type ExecutionAdapter,
 } from '@/features/runtime';
-import {
-  JavaScriptValidationStrategy,
-  InteractiveWebValidationStrategy,
-  serializeWebSource,
-  StaticWebValidationStrategy,
-  type ValidationDefinition,
-  type ValidationResult,
-  type ValidationStrategy,
-} from '@/features/validation';
+import { JavaScriptValidationStrategy } from '@/features/validation/javascript-validation-strategy';
+import { serializeWebSource } from '@/features/validation/web-source';
+import type {
+  ValidationDefinition,
+  ValidationResult,
+  ValidationStrategy,
+} from '@/features/validation/validation-types';
 import type { QuestDetail } from '@/lib/api-client';
 import { readCapstoneResponses } from './capstone-responses';
 import { progressReplay } from '@/features/progress-sync/progress-replay';
@@ -253,6 +245,7 @@ export function QuestWorkspace({
   );
 
   useEffect(() => {
+    let active = true;
     const origin = resolveRunnerOrigin(
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
       window.location.origin,
@@ -266,10 +259,6 @@ export function QuestWorkspace({
       window.location.origin,
       origin,
     );
-    const preview =
-      mode === 'static-web' && previewOrigin
-        ? new StaticPreviewAdapter(previewOrigin)
-        : undefined;
     const interactiveOrigins =
       mode === 'interactive-web'
         ? resolveInteractiveOrigins(
@@ -278,30 +267,57 @@ export function QuestWorkspace({
             process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
           )
         : null;
-    const interactive = interactiveOrigins
-      ? new IsolatedInteractiveWebAdapter(
+    let preview: PreviewAdapter | undefined;
+    let interactive: InteractiveWebAdapter | undefined;
+    let checker: ValidationStrategy | undefined;
+    setExecutionAdapter(runner);
+    setPreviewAdapter(undefined);
+    setInteractiveAdapter(undefined);
+    setValidationStrategy(undefined);
+    const loadMode = async () => {
+      if (mode === 'static-web' && previewOrigin) {
+        const [{ StaticPreviewAdapter }, { StaticWebValidationStrategy }] =
+          await Promise.all([
+            import('@/features/preview/static-preview-adapter'),
+            import('@/features/validation/static-web-validation-strategy'),
+          ]);
+        if (!active) return;
+        preview = new StaticPreviewAdapter(previewOrigin);
+        checker = new StaticWebValidationStrategy();
+      } else if (mode === 'interactive-web' && interactiveOrigins) {
+        const [
+          { IsolatedInteractiveWebAdapter },
+          { InteractiveWebValidationStrategy },
+        ] = await Promise.all([
+          import('@/features/interactive/interactive-web-adapter'),
+          import('@/features/validation/interactive-web-validation-strategy'),
+        ]);
+        if (!active) return;
+        interactive = new IsolatedInteractiveWebAdapter(
           interactiveOrigins.runnerOrigin,
           interactiveOrigins.previewOrigin,
-        )
-      : undefined;
-    const checker =
-      mode === 'static-web'
-        ? new StaticWebValidationStrategy()
-        : mode === 'interactive-web'
-          ? interactiveOrigins
-            ? new InteractiveWebValidationStrategy(
-                interactiveOrigins.runnerOrigin,
-                interactiveOrigins.previewOrigin,
-              )
-            : undefined
-          : origin
-            ? new JavaScriptValidationStrategy(origin)
-            : undefined;
-    setExecutionAdapter(runner);
-    setPreviewAdapter(preview);
-    setInteractiveAdapter(interactive);
-    setValidationStrategy(checker);
+        );
+        checker = new InteractiveWebValidationStrategy(
+          interactiveOrigins.runnerOrigin,
+          interactiveOrigins.previewOrigin,
+        );
+      } else if (mode === 'javascript' && origin) {
+        checker = new JavaScriptValidationStrategy(origin);
+      }
+      if (!active) return;
+      setPreviewAdapter(preview);
+      setInteractiveAdapter(interactive);
+      setValidationStrategy(checker);
+    };
+    void loadMode().catch(() => {
+      if (active) {
+        setPreviewAdapter(undefined);
+        setInteractiveAdapter(undefined);
+        setValidationStrategy(undefined);
+      }
+    });
     return () => {
+      active = false;
       void runner?.dispose();
       void preview?.dispose();
       void interactive?.dispose();
