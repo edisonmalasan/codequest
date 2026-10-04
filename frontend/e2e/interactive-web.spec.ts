@@ -1,6 +1,37 @@
 import { expect, test } from '@playwright/test';
 import { appOrigin, previewOrigin, runtimeOrigin } from './test-origins';
 
+test('interactive local Check uses isolated state and recovers after a hostile loop', async ({
+  page,
+}) => {
+  test.setTimeout(90_000);
+  await page.goto('/editor-workspace');
+  await page.getByLabel('Local check example').selectOption('interactive-web');
+  const check = page.getByRole('button', { name: 'Check', exact: true });
+  await expect(check).toBeVisible();
+  await check.click();
+  await expect(page.getByText(/Local check passed/)).toBeVisible({
+    timeout: 15_000,
+  });
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await editor.fill('while (true) {}');
+  await check.click();
+  await expect(page.getByText(/Local check failed/)).toBeVisible({
+    timeout: 15_000,
+  });
+  await expect(editor).toContainText('while (true)');
+  await editor.fill(
+    'document.getElementById("trigger").addEventListener("click", () => { document.getElementById("answer").textContent = "Done"; });',
+  );
+  await check.click();
+  await expect(page.getByText(/Local check passed/)).toBeVisible({
+    timeout: 15_000,
+  });
+});
+
 test('interactive Worker updates an opaque preview through bounded events', async ({
   page,
 }) => {

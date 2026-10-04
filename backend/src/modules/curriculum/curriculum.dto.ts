@@ -95,6 +95,13 @@ export class QuestHintsDto {
   @ApiProperty({ type: String }) nextStep!: string;
 }
 
+export class QuestInteractiveEventDto {
+  @ApiProperty({ type: String, enum: ['click', 'input', 'change'] })
+  type!: 'click' | 'input' | 'change';
+  @ApiProperty({ type: String }) targetId!: string;
+  @ApiPropertyOptional({ type: String }) value?: string;
+}
+
 export class QuestCaseDto {
   @ApiProperty({ type: String }) id!: string;
   @ApiProperty({ type: String, enum: ['normal', 'boundary'] }) category!:
@@ -128,11 +135,8 @@ export class QuestCaseDto {
   })
   property?: string;
   @ApiPropertyOptional({ type: String }) expectedValue?: string;
-  @ApiPropertyOptional({ type: [Object] }) events?: {
-    type: 'click' | 'input' | 'change';
-    targetId: string;
-    value?: string;
-  }[];
+  @ApiPropertyOptional({ type: [QuestInteractiveEventDto] })
+  events?: QuestInteractiveEventDto[];
 }
 
 export class QuestExerciseFileDto {

@@ -156,7 +156,18 @@ export class JavaScriptValidationStrategy implements ValidationStrategy {
         [],
         'Isolated validation unavailable',
       );
-    if (!validDefinition(request.definition))
+    if (
+      !validDefinition(request.definition) ||
+      request.definition.cases.some(
+        (item) =>
+          ![
+            'output-match',
+            'value-test',
+            'function-test',
+            'custom-test',
+          ].includes(item.mode),
+      )
+    )
       return result(
         id,
         startedAt,

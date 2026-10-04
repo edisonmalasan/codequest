@@ -219,3 +219,75 @@ test('guest can check published quest locally without creating a submission', as
   await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
   expect(attemptRequests).toBe(0);
 });
+
+test('published static web lesson checks the complete saved file set', async ({
+  page,
+}) => {
+  await installLessonRoutes(page);
+  await page.route(
+    'http://127.0.0.1:3001/api/v1/quests/first-message',
+    (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        json: {
+          ...quest,
+          starterCode: '',
+          exercise: {
+            schemaVersion: 1,
+            mode: 'static-web',
+            files: [
+              {
+                id: 'page',
+                name: 'index.html',
+                language: 'html',
+                starterSource: '<h1 id="answer">Hello</h1>',
+              },
+              {
+                id: 'style',
+                name: 'style.css',
+                language: 'css',
+                starterSource: 'h1 { color: blue; }',
+              },
+            ],
+          },
+          cases: [
+            {
+              id: 'heading',
+              category: 'normal',
+              kind: 'html-element',
+              feedback: 'Add the heading.',
+              selector: '#answer',
+              expectedText: 'Hello',
+            },
+            {
+              id: 'color',
+              category: 'boundary',
+              kind: 'css-declaration',
+              feedback: 'Use blue.',
+              selector: 'h1',
+              property: 'color',
+              expectedValue: 'blue',
+            },
+          ],
+        },
+      }),
+  );
+  await page.goto('/quests/first-message');
+  const editor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await expect(editor).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'style.css' })).toBeVisible();
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
+  await editor.fill('<h1 id="answer">Wrong</h1>');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(page.getByText(/Local check failed/)).toBeVisible();
+  await editor.fill('<h1 id="answer">Hello</h1>');
+  await page.getByRole('tab', { name: 'style.css' }).click();
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(page.getByText(/Static preview ready/)).toBeVisible();
+});

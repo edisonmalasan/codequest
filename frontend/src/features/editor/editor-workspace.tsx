@@ -77,7 +77,12 @@ export interface EditorWorkspaceProps {
   interactiveAdapter?: InteractiveWebAdapter;
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
+  captureValidationSource?: (
+    files: readonly WorkspaceFile[],
+    sources: Readonly<Record<string, string>>,
+  ) => string | null;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+  onSaveStatusChange?: (status: SaveStatus) => void;
   onRunComplete?: (outcome: {
     readonly status: ExecutionResult['status'];
   }) => void;
@@ -194,7 +199,9 @@ export function EditorWorkspace({
   interactiveAdapter,
   validationStrategy,
   validationDefinition,
+  captureValidationSource,
   onSourcesChange,
+  onSaveStatusChange,
   onRunComplete,
   onSubmit,
   onCheckComplete,
@@ -256,11 +263,24 @@ export function EditorWorkspace({
 
   onSourcesChangeRef.current = onSourcesChange;
 
+  useEffect(() => {
+    onSaveStatusChange?.(saveStatus);
+  }, [onSaveStatusChange, saveStatus]);
+
   const identity = useMemo(
     () => ({ ownerId, workspaceId }),
     [ownerId, workspaceId],
   );
   const activeFile = files.find((file) => file.id === activeFileId) ?? files[0];
+  const currentCheckSource = useCallback(
+    (snapshot: Readonly<Record<string, string>>): string | null =>
+      captureValidationSource
+        ? captureValidationSource(files, snapshot)
+        : activeFile?.language === 'javascript'
+          ? (snapshot[activeFile.id] ?? activeFile.starterSource)
+          : null,
+    [activeFile, captureValidationSource, files],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -552,15 +572,29 @@ export function EditorWorkspace({
     if (
       !validationStrategy ||
       !validationDefinition ||
-      activeFile?.language !== 'javascript'
+      (!captureValidationSource && activeFile?.language !== 'javascript')
     )
       return;
     validationControllerRef.current?.abort();
     const controller = new AbortController();
     validationControllerRef.current = controller;
     const token = ++validationTokenRef.current;
-    const source =
-      sourcesRef.current[activeFile.id] ?? activeFile.starterSource;
+    const source = currentCheckSource(sourcesRef.current);
+    if (source === null) {
+      validationControllerRef.current = null;
+      checkedSourceRef.current = null;
+      setChecking(false);
+      setValidationResult({
+        checkId: crypto.randomUUID(),
+        status: 'output-limit',
+        passed: false,
+        cases: [],
+        failedCaseIds: [],
+        feedback: 'The complete exercise source exceeds the Check limit',
+        durationMs: 0,
+      });
+      return;
+    }
     setValidationResult(undefined);
     checkedSourceRef.current = source;
     setChecking(true);
@@ -593,7 +627,14 @@ export function EditorWorkspace({
           });
         },
       );
-  }, [activeFile, onCheckComplete, validationDefinition, validationStrategy]);
+  }, [
+    activeFile,
+    captureValidationSource,
+    currentCheckSource,
+    onCheckComplete,
+    validationDefinition,
+    validationStrategy,
+  ]);
 
   const invalidateCheck = (): void => {
     validationTokenRef.current += 1;
@@ -707,7 +748,7 @@ export function EditorWorkspace({
         onCheck={
           validationStrategy &&
           validationDefinition &&
-          activeFile.language === 'javascript'
+          (captureValidationSource || activeFile.language === 'javascript')
             ? checkCurrent
             : undefined
         }
@@ -720,15 +761,12 @@ export function EditorWorkspace({
           onSubmit &&
           validationResult &&
           checkedSourceRef.current !== null &&
-          checkedSourceRef.current ===
-            (sources[activeFile.id] ?? activeFile.starterSource)
+          checkedSourceRef.current === currentCheckSource(sources)
             ? () => {
                 const checkedSource = checkedSourceRef.current;
                 if (
                   checkedSource !== null &&
-                  checkedSource ===
-                    (sourcesRef.current[activeFile.id] ??
-                      activeFile.starterSource)
+                  checkedSource === currentCheckSource(sourcesRef.current)
                 )
                   onSubmit({
                     source: checkedSource,

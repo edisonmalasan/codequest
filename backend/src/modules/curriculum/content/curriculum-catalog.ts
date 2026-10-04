@@ -382,6 +382,11 @@ export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
                     questPath,
                     'Interactive publication evidence is missing',
                   );
+                if (snapshot.exercise?.mode === 'interactive-web')
+                  throw new ContentError(
+                    questPath,
+                    'Interactive publication remains disabled until a separately reviewed R08 snapshot and exact-build route evidence are approved',
+                  );
                 publishedQuestIds.add(quest.metadata.id);
                 return { metadata: quest.metadata, activeSnapshot: snapshot };
               }),

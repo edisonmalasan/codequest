@@ -14,6 +14,7 @@ import {
 } from './content-schema';
 import {
   checkLesson,
+  checkInteractiveStarter,
   checkStarter,
   ContentError,
   readCases,
@@ -303,8 +304,11 @@ export function validateCurriculum(contentRoot: string): void {
             else
               for (const file of version.exercise.files) {
                 const source = join(versionPath, file.starterFile);
-                if (file.language === 'javascript') checkStarter(root, source);
-                else if (
+                if (file.language === 'javascript') {
+                  if (version.exercise.mode === 'interactive-web')
+                    checkInteractiveStarter(root, source);
+                  else checkStarter(root, source);
+                } else if (
                   !safeFile(
                     root,
                     source,
@@ -324,11 +328,7 @@ export function validateCurriculum(contentRoot: string): void {
                   ? !['console', 'function'].includes(item.kind)
                   : mode === 'static-web'
                     ? !['html-element', 'css-declaration'].includes(item.kind)
-                    : ![
-                        'html-element',
-                        'css-declaration',
-                        'interactive-text',
-                      ].includes(item.kind),
+                    : item.kind !== 'interactive-text',
               )
             )
               throw new ContentError(

@@ -8,10 +8,10 @@
 
 ## 2. Local web checks and source transport
 
-- [ ] 2.1 Implement bounded inert static HTML/CSS assertions and deterministic case feedback; verify malformed definitions, external-resource denial, byte/count limits, and a finite Check in focused tests.
-- [ ] 2.2 Implement supported interactive-state/event assertions through the isolated R07A adapter without executable test programs; verify finite interaction, unsupported APIs, malformed packets, hostile loops, and fresh-check recovery in browser tests.
-- [ ] 2.3 Add the canonical multi-file source envelope and backend descriptor comparison under the existing 64 KiB `source` limit; verify legacy source, version mismatch, duplicate/extra files, owner isolation, exact replay, and no second reward in backend tests.
-- [ ] 2.4 Extend the owner-scoped outbox/guest-local source handling only where an authored mode permits it; verify uncertain-response replay and account switching preserve original source and event IDs in focused tests.
+- [x] 2.1 Implement bounded inert static HTML/CSS assertions and deterministic case feedback; verify malformed definitions, external-resource denial, byte/count limits, and a finite Check in focused tests.
+- [x] 2.2 Implement supported interactive-state/event assertions through the isolated R07A adapter without executable test programs; verify finite interaction, unsupported APIs, malformed packets, hostile loops, and fresh-check recovery in browser tests.
+- [x] 2.3 Add the canonical multi-file source envelope and backend descriptor comparison under the existing 64 KiB `source` limit; verify legacy source, version mismatch, duplicate/extra files, owner isolation, exact replay, and no second reward in backend tests.
+- [x] 2.4 Extend the owner-scoped outbox/guest-local source handling only where an authored mode permits it; verify uncertain-response replay and account switching preserve original source and event IDs in focused tests.
 
 ## 3. Published lesson integration
 
@@ -23,5 +23,5 @@
 ## 4. Published interactive gate and integration review
 
 - [ ] 4.1 Run exact-build published-route containment, origin, message-spoof, source/output bound, repeated tight-loop, fresh-run, cancellation, navigation, and cleanup probes across the declared browser matrix; record dated build, origins, versions, failures, and untested setups. Keep publication disabled if any required probe fails.
-- [ ] 4.2 Define and verify the curriculum and technical/security publication review gate with a synthetic test-only descriptor; confirm production publication rejects missing reviews and remains off until a separately reviewed R08 snapshot and exact-build evidence exist.
+- [x] 4.2 Define and verify the curriculum and technical/security publication review gate with a synthetic test-only descriptor; confirm production publication rejects missing reviews and remains off until a separately reviewed R08 snapshot and exact-build evidence exist.
 - [ ] 4.3 Exercise the complete synthetic and existing published JavaScript paths from lesson through accepted backend replay, map/progress refresh, and revisit; verify `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm api:check`, strict OpenSpec validation, and focused Playwright. Record R04 real-provider and founder acceptance separately if still unavailable.

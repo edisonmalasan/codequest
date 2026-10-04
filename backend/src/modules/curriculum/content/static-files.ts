@@ -281,3 +281,17 @@ export function checkStarter(root: string, file: string): void {
   }
   inspect(script);
 }
+
+export function checkInteractiveStarter(root: string, file: string): void {
+  const source = safeFile(root, file, 65_536);
+  if (!source.trim())
+    throw new ContentError(file, 'Starter source must not be empty');
+  const diagnostics =
+    ts.transpileModule(source, {
+      fileName: file,
+      reportDiagnostics: true,
+      compilerOptions: { target: ts.ScriptTarget.ES2022 },
+    }).diagnostics ?? [];
+  if (diagnostics.some((item) => item.category === ts.DiagnosticCategory.Error))
+    throw new ContentError(file, 'Invalid interactive starter syntax');
+}

@@ -554,6 +554,12 @@ export interface components {
             concept: string;
             nextStep: string;
         };
+        QuestInteractiveEventDto: {
+            /** @enum {string} */
+            type: "click" | "input" | "change";
+            targetId: string;
+            value?: string;
+        };
         QuestCaseDto: {
             id: string;
             /** @enum {string} */
@@ -570,7 +576,7 @@ export interface components {
             /** @enum {string} */
             property?: "color" | "background-color" | "display" | "font-size";
             expectedValue?: string;
-            events?: Record<string, never>[];
+            events?: components["schemas"]["QuestInteractiveEventDto"][];
         };
         QuestExerciseFileDto: {
             id: string;

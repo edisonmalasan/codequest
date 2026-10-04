@@ -8,6 +8,7 @@ import type {
   ProtectedApiResult,
 } from '@/lib/api-client';
 import { ProgressReplay } from './progress-replay';
+import { serializeWebSource } from '@/features/validation';
 
 const databases: CodeQuestDatabase[] = [];
 function setup() {
@@ -31,6 +32,7 @@ function body(id = crypto.randomUUID()): CreateAttemptRequest {
 }
 function confirmed(
   submission: CreateAttemptRequest,
+  questId = 'Q01',
 ): ProtectedApiResult<AttemptResponse> {
   return {
     ok: true,
@@ -38,7 +40,7 @@ function confirmed(
     data: {
       ...submission,
       id: 'attempt',
-      questId: 'Q01',
+      questId,
       submittedAt: '2026-09-29T00:00:00Z',
       attemptCount: 1,
       reportedPassed: true,
@@ -53,6 +55,39 @@ afterEach(async () => {
 });
 
 describe('durable authenticated replay', () => {
+  it('retains a complete multi-file bundle and stable event through uncertainty and account switch', async () => {
+    const { replay } = setup();
+    const source = serializeWebSource({
+      schemaVersion: 1,
+      questId: 'WEB01',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      mode: 'static-web',
+      files: [
+        { id: 'page', language: 'html', source: '<h1>Private</h1>' },
+        { id: 'style', language: 'css', source: 'h1 { color: blue; }' },
+      ],
+    });
+    expect(source).not.toBeNull();
+    const submission = { ...body(), source: source ?? '' };
+    await replay.save('A', 'WEB01', submission);
+    const api = {
+      replayAttempt: vi
+        .fn()
+        .mockResolvedValueOnce({ ok: false, kind: 'network' })
+        .mockResolvedValue(confirmed(submission, 'WEB01')),
+    };
+    await replay.replay('A', api, async () => 'A');
+    expect((await replay.repository.list('A'))[0].payload).toContain('Private');
+    await replay.replay('A', api, async () => 'B', true);
+    expect(api.replayAttempt).toHaveBeenCalledTimes(1);
+    expect(await replay.repository.list('B')).toEqual([]);
+    await replay.replay('A', api, async () => 'A', true);
+    expect(api.replayAttempt.mock.calls).toEqual([
+      ['WEB01', submission],
+      ['WEB01', submission],
+    ]);
+  });
   it('retains written responses through rejection and uncertain duplicate delivery', async () => {
     const { replay } = setup();
     const submission = {

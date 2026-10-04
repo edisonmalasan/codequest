@@ -31,6 +31,27 @@ export type ValidationCase =
       predicate:
         | { kind: 'output-contains'; text: string }
         | { kind: 'number-range'; min: number; max: number };
+    })
+  | (CaseBase & {
+      mode: 'html-element';
+      selector: string;
+      expectedText: string;
+    })
+  | (CaseBase & {
+      mode: 'css-declaration';
+      selector: string;
+      property: 'color' | 'background-color' | 'display' | 'font-size';
+      expectedValue: string;
+    })
+  | (CaseBase & {
+      mode: 'interactive-text';
+      selector: string;
+      events: readonly {
+        type: 'click' | 'input' | 'change';
+        targetId: string;
+        value?: string;
+      }[];
+      expectedText: string;
     });
 
 export interface ValidationDefinition {

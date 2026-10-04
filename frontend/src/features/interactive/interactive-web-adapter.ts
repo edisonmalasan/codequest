@@ -39,6 +39,7 @@ interface Session {
   busy: boolean;
   description: string;
   startedAt: number;
+  textByNode: Map<string, string>;
 }
 
 function result(
@@ -289,6 +290,9 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
       busy: false,
       description: document.description,
       startedAt: performance.now(),
+      textByNode: new Map(
+        document.nodes.map((node) => [node.nodeId, node.ownText]),
+      ),
     };
     this.session = session;
     const operation = this.operation;
@@ -397,6 +401,17 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
       mutations,
     });
     await applied;
+    for (const mutation of mutations)
+      if (mutation.kind === 'text') {
+        session.textByNode.set(mutation.nodeId, mutation.value);
+        const descendants = new Set([mutation.nodeId]);
+        for (const node of session.document.nodes) {
+          if (node.parentId && descendants.has(node.parentId)) {
+            descendants.add(node.nodeId);
+            session.textByNode.delete(node.nodeId);
+          }
+        }
+      }
     const text = mutations
       .filter((mutation) => mutation.kind === 'text')
       .map((mutation) => mutation.value.trim())
@@ -505,6 +520,16 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
         result(undefined, 'unavailable', 'Run the interactive preview first'),
       );
     return this.start(this.session.snapshot, signal);
+  }
+
+  readText(elementId: string): string | null {
+    const session = this.session;
+    if (!session?.ready || !/^[a-z][a-z0-9-]{0,31}$/.test(elementId))
+      return null;
+    const node = session.document.nodes.find(
+      (item) => item.elementId === elementId,
+    );
+    return node ? (session.textByNode.get(node.nodeId) ?? null) : null;
   }
 
   async cancel(): Promise<void> {

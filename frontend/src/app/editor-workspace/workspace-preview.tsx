@@ -20,10 +20,78 @@ import {
   type ExecutionAdapter,
 } from '@/features/runtime';
 import {
+  InteractiveWebValidationStrategy,
   JavaScriptValidationStrategy,
+  serializeWebSource,
+  StaticWebValidationStrategy,
   type ValidationDefinition,
   type ValidationStrategy,
 } from '@/features/validation';
+
+const staticFiles: readonly WorkspaceFile[] = [
+  {
+    id: 'page',
+    name: 'index.html',
+    language: 'html',
+    starterSource: '<h1 id="answer">Hello</h1>',
+  },
+  {
+    id: 'style',
+    name: 'style.css',
+    language: 'css',
+    starterSource: 'h1 { color: blue; }',
+  },
+];
+const interactiveFiles: readonly WorkspaceFile[] = [
+  {
+    id: 'page',
+    name: 'index.html',
+    language: 'html',
+    starterSource:
+      '<button id="trigger">Press</button><p id="answer">Ready</p>',
+  },
+  {
+    id: 'logic',
+    name: 'main.js',
+    language: 'javascript',
+    starterSource:
+      'document.getElementById("trigger").addEventListener("click", () => { document.getElementById("answer").textContent = "Done"; });',
+  },
+];
+const staticDefinition: ValidationDefinition = {
+  cases: [
+    {
+      id: 'heading',
+      label: 'Heading',
+      feedback: 'Add the greeting',
+      mode: 'html-element',
+      selector: '#answer',
+      expectedText: 'Hello',
+    },
+    {
+      id: 'color',
+      label: 'Color',
+      feedback: 'Use blue',
+      mode: 'css-declaration',
+      selector: 'h1',
+      property: 'color',
+      expectedValue: 'blue',
+    },
+  ],
+};
+const interactiveDefinition: ValidationDefinition = {
+  cases: [
+    {
+      id: 'clicked',
+      label: 'Click response',
+      feedback: 'Update the answer after click',
+      mode: 'interactive-text',
+      selector: '#answer',
+      events: [{ type: 'click', targetId: 'trigger' }],
+      expectedText: 'Done',
+    },
+  ],
+};
 
 const checkExamples: Record<
   string,
@@ -148,10 +216,14 @@ export function WorkspacePreview(): React.JSX.Element {
       ? new JavaScriptWorkerAdapter(runtimeOrigin)
       : undefined;
     setExecutionAdapter(adapter);
-    const checker = runtimeOrigin
-      ? new JavaScriptValidationStrategy(runtimeOrigin)
-      : undefined;
-    setValidationStrategy(checker);
+    const checker =
+      checkMode === 'static-web'
+        ? new StaticWebValidationStrategy()
+        : checkMode === 'interactive-web'
+          ? undefined
+          : runtimeOrigin
+            ? new JavaScriptValidationStrategy(runtimeOrigin)
+            : undefined;
     const previewOrigin = resolvePreviewOrigin(
       process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
       applicationOrigin,
@@ -169,6 +241,14 @@ export function WorkspacePreview(): React.JSX.Element {
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
       process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
     );
+    const selectedChecker =
+      checkMode === 'interactive-web' && interactiveOrigins
+        ? new InteractiveWebValidationStrategy(
+            interactiveOrigins.runnerOrigin,
+            interactiveOrigins.previewOrigin,
+          )
+        : checker;
+    setValidationStrategy(selectedChecker);
     if (interactiveOrigins) {
       const interactive = new IsolatedInteractiveWebAdapter(
         interactiveOrigins.runnerOrigin,
@@ -178,15 +258,26 @@ export function WorkspacePreview(): React.JSX.Element {
     }
     return () => {
       void adapter?.dispose();
-      void checker?.dispose();
+      void selectedChecker?.dispose();
     };
-  }, []);
+  }, [checkMode]);
 
   const example = checkExamples[checkMode] ?? checkExamples['output-match'];
-  const files = [
-    { ...previewFiles[0], starterSource: example.source },
-    ...previewFiles.slice(1),
-  ];
+  const files =
+    checkMode === 'static-web'
+      ? staticFiles
+      : checkMode === 'interactive-web'
+        ? interactiveFiles
+        : [
+            { ...previewFiles[0], starterSource: example.source },
+            ...previewFiles.slice(1),
+          ];
+  const definition =
+    checkMode === 'static-web'
+      ? staticDefinition
+      : checkMode === 'interactive-web'
+        ? interactiveDefinition
+        : example.definition;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas px-4 py-6 text-ink sm:px-6 lg:px-8">
@@ -216,7 +307,11 @@ export function WorkspacePreview(): React.JSX.Element {
             onChange={(event) => setCheckMode(event.target.value)}
             className="rounded-md border border-line bg-surface px-3 py-2 text-ink"
           >
-            {Object.keys(checkExamples).map((mode) => (
+            {[
+              ...Object.keys(checkExamples),
+              'static-web',
+              'interactive-web',
+            ].map((mode) => (
               <option key={mode} value={mode}>
                 {mode}
               </option>
@@ -231,7 +326,24 @@ export function WorkspacePreview(): React.JSX.Element {
           previewAdapter={previewAdapter}
           interactiveAdapter={interactiveAdapter}
           validationStrategy={validationStrategy}
-          validationDefinition={example.definition}
+          validationDefinition={definition}
+          captureValidationSource={
+            checkMode === 'static-web' || checkMode === 'interactive-web'
+              ? (supplied, sources) =>
+                  serializeWebSource({
+                    schemaVersion: 1,
+                    questId: 'Q01',
+                    contentVersion: '1.0.0',
+                    assessmentVersion: '1.0.0',
+                    mode: checkMode,
+                    files: supplied.map((file) => ({
+                      id: file.id,
+                      language: file.language,
+                      source: sources[file.id] ?? file.starterSource,
+                    })),
+                  })
+              : undefined
+          }
         />
       </div>
     </main>

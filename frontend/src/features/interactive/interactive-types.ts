@@ -63,6 +63,7 @@ export interface InteractiveWebAdapter {
     signal?: AbortSignal,
   ): Promise<InteractiveResult>;
   reload(signal?: AbortSignal): Promise<InteractiveResult>;
+  readText(elementId: string): string | null;
   cancel(): Promise<void>;
   dispose(): Promise<void>;
 }

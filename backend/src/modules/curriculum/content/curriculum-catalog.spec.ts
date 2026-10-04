@@ -160,6 +160,46 @@ describe('curriculum publication catalog', () => {
       'File exceeds size limit',
     );
   });
+  it('keeps synthetic interactive publication disabled even with declared reviews and a record reference', () => {
+    const root = fixture();
+    reviewed(root);
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    writeFileSync(
+      join(snapshot, 'version.yaml'),
+      `${readFileSync(join(snapshot, 'version.yaml'), 'utf8')}exercise:\n  schemaVersion: 1\n  mode: interactive-web\n  files:\n    - id: page\n      name: index.html\n      language: html\n      starterFile: starter.html\n    - id: logic\n      name: main.js\n      language: javascript\n      starterFile: starter.js\n`,
+    );
+    writeFileSync(
+      join(snapshot, 'starter.html'),
+      '<button id="trigger">Go</button><p id="answer">Ready</p>',
+    );
+    writeFileSync(
+      join(snapshot, 'starter.js'),
+      'document.getElementById("trigger").addEventListener("click", () => { document.getElementById("answer").textContent = "Done"; });',
+    );
+    writeFileSync(
+      join(snapshot, 'tests.ts'),
+      `export const cases = [
+  { id: 'normal-message', category: 'normal', kind: 'interactive-text', selector: '#answer', events: [{ type: 'click', targetId: 'trigger' }], expectedText: 'Done', feedback: 'Handle the click.' },
+  { id: 'boundary-exact-output', category: 'boundary', kind: 'interactive-text', selector: '#answer', events: [], expectedText: 'Ready', feedback: 'Keep the initial text.' },
+];\n`,
+    );
+    const reviews =
+      '            curriculumReview: approved\n            technicalReview: approved\n';
+    publish(root, reviews);
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Interactive publication evidence is missing',
+    );
+    publish(
+      root,
+      `${reviews}            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n`,
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Interactive publication remains disabled',
+    );
+  });
   it('rejects unknown publication fields and duplicate stable IDs', () => {
     const reviewedSelection = {
       schemaVersion: 2,
