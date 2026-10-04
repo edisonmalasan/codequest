@@ -2,9 +2,9 @@
 
 ## 1. Published exercise contract
 
-- [ ] 1.1 Add a versioned, bounded, mode-specific descriptor to backend curriculum authoring and publication validation; verify existing JavaScript snapshots and invalid file/mode/case fixtures with backend tests and the curriculum validation command.
-- [ ] 1.2 Expose the optional descriptor in Quest OpenAPI and regenerate the frontend client; verify `pnpm api:check` and that current Quest responses remain compatible.
-- [ ] 1.3 Document authored mode, file, version, assessment, and publication-review rules with an original synthetic fixture; verify the fixture is not selected as a public course.
+- [x] 1.1 Add a versioned, bounded, mode-specific descriptor to backend curriculum authoring and publication validation; verify existing JavaScript snapshots and invalid file/mode/case fixtures with backend tests and the curriculum validation command.
+- [x] 1.2 Expose the optional descriptor in Quest OpenAPI and regenerate the frontend client; verify `pnpm api:check` and that current Quest responses remain compatible.
+- [x] 1.3 Document authored mode, file, version, assessment, and publication-review rules with an original synthetic fixture; verify the fixture is not selected as a public course.
 
 ## 2. Local web checks and source transport
 

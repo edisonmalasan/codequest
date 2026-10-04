@@ -117,6 +117,20 @@ export class CurriculumService {
       lesson: snapshot.lesson,
       starterCode: snapshot.starterCode,
       cases: snapshot.cases.map((item) => ({ ...item }) as QuestCaseDto),
+      ...(snapshot.exercise
+        ? {
+            exercise: {
+              schemaVersion: snapshot.exercise.schemaVersion,
+              mode: snapshot.exercise.mode,
+              files: snapshot.exercise.files.map((file) => ({
+                id: file.id,
+                name: file.name,
+                language: file.language,
+                starterSource: file.starterSource,
+              })),
+            },
+          }
+        : {}),
       ...(snapshot.metadata.explanationPrompt
         ? { explanationPrompt: snapshot.metadata.explanationPrompt }
         : {}),

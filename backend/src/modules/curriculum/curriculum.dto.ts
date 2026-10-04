@@ -99,13 +99,58 @@ export class QuestCaseDto {
   @ApiProperty({ type: String }) id!: string;
   @ApiProperty({ type: String, enum: ['normal', 'boundary'] }) category!:
     'normal' | 'boundary';
-  @ApiProperty({ type: String, enum: ['console', 'function'] }) kind!:
-    'console' | 'function';
+  @ApiProperty({
+    type: String,
+    enum: [
+      'console',
+      'function',
+      'html-element',
+      'css-declaration',
+      'interactive-text',
+    ],
+  })
+  kind!:
+    | 'console'
+    | 'function'
+    | 'html-element'
+    | 'css-declaration'
+    | 'interactive-text';
   @ApiProperty({ type: String }) feedback!: string;
   @ApiPropertyOptional({ type: String }) expectedOutput?: string;
   @ApiPropertyOptional({ type: String }) functionName?: string;
   @ApiPropertyOptional({ type: Array, items: {} }) args?: unknown[];
   @ApiPropertyOptional({ type: Object }) expected?: unknown;
+  @ApiPropertyOptional({ type: String }) selector?: string;
+  @ApiPropertyOptional({ type: String }) expectedText?: string;
+  @ApiPropertyOptional({
+    type: String,
+    enum: ['color', 'background-color', 'display', 'font-size'],
+  })
+  property?: string;
+  @ApiPropertyOptional({ type: String }) expectedValue?: string;
+  @ApiPropertyOptional({ type: [Object] }) events?: {
+    type: 'click' | 'input' | 'change';
+    targetId: string;
+    value?: string;
+  }[];
+}
+
+export class QuestExerciseFileDto {
+  @ApiProperty({ type: String }) id!: string;
+  @ApiProperty({ type: String }) name!: string;
+  @ApiProperty({ type: String, enum: ['html', 'css', 'javascript'] })
+  language!: 'html' | 'css' | 'javascript';
+  @ApiProperty({ type: String }) starterSource!: string;
+}
+
+export class QuestExerciseDto {
+  @ApiProperty({ type: Number, enum: [1] }) schemaVersion!: 1;
+  @ApiProperty({
+    type: String,
+    enum: ['javascript', 'static-web', 'interactive-web'],
+  })
+  mode!: 'javascript' | 'static-web' | 'interactive-web';
+  @ApiProperty({ type: [QuestExerciseFileDto] }) files!: QuestExerciseFileDto[];
 }
 
 export class QuestDetailDto extends QuestSummaryDto {
@@ -119,6 +164,7 @@ export class QuestDetailDto extends QuestSummaryDto {
   @ApiProperty({ type: String }) lesson!: string;
   @ApiProperty({ type: String }) starterCode!: string;
   @ApiProperty({ type: [QuestCaseDto] }) cases!: QuestCaseDto[];
+  @ApiPropertyOptional({ type: QuestExerciseDto }) exercise?: QuestExerciseDto;
   @ApiPropertyOptional({ type: String }) explanationPrompt?: string;
   @ApiPropertyOptional({ type: String }) transferPrompt?: string;
 }

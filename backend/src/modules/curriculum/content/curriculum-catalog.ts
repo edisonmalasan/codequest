@@ -12,6 +12,7 @@ import {
   type Chapter,
   type Course,
   type CurriculumCase,
+  type Exercise,
   type Journey,
   type Quest,
   type QuestVersion,
@@ -41,6 +42,11 @@ export interface CatalogQuestSnapshot {
   readonly metadata: QuestVersion;
   readonly lesson: string;
   readonly starterCode: string;
+  readonly exercise?: Omit<Exercise, 'files'> & {
+    readonly files: readonly (Exercise['files'][number] & {
+      readonly starterSource: string;
+    })[];
+  };
   readonly cases: readonly CurriculumCase[];
   readonly assets: Readonly<Record<string, CatalogQuestAsset>>;
 }
@@ -203,17 +209,40 @@ export function loadAuthoredCurriculum(
                     snapshotVersion,
                   );
                   const lessonFile = join(snapshotPath, 'lesson.mdx');
-                  const starterFile = join(snapshotPath, 'starter.js');
+                  const metadata = parse(
+                    root,
+                    join(snapshotPath, 'version.yaml'),
+                    versionSchema,
+                  );
+                  const exercise = metadata.exercise
+                    ? {
+                        ...metadata.exercise,
+                        files: metadata.exercise.files.map((file) => ({
+                          ...file,
+                          starterSource: safeFile(
+                            root,
+                            join(snapshotPath, file.starterFile),
+                            file.language === 'css' ? 32_768 : 65_536,
+                          ),
+                        })),
+                      }
+                    : undefined;
                   checkLesson(root, lessonFile);
-                  checkStarter(root, starterFile);
+                  if (!exercise)
+                    checkStarter(root, join(snapshotPath, 'starter.js'));
                   snapshots[snapshotVersion] = {
-                    metadata: parse(
-                      root,
-                      join(snapshotPath, 'version.yaml'),
-                      versionSchema,
-                    ),
+                    metadata,
                     lesson: safeFile(root, lessonFile, 65_536),
-                    starterCode: safeFile(root, starterFile, 32_768),
+                    starterCode: exercise
+                      ? (exercise.files.find(
+                          (file) => file.language === 'javascript',
+                        )?.starterSource ?? '')
+                      : safeFile(
+                          root,
+                          join(snapshotPath, 'starter.js'),
+                          32_768,
+                        ),
+                    ...(exercise ? { exercise } : {}),
                     cases: readCases(root, join(snapshotPath, 'tests.ts')),
                     assets: loadAssets(root, snapshotPath),
                   };
@@ -334,6 +363,24 @@ export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
                   throw new ContentError(
                     questPath,
                     'Selected quest version is stale',
+                  );
+                if (
+                  snapshot.exercise?.mode !== undefined &&
+                  snapshot.exercise.mode !== 'javascript' &&
+                  (questSelection.curriculumReview !== 'approved' ||
+                    questSelection.technicalReview !== 'approved')
+                )
+                  throw new ContentError(
+                    questPath,
+                    'Web exercise review is missing',
+                  );
+                if (
+                  snapshot.exercise?.mode === 'interactive-web' &&
+                  !questSelection.interactiveEvidence
+                )
+                  throw new ContentError(
+                    questPath,
+                    'Interactive publication evidence is missing',
                   );
                 publishedQuestIds.add(quest.metadata.id);
                 return { metadata: quest.metadata, activeSnapshot: snapshot };

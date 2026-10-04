@@ -18,6 +18,7 @@ import {
   ContentError,
   readCases,
   readYaml,
+  safeFile,
 } from './static-files';
 
 type Cases = z.infer<typeof casesSchema>;
@@ -95,7 +96,7 @@ export function validateCurriculum(contentRoot: string): void {
   const root = resolve(contentRoot);
   let visitedFiles = 0;
   const authoredFile =
-    /^(?:README\.md|concepts\.yaml|publication\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/courses\/[^/]+\/course\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.js|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
+    /^(?:README\.md|concepts\.yaml|publication\.yaml|journeys\/[^/]+\/journey\.yaml|journeys\/[^/]+\/courses\/[^/]+\/course\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/chapter\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/quest\.yaml|journeys\/[^/]+\/courses\/[^/]+\/chapters\/[^/]+\/quests\/[^/]+\/versions\/[^/]+\/(?:version\.yaml|lesson\.mdx|starter\.(?:js|html|css)|tests\.ts|assets\/[a-zA-Z0-9/_-]+\.(?:png|webp)))$/;
   function scan(folder: string, depth: number): void {
     if (depth > 18)
       throw new ContentError(
@@ -297,8 +298,43 @@ export function validateCurriculum(contentRoot: string): void {
               );
             const lesson = join(versionPath, 'lesson.mdx');
             checkLesson(root, lesson);
-            checkStarter(root, join(versionPath, 'starter.js'));
+            if (!version.exercise)
+              checkStarter(root, join(versionPath, 'starter.js'));
+            else
+              for (const file of version.exercise.files) {
+                const source = join(versionPath, file.starterFile);
+                if (file.language === 'javascript') checkStarter(root, source);
+                else if (
+                  !safeFile(
+                    root,
+                    source,
+                    file.language === 'css' ? 32_768 : 65_536,
+                  ).trim()
+                )
+                  throw new ContentError(
+                    source,
+                    'Starter source must not be empty',
+                  );
+              }
             const cases = readCases(root, join(versionPath, 'tests.ts'));
+            const mode = version.exercise?.mode ?? 'javascript';
+            if (
+              cases.some((item) =>
+                mode === 'javascript'
+                  ? !['console', 'function'].includes(item.kind)
+                  : mode === 'static-web'
+                    ? !['html-element', 'css-declaration'].includes(item.kind)
+                    : ![
+                        'html-element',
+                        'css-declaration',
+                        'interactive-text',
+                      ].includes(item.kind),
+              )
+            )
+              throw new ContentError(
+                versionPath,
+                'Assessment cases do not match exercise mode',
+              );
             exactInventory(
               version.caseIds,
               cases.map((item) => item.id),
@@ -482,7 +518,9 @@ export function validateCurriculum(contentRoot: string): void {
           'Contradictory compatibility decision',
         );
       if (
-        JSON.stringify(previous.cases) !== JSON.stringify(next.cases) &&
+        (JSON.stringify(previous.cases) !== JSON.stringify(next.cases) ||
+          JSON.stringify(previous.metadata.exercise) !==
+            JSON.stringify(next.metadata.exercise)) &&
         previous.metadata.assessmentVersion === next.metadata.assessmentVersion
       )
         throw new ContentError(
