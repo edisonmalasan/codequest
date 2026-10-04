@@ -46,8 +46,27 @@ test('interactive Worker updates an opaque preview through bounded events', asyn
   await child.getByRole('button', { name: 'Add' }).focus();
   await page.keyboard.press('Enter');
   await expect(child.getByRole('heading', { name: '2' })).toBeVisible();
+  await child.getByRole('button', { name: 'Add' }).evaluate((button) => {
+    const bridge = document.querySelector<HTMLScriptElement>(
+      'script[src="/preview/interactive-bridge.js"]',
+    );
+    parent.postMessage(
+      {
+        type: 'interaction',
+        nonce: bridge?.dataset.nonce,
+        generationId: bridge?.dataset.generation,
+        sequence: 2,
+        targetId: button.getAttribute('data-cq-node'),
+        eventType: 'click',
+        value: undefined,
+      },
+      '*',
+    );
+  });
+  await expect(child.getByRole('heading', { name: '2' })).toBeVisible();
   await child.getByRole('textbox', { name: 'Name' }).fill('Ava');
   await expect(child.getByText('Ava')).toBeVisible();
+  await expect(child.getByRole('heading', { name: '2' })).toBeVisible();
   await expect(panel.getByLabel('Interactive console output')).toContainText(
     'count 1',
   );
