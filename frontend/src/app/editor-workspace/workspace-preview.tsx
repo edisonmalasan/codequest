@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import {
+  IsolatedInteractiveWebAdapter,
+  resolveInteractiveOrigins,
+  type InteractiveWebAdapter,
+} from '@/features/interactive';
 
 import { CodeQuestLogo } from '@/components/brand/codequest-logo';
 import { EditorWorkspace, type WorkspaceFile } from '@/features/editor';
@@ -127,6 +132,8 @@ h1 { color: #2357a5; }`,
 export function WorkspacePreview(): React.JSX.Element {
   const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
   const [previewAdapter, setPreviewAdapter] = useState<PreviewAdapter>();
+  const [interactiveAdapter, setInteractiveAdapter] =
+    useState<InteractiveWebAdapter>();
   const [validationStrategy, setValidationStrategy] =
     useState<ValidationStrategy>();
   const [checkMode, setCheckMode] = useState('output-match');
@@ -156,6 +163,18 @@ export function WorkspacePreview(): React.JSX.Element {
         runtimeOrigin ? new JavaScriptWorkerAdapter(runtimeOrigin) : undefined,
       );
       setPreviewAdapter(preview);
+    }
+    const interactiveOrigins = resolveInteractiveOrigins(
+      applicationOrigin,
+      process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
+      process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
+    );
+    if (interactiveOrigins) {
+      const interactive = new IsolatedInteractiveWebAdapter(
+        interactiveOrigins.runnerOrigin,
+        interactiveOrigins.previewOrigin,
+      );
+      setInteractiveAdapter(interactive);
     }
     return () => {
       void adapter?.dispose();
@@ -210,6 +229,7 @@ export function WorkspacePreview(): React.JSX.Element {
           files={files}
           executionAdapter={executionAdapter}
           previewAdapter={previewAdapter}
+          interactiveAdapter={interactiveAdapter}
           validationStrategy={validationStrategy}
           validationDefinition={example.definition}
         />

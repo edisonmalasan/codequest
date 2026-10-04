@@ -51,6 +51,7 @@ export interface InteractiveResult {
 
 export interface InteractiveWebAdapter {
   attach(host: HTMLElement): void;
+  subscribe(listener: (result: InteractiveResult) => void): () => void;
   start(
     snapshot: InteractiveSnapshot,
     signal?: AbortSignal,

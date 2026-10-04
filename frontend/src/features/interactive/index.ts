@@ -12,3 +12,4 @@ export {
   type InteractiveStatus,
   type InteractiveWebAdapter,
 } from './interactive-types';
+export { IsolatedInteractiveWebAdapter } from './interactive-web-adapter';
