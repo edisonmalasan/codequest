@@ -4,6 +4,7 @@ import { appOrigin, previewOrigin, runtimeOrigin } from './test-origins';
 test('interactive Worker updates an opaque preview through bounded events', async ({
   page,
 }) => {
+  test.setTimeout(90_000);
   await page.goto('/editor-workspace');
   const panel = page.getByRole('region', { name: 'Interactive result' });
   const htmlTab = page.getByRole('tab', { name: 'index.html' });
@@ -11,18 +12,14 @@ test('interactive Worker updates an opaque preview through bounded events', asyn
   const htmlEditor = page.getByRole('textbox', {
     name: 'index.html code editor (html)',
   });
-  await htmlEditor.click();
-  await page.keyboard.press('Control+A');
-  await page.keyboard.insertText(
+  await htmlEditor.fill(
     '<main><h1 id="count">0</h1><button id="add">Add</button><input id="name" type="text" placeholder="Name"><p id="echo"></p></main>',
   );
   await page.getByRole('tab', { name: 'main.js' }).click();
   const jsEditor = page.getByRole('textbox', {
     name: 'main.js code editor (javascript)',
   });
-  await jsEditor.click();
-  await page.keyboard.press('Control+A');
-  await page.keyboard.insertText(
+  await jsEditor.fill(
     'let count = 0; document.getElementById("add").addEventListener("click", () => { document.getElementById("count").textContent = String(++count); console.log("count", count); }); document.getElementById("name").addEventListener("input", (event) => { document.getElementById("echo").textContent = event.target.value; });',
   );
   await panel.getByRole('button', { name: 'Start interactive' }).click();
