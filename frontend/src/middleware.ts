@@ -27,6 +27,9 @@ export async function middleware(request: NextRequest) {
             '/runtime/validation-bootstrap.html',
             '/runtime/validation-bootstrap.js',
             '/runtime/validation-worker.js',
+            '/runtime/interactive-bootstrap.html',
+            '/runtime/interactive-bootstrap.js',
+            '/runtime/interactive-worker.js',
             '/runtime/offline-sw.js',
             '/runtime/offline-setup.html',
             '/runtime/offline-setup.js',
@@ -47,8 +50,13 @@ export async function middleware(request: NextRequest) {
         request.headers.get('host') === new URL(configuredPreviewOrigin).host
       ) {
         if (
-          request.nextUrl.pathname !== '/preview/bootstrap.html' &&
-          request.nextUrl.pathname !== '/preview/bootstrap.js'
+          !new Set([
+            '/preview/bootstrap.html',
+            '/preview/bootstrap.js',
+            '/preview/interactive-bootstrap.html',
+            '/preview/interactive-bootstrap.js',
+            '/preview/interactive-bridge.js',
+          ]).has(request.nextUrl.pathname)
         ) {
           return new NextResponse(null, { status: 404 });
         }

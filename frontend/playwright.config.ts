@@ -58,12 +58,20 @@ export default defineConfig({
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     {
       name: 'firefox',
-      testMatch: ['**/web-preview.spec.ts', '**/validation-engine.spec.ts'],
+      testMatch: [
+        '**/web-preview.spec.ts',
+        '**/interactive-web.spec.ts',
+        '**/validation-engine.spec.ts',
+      ],
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'webkit',
-      testMatch: ['**/web-preview.spec.ts', '**/validation-engine.spec.ts'],
+      testMatch: [
+        '**/web-preview.spec.ts',
+        '**/interactive-web.spec.ts',
+        '**/validation-engine.spec.ts',
+      ],
       use: { ...devices['Desktop Safari'] },
     },
   ],

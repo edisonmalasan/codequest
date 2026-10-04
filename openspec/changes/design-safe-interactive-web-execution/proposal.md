@@ -10,7 +10,7 @@ The existing web preview safely displays HTML and CSS, but learner JavaScript ca
 - Keep arbitrary learner JavaScript in a fresh, terminable, credential-free Worker. Use a deliberately limited DOM/event model and a fixed, reviewed display bridge on an isolated preview origin; learner source is never evaluated in the display frame.
 - Define source, DOM mutation, event, output, packet, time, and recovery limits, with exact-origin/correlated channels and cleanup on every terminal path.
 - Require adversarial browser evidence for containment, event spoofing, network/storage denial, tight loops, malformed packets, and fresh-run recovery before enabling interactive lessons. Record unsupported browser APIs explicitly.
-- Keep Run/preview separate from local Check and backend-accepted completion. R06 founder acceptance and R04 real-provider verification remain independent open gates.
+- Keep Run/preview separate from local Check and backend-accepted completion. The exact R06 local visual/workflow acceptance is recorded separately; R04 real-provider verification remains open.
 
 ## Capabilities
 

@@ -135,6 +135,19 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'no-store' },
         ],
       },
+      ...[
+        '/preview/interactive-bootstrap.html',
+        '/preview/interactive-bootstrap.js',
+        '/preview/interactive-bridge.js',
+      ].map((source) => ({
+        source,
+        headers: [
+          { key: 'Content-Security-Policy', value: previewPolicy },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      })),
       {
         source: '/runtime/bootstrap.html',
         headers: [
@@ -179,6 +192,27 @@ const nextConfig: NextConfig = {
           { key: 'Content-Security-Policy', value: workerPolicy },
           { key: 'Referrer-Policy', value: 'no-referrer' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
+        ],
+      },
+      ...[
+        '/runtime/interactive-bootstrap.html',
+        '/runtime/interactive-bootstrap.js',
+      ].map((source) => ({
+        source,
+        headers: [
+          { key: 'Content-Security-Policy', value: bootstrapPolicy },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      })),
+      {
+        source: '/runtime/interactive-worker.js',
+        headers: [
+          { key: 'Content-Security-Policy', value: workerPolicy },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Cache-Control', value: 'no-store' },
         ],
       },
       {

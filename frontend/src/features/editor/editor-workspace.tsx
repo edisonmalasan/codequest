@@ -12,6 +12,7 @@ import { DeferredCodeEditor } from './deferred-code-editor';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import type { ExecutionAdapter, ExecutionResult } from '@/features/runtime';
+import type { InteractiveWebAdapter } from '@/features/interactive';
 import type {
   PreviewAdapter,
   PreviewFile,
@@ -35,6 +36,7 @@ import { ConsolePanel } from './console-panel';
 import { EditorToolbar } from './editor-toolbar';
 import { FileTabs } from './file-tabs';
 import { PreviewPanel } from './preview-panel';
+import { InteractivePreviewPanel } from './interactive-preview-panel';
 import { RuntimeStatus } from './runtime-status';
 import { TestResults } from './test-results';
 import type {
@@ -72,6 +74,7 @@ export interface EditorWorkspaceProps {
   runtimeState?: RuntimeDisplayState;
   executionAdapter?: ExecutionAdapter;
   previewAdapter?: PreviewAdapter;
+  interactiveAdapter?: InteractiveWebAdapter;
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
@@ -188,6 +191,7 @@ export function EditorWorkspace({
   runtimeState,
   executionAdapter,
   previewAdapter,
+  interactiveAdapter,
   validationStrategy,
   validationDefinition,
   onSourcesChange,
@@ -882,6 +886,17 @@ export function EditorWorkspace({
               />
             </div>
           )}
+          {presentation === 'standalone' && interactiveAdapter && (
+            <div className="mt-4">
+              <InteractivePreviewPanel
+                adapter={interactiveAdapter}
+                ownerId={ownerId}
+                workspaceId={workspaceId}
+                files={files}
+                sources={sources}
+              />
+            </div>
+          )}
         </div>
         <aside
           aria-label={
@@ -901,6 +916,15 @@ export function EditorWorkspace({
               hostRef={previewHostRef}
               result={previewResult}
               running={previewRunning}
+            />
+          )}
+          {presentation === 'integrated' && interactiveAdapter && (
+            <InteractivePreviewPanel
+              adapter={interactiveAdapter}
+              ownerId={ownerId}
+              workspaceId={workspaceId}
+              files={files}
+              sources={sources}
             />
           )}
           <RuntimeStatus

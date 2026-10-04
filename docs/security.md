@@ -1,5 +1,7 @@
 # Security and privacy boundaries
 
+R07A's [interactive web execution candidate](interactive-web-execution.md) is confined to a development-only review surface while its technical and security gates are assessed. Its Worker DOM facade and fixed opaque display bridge are distinct from both the Phase 14 Run and Phase 15 static-preview contracts. Local browser automation is not hosted-origin or physical-device evidence; the existing P11 and Phase 38 boundaries remain in force.
+
 Phase 33 source and test evidence, with deployment-only checks, is recorded in the [security review](security-review.md). It does not close the F06 gate for real learner data.
 
 Phase 25 replay binds every request token to its originating account, isolates old-owner source and results on session changes, and persists no protected response or credential. Delivery markers are not completion authority. Stable event replay preserves backend uniqueness and acceptance-day streaks; see [cloud progress replay](cloud-progress-sync.md).

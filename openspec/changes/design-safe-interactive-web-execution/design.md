@@ -45,7 +45,7 @@ First build a focused development probe with finite counter/input/class/text exe
 - [Opaque child message origin cannot prove identity] -> Validate exact frame window, unpredictable instance/generation IDs, private parent channel and bounded allowlist; treat `null` as insufficient.
 - [CSS or large DOM work stalls display] -> Bound source, elements, depth and mutation operations; measure hostile rendering and recovery. Browser memory has no hard per-frame quota, so release claims must stay qualified.
 - [Idle Worker retains state longer than intended] -> Cap events and session lifetime, cancel on ownership/navigation changes, and test resource cleanup.
-- [R06 or R04 gaps are mistaken for R07A completion] -> Record technical runtime evidence separately. R06 founder review and R04 real-provider verification remain open.
+- [R06 or R04 evidence is mistaken for R07A completion] -> Record technical runtime evidence separately. The exact R06 local layout is founder accepted; R04 real-provider verification and broader V1 acceptance remain open.
 
 ## Migration Plan
 
