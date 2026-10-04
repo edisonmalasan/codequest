@@ -15,10 +15,10 @@
 
 ## 3. Published lesson integration
 
-- [ ] 3.1 Map the selected descriptor to one owner/version-bound Editor Workspace and its allowed Run, Preview, and Check adapters; verify JavaScript compatibility, static mode, unavailable mode, draft restoration, and source preservation in component tests.
-- [ ] 3.2 Wire Check snapshot correlation and explicit Submit to the published assessment and private source format; verify edit-after-pass, cancellation, blocked/stale/offline replay, backend acceptance refresh, and no local false completion in component and API tests.
-- [ ] 3.3 Add ordered Back/Next navigation using published hierarchy and owner-scoped unlock data, with provisional guest states and unsaved-work handling; verify locked, unavailable, cross-chapter, guest, and revisit paths in component/browser tests.
-- [ ] 3.4 Update the R07 workflow documentation and accessible desktop/tablet/mobile states; verify keyboard/reflow and source/error/status presentation in Playwright against the published route.
+- [x] 3.1 Map the selected descriptor to one owner/version-bound Editor Workspace and its allowed Run, Preview, and Check adapters; verify JavaScript compatibility, static mode, unavailable mode, draft restoration, and source preservation in component tests.
+- [x] 3.2 Wire Check snapshot correlation and explicit Submit to the published assessment and private source format; verify edit-after-pass, cancellation, blocked/stale/offline replay, backend acceptance refresh, and no local false completion in component and API tests.
+- [x] 3.3 Add ordered Back/Next navigation using published hierarchy and owner-scoped unlock data, with provisional guest states and unsaved-work handling; verify locked, unavailable, cross-chapter, guest, and revisit paths in component/browser tests.
+- [x] 3.4 Update the R07 workflow documentation and accessible desktop/tablet/mobile states; verify keyboard/reflow and source/error/status presentation in Playwright against the published route.
 
 ## 4. Published interactive gate and integration review
 

@@ -229,13 +229,15 @@ export function WorkspacePreview(): React.JSX.Element {
       applicationOrigin,
       runtimeOrigin,
     );
-    if (previewOrigin) {
-      const preview = new StaticPreviewAdapter(
-        previewOrigin,
-        runtimeOrigin ? new JavaScriptWorkerAdapter(runtimeOrigin) : undefined,
-      );
-      setPreviewAdapter(preview);
-    }
+    const preview = previewOrigin
+      ? new StaticPreviewAdapter(
+          previewOrigin,
+          runtimeOrigin
+            ? new JavaScriptWorkerAdapter(runtimeOrigin)
+            : undefined,
+        )
+      : undefined;
+    setPreviewAdapter(preview);
     const interactiveOrigins = resolveInteractiveOrigins(
       applicationOrigin,
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
@@ -249,15 +251,17 @@ export function WorkspacePreview(): React.JSX.Element {
           )
         : checker;
     setValidationStrategy(selectedChecker);
-    if (interactiveOrigins) {
-      const interactive = new IsolatedInteractiveWebAdapter(
-        interactiveOrigins.runnerOrigin,
-        interactiveOrigins.previewOrigin,
-      );
-      setInteractiveAdapter(interactive);
-    }
+    const interactive = interactiveOrigins
+      ? new IsolatedInteractiveWebAdapter(
+          interactiveOrigins.runnerOrigin,
+          interactiveOrigins.previewOrigin,
+        )
+      : undefined;
+    setInteractiveAdapter(interactive);
     return () => {
       void adapter?.dispose();
+      void preview?.dispose();
+      void interactive?.dispose();
       void selectedChecker?.dispose();
     };
   }, [checkMode]);

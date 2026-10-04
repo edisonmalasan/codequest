@@ -165,3 +165,25 @@ it('keeps guest sequence provisional and respects published prerequisites', asyn
   expect(screen.getByRole('link', { name: 'Back: First value' })).toBeDefined();
   expect(screen.queryByRole('link', { name: /Next:/ })).toBeNull();
 });
+
+it('sends offline readers to downloaded lessons without claiming current availability', () => {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  render(
+    <QueryClientProvider client={client}>
+      <LessonNavigation
+        quest={questFixtures.Q02}
+        offline
+        safeToLeave
+        api={publicApi}
+      />
+    </QueryClientProvider>,
+  );
+  expect(
+    screen
+      .getByRole('link', { name: 'downloaded lessons' })
+      .getAttribute('href'),
+  ).toBe('/offline-learning');
+  expect(screen.queryByRole('link', { name: /Next:/ })).toBeNull();
+});

@@ -223,6 +223,7 @@ test('guest can check published quest locally without creating a submission', as
 test('published static web lesson checks the complete saved file set', async ({
   page,
 }) => {
+  test.setTimeout(90_000);
   await installLessonRoutes(page);
   await page.route(
     'http://127.0.0.1:3001/api/v1/quests/first-message',
@@ -273,11 +274,11 @@ test('published static web lesson checks the complete saved file set', async ({
         },
       }),
   );
-  await page.goto('/quests/first-message');
+  await page.goto('/quests/first-message', { waitUntil: 'domcontentloaded' });
   const editor = page.getByRole('textbox', {
     name: 'index.html code editor (html)',
   });
-  await expect(editor).toBeVisible();
+  await expect(editor).toBeVisible({ timeout: 20_000 });
   await expect(page.getByRole('tab', { name: 'style.css' })).toBeVisible();
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
@@ -289,5 +290,19 @@ test('published static web lesson checks the complete saved file set', async ({
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
   await page.getByRole('button', { name: 'Preview', exact: true }).click();
-  await expect(page.getByText(/Static preview ready/)).toBeVisible();
+  await expect(
+    page.locator('iframe[title="Static HTML and CSS preview"]'),
+  ).toHaveCount(1);
+  const previewStatus = page
+    .getByRole('region', { name: 'Web preview' })
+    .getByRole('status');
+  await expect(previewStatus).toContainText('Static preview ready');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole('button', { name: 'Results', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Web preview' })).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
 });

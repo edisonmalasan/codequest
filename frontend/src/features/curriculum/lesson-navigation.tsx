@@ -203,7 +203,9 @@ export function LessonNavigation({
       owner.ready &&
       (owner.id === null ? guest.isSuccess : progress.isSuccess) &&
       index < 0);
-  const mapHref = `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
+  const mapHref = offline
+    ? '/offline-learning'
+    : `/journeys/${encodeURIComponent(quest.hierarchy.journey.slug)}`;
   const renderStep = (entry: NavigationEntry | undefined, label: string) => {
     if (!entry) return <span className="text-muted">{label}: end of path</span>;
     if (entry.status === 'unavailable' || entry.status === 'not_started')
@@ -246,9 +248,9 @@ export function LessonNavigation({
     >
       {unavailable ? (
         <p role="status">
-          Exercise sequence unavailable. Open the{' '}
+          Exercise sequence unavailable. Open{' '}
           <Link className="underline" href={mapHref}>
-            Journey map
+            {offline ? 'downloaded lessons' : 'the Journey map'}
           </Link>{' '}
           to continue.
         </p>

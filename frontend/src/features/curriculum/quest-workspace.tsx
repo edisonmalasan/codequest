@@ -539,6 +539,7 @@ export function QuestWorkspace({
         executionAdapter={executionAdapter}
         previewAdapter={previewAdapter}
         interactiveAdapter={interactiveAdapter}
+        interactiveContentVersion={quest.contentVersion}
         validationStrategy={validationStrategy}
         validationDefinition={definition}
         captureValidationSource={captureSource}

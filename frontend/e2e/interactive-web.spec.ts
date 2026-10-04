@@ -1,6 +1,163 @@
 import { expect, test } from '@playwright/test';
 import { appOrigin, previewOrigin, runtimeOrigin } from './test-origins';
 
+test('synthetic published interactive lesson checks, previews, and recovers in isolation', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  const starter =
+    'document.getElementById("trigger").addEventListener("click", () => { document.getElementById("answer").textContent = "Done"; });';
+  await page.route('http://127.0.0.1:3001/api/v1/**', (route) => {
+    if (
+      new URL(route.request().url()).pathname !==
+      '/api/v1/quests/synthetic-interaction'
+    )
+      return route.fulfill({
+        status: 404,
+        contentType: 'application/json',
+        json: {
+          error: {
+            code: 'NOT_FOUND',
+            message: 'Unavailable',
+            status: 404,
+            requestId: 'synthetic',
+          },
+        },
+      });
+    return route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      json: {
+        id: 'Q01',
+        slug: 'synthetic-interaction',
+        title: 'Synthetic interaction',
+        position: 1,
+        kind: 'instructional',
+        guestEligible: true,
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        difficulty: 'introductory',
+        xpAward: 10,
+        hierarchy: {
+          journey: {
+            id: 'JAVASCRIPT-FOUNDATIONS',
+            slug: 'javascript-foundations',
+            title: 'JavaScript Foundations',
+            position: 1,
+            chapterCount: 1,
+            questCount: 1,
+          },
+          chapter: {
+            id: 'CH01',
+            slug: 'interactions',
+            title: 'Interactions',
+            position: 1,
+            objectiveSummary: 'Try an event',
+            questCount: 1,
+          },
+        },
+        objective: 'Update visible text after a click.',
+        outcomeId: 'O1',
+        concepts: [{ id: 'dom-events', title: 'Events' }],
+        prerequisites: [],
+        hints: {
+          question: 'Where is the button?',
+          concept: 'A click event invokes a listener.',
+          nextStep: 'Update the answer text.',
+        },
+        lesson:
+          '# Synthetic interaction\n\nPress the button after starting the preview.',
+        starterCode: starter,
+        exercise: {
+          schemaVersion: 1,
+          mode: 'interactive-web',
+          files: [
+            {
+              id: 'page',
+              name: 'index.html',
+              language: 'html',
+              starterSource:
+                '<button id="trigger">Press</button><p id="answer">Ready</p>',
+            },
+            {
+              id: 'logic',
+              name: 'main.js',
+              language: 'javascript',
+              starterSource: starter,
+            },
+          ],
+        },
+        cases: [
+          {
+            id: 'clicked',
+            category: 'normal',
+            kind: 'interactive-text',
+            feedback: 'Update the answer after click.',
+            selector: '#answer',
+            events: [{ type: 'click', targetId: 'trigger' }],
+            expectedText: 'Done',
+          },
+          {
+            id: 'initial',
+            category: 'boundary',
+            kind: 'interactive-text',
+            feedback: 'Keep the initial text.',
+            selector: '#answer',
+            events: [],
+            expectedText: 'Ready',
+          },
+        ],
+      },
+    });
+  });
+  await page.goto('/quests/synthetic-interaction', {
+    waitUntil: 'domcontentloaded',
+  });
+  const check = page.getByRole('button', { name: 'Check', exact: true });
+  await expect(check).toBeVisible({ timeout: 20_000 });
+  await check.click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible({
+    timeout: 15_000,
+  });
+  const panel = page.getByRole('region', { name: 'Interactive result' });
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 15_000,
+  });
+  const shell = page.frameLocator(
+    'iframe[title="Isolated interactive preview"]',
+  );
+  const child = shell.frameLocator('iframe[title="Interactive learner page"]');
+  await expect(shell.locator('iframe')).toHaveAttribute(
+    'sandbox',
+    'allow-scripts',
+  );
+  expect(await child.locator('body').evaluate(() => location.origin)).toBe(
+    'null',
+  );
+  await child.getByRole('button', { name: 'Press' }).click();
+  await expect(child.getByText('Done')).toBeVisible();
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await editor.fill('while (true) {}');
+  await check.click();
+  await expect(page.getByText(/Local check failed/)).toBeVisible({
+    timeout: 15_000,
+  });
+  await expect(editor).toContainText('while (true)');
+  await editor.fill(starter);
+  await check.click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible({
+    timeout: 15_000,
+  });
+  await page.goto('/courses', { waitUntil: 'domcontentloaded' });
+  await expect(
+    page.locator('iframe[title="Isolated interactive preview"]'),
+  ).toHaveCount(0);
+});
+
 test('interactive local Check uses isolated state and recovers after a hostile loop', async ({
   page,
 }) => {

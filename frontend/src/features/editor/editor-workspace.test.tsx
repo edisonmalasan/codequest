@@ -21,6 +21,7 @@ import type {
   ValidationResult,
   ValidationStrategy,
 } from '@/features/validation';
+import { parseWebSource, serializeWebSource } from '@/features/validation';
 import type {
   DraftIdentity,
   DraftSource,
@@ -355,7 +356,8 @@ describe('EditorWorkspace', () => {
     await user.click(screen.getByRole('button', { name: 'Reload preview' }));
     await waitFor(() => expect(adapter.reload).toHaveBeenCalledOnce());
     unmount();
-    expect(adapter.dispose).toHaveBeenCalled();
+    expect(adapter.cancel).toHaveBeenCalled();
+    expect(adapter.dispose).not.toHaveBeenCalled();
   });
   it('restores drafts and preserves independent edits across file switches', async () => {
     const repository = new MemoryDraftRepository([
@@ -1016,5 +1018,107 @@ describe('EditorWorkspace', () => {
     });
     act(() => editActiveSource('new source'));
     expect(screen.queryByRole('button', { name: 'Submit attempt' })).toBeNull();
+  });
+
+  it('checks and submits one exact multi-file snapshot, then invalidates it after a CSS edit', async () => {
+    const webFiles: readonly WorkspaceFile[] = [
+      {
+        id: 'page',
+        name: 'index.html',
+        language: 'html',
+        starterSource: '<h1 id="answer">Hello</h1>',
+      },
+      {
+        id: 'style',
+        name: 'style.css',
+        language: 'css',
+        starterSource: 'h1 { color: blue; }',
+      },
+    ];
+    const definition: ValidationDefinition = {
+      cases: [
+        {
+          id: 'heading',
+          label: 'Heading',
+          feedback: 'Add heading',
+          mode: 'html-element',
+          selector: '#answer',
+          expectedText: 'Hello',
+        },
+      ],
+    };
+    const result: ValidationResult = {
+      checkId: 'web-check',
+      status: 'completed',
+      passed: true,
+      cases: [
+        {
+          id: 'heading',
+          label: 'Heading',
+          status: 'passed',
+          message: 'Passed',
+        },
+      ],
+      failedCaseIds: [],
+      feedback: 'Passed',
+      durationMs: 5,
+    };
+    const strategy: ValidationStrategy = {
+      validate: vi.fn(async () => result),
+      cancel: vi.fn(async () => undefined),
+      dispose: vi.fn(async () => undefined),
+    };
+    const onSubmit = vi.fn();
+    const capture = (
+      selected: readonly WorkspaceFile[],
+      sources: Readonly<Record<string, string>>,
+    ) =>
+      serializeWebSource({
+        schemaVersion: 1,
+        questId: 'Q01',
+        contentVersion: '1.0.0',
+        assessmentVersion: '1.0.0',
+        mode: 'static-web',
+        files: selected.map((file) => ({
+          id: file.id,
+          language: file.language,
+          source: sources[file.id] ?? file.starterSource,
+        })),
+      });
+    const user = userEvent.setup();
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="web-submission"
+        files={webFiles}
+        draftRepository={new MemoryDraftRepository()}
+        validationStrategy={strategy}
+        validationDefinition={definition}
+        captureValidationSource={capture}
+        onSubmit={onSubmit}
+      />,
+    );
+    await screen.findByText('Starter source ready');
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByText(/Local check passed/);
+    await user.click(screen.getByRole('button', { name: 'Submit attempt' }));
+    const submitted: unknown = onSubmit.mock.calls[0]?.[0];
+    if (
+      typeof submitted !== 'object' ||
+      submitted === null ||
+      !('source' in submitted) ||
+      typeof submitted.source !== 'string'
+    )
+      throw new Error('Missing web source');
+    expect(
+      parseWebSource(submitted.source)?.files.map((file) => file.id),
+    ).toEqual(['page', 'style']);
+    await user.click(screen.getByRole('tab', { name: 'style.css' }));
+    act(() => editActiveSource('h1 { color: red; }'));
+    expect(screen.queryByRole('button', { name: 'Submit attempt' })).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    expect(
+      vi.mocked(strategy.validate).mock.calls.at(-1)?.[0].source,
+    ).toContain('h1 { color: red; }');
   });
 });

@@ -5,7 +5,7 @@ export function PreviewPanel({
   result,
   running,
 }: {
-  hostRef: React.RefObject<HTMLDivElement | null>;
+  hostRef: React.Ref<HTMLDivElement>;
   result?: PreviewResult;
   running: boolean;
 }): React.JSX.Element {

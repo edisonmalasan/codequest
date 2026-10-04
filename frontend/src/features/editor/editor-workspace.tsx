@@ -75,6 +75,7 @@ export interface EditorWorkspaceProps {
   executionAdapter?: ExecutionAdapter;
   previewAdapter?: PreviewAdapter;
   interactiveAdapter?: InteractiveWebAdapter;
+  interactiveContentVersion?: string;
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
   captureValidationSource?: (
@@ -197,6 +198,7 @@ export function EditorWorkspace({
   executionAdapter,
   previewAdapter,
   interactiveAdapter,
+  interactiveContentVersion,
   validationStrategy,
   validationDefinition,
   captureValidationSource,
@@ -249,6 +251,13 @@ export function EditorWorkspace({
   const executionControllerRef = useRef<AbortController | null>(null);
   const executionTokenRef = useRef(0);
   const previewHostRef = useRef<HTMLDivElement | null>(null);
+  const attachPreviewHost = useCallback(
+    (host: HTMLDivElement | null) => {
+      previewHostRef.current = host;
+      if (host) previewAdapter?.attach(host);
+    },
+    [previewAdapter],
+  );
   const previewControllerRef = useRef<AbortController | null>(null);
   const previewTokenRef = useRef(0);
   const [previewResult, setPreviewResult] = useState<PreviewResult>();
@@ -466,12 +475,12 @@ export function EditorWorkspace({
   }, [ownerId, workspaceId, validationDefinition, validationStrategy]);
 
   useEffect(() => {
-    if (!previewAdapter || !previewHostRef.current) return;
-    previewAdapter.attach(previewHostRef.current);
+    if (!previewAdapter) return;
+    if (previewHostRef.current) previewAdapter.attach(previewHostRef.current);
     return () => {
       previewTokenRef.current += 1;
       previewControllerRef.current?.abort();
-      void previewAdapter.dispose();
+      void previewAdapter.cancel();
     };
   }, [previewAdapter]);
 
@@ -918,7 +927,7 @@ export function EditorWorkspace({
           {presentation === 'standalone' && previewAdapter && (
             <div className="mt-4">
               <PreviewPanel
-                hostRef={previewHostRef}
+                hostRef={attachPreviewHost}
                 result={previewResult}
                 running={previewRunning}
               />
@@ -928,6 +937,7 @@ export function EditorWorkspace({
             <div className="mt-4">
               <InteractivePreviewPanel
                 adapter={interactiveAdapter}
+                contentVersion={interactiveContentVersion}
                 ownerId={ownerId}
                 workspaceId={workspaceId}
                 files={files}
@@ -951,7 +961,7 @@ export function EditorWorkspace({
           )}
           {presentation === 'integrated' && previewAdapter && (
             <PreviewPanel
-              hostRef={previewHostRef}
+              hostRef={attachPreviewHost}
               result={previewResult}
               running={previewRunning}
             />
@@ -959,6 +969,7 @@ export function EditorWorkspace({
           {presentation === 'integrated' && interactiveAdapter && (
             <InteractivePreviewPanel
               adapter={interactiveAdapter}
+              contentVersion={interactiveContentVersion}
               ownerId={ownerId}
               workspaceId={workspaceId}
               files={files}
