@@ -36,4 +36,20 @@ The same browser test checked 640 and 320 CSS pixels without document overflow. 
 
 ## Boundaries and remaining acceptance
 
-These checks establish the implemented composition and local browser behavior on synthetic curriculum. They do not establish physical-device or spoken assistive-technology results, real Supabase Auth, hosted runtime isolation, or learner outcomes. The standalone workspace remains the default presentation and its existing browser Run/recovery test passed. Published JavaScript Quests do not yet mount a web preview adapter; R07 owns the complete Run/preview/Check/completion workflow. Local Check does not grant accepted account progress. R06 founder visual/usability acceptance is **open** until the founder reviews this exact build and records a decision; this record does not mark the product or private beta ready.
+These checks establish the implemented composition and local browser behavior on synthetic curriculum. They do not establish physical-device or spoken assistive-technology results, real Supabase Auth, hosted runtime isolation, or learner outcomes. The standalone workspace remains the default presentation and its existing browser Run/recovery test passed. Published JavaScript Quests do not yet mount a web preview adapter; R07 owns the complete Run/preview/Check/completion workflow. Local Check does not grant accepted account progress. The founder's exact-build R06 visual/workflow decision is recorded below; it does not mark the full product or private beta ready.
+
+## R06 founder acceptance
+
+| Field | Record |
+| --- | --- |
+| Capability/scenario | R06 desktop three-region lesson/editor/results layout and intentional tablet/mobile panel workflow shown in this record |
+| Release/build/commit | Implementation `a8df10c`; Apply PR #207 merge `333e376`; Sync PR #208 merge `aecf7a2`; Archive PR #209 merge `5c6d4f0` |
+| Environment | Local Chromium browser captures with synthetic published Q01 at 1440, 1280, 820, and 390 CSS pixels; 640 and 320 CSS pixels checked without document overflow |
+| Tester | CodeQuest founder (visual/workflow decision); development agent (implementation and browser checks) |
+| Date | 2026-10-04 (Asia/Manila) |
+| Expected behavior | Lesson, CodeMirror editor, and output/results stay usable together on desktop; named smaller-screen panels retain source and current result. |
+| Observed behavior | After the exact build and capture record was presented, the founder replied, “Accept exact R06 build.” The technical observations are documented above; the founder supplied no additional device or workflow notes. |
+| Pass/fail | **PASS for R06 founder visual/workflow acceptance of this exact local build** |
+| Defect | None reported in this decision; real-provider, hosted, physical-device, and assistive-technology behavior remain separately unverified. |
+| Retest | Required if the accepted layout or workflow is materially changed; later R07 integration requires its own founder review. |
+| Final founder acceptance | **ACCEPTED** for this exact R06 build and reviewed scope. This is not full V1 Founder Acceptance or release readiness. |
