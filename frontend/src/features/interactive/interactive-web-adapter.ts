@@ -134,8 +134,18 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
 
   attach(host: HTMLElement): void {
     if (this.host === host && !this.disposed) return;
-    if (this.disposed || this.host)
-      throw new Error('Interactive adapter is already attached');
+    if (this.disposed) throw new Error('Interactive adapter is disposed');
+    if (this.host) {
+      this.stop();
+      this.unsubscribePreview?.();
+      this.unsubscribeRunner?.();
+      this.unsubscribePreview = undefined;
+      this.unsubscribeRunner = undefined;
+      this.preview?.dispose();
+      this.runner?.dispose();
+      this.preview = undefined;
+      this.runner = undefined;
+    }
     this.host = host;
   }
 

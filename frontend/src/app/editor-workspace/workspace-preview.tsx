@@ -216,14 +216,6 @@ export function WorkspacePreview(): React.JSX.Element {
       ? new JavaScriptWorkerAdapter(runtimeOrigin)
       : undefined;
     setExecutionAdapter(adapter);
-    const checker =
-      checkMode === 'static-web'
-        ? new StaticWebValidationStrategy()
-        : checkMode === 'interactive-web'
-          ? undefined
-          : runtimeOrigin
-            ? new JavaScriptValidationStrategy(runtimeOrigin)
-            : undefined;
     const previewOrigin = resolvePreviewOrigin(
       process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
       applicationOrigin,
@@ -243,14 +235,6 @@ export function WorkspacePreview(): React.JSX.Element {
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
       process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
     );
-    const selectedChecker =
-      checkMode === 'interactive-web' && interactiveOrigins
-        ? new InteractiveWebValidationStrategy(
-            interactiveOrigins.runnerOrigin,
-            interactiveOrigins.previewOrigin,
-          )
-        : checker;
-    setValidationStrategy(selectedChecker);
     const interactive = interactiveOrigins
       ? new IsolatedInteractiveWebAdapter(
           interactiveOrigins.runnerOrigin,
@@ -262,6 +246,35 @@ export function WorkspacePreview(): React.JSX.Element {
       void adapter?.dispose();
       void preview?.dispose();
       void interactive?.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    const applicationOrigin = window.location.origin;
+    const runtimeOrigin = resolveRunnerOrigin(
+      process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
+      applicationOrigin,
+    );
+    const interactiveOrigins = resolveInteractiveOrigins(
+      applicationOrigin,
+      process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
+      process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
+    );
+    const selectedChecker =
+      checkMode === 'static-web'
+        ? new StaticWebValidationStrategy()
+        : checkMode === 'interactive-web'
+          ? interactiveOrigins
+            ? new InteractiveWebValidationStrategy(
+                interactiveOrigins.runnerOrigin,
+                interactiveOrigins.previewOrigin,
+              )
+            : undefined
+          : runtimeOrigin
+            ? new JavaScriptValidationStrategy(runtimeOrigin)
+            : undefined;
+    setValidationStrategy(selectedChecker);
+    return () => {
       void selectedChecker?.dispose();
     };
   }, [checkMode]);

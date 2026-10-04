@@ -29,11 +29,9 @@ export function InteractivePreviewPanel({
   const [stale, setStale] = useState(false);
   const [revision, setRevision] = useState(0);
   const token = useRef(0);
-  const disposeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!host.current) return;
-    if (disposeTimer.current !== null) clearTimeout(disposeTimer.current);
     adapter.attach(host.current);
     const unsubscribe = adapter.subscribe((next) =>
       setValue((previous) => ({
@@ -44,7 +42,7 @@ export function InteractivePreviewPanel({
     return () => {
       token.current += 1;
       unsubscribe();
-      disposeTimer.current = setTimeout(() => void adapter.dispose(), 0);
+      void adapter.cancel();
     };
   }, [adapter]);
 
