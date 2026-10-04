@@ -1,5 +1,7 @@
 # JavaScript runtime
 
+R07A's [interactive web execution candidate](interactive-web-execution.md) uses separate fixed runner resources and a fresh Worker per interactive session. It does not change the Phase 14 `ExecutionAdapter`, Run limits, or validation authority. The capability is development-review-only pending its own evidence decision.
+
 Phase 16 adds a separate [local validation engine](validation-engine.md) on the same credential-free runner origin. It uses dedicated fixed bootstrap and Worker resources for deterministic assessment cases while leaving the Phase 14 `ExecutionAdapter` Run contract and its limits unchanged. Local Check results have no completion authority.
 
 Status: Phase 14 implementation complete. The browser computation boundary is synced to the canonical OpenSpec capabilities and the completed change is archived.
