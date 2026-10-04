@@ -214,6 +214,25 @@ test('active markup, CSS sinks, and forged messages stay contained', async ({
   const child = shell.frameLocator('iframe[title="Interactive learner page"]');
   await expect(shell.locator('iframe')).toHaveCount(1);
   await expect(child.getByRole('heading', { name: 'Safe' })).toBeVisible();
+  expect(
+    await child.locator('body').evaluate(() => {
+      try {
+        localStorage.setItem('interactive-probe', 'blocked');
+        return 'available';
+      } catch {
+        return 'blocked';
+      }
+    }),
+  ).toBe('blocked');
+  expect(
+    await child.locator('body').evaluate(() => {
+      try {
+        return top?.location.href ?? 'available';
+      } catch {
+        return 'blocked';
+      }
+    }),
+  ).toBe('blocked');
   await expect(
     child.locator(
       'iframe, script[src^="/interactive-forbidden"], a[href], img[src^="/"]',
