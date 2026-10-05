@@ -327,25 +327,22 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
 test('published HTML Course flows from map through inert Preview, Check, accepted Submit, and Next', async ({
   page,
   request,
+  context,
 }) => {
   test.setTimeout(180_000);
+  const owner = await register(request);
+  await context.addCookies([
+    {
+      name: 'sb-127-auth-token',
+      value: `base64-${Buffer.from(JSON.stringify(owner)).toString('base64url')}`,
+      url: 'http://127.0.0.1:3200',
+    },
+  ]);
   let authorization: string | undefined;
   page.on('request', (entry) => {
     if (entry.url().endsWith('/api/v1/learning-sync/HTML01'))
       authorization = entry.headers().authorization;
   });
-  await page.goto('/register');
-  await page
-    .getByLabel('Email')
-    .fill(`html-course-${randomUUID()}@example.test`);
-  await page.getByLabel('Password').fill('testing-password-123');
-  await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(
-    page.getByRole('heading', { name: 'Your account' }),
-  ).toBeVisible();
-  await page.waitForURL(/\/account$/);
-  await page.waitForLoadState('networkidle');
-
   await page.goto('/courses', {
     waitUntil: 'domcontentloaded',
   });
