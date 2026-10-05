@@ -1,0 +1,18 @@
+id: WEB-FOUNDATIONS
+slug: web-foundations
+title: Web Foundations
+position: 2
+status: reviewed
+entryRequirements:
+  - Read English and edit text in a browser; no prior web coding is required.
+outcomes:
+  - id: O1
+    description: Structure a document with headings and readable text.
+  - id: O2
+    description: Connect sections and describe visual and list content.
+  - id: O3
+    description: Use page landmarks, figures, and tables to express meaning.
+  - id: O4
+    description: Label fields and assemble an accessible static page.
+courseIds:
+  - COURSE-HTML-FOUNDATIONS

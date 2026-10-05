@@ -1,0 +1,10 @@
+id: HTML-CH03
+courseId: COURSE-HTML-FOUNDATIONS
+slug: meaningful-regions
+title: Meaningful regions
+position: 3
+objectiveSummary: Organize page landmarks, illustrations, and data.
+questIds:
+  - HTML07
+  - HTML08
+  - HTML09

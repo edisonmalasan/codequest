@@ -123,7 +123,10 @@ export class StaticWebValidationStrategy implements ValidationStrategy {
     if (
       !validDefinition(request.definition) ||
       request.definition.cases.some(
-        (item) => !['html-element', 'css-declaration'].includes(item.mode),
+        (item) =>
+          !['html-element', 'html-semantic', 'css-declaration'].includes(
+            item.mode,
+          ),
       )
     )
       return terminal(
@@ -188,10 +191,35 @@ export class StaticWebValidationStrategy implements ValidationStrategy {
                     textOf(found).trim() === item.expectedText
                   );
                 })()
-              : item.mode === 'css-declaration'
-                ? styles.get(item.selector)?.get(item.property) ===
-                  item.expectedValue
-                : false;
+              : item.mode === 'html-semantic'
+                ? (() => {
+                    const found = findId(
+                      fragment.childNodes,
+                      item.selector.slice(1),
+                    );
+                    if (
+                      !found ||
+                      !('tagName' in found) ||
+                      found.tagName !== item.tag
+                    )
+                      return false;
+                    if (
+                      item.expectedText !== undefined &&
+                      textOf(found).trim() !== item.expectedText
+                    )
+                      return false;
+                    return item.expectedAttributes.every((expected) =>
+                      found.attrs.some(
+                        (actual) =>
+                          actual.name === expected.name &&
+                          actual.value === expected.value,
+                      ),
+                    );
+                  })()
+                : item.mode === 'css-declaration'
+                  ? styles.get(item.selector)?.get(item.property) ===
+                    item.expectedValue
+                  : false;
           return {
             id: item.id,
             label: item.label,

@@ -65,7 +65,7 @@ describe('static preview document', () => {
     ).toThrow(PreviewSourceError);
   });
 
-  it('removes navigation, forms, embeddings, refresh, and event attributes', () => {
+  it('keeps inert form structure while removing destinations, embeddings, refresh, and event attributes', () => {
     const result = buildStaticDocument([
       {
         id: 'html',
@@ -75,9 +75,30 @@ describe('static preview document', () => {
       },
     ]);
     expect(result.html).toContain('<a>Text</a>');
+    expect(result.html).toContain('<form><button>Go</button></form>');
     expect(result.html.split('<body>')[1]).not.toMatch(
-      /<meta|<form|<iframe|<svg|onclick|href=|fetch\(1\)/,
+      /<meta|action=|<iframe|<svg|onclick|href=|fetch\(1\)/,
     );
     expect(result.filteredActiveContent).toBe(true);
+  });
+
+  it('displays safe labels and fields but never activates link destinations', () => {
+    const result = buildStaticDocument([
+      {
+        id: 'html',
+        language: 'html',
+        source:
+          '<a id="jump" href="#questions">Questions</a><form id="questions"><fieldset><legend>Search</legend><label for="query">Place</label><input id="query" name="query" type="text"></fieldset></form>',
+      },
+    ]);
+    expect(result.filteredActiveContent).toBe(false);
+    expect(result.html).toContain('<a id="jump">Questions</a>');
+    expect(result.html).toContain('<label for="query">Place</label>');
+    expect(result.html).toContain(
+      '<input id="query" name="query" type="text">',
+    );
+    expect(result.html).toContain("form-action 'none'");
+    expect(result.html).not.toContain('allow-forms');
+    expect(result.html).not.toContain('href=');
   });
 });

@@ -5,6 +5,7 @@ export const EXECUTION_LIMITS = {
   packetBytes: 16_384,
   errorBytes: 1_024,
   deadlineMs: 2_000,
+  bootstrapDeadlineMs: 3_000,
   recoveryMs: 1_000,
 } as const;
 

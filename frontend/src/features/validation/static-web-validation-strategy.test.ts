@@ -41,6 +41,94 @@ const definition: ValidationDefinition = {
 };
 
 describe('static web local Check', () => {
+  it('checks semantic label and field relationships from inert source without depending on formatting', async () => {
+    const strategy = new StaticWebValidationStrategy();
+    const semantic: ValidationDefinition = {
+      cases: [
+        {
+          id: 'label',
+          label: 'Label',
+          feedback: 'Connect the label to the field.',
+          mode: 'html-semantic',
+          selector: '#search-label',
+          tag: 'label',
+          expectedText: 'Search',
+          expectedAttributes: [{ name: 'for', value: 'search-field' }],
+        },
+        {
+          id: 'field',
+          label: 'Field',
+          feedback: 'Use a text field.',
+          mode: 'html-semantic',
+          selector: '#search-field',
+          tag: 'input',
+          expectedAttributes: [{ name: 'type', value: 'text' }],
+        },
+      ],
+    };
+    const sourceFor = (html: string) =>
+      serializeWebSource({
+        ...bundle,
+        files: [{ id: 'page', language: 'html', source: html }],
+      }) ?? '';
+    const validSource = sourceFor(
+      '<form><input type="text" id="search-field"><label for="search-field" id="search-label">Search</label></form>',
+    );
+    expect(
+      await strategy.validate({ source: validSource, definition: semantic }),
+    ).toMatchObject({
+      status: 'completed',
+      passed: true,
+      cases: [{ status: 'passed' }, { status: 'passed' }],
+    });
+    const brokenSource = sourceFor(
+      '<form><label id="search-label" for="other">Search</label><input id="search-field" type="email"></form>',
+    );
+    expect(
+      await strategy.validate({ source: brokenSource, definition: semantic }),
+    ).toMatchObject({
+      status: 'completed',
+      passed: false,
+      failedCaseIds: ['label', 'field'],
+    });
+    expect(brokenSource).toContain('for=\\"other\\"');
+    const signal = new AbortController();
+    signal.abort();
+    expect(
+      (
+        await strategy.validate({
+          source: validSource,
+          definition: semantic,
+          signal: signal.signal,
+        })
+      ).status,
+    ).toBe('cancelled');
+    expect(
+      (
+        await strategy.validate({
+          source: validSource,
+          definition: {
+            cases: [
+              {
+                id: 'label',
+                label: 'Label',
+                feedback: 'Connect the label to the field.',
+                mode: 'html-semantic',
+                selector: '#search-label',
+                tag: 'label',
+                expectedText: 'Search',
+                expectedAttributes: [
+                  { name: 'for', value: 'https://bad.test' },
+                ],
+              },
+              semantic.cases[1],
+            ],
+          },
+        })
+      ).status,
+    ).toBe('invalid-definition');
+    await strategy.dispose();
+  });
   it('returns ordered deterministic feedback from bounded inert markup and declarations', async () => {
     const strategy = new StaticWebValidationStrategy();
     const source = serializeWebSource(bundle);

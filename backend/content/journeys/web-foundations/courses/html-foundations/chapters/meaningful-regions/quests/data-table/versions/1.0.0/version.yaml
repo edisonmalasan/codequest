@@ -1,0 +1,28 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Data table
+objective: Use table headers to identify columns of simple data.
+outcomeId: O3
+conceptIds:
+  - html-tables
+prerequisiteQuestIds:
+  - HTML08
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from data table?
+  concept: A table is useful when rows and columns make facts easier to compare.
+  nextStep: Put Day and Weather in th elements, then put Tuesday in a td data cell.
+caseIds:
+  - normal-table
+  - normal-day
+  - boundary-weather
+  - boundary-cell
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

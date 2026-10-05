@@ -1,0 +1,28 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Images with meaning
+objective: Give a supplied image a useful text alternative.
+outcomeId: O2
+conceptIds:
+  - html-images
+prerequisiteQuestIds:
+  - HTML04
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from images with meaning?
+  concept: An image needs alternate text that communicates its purpose.
+  nextStep:
+    Replace the empty alt on the supplied map and add the crossing instruction as a
+    separate paragraph.
+caseIds:
+  - normal-image
+  - boundary-note
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

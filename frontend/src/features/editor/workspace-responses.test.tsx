@@ -57,7 +57,9 @@ describe('written workspace draft fields', () => {
       expect(field).toHaveProperty('value', 'Saved A answer'),
     );
     fireEvent.change(field, { target: { value: 'New A answer' } });
-    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1), {
+      timeout: 3_000,
+    });
     expect(save).toHaveBeenLastCalledWith(
       { ownerId: 'A', workspaceId: 'CAP01-1.0.0' },
       [
@@ -102,17 +104,21 @@ describe('written workspace draft fields', () => {
       />,
     );
     await screen.findByText('Starter source ready');
+    const saveButton = screen.getByRole('button', { name: /Save locally/ });
+    await waitFor(() =>
+      expect(saveButton.hasAttribute('disabled')).toBe(false),
+    );
     fireEvent.change(screen.getByLabelText('Debug explanation'), {
       target: { value: 'Recover this explanation' },
     });
-    await userEvent.click(screen.getByRole('button', { name: /Save locally/ }));
-    await screen.findByText(/Local save failed/);
+    await userEvent.click(saveButton);
+    await screen.findByText(/Local save failed/, {}, { timeout: 3_000 });
     expect(screen.getByLabelText('Debug explanation')).toHaveProperty(
       'value',
       'Recover this explanation',
     );
-    await userEvent.click(screen.getByRole('button', { name: /Save locally/ }));
-    await screen.findByText('Saved on this device');
+    await userEvent.click(saveButton);
+    await screen.findByText('Saved on this device', {}, { timeout: 3_000 });
     expect(save).toHaveBeenCalledTimes(2);
   });
 

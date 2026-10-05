@@ -38,6 +38,16 @@ export type ValidationCase =
       expectedText: string;
     })
   | (CaseBase & {
+      mode: 'html-semantic';
+      selector: string;
+      tag: string;
+      expectedText?: string;
+      expectedAttributes: readonly {
+        name: 'alt' | 'aria-label' | 'for' | 'href' | 'name' | 'type';
+        value: string;
+      }[];
+    })
+  | (CaseBase & {
       mode: 'css-declaration';
       selector: string;
       property: 'color' | 'background-color' | 'display' | 'font-size';

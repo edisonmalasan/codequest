@@ -1,6 +1,21 @@
 import { expect, test } from '@playwright/test';
 import { runtimeOrigin } from './test-origins';
 
+test('cold validation bootstrap tolerates asset loading without extending worker recovery', async ({
+  page,
+}) => {
+  await page.route(
+    `${runtimeOrigin}/runtime/validation-bootstrap.js`,
+    async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 1_200));
+      await route.continue();
+    },
+  );
+  await page.goto('/editor-workspace');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
+});
+
 async function edit(page: import('@playwright/test').Page, source: string) {
   await page
     .getByRole('heading', { name: 'Editor Workspace' })

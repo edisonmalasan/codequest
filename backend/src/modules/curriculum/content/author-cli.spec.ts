@@ -127,4 +127,22 @@ describe('author CLI', () => {
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain('65536 bytes');
   }, 30_000);
+
+  it('requires an HTML candidate for a static web Quest before starting a browser', () => {
+    const source = join(directory, 'wrong-extension.js');
+    writeFileSync(source, '<main id="page"></main>');
+    const result = run(
+      'test',
+      '--id',
+      'HTML01',
+      '--version',
+      'current',
+      '--source',
+      source,
+      '--expect',
+      'pass',
+    );
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('.html');
+  }, 30_000);
 });

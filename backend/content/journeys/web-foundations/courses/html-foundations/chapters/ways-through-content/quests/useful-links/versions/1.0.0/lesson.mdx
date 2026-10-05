@@ -1,0 +1,30 @@
+## Goal
+
+Name a local fragment destination and its target section.
+
+## Learn
+
+An anchor can point to a section on the same page with a fragment such as #hours. The target element needs the matching ID. Link words should say where the link leads; “Opening hours” is clearer than “click here.” In this learning Preview, links are displayed but do not navigate. Check reads the safe fragment in your HTML source.
+
+## Worked example
+
+```html
+<a href="#map">View the map</a>
+<section id="map"><h2>Map</h2></section>
+```
+
+## Your task
+
+Add a link with ID `hours-link`, text `Opening hours`, and href `#hours`. Create a target section with ID `hours` and put an h2 named `Opening hours` inside it.
+
+1. Edit index.html and keep the named IDs unique.
+2. Choose Preview to inspect the static page; then choose Check for local feedback.
+3. Read each failed case, correct the relevant element, and Check again.
+
+## What Check examines
+
+Check inspects the listed element types, text, and safe attributes in your source. Different valid surrounding markup can pass. It does not run scripts or judge unlisted visual polish. Preview links never navigate and forms never submit or save typed values. Check is local feedback; signed-in Submit requests backend acceptance before account progress and XP can change.
+
+## Reflect
+
+Explain in your own words why the chosen elements help someone understand this page. This reflection is not graded.

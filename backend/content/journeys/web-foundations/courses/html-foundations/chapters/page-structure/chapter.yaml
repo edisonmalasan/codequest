@@ -1,0 +1,10 @@
+id: HTML-CH01
+courseId: COURSE-HTML-FOUNDATIONS
+slug: page-structure
+title: Page structure
+position: 1
+objectiveSummary: Give a document a clear beginning and readable text.
+questIds:
+  - HTML01
+  - HTML02
+  - HTML03

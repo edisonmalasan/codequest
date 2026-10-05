@@ -1,0 +1,10 @@
+id: HTML-CH02
+courseId: COURSE-HTML-FOUNDATIONS
+slug: ways-through-content
+title: Ways through content
+position: 2
+objectiveSummary: Connect sections and describe visual and list content.
+questIds:
+  - HTML04
+  - HTML05
+  - HTML06

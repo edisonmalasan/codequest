@@ -1,0 +1,27 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Figure and caption
+objective: Keep an illustration and its explanation together.
+outcomeId: O3
+conceptIds:
+  - html-figures
+prerequisiteQuestIds:
+  - HTML07
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from figure and caption?
+  concept: A figure groups a visual with context that belongs to it.
+  nextStep: Wrap the supplied image in figure and place its short label in figcaption.
+caseIds:
+  - normal-figure
+  - normal-image
+  - boundary-caption
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

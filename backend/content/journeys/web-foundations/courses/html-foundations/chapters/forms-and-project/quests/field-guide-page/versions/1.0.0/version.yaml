@@ -1,0 +1,38 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Field guide page
+objective:
+  Combine headings, landmarks, a local link, a figure, and a labeled field into
+  one coherent page.
+outcomeId: O4
+conceptIds:
+  - html-integration
+prerequisiteQuestIds:
+  - HTML11
+difficulty: integrative
+xpAward: 10
+hints:
+  question: Which named element is missing from field guide page?
+  concept: A useful page combines small semantic choices.
+  nextStep:
+    'Complete the page in stages: landmarks and title, route link and section,
+    figure, then labeled field.'
+caseIds:
+  - normal-title
+  - normal-main
+  - normal-link
+  - normal-route
+  - boundary-heading
+  - boundary-figure
+  - boundary-image
+  - boundary-caption
+  - boundary-label
+  - boundary-field
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

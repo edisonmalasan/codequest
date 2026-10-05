@@ -1,0 +1,32 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Grouped questions
+objective: Use fieldset and legend to explain a related input group.
+outcomeId: O4
+conceptIds:
+  - html-forms
+prerequisiteQuestIds:
+  - HTML10
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from grouped questions?
+  concept:
+    When several controls answer one question, fieldset gives them a group and legend
+    names that group.
+  nextStep:
+    Put the group question in legend, then connect the Trail name label to the named
+    text input.
+caseIds:
+  - normal-group
+  - normal-legend
+  - boundary-label
+  - boundary-input
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

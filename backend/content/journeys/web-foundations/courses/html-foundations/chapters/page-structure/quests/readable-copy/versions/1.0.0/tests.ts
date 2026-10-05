@@ -1,0 +1,32 @@
+export const cases = [
+  {
+    id: 'normal-paragraph',
+    category: 'normal',
+    kind: 'html-semantic',
+    selector: '#intro',
+    tag: 'p',
+    expectedText: 'Look closely at the old bridge.',
+    expectedAttributes: [],
+    feedback: 'Use a paragraph for the opening note.',
+  },
+  {
+    id: 'normal-important',
+    category: 'normal',
+    kind: 'html-semantic',
+    selector: '#key',
+    tag: 'strong',
+    expectedText: 'Stay on the path',
+    expectedAttributes: [],
+    feedback: 'Mark the direction with strong emphasis.',
+  },
+  {
+    id: 'boundary-stress',
+    category: 'boundary',
+    kind: 'html-semantic',
+    selector: '#mood',
+    tag: 'em',
+    expectedText: 'quiet morning',
+    expectedAttributes: [],
+    feedback: 'Use em for the change of stress.',
+  },
+];

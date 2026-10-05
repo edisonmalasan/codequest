@@ -17,13 +17,14 @@ pnpm --dir backend content:preview:course --id JAVASCRIPT-FOUNDATIONS --out <abs
 
 The self-contained previews render safe static lesson text and bounded local images with scripts and network loads disabled. Quest previews show selected content and assessment versions, starter, hints, cases, prerequisites, and their exact published comparison. Course previews show the ordered authored inventory, review status, and manifest-selected versions. An unselected snapshot is visibly unpublished; previewing it does not make it available to learners. The Course outline does not calculate learner progress or unlocks.
 
-Save each candidate in a regular local `.js` file, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check at the dedicated Worker origin, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
+Save each candidate in a regular local `.js` file for a JavaScript Quest or `.html` file for a one-file static web Quest, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. JavaScript candidates use the dedicated Worker origin; static HTML candidates use the inert local Check strategy. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
 
 ```text
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-reference.js> --expect pass
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-alternative.js> --expect pass
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-defect.js> --expect fail
 pnpm --dir backend content:test --id Q01 --version 1.0.0 --source <absolute-reference.js> --expect pass
+pnpm --dir backend content:test --id HTML01 --version current --source <absolute-reference.html> --expect pass
 ```
 
 The same commands can target an unselected draft after it passes structural validation. The browser test does not submit attempts or alter account records. A looping candidate fails within the runtime bound; the harness checks that a later finite Check recovers on a fresh Worker. Keep candidate files and generated previews outside Git unless they are reviewed authored content, and delete local outputs when finished.
@@ -58,6 +59,36 @@ Each immutable `versions/<semver>/version.yaml` records the same `contentVersion
 An existing snapshot without `exercise` remains a single `main.js` JavaScript exercise. New snapshots may add `exercise` to `version.yaml` with `schemaVersion: 1`, one of `javascript`, `static-web`, or `interactive-web`, and ordered files. Each file declares a stable lowercase ID, safe display name, matching `html`, `css`, or `javascript` language, and a local `starter.html`, `starter.css`, or `starter.js` path. A JavaScript exercise has exactly one JavaScript file. A static web exercise needs HTML, may add CSS, and has no JavaScript file. An interactive web exercise needs HTML and JavaScript and may add CSS. File IDs, names, languages, and starter paths must be unique. Source files are bounded to 64 KiB for HTML/JavaScript and 32 KiB for CSS; the private submission bundle including metadata remains bounded to 64 KiB total.
 
 The synthetic, test-only static exercise in `backend/src/modules/curriculum/content/curriculum-catalog.spec.ts` shows a two-file descriptor, literal `html-element` and `css-declaration` cases, and the publication review checks. It is created in a temporary test tree; it is absent from `backend/content/publication.yaml` and is not a public course. Web cases must match their exercise mode and retain the declared case-ID order and normal/boundary coverage. Invalid files, executable tests, unsupported modes, or mismatched cases fail validation. A changed exercise contract or cases requires a new reviewed snapshot and appropriate assessment version/transition.
+
+Static HTML lessons may also use a literal `html-semantic` case. It identifies one element by `#id`, requires an allowlisted HTML tag, and may compare exact trimmed text and up to four unique safe attributes. The supported attributes are `alt` on images, `for` on labels, `href` on links, `name` and text-like `type` on inputs, and `aria-label`. Link values are local fragments such as `#habitats`; field names and label targets are short stable IDs. The case is parsed as data, with no callbacks or arbitrary CSS selectors. For a label relationship, author separate cases for the label's `for` value and the input's ID/type. Give every case clear failure feedback and include normal and boundary cases. For example:
+
+```ts
+export const cases = [
+  {
+    id: 'normal-label',
+    category: 'normal',
+    kind: 'html-semantic',
+    selector: '#search-label',
+    tag: 'label',
+    expectedText: 'Search',
+    expectedAttributes: [{ name: 'for', value: 'search-field' }],
+    feedback: 'Connect the visible label to the search field.',
+  },
+  {
+    id: 'boundary-field',
+    category: 'boundary',
+    kind: 'html-semantic',
+    selector: '#search-field',
+    tag: 'input',
+    expectedAttributes: [{ name: 'type', value: 'text' }],
+    feedback: 'Use a text input with the stated ID.',
+  },
+];
+```
+
+These cases are browser-visible local feedback, not independent grading. The static preview displays only safe inert markup; even a checked fragment link does not navigate in Preview, and visible forms cannot submit.
+
+The original HTML Foundations draft uses one `index.html` file per Quest and carries the supplied 16-pixel route marker as a bounded local raster data image. Authors must explain that Preview strips link destinations and form actions, that clicking a link or submit button does not navigate or send data, and that input values typed in Preview are not saved. A lesson must never promise live browser interaction from this static exercise mode. The course coverage, case map, and exact review status are tracked in [the HTML Foundations review](../../docs/html-foundations-course.md).
 
 Selecting a web Quest requires Quest-level `curriculumReview: approved` and `technicalReview: approved` in the publication manifest in addition to the existing Journey/Course reviews. Interactive selection additionally requires a dated exact-build evidence record for the integrated published route; the development workspace does not grant publication approval. The R07 Apply gate and later R08 content review must both pass before any interactive Quest can be selected. Existing JavaScript snapshots and their manifest entries remain unchanged.
 

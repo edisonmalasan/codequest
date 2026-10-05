@@ -54,7 +54,16 @@ test('CAP01 publishes separately, checks alternatives and recovers after timeout
   await session(context);
   const catalog = await request.get(`${apiOrigin}/api/v1/journeys`);
   expect(await catalog.json()).toEqual([
-    expect.objectContaining({ chapterCount: 7, questCount: 25 }),
+    expect.objectContaining({
+      id: 'JAVASCRIPT-FOUNDATIONS',
+      chapterCount: 7,
+      questCount: 25,
+    }),
+    expect.objectContaining({
+      id: 'WEB-FOUNDATIONS',
+      chapterCount: 4,
+      questCount: 12,
+    }),
   ]);
   const response = await request.get(
     `${apiOrigin}/api/v1/quests/inventory-manager`,

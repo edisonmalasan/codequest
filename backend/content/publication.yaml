@@ -83,3 +83,71 @@ journeys:
           - id: CAP01
             contentVersion: 1.0.0
             assessmentVersion: 1.0.0
+  - id: WEB-FOUNDATIONS
+    curriculumReview: approved
+    technicalReview: approved
+    courses:
+      - id: COURSE-HTML-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: HTML01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML02
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML03
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML04
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML05
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML06
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML07
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML08
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML09
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML10
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML11
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: HTML12
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
