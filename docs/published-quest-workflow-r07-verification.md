@@ -1,6 +1,6 @@
 # R07 local verification — 2026-10-05
 
-Latest implementation commit: `bae3e21` on `feat/published-quest-workflow`.
+Latest implementation commit: `0c3b95e` on `feat/published-quest-workflow`.
 
 ## Confirmed on this implementation
 
@@ -18,13 +18,15 @@ Latest implementation commit: `bae3e21` on `feat/published-quest-workflow`.
 | `pnpm test` | Failed on `5a9cdc6` with six and on `8996a06` with eight backend HTTP foundation cases reaching their 5-second timeout. A sequential Turbo retry on `8996a06` still timed out five of those cases. The same 12-case file and complete backend suite passed alone; the frontend suite passed separately after `8996a06`. |
 | GitHub CI run `37226058401` for `75b8ae9` | Passed: database check/drift/migration, API contract, curriculum validation, lint, typecheck, `pnpm test`, production build and performance budget, home/PWA/performance/curriculum/analytics/learning/accessibility browser checks. |
 | GitHub CI run `37250044616` for `bae3e21` | Passed all required checks, including isolated PostgreSQL learning E2E. That flow now verifies authenticated Q02 submission, refreshed course map showing Q02 completed and Q03 available, reopening Q02, Next navigation, and unchanged attempt count. |
+| GitHub CI run `37251202501` for `183dba0` | Failed the learning suite because the first test-only server used `tsx`, which did not emit Nest decorator metadata; Quest GET requests returned 500. The fixture was changed to use the repository TypeScript build, then checked locally with 200 responses for Q01 and WEB01 before the successful CI rerun. |
+| GitHub CI run `37252046312` for `0c3b95e` | Passed all required checks. The isolated PostgreSQL learning E2E also exercised a test-only synthetic static web Quest through local Check, owner-bound backend submission, exact replay, completed progress, refreshed course map, and revisit without another attempt across Chromium, Firefox, WebKit, and mobile Chromium. The fixture is injected by a test-only compiled server and is not part of production publication. |
 
 The browser fixtures use the local development application origin `http://127.0.0.1:3100`, runtime origin `http://localhost:3100`, and preview origin `http://localhost:3101`. The Quest API is mocked for the static and interactive route probes. Browser engines are Playwright 1.63.0 Chromium, Firefox, and WebKit; these results do not establish physical-device or hosted behavior.
 
 ## Open gates
 
 - **Task 4.1:** No original R08 interactive Quest is selected in the production curriculum. The exact-build published-route containment and recovery matrix cannot be closed by a mocked Quest response. The current local 100-cycle probe passed, but the earlier worker exit remains unexplained. Production interactive publication remains rejected by the curriculum loader.
-- **Task 4.3:** CI ran the existing published JavaScript lesson-to-backend account flow with an isolated PostgreSQL service and confirmed the refreshed map and completed-lesson revisit on `bae3e21`. The complete synthetic web lesson-to-accepted-backend replay, map refresh, and revisit sequence has not been demonstrated as one browser flow; no static or interactive web Quest is selected in the production catalog. Owner-bound multi-file replay, source matching, XP idempotency, and progress/unlock behavior passed in isolated PGlite backend tests. The local root test timeouts remain recorded above. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it.
+- **Task 4.3:** Complete on `0c3b95e` with CI run `37252046312`. The browser used the compiled test-only catalog server and isolated PostgreSQL; it did not select or publish a web Quest in the production catalog. R04 real-provider verification and founder acceptance remain separate. The local root test timeouts remain recorded above. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it.
 - R04 real-provider verification and founder acceptance remain separate, open records.
 
 No public interactive content, hosted release evidence, or founder acceptance is claimed by these local results.
