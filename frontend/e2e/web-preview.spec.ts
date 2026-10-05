@@ -158,3 +158,67 @@ test('preview Worker recovers after a loop and remains independent of Run', asyn
     page.getByText('fresh-preview', { exact: true }).last(),
   ).toBeVisible();
 });
+
+test('inert form and link preview cannot submit or navigate', async ({ page }) => {
+  const sinks: string[] = [];
+  await page.route('**/forbidden-preview-sink', async (route) => {
+    sinks.push(route.request().url());
+    await route.fulfill({ status: 204 });
+  });
+  await page.goto('/editor-workspace');
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
+  const editor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  await editor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '<main><h1 id="safe">Field guide</h1><a href="/forbidden-preview-sink">Outside</a><a href="#safe">Inside</a><form action="/forbidden-preview-sink" method="post"><fieldset><legend>Search</legend><label for="query">Query</label><input id="query" name="query" type="search"><button type="submit">Send</button></fieldset></form><script>fetch("/forbidden-preview-sink")</script></main>',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  await expect(preview.getByRole('status')).toContainText('Static preview ready');
+  const shell = page.frameLocator('iframe[title="Static HTML and CSS preview"]');
+  const child = shell.frameLocator(
+    'iframe[title="Static learner HTML and CSS preview"]',
+  );
+  await expect(child.getByRole('heading', { name: 'Field guide' })).toBeVisible();
+  await expect(child.locator('input#query')).toBeVisible();
+  expect(await child.locator('form').getAttribute('action')).toBeNull();
+  expect(await child.getByText('Outside').getAttribute('href')).toBeNull();
+  expect(await child.getByText('Inside').getAttribute('href')).toBeNull();
+  expect(await child.locator('script').count()).toBe(0);
+  await child.getByRole('button', { name: 'Send' }).click();
+  await child.getByText('Outside').click();
+  await child.getByText('Inside').click();
+  await child.locator('body').evaluate(() => {
+    parent.postMessage(
+      { type: 'bootstrap-ready', bootstrapId: 'forged-preview' },
+      '*',
+    );
+    parent.postMessage(
+      { type: 'ready', generationId: 'forged-preview' },
+      '*',
+    );
+  });
+  await expect(preview.getByRole('status')).toContainText('Static preview ready');
+  await expect(child.getByRole('heading', { name: 'Field guide' })).toBeVisible();
+  expect(page.url()).toContain('/editor-workspace');
+  expect(await shell.locator('iframe').getAttribute('sandbox')).toBe('');
+  expect(await child.locator('body').evaluate(() => location.origin)).toBe('null');
+  expect(
+    await child.locator('body').evaluate(() => {
+      try {
+        localStorage.setItem('forged-preview', '1');
+        return false;
+      } catch {
+        return true;
+      }
+    }),
+  ).toBe(true);
+  expect(sinks).toEqual([]);
+  await expect(editor).toContainText('forbidden-preview-sink');
+});

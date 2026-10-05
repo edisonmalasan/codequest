@@ -1,0 +1,24 @@
+id: COURSE-HTML-FOUNDATIONS
+journeyId: WEB-FOUNDATIONS
+slug: html-foundations
+title: HTML Foundations
+summary: Build a complete static field guide while learning headings, links, images,
+  lists, landmarks, tables, and forms.
+position: 1
+status: draft
+topics:
+  - html
+  - semantic-markup
+  - accessibility
+outcomes:
+  - id: C1
+    description: Organize a readable page with meaningful text and links.
+  - id: C2
+    description: Describe images, lists, landmarks, and data structures.
+  - id: C3
+    description: Label form fields and combine taught elements in a static project.
+chapterIds:
+  - HTML-CH01
+  - HTML-CH02
+  - HTML-CH03
+  - HTML-CH04

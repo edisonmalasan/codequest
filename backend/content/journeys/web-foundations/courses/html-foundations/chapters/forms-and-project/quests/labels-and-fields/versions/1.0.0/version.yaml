@@ -1,0 +1,26 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Labels and fields
+objective: Connect a visible label to its input with matching for and id values.
+outcomeId: O4
+conceptIds:
+  - html-forms
+prerequisiteQuestIds:
+  - HTML09
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from labels and fields?
+  concept: A visible label tells a reader what belongs in a field.
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-label
+  - boundary-field
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

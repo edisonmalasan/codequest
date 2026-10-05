@@ -1,0 +1,29 @@
+## Goal
+
+Use fieldset and legend to explain a related input group.
+
+## Learn
+
+When several controls answer one question, fieldset gives them a group and legend names that group. Each field still needs its own label. This example uses a single text field so its structure stays clear. Preview is deliberately inert: it displays the field, but submitting, navigation, and saving typed answers are disabled.
+
+## Worked example
+
+```html
+<fieldset><legend>Route choice</legend><label for="trail">Trail</label><input id="trail" type="text"></fieldset>
+```
+
+## Your task
+
+Inside a form, add a fieldset with ID `route-group`, legend ID `route-legend` reading `Choose a trail`, label ID `trail-label` reading `Trail name` with for `trail-field`, and a text input with ID `trail-field` and name `trail`.
+
+1. Edit index.html and keep the named IDs unique.
+2. Choose Preview to inspect the static page; then choose Check for local feedback.
+3. Read each failed case, correct the relevant element, and Check again.
+
+## What Check examines
+
+Check inspects the listed element types, text, and safe attributes in your source. Different valid surrounding markup can pass. It does not run scripts or judge unlisted visual polish. Preview links never navigate and forms never submit or save typed values. Check is local feedback; signed-in Submit requests backend acceptance before account progress and XP can change.
+
+## Reflect
+
+Explain in your own words why the chosen elements help someone understand this page. This reflection is not graded.

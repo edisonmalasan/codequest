@@ -1,0 +1,29 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Page landmarks
+objective: Divide a page into header, main, and footer regions.
+outcomeId: O3
+conceptIds:
+  - html-landmarks
+prerequisiteQuestIds:
+  - HTML06
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from page landmarks?
+  concept: Landmarks make the main parts of a page recognizable without relying on visual
+    position.
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-header
+  - normal-main
+  - boundary-footer
+  - boundary-title
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

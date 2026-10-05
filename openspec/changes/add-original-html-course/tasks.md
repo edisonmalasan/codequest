@@ -9,12 +9,12 @@
 ## 2. Inert HTML teaching preview
 
 - [x] 2.1 Extend only the static sanitizer's safe form-control display subset and keep destinations/actions inert; verify safe label/input/fieldset rendering and hostile form, link, script, resource, and URL filtering in unit tests.
-- [ ] 2.2 Probe the actual separate-origin preview in Chromium, Firefox, and WebKit for no form submission, navigation, network/storage/application access, script execution, or forged message acceptance; retain any failed result and verify current static preview and source recovery.
-- [ ] 2.3 Document the inert link/form behavior and exact tested origins/build in the preview and course authoring guides; verify the published lesson states do not imply that links or submissions execute inside Preview.
+- [x] 2.2 Probe the actual separate-origin preview in Chromium, Firefox, and WebKit for no form submission, navigation, network/storage/application access, script execution, or forged message acceptance; retain any failed result and verify current static preview and source recovery.
+- [x] 2.3 Document the inert link/form behavior and exact tested origins/build in the preview and course authoring guides; verify the published lesson states do not imply that links or submissions execute inside Preview.
 
 ## 3. HTML Foundations first half
 
-- [ ] 3.1 Author the new Web Foundations Journey, HTML Course outline, stable IDs, concepts, four-chapter coverage map, and exact 12-Quest plan as original material; verify global identity, order, prerequisites, and draft structural validation.
+- [x] 3.1 Author the new Web Foundations Journey, HTML Course outline, stable IDs, concepts, four-chapter coverage map, and exact 12-Quest plan as original material; verify global identity, order, prerequisites, and draft structural validation.
 - [ ] 3.2 Author and review HTML01–HTML03 on page structure and text with original lessons, starters, hints, normal/boundary cases, reference/alternative/defect examples; verify focused content validation and candidate Checks.
 - [ ] 3.3 Author and review HTML04–HTML06 on safe links, bounded images with text alternatives, and lists; verify content validation, candidate Checks, and static preview text/visual behavior without external loading.
 

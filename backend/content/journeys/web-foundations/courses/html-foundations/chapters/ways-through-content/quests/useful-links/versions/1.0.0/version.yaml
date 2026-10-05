@@ -1,0 +1,26 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Useful links
+objective: Name a local fragment destination and its target section.
+outcomeId: O2
+conceptIds:
+  - html-links
+prerequisiteQuestIds:
+  - HTML03
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which named element is missing from useful links?
+  concept: "An anchor can point to a section on the same page with a fragment such as #hours."
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-link
+  - boundary-target
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

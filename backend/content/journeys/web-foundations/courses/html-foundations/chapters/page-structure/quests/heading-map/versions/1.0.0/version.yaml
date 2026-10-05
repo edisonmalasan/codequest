@@ -1,0 +1,27 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Heading map
+objective: Use heading levels to show sections and subsections.
+outcomeId: O1
+conceptIds:
+  - html-headings
+prerequisiteQuestIds:
+  - HTML01
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which named element is missing from heading map?
+  concept: Heading levels describe the outline of a page.
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-title
+  - normal-section
+  - boundary-subsection
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

@@ -1,0 +1,27 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Readable copy
+objective: Separate paragraphs and mark strong emphasis without losing meaning.
+outcomeId: O1
+conceptIds:
+  - html-text
+prerequisiteQuestIds:
+  - HTML02
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which named element is missing from readable copy?
+  concept: A paragraph groups one idea.
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-paragraph
+  - normal-important
+  - boundary-stress
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

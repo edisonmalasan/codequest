@@ -1,0 +1,25 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: First page
+objective: Create a main region with a meaningful first heading.
+outcomeId: O1
+conceptIds:
+  - html-document
+prerequisiteQuestIds: []
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which named element is missing from first page?
+  concept: A page is a document with a purpose.
+  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+caseIds:
+  - normal-main
+  - boundary-heading
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html

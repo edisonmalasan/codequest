@@ -29,3 +29,25 @@ concepts:
     title: Ordered collections
   - id: js-objects
     title: Named record properties
+  - id: html-document
+    title: Main page content
+  - id: html-headings
+    title: Heading hierarchy
+  - id: html-text
+    title: Paragraphs and text emphasis
+  - id: html-links
+    title: Local links and destinations
+  - id: html-images
+    title: Images and text alternatives
+  - id: html-lists
+    title: Ordered and unordered lists
+  - id: html-landmarks
+    title: Page landmarks
+  - id: html-figures
+    title: Figures and captions
+  - id: html-tables
+    title: Data table headings and cells
+  - id: html-forms
+    title: Labeled and grouped fields
+  - id: html-integration
+    title: Integrated static web page
