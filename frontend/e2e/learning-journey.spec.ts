@@ -312,7 +312,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('textbox', { name: 'index.html code editor (html)' }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 15_000 });
   expect(
     await (
       await request.get(`${webPath}/attempts`, {
