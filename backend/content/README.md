@@ -17,13 +17,14 @@ pnpm --dir backend content:preview:course --id JAVASCRIPT-FOUNDATIONS --out <abs
 
 The self-contained previews render safe static lesson text and bounded local images with scripts and network loads disabled. Quest previews show selected content and assessment versions, starter, hints, cases, prerequisites, and their exact published comparison. Course previews show the ordered authored inventory, review status, and manifest-selected versions. An unselected snapshot is visibly unpublished; previewing it does not make it available to learners. The Course outline does not calculate learner progress or unlocks.
 
-Save each candidate in a regular local `.js` file, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check at the dedicated Worker origin, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
+Save each candidate in a regular local `.js` file for a JavaScript Quest or `.html` file for a one-file static web Quest, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. JavaScript candidates use the dedicated Worker origin; static HTML candidates use the inert local Check strategy. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
 
 ```text
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-reference.js> --expect pass
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-alternative.js> --expect pass
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-defect.js> --expect fail
 pnpm --dir backend content:test --id Q01 --version 1.0.0 --source <absolute-reference.js> --expect pass
+pnpm --dir backend content:test --id HTML01 --version current --source <absolute-reference.html> --expect pass
 ```
 
 The same commands can target an unselected draft after it passes structural validation. The browser test does not submit attempts or alter account records. A looping candidate fails within the runtime bound; the harness checks that a later finite Check recovers on a fresh Worker. Keep candidate files and generated previews outside Git unless they are reviewed authored content, and delete local outputs when finished.

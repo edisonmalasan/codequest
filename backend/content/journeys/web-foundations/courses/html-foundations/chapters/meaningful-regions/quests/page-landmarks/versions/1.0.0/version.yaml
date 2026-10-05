@@ -11,9 +11,12 @@ difficulty: developing
 xpAward: 10
 hints:
   question: Which named element is missing from page landmarks?
-  concept: Landmarks make the main parts of a page recognizable without relying on visual
+  concept:
+    Landmarks make the main parts of a page recognizable without relying on visual
     position.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep:
+    Wrap the introduction in header, the observation in main, and the closing note
+    in footer.
 caseIds:
   - normal-header
   - normal-main

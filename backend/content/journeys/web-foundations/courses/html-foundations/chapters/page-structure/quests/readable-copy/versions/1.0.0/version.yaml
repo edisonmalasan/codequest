@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from readable copy?
   concept: A paragraph groups one idea.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Replace the visual-only bold tag with strong, and keep quiet morning inside em.
 caseIds:
   - normal-paragraph
   - normal-important

@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from data table?
   concept: A table is useful when rows and columns make facts easier to compare.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Put Day and Weather in th elements, then put Tuesday in a td data cell.
 caseIds:
   - normal-table
   - normal-day

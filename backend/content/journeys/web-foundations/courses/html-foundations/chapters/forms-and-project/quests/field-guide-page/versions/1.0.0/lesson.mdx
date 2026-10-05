@@ -9,12 +9,22 @@ A useful page combines small semantic choices. Begin with landmarks and a clear 
 ## Worked example
 
 ```html
-<header><h1>Field guide</h1></header><main><section id="route"><h2>Route</h2></section></main>
+<header><h1>Field guide</h1></header>
+<main>
+  <section id="route"><h2>Route</h2></section>
+</main>
 ```
 
 ## Your task
 
 Finish a one-page river field guide. Use header `guide-head` with h1 `guide-title` reading `River field guide`, main `guide-main`, a descriptive link `route-link` reading `Read the route` with href `#route`, section `route` with h2 `route-heading` reading `The route`, figure `guide-figure` with image `guide-image` alt `Map showing the river crossing` and figcaption `guide-caption` reading `Crossing sketch`, and a label `note-label` reading `Observation` with for `note-field` plus a text input `note-field` named `observation`.
+
+Build in four passes:
+
+- Establish the header, title, and main landmark.
+- Add the named route link and the section it points to.
+- Group the supplied image with a useful alt and a short figure caption.
+- Add the observation label and text field; keep form behavior inert.
 
 1. Edit index.html and keep the named IDs unique.
 2. Choose Preview to inspect the static page; then choose Check for local feedback.

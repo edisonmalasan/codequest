@@ -135,18 +135,22 @@ function writePreview(contentRoot: string, output: string, html: string): void {
   process.stdout.write(`${target}\n`);
 }
 
-function candidateSource(path: string): string {
+function candidateSource(
+  path: string,
+  mode: 'javascript' | 'static-web' | 'interactive-web',
+): string {
   const absolute = resolve(path);
+  const extension = mode === 'static-web' ? '.html' : '.js';
   if (
     !isAbsolute(path) ||
-    !absolute.endsWith('.js') ||
+    !absolute.endsWith(extension) ||
     !lstatSync(absolute).isFile() ||
     lstatSync(absolute).isSymbolicLink() ||
     lstatSync(absolute).size > 65_536
   )
     throw new ContentError(
       'source',
-      'Use an absolute regular .js file no larger than 65536 bytes',
+      `Use an absolute regular ${extension} file no larger than 65536 bytes`,
     );
   const source = readFileSync(absolute, 'utf8');
   if (!source.trim())
@@ -208,8 +212,11 @@ function main(): void {
     writePreview(contentRoot, options.out, renderQuestPreview(selected));
     return;
   }
-  const source = candidateSource(options.source);
   const quest = authorQuestFixture(catalog, selected);
+  const source = candidateSource(
+    options.source,
+    quest.exercise?.mode ?? 'javascript',
+  );
   if (quest.cases.length > 10)
     throw new ContentError(
       'candidate test',

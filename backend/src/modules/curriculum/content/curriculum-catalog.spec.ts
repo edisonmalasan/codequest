@@ -67,6 +67,80 @@ afterEach(() => {
 });
 
 describe('curriculum publication catalog', () => {
+  it('publishes the complete reviewed HTML Course alongside the unchanged JavaScript inventory', () => {
+    const catalog = loadCurriculumCatalog(resolve(process.cwd(), 'content'));
+    expect(catalog.journeys.map((journey) => journey.metadata.id)).toEqual([
+      'JAVASCRIPT-FOUNDATIONS',
+      'WEB-FOUNDATIONS',
+    ]);
+    const [javascript, web] = catalog.journeys;
+    expect(
+      javascript.chapters.flatMap((chapter) =>
+        chapter.quests.map((quest) => quest.metadata.id),
+      ),
+    ).toEqual([
+      ...Array.from(
+        { length: 24 },
+        (_, index) => `Q${String(index + 1).padStart(2, '0')}`,
+      ),
+      'CAP01',
+    ]);
+    expect(web.courses.map((course) => course.metadata.id)).toEqual([
+      'COURSE-HTML-FOUNDATIONS',
+    ]);
+    expect(web.chapters.map((chapter) => chapter.metadata.id)).toEqual([
+      'HTML-CH01',
+      'HTML-CH02',
+      'HTML-CH03',
+      'HTML-CH04',
+    ]);
+    expect(
+      web.chapters.flatMap((chapter) =>
+        chapter.quests.map((quest) => quest.metadata.id),
+      ),
+    ).toEqual(
+      Array.from(
+        { length: 12 },
+        (_, index) => `HTML${String(index + 1).padStart(2, '0')}`,
+      ),
+    );
+    expect(
+      web.chapters.every((chapter) =>
+        chapter.quests.every(
+          (quest) => quest.activeSnapshot.exercise?.mode === 'static-web',
+        ),
+      ),
+    ).toBe(true);
+  });
+  it('keeps a partial or unreviewed HTML Course out of publication', () => {
+    const root = mkdtempSync(join(tmpdir(), 'codequest-html-publication-'));
+    created.push(root);
+    cpSync(resolve(process.cwd(), 'content'), root, { recursive: true });
+    const publicationPath = join(root, 'publication.yaml');
+    const published = readFileSync(publicationPath, 'utf8');
+    const finalQuest = [
+      '          - id: HTML12',
+      '            contentVersion: 1.0.0',
+      '            assessmentVersion: 1.0.0',
+      '            curriculumReview: approved',
+      '            technicalReview: approved',
+    ].join('\n');
+    expect(published).toContain(finalQuest);
+    writeFileSync(publicationPath, published.replace(finalQuest, ''));
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Published Course inventory is incomplete',
+    );
+    writeFileSync(
+      publicationPath,
+      published.replace(
+        finalQuest,
+        finalQuest.replace('            technicalReview: approved', ''),
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Web exercise review is missing',
+    );
+  });
   it('rejects unsafe or incompatible exercise descriptors before publication', () => {
     const base = {
       schemaVersion: 1,

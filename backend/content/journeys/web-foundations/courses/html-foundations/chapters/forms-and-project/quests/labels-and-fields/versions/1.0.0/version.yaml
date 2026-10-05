@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from labels and fields?
   concept: A visible label tells a reader what belongs in a field.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Match the label for value to the email input ID, and set the input name and type.
 caseIds:
   - normal-label
   - boundary-field

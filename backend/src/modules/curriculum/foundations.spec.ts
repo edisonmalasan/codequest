@@ -23,8 +23,10 @@ const ids = Array.from(
 describe('reviewed JavaScript Foundations course', () => {
   it('publishes exactly the approved ordered instructional inventory and guest subset', () => {
     const catalog = loadCurriculumCatalog(root);
-    expect(catalog.journeys).toHaveLength(1);
-    const journey = catalog.journeys[0];
+    const journey = catalog.journeys.find(
+      (item) => item.metadata.id === 'JAVASCRIPT-FOUNDATIONS',
+    );
+    if (!journey) throw new Error('JavaScript Foundations was not published');
     expect(journey.chapters.map((chapter) => chapter.metadata.title)).toEqual([
       'Variables',
       'Operators',
@@ -161,9 +163,11 @@ describe('reviewed JavaScript Foundations course', () => {
         method: 'GET',
         url: '/api/v1/journeys',
       });
-      expect(list.json()).toEqual([
-        expect.objectContaining({ questCount: 25, chapterCount: 7 }),
-      ]);
+      expect(list.json()).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ questCount: 25, chapterCount: 7 }),
+        ]),
+      );
       const catalog = loadCurriculumCatalog(root);
       for (const chapter of catalog.journeys[0].chapters) {
         const chapterResponse = await http.inject({

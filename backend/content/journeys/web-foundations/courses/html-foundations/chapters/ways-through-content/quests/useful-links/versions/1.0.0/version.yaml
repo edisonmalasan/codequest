@@ -11,8 +11,10 @@ difficulty: developing
 xpAward: 10
 hints:
   question: Which named element is missing from useful links?
-  concept: "An anchor can point to a section on the same page with a fragment such as #hours."
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  concept: 'An anchor can point to a section on the same page with a fragment such as #hours.'
+  nextStep:
+    'Use href #hours on the named link and give the destination section the matching
+    ID hours.'
 caseIds:
   - normal-link
   - boundary-target

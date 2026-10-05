@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from heading map?
   concept: Heading levels describe the outline of a page.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Keep the page title at h1, make Start here an h2, then make Opening times an h3.
 caseIds:
   - normal-title
   - normal-section

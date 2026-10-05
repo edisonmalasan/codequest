@@ -12,7 +12,9 @@ xpAward: 10
 hints:
   question: Which named element is missing from images with meaning?
   concept: An image needs alternate text that communicates its purpose.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep:
+    Replace the empty alt on the supplied map and add the crossing instruction as a
+    separate paragraph.
 caseIds:
   - normal-image
   - boundary-note

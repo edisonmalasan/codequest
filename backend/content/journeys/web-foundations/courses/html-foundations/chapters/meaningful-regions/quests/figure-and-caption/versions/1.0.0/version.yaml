@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from figure and caption?
   concept: A figure groups a visual with context that belongs to it.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Wrap the supplied image in figure and place its short label in figcaption.
 caseIds:
   - normal-figure
   - normal-image

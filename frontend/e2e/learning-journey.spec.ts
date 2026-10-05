@@ -323,3 +323,133 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await page.goto('/account');
   await expect(page.getByText('Q01: provisional Check saved')).toBeVisible();
 });
+
+test('published HTML Course flows from map through inert Preview, Check, accepted Submit, and Next', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(180_000);
+  let authorization: string | undefined;
+  page.on('request', (entry) => {
+    if (entry.url().endsWith('/api/v1/learning-sync/HTML01'))
+      authorization = entry.headers().authorization;
+  });
+  await page.goto('/register');
+  await page
+    .getByLabel('Email')
+    .fill(`html-course-${randomUUID()}@example.test`);
+  await page.getByLabel('Password').fill('testing-password-123');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Your account' }),
+  ).toBeVisible();
+
+  await page.goto('/courses/html-foundations');
+  await expect(
+    page.getByRole('heading', { name: 'HTML Foundations' }),
+  ).toBeVisible();
+  await expect(page.getByText('4 chapters · 12 exercises')).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Forms and field guide' }),
+  ).toBeVisible();
+  const orderedLessons = await page.locator('main ol ol a').allTextContents();
+  expect(orderedLessons).toHaveLength(12);
+  for (const [index, title] of [
+    'First page',
+    'Heading map',
+    'Readable copy',
+    'Useful links',
+    'Images with meaning',
+    'Clear lists',
+    'Page landmarks',
+    'Figure and caption',
+    'Data table',
+    'Labels and fields',
+    'Grouped questions',
+    'Field guide page',
+  ].entries())
+    expect(orderedLessons[index]).toContain(title);
+  await page.getByRole('link', { name: 'First page, Available' }).click();
+  await expect(page).toHaveURL(/\/quests\/first-page$/);
+  await showLearningPanel(page, 'Code');
+  const editor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await expect(editor).toBeVisible();
+  await editor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '<main id="page"><h1 id="title">City field notes</h1><p>Small observations from the streets we share.</p></main>',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(
+    page.getByRole('region', { name: 'Web preview' }).getByRole('status'),
+  ).toContainText('Static preview ready');
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed/)).toBeVisible();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
+  expect(authorization).toMatch(/^Bearer /);
+  if (!authorization) throw new Error('HTML01 request was not authorized');
+  const own = { headers: { Authorization: authorization } };
+  const firstPath = `${apiOrigin}/api/v1/quests/first-page`;
+  expect(
+    await (await request.get(`${firstPath}/progress`, own)).json(),
+  ).toMatchObject({
+    status: 'completed',
+  });
+  expect(
+    await (
+      await request.get(`${apiOrigin}/api/v1/quests/heading-map/progress`, own)
+    ).json(),
+  ).toMatchObject({ availability: 'available' });
+  expect(
+    await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
+  ).toMatchObject({
+    totalXp: 10,
+  });
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Exercise sequence' })
+      .getByRole('link', { name: 'Next: Heading map' }),
+  ).toBeVisible();
+  await page.reload();
+  await showLearningPanel(page, 'Code');
+  await expect(editor).toContainText('City field notes');
+  await page.goto('/courses/html-foundations');
+  await expect(
+    page.getByRole('link', { name: 'First page, Completed' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Heading map, Available' }),
+  ).toBeVisible();
+  const saved = await (await request.get(`${firstPath}/attempts`, own)).json();
+  expect(saved).toMatchObject({
+    attemptCount: 1,
+  });
+  const firstAttempt = saved.attempts[0];
+  const replay = await request.post(
+    `${apiOrigin}/api/v1/learning-sync/HTML01`,
+    {
+      ...own,
+      data: {
+        clientEventId: firstAttempt.clientEventId,
+        contentVersion: firstAttempt.contentVersion,
+        assessmentVersion: firstAttempt.assessmentVersion,
+        source: firstAttempt.source,
+        report: firstAttempt.report,
+      },
+    },
+  );
+  expect(replay.status()).toBe(201);
+  expect(await replay.json()).toMatchObject({
+    id: firstAttempt.id,
+    attemptCount: 1,
+  });
+  expect(
+    await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
+  ).toMatchObject({ totalXp: 10 });
+});

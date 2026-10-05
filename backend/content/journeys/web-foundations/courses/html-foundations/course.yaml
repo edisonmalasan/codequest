@@ -2,10 +2,11 @@ id: COURSE-HTML-FOUNDATIONS
 journeyId: WEB-FOUNDATIONS
 slug: html-foundations
 title: HTML Foundations
-summary: Build a complete static field guide while learning headings, links, images,
+summary:
+  Build a complete static field guide while learning headings, links, images,
   lists, landmarks, tables, and forms.
 position: 1
-status: draft
+status: reviewed
 topics:
   - html
   - semantic-markup

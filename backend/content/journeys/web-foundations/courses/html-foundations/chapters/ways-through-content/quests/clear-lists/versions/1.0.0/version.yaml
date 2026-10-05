@@ -12,7 +12,7 @@ xpAward: 10
 hints:
   question: Which named element is missing from clear lists?
   concept: Use ul when the items belong together but their order does not matter.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep: Use ul for the kit, ol for route steps, and place each named item inside li.
 caseIds:
   - normal-kit
   - normal-item

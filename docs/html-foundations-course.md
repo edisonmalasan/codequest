@@ -1,6 +1,6 @@
 # HTML Foundations content and publication review
 
-R08 first Course draft: `WEB-FOUNDATIONS` / `COURSE-HTML-FOUNDATIONS`, four chapters and twelve original instructional Quests, all content and assessment version `1.0.0`. This is a static HTML teaching course. The final page is an instructional project, not a capstone claim. The Course remains unselected from `backend/content/publication.yaml` until every review and integrated gate below is recorded.
+R08 first Course: `WEB-FOUNDATIONS` / `COURSE-HTML-FOUNDATIONS`, four chapters and twelve original instructional Quests, all content and assessment version `1.0.0`. This is a static HTML teaching course. The final page is an instructional project, not a capstone claim. The complete Course is now selected in `backend/content/publication.yaml` after local content and containment review. Integrated account and founder gates are recorded separately below.
 
 | Chapter | Quests | Learning progression | Declared evidence |
 | --- | --- | --- | --- |
@@ -11,6 +11,27 @@ R08 first Course draft: `WEB-FOUNDATIONS` / `COURSE-HTML-FOUNDATIONS`, four chap
 
 Each Quest depends on the previous stable Quest ID, starts with one HTML file, has three graduated hints, at least one normal and one boundary case, and offers an original worked example and reflection prompt. All are authenticated-only for now; the existing guest Q01–Q04 path is unchanged. The approved private-beta experiment awards 10 XP only on first backend-accepted completion and does not claim that difficulty or pacing is balanced.
 
+## Dated content and assessment review — 2026-10-05
+
+Reviewer: CodeQuest implementation review (agent), with founder product acceptance still open. The twelve `1.0.0` lessons were read against the coverage map and their actual starters/cases. They use an original city/river field-guide scenario, original text and examples, and an original local raster route marker. The sequence introduces each required element before the integrated final page. Essential instructions remain text; image lessons include useful alternate text; heading, landmark, list, table-header, and form-label examples use semantic tags. The final project requires no CSS or JavaScript. Links and form controls are explicitly described as inert in every lesson's Check contract. This review verifies authored material and declared behavior; it is not a founder quality acceptance or a claim of independently verified mastery.
+
+| Exact Quest snapshot | Editorial coverage | Browser candidate Check |
+| --- | --- | --- |
+| HTML01 `1.0.0/1.0.0` | Main + heading | Reference pass; alternate pass; wrong-tag defect fail |
+| HTML02 `1.0.0/1.0.0` | Heading hierarchy | Reference pass; alternate pass; wrong-level defect fail |
+| HTML03 `1.0.0/1.0.0` | Paragraph + emphasis | Reference pass; alternate pass; wrong-tag defect fail |
+| HTML04 `1.0.0/1.0.0` | Local link + target | Reference pass; alternate pass; wrong-fragment defect fail |
+| HTML05 `1.0.0/1.0.0` | Image alt + text note | Reference pass; alternate pass; vague-alt defect fail |
+| HTML06 `1.0.0/1.0.0` | List choice + items | Reference pass; alternate pass; wrong-list defect fail |
+| HTML07 `1.0.0/1.0.0` | Page landmarks | Reference pass; alternate pass; wrong-main defect fail |
+| HTML08 `1.0.0/1.0.0` | Figure + caption | Reference pass; alternate pass; wrong-caption defect fail |
+| HTML09 `1.0.0/1.0.0` | Data table | Reference pass; alternate pass; wrong-header defect fail |
+| HTML10 `1.0.0/1.0.0` | Label + email field | Reference pass; alternate pass; broken-for defect fail |
+| HTML11 `1.0.0/1.0.0` | Group + legend | Reference pass; alternate pass; wrong-legend defect fail |
+| HTML12 `1.0.0/1.0.0` | Integrated field guide | Reference pass; alternate pass; wrong-caption defect fail |
+
+The authoring command `content:test` drove the real local lesson Check in Chromium with synthetic authentication and aborted API writes. Each result reported ordered declared case IDs. The first HTML04 negative candidate used an unsafe external destination, which correctly caused a whole-Check safety rejection without case rows; it was replaced with a safe wrong fragment, and the full three-candidate matrix then passed. Source versions and authored tests were not changed by that candidate correction. The exact static origin probe on `5ba894b` passed Chromium, Firefox, and WebKit with no submission, navigation, sink request, storage, script execution, or forged-message acceptance. A later three-engine probe rendered the exact authored local route image at its intrinsic 16-pixel width with its text alternative and a data-only source. These are local synthetic results. Physical assistive technology and hosted release evidence are still untested.
+
 ## Static interaction contract
 
 The lesson and authoring guide state that Preview displays links and form controls only. It strips link destinations and form actions, prevents navigation and submission with an empty learner-frame sandbox and `form-action 'none'`, and does not save values typed inside the frame. The Check parser reads safe HTML source and returns local feedback; it never executes learner script. The supplied image is bounded raster data embedded in source, with no external request. Existing Worker containment and authenticated Submit authority remain unchanged.
@@ -19,11 +40,11 @@ The lesson and authoring guide state that Preview displays links and form contro
 
 | Gate | Status | Evidence needed before selection |
 | --- | --- | --- |
-| Structure and immutable history | Pass, local draft | `pnpm --dir backend curriculum:validate` on the exact content commit |
-| Original writing and coherent coverage | Open | Dated editorial review of all 12 lessons, examples, starters, hints and project |
-| Reference, alternative and deliberate-defect candidates | Open | Exact Check results per Quest/version and actionable failure feedback |
-| Accessibility and static preview | Open | Text alternatives, headings, labels, keyboard path and browser probes on exact build |
-| Publication manifest | Open | Whole reviewed Course selected with exact 12 versions, prior JavaScript inventory unchanged |
+| Structure and immutable history | Pass, selected Course | `pnpm --dir backend curriculum:validate`; repeat on the final content commit |
+| Original writing and coherent coverage | Pass, implementation review | The dated twelve-Quest map above; founder acceptance remains separate |
+| Reference, alternative and deliberate-defect candidates | Pass, local Chromium | 36 browser Check outcomes above; no account writes |
+| Accessibility and static preview | Local technical pass | Semantic/text review, three-engine sink/image probes passed; physical AT remains a later release gate |
+| Publication manifest | Pass, local catalog | Exact 12 snapshots selected; backend test confirms unchanged JavaScript inventory and rejects partial/unreviewed selection |
 | Integrated account flow | Open | Catalog through Next, accepted Submit, progress/XP/unlock, refresh/replay and source recovery |
 | Founder product acceptance | Open | Exact-build founder review; technical/CI passage is not acceptance |
 

@@ -9,6 +9,7 @@ interface Fixture {
     contentVersion: string;
     assessmentVersion: string;
     cases: { id: string }[];
+    exercise?: { mode: 'javascript' | 'static-web' | 'interactive-web' };
   };
   source: string;
   expected: 'pass' | 'fail';
@@ -56,6 +57,16 @@ function loadFixture(): Fixture {
       contentVersion: quest.contentVersion,
       assessmentVersion: quest.assessmentVersion,
       cases: quest.cases,
+      exercise:
+        isRecord(quest.exercise) &&
+        ['javascript', 'static-web', 'interactive-web'].includes(
+          String(quest.exercise.mode),
+        )
+          ? {
+              mode: quest.exercise.mode as
+                'javascript' | 'static-web' | 'interactive-web',
+            }
+          : undefined,
     },
     source: raw.source,
     expected: raw.expected === 'pass' ? 'pass' : 'fail',
@@ -86,7 +97,7 @@ test('selected authored cases run through isolated browser Check', async ({
   };
   await context.addCookies([
     {
-      name: 'sb-auth-auth-token',
+      name: 'sb-127-auth-token',
       value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
       url: 'http://127.0.0.1:3310',
     },
@@ -113,11 +124,20 @@ test('selected authored cases run through isolated browser Check', async ({
     await route.abort();
   });
   await page.goto(`/quests/${fixture.quest.slug}`);
-  await expect(
-    page.getByRole('region', { name: 'Quest workspace' }),
-  ).toBeVisible();
+  const workspace = page.getByRole('region', { name: 'Quest workspace' });
+  try {
+    await expect(workspace).toBeVisible({ timeout: 10_000 });
+  } catch (error) {
+    throw new Error(
+      `Quest workspace unavailable: ${(await page.locator('body').innerText()).slice(-700)}`,
+      { cause: error },
+    );
+  }
   const editor = page.getByRole('textbox', {
-    name: 'main.js code editor (javascript)',
+    name:
+      fixture.quest.exercise?.mode === 'static-web'
+        ? 'index.html code editor (html)'
+        : 'main.js code editor (javascript)',
   });
   const loadEditor = page.getByRole('button', { name: 'Load code editor' });
   await expect

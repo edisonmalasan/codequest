@@ -11,7 +11,9 @@ xpAward: 10
 hints:
   question: Which named element is missing from first page?
   concept: A page is a document with a purpose.
-  nextStep: Compare the IDs, tags, text, and safe attributes in the task with the Check feedback.
+  nextStep:
+    Put an h1 with ID title inside the existing main element, then compare its words
+    with the task.
 caseIds:
   - normal-main
   - boundary-heading
