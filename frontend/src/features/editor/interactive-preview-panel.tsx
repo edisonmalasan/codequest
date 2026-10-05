@@ -10,12 +10,14 @@ import type { WorkspaceFile } from './editor-workspace-types';
 
 export function InteractivePreviewPanel({
   adapter,
+  contentVersion,
   ownerId,
   workspaceId,
   files,
   sources,
 }: {
   adapter: InteractiveWebAdapter;
+  contentVersion?: string;
   ownerId: string;
   workspaceId: string;
   files: readonly WorkspaceFile[];
@@ -27,11 +29,9 @@ export function InteractivePreviewPanel({
   const [stale, setStale] = useState(false);
   const [revision, setRevision] = useState(0);
   const token = useRef(0);
-  const disposeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!host.current) return;
-    if (disposeTimer.current !== null) clearTimeout(disposeTimer.current);
     adapter.attach(host.current);
     const unsubscribe = adapter.subscribe((next) =>
       setValue((previous) => ({
@@ -42,7 +42,7 @@ export function InteractivePreviewPanel({
     return () => {
       token.current += 1;
       unsubscribe();
-      disposeTimer.current = setTimeout(() => void adapter.dispose(), 0);
+      void adapter.cancel();
     };
   }, [adapter]);
 
@@ -69,7 +69,7 @@ export function InteractivePreviewPanel({
     const operation = reload
       ? adapter.reload()
       : adapter.start({
-          contentVersion: `review-${revision}`,
+          contentVersion: contentVersion ?? `review-${revision}`,
           files: files.map((file) => ({
             id: file.id,
             language: file.language,
@@ -107,8 +107,8 @@ export function InteractivePreviewPanel({
       <div className="border-b border-line px-4 py-3">
         <h2 className="font-sans text-sm font-bold">Interactive web preview</h2>
         <p className="mt-1 text-xs text-muted">
-          Development review mode: a limited DOM and event subset runs in an
-          isolated Worker.
+          Start the page to try its supported interactions. Your latest edits
+          appear after you start it again.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <Button type="button" onClick={() => start(false)} disabled={running}>

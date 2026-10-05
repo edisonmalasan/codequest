@@ -378,7 +378,27 @@ function isChapterDetail(value: unknown): value is ChapterDetail {
 
 export function isQuestDetail(value: unknown): value is QuestDetail {
   if (!isRecord(value) || !isQuestSummary(value)) return false;
+  const exercise = value.exercise;
+  const validExercise =
+    exercise === undefined ||
+    (isRecord(exercise) &&
+      exercise.schemaVersion === 1 &&
+      ['javascript', 'static-web', 'interactive-web'].includes(
+        String(exercise.mode),
+      ) &&
+      Array.isArray(exercise.files) &&
+      exercise.files.length >= 1 &&
+      exercise.files.length <= 3 &&
+      exercise.files.every(
+        (file) =>
+          isRecord(file) &&
+          typeof file.id === 'string' &&
+          typeof file.name === 'string' &&
+          ['html', 'css', 'javascript'].includes(String(file.language)) &&
+          typeof file.starterSource === 'string',
+      ));
   return (
+    validExercise &&
     isRecord(value.hierarchy) &&
     isJourneySummary(value.hierarchy.journey) &&
     isChapterSummary(value.hierarchy.chapter) &&
@@ -411,7 +431,13 @@ export function isQuestDetail(value: unknown): value is QuestDetail {
         isRecord(item) &&
         typeof item.id === 'string' &&
         ['normal', 'boundary'].includes(String(item.category)) &&
-        ['console', 'function'].includes(String(item.kind)) &&
+        [
+          'console',
+          'function',
+          'html-element',
+          'css-declaration',
+          'interactive-text',
+        ].includes(String(item.kind)) &&
         typeof item.feedback === 'string',
     )
   );

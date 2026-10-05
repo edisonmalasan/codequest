@@ -67,13 +67,26 @@ function renderClient(api: LessonApi) {
   );
 }
 
+function renderView(offline: boolean) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  return render(
+    <QueryClientProvider client={client}>
+      <LessonPageView
+        quest={quest}
+        apiBaseUrl="https://api.test"
+        offline={offline}
+      />
+    </QueryClientProvider>,
+  );
+}
+
 it('offline reading and hints never record backend activity', async () => {
   authState.ownerId = 'current-owner';
   const request = vi.fn<typeof fetch>();
   vi.stubGlobal('fetch', request);
-  render(
-    <LessonPageView quest={quest} apiBaseUrl="https://api.test" offline />,
-  );
+  renderView(true);
   await userEvent.click(screen.getByText(/Concept hint/));
   await waitFor(() =>
     expect(screen.getByText(quest.hints.concept)).toBeDefined(),
@@ -84,9 +97,7 @@ it('offline reading and hints never record backend activity', async () => {
 
 it('composes lesson, code, and results around one mounted workspace', async () => {
   authState.ownerId = 'current-owner';
-  render(
-    <LessonPageView quest={quest} apiBaseUrl="https://api.test" offline />,
-  );
+  renderView(true);
   expect(screen.getByRole('article', { name: 'Lesson region' })).toBeDefined();
   expect(
     await screen.findByRole('tabpanel', { name: 'Code editor' }),

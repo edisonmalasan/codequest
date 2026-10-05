@@ -54,4 +54,54 @@ describe('published quest validation mapping', () => {
       }),
     ).toBeUndefined();
   });
+
+  it('maps published static and interactive cases without executable test source', () => {
+    expect(
+      questValidationDefinition({
+        cases: [
+          {
+            id: 'heading',
+            category: 'normal',
+            kind: 'html-element',
+            feedback: 'Add a heading',
+            selector: '#answer',
+            expectedText: 'Hello',
+          },
+          {
+            id: 'color',
+            category: 'boundary',
+            kind: 'css-declaration',
+            feedback: 'Set the color',
+            selector: 'h1',
+            property: 'color',
+            expectedValue: 'blue',
+          },
+        ],
+      }),
+    ).toMatchObject({
+      cases: [{ mode: 'html-element' }, { mode: 'css-declaration' }],
+    });
+    expect(
+      questValidationDefinition({
+        cases: [
+          {
+            id: 'clicked',
+            category: 'normal',
+            kind: 'interactive-text',
+            feedback: 'Handle the click',
+            selector: '#answer',
+            expectedText: 'Done',
+            events: [{ type: 'click', targetId: 'trigger' }],
+          },
+        ],
+      }),
+    ).toMatchObject({
+      cases: [
+        {
+          mode: 'interactive-text',
+          events: [{ type: 'click', targetId: 'trigger' }],
+        },
+      ],
+    });
+  });
 });

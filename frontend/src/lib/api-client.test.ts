@@ -701,4 +701,39 @@ describe('CodeQuest typed API client', () => {
       kind: 'cancelled',
     });
   });
+
+  it('accepts a bounded published static web descriptor and case', async () => {
+    const webQuest: QuestDetail = {
+      ...quest,
+      exercise: {
+        schemaVersion: 1,
+        mode: 'static-web',
+        files: [
+          {
+            id: 'page',
+            name: 'index.html',
+            language: 'html',
+            starterSource: '<h1 id="answer">Hello</h1>',
+          },
+        ],
+      },
+      cases: [
+        {
+          id: 'heading',
+          category: 'normal',
+          kind: 'html-element',
+          feedback: 'Add the heading.',
+          selector: '#answer',
+          expectedText: 'Hello',
+        },
+      ],
+    };
+    const client = createCodequestApi({
+      fetch: async () => jsonResponse(webQuest),
+    });
+    await expect(client.getQuest('first-message')).resolves.toMatchObject({
+      ok: true,
+      data: { exercise: { mode: 'static-web' } },
+    });
+  });
 });

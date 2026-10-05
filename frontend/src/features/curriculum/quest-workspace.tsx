@@ -2,7 +2,15 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { EditorWorkspace } from '@/features/editor';
+import {
+  EditorWorkspace,
+  type SaveStatus,
+  type WorkspaceFile,
+} from '@/features/editor';
+import { resolveInteractiveOrigins } from '@/features/interactive/interactive-snapshot';
+import type { InteractiveWebAdapter } from '@/features/interactive/interactive-types';
+import { resolvePreviewOrigin } from '@/features/preview/preview-origin';
+import type { PreviewAdapter } from '@/features/preview/preview-types';
 import {
   captureFirstRun,
   captureGuestFirstStart,
@@ -10,17 +18,19 @@ import {
   updateObservedOwner,
 } from '@/features/analytics/observed-analytics';
 import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
+import { getQueryClient } from '@/lib/query-client';
 import {
   JavaScriptWorkerAdapter,
   resolveRunnerOrigin,
   type ExecutionAdapter,
 } from '@/features/runtime';
-import {
-  JavaScriptValidationStrategy,
-  type ValidationDefinition,
-  type ValidationResult,
-  type ValidationStrategy,
-} from '@/features/validation';
+import { JavaScriptValidationStrategy } from '@/features/validation/javascript-validation-strategy';
+import { serializeWebSource } from '@/features/validation/web-source';
+import type {
+  ValidationDefinition,
+  ValidationResult,
+  ValidationStrategy,
+} from '@/features/validation/validation-types';
 import type { QuestDetail } from '@/lib/api-client';
 import { readCapstoneResponses } from './capstone-responses';
 import { progressReplay } from '@/features/progress-sync/progress-replay';
@@ -55,6 +65,72 @@ export function questValidationDefinition(
         mode: 'output-match',
         expectedLines: item.expectedOutput.split('\n'),
       });
+    } else if (item.kind === 'html-element') {
+      if (
+        typeof item.selector !== 'string' ||
+        typeof item.expectedText !== 'string'
+      )
+        return undefined;
+      cases.push({
+        id: item.id,
+        label: item.id,
+        feedback: item.feedback,
+        mode: 'html-element',
+        selector: item.selector,
+        expectedText: item.expectedText,
+      });
+    } else if (item.kind === 'css-declaration') {
+      if (
+        typeof item.selector !== 'string' ||
+        typeof item.property !== 'string' ||
+        typeof item.expectedValue !== 'string'
+      )
+        return undefined;
+      if (
+        !['color', 'background-color', 'display', 'font-size'].includes(
+          item.property,
+        )
+      )
+        return undefined;
+      cases.push({
+        id: item.id,
+        label: item.id,
+        feedback: item.feedback,
+        mode: 'css-declaration',
+        selector: item.selector,
+        property: item.property as
+          'color' | 'background-color' | 'display' | 'font-size',
+        expectedValue: item.expectedValue,
+      });
+    } else if (item.kind === 'interactive-text') {
+      if (
+        typeof item.selector !== 'string' ||
+        typeof item.expectedText !== 'string' ||
+        !Array.isArray(item.events) ||
+        !item.events.every(
+          (event) =>
+            typeof event === 'object' &&
+            event !== null &&
+            ['click', 'input', 'change'].includes(String(event.type)) &&
+            typeof event.targetId === 'string' &&
+            (event.value === undefined || typeof event.value === 'string'),
+        )
+      )
+        return undefined;
+      const events = item.events.map((event) => ({
+        type: event.type as 'click' | 'input' | 'change',
+        targetId: event.targetId as string,
+        ...(typeof event.value === 'string' ? { value: event.value } : {}),
+      }));
+      cases.push({
+        id: item.id,
+        label: item.id,
+        feedback: item.feedback,
+        mode: 'interactive-text',
+        selector: item.selector,
+        events,
+        expectedText: item.expectedText,
+      });
     } else {
       if (
         typeof item.functionName !== 'string' ||
@@ -80,10 +156,12 @@ export function QuestWorkspace({
   quest,
   offline = false,
   activePanel,
+  onSaveStatusChange,
 }: {
   readonly quest: QuestDetail;
   readonly offline?: boolean;
   readonly activePanel?: 'lesson' | 'code' | 'results';
+  readonly onSaveStatusChange?: (status: SaveStatus) => void;
 }): React.JSX.Element | null {
   const [ownerId, setOwnerId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -91,6 +169,9 @@ export function QuestWorkspace({
   const [executionAdapter, setExecutionAdapter] = useState<ExecutionAdapter>();
   const [validationStrategy, setValidationStrategy] =
     useState<ValidationStrategy>();
+  const [previewAdapter, setPreviewAdapter] = useState<PreviewAdapter>();
+  const [interactiveAdapter, setInteractiveAdapter] =
+    useState<InteractiveWebAdapter>();
   const [submission, setSubmission] = useState<SubmissionState>({
     status: 'idle',
   });
@@ -127,34 +208,122 @@ export function QuestWorkspace({
         : [],
     [quest],
   );
-  const file = useMemo(
-    () => [
-      {
-        id: 'main',
-        name: 'main.js',
-        language: 'javascript' as const,
-        starterSource: quest.starterCode,
-      },
-    ],
-    [quest.starterCode],
+  const files = useMemo<readonly WorkspaceFile[]>(
+    () =>
+      quest.exercise?.files ?? [
+        {
+          id: 'main',
+          name: 'main.js',
+          language: 'javascript',
+          starterSource: quest.starterCode,
+        },
+      ],
+    [quest.exercise, quest.starterCode],
+  );
+  const mode = quest.exercise?.mode ?? 'javascript';
+  const captureSource = useMemo(
+    () =>
+      mode === 'javascript'
+        ? undefined
+        : (
+            selectedFiles: readonly WorkspaceFile[],
+            sources: Readonly<Record<string, string>>,
+          ) =>
+            serializeWebSource({
+              schemaVersion: 1,
+              questId: quest.id,
+              contentVersion: quest.contentVersion,
+              assessmentVersion: quest.assessmentVersion,
+              mode,
+              files: selectedFiles.map((file) => ({
+                id: file.id,
+                language: file.language,
+                source: sources[file.id] ?? file.starterSource,
+              })),
+            }),
+    [mode, quest.id, quest.contentVersion, quest.assessmentVersion],
   );
 
   useEffect(() => {
+    let active = true;
     const origin = resolveRunnerOrigin(
       process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
       window.location.origin,
     );
-    const runner = origin ? new JavaScriptWorkerAdapter(origin) : undefined;
-    const checker = origin
-      ? new JavaScriptValidationStrategy(origin)
-      : undefined;
+    const runner =
+      mode === 'javascript' && origin
+        ? new JavaScriptWorkerAdapter(origin)
+        : undefined;
+    const previewOrigin = resolvePreviewOrigin(
+      process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
+      window.location.origin,
+      origin,
+    );
+    const interactiveOrigins =
+      mode === 'interactive-web'
+        ? resolveInteractiveOrigins(
+            window.location.origin,
+            process.env.NEXT_PUBLIC_RUNTIME_ORIGIN,
+            process.env.NEXT_PUBLIC_PREVIEW_ORIGIN,
+          )
+        : null;
+    let preview: PreviewAdapter | undefined;
+    let interactive: InteractiveWebAdapter | undefined;
+    let checker: ValidationStrategy | undefined;
     setExecutionAdapter(runner);
-    setValidationStrategy(checker);
+    setPreviewAdapter(undefined);
+    setInteractiveAdapter(undefined);
+    setValidationStrategy(undefined);
+    const loadMode = async () => {
+      if (mode === 'static-web' && previewOrigin) {
+        const [{ StaticPreviewAdapter }, { StaticWebValidationStrategy }] =
+          await Promise.all([
+            import('@/features/preview/static-preview-adapter'),
+            import('@/features/validation/static-web-validation-strategy'),
+          ]);
+        if (!active) return;
+        preview = new StaticPreviewAdapter(previewOrigin);
+        checker = new StaticWebValidationStrategy();
+      } else if (mode === 'interactive-web' && interactiveOrigins) {
+        const [
+          { IsolatedInteractiveWebAdapter },
+          { InteractiveWebValidationStrategy },
+        ] = await Promise.all([
+          import('@/features/interactive/interactive-web-adapter'),
+          import('@/features/validation/interactive-web-validation-strategy'),
+        ]);
+        if (!active) return;
+        interactive = new IsolatedInteractiveWebAdapter(
+          interactiveOrigins.runnerOrigin,
+          interactiveOrigins.previewOrigin,
+        );
+        checker = new InteractiveWebValidationStrategy(
+          interactiveOrigins.runnerOrigin,
+          interactiveOrigins.previewOrigin,
+        );
+      } else if (mode === 'javascript' && origin) {
+        checker = new JavaScriptValidationStrategy(origin);
+      }
+      if (!active) return;
+      setPreviewAdapter(preview);
+      setInteractiveAdapter(interactive);
+      setValidationStrategy(checker);
+    };
+    void loadMode().catch(() => {
+      if (active) {
+        setPreviewAdapter(undefined);
+        setInteractiveAdapter(undefined);
+        setValidationStrategy(undefined);
+      }
+    });
     return () => {
+      active = false;
       void runner?.dispose();
+      void preview?.dispose();
+      void interactive?.dispose();
       void checker?.dispose();
     };
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
     if (!ready || ownerId !== null || !guestAllowed) return;
@@ -208,6 +377,9 @@ export function QuestWorkspace({
       );
       setGuestProgress(progress);
       setGuestStorageError(false);
+      void getQueryClient().invalidateQueries({
+        queryKey: ['lesson-navigation-guest', quest.hierarchy.journey.slug],
+      });
     } catch {
       setGuestStorageError(true);
     } finally {
@@ -373,12 +545,21 @@ export function QuestWorkspace({
         activePanel={activePanel}
         key={ownerId ?? 'guest'}
         ownerId={ownerId ?? 'guest'}
-        workspaceId={`${quest.id}-${quest.contentVersion}`}
-        files={file}
+        workspaceId={
+          mode === 'javascript'
+            ? `${quest.id}-${quest.contentVersion}`
+            : `${quest.id}-${quest.contentVersion}-${quest.assessmentVersion}-${mode}`
+        }
+        files={files}
         responseFields={responseFields}
         executionAdapter={executionAdapter}
+        previewAdapter={previewAdapter}
+        interactiveAdapter={interactiveAdapter}
+        interactiveContentVersion={quest.contentVersion}
         validationStrategy={validationStrategy}
         validationDefinition={definition}
+        captureValidationSource={captureSource}
+        onSaveStatusChange={onSaveStatusChange}
         submitting={submission.status === 'submitting'}
         onSubmit={
           ownerId && (quest.kind !== 'capstone' || responsesReady)

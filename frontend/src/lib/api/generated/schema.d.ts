@@ -554,17 +554,43 @@ export interface components {
             concept: string;
             nextStep: string;
         };
+        QuestInteractiveEventDto: {
+            /** @enum {string} */
+            type: "click" | "input" | "change";
+            targetId: string;
+            value?: string;
+        };
         QuestCaseDto: {
             id: string;
             /** @enum {string} */
             category: "normal" | "boundary";
             /** @enum {string} */
-            kind: "console" | "function";
+            kind: "console" | "function" | "html-element" | "css-declaration" | "interactive-text";
             feedback: string;
             expectedOutput?: string;
             functionName?: string;
             args?: unknown[];
             expected?: Record<string, never>;
+            selector?: string;
+            expectedText?: string;
+            /** @enum {string} */
+            property?: "color" | "background-color" | "display" | "font-size";
+            expectedValue?: string;
+            events?: components["schemas"]["QuestInteractiveEventDto"][];
+        };
+        QuestExerciseFileDto: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            language: "html" | "css" | "javascript";
+            starterSource: string;
+        };
+        QuestExerciseDto: {
+            /** @enum {number} */
+            schemaVersion: 1;
+            /** @enum {string} */
+            mode: "javascript" | "static-web" | "interactive-web";
+            files: components["schemas"]["QuestExerciseFileDto"][];
         };
         QuestDetailDto: {
             /** @example Q01 */
@@ -593,6 +619,7 @@ export interface components {
             lesson: string;
             starterCode: string;
             cases: components["schemas"]["QuestCaseDto"][];
+            exercise?: components["schemas"]["QuestExerciseDto"];
             explanationPrompt?: string;
             transferPrompt?: string;
         };

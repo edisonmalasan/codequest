@@ -53,6 +53,7 @@ import {
   canCreditChangedTimezone,
   localDate,
 } from '../gamification/streak-policy';
+import { validateAttemptSource } from './attempt-source';
 
 interface LocatedQuest {
   journey: PublishedJourney;
@@ -226,6 +227,7 @@ export class LearningService {
         throw new ConflictException(
           'Quest version changed; retry with the current version',
         );
+      validateAttemptSource(body.source, quest.metadata.id, snapshot);
       const report = normalizeAttemptReport(body.report, snapshot.cases);
       requireQuestResponses(report, quest.metadata.kind);
       if (

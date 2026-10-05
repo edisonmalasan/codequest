@@ -75,9 +75,15 @@ export interface EditorWorkspaceProps {
   executionAdapter?: ExecutionAdapter;
   previewAdapter?: PreviewAdapter;
   interactiveAdapter?: InteractiveWebAdapter;
+  interactiveContentVersion?: string;
   validationStrategy?: ValidationStrategy;
   validationDefinition?: ValidationDefinition;
+  captureValidationSource?: (
+    files: readonly WorkspaceFile[],
+    sources: Readonly<Record<string, string>>,
+  ) => string | null;
   onSourcesChange?: (sources: Readonly<Record<string, string>>) => void;
+  onSaveStatusChange?: (status: SaveStatus) => void;
   onRunComplete?: (outcome: {
     readonly status: ExecutionResult['status'];
   }) => void;
@@ -192,9 +198,12 @@ export function EditorWorkspace({
   executionAdapter,
   previewAdapter,
   interactiveAdapter,
+  interactiveContentVersion,
   validationStrategy,
   validationDefinition,
+  captureValidationSource,
   onSourcesChange,
+  onSaveStatusChange,
   onRunComplete,
   onSubmit,
   onCheckComplete,
@@ -242,6 +251,13 @@ export function EditorWorkspace({
   const executionControllerRef = useRef<AbortController | null>(null);
   const executionTokenRef = useRef(0);
   const previewHostRef = useRef<HTMLDivElement | null>(null);
+  const attachPreviewHost = useCallback(
+    (host: HTMLDivElement | null) => {
+      previewHostRef.current = host;
+      if (host) previewAdapter?.attach(host);
+    },
+    [previewAdapter],
+  );
   const previewControllerRef = useRef<AbortController | null>(null);
   const previewTokenRef = useRef(0);
   const [previewResult, setPreviewResult] = useState<PreviewResult>();
@@ -256,11 +272,24 @@ export function EditorWorkspace({
 
   onSourcesChangeRef.current = onSourcesChange;
 
+  useEffect(() => {
+    onSaveStatusChange?.(saveStatus);
+  }, [onSaveStatusChange, saveStatus]);
+
   const identity = useMemo(
     () => ({ ownerId, workspaceId }),
     [ownerId, workspaceId],
   );
   const activeFile = files.find((file) => file.id === activeFileId) ?? files[0];
+  const currentCheckSource = useCallback(
+    (snapshot: Readonly<Record<string, string>>): string | null =>
+      captureValidationSource
+        ? captureValidationSource(files, snapshot)
+        : activeFile?.language === 'javascript'
+          ? (snapshot[activeFile.id] ?? activeFile.starterSource)
+          : null,
+    [activeFile, captureValidationSource, files],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -446,12 +475,12 @@ export function EditorWorkspace({
   }, [ownerId, workspaceId, validationDefinition, validationStrategy]);
 
   useEffect(() => {
-    if (!previewAdapter || !previewHostRef.current) return;
-    previewAdapter.attach(previewHostRef.current);
+    if (!previewAdapter) return;
+    if (previewHostRef.current) previewAdapter.attach(previewHostRef.current);
     return () => {
       previewTokenRef.current += 1;
       previewControllerRef.current?.abort();
-      void previewAdapter.dispose();
+      void previewAdapter.cancel();
     };
   }, [previewAdapter]);
 
@@ -552,15 +581,29 @@ export function EditorWorkspace({
     if (
       !validationStrategy ||
       !validationDefinition ||
-      activeFile?.language !== 'javascript'
+      (!captureValidationSource && activeFile?.language !== 'javascript')
     )
       return;
     validationControllerRef.current?.abort();
     const controller = new AbortController();
     validationControllerRef.current = controller;
     const token = ++validationTokenRef.current;
-    const source =
-      sourcesRef.current[activeFile.id] ?? activeFile.starterSource;
+    const source = currentCheckSource(sourcesRef.current);
+    if (source === null) {
+      validationControllerRef.current = null;
+      checkedSourceRef.current = null;
+      setChecking(false);
+      setValidationResult({
+        checkId: crypto.randomUUID(),
+        status: 'output-limit',
+        passed: false,
+        cases: [],
+        failedCaseIds: [],
+        feedback: 'The complete exercise source exceeds the Check limit',
+        durationMs: 0,
+      });
+      return;
+    }
     setValidationResult(undefined);
     checkedSourceRef.current = source;
     setChecking(true);
@@ -593,7 +636,14 @@ export function EditorWorkspace({
           });
         },
       );
-  }, [activeFile, onCheckComplete, validationDefinition, validationStrategy]);
+  }, [
+    activeFile,
+    captureValidationSource,
+    currentCheckSource,
+    onCheckComplete,
+    validationDefinition,
+    validationStrategy,
+  ]);
 
   const invalidateCheck = (): void => {
     validationTokenRef.current += 1;
@@ -707,7 +757,7 @@ export function EditorWorkspace({
         onCheck={
           validationStrategy &&
           validationDefinition &&
-          activeFile.language === 'javascript'
+          (captureValidationSource || activeFile.language === 'javascript')
             ? checkCurrent
             : undefined
         }
@@ -720,15 +770,12 @@ export function EditorWorkspace({
           onSubmit &&
           validationResult &&
           checkedSourceRef.current !== null &&
-          checkedSourceRef.current ===
-            (sources[activeFile.id] ?? activeFile.starterSource)
+          checkedSourceRef.current === currentCheckSource(sources)
             ? () => {
                 const checkedSource = checkedSourceRef.current;
                 if (
                   checkedSource !== null &&
-                  checkedSource ===
-                    (sourcesRef.current[activeFile.id] ??
-                      activeFile.starterSource)
+                  checkedSource === currentCheckSource(sourcesRef.current)
                 )
                   onSubmit({
                     source: checkedSource,
@@ -880,7 +927,7 @@ export function EditorWorkspace({
           {presentation === 'standalone' && previewAdapter && (
             <div className="mt-4">
               <PreviewPanel
-                hostRef={previewHostRef}
+                hostRef={attachPreviewHost}
                 result={previewResult}
                 running={previewRunning}
               />
@@ -890,6 +937,7 @@ export function EditorWorkspace({
             <div className="mt-4">
               <InteractivePreviewPanel
                 adapter={interactiveAdapter}
+                contentVersion={interactiveContentVersion}
                 ownerId={ownerId}
                 workspaceId={workspaceId}
                 files={files}
@@ -913,7 +961,7 @@ export function EditorWorkspace({
           )}
           {presentation === 'integrated' && previewAdapter && (
             <PreviewPanel
-              hostRef={previewHostRef}
+              hostRef={attachPreviewHost}
               result={previewResult}
               running={previewRunning}
             />
@@ -921,6 +969,7 @@ export function EditorWorkspace({
           {presentation === 'integrated' && interactiveAdapter && (
             <InteractivePreviewPanel
               adapter={interactiveAdapter}
+              contentVersion={interactiveContentVersion}
               ownerId={ownerId}
               workspaceId={workspaceId}
               files={files}

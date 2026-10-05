@@ -15,7 +15,7 @@ import {
   loadAuthoredCurriculum,
   loadCurriculumCatalog,
 } from './curriculum-catalog';
-import { publicationSchema } from './content-schema';
+import { exerciseSchema, publicationSchema } from './content-schema';
 
 const source = resolve(process.cwd(), 'test/fixtures/curriculum-draft');
 const created: string[] = [];
@@ -67,6 +67,139 @@ afterEach(() => {
 });
 
 describe('curriculum publication catalog', () => {
+  it('rejects unsafe or incompatible exercise descriptors before publication', () => {
+    const base = {
+      schemaVersion: 1,
+      mode: 'static-web',
+      files: [
+        {
+          id: 'page',
+          name: 'index.html',
+          language: 'html',
+          starterFile: 'starter.html',
+        },
+        {
+          id: 'style',
+          name: 'style.css',
+          language: 'css',
+          starterFile: 'starter.css',
+        },
+      ],
+    };
+    expect(exerciseSchema.safeParse(base).success).toBe(true);
+    expect(
+      exerciseSchema.safeParse({
+        ...base,
+        files: [base.files[0], base.files[0]],
+      }).success,
+    ).toBe(false);
+    expect(
+      exerciseSchema.safeParse({ ...base, mode: 'interactive-web' }).success,
+    ).toBe(false);
+    expect(
+      exerciseSchema.safeParse({
+        ...base,
+        files: [{ ...base.files[0], name: '../index.html' }],
+      }).success,
+    ).toBe(false);
+    expect(
+      exerciseSchema.safeParse({
+        ...base,
+        files: [
+          ...base.files,
+          {
+            id: 'logic',
+            name: 'main.js',
+            language: 'javascript',
+            starterFile: 'starter.js',
+          },
+        ],
+      }).success,
+    ).toBe(false);
+  });
+
+  it('loads only a reviewed bounded synthetic web snapshot', () => {
+    const root = fixture();
+    reviewed(root);
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    writeFileSync(
+      join(snapshot, 'version.yaml'),
+      `${readFileSync(join(snapshot, 'version.yaml'), 'utf8')}exercise:\n  schemaVersion: 1\n  mode: static-web\n  files:\n    - id: page\n      name: index.html\n      language: html\n      starterFile: starter.html\n    - id: style\n      name: style.css\n      language: css\n      starterFile: starter.css\n`,
+    );
+    writeFileSync(
+      join(snapshot, 'starter.html'),
+      '<h1 id="heading">Hello</h1>',
+    );
+    writeFileSync(join(snapshot, 'starter.css'), 'h1 { color: blue; }');
+    writeFileSync(
+      join(snapshot, 'tests.ts'),
+      `export const cases = [\n  { id: 'normal-message', category: 'normal', kind: 'html-element', selector: '#heading', expectedText: 'Hello', feedback: 'Add the heading.' },\n  { id: 'boundary-exact-output', category: 'boundary', kind: 'css-declaration', selector: 'h1', property: 'color', expectedValue: 'blue', feedback: 'Use blue.' },\n];\n`,
+    );
+    publish(
+      root,
+      '            curriculumReview: approved\n            technicalReview: approved\n',
+    );
+    const selected =
+      loadCurriculumCatalog(root).journeys[0].chapters[0].quests[0]
+        .activeSnapshot;
+    expect(selected.exercise?.mode).toBe('static-web');
+    expect(selected.exercise?.files.map((file) => file.starterSource)).toEqual([
+      '<h1 id="heading">Hello</h1>',
+      'h1 { color: blue; }',
+    ]);
+    expect(selected.starterCode).toBe('');
+    publish(root);
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Web exercise review is missing',
+    );
+    writeFileSync(join(snapshot, 'starter.css'), 'x'.repeat(32_769));
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'File exceeds size limit',
+    );
+  });
+  it('keeps synthetic interactive publication disabled even with declared reviews and a record reference', () => {
+    const root = fixture();
+    reviewed(root);
+    const snapshot = join(
+      root,
+      'journeys/javascript-foundations/courses/javascript-foundations/chapters/variables/quests/first-message/versions/1.0.0',
+    );
+    writeFileSync(
+      join(snapshot, 'version.yaml'),
+      `${readFileSync(join(snapshot, 'version.yaml'), 'utf8')}exercise:\n  schemaVersion: 1\n  mode: interactive-web\n  files:\n    - id: page\n      name: index.html\n      language: html\n      starterFile: starter.html\n    - id: logic\n      name: main.js\n      language: javascript\n      starterFile: starter.js\n`,
+    );
+    writeFileSync(
+      join(snapshot, 'starter.html'),
+      '<button id="trigger">Go</button><p id="answer">Ready</p>',
+    );
+    writeFileSync(
+      join(snapshot, 'starter.js'),
+      'document.getElementById("trigger").addEventListener("click", () => { document.getElementById("answer").textContent = "Done"; });',
+    );
+    writeFileSync(
+      join(snapshot, 'tests.ts'),
+      `export const cases = [
+  { id: 'normal-message', category: 'normal', kind: 'interactive-text', selector: '#answer', events: [{ type: 'click', targetId: 'trigger' }], expectedText: 'Done', feedback: 'Handle the click.' },
+  { id: 'boundary-exact-output', category: 'boundary', kind: 'interactive-text', selector: '#answer', events: [], expectedText: 'Ready', feedback: 'Keep the initial text.' },
+];\n`,
+    );
+    const reviews =
+      '            curriculumReview: approved\n            technicalReview: approved\n';
+    publish(root, reviews);
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Interactive publication evidence is missing',
+    );
+    publish(
+      root,
+      `${reviews}            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n`,
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Interactive publication remains disabled',
+    );
+  });
   it('rejects unknown publication fields and duplicate stable IDs', () => {
     const reviewedSelection = {
       schemaVersion: 2,

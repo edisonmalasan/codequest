@@ -68,6 +68,10 @@
   scrollbar-color: var(--color-line-strong) transparent;
 }
 
+.learningShell :global(.learning-results-region) {
+  grid-auto-rows: max-content;
+}
+
 .learningShell
   :global(
     .learning-workspace[data-presentation='integrated'] > .learning-actions

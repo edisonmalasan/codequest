@@ -644,6 +644,98 @@ describe('authoritative attempt persistence', () => {
     });
   });
 
+  it('keeps multi-file source owner-bound with exact replay and one reward per completion', async () => {
+    const catalog = loadCurriculumCatalog(root);
+    const chapter = catalog.journeys[0].chapters[0];
+    const quest = chapter.quests[0];
+    const webQuest = {
+      ...quest,
+      activeSnapshot: {
+        ...quest.activeSnapshot,
+        exercise: {
+          schemaVersion: 1 as const,
+          mode: 'static-web' as const,
+          files: [
+            {
+              id: 'page',
+              name: 'index.html',
+              language: 'html' as const,
+              starterFile: 'starter.html' as const,
+              starterSource: '<h1>Start</h1>',
+            },
+            {
+              id: 'style',
+              name: 'style.css',
+              language: 'css' as const,
+              starterFile: 'starter.css' as const,
+              starterSource: 'h1 { color: blue; }',
+            },
+          ],
+        },
+      },
+    };
+    const webCatalog = {
+      ...catalog,
+      journeys: [
+        {
+          ...catalog.journeys[0],
+          chapters: [{ ...chapter, quests: [webQuest] }],
+        },
+      ],
+    };
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: webCatalog },
+      ],
+    }).compile();
+    const web = module.get(LearningService);
+    const source = JSON.stringify({
+      schemaVersion: 1,
+      questId: 'Q01',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      mode: 'static-web',
+      files: [
+        { id: 'page', language: 'html', source: '<h1>Current</h1>' },
+        { id: 'style', language: 'css', source: 'h1 { color: red; }' },
+      ],
+    });
+    const body = {
+      clientEventId: '00000000-0000-4000-8000-000000000399',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source,
+      report: REPORT,
+    };
+    const first = await web.submit(USER_A, 'first-message', body);
+    expect(first.accepted).toBe(true);
+    expect(await web.replay(USER_A, 'Q01', body)).toEqual(first);
+    await expect(
+      web.replay(USER_A, 'Q01', { ...body, source: `${source} ` }),
+    ).rejects.toMatchObject({ status: 409 });
+    expect((await web.history(USER_B, 'first-message')).attempts).toHaveLength(
+      0,
+    );
+    const secondOwner = await web.submit(USER_B, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000398',
+    });
+    expect(secondOwner.accepted).toBe(true);
+    const repeat = await web.submit(USER_A, 'first-message', {
+      ...body,
+      clientEventId: '00000000-0000-4000-8000-000000000397',
+    });
+    expect(repeat.accepted).toBe(false);
+    expect(
+      (await client.query('select user_id from codequest.xp_events')).rows,
+    ).toHaveLength(2);
+  });
+
   it('imports only the published guest stable ID through normal acceptance and replay', async () => {
     const body = {
       clientEventId: '00000000-0000-4000-8000-000000000299',

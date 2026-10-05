@@ -17,6 +17,8 @@ import { getBrowserSupabaseClient } from '@/features/auth/supabase-browser';
 import { LessonDocument } from './lesson-document';
 import { LessonHints } from './lesson-hints';
 import { QuestWorkspace } from './quest-workspace';
+import { LessonNavigation } from './lesson-navigation';
+import type { SaveStatus } from '@/features/editor';
 import { captureObserved } from '@/features/analytics/observed-analytics';
 import { DownloadLessonButton } from '@/features/offline-learning/download-lesson-button';
 import styles from './lesson-page-client.module.css';
@@ -72,6 +74,7 @@ export function LessonPageView({
   readonly offlineAssets?: ReadonlyMap<string, string>;
 }): React.JSX.Element {
   const [activityError, setActivityError] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('loading');
   const [activePanel, setActivePanel] = useState<'lesson' | 'code' | 'results'>(
     'lesson',
   );
@@ -275,8 +278,14 @@ export function LessonPageView({
           quest={quest}
           offline={offline}
           activePanel={activePanel}
+          onSaveStatusChange={setSaveStatus}
         />
       </div>
+      <LessonNavigation
+        quest={quest}
+        offline={offline}
+        safeToLeave={saveStatus === 'ready' || saveStatus === 'saved'}
+      />
     </main>
   );
 }

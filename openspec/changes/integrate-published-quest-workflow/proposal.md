@@ -11,7 +11,7 @@ R06 gives published lessons a coherent reading, editor, and results shell, but t
 - Bind deterministic local Check to the selected published assessment and an immutable source snapshot. Provide declarative, bounded checks for approved web exercises without evaluating learner code or test programs in the application, display frame, or NestJS.
 - Keep Submit explicit and authenticated. Extend the private source-snapshot contract for identified multi-file exercises without changing the current single-file payload or ADR 0005 personal-learning acceptance semantics. Refresh trusted progress, rewards, and unlock views only after backend acceptance.
 - Add ordered Back/Next Quest navigation with truthful locked/unavailable states, guest eligibility, and recovery from stale versions, failed saves, offline replay, and submission errors.
-- Require exact-build browser containment/recovery and curriculum/security review before a published Quest may select interactive mode. Local development evidence alone does not enable it.
+- Keep interactive publication disabled in R07. R08 must obtain exact-build published-route browser containment/recovery and curriculum/security review for a selected original Quest before it may select interactive mode. Local development evidence alone does not enable it.
 
 ## Capabilities
 
@@ -28,4 +28,4 @@ R06 gives published lessons a coherent reading, editor, and results shell, but t
 
 ## Impact
 
-Apply will affect backend curriculum authoring/schema/DTO/OpenAPI, the generated frontend API client, the published Quest host, reusable Editor Workspace adapters, local validation, private submission snapshots, and focused unit/browser/API verification. No new course is published by this change; original HTML/CSS/DOM course authoring remains R08. R04 real-provider authentication and Phase 38 hosted/device gates remain open. This proposal contains no application implementation.
+Apply will affect backend curriculum authoring/schema/DTO/OpenAPI, the generated frontend API client, the published Quest host, reusable Editor Workspace adapters, local validation, private submission snapshots, and focused unit/browser/API verification. No new course or interactive Quest is published by this change; original HTML/CSS/DOM course authoring and the selected-Quest interactive publication review remain R08. R04 real-provider authentication and Phase 38 hosted/device gates remain open. This proposal contains no application implementation.

@@ -177,6 +177,79 @@ function validateDefinition(value: unknown): value is ValidationDefinition {
         )
           return false;
       } else return false;
+    } else if (item.mode === 'html-element') {
+      if (
+        !exactKeys(item, [
+          'id',
+          'label',
+          'feedback',
+          'mode',
+          'selector',
+          'expectedText',
+        ]) ||
+        typeof item.selector !== 'string' ||
+        !/^#[a-z][a-z0-9-]{0,31}$/.test(item.selector) ||
+        typeof item.expectedText !== 'string' ||
+        utf8Bytes(item.expectedText) > 512
+      )
+        return false;
+    } else if (item.mode === 'css-declaration') {
+      if (
+        !exactKeys(item, [
+          'id',
+          'label',
+          'feedback',
+          'mode',
+          'selector',
+          'property',
+          'expectedValue',
+        ]) ||
+        typeof item.selector !== 'string' ||
+        !/^(?:#[a-z][a-z0-9-]{0,31}|\.[a-z][a-z0-9-]{0,31}|[a-z][a-z0-9-]{0,31})$/.test(
+          item.selector,
+        ) ||
+        !['color', 'background-color', 'display', 'font-size'].includes(
+          String(item.property),
+        ) ||
+        typeof item.expectedValue !== 'string' ||
+        !/^[a-zA-Z0-9#(),.%\s-]{1,128}$/.test(item.expectedValue)
+      )
+        return false;
+    } else if (item.mode === 'interactive-text') {
+      if (
+        !exactKeys(item, [
+          'id',
+          'label',
+          'feedback',
+          'mode',
+          'selector',
+          'events',
+          'expectedText',
+        ]) ||
+        typeof item.selector !== 'string' ||
+        !/^#[a-z][a-z0-9-]{0,31}$/.test(item.selector) ||
+        typeof item.expectedText !== 'string' ||
+        utf8Bytes(item.expectedText) > 512 ||
+        !Array.isArray(item.events) ||
+        item.events.length > 8 ||
+        !item.events.every(
+          (event) =>
+            record(event) &&
+            exactKeys(
+              event,
+              event.value === undefined
+                ? ['type', 'targetId']
+                : ['type', 'targetId', 'value'],
+            ) &&
+            ['click', 'input', 'change'].includes(String(event.type)) &&
+            typeof event.targetId === 'string' &&
+            /^[a-z][a-z0-9-]{0,31}$/.test(event.targetId) &&
+            (event.value === undefined ||
+              (typeof event.value === 'string' &&
+                utf8Bytes(event.value) <= 512)),
+        )
+      )
+        return false;
     } else return false;
   }
   try {

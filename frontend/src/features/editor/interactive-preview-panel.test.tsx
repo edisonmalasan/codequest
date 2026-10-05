@@ -47,6 +47,9 @@ class ReviewAdapter implements InteractiveWebAdapter {
   reload(): Promise<InteractiveResult> {
     return Promise.resolve(this.outcome);
   }
+  readText(): string | null {
+    return null;
+  }
 }
 
 const ready: InteractiveResult = {
