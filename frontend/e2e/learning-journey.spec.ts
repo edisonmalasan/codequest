@@ -346,9 +346,11 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await page.waitForURL(/\/account$/);
   await page.waitForLoadState('load');
 
-  await page.goto('/courses/html-foundations', {
+  await page.goto('/courses', {
     waitUntil: 'domcontentloaded',
   });
+  await page.getByRole('link', { name: /HTML Foundations/ }).click();
+  await expect(page).toHaveURL(/\/courses\/html-foundations$/);
   await expect(
     page.getByRole('heading', { name: 'HTML Foundations' }),
   ).toBeVisible();
@@ -422,6 +424,15 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
       .getByRole('navigation', { name: 'Exercise sequence' })
       .getByRole('link', { name: 'Next: Heading map' }),
   ).toBeVisible();
+  await page
+    .getByRole('navigation', { name: 'Exercise sequence' })
+    .getByRole('link', { name: 'Next: Heading map' })
+    .click();
+  await expect(page).toHaveURL(/\/quests\/heading-map$/);
+  await expect(
+    page.getByRole('heading', { name: 'Heading map' }),
+  ).toBeVisible();
+  await page.goto('/quests/first-page');
   await page.reload();
   await showLearningPanel(page, 'Code');
   await expect(editor).toContainText('City field notes');
