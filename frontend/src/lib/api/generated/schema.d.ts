@@ -554,6 +554,11 @@ export interface components {
             concept: string;
             nextStep: string;
         };
+        QuestSemanticAttributeDto: {
+            /** @enum {string} */
+            name: "alt" | "aria-label" | "for" | "href" | "name" | "type";
+            value: string;
+        };
         QuestInteractiveEventDto: {
             /** @enum {string} */
             type: "click" | "input" | "change";
@@ -565,7 +570,7 @@ export interface components {
             /** @enum {string} */
             category: "normal" | "boundary";
             /** @enum {string} */
-            kind: "console" | "function" | "html-element" | "css-declaration" | "interactive-text";
+            kind: "console" | "function" | "html-element" | "html-semantic" | "css-declaration" | "interactive-text";
             feedback: string;
             expectedOutput?: string;
             functionName?: string;
@@ -573,6 +578,8 @@ export interface components {
             expected?: Record<string, never>;
             selector?: string;
             expectedText?: string;
+            tag?: string;
+            expectedAttributes?: components["schemas"]["QuestSemanticAttributeDto"][];
             /** @enum {string} */
             property?: "color" | "background-color" | "display" | "font-size";
             expectedValue?: string;

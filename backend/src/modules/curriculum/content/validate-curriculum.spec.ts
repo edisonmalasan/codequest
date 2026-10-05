@@ -11,6 +11,7 @@ import { join, resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   caseSchema,
+  casesSchema,
   journeySchema,
   transitionSchema,
   versionSchema,
@@ -394,6 +395,54 @@ describe('Git curriculum authoring validation', () => {
     expect(caseSchema.safeParse({ ...value, expected: () => 0 }).success).toBe(
       false,
     );
+  });
+
+  it('accepts safe semantic HTML cases and rejects active or ambiguous definitions', () => {
+    const label = {
+      id: 'normal-label',
+      kind: 'html-semantic',
+      category: 'normal',
+      selector: '#search-label',
+      tag: 'label',
+      expectedText: 'Search the field guide',
+      expectedAttributes: [{ name: 'for', value: 'search-field' }],
+      feedback: 'Connect the label to the field.',
+    };
+    const link = {
+      ...label,
+      id: 'boundary-link',
+      category: 'boundary',
+      selector: '#section-link',
+      tag: 'a',
+      expectedText: 'Go to habitats',
+      expectedAttributes: [{ name: 'href', value: '#habitats' }],
+    };
+    expect(caseSchema.safeParse(label).success).toBe(true);
+    expect(casesSchema.safeParse([label, link]).success).toBe(true);
+    expect(casesSchema.safeParse([label, label]).success).toBe(false);
+    expect(
+      caseSchema.safeParse({
+        ...link,
+        expectedAttributes: [
+          { name: 'href', value: 'https://example.test/collect' },
+        ],
+      }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({
+        ...label,
+        expectedAttributes: [
+          { name: 'for', value: 'search-field' },
+          { name: 'for', value: 'other-field' },
+        ],
+      }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...label, expected: () => true }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...label, selector: 'form input' }).success,
+    ).toBe(false);
   });
 
   it('rejects wrong Foundations order and guest eligibility', () => {

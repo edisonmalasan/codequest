@@ -327,7 +327,11 @@ export function validateCurriculum(contentRoot: string): void {
                 mode === 'javascript'
                   ? !['console', 'function'].includes(item.kind)
                   : mode === 'static-web'
-                    ? !['html-element', 'css-declaration'].includes(item.kind)
+                    ? ![
+                        'html-element',
+                        'html-semantic',
+                        'css-declaration',
+                      ].includes(item.kind)
                     : item.kind !== 'interactive-text',
               )
             )

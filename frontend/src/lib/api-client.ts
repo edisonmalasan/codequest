@@ -435,6 +435,7 @@ export function isQuestDetail(value: unknown): value is QuestDetail {
           'console',
           'function',
           'html-element',
+          'html-semantic',
           'css-declaration',
           'interactive-text',
         ].includes(String(item.kind)) &&

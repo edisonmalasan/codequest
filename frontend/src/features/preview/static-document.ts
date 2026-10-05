@@ -20,7 +20,9 @@ const ALLOWED_TAGS = new Set([
   'em',
   'figcaption',
   'figure',
+  'fieldset',
   'footer',
+  'form',
   'h1',
   'h2',
   'h3',
@@ -31,6 +33,9 @@ const ALLOWED_TAGS = new Set([
   'hr',
   'i',
   'img',
+  'input',
+  'label',
+  'legend',
   'li',
   'main',
   'mark',
@@ -52,7 +57,7 @@ const ALLOWED_TAGS = new Set([
   'u',
   'ul',
 ]);
-const VOID_TAGS = new Set(['br', 'hr', 'img']);
+const VOID_TAGS = new Set(['br', 'hr', 'img', 'input']);
 const SAFE_ATTRIBUTES = new Set([
   'alt',
   'class',
@@ -65,6 +70,8 @@ const SAFE_ATTRIBUTES = new Set([
   'width',
 ]);
 const IMAGE_DATA = /^data:image\/(?:png|jpeg|gif|webp);base64,[a-z0-9+/=]+$/i;
+const SAFE_FRAGMENT = /^#[a-z][a-z0-9-]{0,31}$/;
+const SAFE_FIELD_NAME = /^[a-z][a-z0-9-]{0,31}$/;
 const CHILD_POLICY = [
   "default-src 'none'",
   "script-src 'none'",
@@ -118,8 +125,35 @@ function renderNode(node: ChildNode, filtered: { value: boolean }): string {
   const attrs: string[] = [];
   for (const attr of node.attrs) {
     const name = attr.name.toLowerCase();
-    if (SAFE_ATTRIBUTES.has(name) || name.startsWith('aria-')) {
+    if (
+      SAFE_ATTRIBUTES.has(name) ||
+      (name.startsWith('aria-') && attr.value.length <= 128)
+    ) {
       attrs.push(`${name}="${escapeAttribute(attr.value)}"`);
+    } else if (
+      tag === 'a' &&
+      name === 'href' &&
+      SAFE_FRAGMENT.test(attr.value)
+    ) {
+      // Keep the declared fragment available to Check, but never make Preview navigate.
+    } else if (
+      tag === 'label' &&
+      name === 'for' &&
+      SAFE_FIELD_NAME.test(attr.value)
+    ) {
+      attrs.push(`for="${escapeAttribute(attr.value)}"`);
+    } else if (
+      tag === 'input' &&
+      name === 'type' &&
+      ['text', 'email', 'search'].includes(attr.value)
+    ) {
+      attrs.push(`type="${attr.value}"`);
+    } else if (
+      tag === 'input' &&
+      name === 'name' &&
+      SAFE_FIELD_NAME.test(attr.value)
+    ) {
+      attrs.push(`name="${escapeAttribute(attr.value)}"`);
     } else if (
       tag === 'img' &&
       name === 'src' &&

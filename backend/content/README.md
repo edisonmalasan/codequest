@@ -59,6 +59,34 @@ An existing snapshot without `exercise` remains a single `main.js` JavaScript ex
 
 The synthetic, test-only static exercise in `backend/src/modules/curriculum/content/curriculum-catalog.spec.ts` shows a two-file descriptor, literal `html-element` and `css-declaration` cases, and the publication review checks. It is created in a temporary test tree; it is absent from `backend/content/publication.yaml` and is not a public course. Web cases must match their exercise mode and retain the declared case-ID order and normal/boundary coverage. Invalid files, executable tests, unsupported modes, or mismatched cases fail validation. A changed exercise contract or cases requires a new reviewed snapshot and appropriate assessment version/transition.
 
+Static HTML lessons may also use a literal `html-semantic` case. It identifies one element by `#id`, requires an allowlisted HTML tag, and may compare exact trimmed text and up to four unique safe attributes. The supported attributes are `alt` on images, `for` on labels, `href` on links, `name` and text-like `type` on inputs, and `aria-label`. Link values are local fragments such as `#habitats`; field names and label targets are short stable IDs. The case is parsed as data, with no callbacks or arbitrary CSS selectors. For a label relationship, author separate cases for the label's `for` value and the input's ID/type. Give every case clear failure feedback and include normal and boundary cases. For example:
+
+```ts
+export const cases = [
+  {
+    id: 'normal-label',
+    category: 'normal',
+    kind: 'html-semantic',
+    selector: '#search-label',
+    tag: 'label',
+    expectedText: 'Search',
+    expectedAttributes: [{ name: 'for', value: 'search-field' }],
+    feedback: 'Connect the visible label to the search field.',
+  },
+  {
+    id: 'boundary-field',
+    category: 'boundary',
+    kind: 'html-semantic',
+    selector: '#search-field',
+    tag: 'input',
+    expectedAttributes: [{ name: 'type', value: 'text' }],
+    feedback: 'Use a text input with the stated ID.',
+  },
+];
+```
+
+These cases are browser-visible local feedback, not independent grading. The static preview displays only safe inert markup; even a checked fragment link does not navigate in Preview, and visible forms cannot submit.
+
 Selecting a web Quest requires Quest-level `curriculumReview: approved` and `technicalReview: approved` in the publication manifest in addition to the existing Journey/Course reviews. Interactive selection additionally requires a dated exact-build evidence record for the integrated published route; the development workspace does not grant publication approval. The R07 Apply gate and later R08 content review must both pass before any interactive Quest can be selected. Existing JavaScript snapshots and their manifest entries remain unchanged.
 
 Interactive publication is currently blocked in the catalog loader even if a manifest contains review fields and an evidence reference. The reference is metadata, not proof of a completed review. A later reviewed R08 change must provide the original content snapshot and exact-build published-route verification, then explicitly revise this gate. Until then, interactive source and local Check remain development capabilities only.

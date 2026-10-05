@@ -2,13 +2,13 @@
 
 ## 1. Bounded semantic Check contract
 
-- [ ] 1.1 Add an allowlisted data-only semantic HTML case to backend authoring validation with exact ID, tag, safe attributes, and strict bounds; verify normal, malformed, unsafe URL, executable-test, and duplicate-case fixtures in focused backend tests.
-- [ ] 1.2 Add the matching deterministic inert parser check in the frontend while retaining existing static cases; verify correct tag/attribute/label relationships, alternative valid markup, failure feedback, cancellation, source retention, and active-content denial in focused frontend tests.
-- [ ] 1.3 Regenerate the OpenAPI frontend client and document the author-facing semantic case contract; verify `pnpm api:check`, `pnpm --dir backend curriculum:validate`, and representative compatible JavaScript/static fixtures.
+- [x] 1.1 Add an allowlisted data-only semantic HTML case to backend authoring validation with exact ID, tag, safe attributes, and strict bounds; verify normal, malformed, unsafe URL, executable-test, and duplicate-case fixtures in focused backend tests.
+- [x] 1.2 Add the matching deterministic inert parser check in the frontend while retaining existing static cases; verify correct tag/attribute/label relationships, alternative valid markup, failure feedback, cancellation, source retention, and active-content denial in focused frontend tests.
+- [x] 1.3 Regenerate the OpenAPI frontend client and document the author-facing semantic case contract; verify `pnpm api:check`, `pnpm --dir backend curriculum:validate`, and representative compatible JavaScript/static fixtures.
 
 ## 2. Inert HTML teaching preview
 
-- [ ] 2.1 Extend only the static sanitizer's safe form-control display subset and keep destinations/actions inert; verify safe label/input/fieldset rendering and hostile form, link, script, resource, and URL filtering in unit tests.
+- [x] 2.1 Extend only the static sanitizer's safe form-control display subset and keep destinations/actions inert; verify safe label/input/fieldset rendering and hostile form, link, script, resource, and URL filtering in unit tests.
 - [ ] 2.2 Probe the actual separate-origin preview in Chromium, Firefox, and WebKit for no form submission, navigation, network/storage/application access, script execution, or forged message acceptance; retain any failed result and verify current static preview and source recovery.
 - [ ] 2.3 Document the inert link/form behavior and exact tested origins/build in the preview and course authoring guides; verify the published lesson states do not imply that links or submissions execute inside Preview.
 

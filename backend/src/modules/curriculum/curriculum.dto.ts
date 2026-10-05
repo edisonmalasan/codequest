@@ -102,6 +102,15 @@ export class QuestInteractiveEventDto {
   @ApiPropertyOptional({ type: String }) value?: string;
 }
 
+export class QuestSemanticAttributeDto {
+  @ApiProperty({
+    type: String,
+    enum: ['alt', 'aria-label', 'for', 'href', 'name', 'type'],
+  })
+  name!: 'alt' | 'aria-label' | 'for' | 'href' | 'name' | 'type';
+  @ApiProperty({ type: String }) value!: string;
+}
+
 export class QuestCaseDto {
   @ApiProperty({ type: String }) id!: string;
   @ApiProperty({ type: String, enum: ['normal', 'boundary'] }) category!:
@@ -112,6 +121,7 @@ export class QuestCaseDto {
       'console',
       'function',
       'html-element',
+      'html-semantic',
       'css-declaration',
       'interactive-text',
     ],
@@ -120,6 +130,7 @@ export class QuestCaseDto {
     | 'console'
     | 'function'
     | 'html-element'
+    | 'html-semantic'
     | 'css-declaration'
     | 'interactive-text';
   @ApiProperty({ type: String }) feedback!: string;
@@ -129,6 +140,9 @@ export class QuestCaseDto {
   @ApiPropertyOptional({ type: Object }) expected?: unknown;
   @ApiPropertyOptional({ type: String }) selector?: string;
   @ApiPropertyOptional({ type: String }) expectedText?: string;
+  @ApiPropertyOptional({ type: String }) tag?: string;
+  @ApiPropertyOptional({ type: [QuestSemanticAttributeDto] })
+  expectedAttributes?: QuestSemanticAttributeDto[];
   @ApiPropertyOptional({
     type: String,
     enum: ['color', 'background-color', 'display', 'font-size'],

@@ -177,6 +177,58 @@ const caseBase = z.object({
   feedback: text,
 });
 const jsonValue: z.ZodType<unknown> = z.json();
+const semanticTag = z.enum([
+  'a',
+  'button',
+  'em',
+  'figcaption',
+  'figure',
+  'fieldset',
+  'footer',
+  'form',
+  'h1',
+  'h2',
+  'h3',
+  'header',
+  'img',
+  'input',
+  'label',
+  'legend',
+  'li',
+  'main',
+  'nav',
+  'ol',
+  'p',
+  'section',
+  'strong',
+  'table',
+  'td',
+  'th',
+  'tr',
+  'ul',
+]);
+const semanticAttribute = z
+  .object({
+    name: z.enum(['alt', 'aria-label', 'for', 'href', 'name', 'type']),
+    value: z.string().min(1).max(128),
+  })
+  .strict()
+  .superRefine((attribute, context) => {
+    if (
+      (attribute.name === 'href' &&
+        !/^#[a-z][a-z0-9-]{0,31}$/.test(attribute.value)) ||
+      (attribute.name === 'for' &&
+        !/^[a-z][a-z0-9-]{0,31}$/.test(attribute.value)) ||
+      (attribute.name === 'name' &&
+        !/^[a-z][a-z0-9-]{0,31}$/.test(attribute.value)) ||
+      (attribute.name === 'type' &&
+        !['text', 'email', 'search'].includes(attribute.value))
+    )
+      context.addIssue({
+        code: 'custom',
+        message: 'Unsafe semantic attribute value',
+      });
+  });
 export const caseSchema = z.discriminatedUnion('kind', [
   caseBase
     .extend({
@@ -199,6 +251,42 @@ export const caseSchema = z.discriminatedUnion('kind', [
       expectedText: z.string().max(512),
     })
     .strict(),
+  caseBase
+    .extend({
+      kind: z.literal('html-semantic'),
+      selector: z.string().regex(/^#[a-z][a-z0-9-]{0,31}$/),
+      tag: semanticTag,
+      expectedText: z.string().max(512).optional(),
+      expectedAttributes: z.array(semanticAttribute).max(4),
+    })
+    .strict()
+    .superRefine((item, context) => {
+      if (
+        new Set(item.expectedAttributes.map((attribute) => attribute.name))
+          .size !== item.expectedAttributes.length
+      )
+        context.addIssue({
+          code: 'custom',
+          message: 'Duplicate semantic attribute',
+        });
+      const allowed: Record<string, string> = {
+        alt: 'img',
+        for: 'label',
+        href: 'a',
+        name: 'input',
+        type: 'input',
+      };
+      if (
+        item.expectedAttributes.some(
+          (attribute) =>
+            allowed[attribute.name] && allowed[attribute.name] !== item.tag,
+        )
+      )
+        context.addIssue({
+          code: 'custom',
+          message: 'Semantic attribute does not match tag',
+        });
+    }),
   caseBase
     .extend({
       kind: z.literal('css-declaration'),

@@ -30,6 +30,58 @@ function exactKeys(
   );
 }
 
+const semanticTags = new Set([
+  'a',
+  'button',
+  'em',
+  'figcaption',
+  'figure',
+  'fieldset',
+  'footer',
+  'form',
+  'h1',
+  'h2',
+  'h3',
+  'header',
+  'img',
+  'input',
+  'label',
+  'legend',
+  'li',
+  'main',
+  'nav',
+  'ol',
+  'p',
+  'section',
+  'strong',
+  'table',
+  'td',
+  'th',
+  'tr',
+  'ul',
+]);
+
+function validSemanticAttribute(value: unknown, tag: string): boolean {
+  if (
+    !record(value) ||
+    !exactKeys(value, ['name', 'value']) ||
+    typeof value.name !== 'string' ||
+    typeof value.value !== 'string' ||
+    !value.value ||
+    utf8Bytes(value.value) > 128
+  )
+    return false;
+  if (value.name === 'href')
+    return tag === 'a' && /^#[a-z][a-z0-9-]{0,31}$/.test(value.value);
+  if (value.name === 'for')
+    return tag === 'label' && /^[a-z][a-z0-9-]{0,31}$/.test(value.value);
+  if (value.name === 'name')
+    return tag === 'input' && /^[a-z][a-z0-9-]{0,31}$/.test(value.value);
+  if (value.name === 'type')
+    return tag === 'input' && ['text', 'email', 'search'].includes(value.value);
+  return value.name === 'alt' ? tag === 'img' : value.name === 'aria-label';
+}
+
 export function isJsonValue(
   value: unknown,
   seen = new Set<object>(),
@@ -191,6 +243,48 @@ function validateDefinition(value: unknown): value is ValidationDefinition {
         !/^#[a-z][a-z0-9-]{0,31}$/.test(item.selector) ||
         typeof item.expectedText !== 'string' ||
         utf8Bytes(item.expectedText) > 512
+      )
+        return false;
+    } else if (item.mode === 'html-semantic') {
+      const tag = item.tag;
+      if (
+        !exactKeys(
+          item,
+          item.expectedText === undefined
+            ? [
+                'id',
+                'label',
+                'feedback',
+                'mode',
+                'selector',
+                'tag',
+                'expectedAttributes',
+              ]
+            : [
+                'id',
+                'label',
+                'feedback',
+                'mode',
+                'selector',
+                'tag',
+                'expectedText',
+                'expectedAttributes',
+              ],
+        ) ||
+        typeof item.selector !== 'string' ||
+        !/^#[a-z][a-z0-9-]{0,31}$/.test(item.selector) ||
+        typeof tag !== 'string' ||
+        !semanticTags.has(tag) ||
+        (item.expectedText !== undefined &&
+          (typeof item.expectedText !== 'string' ||
+            utf8Bytes(item.expectedText) > 512)) ||
+        !Array.isArray(item.expectedAttributes) ||
+        item.expectedAttributes.length > 4 ||
+        !item.expectedAttributes.every((attribute) =>
+          validSemanticAttribute(attribute, tag),
+        ) ||
+        new Set(item.expectedAttributes.map((attribute) => attribute.name))
+          .size !== item.expectedAttributes.length
       )
         return false;
     } else if (item.mode === 'css-declaration') {

@@ -104,4 +104,31 @@ describe('published quest validation mapping', () => {
       ],
     });
   });
+
+  it('maps a published semantic case without treating it as executable test code', () => {
+    expect(
+      questValidationDefinition({
+        cases: [
+          {
+            id: 'label',
+            category: 'normal',
+            kind: 'html-semantic',
+            feedback: 'Connect the label.',
+            selector: '#search-label',
+            tag: 'label',
+            expectedText: 'Search',
+            expectedAttributes: [{ name: 'for', value: 'search-field' }],
+          },
+        ],
+      }),
+    ).toMatchObject({
+      cases: [
+        {
+          mode: 'html-semantic',
+          tag: 'label',
+          expectedAttributes: [{ name: 'for', value: 'search-field' }],
+        },
+      ],
+    });
+  });
 });

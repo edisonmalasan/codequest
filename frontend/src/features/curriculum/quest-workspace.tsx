@@ -79,6 +79,27 @@ export function questValidationDefinition(
         selector: item.selector,
         expectedText: item.expectedText,
       });
+    } else if (item.kind === 'html-semantic') {
+      if (
+        typeof item.selector !== 'string' ||
+        typeof item.tag !== 'string' ||
+        !Array.isArray(item.expectedAttributes) ||
+        (item.expectedText !== undefined &&
+          typeof item.expectedText !== 'string')
+      )
+        return undefined;
+      cases.push({
+        id: item.id,
+        label: item.id,
+        feedback: item.feedback,
+        mode: 'html-semantic',
+        selector: item.selector,
+        tag: item.tag,
+        ...(item.expectedText === undefined
+          ? {}
+          : { expectedText: item.expectedText }),
+        expectedAttributes: item.expectedAttributes,
+      });
     } else if (item.kind === 'css-declaration') {
       if (
         typeof item.selector !== 'string' ||
