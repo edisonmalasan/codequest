@@ -10,6 +10,8 @@ Status snapshot: 2026-10-05. Update this section when the phase or OpenSpec stag
 
 **R07 archived (2026-10-05):** [Published Quest workflow integration](../openspec/changes/archive/2026-10-05-integrate-published-quest-workflow/proposal.md) implements reviewed exercise descriptors, reusable multi-file workspace integration, local checks, explicit backend submission, and navigation in Apply [PR #216](https://github.com/edisonmalasan/codequest/pull/216); canonical spec Sync [PR #217](https://github.com/edisonmalasan/codequest/pull/217) merged after required CI. Its selected-Quest exact-build interactive publication gate belongs to R08 under the approved boundary below. No new course or interactive Quest is published by R07.
 
+**R08 first Course proposal:** [Original HTML Foundations](../openspec/changes/add-original-html-course/proposal.md) scopes a complete four-chapter, twelve-Quest static web Course and the bounded semantic Check/inert preview behavior needed to teach it. This proposal does not publish content. Later CSS, JavaScript quality, and interactive browser courses remain separate R08 work; the selected interactive Quest gate below remains open.
+
 | Item | Current status |
 | --- | --- |
 | Local developer environment | [Scoped frontend/backend setup](../openspec/changes/archive/2026-10-01-scoped-local-environment/proposal.md) implemented, synced, and archived; root `pnpm dev` and loopback origin isolation verified with synthetic local configuration. Beta release gates remain open. |
