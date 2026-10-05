@@ -49,7 +49,10 @@ export function createIframeBootstrapChannel(
     settled = true;
     rejectReady?.(new Error('Isolated runtime unavailable'));
   };
-  const readyTimer = window.setTimeout(fail, EXECUTION_LIMITS.recoveryMs);
+  const readyTimer = window.setTimeout(
+    fail,
+    EXECUTION_LIMITS.bootstrapDeadlineMs,
+  );
 
   const onWindowMessage = (event: MessageEvent<unknown>): void => {
     if (
