@@ -27,6 +27,6 @@
 ## 5. Reviewed publication and end-to-end course
 
 - [x] 5.1 Record dated curriculum and technical review for all exact content/assessment versions, original writing, accessibility, safe static behavior, candidate checks, and open evidence; verify every selected Quest and chapter is reviewed and the manifest rejects incomplete or unsafe Course selection.
-- [ ] 5.2 Select only the complete HTML Course in `publication.yaml` and preserve all prior JavaScript selections/versions; verify catalog API and generated frontend routes show the whole Course in order while draft or invalid variants stay hidden.
-- [ ] 5.3 Exercise catalog → Course map → lesson → edit → Preview → Check → explicit authenticated Submit → backend accepted progress/XP/unlock → Next → revisit against synthetic isolated state; verify Chromium, Firefox, WebKit, and mobile browser coverage plus refresh/replay/source recovery.
+- [x] 5.2 Select only the complete HTML Course in `publication.yaml` and preserve all prior JavaScript selections/versions; verify catalog API and generated frontend routes show the whole Course in order while draft or invalid variants stay hidden.
+- [x] 5.3 Exercise catalog → Course map → lesson → edit → Preview → Check → explicit authenticated Submit → backend accepted progress/XP/unlock → Next → revisit against synthetic isolated state; verify Chromium, Firefox, WebKit, and mobile browser coverage plus refresh/replay/source recovery.
 - [ ] 5.4 Run `pnpm --dir backend curriculum:validate`, `pnpm api:check`, `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, focused browser probes, and strict OpenSpec validation; document exact commit/build, pass/fail/untested evidence and keep the separate interactive publication and Phase 38 gates open.

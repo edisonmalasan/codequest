@@ -45,7 +45,13 @@ The lesson and authoring guide state that Preview displays links and form contro
 | Reference, alternative and deliberate-defect candidates | Pass, local Chromium | 36 browser Check outcomes above; no account writes |
 | Accessibility and static preview | Local technical pass | Semantic/text review, three-engine sink/image probes passed; physical AT remains a later release gate |
 | Publication manifest | Pass, local catalog | Exact 12 snapshots selected; backend test confirms unchanged JavaScript inventory and rejects partial/unreviewed selection |
-| Integrated account flow | Open | Catalog through Next, accepted Submit, progress/XP/unlock, refresh/replay and source recovery |
+| Integrated account flow | Pass, synthetic four-browser CI | Catalog through Next, accepted Submit, progress/XP/unlock, refresh/replay and source recovery; real-provider Auth remains open |
 | Founder product acceptance | Open | Exact-build founder review; technical/CI passage is not acceptance |
+
+## Apply verification — 2026-10-06
+
+The selected application and content changes are in commit `afe7dec`; the catalog-to-Next browser flow is in test commit `5e81c8e`, with subsequent route-stability test corrections through `40a4978`. These are development builds, not a selected beta release candidate. The first PR browser run exposed a test assumption that counted only links, while locked exercises are list items. CI run `37342728572` on `e96df1e` passed all required checks, including twelve authenticated learning cases across Chromium, Firefox, WebKit, and mobile Chromium, after that assertion was corrected. CI run `37346782700` on `7a2778c` passed the expanded HTML Course path in all four browser projects but failed an existing guest-flow editor assertion while the revisited lesson was still loading in WebKit. The later assertion now waits for that actual hydration; the final PR check remains open.
+
+Local checks on the selected content passed: `pnpm --dir backend curriculum:validate`, `pnpm api:check`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, and strict OpenSpec validation. `pnpm test --concurrency=1` passed 217 backend tests, 460 frontend tests, and seven backend script checks; the unrestricted parallel run had local resource-pressure timeouts. The public curriculum browser suite passed its 26 unaffected cases plus the two corrected catalog cases on a focused rerun. The exact pushed preview suite passed all twelve Chromium, Firefox, and WebKit cases for safe rendering, sink denial, source recovery, and Worker recovery. The 36 authored reference, alternative, and defect Check candidates passed in the synthetic authoring browser. None of these results substitutes for real-provider Auth, physical assistive-technology review, hosted release evidence, or founder acceptance.
 
 The R07 interactive publication guard stays closed. R04 real-provider, Phase 38 hosted/physical, and private-beta readiness gates remain separate and open.
