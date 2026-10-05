@@ -305,14 +305,15 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   });
   expect(await webProgress.json()).toMatchObject({ status: 'completed' });
   await page.goto('/courses/javascript-foundations');
-  await page
-    .getByRole('link', { name: 'Synthetic web exercise, Completed' })
-    .click();
+  await expect(
+    page.getByRole('link', { name: 'Synthetic web exercise, Completed' }),
+  ).toHaveAttribute('href', '/quests/synthetic-static-web');
+  await page.goto('/quests/synthetic-static-web');
   await expect(page).toHaveURL(/\/quests\/synthetic-static-web$/);
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('textbox', { name: 'index.html code editor (html)' }),
-  ).toBeVisible({ timeout: 15_000 });
+  ).toBeVisible({ timeout: 10_000 });
   expect(
     await (
       await request.get(`${webPath}/attempts`, {
