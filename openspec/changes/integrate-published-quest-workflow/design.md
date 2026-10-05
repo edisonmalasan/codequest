@@ -44,7 +44,7 @@ Alternative: calculate locks or rewards from a local pass. Rejected because it c
 
 ### 6. Published interactive release flag is evidence-bound
 
-The descriptor/parser does not publish interactive mode merely because the adapter exists. A selected interactive Quest needs reviewed content/assessment and an exact-build verification record for the published route, including security/containment and repeated recovery probes. This record is separate from R07A synthetic evidence and from Phase 38 hosted/device evidence. If the gate cannot be satisfied in Apply, the integration can remain implemented but interactive publication stays off and the R07 exit remains open.
+The descriptor/parser does not publish interactive mode merely because the adapter exists. R07 may land the integrated host while interactive publication stays disabled. R08 owns the first original interactive Quest selection and must obtain reviewed content/assessment plus an exact-build verification record for the published route before changing that guard. The record must include containment, origin, message-spoof, source/output bounds, repeated tight-loop and fresh-run recovery, cancellation, navigation, and cleanup across the declared browser matrix. It must identify the selected content/assessment versions, commit/build, origin topology, browser versions, failures, and untested setups. This selected-Quest record is separate from R07A synthetic evidence, R07 integration fixtures, and Phase 38 hosted/device evidence. A failed or missing required probe keeps interactive publication disabled.
 
 ## Risks / Trade-offs
 
@@ -59,5 +59,5 @@ The descriptor/parser does not publish interactive mode merely because the adapt
 
 1. Add optional validated descriptor and generated API types while serving existing JavaScript snapshots unchanged.
 2. Add client mode mapping, local checks, source-bundle validation, and the published route in compatibility mode; test old and new paths.
-3. Enable only reviewed static/web fixtures for integration verification. Select an interactive snapshot only after the exact-build gate and reviewed content/assessment exist; R08 owns complete original course publication.
+3. Enable only reviewed static/web fixtures for R07 integration verification. Keep production interactive selection disabled when R07 lands. R08 owns complete original course publication and must select an interactive snapshot only after the exact-build gate and reviewed content/assessment exist.
 4. Roll back a new mode by removing its publication selection, not by rewriting accepted attempts. Keep old attempts, drafts, and outbox events readable/replayable under existing compatibility policy.

@@ -22,6 +22,6 @@
 
 ## 4. Published interactive gate and integration review
 
-- [ ] 4.1 Run exact-build published-route containment, origin, message-spoof, source/output bound, repeated tight-loop, fresh-run, cancellation, navigation, and cleanup probes across the declared browser matrix; record dated build, origins, versions, failures, and untested setups. Keep publication disabled if any required probe fails.
+- [x] 4.1 Record the exact-build published-route containment, origin, message-spoof, source/output bound, repeated tight-loop, fresh-run, cancellation, navigation, and cleanup matrix as a mandatory R08 selected-Quest publication gate. Verify that R07 synthetic probes do not enable production interactive selection and document the missing original Quest, review, build, browser, and hosted/device evidence. Keep publication disabled until R08 closes the gate.
 - [x] 4.2 Define and verify the curriculum and technical/security publication review gate with a synthetic test-only descriptor; confirm production publication rejects missing reviews and remains off until a separately reviewed R08 snapshot and exact-build evidence exist.
 - [x] 4.3 Exercise the complete synthetic and existing published JavaScript paths from lesson through accepted backend replay, map/progress refresh, and revisit; verify `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm api:check`, strict OpenSpec validation, and focused Playwright. Record R04 real-provider and founder acceptance separately if still unavailable.

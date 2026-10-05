@@ -23,10 +23,19 @@ Latest implementation commit: `0c3b95e` on `feat/published-quest-workflow`.
 
 The browser fixtures use the local development application origin `http://127.0.0.1:3100`, runtime origin `http://localhost:3100`, and preview origin `http://localhost:3101`. The Quest API is mocked for the static and interactive route probes. Browser engines are Playwright 1.63.0 Chromium, Firefox, and WebKit; these results do not establish physical-device or hosted behavior.
 
-## Open gates
+## R07 completion and R08 publication handoff
 
-- **Task 4.1:** No original R08 interactive Quest is selected in the production curriculum. The exact-build published-route containment and recovery matrix cannot be closed by a mocked Quest response. The current local 100-cycle probe passed, but the earlier worker exit remains unexplained. Production interactive publication remains rejected by the curriculum loader.
-- **Task 4.3:** Complete on `0c3b95e` with CI run `37252046312`. The browser used the compiled test-only catalog server and isolated PostgreSQL; it did not select or publish a web Quest in the production catalog. R04 real-provider verification and founder acceptance remain separate. The local root test timeouts remain recorded above. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it.
-- R04 real-provider verification and founder acceptance remain separate, open records.
+Task 4.3 completed on `0c3b95e` with CI run `37252046312`. The browser used the compiled test-only catalog server and isolated PostgreSQL; it did not select or publish a web Quest in the production catalog. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it. R04 real-provider verification and founder acceptance remain separate, open records.
+
+The founder approved moving selected-Quest exact-build evidence to R08 on 2026-10-05. Task 4.1 records that mandatory gate; it does not claim the following evidence has passed. The production curriculum loader still rejects interactive selection even when synthetic review fields are present. R08 must retain failures and untested setups rather than infer success from R07/R07A fixtures.
+
+| R08 publication requirement | Current status / required record |
+| --- | --- |
+| Original Quest and assessment | **Open.** Select complete original interactive content and assessment versions, with dated curriculum and technical/security reviewers. No R08 interactive Quest is selected. |
+| Exact build and origins | **Open.** Record the selected commit/build, application, runner, and preview origins, CSP/sandbox configuration, browser versions, and supported setup matrix. R07 probes used local development origins and a mocked Quest response. |
+| Containment and message correlation | **Open on selected build.** Probe runner/preview isolation, allowlisted assets, opaque display child, network/storage/navigation denial, forged and stale messages, and exact window/origin/nonce/generation correlation. |
+| Source, output, and mutation bounds | **Open on selected build.** Probe oversized source/output, unsupported DOM APIs, malformed packets, event sequence, and mutation flood without partial display updates or source loss. |
+| Repeated recovery and lifecycle | **Open on selected build.** Probe repeated source and handler tight loops, bounded termination, fresh finite Run/Check, cancellation, navigation, unmount, and cleanup across Chromium, Firefox, WebKit, and the declared mobile setup. The earlier local worker exit remains unexplained. |
+| Review and change control | **Open.** Record each pass/fail/untested result with date and exact versions. Re-run affected probes after adapter, host, origin, policy, or snapshot changes before publication. |
 
 No public interactive content, hosted release evidence, or founder acceptance is claimed by these local results.
