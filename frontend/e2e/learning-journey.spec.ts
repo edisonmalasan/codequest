@@ -226,6 +226,31 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
       expect.objectContaining({ accepted: true, source: q02.reference }),
     ],
   });
+  await page.goto('/courses/javascript-foundations');
+  const completedQuest = page.getByRole('link', {
+    name: 'Name the values, Completed',
+  });
+  await expect(completedQuest).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Update supplies, Available' }),
+  ).toBeVisible();
+  await completedQuest.click();
+  await expect(page).toHaveURL(/\/quests\/name-the-values$/);
+  await showLearningPanel(page, 'Code');
+  await expect(
+    page.getByRole('region', { name: 'Quest workspace' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Exercise sequence' }).getByRole(
+      'link',
+      { name: 'Next: Update supplies' },
+    ),
+  ).toBeVisible();
+  const revisitedHistory = await request.get(
+    `${apiOrigin}/api/v1/quests/${q02.slug}/attempts`,
+    { headers: { Authorization: submittedAuthorization } },
+  );
+  expect(await revisitedHistory.json()).toMatchObject({ attemptCount: 1 });
   await page.goto('/account');
   await expect(page.getByText('Q01: provisional Check saved')).toBeVisible();
 });
