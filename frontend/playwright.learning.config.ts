@@ -25,7 +25,7 @@ export default defineConfig({
       timeout: 30_000,
     },
     {
-      command: 'pnpm exec tsx scripts/learning-web-server.ts',
+      command: 'pnpm build && node dist/test/learning-web-server.js',
       cwd: '../backend',
       url: `${apiOrigin}/api/v1/journeys`,
       reuseExistingServer: false,

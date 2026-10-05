@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { resolve } from 'node:path';
-import { createApplication } from '../src/application';
-import { loadBackendConfig } from '../src/infrastructure/config/backend-config';
+import { createApplication } from '../application';
+import { loadBackendConfig } from '../infrastructure/config/backend-config';
 import {
   loadCurriculumCatalog,
   type CurriculumCatalog,
   type PublishedQuest,
-} from '../src/modules/curriculum/content/curriculum-catalog';
+} from '../modules/curriculum/content/curriculum-catalog';
 
 function syntheticCatalog(): CurriculumCatalog {
   const catalog = loadCurriculumCatalog(resolve(process.cwd(), 'content'));
