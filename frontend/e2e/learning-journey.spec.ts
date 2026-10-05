@@ -344,7 +344,7 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
     page.getByRole('heading', { name: 'Your account' }),
   ).toBeVisible();
   await page.waitForURL(/\/account$/);
-  await page.waitForLoadState('load');
+  await page.waitForLoadState('networkidle');
 
   await page.goto('/courses', {
     waitUntil: 'domcontentloaded',
