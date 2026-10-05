@@ -1,6 +1,6 @@
 # R07 local verification — 2026-10-05
 
-Latest implementation commit: `75b8ae9` on `feat/published-quest-workflow`.
+Latest implementation commit: `bae3e21` on `feat/published-quest-workflow`.
 
 ## Confirmed on this implementation
 
@@ -17,13 +17,14 @@ Latest implementation commit: `75b8ae9` on `feat/published-quest-workflow`.
 | `100 hostile loops each allow a fresh finite session`, Chromium | Passed on `8996a06` in 5.0 minutes. An earlier run on `5a9cdc6` ended with a Playwright worker exit (`4294967295`); the cause of that exit was not established. |
 | `pnpm test` | Failed on `5a9cdc6` with six and on `8996a06` with eight backend HTTP foundation cases reaching their 5-second timeout. A sequential Turbo retry on `8996a06` still timed out five of those cases. The same 12-case file and complete backend suite passed alone; the frontend suite passed separately after `8996a06`. |
 | GitHub CI run `37226058401` for `75b8ae9` | Passed: database check/drift/migration, API contract, curriculum validation, lint, typecheck, `pnpm test`, production build and performance budget, home/PWA/performance/curriculum/analytics/learning/accessibility browser checks. |
+| GitHub CI run `37250044616` for `bae3e21` | Passed all required checks, including isolated PostgreSQL learning E2E. That flow now verifies authenticated Q02 submission, refreshed course map showing Q02 completed and Q03 available, reopening Q02, Next navigation, and unchanged attempt count. |
 
 The browser fixtures use the local development application origin `http://127.0.0.1:3100`, runtime origin `http://localhost:3100`, and preview origin `http://localhost:3101`. The Quest API is mocked for the static and interactive route probes. Browser engines are Playwright 1.63.0 Chromium, Firefox, and WebKit; these results do not establish physical-device or hosted behavior.
 
 ## Open gates
 
 - **Task 4.1:** No original R08 interactive Quest is selected in the production curriculum. The exact-build published-route containment and recovery matrix cannot be closed by a mocked Quest response. The current local 100-cycle probe passed, but the earlier worker exit remains unexplained. Production interactive publication remains rejected by the curriculum loader.
-- **Task 4.3:** CI ran the existing published JavaScript lesson-to-backend account flow with an isolated PostgreSQL service. The complete synthetic web lesson-to-accepted-backend replay, map refresh, and revisit sequence has not been demonstrated as one browser flow; no static or interactive web Quest is selected in the production catalog. Owner-bound multi-file replay, source matching, XP idempotency, and progress/unlock behavior passed in isolated PGlite backend tests. The local root test timeouts remain recorded above. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it.
+- **Task 4.3:** CI ran the existing published JavaScript lesson-to-backend account flow with an isolated PostgreSQL service and confirmed the refreshed map and completed-lesson revisit on `bae3e21`. The complete synthetic web lesson-to-accepted-backend replay, map refresh, and revisit sequence has not been demonstrated as one browser flow; no static or interactive web Quest is selected in the production catalog. Owner-bound multi-file replay, source matching, XP idempotency, and progress/unlock behavior passed in isolated PGlite backend tests. The local root test timeouts remain recorded above. The configured local backend database URL points to a remote host, so synthetic-account Playwright writes were not run against it.
 - R04 real-provider verification and founder acceptance remain separate, open records.
 
 No public interactive content, hosted release evidence, or founder acceptance is claimed by these local results.
