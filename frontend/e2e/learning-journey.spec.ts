@@ -241,10 +241,9 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Exercise sequence' }).getByRole(
-      'link',
-      { name: 'Next: Update supplies' },
-    ),
+    page
+      .getByRole('navigation', { name: 'Exercise sequence' })
+      .getByRole('link', { name: 'Next: Update supplies' }),
   ).toBeVisible();
   const revisitedHistory = await request.get(
     `${apiOrigin}/api/v1/quests/${q02.slug}/attempts`,
