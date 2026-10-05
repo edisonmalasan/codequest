@@ -144,7 +144,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   page,
   request,
 }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const prematureWrites: string[] = [];
   let submittedAuthorization: string | undefined;
   page.on('request', (request) => {
@@ -250,6 +250,76 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
     { headers: { Authorization: submittedAuthorization } },
   );
   expect(await revisitedHistory.json()).toMatchObject({ attemptCount: 1 });
+
+  await page.goto('/quests/synthetic-static-web');
+  await showLearningPanel(page, 'Code');
+  await expect(
+    page.getByRole('textbox', { name: 'index.html code editor (html)' }),
+  ).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'style.css' })).toBeVisible();
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
+  const webPath = `${apiOrigin}/api/v1/quests/synthetic-static-web`;
+  const webHistory = await request.get(`${webPath}/attempts`, {
+    headers: { Authorization: submittedAuthorization },
+  });
+  expect(webHistory.status()).toBe(200);
+  const savedWeb = await webHistory.json();
+  expect(savedWeb).toMatchObject({
+    attemptCount: 1,
+    attempts: [expect.objectContaining({ accepted: true, questId: 'WEB01' })],
+  });
+  const firstWebAttempt = savedWeb.attempts[0];
+  expect(JSON.parse(firstWebAttempt.source)).toMatchObject({
+    schemaVersion: 1,
+    questId: 'WEB01',
+    mode: 'static-web',
+    files: [
+      { id: 'page', source: '<h1 id="answer">Hello</h1>' },
+      { id: 'style', source: 'h1 { color: blue; }' },
+    ],
+  });
+  const webReplay = await request.post(
+    `${apiOrigin}/api/v1/learning-sync/WEB01`,
+    {
+      headers: { Authorization: submittedAuthorization },
+      data: {
+        clientEventId: firstWebAttempt.clientEventId,
+        contentVersion: firstWebAttempt.contentVersion,
+        assessmentVersion: firstWebAttempt.assessmentVersion,
+        source: firstWebAttempt.source,
+        report: firstWebAttempt.report,
+      },
+    },
+  );
+  expect(webReplay.status()).toBe(201);
+  expect(await webReplay.json()).toMatchObject({
+    id: firstWebAttempt.id,
+    attemptCount: 1,
+  });
+  const webProgress = await request.get(`${webPath}/progress`, {
+    headers: { Authorization: submittedAuthorization },
+  });
+  expect(await webProgress.json()).toMatchObject({ status: 'completed' });
+  await page.goto('/courses/javascript-foundations');
+  await page
+    .getByRole('link', { name: 'Synthetic web exercise, Completed' })
+    .click();
+  await expect(page).toHaveURL(/\/quests\/synthetic-static-web$/);
+  await showLearningPanel(page, 'Code');
+  await expect(
+    page.getByRole('textbox', { name: 'index.html code editor (html)' }),
+  ).toBeVisible();
+  expect(
+    await (
+      await request.get(`${webPath}/attempts`, {
+        headers: { Authorization: submittedAuthorization },
+      })
+    ).json(),
+  ).toMatchObject({ attemptCount: 1 });
   await page.goto('/account');
   await expect(page.getByText('Q01: provisional Check saved')).toBeVisible();
 });

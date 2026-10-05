@@ -25,7 +25,7 @@ export default defineConfig({
       timeout: 30_000,
     },
     {
-      command: 'pnpm start',
+      command: 'pnpm exec tsx scripts/learning-web-server.ts',
       cwd: '../backend',
       url: `${apiOrigin}/api/v1/journeys`,
       reuseExistingServer: false,
@@ -36,8 +36,8 @@ export default defineConfig({
         PORT: '3001',
         RATE_LIMIT_MAX: '1000',
         CORS_ORIGINS: appOrigin,
-        DATABASE_URL:
-          process.env.DATABASE_TEST_URL ?? process.env.DATABASE_URL ?? '',
+        DATABASE_URL: process.env.DATABASE_TEST_URL ?? '',
+        DATABASE_TEST_URL: process.env.DATABASE_TEST_URL ?? '',
         SUPABASE_AUTH_ISSUER: `${authOrigin}/auth/v1`,
         SUPABASE_AUTH_AUDIENCE: 'authenticated',
         SUPABASE_AUTH_JWKS_URL: `${authOrigin}/auth/v1/.well-known/jwks.json`,
