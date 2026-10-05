@@ -343,8 +343,12 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await expect(
     page.getByRole('heading', { name: 'Your account' }),
   ).toBeVisible();
+  await page.waitForURL(/\/account$/);
+  await page.waitForLoadState('load');
 
-  await page.goto('/courses/html-foundations');
+  await page.goto('/courses/html-foundations', {
+    waitUntil: 'domcontentloaded',
+  });
   await expect(
     page.getByRole('heading', { name: 'HTML Foundations' }),
   ).toBeVisible();
@@ -352,7 +356,9 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await expect(
     page.getByRole('heading', { name: 'Forms and field guide' }),
   ).toBeVisible();
-  const orderedLessons = await page.locator('main ol ol a').allTextContents();
+  const orderedLessons = await page
+    .locator('main ol ol > li')
+    .allTextContents();
   expect(orderedLessons).toHaveLength(12);
   for (const [index, title] of [
     'First page',
