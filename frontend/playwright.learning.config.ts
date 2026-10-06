@@ -50,6 +50,7 @@ export default defineConfig({
       reuseExistingServer: false,
       timeout: 240_000,
       env: {
+        NODE_ENV: 'test',
         NEXT_PUBLIC_API_URL: apiOrigin,
         NEXT_PUBLIC_SUPABASE_URL: authOrigin,
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
