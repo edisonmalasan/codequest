@@ -349,6 +349,7 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await expect(courseLink).toHaveAttribute('href', '/courses/html-foundations');
   await courseLink.click();
   await expect(page).toHaveURL(/\/courses\/html-foundations$/);
+  await page.reload();
   await expect(
     page.getByRole('heading', { name: 'HTML Foundations' }),
   ).toBeVisible();
