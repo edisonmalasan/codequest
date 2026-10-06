@@ -44,10 +44,11 @@ export default defineConfig({
       },
     },
     {
-      command: 'pnpm exec next dev --hostname 0.0.0.0 --port 3200',
+      command:
+        'pnpm exec next build && pnpm exec next start --hostname 0.0.0.0 --port 3200',
       url: `${appOrigin}/register`,
       reuseExistingServer: false,
-      timeout: 180_000,
+      timeout: 240_000,
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
         NEXT_PUBLIC_SUPABASE_URL: authOrigin,
