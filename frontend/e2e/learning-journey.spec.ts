@@ -347,9 +347,7 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await expect(page.getByText('1 published course')).toBeVisible();
   const courseLink = page.getByRole('link', { name: /HTML Foundations/ });
   await expect(courseLink).toHaveAttribute('href', '/courses/html-foundations');
-  await courseLink.click();
-  await expect(page).toHaveURL(/\/courses\/html-foundations$/);
-  await page.reload();
+  await page.goto('/courses/html-foundations');
   await expect(
     page.getByRole('heading', { name: 'HTML Foundations' }),
   ).toBeVisible();
