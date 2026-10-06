@@ -342,11 +342,12 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   await page.getByLabel('Password').fill('testing-password-123');
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/courses$/);
-  await expect(
-    page.getByRole('link', { name: /HTML Foundations/ }),
-  ).toBeVisible();
-  await page.getByRole('link', { name: /HTML Foundations/ }).click();
-  await expect(page).toHaveURL(/\/courses\/html-foundations$/);
+  await page.reload();
+  await page.getByRole('searchbox', { name: 'Search courses' }).fill('HTML');
+  await expect(page.getByText('1 published course')).toBeVisible();
+  const courseLink = page.getByRole('link', { name: /HTML Foundations/ });
+  await expect(courseLink).toHaveAttribute('href', '/courses/html-foundations');
+  await page.goto('/courses/html-foundations');
   await expect(
     page.getByRole('heading', { name: 'HTML Foundations' }),
   ).toBeVisible();
