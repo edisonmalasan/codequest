@@ -12,6 +12,8 @@ Status snapshot: 2026-10-06. Update this section when the phase or OpenSpec stag
 
 **R08 first Course archived (2026-10-06):** [Original HTML Foundations](../openspec/changes/archive/2026-10-06-add-original-html-course/proposal.md) publishes a complete four-chapter, twelve-Quest static web Course with bounded semantic Check and inert link/form preview. Apply [#220](https://github.com/edisonmalasan/codequest/pull/220) and canonical spec Sync [#221](https://github.com/edisonmalasan/codequest/pull/221) passed required CI. The [content and synthetic integration record](html-foundations-course.md) documents exact versions, checks and remaining limits. Founder acceptance, real-provider Auth, hosted/physical verification and the selected interactive Quest gate remain open; R08 is not complete. Later CSS, JavaScript quality and interactive browser courses remain separate R08 work.
 
+**R08 next Course proposed (2026-10-07):** [Original CSS Foundations](../openspec/changes/add-original-css-course/proposal.md) scopes a complete four-chapter, twelve-Quest static CSS Course, bounded responsive CSS Check, two-file authoring candidates, and explicit preview widths. This is planning only; no CSS Course is selected for publication, and the existing founder, real-provider, interactive, and release gates remain open.
+
 | Item | Current status |
 | --- | --- |
 | Local developer environment | [Scoped frontend/backend setup](../openspec/changes/archive/2026-10-01-scoped-local-environment/proposal.md) implemented, synced, and archived; root `pnpm dev` and loopback origin isolation verified with synthetic local configuration. Beta release gates remain open. |
