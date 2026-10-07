@@ -62,7 +62,13 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    {
+      name: 'webkit',
+      // CI WebKit can lose its network process while Next serves dev chunks.
+      // A retry starts a fresh browser process; persistent product failures still fail.
+      retries: process.env.CI ? 1 : 0,
+      use: { ...devices['Desktop Safari'] },
+    },
     { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
   ],
 });
