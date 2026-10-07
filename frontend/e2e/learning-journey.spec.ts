@@ -766,17 +766,19 @@ test('published CSS Course reaches the final responsive guide with trusted accou
   await expect(finalCss).toContainText('grid-template-columns');
   await page.unroute('**/api/v1/learning-sync/CSS12');
   await page.goto('/account');
-  const retry = page.getByRole('button', { name: 'Retry saved submissions' });
-  if (await retry.isVisible()) await retry.click();
   await expect
-    .poll(async () => {
-      const progress = await request.get(
-        `${apiOrigin}/api/v1/quests/finish-the-field-guide/progress`,
-        own,
-      );
-      return (await progress.json()).status;
-    })
+    .poll(
+      async () => {
+        const progress = await request.get(
+          `${apiOrigin}/api/v1/quests/finish-the-field-guide/progress`,
+          own,
+        );
+        return (await progress.json()).status;
+      },
+      { timeout: 30_000 },
+    )
     .toBe('completed');
+  await expect(page.getByText('CSS12: delivery confirmed')).toBeVisible();
   expect(
     await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
   ).toMatchObject({ totalXp: 120 });
