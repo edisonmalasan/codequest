@@ -1,6 +1,6 @@
 # CSS Foundations content and technical review
 
-Status on 2026-10-07: twelve authored `1.0.0` content / `1.0.0` assessment snapshots have passed local structure, candidate, and Preview review. The complete Course is selected after that review; integrated browser and founder gates remain separate. This is an implementation review, not founder acceptance or verified mastery.
+Status on 2026-10-08: twelve authored `1.0.0` content / `1.0.0` assessment snapshots passed structure, candidate, Preview, and synthetic account-flow review. The complete Course is selected after that review; founder acceptance remains separate. This is an implementation review, not founder acceptance or verified mastery.
 
 | Chapter | Stable Quests | Learning sequence |
 | --- | --- | --- |
@@ -44,9 +44,19 @@ The `content:test` authoring harness reported ordered case IDs and exact `1.0.0/
 | Responsive final-page Preview | Local Chromium pass | CSS12 narrow single track and wide two-track probe on 2026-10-07 |
 | Three-engine static Preview containment | Local pass on `1225666` | 18/18 Chromium, Firefox, and WebKit cases passed: width changes, denied external sinks/script/storage/navigation, forged messages, timeout recovery, and single-frame cleanup |
 | Complete atomic publication | Local pass | All twelve `1.0.0/1.0.0` snapshots selected together; 18 focused catalog tests passed, including incomplete inventory, missing Quest review, and draft Course rejection; existing HTML/JavaScript identities unchanged |
-| Integrated account journey | Open | Catalog to final project, local Check, accepted Submit, trusted progress/XP/unlock, refresh, and pending recovery on desktop/mobile browser projects |
+| Integrated account journey | CI synthetic pass on `e79bede` | Run `37683979437` passed CSS flow on Chromium, Firefox, WebKit, and mobile Chromium: catalog, first and final Quest UI, Preview widths, Check, Submit, progress/XP/unlock, pending replay, map, and saved source after reload. Middle prerequisite completions used authenticated synthetic API reports, as detailed below. |
 | Founder product acceptance | Open | Review the exact merged build in the real application |
 | Real-provider Auth, hosted and physical gates | Open | Separate R04 and Phase 38 evidence; no beta release candidate selected |
+
+## Integrated account verification
+
+The Playwright account journey uses isolated PostgreSQL and synthetic Auth. It searches the catalog, opens the CSS Course, edits and Checks CSS01 through the browser, submits it, then advances CSS02–CSS11 with authenticated synthetic API reports so the final prerequisite is available. It edits, Previews at narrow and wide widths, Checks, and submits CSS12 through the browser. An aborted delivery response exercises device-local pending work and reconnect replay. Backend progress and XP reads, the Course map, and the restored final draft are checked after navigation and reload. The middle Quests are not individually exercised through their UI in this test; their reference, variant, and defect Check outcomes are covered by the separate author-candidate suite. Client reports remain subject to the existing personal-learning acceptance policy and do not establish independent grading.
+
+The first CI attempt, run `37620798969`, found that persisted chapter positions collided when two Courses each used local chapter position 1. Commit `921b46f` materializes Journey-wide positions in the existing database schema, with a focused two-Course regression test. Run `37679805295` passed the account submit but found a test race: automatic reconnect replay removed the manual retry button between the visibility check and click. Commit `17f171e` waits for confirmed replay and backend facts instead. Run `37682225681` confirmed account completion and XP across all browser projects but found a Firefox draft-restore assertion after an immediate revisit and reload. Its trace showed the final edit still unsaved before navigation. Commit `e79bede` requires the editor's durable saved status, then checks restoration before and after reload. The exact-commit [CI run](https://github.com/edisonmalasan/codequest/actions/runs/37683979437) passed the CSS account journey on all four browser projects. The full learning suite recorded 15 passes and one unrelated HTML Course WebKit case that passed on retry after its editor was transiently absent; that flaky result is retained rather than counted as a clean first attempt.
+
+Local `pnpm test --concurrency=1` ran all 223 backend assertions on `921b46f` but exited nonzero because Vitest reported an unhandled worker heartbeat timeout after the assertions. The same commit passed the CI `pnpm test` step. That local result is not recorded as a clean pass.
+
+On `e79bede`, CI passed migration check/drift/migrate, API contract, curriculum validation, lint, typecheck, `pnpm test`, frontend build, performance, PWA, curriculum, analytics, learning, and accessibility checks. Local `pnpm build`, focused backend lint/typecheck and chapter regression, frontend lint/typecheck, API contract, curriculum validation, and strict OpenSpec validation also passed. These are synthetic/local checks, not real-provider Auth, hosted, physical-device, or founder evidence. The full branch diff was reviewed for generated-client drift, selected version identity, chapter persistence, security boundaries, and unrelated scope; no beta release candidate is selected.
 
 Static Preview remains script-disabled, opaque, and on its dedicated origin. CSS Check rejects unsupported CSS and cannot grant account authority. This Course does not select the separate interactive Quest. Phase 38 remains paused and NO GO.
 
