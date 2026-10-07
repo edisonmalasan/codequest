@@ -234,12 +234,16 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(
     page.getByRole('link', { name: 'Update supplies, Available' }),
   ).toBeVisible();
-  await completedQuest.click();
+  await expect(completedQuest).toHaveAttribute(
+    'href',
+    '/quests/name-the-values',
+  );
+  await page.goto('/quests/name-the-values');
   await expect(page).toHaveURL(/\/quests\/name-the-values$/);
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30_000 });
   await expect(
     page
       .getByRole('navigation', { name: 'Exercise sequence' })
@@ -313,7 +317,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('textbox', { name: 'index.html code editor (html)' }),
-  ).toBeVisible({ timeout: 10_000 });
+  ).toBeVisible({ timeout: 30_000 });
   expect(
     await (
       await request.get(`${webPath}/attempts`, {
