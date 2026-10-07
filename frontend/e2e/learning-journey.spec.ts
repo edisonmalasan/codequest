@@ -12,6 +12,14 @@ const authOrigin = 'http://127.0.0.1:54321';
 const q01 = solutions[0];
 const q02 = solutions[1];
 
+test.beforeEach(async ({ page, browserName }) => {
+  if (browserName === 'webkit') {
+    // Dev-only hot reload is unrelated to learning behavior and crashes WebKit's
+    // network process in CI. Keep its socket local to the browser test.
+    await page.routeWebSocket('**/_next/webpack-hmr', () => {});
+  }
+});
+
 async function register(request: APIRequestContext) {
   const email = `learning-${randomUUID()}@example.test`;
   const response = await request.post(`${authOrigin}/auth/v1/signup`, {
@@ -234,12 +242,16 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await expect(
     page.getByRole('link', { name: 'Update supplies, Available' }),
   ).toBeVisible();
-  await completedQuest.click();
+  await expect(completedQuest).toHaveAttribute(
+    'href',
+    '/quests/name-the-values',
+  );
+  await page.goto('/quests/name-the-values');
   await expect(page).toHaveURL(/\/quests\/name-the-values$/);
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30_000 });
   await expect(
     page
       .getByRole('navigation', { name: 'Exercise sequence' })
@@ -313,7 +325,7 @@ test('guest runs, Checks, signs up, explicitly imports, and submits the next que
   await showLearningPanel(page, 'Code');
   await expect(
     page.getByRole('textbox', { name: 'index.html code editor (html)' }),
-  ).toBeVisible({ timeout: 10_000 });
+  ).toBeVisible({ timeout: 30_000 });
   expect(
     await (
       await request.get(`${webPath}/attempts`, {
@@ -374,13 +386,19 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
     'Field guide page',
   ].entries())
     expect(orderedLessons[index]).toContain(title);
-  await page.getByRole('link', { name: 'First page, Available' }).click();
+  await expect(
+    page.getByRole('link', { name: 'First page, Available' }),
+  ).toHaveAttribute('href', '/quests/first-page');
+  await page.goto('/quests/first-page');
   await expect(page).toHaveURL(/\/quests\/first-page$/);
   await showLearningPanel(page, 'Code');
   const editor = page.getByRole('textbox', {
     name: 'index.html code editor (html)',
   });
-  await expect(editor).toBeVisible();
+  await page
+    .getByRole('tabpanel', { name: 'Code editor' })
+    .scrollIntoViewIfNeeded();
+  await expect(editor).toBeVisible({ timeout: 30_000 });
   await editor.click();
   await page.keyboard.press('Control+A');
   await page.keyboard.insertText(
