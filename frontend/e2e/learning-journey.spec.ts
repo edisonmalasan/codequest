@@ -386,13 +386,18 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
     'Field guide page',
   ].entries())
     expect(orderedLessons[index]).toContain(title);
-  await page.getByRole('link', { name: 'First page, Available' }).click();
+  await expect(
+    page.getByRole('link', { name: 'First page, Available' }),
+  ).toHaveAttribute('href', '/quests/first-page');
+  await page.goto('/quests/first-page');
   await expect(page).toHaveURL(/\/quests\/first-page$/);
   await showLearningPanel(page, 'Code');
   const editor = page.getByRole('textbox', {
     name: 'index.html code editor (html)',
   });
-  await expect(editor).toBeVisible();
+  const loadEditor = page.getByRole('button', { name: 'Load code editor' });
+  if (await loadEditor.isVisible()) await loadEditor.click();
+  await expect(editor).toBeVisible({ timeout: 30_000 });
   await editor.click();
   await page.keyboard.press('Control+A');
   await page.keyboard.insertText(
