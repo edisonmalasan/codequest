@@ -395,8 +395,9 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   const editor = page.getByRole('textbox', {
     name: 'index.html code editor (html)',
   });
-  const loadEditor = page.getByRole('button', { name: 'Load code editor' });
-  if (await loadEditor.isVisible()) await loadEditor.click();
+  await page
+    .getByRole('tabpanel', { name: 'Code editor' })
+    .scrollIntoViewIfNeeded();
   await expect(editor).toBeVisible({ timeout: 30_000 });
   await editor.click();
   await page.keyboard.press('Control+A');
