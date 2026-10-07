@@ -88,6 +88,27 @@ export const cases = [
 
 These cases are browser-visible local feedback, not independent grading. The static preview displays only safe inert markup; even a checked fragment link does not navigate in Preview, and visible forms cannot submit.
 
+### Static CSS Check grammar
+
+Static CSS cases use `kind: 'css-declaration'`, a single lowercase tag, `.class`, or `#id` selector, an allowlisted property, and `expectedValue`. An optional `media: { type: 'min-width' | 'max-width', widthPx: 320..1440 }` requires the declaration inside that **exact** `@media (min-width: Npx)` or `@media (max-width: Npx)` scope. A case without `media` matches only a base rule. The same selector may occur in several scopes; the last declaration of a property within one scope wins. Check ignores insignificant value whitespace and keyword case, while preserving units and the order of grid columns. For example, this authored case passes when the learner writes `.card { gap: 1rem; }` inside `@media (max-width: 600px)`, and fails if the declaration occurs only outside that rule:
+
+```ts
+{
+  id: 'boundary-narrow-gap',
+  category: 'boundary',
+  kind: 'css-declaration',
+  selector: '.card',
+  property: 'gap',
+  expectedValue: '1rem',
+  media: { type: 'max-width', widthPx: 600 },
+  feedback: 'Add a 1rem card gap inside the 600px narrow rule.',
+}
+```
+
+The supported properties are `color`, `background-color`, `display`, `font-size`, `font-family`, `font-weight`, `line-height`, `text-align`, `letter-spacing`, the four `margin` and `padding` sides plus their shorthands, `border-width`, `border-style`, `border-color`, `border-radius`, `box-sizing`, `width`, `min-width`, `max-width`, `height`, `min-height`, `max-height`, `gap`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, and `grid-template-columns`. Colors are the reviewed small named-color set or three/six-digit hex. Lengths use `0` or bounded `px`, `rem`, `em`, `%`, `vw`, or `vh` numbers; margin and sizing may also use `auto`. Margin/padding shorthands accept up to four lengths. Grid columns accept one to four bounded `fr`, `px`, or percent tracks. Other keywords are restricted by property: display, font family/weight, text alignment, border style, box sizing, flex direction/wrap, and flex alignment/justification use the explicit values in `css-case-contract.ts`. `line-height` also accepts a bounded unitless number. No arbitrary CSS function is accepted.
+
+Check accepts at most 16 media rules, 64 selector rules, and 256 declarations in a CSS file, within the existing 32 KiB CSS source limit. It rejects comments, imports, resource URLs, unsupported at-rules or selectors, nested rules, `!important`, unsupported declarations, and over-limit source. An invalid case fails authoring validation; unsupported learner CSS returns bounded local feedback and leaves the source editable. Preview remains a separate script-disabled, origin-isolated display with a deny-by-default CSP. Check compares declared source structure, not computed cascade, pixels, contrast, accessibility, or independent mastery. Authors must explain this limit in lessons and inspect both narrow and wide Preview before publication. The focused definition and parser tests in `frontend/src/features/validation/` exercise the example and rejection rules.
+
 The original HTML Foundations draft uses one `index.html` file per Quest and carries the supplied 16-pixel route marker as a bounded local raster data image. Authors must explain that Preview strips link destinations and form actions, that clicking a link or submit button does not navigate or send data, and that input values typed in Preview are not saved. A lesson must never promise live browser interaction from this static exercise mode. The course coverage, case map, and exact review status are tracked in [the HTML Foundations review](../../docs/html-foundations-course.md).
 
 Selecting a web Quest requires Quest-level `curriculumReview: approved` and `technicalReview: approved` in the publication manifest in addition to the existing Journey/Course reviews. Interactive selection additionally requires a dated exact-build evidence record for the integrated published route; the development workspace does not grant publication approval. The R07 Apply gate and later R08 content review must both pass before any interactive Quest can be selected. Existing JavaScript snapshots and their manifest entries remain unchanged.

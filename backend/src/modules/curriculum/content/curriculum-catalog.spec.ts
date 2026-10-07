@@ -210,7 +210,7 @@ describe('curriculum publication catalog', () => {
     writeFileSync(join(snapshot, 'starter.css'), 'h1 { color: blue; }');
     writeFileSync(
       join(snapshot, 'tests.ts'),
-      `export const cases = [\n  { id: 'normal-message', category: 'normal', kind: 'html-element', selector: '#heading', expectedText: 'Hello', feedback: 'Add the heading.' },\n  { id: 'boundary-exact-output', category: 'boundary', kind: 'css-declaration', selector: 'h1', property: 'color', expectedValue: 'blue', feedback: 'Use blue.' },\n];\n`,
+      `export const cases = [\n  { id: 'normal-message', category: 'normal', kind: 'html-element', selector: '#heading', expectedText: 'Hello', feedback: 'Add the heading.' },\n  { id: 'boundary-exact-output', category: 'boundary', kind: 'css-declaration', selector: 'h1', property: 'color', expectedValue: 'blue', media: { type: 'max-width', widthPx: 600 }, feedback: 'Use blue.' },\n];\n`,
     );
     publish(
       root,
@@ -225,6 +225,10 @@ describe('curriculum publication catalog', () => {
       'h1 { color: blue; }',
     ]);
     expect(selected.starterCode).toBe('');
+    expect(selected.cases[1]).toMatchObject({
+      kind: 'css-declaration',
+      media: { type: 'max-width', widthPx: 600 },
+    });
     publish(root);
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Web exercise review is missing',

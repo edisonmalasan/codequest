@@ -47,6 +47,63 @@ afterEach(() => {
 });
 
 describe('Git curriculum authoring validation', () => {
+  it('bounds CSS declaration cases before publication', () => {
+    const base = {
+      id: 'css-rule',
+      category: 'normal',
+      kind: 'css-declaration',
+      selector: '.card',
+      property: 'gap',
+      expectedValue: '1rem',
+      feedback: 'Add a gap.',
+      media: { type: 'max-width', widthPx: 600 },
+    };
+    expect(caseSchema.safeParse(base).success).toBe(true);
+    expect(
+      caseSchema.safeParse({ ...base, property: 'behavior' }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...base, selector: '.card:hover' }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({
+        ...base,
+        media: { type: 'min-width', widthPx: 319 },
+      }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({
+        ...base,
+        media: { type: 'orientation', widthPx: 600 },
+      }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({
+        ...base,
+        expectedValue: 'url(https://example.test)',
+      }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...base, expectedValue: 'x'.repeat(129) }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...base, expectedValue: 'auto' }).success,
+    ).toBe(false);
+    expect(
+      caseSchema.safeParse({ ...base, media: { ...base.media, extra: true } })
+        .success,
+    ).toBe(false);
+    expect(
+      casesSchema.safeParse(
+        Array.from({ length: 31 }, (_, index) => ({
+          ...base,
+          id: `css-${index}`,
+          category: index === 0 ? 'boundary' : 'normal',
+        })),
+      ).success,
+    ).toBe(false);
+  });
+
   it('accepts the single explicitly draft Foundations fixture', () =>
     expect(() => validateCurriculum(source)).not.toThrow());
 

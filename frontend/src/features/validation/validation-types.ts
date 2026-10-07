@@ -1,3 +1,5 @@
+import type { CssCaseProperty } from './css-case-contract';
+
 export const VALIDATION_LIMITS = {
   sourceBytes: 65_536,
   definitionBytes: 16_384,
@@ -50,8 +52,9 @@ export type ValidationCase =
   | (CaseBase & {
       mode: 'css-declaration';
       selector: string;
-      property: 'color' | 'background-color' | 'display' | 'font-size';
+      property: CssCaseProperty;
       expectedValue: string;
+      media?: { type: 'min-width' | 'max-width'; widthPx: number };
     })
   | (CaseBase & {
       mode: 'interactive-text';

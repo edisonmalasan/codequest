@@ -4,6 +4,29 @@ import { validDefinition } from './validation-definition';
 const base = { id: 'case-1', label: 'Case 1', feedback: 'Try again' };
 
 describe('validation definitions', () => {
+  it('accepts only bounded CSS rules and explicit responsive scope', () => {
+    const css = {
+      ...base,
+      mode: 'css-declaration',
+      selector: '.card',
+      property: 'gap',
+      expectedValue: '1rem',
+      media: { type: 'max-width', widthPx: 600 },
+    };
+    expect(validDefinition({ cases: [css] })).toBe(true);
+    for (const change of [
+      { property: 'behavior' },
+      { selector: '.card:hover' },
+      { expectedValue: 'auto' },
+      { expectedValue: 'url(https://example.test)' },
+      { expectedValue: 'x'.repeat(129) },
+      { media: { type: 'orientation', widthPx: 600 } },
+      { media: { type: 'min-width', widthPx: 319 } },
+      { media: { type: 'max-width', widthPx: 600, extra: true } },
+    ])
+      expect(validDefinition({ cases: [{ ...css, ...change }] })).toBe(false);
+  });
+
   it('accepts all four bounded data-only modes', () => {
     expect(
       validDefinition({

@@ -559,6 +559,11 @@ export interface components {
             name: "alt" | "aria-label" | "for" | "href" | "name" | "type";
             value: string;
         };
+        QuestCssMediaDto: {
+            /** @enum {string} */
+            type: "min-width" | "max-width";
+            widthPx: number;
+        };
         QuestInteractiveEventDto: {
             /** @enum {string} */
             type: "click" | "input" | "change";
@@ -581,8 +586,9 @@ export interface components {
             tag?: string;
             expectedAttributes?: components["schemas"]["QuestSemanticAttributeDto"][];
             /** @enum {string} */
-            property?: "color" | "background-color" | "display" | "font-size";
+            property?: "color" | "background-color" | "display" | "font-size" | "font-family" | "font-weight" | "line-height" | "text-align" | "letter-spacing" | "margin" | "margin-top" | "margin-right" | "margin-bottom" | "margin-left" | "padding" | "padding-top" | "padding-right" | "padding-bottom" | "padding-left" | "border-width" | "border-style" | "border-color" | "border-radius" | "box-sizing" | "width" | "min-width" | "max-width" | "height" | "min-height" | "max-height" | "gap" | "flex-direction" | "flex-wrap" | "justify-content" | "align-items" | "grid-template-columns";
             expectedValue?: string;
+            media?: components["schemas"]["QuestCssMediaDto"];
             events?: components["schemas"]["QuestInteractiveEventDto"][];
         };
         QuestExerciseFileDto: {

@@ -1,6 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import { StaticWebValidationStrategy } from './static-web-validation-strategy';
-import { serializeWebSource, type WebSourceBundle } from './web-source';
+import {
+  parseWebSource,
+  serializeWebSource,
+  type WebSourceBundle,
+} from './web-source';
 import type { ValidationDefinition } from './validation-types';
 
 const bundle: WebSourceBundle = {
@@ -41,6 +45,97 @@ const definition: ValidationDefinition = {
 };
 
 describe('static web local Check', () => {
+  it('matches normalized declarations only in the exact authored media scope', async () => {
+    const strategy = new StaticWebValidationStrategy();
+    const scoped: ValidationDefinition = {
+      cases: [
+        {
+          id: 'base-color',
+          label: 'Base color',
+          feedback: 'Set the base color.',
+          mode: 'css-declaration',
+          selector: '.card',
+          property: 'color',
+          expectedValue: 'blue',
+        },
+        {
+          id: 'narrow-gap',
+          label: 'Narrow gap',
+          feedback: 'Set the narrow gap.',
+          mode: 'css-declaration',
+          selector: '.card',
+          property: 'gap',
+          expectedValue: '1rem',
+          media: { type: 'max-width', widthPx: 600 },
+        },
+        {
+          id: 'wide-grid',
+          label: 'Wide columns',
+          feedback: 'Set the wide columns.',
+          mode: 'css-declaration',
+          selector: '.card',
+          property: 'grid-template-columns',
+          expectedValue: '1fr 1fr',
+          media: { type: 'min-width', widthPx: 900 },
+        },
+      ],
+    };
+    const sourceFor = (css: string) =>
+      serializeWebSource({
+        ...bundle,
+        files: [bundle.files[0], { ...bundle.files[1], source: css }],
+      }) ?? '';
+    const valid = sourceFor(
+      '@media (min-width: 900px) { .card { grid-template-columns: 1fr   1fr; } } .card { COLOR: red; color: BLUE; } @media (max-width: 600px) { .card { gap: 1rem; } }',
+    );
+    expect(
+      await strategy.validate({ source: valid, definition: scoped }),
+    ).toMatchObject({
+      status: 'completed',
+      passed: true,
+      cases: [{ status: 'passed' }, { status: 'passed' }, { status: 'passed' }],
+    });
+    const wrongScope = sourceFor(
+      '.card { color: blue; gap: 1rem; grid-template-columns: 1fr 1fr; }',
+    );
+    expect(
+      await strategy.validate({ source: wrongScope, definition: scoped }),
+    ).toMatchObject({
+      status: 'completed',
+      passed: false,
+      failedCaseIds: ['narrow-gap', 'wide-grid'],
+    });
+    expect(wrongScope).toContain('grid-template-columns');
+    await strategy.dispose();
+  });
+
+  it.each([
+    '@import "https://example.invalid/a.css";',
+    '.card { background-color: url(https://example.invalid/a); }',
+    '@supports (display: grid) { .card { display: grid; } }',
+    '.card:hover { color: blue; }',
+    '.card { behavior: active; }',
+    '.card { color: blue !important; }',
+    '@media (max-width: 319px) { .card { color: blue; } }',
+    '@media (max-width: 600px) { @media (min-width: 400px) { .card { color: blue; } } }',
+    Array.from({ length: 65 }, () => '.card { color: blue; }').join(''),
+  ])(
+    'rejects unsupported or over-limit CSS without changing source: %s',
+    async (css) => {
+      const strategy = new StaticWebValidationStrategy();
+      const source =
+        serializeWebSource({
+          ...bundle,
+          files: [bundle.files[0], { ...bundle.files[1], source: css }],
+        }) ?? '';
+      const result = await strategy.validate({ source, definition });
+      expect(result.passed).toBe(false);
+      expect(result.status).toBe('invalid-definition');
+      expect(parseWebSource(source)?.files[1].source).toBe(css);
+      await strategy.dispose();
+    },
+  );
+
   it('checks semantic label and field relationships from inert source without depending on formatting', async () => {
     const strategy = new StaticWebValidationStrategy();
     const semantic: ValidationDefinition = {

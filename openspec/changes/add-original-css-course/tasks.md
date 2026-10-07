@@ -2,9 +2,9 @@
 
 ## 1. Bounded static CSS Check
 
-- [ ] 1.1 Extend the backend authored-case schema, validator, public projection, and frontend definition contract for allowlisted CSS teaching properties and optional responsive scope; verify invalid property, selector, media, value, and over-limit fixture tests fail before publication while current cases remain valid.
-- [ ] 1.2 Extend the frontend static CSS parser and deterministic case evaluation with exact media-scope matching, safe normalization, fixed limits, and source-preserving failures; verify focused passing, wrong-scope, duplicate, unsupported, import/URL, and cancellation tests.
-- [ ] 1.3 Document the supported CSS Check grammar and source-level feedback limits in the authoring guide; verify its stated examples against the focused validation tests.
+- [x] 1.1 Extend the backend authored-case schema, validator, public projection, and frontend definition contract for allowlisted CSS teaching properties and optional responsive scope; verify invalid property, selector, media, value, and over-limit fixture tests fail before publication while current cases remain valid.
+- [x] 1.2 Extend the frontend static CSS parser and deterministic case evaluation with exact media-scope matching, safe normalization, fixed limits, and source-preserving failures; verify focused passing, wrong-scope, duplicate, unsupported, import/URL, and cancellation tests.
+- [x] 1.3 Document the supported CSS Check grammar and source-level feedback limits in the authoring guide; verify its stated examples against the focused validation tests.
 
 ## 2. Static candidate authoring
 
