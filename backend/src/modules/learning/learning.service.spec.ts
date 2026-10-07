@@ -128,6 +128,86 @@ describe('authoritative attempt persistence', () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  it('persists chapters from two Courses with the same local position', async () => {
+    const catalog = loadCurriculumCatalog(root);
+    const firstJourney = catalog.journeys[0];
+    const firstChapter = firstJourney.chapters[0];
+    const secondQuest = {
+      ...firstChapter.quests[0],
+      metadata: {
+        ...firstChapter.quests[0].metadata,
+        id: 'CSS01',
+        slug: 'style-a-note',
+      },
+    };
+    const secondChapter = {
+      ...firstChapter,
+      metadata: {
+        ...firstChapter.metadata,
+        id: 'CSS-CH01',
+        position: 1,
+      },
+      quests: [secondQuest],
+    };
+    const twoCourseCatalog = {
+      ...catalog,
+      journeys: [
+        {
+          ...firstJourney,
+          courses: [
+            firstJourney.courses[0],
+            {
+              ...firstJourney.courses[0],
+              metadata: {
+                ...firstJourney.courses[0].metadata,
+                id: 'COURSE-CSS-FOUNDATIONS',
+                slug: 'css-foundations',
+                position: 2,
+              },
+              chapters: [secondChapter],
+            },
+          ],
+          chapters: [firstChapter, secondChapter],
+        },
+      ],
+    };
+    const module = await Test.createTestingModule({
+      providers: [
+        LearningService,
+        {
+          provide: DatabaseConnectionService,
+          useValue: { database: drizzle(client) },
+        },
+        { provide: CURRICULUM_CATALOG, useValue: twoCourseCatalog },
+      ],
+    }).compile();
+    const twoCourseService = module.get(LearningService);
+    await twoCourseService.submit(USER_A, 'first-message', {
+      clientEventId: '00000000-0000-4000-8000-000000000401',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'console.log("Hello, CodeQuest!")',
+      report: REPORT,
+    });
+    await twoCourseService.submit(USER_A, 'style-a-note', {
+      clientEventId: '00000000-0000-4000-8000-000000000402',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      source: 'console.log("Hello, CodeQuest!")',
+      report: REPORT,
+    });
+    expect(
+      (
+        await client.query(
+          'select id, position from codequest.chapters order by position',
+        )
+      ).rows,
+    ).toEqual([
+      { id: firstChapter.metadata.id, position: 1 },
+      { id: 'CSS-CH01', position: 2 },
+    ]);
+  });
+
   it('requires private capstone responses, settles replay and awards only once', async () => {
     const catalog = loadCurriculumCatalog(root);
     const chapter = catalog.journeys[0].chapters[0];

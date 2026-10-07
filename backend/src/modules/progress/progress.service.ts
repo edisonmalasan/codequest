@@ -26,6 +26,7 @@ import {
   PublishedCourse,
   PublishedJourney,
   PublishedQuest,
+  chapterJourneyPosition,
 } from '../curriculum/content/curriculum-catalog';
 import { completionIsCurrent } from '../curriculum/content/completion-compatibility';
 import {
@@ -154,7 +155,7 @@ export class ProgressService {
       .values({
         id: chapter.metadata.id,
         journeyId: journey.metadata.id,
-        position: chapter.metadata.position,
+        position: chapterJourneyPosition(journey, chapter),
       })
       .onConflictDoNothing();
     await db
