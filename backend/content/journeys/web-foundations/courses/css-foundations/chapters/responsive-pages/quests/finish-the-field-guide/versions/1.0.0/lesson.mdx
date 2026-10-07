@@ -1,0 +1,32 @@
+# Finish the field guide
+
+## Goal
+
+Integrate a readable static guide with a responsive card section.
+
+## Learn
+
+A finished guide needs more than one attractive rule. The reading region needs a bounded line length, the three stops need a clear relationship, and the layout needs to remain usable when the viewport narrows. Keep the supplied semantic structure and build the visual system in the stylesheet.
+
+## Worked example
+
+```css
+.catalog {
+  max-width: 60rem;
+}
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+The pattern combines a readable container with a responsive group. Your guide has three stops, so make your own decisions about their presentation.
+
+## Your task
+
+Keep the heading, three stops, and closing note. Set `.field-guide` to `max-width: 64rem`; set `.guide-stops` to `display: grid` with `grid-template-columns: 1fr 1fr` in the base stylesheet; and set `.guide-stops` to `grid-template-columns: 1fr` inside `@media (max-width: 600px)`. Add safe spacing or color of your own, inspect Narrow and Wide Preview, and revise if the guide is hard to read. Check confirms only these source declarations, not overall visual quality.

@@ -1,0 +1,24 @@
+# Give text room
+
+## Goal
+
+Limit reading width and add breathing room inside the main region.
+
+## Learn
+
+Long lines make it harder to return to the next row of text. A bounded content column gives the eye a reliable path. Padding then keeps the first and last letters away from that column’s edge. The two properties solve different spacing problems.
+
+## Worked example
+
+```css
+article {
+  max-width: 40rem;
+  padding: 1rem;
+}
+```
+
+Resize Preview to see how a maximum width behaves when less space is available.
+
+## Your task
+
+Set `main` to `max-width: 48rem` and `padding: 1.5rem`. Check inspects both declarations; compare the narrow and wide Preview widths to judge the reading line.

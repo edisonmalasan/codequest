@@ -131,4 +131,54 @@ describe('published quest validation mapping', () => {
       ],
     });
   });
+
+  it('maps the expanded CSS contract and responsive media scope into local Check', () => {
+    expect(
+      questValidationDefinition({
+        cases: [
+          {
+            id: 'reading-width',
+            category: 'normal',
+            kind: 'css-declaration',
+            feedback: 'Bound the page width.',
+            selector: 'main',
+            property: 'max-width',
+            expectedValue: '48rem',
+          },
+          {
+            id: 'narrow-grid',
+            category: 'boundary',
+            kind: 'css-declaration',
+            feedback: 'Use one narrow column.',
+            selector: '.cards',
+            property: 'grid-template-columns',
+            expectedValue: '1fr',
+            media: { type: 'max-width', widthPx: 600 },
+          },
+        ],
+      }),
+    ).toEqual({
+      cases: [
+        {
+          id: 'reading-width',
+          label: 'reading-width',
+          feedback: 'Bound the page width.',
+          mode: 'css-declaration',
+          selector: 'main',
+          property: 'max-width',
+          expectedValue: '48rem',
+        },
+        {
+          id: 'narrow-grid',
+          label: 'narrow-grid',
+          feedback: 'Use one narrow column.',
+          mode: 'css-declaration',
+          selector: '.cards',
+          property: 'grid-template-columns',
+          expectedValue: '1fr',
+          media: { type: 'max-width', widthPx: 600 },
+        },
+      ],
+    });
+  });
 });

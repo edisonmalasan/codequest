@@ -1,0 +1,25 @@
+# Stack at narrow width
+
+## Goal
+
+Switch a two-column card grid to one column at narrow widths.
+
+## Learn
+
+The two cards fit side by side when there is room. On a phone-sized viewport, each deserves the full line. A max-width condition narrows the scope of one rule without changing the HTML or the default layout.
+
+## Worked example
+
+```css
+@media (max-width: 600px) {
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+The condition belongs around the rule. Preview Narrow and Wide to compare the same source.
+
+## Your task
+
+Keep `.stops` at `grid-template-columns: 1fr 1fr` outside media rules. At `@media (max-width: 600px)`, set `.stops` to `grid-template-columns: 1fr`. Check matches exact source scopes; it does not judge all rendered widths.

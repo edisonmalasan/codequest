@@ -1,0 +1,10 @@
+id: CSS-CH04
+courseId: COURSE-CSS-FOUNDATIONS
+slug: responsive-pages
+title: Responsive pages
+position: 4
+objectiveSummary: Adapt a complete static field guide to narrow and wide viewports.
+questIds:
+  - CSS10
+  - CSS11
+  - CSS12

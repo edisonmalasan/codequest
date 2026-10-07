@@ -1,0 +1,34 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Finish the field guide
+objective: Integrate a readable static guide with a responsive card section.
+outcomeId: O7
+conceptIds:
+  - css-integration
+  - css-responsive
+  - css-grid
+prerequisiteQuestIds:
+  - CSS11
+difficulty: integrative
+xpAward: 10
+hints:
+  question: Which region needs a reading width, and which region owns the cards?
+  concept: Compose a bounded page first, then give the card group a broad layout and a narrow override.
+  nextStep: Set the guide width, define the card grid, and add the 600px one-column rule.
+caseIds:
+  - normal-guide-width
+  - normal-stop-grid
+  - boundary-stop-columns
+  - boundary-narrow-stack
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

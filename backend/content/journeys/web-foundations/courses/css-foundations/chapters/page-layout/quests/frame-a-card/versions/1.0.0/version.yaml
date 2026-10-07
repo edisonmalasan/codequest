@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Frame a card
+objective: Use border and padding to separate a specimen card from surrounding text.
+outcomeId: O6
+conceptIds:
+  - css-boxes
+prerequisiteQuestIds:
+  - CSS06
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which class identifies the specimen card?
+  concept: Padding is inside the border; a border needs a style as well as a width to appear.
+  nextStep: Add solid border style, 2px width, and 1rem padding to .specimen.
+caseIds:
+  - normal-border-style
+  - boundary-border-width
+  - normal-card-padding
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

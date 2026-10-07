@@ -501,14 +501,16 @@ export function EditorWorkspace({
       const token = ++previewTokenRef.current;
       setPreviewRunning(true);
       setPreviewResult(undefined);
-      const snapshot: PreviewFile[] = files.map((file) => ({
-        id: file.id,
-        language: file.language,
-        source: sourcesRef.current[file.id] ?? file.starterSource,
-      }));
       const operation = reload
         ? previewAdapter.reload(controller.signal)
-        : previewAdapter.preview(snapshot, controller.signal);
+        : previewAdapter.preview(
+            files.map((file): PreviewFile => ({
+              id: file.id,
+              language: file.language,
+              source: sourcesRef.current[file.id] ?? file.starterSource,
+            })),
+            controller.signal,
+          );
       void operation.then(
         (result) => {
           if (previewTokenRef.current !== token) return;
@@ -930,6 +932,7 @@ export function EditorWorkspace({
                 hostRef={attachPreviewHost}
                 result={previewResult}
                 running={previewRunning}
+                onFailedWidthChange={() => showPreview(true)}
               />
             </div>
           )}
@@ -964,6 +967,7 @@ export function EditorWorkspace({
               hostRef={attachPreviewHost}
               result={previewResult}
               running={previewRunning}
+              onFailedWidthChange={() => showPreview(true)}
             />
           )}
           {presentation === 'integrated' && interactiveAdapter && (

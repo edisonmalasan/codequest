@@ -1,0 +1,30 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Set reading type
+objective: Choose a heading family and size that establish a reading hierarchy.
+outcomeId: O6
+conceptIds:
+  - css-type
+prerequisiteQuestIds:
+  - CSS03
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which selector reaches the page title without changing body paragraphs?
+  concept: Font family changes the character of letters; font size sets their scale.
+  nextStep: Give h1 a serif family and a 2rem size in style.css.
+caseIds:
+  - normal-heading-family
+  - boundary-heading-scale
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

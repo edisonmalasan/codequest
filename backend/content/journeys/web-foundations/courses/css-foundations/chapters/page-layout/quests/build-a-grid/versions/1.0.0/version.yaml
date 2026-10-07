@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Build a grid
+objective: Place related observations in two equal columns with a consistent gap.
+outcomeId: O6
+conceptIds:
+  - css-grid
+prerequisiteQuestIds:
+  - CSS08
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which element directly contains the two observation articles?
+  concept: Grid tracks divide the container; each 1fr track takes an equal share of free space.
+  nextStep: Use grid display, two 1fr tracks, and a 1rem gap on .observations.
+caseIds:
+  - normal-grid-display
+  - boundary-grid-tracks
+  - normal-grid-gap
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Align a toolbar
+objective: Arrange related links in a flexible row with space between them.
+outcomeId: O6
+conceptIds:
+  - css-flex
+prerequisiteQuestIds:
+  - CSS07
+difficulty: developing
+xpAward: 10
+hints:
+  question: What display value turns the navigation into a flex container?
+  concept: Flex places children along one axis. Gap separates neighboring items without changing their content.
+  nextStep: Make .trail-links flex, give it a 1rem gap, and distribute spare space.
+caseIds:
+  - normal-flex-display
+  - boundary-flex-gap
+  - normal-flex-distribution
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

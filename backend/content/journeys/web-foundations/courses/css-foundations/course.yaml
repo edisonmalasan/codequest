@@ -1,0 +1,23 @@
+id: COURSE-CSS-FOUNDATIONS
+journeyId: WEB-FOUNDATIONS
+slug: css-foundations
+title: CSS Foundations
+summary: Shape a readable field guide with selectors, type, spacing, layout, and responsive rules.
+position: 2
+status: draft
+topics:
+  - css
+  - layout
+  - responsive-design
+outcomes:
+  - id: C1
+    description: Style supplied semantic HTML with bounded selectors and declarations.
+  - id: C2
+    description: Compose readable type, spacing, boxes, and page layout.
+  - id: C3
+    description: Adapt and integrate a static page for narrow and wide viewports.
+chapterIds:
+  - CSS-CH01
+  - CSS-CH02
+  - CSS-CH03
+  - CSS-CH04

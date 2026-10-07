@@ -1,0 +1,40 @@
+export const cases = [
+  {
+    id: 'normal-guide-width',
+    category: 'normal',
+    kind: 'css-declaration',
+    selector: '.field-guide',
+    property: 'max-width',
+    expectedValue: '64rem',
+    feedback: 'Set .field-guide max-width to 64rem.',
+  },
+  {
+    id: 'normal-stop-grid',
+    category: 'normal',
+    kind: 'css-declaration',
+    selector: '.guide-stops',
+    property: 'display',
+    expectedValue: 'grid',
+    feedback: 'Set .guide-stops display to grid.',
+  },
+  {
+    id: 'boundary-stop-columns',
+    category: 'boundary',
+    kind: 'css-declaration',
+    selector: '.guide-stops',
+    property: 'grid-template-columns',
+    expectedValue: '1fr 1fr',
+    feedback: 'Set .guide-stops grid-template-columns to 1fr 1fr.',
+  },
+  {
+    id: 'boundary-narrow-stack',
+    category: 'boundary',
+    kind: 'css-declaration',
+    selector: '.guide-stops',
+    property: 'grid-template-columns',
+    expectedValue: '1fr',
+    media: { type: 'max-width', widthPx: 600 },
+    feedback:
+      'Set .guide-stops grid-template-columns to 1fr inside max-width 600px.',
+  },
+];

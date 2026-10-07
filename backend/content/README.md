@@ -32,6 +32,8 @@ pnpm --dir backend content:test --id CSS01 --version current --source <absolute-
 
 The same commands can target an unselected draft after it passes structural validation. The browser test does not submit attempts or alter account records. A looping candidate fails within the runtime bound; the harness checks that a later finite Check recovers on a fresh Worker. Keep candidate files and generated previews outside Git unless they are reviewed authored content, and delete local outputs when finished.
 
+On 2026-10-07, the documented two-file `CSS01 --version current` reference command passed the local Chromium authoring harness against unpublished content/assessment `1.0.0`: `normal-note-color` and `boundary-note-background` both passed. This is candidate-tool evidence, not Course publication, editorial review, or founder acceptance.
+
 ## Tree and identity
 
 ```text

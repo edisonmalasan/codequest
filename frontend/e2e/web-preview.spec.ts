@@ -161,6 +161,72 @@ test('preview Worker recovers after a loop and remains independent of Run', asyn
   ).toBeVisible();
 });
 
+test('static preview switches named widths without losing the source or overflowing the page', async ({
+  page,
+}) => {
+  await page.goto('/editor-workspace');
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  const htmlEditor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await htmlEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '<main><h1>Responsive field guide</h1></main>',
+  );
+  await page.getByRole('tab', { name: 'styles.css' }).click();
+  const cssEditor = page.getByRole('textbox', {
+    name: 'styles.css code editor (css)',
+  });
+  await cssEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    'h1 { color: blue; } @media (max-width: 600px) { h1 { color: red; } }',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  await expect(preview.getByRole('status')).toContainText(
+    'Static preview ready',
+  );
+  const shell = page.frameLocator(
+    'iframe[title="Static HTML and CSS preview"]',
+  );
+  const child = shell.frameLocator(
+    'iframe[title="Static learner HTML and CSS preview"]',
+  );
+  const heading = child.getByRole('heading', {
+    name: 'Responsive field guide',
+  });
+  const color = () =>
+    heading.evaluate((element) => getComputedStyle(element).color);
+
+  const narrow = preview.getByRole('button', { name: 'Narrow · 390px' });
+  const wide = preview.getByRole('button', { name: 'Wide · 1024px' });
+  const current = preview.getByRole('button', { name: 'Current' });
+  await expect(current).toHaveAttribute('aria-pressed', 'true');
+  await wide.click();
+  await expect(wide).toHaveAttribute('aria-pressed', 'true');
+  await expect.poll(color).toBe('rgb(0, 0, 255)');
+  await narrow.click();
+  await expect(narrow).toHaveAttribute('aria-pressed', 'true');
+  await expect.poll(color).toBe('rgb(255, 0, 0)');
+  await expect(shell.locator('iframe')).toHaveCount(1);
+  await expect(cssEditor).toContainText('@media (max-width: 600px)');
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await current.click();
+  await expect(current).toHaveAttribute('aria-pressed', 'true');
+  await expect(heading).toBeVisible();
+});
+
 test('inert form and link preview cannot submit or navigate', async ({
   page,
 }) => {
@@ -279,4 +345,55 @@ test('authored local route image displays with its text alternative and no remot
       (element) => (element as HTMLImageElement).naturalWidth,
     ),
   ).toBe(16);
+});
+
+test('authored CSS field guide changes its grid between narrow and wide Preview', async ({
+  page,
+}) => {
+  const starter = readFileSync(
+    resolve(
+      process.cwd(),
+      '../backend/content/journeys/web-foundations/courses/css-foundations/chapters/responsive-pages/quests/finish-the-field-guide/versions/1.0.0/starter.html',
+    ),
+    'utf8',
+  );
+  await page.goto('/editor-workspace');
+  await page
+    .getByRole('heading', { name: 'Editor Workspace' })
+    .scrollIntoViewIfNeeded();
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  const htmlEditor = page.getByRole('textbox', {
+    name: 'index.html code editor (html)',
+  });
+  await htmlEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(starter);
+  await page.getByRole('tab', { name: 'styles.css' }).click();
+  const cssEditor = page.getByRole('textbox', {
+    name: 'styles.css code editor (css)',
+  });
+  await cssEditor.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '.field-guide { max-width: 64rem; padding: 1rem; } .guide-stops { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; } @media (max-width: 600px) { .guide-stops { grid-template-columns: 1fr; } }',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  await expect(preview.getByRole('status')).toContainText(
+    'Static preview ready',
+  );
+  const stops = page
+    .frameLocator('iframe[title="Static HTML and CSS preview"]')
+    .frameLocator('iframe[title="Static learner HTML and CSS preview"]')
+    .locator('.guide-stops');
+  const trackCount = () =>
+    stops.evaluate(
+      (element) =>
+        getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+    );
+  await preview.getByRole('button', { name: 'Narrow · 390px' }).click();
+  await expect.poll(trackCount).toBe(1);
+  await preview.getByRole('button', { name: 'Wide · 1024px' }).click();
+  await expect.poll(trackCount).toBe(2);
+  await expect(cssEditor).toContainText('@media (max-width: 600px)');
 });

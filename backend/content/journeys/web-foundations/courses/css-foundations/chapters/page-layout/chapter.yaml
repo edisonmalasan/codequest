@@ -1,0 +1,10 @@
+id: CSS-CH03
+courseId: COURSE-CSS-FOUNDATIONS
+slug: page-layout
+title: Boxes and layout
+position: 3
+objectiveSummary: Arrange page regions with boxes, flex, and grid.
+questIds:
+  - CSS07
+  - CSS08
+  - CSS09

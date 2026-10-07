@@ -1,0 +1,25 @@
+# Align a toolbar
+
+## Goal
+
+Arrange related links in a flexible row with space between them.
+
+## Learn
+
+The three guide links belong together, but each needs room to breathe. A flex container arranges its direct children in a row by default. Gap reserves space between links; distributing spare space spreads the group across the available width.
+
+## Worked example
+
+```css
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+```
+
+This groups the actions in the center. Your toolbar will spread them across the row; use a narrow Preview to check that the words still have room.
+
+## Your task
+
+Give `.trail-links` `display: flex`, `gap: 1rem`, and `justify-content: space-between`. Check reads these declarations. Static Preview keeps the link labels visible but disables navigation.

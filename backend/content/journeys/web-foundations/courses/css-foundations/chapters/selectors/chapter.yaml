@@ -1,0 +1,10 @@
+id: CSS-CH01
+courseId: COURSE-CSS-FOUNDATIONS
+slug: selectors
+title: Rules and selectors
+position: 1
+objectiveSummary: Connect styles to supplied HTML through simple selectors and source order.
+questIds:
+  - CSS01
+  - CSS02
+  - CSS03

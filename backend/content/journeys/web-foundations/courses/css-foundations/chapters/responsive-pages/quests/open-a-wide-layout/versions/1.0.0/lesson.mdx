@@ -1,0 +1,26 @@
+# Open a wide layout
+
+## Goal
+
+Create a wider two-column reading layout only when space permits.
+
+## Learn
+
+A narrow document works well as a vertical reading sequence. When more width becomes available, the short aside can sit beside the longer article. Put the grid rule behind a minimum-width condition, leaving the small layout unforced.
+
+## Worked example
+
+```css
+@media (min-width: 900px) {
+  .page {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+```
+
+The second track gets twice the flexible share of the first.
+
+## Your task
+
+Inside `@media (min-width: 900px)`, set `.guide-layout` to `display: grid` and `grid-template-columns: 1fr 2fr`. Check looks for these declarations in that exact scope. Compare Current, Narrow, and Wide Preview.

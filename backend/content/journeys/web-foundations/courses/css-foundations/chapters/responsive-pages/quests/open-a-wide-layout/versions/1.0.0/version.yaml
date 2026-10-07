@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Open a wide layout
+objective: Create a wider two-column reading layout only when space permits.
+outcomeId: O7
+conceptIds:
+  - css-responsive
+  - css-grid
+prerequisiteQuestIds:
+  - CSS10
+difficulty: developing
+xpAward: 10
+hints:
+  question: Which media condition applies from 900px upward?
+  concept: A min-width rule adds a layout only at and above its breakpoint.
+  nextStep: Use a wide media rule to make .guide-layout a grid with 1fr 2fr tracks.
+caseIds:
+  - normal-wide-grid
+  - boundary-wide-tracks
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

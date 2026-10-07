@@ -1,0 +1,30 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Mark an observation
+objective: Pair a dark text color with a light background on a note.
+outcomeId: O6
+conceptIds:
+  - css-color
+prerequisiteQuestIds:
+  - CSS04
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which class marks the observation that needs emphasis?
+  concept: Text and background colors work as a pair. Compare them in Preview for readability.
+  nextStep: Style .observation with navy text on a yellow background.
+caseIds:
+  - normal-note-ink
+  - boundary-note-surface
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

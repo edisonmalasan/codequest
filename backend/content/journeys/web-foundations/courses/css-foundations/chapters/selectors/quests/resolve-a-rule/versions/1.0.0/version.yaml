@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Resolve a rule
+objective: Use later source order to replace an earlier declaration on the same selector.
+outcomeId: O5
+conceptIds:
+  - css-cascade
+  - css-rules
+prerequisiteQuestIds:
+  - CSS02
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Where does the starter stylesheet first set the summary color?
+  concept: When the same selector and property appear again at equal specificity, the later declaration wins.
+  nextStep: Add a later .summary rule with color teal, then set line-height on p.
+caseIds:
+  - normal-summary-color
+  - boundary-paragraph-rhythm
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
