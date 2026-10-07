@@ -44,6 +44,7 @@ jobs:
       - run: pnpm --dir backend db:check
       - run: pnpm --dir backend db:drift
       - run: pnpm --dir backend db:migrate
+      - run: pnpm --dir frontend exec playwright install --with-deps chromium firefox webkit
       - run: pnpm api:check
       - run: pnpm --dir backend curriculum:validate
       - run: pnpm lint
@@ -51,7 +52,6 @@ jobs:
       - run: pnpm test
       - run: pnpm --filter frontend build
       - run: pnpm --dir frontend test:performance-budget
-      - run: pnpm --dir frontend exec playwright install --with-deps chromium firefox webkit
       - run: pnpm --dir frontend exec playwright test e2e/home-shell.spec.ts --project=chromium
       - run: pnpm --dir frontend test:pwa
       - run: pnpm --dir frontend test:performance

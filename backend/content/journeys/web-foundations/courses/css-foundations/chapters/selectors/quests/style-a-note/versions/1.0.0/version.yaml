@@ -1,0 +1,30 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Style a field note
+objective: Use a class rule in a separate stylesheet to distinguish a field note.
+outcomeId: O5
+conceptIds:
+  - css-rules
+  - css-selectors
+prerequisiteQuestIds: []
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which class already labels the note in index.html?
+  concept: A class selector begins with a dot and its braces contain declarations.
+  nextStep: In style.css, target .field-note and set its color and background-color.
+caseIds:
+  - normal-note-color
+  - boundary-note-background
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

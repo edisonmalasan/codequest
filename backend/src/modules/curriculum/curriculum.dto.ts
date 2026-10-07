@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { cssCaseProperties } from './content/css-case-contract';
 
 export class OutcomeDto {
   @ApiProperty({ type: String, example: 'O1' }) id!: string;
@@ -111,6 +112,13 @@ export class QuestSemanticAttributeDto {
   @ApiProperty({ type: String }) value!: string;
 }
 
+export class QuestCssMediaDto {
+  @ApiProperty({ type: String, enum: ['min-width', 'max-width'] })
+  type!: 'min-width' | 'max-width';
+  @ApiProperty({ type: Number, minimum: 320, maximum: 1440 })
+  widthPx!: number;
+}
+
 export class QuestCaseDto {
   @ApiProperty({ type: String }) id!: string;
   @ApiProperty({ type: String, enum: ['normal', 'boundary'] }) category!:
@@ -145,10 +153,11 @@ export class QuestCaseDto {
   expectedAttributes?: QuestSemanticAttributeDto[];
   @ApiPropertyOptional({
     type: String,
-    enum: ['color', 'background-color', 'display', 'font-size'],
+    enum: [...cssCaseProperties],
   })
   property?: string;
   @ApiPropertyOptional({ type: String }) expectedValue?: string;
+  @ApiPropertyOptional({ type: QuestCssMediaDto }) media?: QuestCssMediaDto;
   @ApiPropertyOptional({ type: [QuestInteractiveEventDto] })
   events?: QuestInteractiveEventDto[];
 }

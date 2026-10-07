@@ -1,0 +1,30 @@
+# Style a field note
+
+## Goal
+
+Use a class rule in `style.css` to make the supplied note stand out without changing its meaning.
+
+## Learn
+
+The HTML file says what the note is. The CSS file says how it appears. A class is a reusable label on an HTML element. In a stylesheet, write a dot before the class name to select it. Put each declaration inside braces, with a property, colon, value, and semicolon.
+
+The workspace gives Preview the HTML and CSS together. You do not need to add a `link` element for this exercise. Preview shows the visual result. Check compares only the required source declarations, so also look at the page to judge whether the note is readable.
+
+## Worked example
+
+```html
+<p class="weather-note">Clouds are gathering.</p>
+```
+
+```css
+.weather-note {
+  color: black;
+  background-color: yellow;
+}
+```
+
+The rule selects only elements with the `weather-note` class. The words remain in the HTML; the two declarations change their colors.
+
+## Your task
+
+Keep the supplied heading and note text. In `style.css`, target `.field-note`. Set its text color to `navy` and its background color to `#f2e9d8`. Use Preview to inspect the result, then Check the declarations. You can add another safe rule, but these exact declarations must be present on `.field-note`.

@@ -25,6 +25,10 @@ import {
   type ExecutionAdapter,
 } from '@/features/runtime';
 import { JavaScriptValidationStrategy } from '@/features/validation/javascript-validation-strategy';
+import {
+  isCssCaseProperty,
+  validCssCaseValue,
+} from '@/features/validation/css-case-contract';
 import { serializeWebSource } from '@/features/validation/web-source';
 import type {
   ValidationDefinition,
@@ -103,14 +107,16 @@ export function questValidationDefinition(
     } else if (item.kind === 'css-declaration') {
       if (
         typeof item.selector !== 'string' ||
-        typeof item.property !== 'string' ||
-        typeof item.expectedValue !== 'string'
-      )
-        return undefined;
-      if (
-        !['color', 'background-color', 'display', 'font-size'].includes(
-          item.property,
-        )
+        !isCssCaseProperty(item.property) ||
+        typeof item.expectedValue !== 'string' ||
+        !validCssCaseValue(item.property, item.expectedValue) ||
+        (item.media !== undefined &&
+          (typeof item.media !== 'object' ||
+            item.media === null ||
+            !['min-width', 'max-width'].includes(item.media.type) ||
+            !Number.isInteger(item.media.widthPx) ||
+            item.media.widthPx < 320 ||
+            item.media.widthPx > 1440))
       )
         return undefined;
       cases.push({
@@ -119,9 +125,9 @@ export function questValidationDefinition(
         feedback: item.feedback,
         mode: 'css-declaration',
         selector: item.selector,
-        property: item.property as
-          'color' | 'background-color' | 'display' | 'font-size',
+        property: item.property,
         expectedValue: item.expectedValue,
+        ...(item.media === undefined ? {} : { media: item.media }),
       });
     } else if (item.kind === 'interactive-text') {
       if (

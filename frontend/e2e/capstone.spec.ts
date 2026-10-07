@@ -61,8 +61,8 @@ test('CAP01 publishes separately, checks alternatives and recovers after timeout
     }),
     expect.objectContaining({
       id: 'WEB-FOUNDATIONS',
-      chapterCount: 4,
-      questCount: 12,
+      chapterCount: 8,
+      questCount: 24,
     }),
   ]);
   const response = await request.get(

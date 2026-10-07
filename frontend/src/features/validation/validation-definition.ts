@@ -1,4 +1,5 @@
 import { utf8Bytes } from '@/features/runtime/execution-protocol';
+import { isCssCaseProperty, validCssCaseValue } from './css-case-contract';
 import {
   VALIDATION_LIMITS,
   type ValidationDefinition,
@@ -289,24 +290,44 @@ function validateDefinition(value: unknown): value is ValidationDefinition {
         return false;
     } else if (item.mode === 'css-declaration') {
       if (
-        !exactKeys(item, [
-          'id',
-          'label',
-          'feedback',
-          'mode',
-          'selector',
-          'property',
-          'expectedValue',
-        ]) ||
+        !exactKeys(
+          item,
+          item.media === undefined
+            ? [
+                'id',
+                'label',
+                'feedback',
+                'mode',
+                'selector',
+                'property',
+                'expectedValue',
+              ]
+            : [
+                'id',
+                'label',
+                'feedback',
+                'mode',
+                'selector',
+                'property',
+                'expectedValue',
+                'media',
+              ],
+        ) ||
         typeof item.selector !== 'string' ||
         !/^(?:#[a-z][a-z0-9-]{0,31}|\.[a-z][a-z0-9-]{0,31}|[a-z][a-z0-9-]{0,31})$/.test(
           item.selector,
         ) ||
-        !['color', 'background-color', 'display', 'font-size'].includes(
-          String(item.property),
-        ) ||
+        !isCssCaseProperty(item.property) ||
         typeof item.expectedValue !== 'string' ||
-        !/^[a-zA-Z0-9#(),.%\s-]{1,128}$/.test(item.expectedValue)
+        !validCssCaseValue(item.property, item.expectedValue) ||
+        (item.media !== undefined &&
+          (!record(item.media) ||
+            !exactKeys(item.media, ['type', 'widthPx']) ||
+            !['min-width', 'max-width'].includes(String(item.media.type)) ||
+            typeof item.media.widthPx !== 'number' ||
+            !Number.isInteger(item.media.widthPx) ||
+            item.media.widthPx < 320 ||
+            item.media.widthPx > 1440))
       )
         return false;
     } else if (item.mode === 'interactive-text') {

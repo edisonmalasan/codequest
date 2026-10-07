@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { cssCaseProperties, validCssCaseValue } from './css-case-contract';
 
 const id = z.string().regex(/^[A-Za-z][A-Za-z0-9-]{1,47}$/);
 const slug = z
@@ -295,14 +296,21 @@ export const caseSchema = z.discriminatedUnion('kind', [
         .regex(
           /^(?:#[a-z][a-z0-9-]{0,31}|\.[a-z][a-z0-9-]{0,31}|[a-z][a-z0-9-]{0,31})$/,
         ),
-      property: z.enum(['color', 'background-color', 'display', 'font-size']),
-      expectedValue: z
-        .string()
-        .min(1)
-        .max(128)
-        .regex(/^[a-zA-Z0-9#(),.%\s-]+$/),
+      property: z.enum(cssCaseProperties),
+      expectedValue: z.string().min(1).max(128),
+      media: z
+        .object({
+          type: z.enum(['min-width', 'max-width']),
+          widthPx: z.number().int().min(320).max(1440),
+        })
+        .strict()
+        .optional(),
     })
-    .strict(),
+    .strict()
+    .superRefine((item, context) => {
+      if (!validCssCaseValue(item.property, item.expectedValue))
+        context.addIssue({ code: 'custom', message: 'Unsupported CSS value' });
+    }),
   caseBase
     .extend({
       kind: z.literal('interactive-text'),

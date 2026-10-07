@@ -51,3 +51,25 @@ concepts:
     title: Labeled and grouped fields
   - id: html-integration
     title: Integrated static web page
+  - id: css-rules
+    title: Stylesheet rules and declarations
+  - id: css-selectors
+    title: Element, class, and ID selectors
+  - id: css-cascade
+    title: Source order and overrides
+  - id: css-type
+    title: Readable typography
+  - id: css-color
+    title: Color and contrast choices
+  - id: css-spacing
+    title: Spacing and visual grouping
+  - id: css-boxes
+    title: Box dimensions and borders
+  - id: css-flex
+    title: Flexible one-dimensional layout
+  - id: css-grid
+    title: Grid tracks and gaps
+  - id: css-responsive
+    title: Viewport rules and responsive composition
+  - id: css-integration
+    title: Integrated responsive static page

@@ -112,8 +112,8 @@ test('published course and guest Q01-Q04 survive reload without account authorit
     }),
     expect.objectContaining({
       id: 'WEB-FOUNDATIONS',
-      chapterCount: 4,
-      questCount: 12,
+      chapterCount: 8,
+      questCount: 24,
     }),
   ]);
   await page.goto('/journeys/javascript-foundations');

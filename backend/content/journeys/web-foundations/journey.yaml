@@ -14,5 +14,12 @@ outcomes:
     description: Use page landmarks, figures, and tables to express meaning.
   - id: O4
     description: Label fields and assemble an accessible static page.
+  - id: O5
+    description: Select supplied HTML elements and apply readable CSS rules.
+  - id: O6
+    description: Compose type, spacing, boxes, and static page layout.
+  - id: O7
+    description: Adapt a static page with bounded responsive CSS rules.
 courseIds:
   - COURSE-HTML-FOUNDATIONS
+  - COURSE-CSS-FOUNDATIONS

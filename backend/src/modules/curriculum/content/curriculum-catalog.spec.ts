@@ -67,7 +67,7 @@ afterEach(() => {
 });
 
 describe('curriculum publication catalog', () => {
-  it('publishes the complete reviewed HTML Course alongside the unchanged JavaScript inventory', () => {
+  it('publishes complete reviewed HTML and CSS Courses alongside the unchanged JavaScript inventory', () => {
     const catalog = loadCurriculumCatalog(resolve(process.cwd(), 'content'));
     expect(catalog.journeys.map((journey) => journey.metadata.id)).toEqual([
       'JAVASCRIPT-FOUNDATIONS',
@@ -87,23 +87,32 @@ describe('curriculum publication catalog', () => {
     ]);
     expect(web.courses.map((course) => course.metadata.id)).toEqual([
       'COURSE-HTML-FOUNDATIONS',
+      'COURSE-CSS-FOUNDATIONS',
     ]);
     expect(web.chapters.map((chapter) => chapter.metadata.id)).toEqual([
       'HTML-CH01',
       'HTML-CH02',
       'HTML-CH03',
       'HTML-CH04',
+      'CSS-CH01',
+      'CSS-CH02',
+      'CSS-CH03',
+      'CSS-CH04',
     ]);
     expect(
       web.chapters.flatMap((chapter) =>
         chapter.quests.map((quest) => quest.metadata.id),
       ),
-    ).toEqual(
-      Array.from(
+    ).toEqual([
+      ...Array.from(
         { length: 12 },
         (_, index) => `HTML${String(index + 1).padStart(2, '0')}`,
       ),
-    );
+      ...Array.from(
+        { length: 12 },
+        (_, index) => `CSS${String(index + 1).padStart(2, '0')}`,
+      ),
+    ]);
     expect(
       web.chapters.every((chapter) =>
         chapter.quests.every(
@@ -139,6 +148,50 @@ describe('curriculum publication catalog', () => {
     );
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Web exercise review is missing',
+    );
+  });
+  it('keeps a partial or unreviewed CSS Course out of publication', () => {
+    const root = mkdtempSync(join(tmpdir(), 'codequest-css-publication-'));
+    created.push(root);
+    cpSync(resolve(process.cwd(), 'content'), root, { recursive: true });
+    const publicationPath = join(root, 'publication.yaml');
+    const published = readFileSync(publicationPath, 'utf8');
+    const finalQuest = [
+      '          - id: CSS12',
+      '            contentVersion: 1.0.0',
+      '            assessmentVersion: 1.0.0',
+      '            curriculumReview: approved',
+      '            technicalReview: approved',
+    ].join('\n');
+    expect(published).toContain(finalQuest);
+    writeFileSync(publicationPath, published.replace(finalQuest, ''));
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Published Course inventory is incomplete',
+    );
+    writeFileSync(
+      publicationPath,
+      published.replace(
+        finalQuest,
+        finalQuest.replace('            technicalReview: approved', ''),
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Web exercise review is missing',
+    );
+    writeFileSync(publicationPath, published);
+    const coursePath = join(
+      root,
+      'journeys/web-foundations/courses/css-foundations/course.yaml',
+    );
+    writeFileSync(
+      coursePath,
+      readFileSync(coursePath, 'utf8').replace(
+        'status: reviewed',
+        'status: draft',
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Selected Course is missing or unreviewed',
     );
   });
   it('rejects unsafe or incompatible exercise descriptors before publication', () => {
@@ -210,7 +263,7 @@ describe('curriculum publication catalog', () => {
     writeFileSync(join(snapshot, 'starter.css'), 'h1 { color: blue; }');
     writeFileSync(
       join(snapshot, 'tests.ts'),
-      `export const cases = [\n  { id: 'normal-message', category: 'normal', kind: 'html-element', selector: '#heading', expectedText: 'Hello', feedback: 'Add the heading.' },\n  { id: 'boundary-exact-output', category: 'boundary', kind: 'css-declaration', selector: 'h1', property: 'color', expectedValue: 'blue', feedback: 'Use blue.' },\n];\n`,
+      `export const cases = [\n  { id: 'normal-message', category: 'normal', kind: 'html-element', selector: '#heading', expectedText: 'Hello', feedback: 'Add the heading.' },\n  { id: 'boundary-exact-output', category: 'boundary', kind: 'css-declaration', selector: 'h1', property: 'color', expectedValue: 'blue', media: { type: 'max-width', widthPx: 600 }, feedback: 'Use blue.' },\n];\n`,
     );
     publish(
       root,
@@ -225,6 +278,10 @@ describe('curriculum publication catalog', () => {
       'h1 { color: blue; }',
     ]);
     expect(selected.starterCode).toBe('');
+    expect(selected.cases[1]).toMatchObject({
+      kind: 'css-declaration',
+      media: { type: 'max-width', widthPx: 600 },
+    });
     publish(root);
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Web exercise review is missing',

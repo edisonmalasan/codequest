@@ -1,0 +1,25 @@
+# Build a grid
+
+## Goal
+
+Place related observations in two equal columns with a consistent gap.
+
+## Learn
+
+A grid is useful when several peers should align in columns. Set it on the common parent, not on each article. Two `1fr` tracks share the width equally, and a gap keeps their text from touching.
+
+## Worked example
+
+```css
+.pairs {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.5rem;
+}
+```
+
+This gives the second track twice as much space. Your observations need equal tracks; a later responsive rule can collapse them.
+
+## Your task
+
+Set `.observations` to `display: grid`, `grid-template-columns: 1fr 1fr`, and `gap: 1rem`. Check inspects these declarations. Preview both widths and notice where two columns become cramped.

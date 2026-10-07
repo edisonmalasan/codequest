@@ -1,6 +1,7 @@
 import { parseFragment, type DefaultTreeAdapterTypes } from 'parse5';
 import postcss from 'postcss';
 import { buildStaticDocument } from '@/features/preview/static-document';
+import { isCssCaseProperty, validCssCaseValue } from './css-case-contract';
 import { validDefinition } from './validation-definition';
 import { parseWebSource } from './web-source';
 import type {
@@ -14,7 +15,18 @@ import type {
 type Child = DefaultTreeAdapterTypes.ChildNode;
 const safeSelector =
   /^(?:#[a-z][a-z0-9-]{0,31}|\.[a-z][a-z0-9-]{0,31}|[a-z][a-z0-9-]{0,31})$/;
-const safeValue = /^[a-zA-Z0-9#(),.%\s-]{1,128}$/;
+
+function mediaScope(params: string): string | null {
+  const match = /^\(\s*(min|max)-width\s*:\s*(\d{3,4})px\s*\)$/i.exec(params);
+  if (!match) return null;
+  const width = Number(match[2]);
+  if (width < 320 || width > 1440) return null;
+  return `${match[1].toLowerCase()}-width:${width}`;
+}
+
+function normalizedValue(value: string): string {
+  return value.trim().replace(/\s+/g, ' ').toLowerCase();
+}
 
 function terminal(
   id: string,
@@ -74,34 +86,57 @@ function boundedTree(nodes: readonly Child[]): boolean {
   return true;
 }
 
-function declarations(css: string): Map<string, Map<string, string>> | null {
-  const values = new Map<string, Map<string, string>>();
-  let count = 0;
+function declarations(
+  css: string,
+): Map<string, Map<string, Map<string, string>>> | null {
+  const values = new Map<string, Map<string, Map<string, string>>>();
+  let rules = 0;
+  let declarations = 0;
+  let mediaRules = 0;
   try {
     const root = postcss.parse(css);
     root.walk((node) => {
-      if (node.type === 'atrule' || node.type === 'comment')
-        throw new Error('Unsupported CSS');
+      if (node.type === 'comment') throw new Error('Unsupported CSS');
+      if (node.type === 'atrule') {
+        if (
+          node.parent !== root ||
+          node.name.toLowerCase() !== 'media' ||
+          !mediaScope(node.params) ||
+          ++mediaRules > 16
+        )
+          throw new Error('Unsupported media rule');
+        return;
+      }
       if (node.type === 'rule') {
-        if (!safeSelector.test(node.selector) || ++count > 64)
+        if (
+          (node.parent !== root && node.parent?.type !== 'atrule') ||
+          !safeSelector.test(node.selector) ||
+          ++rules > 64
+        )
           throw new Error('Unsupported selector');
         return;
       }
       if (node.type === 'decl') {
+        const property = node.prop.toLowerCase();
         if (
           node.parent?.type !== 'rule' ||
-          !['color', 'background-color', 'display', 'font-size'].includes(
-            node.prop,
-          ) ||
-          !safeValue.test(node.value) ||
-          /url\s*\(/i.test(node.value) ||
-          ++count > 256
+          !isCssCaseProperty(property) ||
+          !validCssCaseValue(property, normalizedValue(node.value)) ||
+          node.important ||
+          ++declarations > 256
         )
           throw new Error('Unsupported declaration');
         const selector = node.parent.selector;
-        const map = values.get(selector) ?? new Map<string, string>();
-        map.set(node.prop, node.value.trim());
-        values.set(selector, map);
+        const parent = node.parent.parent;
+        const scope =
+          parent?.type === 'atrule' ? mediaScope(parent.params) : 'base';
+        if (!scope) throw new Error('Unsupported scope');
+        const scoped =
+          values.get(scope) ?? new Map<string, Map<string, string>>();
+        const properties = scoped.get(selector) ?? new Map<string, string>();
+        properties.set(property, normalizedValue(node.value));
+        scoped.set(selector, properties);
+        values.set(scope, scoped);
       }
     });
   } catch {
@@ -217,8 +252,15 @@ export class StaticWebValidationStrategy implements ValidationStrategy {
                     );
                   })()
                 : item.mode === 'css-declaration'
-                  ? styles.get(item.selector)?.get(item.property) ===
-                    item.expectedValue
+                  ? styles
+                      .get(
+                        item.media
+                          ? `${item.media.type}:${item.media.widthPx}`
+                          : 'base',
+                      )
+                      ?.get(item.selector)
+                      ?.get(item.property) ===
+                    normalizedValue(item.expectedValue)
                   : false;
           return {
             id: item.id,

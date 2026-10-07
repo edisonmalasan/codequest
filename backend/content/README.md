@@ -17,7 +17,7 @@ pnpm --dir backend content:preview:course --id JAVASCRIPT-FOUNDATIONS --out <abs
 
 The self-contained previews render safe static lesson text and bounded local images with scripts and network loads disabled. Quest previews show selected content and assessment versions, starter, hints, cases, prerequisites, and their exact published comparison. Course previews show the ordered authored inventory, review status, and manifest-selected versions. An unselected snapshot is visibly unpublished; previewing it does not make it available to learners. The Course outline does not calculate learner progress or unlocks.
 
-Save each candidate in a regular local `.js` file for a JavaScript Quest or `.html` file for a one-file static web Quest, at most 65,536 UTF-8 bytes. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative sources with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check, reports ordered case IDs and bounded feedback, and deletes its temporary fixture. JavaScript candidates use the dedicated Worker origin; static HTML candidates use the inert local Check strategy. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
+Save each candidate in a regular local `.js` file for a JavaScript Quest or `.html` file for a static web Quest, at most 65,536 UTF-8 bytes. A two-file static web Quest also requires `--css` pointing to a separate regular `.css` file of at most 32,768 UTF-8 bytes. Use absolute candidate paths outside `backend/content`; symlinks, missing files, and a CSS file for a Quest without one are rejected before browser launch. The selected Quest must fit the current browser Check limit of 10 cases; a larger authored case set fails with a clear limit error rather than a false test result. Run reference and alternative snapshots with `--expect pass`, then a deliberate defect with `--expect fail`. A mismatch, malformed source, or timeout exits nonzero. The command starts a fresh local browser Check, reports exact content/assessment versions, ordered case IDs and bounded feedback, and deletes its temporary fixture. JavaScript candidates use the dedicated Worker origin; static HTML/CSS candidates use the inert local Check strategy. It aborts all backend API requests. A passing candidate is technical review evidence only; curriculum and technical approval remain explicit.
 
 ```text
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-reference.js> --expect pass
@@ -25,9 +25,14 @@ pnpm --dir backend content:test --id Q01 --version current --source <absolute-al
 pnpm --dir backend content:test --id Q01 --version current --source <absolute-defect.js> --expect fail
 pnpm --dir backend content:test --id Q01 --version 1.0.0 --source <absolute-reference.js> --expect pass
 pnpm --dir backend content:test --id HTML01 --version current --source <absolute-reference.html> --expect pass
+pnpm --dir backend content:test --id CSS01 --version current --source <absolute-reference.html> --css <absolute-reference.css> --expect pass
+pnpm --dir backend content:test --id CSS01 --version current --source <absolute-alternative.html> --css <absolute-alternative.css> --expect pass
+pnpm --dir backend content:test --id CSS01 --version current --source <absolute-defect.html> --css <absolute-defect.css> --expect fail
 ```
 
 The same commands can target an unselected draft after it passes structural validation. The browser test does not submit attempts or alter account records. A looping candidate fails within the runtime bound; the harness checks that a later finite Check recovers on a fresh Worker. Keep candidate files and generated previews outside Git unless they are reviewed authored content, and delete local outputs when finished.
+
+On 2026-10-07, the documented two-file `CSS01 --version current` reference command passed the local Chromium authoring harness against unpublished content/assessment `1.0.0`: `normal-note-color` and `boundary-note-background` both passed. This is candidate-tool evidence, not Course publication, editorial review, or founder acceptance.
 
 ## Tree and identity
 
@@ -87,6 +92,27 @@ export const cases = [
 ```
 
 These cases are browser-visible local feedback, not independent grading. The static preview displays only safe inert markup; even a checked fragment link does not navigate in Preview, and visible forms cannot submit.
+
+### Static CSS Check grammar
+
+Static CSS cases use `kind: 'css-declaration'`, a single lowercase tag, `.class`, or `#id` selector, an allowlisted property, and `expectedValue`. An optional `media: { type: 'min-width' | 'max-width', widthPx: 320..1440 }` requires the declaration inside that **exact** `@media (min-width: Npx)` or `@media (max-width: Npx)` scope. A case without `media` matches only a base rule. The same selector may occur in several scopes; the last declaration of a property within one scope wins. Check ignores insignificant value whitespace and keyword case, while preserving units and the order of grid columns. For example, this authored case passes when the learner writes `.card { gap: 1rem; }` inside `@media (max-width: 600px)`, and fails if the declaration occurs only outside that rule:
+
+```ts
+{
+  id: 'boundary-narrow-gap',
+  category: 'boundary',
+  kind: 'css-declaration',
+  selector: '.card',
+  property: 'gap',
+  expectedValue: '1rem',
+  media: { type: 'max-width', widthPx: 600 },
+  feedback: 'Add a 1rem card gap inside the 600px narrow rule.',
+}
+```
+
+The supported properties are `color`, `background-color`, `display`, `font-size`, `font-family`, `font-weight`, `line-height`, `text-align`, `letter-spacing`, the four `margin` and `padding` sides plus their shorthands, `border-width`, `border-style`, `border-color`, `border-radius`, `box-sizing`, `width`, `min-width`, `max-width`, `height`, `min-height`, `max-height`, `gap`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, and `grid-template-columns`. Colors are the reviewed small named-color set or three/six-digit hex. Lengths use `0` or bounded `px`, `rem`, `em`, `%`, `vw`, or `vh` numbers; margin and sizing may also use `auto`. Margin/padding shorthands accept up to four lengths. Grid columns accept one to four bounded `fr`, `px`, or percent tracks. Other keywords are restricted by property: display, font family/weight, text alignment, border style, box sizing, flex direction/wrap, and flex alignment/justification use the explicit values in `css-case-contract.ts`. `line-height` also accepts a bounded unitless number. No arbitrary CSS function is accepted.
+
+Check accepts at most 16 media rules, 64 selector rules, and 256 declarations in a CSS file, within the existing 32 KiB CSS source limit. It rejects comments, imports, resource URLs, unsupported at-rules or selectors, nested rules, `!important`, unsupported declarations, and over-limit source. An invalid case fails authoring validation; unsupported learner CSS returns bounded local feedback and leaves the source editable. Preview remains a separate script-disabled, origin-isolated display with a deny-by-default CSP. Check compares declared source structure, not computed cascade, pixels, contrast, accessibility, or independent mastery. Authors must explain this limit in lessons and inspect both narrow and wide Preview before publication. The focused definition and parser tests in `frontend/src/features/validation/` exercise the example and rejection rules.
 
 The original HTML Foundations draft uses one `index.html` file per Quest and carries the supplied 16-pixel route marker as a bounded local raster data image. Authors must explain that Preview strips link destinations and form actions, that clicking a link or submit button does not navigate or send data, and that input values typed in Preview are not saved. A lesson must never promise live browser interaction from this static exercise mode. The course coverage, case map, and exact review status are tracked in [the HTML Foundations review](../../docs/html-foundations-course.md).
 

@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Stack at narrow width
+objective: Switch a two-column card grid to one column at narrow widths.
+outcomeId: O7
+conceptIds:
+  - css-responsive
+  - css-grid
+prerequisiteQuestIds:
+  - CSS09
+difficulty: developing
+xpAward: 10
+hints:
+  question: At what width should the cards stop sharing a row?
+  concept: A max-width media rule applies at that width and below; keep the broad default outside it.
+  nextStep: Keep the two-column base and add one 1fr track inside max-width 600px.
+caseIds:
+  - normal-wide-stops
+  - boundary-narrow-stops
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

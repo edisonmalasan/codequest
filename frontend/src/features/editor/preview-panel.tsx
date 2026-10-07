@@ -1,14 +1,31 @@
+import { useState } from 'react';
 import type { PreviewResult } from '@/features/preview';
+
+const viewportWidths = {
+  current: null,
+  narrow: 390,
+  wide: 1024,
+} as const;
+type ViewportChoice = keyof typeof viewportWidths;
 
 export function PreviewPanel({
   hostRef,
   result,
   running,
+  onFailedWidthChange,
 }: {
   hostRef: React.Ref<HTMLDivElement>;
   result?: PreviewResult;
   running: boolean;
+  onFailedWidthChange?: () => void;
 }): React.JSX.Element {
+  const [viewport, setViewport] = useState<ViewportChoice>('current');
+  const width = viewportWidths[viewport];
+  const chooseViewport = (choice: ViewportChoice): void => {
+    if (choice === viewport) return;
+    setViewport(choice);
+    if (result && result.status !== 'ready') onFailedWidthChange?.();
+  };
   return (
     <section
       aria-label="Web preview"
@@ -26,8 +43,38 @@ export function PreviewPanel({
             Active HTML content was removed for safety.
           </p>
         )}
+        <div
+          role="group"
+          aria-label="Preview width"
+          className="mt-3 flex flex-wrap gap-2"
+        >
+          {(['current', 'narrow', 'wide'] as const).map((choice) => (
+            <button
+              key={choice}
+              type="button"
+              aria-pressed={viewport === choice}
+              onClick={() => chooseViewport(choice)}
+              className="min-h-11 rounded-sm border border-line px-3 py-1 font-mono text-xs font-bold text-ink aria-pressed:border-ascent aria-pressed:bg-ascent/15"
+            >
+              {choice === 'current'
+                ? 'Current'
+                : `${choice === 'narrow' ? 'Narrow' : 'Wide'} · ${viewportWidths[choice]}px`}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-muted" aria-live="polite">
+          {viewport === 'current'
+            ? 'Preview width follows this panel.'
+            : `${viewport === 'narrow' ? 'Narrow' : 'Wide'} preview: ${width} CSS pixels.`}
+        </p>
       </div>
-      <div ref={hostRef} className="h-80 min-w-0 overflow-hidden bg-white" />
+      <div className="max-w-full overflow-x-auto bg-white">
+        <div
+          ref={hostRef}
+          className="h-80 overflow-hidden bg-white"
+          style={{ width: width === null ? '100%' : `${width}px` }}
+        />
+      </div>
       {result?.execution && (
         <div className="max-h-40 overflow-auto border-t border-line px-4 py-3">
           <p className="text-xs font-bold">

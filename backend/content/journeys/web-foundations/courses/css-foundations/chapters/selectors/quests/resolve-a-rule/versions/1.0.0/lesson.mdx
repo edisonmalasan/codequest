@@ -1,0 +1,26 @@
+# Resolve a rule
+
+## Goal
+
+Use later source order to replace an earlier declaration on the same selector.
+
+## Learn
+
+Stylesheets are read in order. If equal selectors assign the same property, the later declaration takes effect. This exercise starts with a navy summary; place the revised color after it. Keep a separate paragraph rhythm so both sentences remain readable.
+
+## Worked example
+
+```css
+.notice {
+  color: blue;
+}
+.notice {
+  color: green;
+}
+```
+
+The later color wins for `.notice`. A single final rule can also express the resulting value. Check sees the final source declaration, not the rendered cascade across every possible selector.
+
+## Your task
+
+Make `.summary` end at `color: teal` and set `p` to `line-height: 1.5`. Use Preview to see the change. Check confirms only those declarations, so inspect any extra rules you add.

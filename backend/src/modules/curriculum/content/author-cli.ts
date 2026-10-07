@@ -41,7 +41,7 @@ function parseArguments(argv: string[]): { mode: Mode; options: Arguments } {
       ? ['id', 'out']
       : mode === 'quest'
         ? ['id', 'version', 'out']
-        : ['id', 'version', 'source', 'expect'],
+        : ['id', 'version', 'source', 'css', 'expect'],
   );
   const options: Record<string, string> = {};
   for (let index = 0; index < tokens.length; index += 2) {
@@ -137,20 +137,28 @@ function writePreview(contentRoot: string, output: string, html: string): void {
 
 function candidateSource(
   path: string,
-  mode: 'javascript' | 'static-web' | 'interactive-web',
+  extension: '.js' | '.html' | '.css',
+  limit: number,
+  contentRoot: string,
 ): string {
   const absolute = resolve(path);
-  const extension = mode === 'static-web' ? '.html' : '.js';
+  const relation = relative(realpathSync(contentRoot), absolute);
   if (
     !isAbsolute(path) ||
     !absolute.endsWith(extension) ||
+    !existsSync(absolute) ||
     !lstatSync(absolute).isFile() ||
     lstatSync(absolute).isSymbolicLink() ||
-    lstatSync(absolute).size > 65_536
+    lstatSync(absolute).size > limit ||
+    relation === '' ||
+    (!relation.startsWith(`..${sep}`) &&
+      relation !== '..' &&
+      !isAbsolute(relation)) ||
+    realpathSync(absolute) !== absolute
   )
     throw new ContentError(
       'source',
-      `Use an absolute regular ${extension} file no larger than 65536 bytes`,
+      `Use an absolute regular ${extension} file outside backend/content no larger than ${limit} bytes`,
     );
   const source = readFileSync(absolute, 'utf8');
   if (!source.trim())
@@ -196,7 +204,9 @@ function runBrowser(backendRoot: string, fixture: unknown): void {
 function main(): void {
   const { mode, options } = parseArguments(process.argv.slice(2));
   const backendRoot = process.cwd();
-  const contentRoot = resolve(backendRoot, 'content');
+  const contentRoot = resolve(
+    process.env.CODEQUEST_CONTENT_ROOT ?? join(backendRoot, 'content'),
+  );
   const catalog = loadAuthorCatalog(contentRoot);
   runHistoryGate(backendRoot);
   if (mode === 'course') {
@@ -213,10 +223,25 @@ function main(): void {
     return;
   }
   const quest = authorQuestFixture(catalog, selected);
+  const exerciseMode = quest.exercise?.mode ?? 'javascript';
+  const hasCss =
+    quest.exercise?.files.some((file) => file.language === 'css') ?? false;
+  if (Boolean(options.css) !== (exerciseMode === 'static-web' && hasCss))
+    throw new ContentError(
+      'arguments',
+      exerciseMode === 'static-web' && hasCss
+        ? 'Selected static web Quest requires --css'
+        : '--css is only valid for a static web Quest with a CSS file',
+    );
   const source = candidateSource(
     options.source,
-    quest.exercise?.mode ?? 'javascript',
+    exerciseMode === 'static-web' ? '.html' : '.js',
+    65_536,
+    contentRoot,
   );
+  const cssSource = options.css
+    ? candidateSource(options.css, '.css', 32_768, contentRoot)
+    : undefined;
   if (quest.cases.length > 10)
     throw new ContentError(
       'candidate test',
@@ -225,6 +250,7 @@ function main(): void {
   runBrowser(backendRoot, {
     quest,
     source,
+    cssSource,
     expected: options.expect,
     version: selected.snapshot.metadata.contentVersion,
     published: selected.isPublishedSelection,

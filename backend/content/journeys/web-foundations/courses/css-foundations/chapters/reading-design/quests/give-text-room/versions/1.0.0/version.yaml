@@ -1,0 +1,31 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Give text room
+objective: Limit reading width and add breathing room inside the main region.
+outcomeId: O6
+conceptIds:
+  - css-spacing
+  - css-type
+prerequisiteQuestIds:
+  - CSS05
+difficulty: developing
+xpAward: 10
+hints:
+  question: Does max-width stop the text column from growing on a wide screen?
+  concept: A maximum width bounds a column; padding creates room between its edge and its contents.
+  nextStep: Add max-width and padding declarations to main.
+caseIds:
+  - normal-reading-width
+  - boundary-inner-space
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css

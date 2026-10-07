@@ -151,3 +151,67 @@ journeys:
             assessmentVersion: 1.0.0
             curriculumReview: approved
             technicalReview: approved
+      - id: COURSE-CSS-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: CSS01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS02
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS03
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS04
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS05
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS06
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS07
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS08
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS09
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS10
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS11
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+          - id: CSS12
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved

@@ -1,0 +1,10 @@
+id: CSS-CH02
+courseId: COURSE-CSS-FOUNDATIONS
+slug: reading-design
+title: Type, color, and space
+position: 2
+objectiveSummary: Make a document readable through type choices, contrast, and grouped spacing.
+questIds:
+  - CSS04
+  - CSS05
+  - CSS06

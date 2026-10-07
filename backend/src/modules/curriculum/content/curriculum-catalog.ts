@@ -92,6 +92,20 @@ export interface PublishedJourney {
   readonly chapters: readonly PublishedChapter[];
 }
 
+// Persisted chapters are ordered within a Journey. Authored chapter positions
+// restart for each Course, so they cannot be used as the Journey-wide key.
+export function chapterJourneyPosition(
+  journey: PublishedJourney,
+  chapter: PublishedChapter,
+): number {
+  const index = journey.chapters.findIndex(
+    (candidate) => candidate.metadata.id === chapter.metadata.id,
+  );
+  if (index < 0)
+    throw new Error('Published chapter is missing from its Journey');
+  return index + 1;
+}
+
 export interface PublishedCourse extends Omit<CatalogCourse, 'chapters'> {
   readonly chapters: readonly PublishedChapter[];
 }

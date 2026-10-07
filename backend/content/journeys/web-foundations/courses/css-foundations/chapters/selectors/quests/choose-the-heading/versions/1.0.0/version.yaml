@@ -1,0 +1,30 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Choose the heading
+objective: Use element and ID selectors to style distinct parts of a page.
+outcomeId: O5
+conceptIds:
+  - css-selectors
+prerequisiteQuestIds:
+  - CSS01
+difficulty: introductory
+xpAward: 10
+hints:
+  question: Which selector names every h1, and which one names only the element with id source?
+  concept: 'An element selector uses its tag name. An ID selector starts with # and matches one named element.'
+  nextStep: 'Add rules for h1 and #source in style.css.'
+caseIds:
+  - normal-heading-weight
+  - boundary-source-color
+exercise:
+  schemaVersion: 1
+  mode: static-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
