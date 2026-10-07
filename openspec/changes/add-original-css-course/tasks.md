@@ -8,8 +8,8 @@
 
 ## 2. Static candidate authoring
 
-- [ ] 2.1 Extend the targeted author command to accept a separate bounded CSS file for static web snapshots and reuse the browser Check harness; verify normal, missing, symlink, wrong-path, and over-limit CLI tests without executing learner source in Node.
-- [ ] 2.2 Add browser candidate tests for HTML/CSS reference, alternative, and deliberate-defect sources; verify the command reports exact version and ordered case outcomes, performs no learning writes, and fails on outcome mismatch.
+- [x] 2.1 Extend the targeted author command to accept a separate bounded CSS file for static web snapshots and reuse the browser Check harness; verify normal, missing, symlink, wrong-path, and over-limit CLI tests without executing learner source in Node.
+- [x] 2.2 Add browser candidate tests for HTML/CSS reference, alternative, and deliberate-defect sources; verify the command reports exact version and ordered case outcomes, performs no learning writes, and fails on outcome mismatch.
 - [ ] 2.3 Document exact static candidate command usage and fixture handling; verify the documented command on one draft CSS Quest before selecting publication.
 
 ## 3. Responsive static Preview

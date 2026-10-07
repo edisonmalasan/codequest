@@ -12,6 +12,7 @@ interface Fixture {
     exercise?: { mode: 'javascript' | 'static-web' | 'interactive-web' };
   };
   source: string;
+  cssSource?: string;
   expected: 'pass' | 'fail';
   version: string;
   published: boolean;
@@ -30,6 +31,9 @@ function loadFixture(): Fixture {
     !isRecord(raw.quest) ||
     typeof raw.source !== 'string' ||
     Buffer.byteLength(raw.source, 'utf8') > 65_536 ||
+    (raw.cssSource !== undefined &&
+      (typeof raw.cssSource !== 'string' ||
+        Buffer.byteLength(raw.cssSource, 'utf8') > 32_768)) ||
     !['pass', 'fail'].includes(String(raw.expected)) ||
     typeof raw.version !== 'string' ||
     typeof raw.published !== 'boolean'
@@ -69,6 +73,7 @@ function loadFixture(): Fixture {
           : undefined,
     },
     source: raw.source,
+    cssSource: typeof raw.cssSource === 'string' ? raw.cssSource : undefined,
     expected: raw.expected === 'pass' ? 'pass' : 'fail',
     version: raw.version,
     published: raw.published,
@@ -156,6 +161,16 @@ test('selected authored cases run through isolated browser Check', async ({
   await editor.click();
   await page.keyboard.press('Control+A');
   await page.keyboard.insertText(fixture.source);
+  if (fixture.cssSource !== undefined) {
+    await page.getByRole('tab', { name: 'style.css' }).click();
+    const cssEditor = page.getByRole('textbox', {
+      name: 'style.css code editor (css)',
+    });
+    await expect(cssEditor).toBeVisible();
+    await cssEditor.click();
+    await page.keyboard.press('Control+A');
+    await page.keyboard.insertText(fixture.cssSource);
+  }
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   const results = page
     .getByRole('heading', { name: 'Test results' })
@@ -173,12 +188,18 @@ test('selected authored cases run through isolated browser Check', async ({
     /timed out|timeout/i.test(status) ||
     rows.some((row) => /timed out|timeout/i.test(row))
   ) {
+    if (fixture.cssSource !== undefined)
+      await page.getByRole('tab', { name: 'index.html' }).click();
     expect(
       (await editor.locator('.cm-line').allTextContents()).join('\n'),
     ).toBe(fixture.source);
     await editor.click();
     await page.keyboard.press('Control+A');
-    await page.keyboard.insertText('console.log("recovered");');
+    await page.keyboard.insertText(
+      fixture.quest.exercise?.mode === 'static-web'
+        ? '<h1 id="heading">Recovered</h1>'
+        : 'console.log("recovered");',
+    );
     await page.getByRole('button', { name: 'Check', exact: true }).click();
     await expect(results.getByText(/Local check (passed|failed)/)).toBeVisible({
       timeout: 10_000,
