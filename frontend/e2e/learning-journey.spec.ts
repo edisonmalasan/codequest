@@ -12,6 +12,14 @@ const authOrigin = 'http://127.0.0.1:54321';
 const q01 = solutions[0];
 const q02 = solutions[1];
 
+test.beforeEach(async ({ page, browserName }) => {
+  if (browserName === 'webkit') {
+    // Dev-only hot reload is unrelated to learning behavior and crashes WebKit's
+    // network process in CI. Keep its socket local to the browser test.
+    await page.routeWebSocket('**/_next/webpack-hmr', () => {});
+  }
+});
+
 async function register(request: APIRequestContext) {
   const email = `learning-${randomUUID()}@example.test`;
   const response = await request.post(`${authOrigin}/auth/v1/signup`, {
