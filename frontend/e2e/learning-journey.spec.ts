@@ -744,6 +744,10 @@ test('published CSS Course reaches the final responsive guide with trusted accou
   await page.keyboard.insertText(
     '.field-guide { max-width: 64rem; padding: 1rem; } .guide-stops { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; } @media (max-width: 600px) { .guide-stops { grid-template-columns: 1fr; } }',
   );
+  await expect(finalCss).toContainText('grid-template-columns');
+  await expect(page.getByText('Saved on this device')).toBeVisible({
+    timeout: 15_000,
+  });
   await page.getByRole('button', { name: 'Preview', exact: true }).click();
   await showLearningPanel(page, 'Results');
   const finalPreview = page.getByRole('region', { name: 'Web preview' });
@@ -787,6 +791,11 @@ test('published CSS Course reaches the final responsive guide with trusted accou
     page.getByRole('link', { name: 'Finish the field guide, Completed' }),
   ).toBeVisible();
   await page.goto('/quests/finish-the-field-guide');
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'style.css' }).click();
+  await expect(finalCss).toContainText('grid-template-columns', {
+    timeout: 15_000,
+  });
   await page.reload();
   await showLearningPanel(page, 'Code');
   await page.getByRole('tab', { name: 'style.css' }).click();
