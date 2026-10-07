@@ -4,7 +4,7 @@ slug: css-foundations
 title: CSS Foundations
 summary: Shape a readable field guide with selectors, type, spacing, layout, and responsive rules.
 position: 2
-status: draft
+status: reviewed
 topics:
   - css
   - layout

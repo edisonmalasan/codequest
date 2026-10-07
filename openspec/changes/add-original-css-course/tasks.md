@@ -15,7 +15,7 @@
 ## 3. Responsive static Preview
 
 - [x] 3.1 Add named current, narrow, and wide width controls to the static Preview panel and contain overflow inside that panel; verify accessible state, same-snapshot resizing, source preservation, and no page-level overflow in component and browser tests.
-- [ ] 3.2 Reprobe the exact static preview build across Chromium, Firefox, and WebKit for width changes, denied external sinks/script/storage/navigation, forged messages, timeout recovery, and cleanup; record the commit/build and failed or untested cases in the technical review worksheet.
+- [x] 3.2 Reprobe the exact static preview build across Chromium, Firefox, and WebKit for width changes, denied external sinks/script/storage/navigation, forged messages, timeout recovery, and cleanup; record the commit/build and failed or untested cases in the technical review worksheet.
 
 ## 4. Original Course authoring
 
@@ -28,6 +28,6 @@
 
 ## 5. Reviewed publication and integrated gate
 
-- [ ] 5.1 Select the complete reviewed CSS Course atomically in the publication manifest only after groups 1–4 pass; verify a partial/unreviewed selection fails backend tests and that the HTML/JavaScript selected identities and versions are unchanged.
+- [x] 5.1 Select the complete reviewed CSS Course atomically in the publication manifest only after groups 1–4 pass; verify a partial/unreviewed selection fails backend tests and that the HTML/JavaScript selected identities and versions are unchanged.
 - [ ] 5.2 Exercise the exact published build from catalog through CSS final project in desktop and mobile browser projects, including Preview widths, Check, Submit, trusted progress/XP/unlock, refresh/revisit, pending recovery, and source persistence; record pass/fail and retest evidence without claiming real-provider or physical-device verification.
 - [ ] 5.3 Run `pnpm --dir backend curriculum:validate`, `pnpm api:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, and strict OpenSpec validation; review the final diff and document remaining founder, R04, interactive-publication, hosted, and physical gates before the Apply PR merges.

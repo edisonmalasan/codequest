@@ -1,6 +1,6 @@
 # CSS Foundations content and technical review
 
-Status on 2026-10-07: twelve authored `1.0.0` content / `1.0.0` assessment snapshots have passed local structure and candidate review. The Course remains unselected until the exact build, browser integration, and publication gates below pass. This is an implementation review, not founder acceptance or verified mastery.
+Status on 2026-10-07: twelve authored `1.0.0` content / `1.0.0` assessment snapshots have passed local structure, candidate, and Preview review. The complete Course is selected after that review; integrated browser and founder gates remain separate. This is an implementation review, not founder acceptance or verified mastery.
 
 | Chapter | Stable Quests | Learning sequence |
 | --- | --- | --- |
@@ -42,10 +42,12 @@ The `content:test` authoring harness reported ordered case IDs and exact `1.0.0/
 | Originality, order, hints, and semantic starters | Implementation review pass | Dated review above; founder quality acceptance remains open |
 | Reference, variant, and defect Check | Local Chromium pass | 36 outcomes above, including the CSS05 retry |
 | Responsive final-page Preview | Local Chromium pass | CSS12 narrow single track and wide two-track probe on 2026-10-07 |
-| Three-engine static Preview containment | Pending exact-build record | Reprobe width, denied sinks, script/storage/navigation, forged messages, timeout recovery, and cleanup after the implementation commit |
-| Complete atomic publication | Open | Select all twelve reviewed snapshots together; prove partial or unreviewed selection fails |
+| Three-engine static Preview containment | Local pass on `1225666` | 18/18 Chromium, Firefox, and WebKit cases passed: width changes, denied external sinks/script/storage/navigation, forged messages, timeout recovery, and single-frame cleanup |
+| Complete atomic publication | Local pass | All twelve `1.0.0/1.0.0` snapshots selected together; 18 focused catalog tests passed, including incomplete inventory, missing Quest review, and draft Course rejection; existing HTML/JavaScript identities unchanged |
 | Integrated account journey | Open | Catalog to final project, local Check, accepted Submit, trusted progress/XP/unlock, refresh, and pending recovery on desktop/mobile browser projects |
 | Founder product acceptance | Open | Review the exact merged build in the real application |
 | Real-provider Auth, hosted and physical gates | Open | Separate R04 and Phase 38 evidence; no beta release candidate selected |
 
 Static Preview remains script-disabled, opaque, and on its dedicated origin. CSS Check rejects unsupported CSS and cannot grant account authority. This Course does not select the separate interactive Quest. Phase 38 remains paused and NO GO.
+
+The 18-case containment probe ran on the pushed implementation commit `1225666` on 2026-10-07. Its build uses local Next.js development servers and synthetic source; it is not hosted, physical-device, or beta-release evidence. Any later preview/security code change requires a fresh exact-build probe.

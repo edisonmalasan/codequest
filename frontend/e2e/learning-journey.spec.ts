@@ -57,6 +57,100 @@ async function showLearningPanel(
   }
 }
 
+interface CssCourseQuest {
+  id: string;
+  slug: string;
+  contentVersion: string;
+  assessmentVersion: string;
+  cases: Array<{
+    id: string;
+    kind: 'css-declaration';
+    selector: string;
+    property: string;
+    expectedValue: string;
+    media?: { type: 'min-width' | 'max-width'; widthPx: number };
+  }>;
+  exercise: {
+    mode: 'static-web';
+    files: Array<{
+      id: string;
+      language: 'html' | 'css';
+      starterSource: string;
+    }>;
+  };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function cssCourseQuest(value: unknown): value is CssCourseQuest {
+  if (!isRecord(value)) return false;
+  const quest = value;
+  if (
+    typeof quest.id !== 'string' ||
+    typeof quest.slug !== 'string' ||
+    typeof quest.contentVersion !== 'string' ||
+    typeof quest.assessmentVersion !== 'string' ||
+    !Array.isArray(quest.cases) ||
+    !isRecord(quest.exercise)
+  )
+    return false;
+  const exercise = quest.exercise;
+  return (
+    exercise.mode === 'static-web' &&
+    Array.isArray(exercise.files) &&
+    exercise.files.length === 2 &&
+    exercise.files.every(
+      (file: unknown) =>
+        isRecord(file) &&
+        typeof file.id === 'string' &&
+        ['html', 'css'].includes(String(file.language)) &&
+        typeof file.starterSource === 'string',
+    ) &&
+    quest.cases.length >= 2 &&
+    quest.cases.every(
+      (item: unknown) =>
+        isRecord(item) &&
+        typeof item.id === 'string' &&
+        item.kind === 'css-declaration' &&
+        typeof item.selector === 'string' &&
+        typeof item.property === 'string' &&
+        typeof item.expectedValue === 'string' &&
+        (item.media === undefined ||
+          (isRecord(item.media) &&
+            ['min-width', 'max-width'].includes(String(item.media.type)) &&
+            Number.isInteger(item.media.widthPx))),
+    )
+  );
+}
+
+function cssCaseSource(quest: CssCourseQuest): string {
+  const files = quest.exercise.files.map((file) => ({
+    id: file.id,
+    language: file.language,
+    source:
+      file.language === 'css'
+        ? `${file.starterSource}\n${quest.cases
+            .map((item) => {
+              const rule = `${item.selector} { ${item.property}: ${item.expectedValue}; }`;
+              return item.media
+                ? `@media (${item.media.type}: ${item.media.widthPx}px) { ${rule} }`
+                : rule;
+            })
+            .join('\n')}`
+        : file.starterSource,
+  }));
+  return JSON.stringify({
+    schemaVersion: 1,
+    questId: quest.id,
+    contentVersion: quest.contentVersion,
+    assessmentVersion: quest.assessmentVersion,
+    mode: 'static-web',
+    files,
+  });
+}
+
 test('accepted Q01 links owner attempt, progress, XP, streak and Q02 unlock exactly once', async ({
   request,
 }) => {
@@ -484,4 +578,215 @@ test('published HTML Course flows from map through inert Preview, Check, accepte
   expect(
     await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
   ).toMatchObject({ totalXp: 10 });
+});
+
+test('published CSS Course reaches the final responsive guide with trusted account recovery', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(240_000);
+  let authorization: string | undefined;
+  page.on('request', (entry) => {
+    if (entry.url().endsWith('/api/v1/learning-sync/CSS01'))
+      authorization = entry.headers().authorization;
+  });
+  await page.goto('/register?next=%2Fcourses');
+  await page
+    .getByLabel('Email')
+    .fill(`css-course-${randomUUID()}@example.test`);
+  await page.getByLabel('Password').fill('testing-password-123');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await expect(page).toHaveURL(/\/courses$/);
+  await page.reload();
+  await page.getByRole('searchbox', { name: 'Search courses' }).fill('CSS');
+  const courseLink = page.getByRole('link', { name: /CSS Foundations/ });
+  await expect(courseLink).toHaveAttribute('href', '/courses/css-foundations');
+  await page.goto('/courses/css-foundations');
+  await expect(
+    page.getByRole('heading', { name: 'CSS Foundations' }),
+  ).toBeVisible();
+  await expect(page.getByText('4 chapters · 12 exercises')).toBeVisible();
+  const orderedLessons = await page
+    .locator('main ol ol > li')
+    .allTextContents();
+  expect(orderedLessons).toHaveLength(12);
+  expect(orderedLessons[0]).toContain('Style a field note');
+  expect(orderedLessons[11]).toContain('Finish the field guide');
+  await expect(
+    page.getByRole('link', { name: 'Style a field note, Available' }),
+  ).toHaveAttribute('href', '/quests/style-a-note');
+
+  await page.goto('/quests/style-a-note');
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'style.css' }).click();
+  const firstCss = page.getByRole('textbox', {
+    name: 'style.css code editor (css)',
+  });
+  await expect(firstCss).toBeVisible({ timeout: 30_000 });
+  await firstCss.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '.field-note { color: navy; background-color: #f2e9d8; }',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  const preview = page.getByRole('region', { name: 'Web preview' });
+  await expect(preview.getByRole('status')).toContainText(
+    'Static preview ready',
+  );
+  await preview.getByRole('button', { name: 'Narrow · 390px' }).click();
+  await expect(
+    preview.getByRole('button', { name: 'Narrow · 390px' }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed/)).toBeVisible();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
+  expect(authorization).toMatch(/^Bearer /);
+  if (!authorization) throw new Error('CSS01 request was not authorized');
+  const own = { headers: { Authorization: authorization } };
+  expect(
+    await (
+      await request.get(`${apiOrigin}/api/v1/quests/style-a-note/progress`, own)
+    ).json(),
+  ).toMatchObject({ status: 'completed' });
+  expect(
+    await (
+      await request.get(
+        `${apiOrigin}/api/v1/quests/choose-the-heading/progress`,
+        own,
+      )
+    ).json(),
+  ).toMatchObject({ availability: 'available' });
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Exercise sequence' })
+      .getByRole('link', { name: 'Next: Choose the heading' }),
+  ).toBeVisible();
+  await page
+    .getByRole('navigation', { name: 'Exercise sequence' })
+    .getByRole('link', { name: 'Next: Choose the heading' })
+    .click();
+  await expect(page).toHaveURL(/\/quests\/choose-the-heading$/);
+
+  for (const slug of [
+    'choose-the-heading',
+    'resolve-a-rule',
+    'set-reading-type',
+    'mark-an-observation',
+    'give-text-room',
+    'frame-a-card',
+    'align-a-toolbar',
+    'build-a-grid',
+    'stack-at-narrow-width',
+    'open-a-wide-layout',
+  ]) {
+    const detailResponse = await request.get(
+      `${apiOrigin}/api/v1/quests/${slug}`,
+    );
+    expect(detailResponse.status()).toBe(200);
+    const detail: unknown = await detailResponse.json();
+    if (!cssCourseQuest(detail))
+      throw new Error(`Invalid static CSS Quest payload for ${slug}`);
+    const result = await request.post(
+      `${apiOrigin}/api/v1/quests/${slug}/attempts`,
+      {
+        ...own,
+        data: {
+          clientEventId: randomUUID(),
+          contentVersion: detail.contentVersion,
+          assessmentVersion: detail.assessmentVersion,
+          source: cssCaseSource(detail),
+          report: {
+            checkId: randomUUID(),
+            status: 'completed',
+            passed: true,
+            cases: detail.cases.map((item) => ({
+              id: item.id,
+              label: item.id,
+              status: 'passed',
+              message: 'Passed',
+            })),
+            failedCaseIds: [],
+            feedback: 'All passed',
+            durationMs: 12,
+          },
+        },
+      },
+    );
+    expect(result.status()).toBe(201);
+    expect(await result.json()).toMatchObject({
+      questId: detail.id,
+      accepted: true,
+      reportedPassed: true,
+    });
+  }
+  expect(
+    await (
+      await request.get(
+        `${apiOrigin}/api/v1/quests/finish-the-field-guide/progress`,
+        own,
+      )
+    ).json(),
+  ).toMatchObject({ availability: 'available' });
+
+  await page.goto('/quests/finish-the-field-guide');
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'style.css' }).click();
+  const finalCss = page.getByRole('textbox', {
+    name: 'style.css code editor (css)',
+  });
+  await expect(finalCss).toBeVisible({ timeout: 30_000 });
+  await finalCss.click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(
+    '.field-guide { max-width: 64rem; padding: 1rem; } .guide-stops { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; } @media (max-width: 600px) { .guide-stops { grid-template-columns: 1fr; } }',
+  );
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  const finalPreview = page.getByRole('region', { name: 'Web preview' });
+  await expect(finalPreview.getByRole('status')).toContainText(
+    'Static preview ready',
+  );
+  await finalPreview.getByRole('button', { name: 'Narrow · 390px' }).click();
+  await finalPreview.getByRole('button', { name: 'Wide · 1024px' }).click();
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed/)).toBeVisible();
+
+  await page.route('**/api/v1/learning-sync/CSS12', (route) => route.abort());
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(
+    page.getByText(/delivery is pending or uncertain/),
+  ).toBeVisible();
+  await showLearningPanel(page, 'Code');
+  await expect(finalCss).toContainText('grid-template-columns');
+  await page.unroute('**/api/v1/learning-sync/CSS12');
+  await page.goto('/account');
+  const retry = page.getByRole('button', { name: 'Retry saved submissions' });
+  if (await retry.isVisible()) await retry.click();
+  await expect
+    .poll(async () => {
+      const progress = await request.get(
+        `${apiOrigin}/api/v1/quests/finish-the-field-guide/progress`,
+        own,
+      );
+      return (await progress.json()).status;
+    })
+    .toBe('completed');
+  expect(
+    await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
+  ).toMatchObject({ totalXp: 120 });
+  await page.goto('/courses/css-foundations');
+  await expect(
+    page.getByRole('link', { name: 'Finish the field guide, Completed' }),
+  ).toBeVisible();
+  await page.goto('/quests/finish-the-field-guide');
+  await page.reload();
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'style.css' }).click();
+  await expect(finalCss).toContainText('grid-template-columns');
 });
