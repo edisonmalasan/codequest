@@ -20,11 +20,11 @@ The accountable acceptance owner for every `REQUIRED` row is the founder at R15,
 | V02 | Global application shell and navigation | No persistent full product shell; `NOT YET TECHNICALLY IMPLEMENTED` | R02–R03; product/frontend |
 | V03 | Course discovery, catalog search/filter and truthful results | No multi-course catalog; `NOT YET TECHNICALLY IMPLEMENTED` | R05; product/frontend/backend |
 | V04 | Distinct journeys, courses, chapters and exercises with stable navigation | One Journey; Course currently aliases Journey; `TECHNICALLY IMPLEMENTED` only for old model | R05; curriculum/backend/frontend |
-| V05 | Complete HTML learning course | No published HTML course; `NOT YET TECHNICALLY IMPLEMENTED` | R08; curriculum/runtime |
-| V06 | Complete CSS learning course | No published CSS course; `NOT YET TECHNICALLY IMPLEMENTED` | R08; curriculum/runtime |
+| V05 | Complete HTML learning course | Four-chapter, twelve-Quest original HTML Foundations Course published; `TECHNICALLY IMPLEMENTED`, founder and release acceptance open | R08; curriculum/runtime |
+| V06 | Complete CSS learning course | Four-chapter, twelve-Quest original CSS Foundations Course published; `TECHNICALLY IMPLEMENTED`, founder and release acceptance open | R08; curriculum/runtime |
 | V07 | Complete JavaScript learning course | Foundations 24 quests + capstone published; `TECHNICALLY IMPLEMENTED`, product quality unaccepted | R06–R08; curriculum/product |
 | V08 | DOM/browser-interaction learning with safe executable projects | Current assessment excludes DOM and preview scripts; `NOT YET TECHNICALLY IMPLEMENTED` | R07A/R08; security/runtime/curriculum |
-| V09 | Additional complete original reference-equivalent course tracks | One published course; `NOT YET TECHNICALLY IMPLEMENTED` for breadth | R12A–R12E; curriculum/runtime |
+| V09 | Additional complete original reference-equivalent course tracks | JavaScript, HTML, and CSS Foundations published; `NOT YET TECHNICALLY IMPLEMENTED` for the required additional breadth | R12A–R12E; curriculum/runtime |
 | V10 | Persistent desktop lesson / editor / output-preview panes | Lesson and workspace vertically separated; `NOT YET TECHNICALLY IMPLEMENTED` for target | R06; product/frontend |
 | V11 | Intentional tablet/mobile learning layouts | Responsive fragments exist; target shell absent; `NOT YET TECHNICALLY IMPLEMENTED` for target | R06/R13; frontend/accessibility |
 | V12 | CodeMirror editing and durable exercise drafts | Reusable workspace exists; `TECHNICALLY IMPLEMENTED` | R06–R07/R13; frontend |
