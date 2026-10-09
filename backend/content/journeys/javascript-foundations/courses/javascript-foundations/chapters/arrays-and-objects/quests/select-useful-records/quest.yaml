@@ -4,5 +4,14 @@ slug: select-useful-records
 position: 4
 kind: instructional
 guestEligible: false
-currentVersion: 1.0.0
-transitions: []
+currentVersion: 1.1.0
+transitions:
+  - from: 1.0.0
+    to: 1.1.0
+    fromAssessment: 1.0.0
+    toAssessment: 1.0.0
+    compatibility: compatible
+    pendingWork: accept-new
+    reason: Uses an adjacent selection example while retaining the same quantity criterion and cases.
+    curriculumReview: approved
+    technicalReview: approved

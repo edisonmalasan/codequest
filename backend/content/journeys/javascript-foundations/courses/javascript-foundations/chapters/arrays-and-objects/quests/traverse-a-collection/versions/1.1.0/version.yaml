@@ -1,0 +1,24 @@
+contentVersion: 1.1.0
+assessmentVersion: 1.0.0
+title: Traverse a collection
+objective: Return a total by visiting every array element, including the last.
+outcomeId: O6
+conceptIds:
+  - js-arrays
+  - js-loops
+  - js-functions
+prerequisiteQuestIds:
+  - Q19
+difficulty: developing
+xpAward: 10
+hints:
+  question: Are you adding a position or the value stored there?
+  concept: numbers[i] reads an element; i only identifies its position.
+  nextStep:
+    Replace the added index with the indexed element and test [] before a
+    longer array.
+caseIds:
+  - several-values
+  - empty-array
+  - single-value
+  - mixed-signs

@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import pwa from './playwright.pwa.config';
 
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
         NODE_ENV: 'test',
         HOST: '127.0.0.1',
         PORT: '3001',
-        RATE_LIMIT_MAX: '1000',
+        RATE_LIMIT_MAX: '10000',
         CORS_ORIGINS: 'http://127.0.0.1:3200',
         DATABASE_URL:
           'postgresql://codequest:local-fixture@127.0.0.1:5432/codequest_test',
@@ -37,5 +37,9 @@ export default defineConfig({
         NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3200',
       },
     })),
+  ],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
   ],
 });
