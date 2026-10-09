@@ -102,6 +102,45 @@ describe('reviewed JavaScript Foundations course', () => {
     );
   });
 
+  it('selects reviewed JavaScript quality snapshots without changing assessment or rewards', () => {
+    const catalog = loadCurriculumCatalog(root);
+    const authored = loadAuthoredCurriculum(root);
+    const journey = catalog.journeys.find(
+      (item) => item.metadata.id === 'JAVASCRIPT-FOUNDATIONS',
+    );
+    const authoredJourney = authored.journeys.find(
+      (item) => item.metadata.id === 'JAVASCRIPT-FOUNDATIONS',
+    );
+    if (!journey) throw new Error('JavaScript Foundations was not published');
+    if (!authoredJourney)
+      throw new Error('JavaScript Foundations authoring tree was not found');
+    const quests = journey.chapters.flatMap((chapter) => chapter.quests);
+    const authoredQuests = authoredJourney.chapters.flatMap(
+      (chapter) => chapter.quests,
+    );
+    const revisedIds = new Set(['Q05', 'Q20', 'Q22']);
+
+    for (const quest of quests) {
+      const revised = revisedIds.has(quest.metadata.id);
+      expect(quest.activeSnapshot.metadata.contentVersion).toBe(
+        revised || quest.metadata.id === 'Q01' ? '1.1.0' : '1.0.0',
+      );
+      expect(quest.activeSnapshot.metadata.assessmentVersion).toBe('1.0.0');
+      expect(quest.activeSnapshot.metadata.xpAward).toBe(10);
+      if (!revised) continue;
+
+      const historical = authoredQuests.find(
+        (item) => item.metadata.id === quest.metadata.id,
+      )?.snapshots['1.0.0'];
+      expect(historical).toBeDefined();
+      if (!historical) throw new Error('Historical snapshot was not found');
+      expect(quest.activeSnapshot.cases).toEqual(historical.cases);
+      expect(quest.activeSnapshot.starterCode).toEqual(historical.starterCode);
+      expect(quest.activeSnapshot.lesson).not.toBe(historical.lesson);
+      expect(completionIsCurrent(quest, '1.0.0', '1.0.0')).toBe(true);
+    }
+  });
+
   it('fits the existing local runtime and backend report bounds without running source', () => {
     const catalog = loadCurriculumCatalog(root);
     const service = new CurriculumService(catalog);

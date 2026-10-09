@@ -1,0 +1,23 @@
+contentVersion: 1.1.0
+assessmentVersion: 1.0.0
+title: Select useful records
+objective: Select available record names while preserving the original order.
+outcomeId: O6
+conceptIds:
+  - js-objects
+  - js-arrays
+  - js-branches
+prerequisiteQuestIds:
+  - Q21
+difficulty: developing
+xpAward: 10
+hints:
+  question: Does zero mean available stock?
+  concept: Use a strict positive comparison and append in traversal order.
+  nextStep: Change the threshold condition, then test an empty array and a
+    zero-only record.
+caseIds:
+  - mixed-stock
+  - empty-records
+  - zero-stock
+  - repeated-name

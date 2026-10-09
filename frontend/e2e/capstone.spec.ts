@@ -3,6 +3,11 @@ import solutions from './fixtures/capstone-solutions.json';
 
 const apiOrigin = 'http://127.0.0.1:3001';
 
+async function showPanel(page: Page, panel: 'Code' | 'Results') {
+  if ((page.viewportSize()?.width ?? 1280) <= 1100)
+    await page.getByRole('button', { name: panel, exact: true }).click();
+}
+
 async function session(context: BrowserContext): Promise<void> {
   const expires = Math.floor(Date.now() / 1000) + 3600;
   const userId = '00000000-0000-4000-8000-000000000030';
@@ -27,6 +32,7 @@ async function session(context: BrowserContext): Promise<void> {
 }
 
 async function edit(page: Page, source: string): Promise<void> {
+  await showPanel(page, 'Code');
   await page
     .getByRole('heading', { name: 'Editor Workspace' })
     .scrollIntoViewIfNeeded();
@@ -40,6 +46,7 @@ async function edit(page: Page, source: string): Promise<void> {
 
 async function check(page: Page, passed: boolean): Promise<void> {
   await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showPanel(page, 'Results');
   await expect(
     page.getByText(passed ? /Local check passed/ : /Local check failed/),
   ).toBeVisible({ timeout: 15_000 });
@@ -88,6 +95,7 @@ test('CAP01 publishes separately, checks alternatives and recovers after timeout
   ])
     expect(quest).not.toHaveProperty(privateField);
   await page.goto('/quests/inventory-manager');
+  await showPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible();
@@ -126,6 +134,7 @@ test('CAP01 keeps written work on device and captures explicit offline Submit', 
   });
   await page.goto('/quests/inventory-manager');
   await edit(page, solutions.reference);
+  await showPanel(page, 'Code');
   await page
     .getByRole('textbox', { name: 'Debug explanation' })
     .fill(
@@ -139,6 +148,7 @@ test('CAP01 keeps written work on device and captures explicit offline Submit', 
   await page.getByRole('button', { name: /Save locally/ }).click();
   await expect(page.getByText('Saved on this device')).toBeVisible();
   await page.reload();
+  await showPanel(page, 'Code');
   await expect(
     page.getByRole('textbox', { name: 'Debug explanation' }),
   ).toHaveValue(/Empty records reveal/);

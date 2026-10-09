@@ -6,6 +6,7 @@ import {
   type Page,
 } from '@playwright/test';
 import solutions from './fixtures/foundations-solutions.json';
+import capstoneSolutions from './fixtures/capstone-solutions.json';
 
 const apiOrigin = 'http://127.0.0.1:3001';
 const authOrigin = 'http://127.0.0.1:54321';
@@ -18,6 +19,157 @@ test.beforeEach(async ({ page, browserName }) => {
     // network process in CI. Keep its socket local to the browser test.
     await page.routeWebSocket('**/_next/webpack-hmr', () => {});
   }
+});
+
+test('selected JavaScript course reaches accepted capstone without losing local source', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(300_000);
+  let authorization: string | undefined;
+  page.on('request', (entry) => {
+    if (entry.url().endsWith('/api/v1/learning-sync/Q01'))
+      authorization = entry.headers().authorization;
+  });
+  await page.goto('/register?next=%2Fcourses');
+  await page.getByLabel('Email').fill(`js-course-${randomUUID()}@example.test`);
+  await page.getByLabel('Password').fill('testing-password-123');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await expect(page).toHaveURL(/\/courses$/);
+  await page
+    .getByRole('searchbox', { name: 'Search courses' })
+    .fill('JavaScript');
+  await expect(
+    page.getByRole('link', { name: /JavaScript Foundations/ }),
+  ).toHaveAttribute('href', '/courses/javascript-foundations');
+  await page.goto('/courses/javascript-foundations');
+  await expect(page.locator('main ol ol > li')).toHaveCount(25);
+  await expect(
+    page.getByRole('link', { name: 'First message, Available' }),
+  ).toHaveAttribute('href', '/quests/first-message');
+
+  await page.goto('/quests/first-message');
+  await page.getByText('1. Question hint').click();
+  await showLearningPanel(page, 'Code');
+  await edit(page, q01.reference);
+  await page.getByRole('button', { name: 'Run', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText('I am ready to code!').last()).toBeVisible();
+  await showLearningPanel(page, 'Code');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed/)).toBeVisible();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
+  expect(authorization).toMatch(/^Bearer /);
+  if (!authorization) throw new Error('Q01 request was not authorized');
+  const own = { headers: { Authorization: authorization } };
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Exercise sequence' })
+      .getByRole('link', { name: 'Next: Name the values' }),
+  ).toBeVisible();
+
+  // The isolated browser curriculum suite exercises each real Check. These
+  // bounded client reports exercise the account prerequisite/reward chain.
+  for (const solution of solutions.slice(1)) {
+    const detailResponse = await request.get(
+      `${apiOrigin}/api/v1/quests/${solution.slug}`,
+    );
+    expect(detailResponse.status()).toBe(200);
+    const detail: {
+      id: string;
+      contentVersion: string;
+      assessmentVersion: string;
+      cases: Array<{ id: string }>;
+    } = await detailResponse.json();
+    const result = await request.post(
+      `${apiOrigin}/api/v1/quests/${solution.slug}/attempts`,
+      {
+        ...own,
+        data: {
+          clientEventId: randomUUID(),
+          contentVersion: detail.contentVersion,
+          assessmentVersion: detail.assessmentVersion,
+          source: solution.reference,
+          report: {
+            checkId: randomUUID(),
+            status: 'completed',
+            passed: true,
+            cases: detail.cases.map((item) => ({
+              id: item.id,
+              label: item.id,
+              status: 'passed',
+              message: 'Passed',
+            })),
+            failedCaseIds: [],
+            feedback: 'All passed',
+            durationMs: 12,
+          },
+        },
+      },
+    );
+    expect(result.status()).toBe(201);
+    expect(await result.json()).toMatchObject({
+      questId: detail.id,
+      accepted: true,
+      reportedPassed: true,
+    });
+  }
+
+  expect(
+    await (
+      await request.get(
+        `${apiOrigin}/api/v1/quests/inventory-manager/progress`,
+        own,
+      )
+    ).json(),
+  ).toMatchObject({ availability: 'available' });
+  await page.goto('/quests/inventory-manager');
+  await showLearningPanel(page, 'Code');
+  await edit(page, capstoneSolutions.reference);
+  await page
+    .getByRole('textbox', { name: 'Debug explanation' })
+    .fill(
+      'An empty collection exposes first-item access; return a safe result.',
+    );
+  await page
+    .getByRole('textbox', { name: 'Transfer response' })
+    .fill('An inclusive threshold retains records equal to the boundary.');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showLearningPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed/)).toBeVisible();
+  await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect(page.getByText(/Submission delivery confirmed/)).toBeVisible();
+  expect(
+    await (
+      await request.get(
+        `${apiOrigin}/api/v1/quests/inventory-manager/progress`,
+        own,
+      )
+    ).json(),
+  ).toMatchObject({ status: 'completed' });
+  expect(
+    await (await request.get(`${apiOrigin}/api/v1/xp`, own)).json(),
+  ).toMatchObject({ totalXp: 250 });
+  await page.goto('/courses/javascript-foundations');
+  await expect(
+    page.getByRole('link', { name: 'Quest inventory manager, Completed' }),
+  ).toBeVisible();
+  await page.goto('/quests/inventory-manager');
+  await showLearningPanel(page, 'Code');
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  const savedSource = async () =>
+    (await editor.locator('.cm-line').allTextContents()).join('\n');
+  await expect.poll(savedSource).toBe(capstoneSolutions.reference);
+  await page.reload();
+  await showLearningPanel(page, 'Code');
+  await expect.poll(savedSource).toBe(capstoneSolutions.reference);
+  await expect(
+    page.getByRole('textbox', { name: 'Debug explanation' }),
+  ).toHaveValue(/empty collection/i);
 });
 
 async function register(request: APIRequestContext) {

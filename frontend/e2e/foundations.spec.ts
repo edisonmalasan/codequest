@@ -3,7 +3,13 @@ import solutions from './fixtures/foundations-solutions.json';
 
 const apiOrigin = 'http://127.0.0.1:3001';
 
+async function showPanel(page: Page, panel: 'Lesson' | 'Code' | 'Results') {
+  if ((page.viewportSize()?.width ?? 1280) <= 1100)
+    await page.getByRole('button', { name: panel, exact: true }).click();
+}
+
 async function edit(page: Page, source: string) {
+  await showPanel(page, 'Code');
   await page
     .getByRole('heading', { name: 'Editor Workspace' })
     .scrollIntoViewIfNeeded();
@@ -17,6 +23,7 @@ async function edit(page: Page, source: string) {
 
 async function check(page: Page, passed: boolean) {
   await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showPanel(page, 'Results');
   await expect(
     page.getByText(passed ? /Local check passed/ : /Local check failed/),
   ).toBeVisible({ timeout: 9_000 });
@@ -69,6 +76,7 @@ for (const solution of solutions) {
     );
     expect(response.status()).toBe(200);
     await page.goto(`/quests/${solution.slug}`);
+    await showPanel(page, 'Code');
     await expect(
       page.getByRole('region', { name: 'Quest workspace' }),
     ).toBeVisible();
@@ -78,6 +86,7 @@ for (const solution of solutions) {
     await check(page, true);
     await edit(page, solution.defective);
     await check(page, false);
+    await showPanel(page, 'Code');
     const editor = page.getByRole('textbox', {
       name: 'main.js code editor (javascript)',
     });
@@ -120,23 +129,47 @@ test('published course and guest Q01-Q04 survive reload without account authorit
   await expect(
     page.getByRole('heading', { name: 'JavaScript Foundations', exact: true }),
   ).toBeVisible();
+  await page.goto('/courses/javascript-foundations');
+  await expect(
+    page.getByRole('link', {
+      name: 'First message, Guest practice · provisional',
+    }),
+  ).toBeVisible();
   for (const solution of solutions.slice(0, 4)) {
     await page.goto(`/quests/${solution.slug}`);
     await expect(
       page.getByRole('heading', { name: 'Goal', exact: true }),
     ).toBeVisible();
+    await showPanel(page, 'Code');
     await edit(page, solution.reference);
+    if (solution.id === 'Q01') {
+      await page.getByRole('button', { name: 'Run', exact: true }).click();
+      await showPanel(page, 'Results');
+      await expect(page.getByText('I am ready to code!').last()).toBeVisible();
+      await showPanel(page, 'Lesson');
+      await page.getByText('1. Question hint').click();
+      await expect(page.getByText('2. Concept hint')).toBeVisible();
+      await showPanel(page, 'Code');
+    }
     await check(page, true);
     await expect(
       page.getByText(/Provisional completion saved on this device/),
     ).toBeVisible();
     await page.reload();
+    await showPanel(page, 'Results');
     await expect(
       page.getByText(/Provisional completion saved on this device/),
     ).toBeVisible();
     await expect(
       page.getByRole('button', { name: 'Submit', exact: true }),
     ).toHaveCount(0);
+    if (solution.id === 'Q01') {
+      await expect(
+        page
+          .getByRole('navigation', { name: 'Exercise sequence' })
+          .getByRole('link', { name: 'Next: Name the values' }),
+      ).toBeVisible();
+    }
   }
   await page.setViewportSize({ width: 390, height: 780 });
   expect(

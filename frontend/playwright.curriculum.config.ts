@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import pwa from './playwright.pwa.config';
 
 export default defineConfig({
@@ -37,5 +37,9 @@ export default defineConfig({
         NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3200',
       },
     })),
+  ],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
   ],
 });
