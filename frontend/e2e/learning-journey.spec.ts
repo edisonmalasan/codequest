@@ -43,7 +43,7 @@ test('selected JavaScript course reaches accepted capstone without losing local 
     page.getByRole('link', { name: /JavaScript Foundations/ }),
   ).toHaveAttribute('href', '/courses/javascript-foundations');
   await page.goto('/courses/javascript-foundations');
-  await expect(page.locator('main ol ol > li')).toHaveCount(25);
+  await expect(page.getByText('7 chapters · 25 exercises')).toBeVisible();
   await expect(
     page.getByRole('link', { name: 'First message, Available' }),
   ).toHaveAttribute('href', '/quests/first-message');
