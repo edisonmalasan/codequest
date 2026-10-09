@@ -16,6 +16,8 @@ Status snapshot: 2026-10-10. Update this section when the phase or OpenSpec stag
 
 **R08 JavaScript Course quality archived (2026-10-10):** [The quality review change](../openspec/changes/archive/2026-10-10-refresh-javascript-foundations-quality/proposal.md) audited selected Q01–Q24 and CAP01, selected immutable editorial Q05/Q20/Q22 content 1.1.0 with unchanged assessment, and recorded [exact-build synthetic integration evidence](javascript-foundations-r08-quality.md) in Apply [PR #232](https://github.com/edisonmalasan/codequest/pull/232). Canonical spec Sync [PR #233](https://github.com/edisonmalasan/codequest/pull/233) and Apply passed required CI. Founder acceptance, real-provider Auth, selected interactive publication, and release gates remain open; R08 and Phase 38 are not complete.
 
+**R08 DOM Foundations proposal (2026-10-10):** [The active Course proposal](../openspec/changes/add-dom-interactions-course/proposal.md) scopes a complete original browser-interaction Course and the first selected interactive Quest's exact-build publication gate. This is planning only; no DOM Course is selected, and no interactive Quest is published by this proposal. R08 founder acceptance and Phase 38 **PAUSED / NO GO** remain unchanged.
+
 | Item | Current status |
 | --- | --- |
 | Local developer environment | [Scoped frontend/backend setup](../openspec/changes/archive/2026-10-01-scoped-local-environment/proposal.md) implemented, synced, and archived; root `pnpm dev` and loopback origin isolation verified with synthetic local configuration. Beta release gates remain open. |
