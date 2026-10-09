@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import curriculum from './playwright.curriculum.config';
@@ -13,6 +13,7 @@ const servers = Array.isArray(curriculum.webServer)
 export default defineConfig({
   ...curriculum,
   testMatch: '**/analytics.spec.ts',
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: servers.map((server, index) =>
     index === 0
       ? {
