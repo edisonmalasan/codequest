@@ -28,7 +28,7 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'publishable-local-author-fixture',
       NEXT_PUBLIC_SITE_URL: appOrigin,
       NEXT_PUBLIC_RUNTIME_ORIGIN: runtimeOrigin,
-      NEXT_PUBLIC_PREVIEW_ORIGIN: 'http://localhost:3311',
+      NEXT_PUBLIC_PREVIEW_ORIGIN: `http://127.0.0.2:${appPort}`,
     },
     timeout: 120_000,
   },

@@ -12,6 +12,7 @@ interface Fixture {
     exercise?: { mode: 'javascript' | 'static-web' | 'interactive-web' };
   };
   source: string;
+  htmlSource?: string;
   cssSource?: string;
   expected: 'pass' | 'fail';
   version: string;
@@ -31,6 +32,9 @@ function loadFixture(): Fixture {
     !isRecord(raw.quest) ||
     typeof raw.source !== 'string' ||
     Buffer.byteLength(raw.source, 'utf8') > 65_536 ||
+    (raw.htmlSource !== undefined &&
+      (typeof raw.htmlSource !== 'string' ||
+        Buffer.byteLength(raw.htmlSource, 'utf8') > 65_536)) ||
     (raw.cssSource !== undefined &&
       (typeof raw.cssSource !== 'string' ||
         Buffer.byteLength(raw.cssSource, 'utf8') > 32_768)) ||
@@ -73,6 +77,7 @@ function loadFixture(): Fixture {
           : undefined,
     },
     source: raw.source,
+    htmlSource: typeof raw.htmlSource === 'string' ? raw.htmlSource : undefined,
     cssSource: typeof raw.cssSource === 'string' ? raw.cssSource : undefined,
     expected: raw.expected === 'pass' ? 'pass' : 'fail',
     version: raw.version,
@@ -144,6 +149,8 @@ test('selected authored cases run through isolated browser Check', async ({
         ? 'index.html code editor (html)'
         : 'main.js code editor (javascript)',
   });
+  if (fixture.quest.exercise?.mode === 'interactive-web')
+    await page.getByRole('tab', { name: 'main.js' }).click();
   const loadEditor = page.getByRole('button', { name: 'Load code editor' });
   await expect
     .poll(
@@ -161,6 +168,16 @@ test('selected authored cases run through isolated browser Check', async ({
   await editor.click();
   await page.keyboard.press('Control+A');
   await page.keyboard.insertText(fixture.source);
+  if (fixture.htmlSource !== undefined) {
+    await page.getByRole('tab', { name: 'index.html' }).click();
+    const htmlEditor = page.getByRole('textbox', {
+      name: 'index.html code editor (html)',
+    });
+    await expect(htmlEditor).toBeVisible();
+    await htmlEditor.click();
+    await page.keyboard.press('Control+A');
+    await page.keyboard.insertText(fixture.htmlSource);
+  }
   if (fixture.cssSource !== undefined) {
     await page.getByRole('tab', { name: 'style.css' }).click();
     const cssEditor = page.getByRole('textbox', {
@@ -171,6 +188,8 @@ test('selected authored cases run through isolated browser Check', async ({
     await page.keyboard.press('Control+A');
     await page.keyboard.insertText(fixture.cssSource);
   }
+  if (fixture.quest.exercise?.mode === 'interactive-web')
+    await page.getByRole('tab', { name: 'main.js' }).click();
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   const results = page
     .getByRole('heading', { name: 'Test results' })
@@ -188,7 +207,9 @@ test('selected authored cases run through isolated browser Check', async ({
     /timed out|timeout/i.test(status) ||
     rows.some((row) => /timed out|timeout/i.test(row))
   ) {
-    if (fixture.cssSource !== undefined)
+    if (fixture.quest.exercise?.mode === 'interactive-web')
+      await page.getByRole('tab', { name: 'main.js' }).click();
+    else if (fixture.cssSource !== undefined)
       await page.getByRole('tab', { name: 'index.html' }).click();
     expect(
       (await editor.locator('.cm-line').allTextContents()).join('\n'),

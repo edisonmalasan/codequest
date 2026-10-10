@@ -41,7 +41,7 @@ function parseArguments(argv: string[]): { mode: Mode; options: Arguments } {
       ? ['id', 'out']
       : mode === 'quest'
         ? ['id', 'version', 'out']
-        : ['id', 'version', 'source', 'css', 'expect'],
+        : ['id', 'version', 'source', 'html', 'css', 'expect'],
   );
   const options: Record<string, string> = {};
   for (let index = 0; index < tokens.length; index += 2) {
@@ -224,14 +224,22 @@ function main(): void {
   }
   const quest = authorQuestFixture(catalog, selected);
   const exerciseMode = quest.exercise?.mode ?? 'javascript';
+  const interactive = exerciseMode === 'interactive-web';
   const hasCss =
     quest.exercise?.files.some((file) => file.language === 'css') ?? false;
-  if (Boolean(options.css) !== (exerciseMode === 'static-web' && hasCss))
+  if (Boolean(options.html) !== interactive)
     throw new ContentError(
       'arguments',
-      exerciseMode === 'static-web' && hasCss
-        ? 'Selected static web Quest requires --css'
-        : '--css is only valid for a static web Quest with a CSS file',
+      interactive
+        ? 'Selected interactive Quest requires --html'
+        : '--html is only valid for an interactive Quest',
+    );
+  if (Boolean(options.css) !== (hasCss && exerciseMode !== 'javascript'))
+    throw new ContentError(
+      'arguments',
+      hasCss && exerciseMode !== 'javascript'
+        ? 'Selected web Quest requires --css'
+        : '--css is only valid for a web Quest with a CSS file',
     );
   const source = candidateSource(
     options.source,
@@ -242,6 +250,9 @@ function main(): void {
   const cssSource = options.css
     ? candidateSource(options.css, '.css', 32_768, contentRoot)
     : undefined;
+  const htmlSource = options.html
+    ? candidateSource(options.html, '.html', 65_536, contentRoot)
+    : undefined;
   if (quest.cases.length > 10)
     throw new ContentError(
       'candidate test',
@@ -250,6 +261,7 @@ function main(): void {
   runBrowser(backendRoot, {
     quest,
     source,
+    htmlSource,
     cssSource,
     expected: options.expect,
     version: selected.snapshot.metadata.contentVersion,

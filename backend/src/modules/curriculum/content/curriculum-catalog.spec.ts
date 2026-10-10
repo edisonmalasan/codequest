@@ -291,8 +291,10 @@ describe('curriculum publication catalog', () => {
       'File exceeds size limit',
     );
   });
-  it('keeps synthetic interactive publication disabled even with declared reviews and a record reference', () => {
+  it('gates each interactive snapshot on approved review and version-bound evidence', () => {
     const root = fixture();
+    const evidenceRoot = mkdtempSync(join(tmpdir(), 'codequest-evidence-'));
+    created.push(evidenceRoot);
     reviewed(root);
     const snapshot = join(
       root,
@@ -325,10 +327,72 @@ describe('curriculum publication catalog', () => {
     );
     publish(
       root,
-      `${reviews}            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n`,
+      `${reviews}            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n              contentVersion: 0.9.0\n              assessmentVersion: 1.0.0\n`,
     );
-    expect(() => loadCurriculumCatalog(root)).toThrow(
-      'Interactive publication remains disabled',
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Interactive publication evidence does not match',
+    );
+    const publication = join(root, 'publication.yaml');
+    writeFileSync(
+      publication,
+      readFileSync(publication, 'utf8').replace(
+        'contentVersion: 0.9.0',
+        'contentVersion: 1.0.0',
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Interactive publication evidence record is unavailable',
+    );
+    mkdirSync(join(evidenceRoot, 'docs'));
+    writeFileSync(
+      join(evidenceRoot, 'docs/interactive-review.md'),
+      'Synthetic reviewed build abcdef1\n',
+    );
+    expect(
+      loadCurriculumCatalog(root, evidenceRoot).journeys[0].chapters[0]
+        .quests[0].metadata.id,
+    ).toBe('Q01');
+    publish(
+      root,
+      `            curriculumReview: approved\n            technicalReview: approved\n            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n              contentVersion: 1.0.0\n              assessmentVersion: 1.0.1\n`,
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Interactive publication evidence does not match',
+    );
+    const firstQuest = resolve(snapshot, '../..');
+    const chapter = resolve(firstQuest, '../..');
+    const secondQuest = join(chapter, 'quests/second-interaction');
+    cpSync(firstQuest, secondQuest, { recursive: true });
+    const secondMetadata = join(secondQuest, 'quest.yaml');
+    writeFileSync(
+      secondMetadata,
+      readFileSync(secondMetadata, 'utf8')
+        .replace('id: Q01', 'id: Q02')
+        .replace('slug: first-message', 'slug: second-interaction')
+        .replace('position: 1', 'position: 2'),
+    );
+    const secondVersion = join(secondQuest, 'versions/1.0.0/version.yaml');
+    writeFileSync(
+      secondVersion,
+      readFileSync(secondVersion, 'utf8').replace(
+        'prerequisiteQuestIds: []',
+        'prerequisiteQuestIds: [Q01]',
+      ),
+    );
+    const chapterMetadata = join(chapter, 'chapter.yaml');
+    writeFileSync(
+      chapterMetadata,
+      readFileSync(chapterMetadata, 'utf8').replace(
+        '  - Q01',
+        '  - Q01\n  - Q02',
+      ),
+    );
+    publish(
+      root,
+      `${reviews}            interactiveEvidence:\n              build: abcdef1\n              date: 2026-10-05\n              record: docs/interactive-review.md\n              contentVersion: 1.0.0\n              assessmentVersion: 1.0.0\n          - id: Q02\n            contentVersion: 1.0.0\n            assessmentVersion: 1.0.0\n`,
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Web exercise review is missing',
     );
   });
   it('rejects unknown publication fields and duplicate stable IDs', () => {

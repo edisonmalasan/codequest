@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, lstatSync, readdirSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { z } from 'zod';
 import {
@@ -300,7 +300,10 @@ function sameInventory(
   );
 }
 
-export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
+export function loadCurriculumCatalog(
+  contentRoot: string,
+  evidenceRoot = resolve(contentRoot, '../..'),
+): CurriculumCatalog {
   const root = resolve(contentRoot);
   const authored = loadAuthoredCurriculum(root);
   const publicationResult = publicationSchema.safeParse(
@@ -396,11 +399,30 @@ export function loadCurriculumCatalog(contentRoot: string): CurriculumCatalog {
                     questPath,
                     'Interactive publication evidence is missing',
                   );
-                if (snapshot.exercise?.mode === 'interactive-web')
-                  throw new ContentError(
-                    questPath,
-                    'Interactive publication remains disabled until a separately reviewed R08 snapshot and exact-build route evidence are approved',
-                  );
+                if (snapshot.exercise?.mode === 'interactive-web') {
+                  const evidence = questSelection.interactiveEvidence;
+                  if (
+                    !evidence ||
+                    evidence.contentVersion !==
+                      snapshot.metadata.contentVersion ||
+                    evidence.assessmentVersion !==
+                      snapshot.metadata.assessmentVersion
+                  )
+                    throw new ContentError(
+                      questPath,
+                      'Interactive publication evidence does not match the selected snapshot',
+                    );
+                  const record = resolve(evidenceRoot, evidence.record);
+                  if (
+                    !existsSync(record) ||
+                    !lstatSync(record).isFile() ||
+                    lstatSync(record).isSymbolicLink()
+                  )
+                    throw new ContentError(
+                      questPath,
+                      'Interactive publication evidence record is unavailable',
+                    );
+                }
                 publishedQuestIds.add(quest.metadata.id);
                 return { metadata: quest.metadata, activeSnapshot: snapshot };
               }),
