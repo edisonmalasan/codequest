@@ -367,6 +367,10 @@ test('selected DOM Course traverses owner-bound prerequisites, Check, accepted p
   ).toBeVisible();
   await page.unroute('**/api/v1/learning-sync/DOM12');
   await page.goto('/account');
+  await expect(
+    page.getByRole('heading', { name: 'Your account' }),
+  ).toBeVisible();
+  await expect(page.getByText('Player ID')).toBeVisible();
   await expect
     .poll(
       async () =>

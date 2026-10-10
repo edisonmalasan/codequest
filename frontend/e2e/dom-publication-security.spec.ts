@@ -172,6 +172,7 @@ test('selected production DOM01 route keeps runner and preview contained through
     });
     await editJavaScript(page, solutions[0].source);
     await showPanel(page, 'Results');
+    await expect(panel.getByRole('status')).toContainText('Source changed');
     await panel.getByRole('button', { name: 'Start interactive' }).click();
     await expect(panel.getByRole('status')).toContainText('ready', {
       timeout: 5_000,
