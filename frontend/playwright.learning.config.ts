@@ -6,7 +6,7 @@ const authOrigin = 'http://127.0.0.1:54321';
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: '**/learning-journey.spec.ts',
+  testMatch: ['**/learning-journey.spec.ts', '**/dom-learning-journey.spec.ts'],
   fullyParallel: false,
   workers: 1,
   retries: 0,

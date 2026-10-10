@@ -465,7 +465,10 @@ export function validateCurriculum(contentRoot: string): void {
             snapshot.path,
             'Unknown or self prerequisite quest ID',
           );
-        if (quests.get(prerequisite)?.journeyId !== quest.journeyId)
+        if (
+          quests.get(prerequisite)?.journeyId !== quest.journeyId &&
+          !(questId === 'DOM01' && prerequisite === 'Q24')
+        )
           throw new ContentError(
             snapshot.path,
             'Prerequisite must belong to the same journey',

@@ -186,6 +186,37 @@ describe('author CLI', () => {
     expect(result.stderr).toContain('65536 bytes');
   }, 30_000);
 
+  it('requires bounded identified interactive files before starting a browser', () => {
+    const source = join(directory, 'interactive.js');
+    const html = join(directory, 'interactive.html');
+    const css = join(directory, 'interactive.css');
+    writeFileSync(source, 'console.log("candidate");');
+    writeFileSync(html, '<p id="north">North</p>');
+    writeFileSync(css, '.board { color: navy; }');
+    const args = [
+      'test',
+      '--id',
+      'DOM01',
+      '--version',
+      'current',
+      '--source',
+      source,
+      '--expect',
+      'pass',
+    ];
+    expect(run(...args).stderr).toContain('requires --html');
+    expect(run(...args, '--html', html).stderr).toContain('requires --css');
+    writeFileSync(html, 'x'.repeat(65_537));
+    expect(run(...args, '--html', html, '--css', css).stderr).toContain(
+      '65536 bytes',
+    );
+    writeFileSync(html, '<p id="north">North</p>');
+    writeFileSync(css, 'x'.repeat(32_769));
+    expect(run(...args, '--html', html, '--css', css).stderr).toContain(
+      '32768 bytes',
+    );
+  }, 90_000);
+
   it('requires an HTML candidate for a static web Quest before starting a browser', () => {
     const source = join(directory, 'wrong-extension.js');
     writeFileSync(source, '<main id="page"></main>');

@@ -179,7 +179,7 @@
       Number.isSafeInteger(data.sequence) &&
       data.sequence > 64
     ) {
-      report('invalid', activeGeneration);
+      report('event-limit', activeGeneration);
     } else if (
       data.type === 'applied' &&
       Object.keys(data).length === 4 &&

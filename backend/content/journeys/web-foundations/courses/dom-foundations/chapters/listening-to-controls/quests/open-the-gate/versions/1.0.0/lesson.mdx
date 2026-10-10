@@ -1,0 +1,36 @@
+## Goal
+
+Respond to a button click with a visible status change.
+
+## Learn
+
+Register a click listener on the supplied button. The callback runs when the learner clicks the button in the preview or when a Check sends a declared click. Keep the initial closed message until the click happens.
+
+## Worked example
+
+```js
+document.getElementById('button').addEventListener('click', () => {
+  document.getElementById('message').textContent = 'Clicked';
+});
+```
+
+## Your task
+
+After a click on `#gate-button`, make `#gate-status` read `Gate open`. The initial state must stay `Gate closed`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after click on #gate-button, `#gate-status` reads `Gate open`.
+- boundary: after initialization, `#gate-status` reads `Gate closed`.
+
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+Why is changing the status before registering the listener a different behavior?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

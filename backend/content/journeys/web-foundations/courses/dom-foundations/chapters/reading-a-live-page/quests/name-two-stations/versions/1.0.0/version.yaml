@@ -1,0 +1,37 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Name two stations
+objective: Select two supplied paragraphs by ID and give each a distinct name.
+outcomeId: O8
+conceptIds:
+  - dom-selection
+  - dom-text
+prerequisiteQuestIds:
+  - HTML12
+  - CSS12
+  - Q24
+difficulty: introductory
+xpAward: 10
+hints:
+  question: 'Which two IDs are already in index.html?'
+  concept: 'Use getElementById once for each paragraph, then set textContent.'
+  nextStep: 'Set north.textContent to "North: fern" and south.textContent to "South: moss".'
+caseIds:
+  - normal-north-name
+  - boundary-south-name
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

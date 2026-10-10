@@ -1,0 +1,25 @@
+id: COURSE-DOM-FOUNDATIONS
+journeyId: WEB-FOUNDATIONS
+slug: dom-foundations
+title: DOM Foundations
+summary: Make supplied pages respond to readers with bounded browser interactions and accessible status feedback.
+position: 3
+status: reviewed
+topics:
+  - javascript
+  - dom
+  - browser-interactions
+outcomes:
+  - id: C1
+    description: Select supplied page nodes and read or update text.
+  - id: C2
+    description: Respond to bounded click, input, and change events.
+  - id: C3
+    description: Keep interface state and accessible feedback aligned.
+  - id: C4
+    description: Combine controls and status into a small interactive project.
+chapterIds:
+  - DOM-CH01
+  - DOM-CH02
+  - DOM-CH03
+  - DOM-CH04

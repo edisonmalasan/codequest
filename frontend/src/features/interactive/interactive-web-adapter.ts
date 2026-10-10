@@ -205,6 +205,16 @@ export class IsolatedInteractiveWebAdapter implements InteractiveWebAdapter {
           current.generationId,
           new Set(current.document.nodes.map((node) => node.nodeId)),
         );
+        if (display?.type === 'event-limit') {
+          const limited = result(
+            current,
+            'output-limit',
+            'Interactive event limit reached',
+          );
+          this.stop();
+          this.emit(limited);
+          return;
+        }
         if (display?.type === 'invalid' || display?.type === 'error') {
           const failed = result(
             current,

@@ -59,6 +59,20 @@ describe('interactive correlated packets', () => {
   });
 
   it('rejects stale, forged, oversized, and wrong-node display events', () => {
+    expect(
+      decodeDisplayPacket(
+        { type: 'event-limit', generationId: 'current' },
+        'current',
+        nodes,
+      ),
+    ).toMatchObject({ type: 'event-limit' });
+    expect(
+      decodeDisplayPacket(
+        { type: 'event-limit', generationId: 'old' },
+        'current',
+        nodes,
+      ),
+    ).toBeNull();
     const packet = {
       type: 'interaction',
       generationId: 'current',

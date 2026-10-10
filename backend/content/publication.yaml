@@ -1,4 +1,4 @@
-﻿schemaVersion: 2
+schemaVersion: 2
 journeys:
   - id: JAVASCRIPT-FOUNDATIONS
     curriculumReview: approved
@@ -215,3 +215,139 @@ journeys:
             assessmentVersion: 1.0.0
             curriculumReview: approved
             technicalReview: approved
+      - id: COURSE-DOM-FOUNDATIONS
+        curriculumReview: approved
+        technicalReview: approved
+        quests:
+          - id: DOM01
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM02
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM03
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM04
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM05
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM06
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM07
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM08
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM09
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM10
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM11
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0
+          - id: DOM12
+            contentVersion: 1.0.0
+            assessmentVersion: 1.0.0
+            curriculumReview: approved
+            technicalReview: approved
+            interactiveEvidence:
+              build: 1f0160f
+              date: 2026-10-10
+              record: docs/dom-foundations-publication-verification.md
+              contentVersion: 1.0.0
+              assessmentVersion: 1.0.0

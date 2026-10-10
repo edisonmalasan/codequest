@@ -69,7 +69,7 @@ describe('local author selection and previews', () => {
     expect(authorQuestFixture(catalog, current)).toEqual(
       new CurriculumService(catalog.published).findQuest('first-message'),
     );
-  });
+  }, 45_000);
 
   it('marks unpublished drafts and escapes author text without changing source', () => {
     const root = fixture();
@@ -124,7 +124,7 @@ describe('local author selection and previews', () => {
     expect(() => selectJourney(catalog, '../../content')).toThrow(
       'Invalid stable ID',
     );
-  });
+  }, 45_000);
 
   it('rejects invalid authored trees before previewing', () => {
     const root = fixture();

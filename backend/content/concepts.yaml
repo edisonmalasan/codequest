@@ -73,3 +73,13 @@ concepts:
     title: Viewport rules and responsive composition
   - id: css-integration
     title: Integrated responsive static page
+  - id: dom-selection
+    title: Selecting supplied page elements
+  - id: dom-text
+    title: Reading and updating page text
+  - id: dom-events
+    title: Bounded user interaction events
+  - id: dom-state
+    title: Interface state and accessible feedback
+  - id: dom-integration
+    title: Integrated browser interaction project
