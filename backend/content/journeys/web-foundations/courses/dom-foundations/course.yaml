@@ -4,7 +4,7 @@ slug: dom-foundations
 title: DOM Foundations
 summary: Make supplied pages respond to readers with bounded browser interactions and accessible status feedback.
 position: 3
-status: draft
+status: reviewed
 topics:
   - javascript
   - dom

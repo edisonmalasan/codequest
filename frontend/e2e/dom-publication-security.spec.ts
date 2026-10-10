@@ -4,7 +4,7 @@ import solutions from './fixtures/dom-solutions.json';
 const application = 'http://127.0.0.1:3400';
 const runner = 'http://127.0.0.2:3400';
 const preview = 'http://localhost:3400';
-const api = 'http://127.0.0.1:3001';
+const api = 'http://127.0.0.1:3431';
 
 async function showPanel(page: Page, label: 'Code' | 'Results') {
   if ((page.viewportSize()?.width ?? 1280) <= 1100)
@@ -25,8 +25,24 @@ async function editJavaScript(page: Page, source: string) {
 test('selected production DOM01 route keeps runner and preview contained through recovery', async ({
   page,
   request,
+  context,
 }) => {
   test.setTimeout(180_000);
+  const signup = await request.post('https://localhost:54322/auth/v1/signup', {
+    data: {
+      email: `dom-publication-${Date.now()}@example.test`,
+      password: 'synthetic-only-password',
+    },
+  });
+  expect(signup.status()).toBe(200);
+  const session: unknown = await signup.json();
+  await context.addCookies([
+    {
+      name: 'sb-localhost-auth-token',
+      value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
+      url: application,
+    },
+  ]);
   const detail = await request.get(`${api}/api/v1/quests/name-two-stations`);
   expect(detail.status()).toBe(200);
   expect(await detail.json()).toMatchObject({
@@ -65,6 +81,7 @@ test('selected production DOM01 route keeps runner and preview contained through
   await page.goto('/quests/name-two-stations', {
     waitUntil: 'domcontentloaded',
   });
+  await showPanel(page, 'Code');
   await expect(
     page.getByRole('region', { name: 'Quest workspace' }),
   ).toBeVisible({ timeout: 30_000 });
@@ -178,6 +195,7 @@ test('selected production DOM01 route keeps runner and preview contained through
   await expect(panel.getByRole('status')).toContainText('timed out', {
     timeout: 5_000,
   });
+  await showPanel(page, 'Code');
   await expect(editor).toContainText('while (true)');
   await editJavaScript(page, solutions[0].source);
   await showPanel(page, 'Results');
@@ -220,6 +238,7 @@ test('selected production DOM01 route keeps runner and preview contained through
   await panel.getByRole('button', { name: 'Start interactive' }).click();
   await panel.getByRole('button', { name: 'Cancel interactive' }).click();
   await expect(panel.getByRole('status')).toContainText('cancelled');
+  await showPanel(page, 'Code');
   await expect(editor).toContainText('while (true)');
 
   const forbidden: string[] = [];

@@ -1,8 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const appOrigin = 'http://127.0.0.1:3400';
-const apiOrigin = 'http://127.0.0.1:3001';
-const authOrigin = 'http://127.0.0.1:54321';
+const apiOrigin = 'http://127.0.0.1:3431';
+const authOrigin = 'https://localhost:54322';
+const certificate = process.env.CODEQUEST_DOM_AUTH_CERT;
+const certificateKey = process.env.CODEQUEST_DOM_AUTH_KEY;
+if (!certificate || !certificateKey)
+  throw new Error('Run this suite with test:dom-publication');
 
 export default defineConfig({
   testDir: './e2e',
@@ -15,6 +19,7 @@ export default defineConfig({
     baseURL: appOrigin,
     trace: 'retain-on-failure',
     actionTimeout: 10_000,
+    ignoreHTTPSErrors: true,
   },
   webServer: [
     {
@@ -23,6 +28,14 @@ export default defineConfig({
       url: `${authOrigin}/auth/v1/.well-known/jwks.json`,
       reuseExistingServer: false,
       timeout: 30_000,
+      ignoreHTTPSErrors: true,
+      env: {
+        CODEQUEST_AUTH_ISSUER: `${authOrigin}/auth/v1`,
+        CODEQUEST_AUTH_CORS_ORIGIN: appOrigin,
+        CODEQUEST_AUTH_PORT: '54322',
+        CODEQUEST_AUTH_HTTPS_CERT: certificate,
+        CODEQUEST_AUTH_HTTPS_KEY: certificateKey,
+      },
     },
     {
       command: 'pnpm build && node dist/main.js',
@@ -33,7 +46,7 @@ export default defineConfig({
       env: {
         NODE_ENV: 'test',
         HOST: '127.0.0.1',
-        PORT: '3001',
+        PORT: '3431',
         RATE_LIMIT_MAX: '10000',
         CORS_ORIGINS: appOrigin,
         DATABASE_URL:
@@ -55,7 +68,7 @@ export default defineConfig({
         NEXT_PUBLIC_SUPABASE_URL: authOrigin,
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
           'publishable-local-browser-fixture',
-        NEXT_PUBLIC_SITE_URL: appOrigin,
+        NEXT_PUBLIC_SITE_URL: 'https://codequest.example.test',
         NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3400',
         NEXT_PUBLIC_PREVIEW_ORIGIN: 'http://localhost:3400',
         NEXT_PUBLIC_ANALYTICS_CAPTURE_APPROVED: 'false',

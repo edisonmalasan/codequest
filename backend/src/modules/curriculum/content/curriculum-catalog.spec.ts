@@ -67,7 +67,7 @@ afterEach(() => {
 });
 
 describe('curriculum publication catalog', () => {
-  it('publishes complete reviewed HTML and CSS Courses alongside the unchanged JavaScript inventory', () => {
+  it('publishes complete reviewed web Courses alongside the unchanged JavaScript inventory', () => {
     const catalog = loadCurriculumCatalog(resolve(process.cwd(), 'content'));
     expect(catalog.journeys.map((journey) => journey.metadata.id)).toEqual([
       'JAVASCRIPT-FOUNDATIONS',
@@ -88,6 +88,7 @@ describe('curriculum publication catalog', () => {
     expect(web.courses.map((course) => course.metadata.id)).toEqual([
       'COURSE-HTML-FOUNDATIONS',
       'COURSE-CSS-FOUNDATIONS',
+      'COURSE-DOM-FOUNDATIONS',
     ]);
     expect(web.chapters.map((chapter) => chapter.metadata.id)).toEqual([
       'HTML-CH01',
@@ -98,6 +99,10 @@ describe('curriculum publication catalog', () => {
       'CSS-CH02',
       'CSS-CH03',
       'CSS-CH04',
+      'DOM-CH01',
+      'DOM-CH02',
+      'DOM-CH03',
+      'DOM-CH04',
     ]);
     expect(
       web.chapters.flatMap((chapter) =>
@@ -112,13 +117,29 @@ describe('curriculum publication catalog', () => {
         { length: 12 },
         (_, index) => `CSS${String(index + 1).padStart(2, '0')}`,
       ),
+      ...Array.from(
+        { length: 12 },
+        (_, index) => `DOM${String(index + 1).padStart(2, '0')}`,
+      ),
     ]);
     expect(
-      web.chapters.every((chapter) =>
-        chapter.quests.every(
-          (quest) => quest.activeSnapshot.exercise?.mode === 'static-web',
+      web.chapters
+        .slice(0, 8)
+        .every((chapter) =>
+          chapter.quests.every(
+            (quest) => quest.activeSnapshot.exercise?.mode === 'static-web',
+          ),
         ),
-      ),
+    ).toBe(true);
+    expect(
+      web.chapters
+        .slice(8)
+        .every((chapter) =>
+          chapter.quests.every(
+            (quest) =>
+              quest.activeSnapshot.exercise?.mode === 'interactive-web',
+          ),
+        ),
     ).toBe(true);
   });
   it('keeps a partial or unreviewed HTML Course out of publication', () => {
@@ -191,6 +212,43 @@ describe('curriculum publication catalog', () => {
       ),
     );
     expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Selected Course is missing or unreviewed',
+    );
+  }, 20_000);
+  it('rejects incomplete, stale, or unreviewed selected DOM content', () => {
+    const root = mkdtempSync(join(tmpdir(), 'codequest-dom-publication-'));
+    created.push(root);
+    cpSync(resolve(process.cwd(), 'content'), root, { recursive: true });
+    const evidenceRoot = resolve(process.cwd(), '..');
+    const manifest = join(root, 'publication.yaml');
+    const complete = readFileSync(manifest, 'utf8');
+    writeFileSync(
+      manifest,
+      complete.replace(/          - id: DOM12[\s\S]*$/, ''),
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Published Course inventory is incomplete',
+    );
+    writeFileSync(
+      manifest,
+      complete.replace(
+        '              contentVersion: 1.0.0\n              assessmentVersion: 1.0.0',
+        '              contentVersion: 1.0.1\n              assessmentVersion: 1.0.0',
+      ),
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
+      'Interactive publication evidence does not match',
+    );
+    writeFileSync(manifest, complete);
+    const course = join(
+      root,
+      'journeys/web-foundations/courses/dom-foundations/course.yaml',
+    );
+    writeFileSync(
+      course,
+      readFileSync(course, 'utf8').replace('status: reviewed', 'status: draft'),
+    );
+    expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
       'Selected Course is missing or unreviewed',
     );
   }, 20_000);

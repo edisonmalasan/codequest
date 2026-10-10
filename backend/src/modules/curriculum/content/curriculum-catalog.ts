@@ -1,5 +1,5 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs';
-import { join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { z } from 'zod';
 import {
   chapterSchema,
@@ -302,7 +302,9 @@ function sameInventory(
 
 export function loadCurriculumCatalog(
   contentRoot: string,
-  evidenceRoot = resolve(contentRoot, '../..'),
+  evidenceRoot = basename(dirname(resolve(contentRoot))) === 'dist'
+    ? resolve(contentRoot, '..')
+    : resolve(contentRoot, '../..'),
 ): CurriculumCatalog {
   const root = resolve(contentRoot);
   const authored = loadAuthoredCurriculum(root);

@@ -1,10 +1,20 @@
 import { randomUUID } from 'node:crypto';
 import { createServer } from 'node:http';
+import { createServer as createSecureServer } from 'node:https';
+import { readFileSync } from 'node:fs';
 import { URL } from 'node:url';
 import { exportJWK, generateKeyPair, jwtVerify, SignJWT } from 'jose';
 
 // Test process only. The private key and registered users never leave this process.
-const issuer = 'http://127.0.0.1:54321/auth/v1';
+const issuer =
+  process.env.CODEQUEST_AUTH_ISSUER ?? 'http://127.0.0.1:54321/auth/v1';
+const origin =
+  process.env.CODEQUEST_AUTH_CORS_ORIGIN ?? 'http://127.0.0.1:3200';
+const port = Number(process.env.CODEQUEST_AUTH_PORT ?? 54321);
+const certificate = process.env.CODEQUEST_AUTH_HTTPS_CERT;
+const certificateKey = process.env.CODEQUEST_AUTH_HTTPS_KEY;
+if ((certificate === undefined) !== (certificateKey === undefined))
+  throw new Error('Both test fixture certificate paths are required');
 const { privateKey, publicKey } = await generateKeyPair('RS256');
 const publicJwk = {
   ...(await exportJWK(publicKey)),
@@ -18,7 +28,7 @@ function respond(response, status, body) {
   response.writeHead(status, {
     'content-type': 'application/json',
     'cache-control': 'no-store',
-    'access-control-allow-origin': 'http://127.0.0.1:3200',
+    'access-control-allow-origin': origin,
     'access-control-allow-headers':
       'apikey, authorization, content-type, x-client-info, x-supabase-api-version',
     'access-control-allow-methods': 'GET, POST, OPTIONS',
@@ -58,7 +68,7 @@ async function sessionFor(user) {
   };
 }
 
-createServer(async (request, response) => {
+const handle = async (request, response) => {
   try {
     if (request.method === 'OPTIONS') return respond(response, 204, {});
     const path = new URL(request.url ?? '/', issuer).pathname;
@@ -103,4 +113,13 @@ createServer(async (request, response) => {
   } catch {
     return respond(response, 400, { msg: 'Invalid test fixture request' });
   }
-}).listen(54321, '127.0.0.1');
+};
+
+const server =
+  certificate && certificateKey
+    ? createSecureServer(
+        { key: readFileSync(certificateKey), cert: readFileSync(certificate) },
+        handle,
+      )
+    : createServer(handle);
+server.listen(port, '127.0.0.1');
