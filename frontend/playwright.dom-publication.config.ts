@@ -62,7 +62,7 @@ export default defineConfig({
         'pnpm build && pnpm exec next start --hostname 0.0.0.0 --port 3400',
       url: `${appOrigin}/login`,
       reuseExistingServer: false,
-      timeout: 240_000,
+      timeout: 360_000,
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
         NEXT_PUBLIC_SUPABASE_URL: authOrigin,

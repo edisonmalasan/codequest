@@ -289,4 +289,49 @@ test('selected production DOM01 route keeps runner and preview contained through
   await expect(
     page.locator('iframe[title="Isolated interactive runner"]'),
   ).toHaveCount(0);
+  await page.goto('/quests/name-two-stations');
+  await editJavaScript(page, "console.log('OWNER_ONE_PREVIEW_DRAFT')");
+  await page.getByRole('button', { name: /Save locally/ }).click();
+  await expect(page.getByText('Saved on this device')).toBeVisible();
+  const otherSignup = await request.post(
+    'https://localhost:54322/auth/v1/signup',
+    {
+      data: {
+        email: `dom-publication-other-${Date.now()}@example.test`,
+        password: 'synthetic-only-password',
+      },
+    },
+  );
+  expect(otherSignup.status()).toBe(200);
+  const otherSession: unknown = await otherSignup.json();
+  await context.addCookies([
+    {
+      name: 'sb-localhost-auth-token',
+      value: `base64-${Buffer.from(JSON.stringify(otherSession)).toString('base64url')}`,
+      url: application,
+    },
+  ]);
+  await page.reload();
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  const otherEditor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await expect(otherEditor).toBeVisible();
+  await expect(otherEditor).not.toContainText('OWNER_ONE_PREVIEW_DRAFT');
+  await context.addCookies([
+    {
+      name: 'sb-localhost-auth-token',
+      value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
+      url: application,
+    },
+  ]);
+  await page.reload();
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  await expect(
+    page.getByRole('textbox', {
+      name: 'main.js code editor (javascript)',
+    }),
+  ).toContainText('OWNER_ONE_PREVIEW_DRAFT');
 });

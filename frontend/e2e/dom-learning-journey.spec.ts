@@ -244,7 +244,7 @@ test('selected DOM Course traverses owner-bound prerequisites, Check, accepted p
     const slugs = await courseQuestSlugs(request, course);
     for (const slug of slugs) {
       const quest = await getQuest(request, slug);
-      if (quest.id === 'CAP01') continue;
+      if (quest.id === 'CAP01' || quest.id === 'WEB01') continue;
       // Backend acceptance is personal learning. These synthetic client reports
       // exercise prerequisites, not independent grading of prerequisite code.
       await acceptReported(request, slug, owner.token);
