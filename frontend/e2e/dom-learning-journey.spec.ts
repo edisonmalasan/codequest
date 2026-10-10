@@ -78,7 +78,9 @@ async function courseQuestSlugs(
   request: APIRequestContext,
   slug: string,
 ): Promise<string[]> {
-  const course = await request.get(`${apiOrigin}/api/v1/courses/${slug}`);
+  const course = await request.get(
+    `${apiOrigin}/api/v1/catalog/courses/${slug}`,
+  );
   expect(course.status()).toBe(200);
   const payload: unknown = await course.json();
   if (!record(payload) || !Array.isArray(payload.chapters))

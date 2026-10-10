@@ -86,13 +86,8 @@ function assertConsistentGraph(graph: JourneyCurriculumGraph): void {
   ) {
     throw new JourneyLoadError('invalid-response');
   }
-  for (const { quests } of graph.chapters) {
-    for (const quest of quests) {
-      if (quest.prerequisites.some(({ id }) => !questIds.has(id))) {
-        throw new JourneyLoadError('invalid-response');
-      }
-    }
-  }
+  // Published prerequisites may refer to a Quest in another Journey. The
+  // backend validates their identities and remains the availability authority.
 }
 
 export async function loadJourneyCurriculumGraph(
