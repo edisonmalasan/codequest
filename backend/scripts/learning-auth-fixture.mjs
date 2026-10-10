@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { createServer } from 'node:http';
 import { createServer as createSecureServer } from 'node:https';
 import { readFileSync } from 'node:fs';
+import process from 'node:process';
 import { URL } from 'node:url';
 import { exportJWK, generateKeyPair, jwtVerify, SignJWT } from 'jose';
 

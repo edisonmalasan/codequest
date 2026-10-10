@@ -2,8 +2,12 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
+import process from 'node:process';
 
 const directory = mkdtempSync(join(tmpdir(), 'codequest-dom-publication-'));
+const safeRoot = resolve(tmpdir());
+if (!resolve(directory).startsWith(`${safeRoot}${sep}`))
+  throw new Error('Refusing to remove test files outside temporary directory');
 const certificate = join(directory, 'auth-cert.pem');
 const key = join(directory, 'auth-key.pem');
 const openssl =
@@ -59,10 +63,5 @@ try {
   if (playwright.error) throw playwright.error;
   process.exitCode = playwright.status ?? 1;
 } finally {
-  const safeRoot = resolve(tmpdir());
-  if (!resolve(directory).startsWith(`${safeRoot}${sep}`))
-    throw new Error(
-      'Refusing to remove test files outside temporary directory',
-    );
   rmSync(directory, { recursive: true, force: true });
 }

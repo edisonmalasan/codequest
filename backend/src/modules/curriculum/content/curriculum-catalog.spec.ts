@@ -222,10 +222,7 @@ describe('curriculum publication catalog', () => {
     const evidenceRoot = resolve(process.cwd(), '..');
     const manifest = join(root, 'publication.yaml');
     const complete = readFileSync(manifest, 'utf8');
-    writeFileSync(
-      manifest,
-      complete.replace(/          - id: DOM12[\s\S]*$/, ''),
-    );
+    writeFileSync(manifest, complete.replace(/ {10}- id: DOM12[\s\S]*$/, ''));
     expect(() => loadCurriculumCatalog(root, evidenceRoot)).toThrow(
       'Published Course inventory is incomplete',
     );
