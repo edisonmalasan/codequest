@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Listen for input on #note."
-  concept: "Read note.value in the callback and branch on whether it is empty."
-  nextStep: "Use note.value ? \"Note: \" + note.value : \"No note yet\"."
+  question: 'Listen for input on #note.'
+  concept: 'Read note.value in the callback and branch on whether it is empty.'
+  nextStep: 'Use note.value ? "Note: " + note.value : "No note yet".'
 caseIds:
   - normal-note
   - boundary-empty-note

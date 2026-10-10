@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Listen for change on #plot-label."
-  concept: "Read plotLabel.value inside the callback."
-  nextStep: "Set confirmation.textContent using a nonempty branch and the exact empty fallback."
+  question: 'Listen for change on #plot-label.'
+  concept: 'Read plotLabel.value inside the callback.'
+  nextStep: 'Set confirmation.textContent using a nonempty branch and the exact empty fallback.'
 caseIds:
   - normal-confirm
   - boundary-empty-confirm

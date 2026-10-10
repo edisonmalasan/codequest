@@ -12,9 +12,9 @@ prerequisiteQuestIds:
 difficulty: integrative
 xpAward: 10
 hints:
-  question: "Listen for input on #reading-input."
-  concept: "Branch on empty first; then use Number and Number.isFinite."
-  nextStep: "For valid finite values between 0 and 100, concatenate the original value after \"Reading accepted: \"."
+  question: 'Listen for input on #reading-input.'
+  concept: 'Branch on empty first; then use Number and Number.isFinite.'
+  nextStep: 'For valid finite values between 0 and 100, concatenate the original value after "Reading accepted: ".'
 caseIds:
   - normal-reading
   - boundary-outside

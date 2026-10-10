@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: introductory
 xpAward: 10
 hints:
-  question: "Which paragraph contains the source reading?"
-  concept: "Save reading.textContent in a variable, then join it to the prefix."
-  nextStep: "Set summary.textContent to \"Current reading: \" + reading.textContent."
+  question: 'Which paragraph contains the source reading?'
+  concept: 'Save reading.textContent in a variable, then join it to the prefix.'
+  nextStep: 'Set summary.textContent to "Current reading: " + reading.textContent.'
 caseIds:
   - normal-summary
   - boundary-original

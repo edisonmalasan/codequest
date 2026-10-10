@@ -58,6 +58,7 @@ jobs:
       - run: pnpm --dir frontend test:curriculum
       - run: pnpm --dir frontend test:analytics
       - run: pnpm --dir frontend test:learning
+      - run: pnpm --dir frontend test:dom-publication
       - run: pnpm --dir frontend test:accessibility
       - if: failure()
         uses: actions/upload-artifact@v4

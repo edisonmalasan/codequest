@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Listen for a click on #signal-button."
-  concept: "Update both style.color and textContent on #signal-status."
-  nextStep: "Set status.style.color to \"green\" and status.textContent to \"Signal ready\" in the listener."
+  question: 'Listen for a click on #signal-button.'
+  concept: 'Update both style.color and textContent on #signal-status.'
+  nextStep: 'Set status.style.color to "green" and status.textContent to "Signal ready" in the listener.'
 caseIds:
   - normal-ready-text
   - boundary-idle-text

@@ -9,8 +9,10 @@ The bounded `change` event represents committing a text field value. Read the in
 ## Worked example
 
 ```js
-const field = document.getElementById("field");
-field.addEventListener("change", () => { document.getElementById("result").textContent = "Saved: " + field.value; });
+const field = document.getElementById('field');
+field.addEventListener('change', () => {
+  document.getElementById('result').textContent = 'Saved: ' + field.value;
+});
 ```
 
 ## Your task
@@ -24,7 +26,7 @@ The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an
 - normal: after change on #plot-label with "east plot", `#confirmation` reads `Confirmed: east plot`.
 - boundary: after change on #plot-label with "", `#confirmation` reads `No label confirmed`.
 
-Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
 
 ## Reflect (ungraded)
 

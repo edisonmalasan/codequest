@@ -21,7 +21,7 @@ export default defineConfig({
   webServer: {
     command: `pnpm exec next dev --hostname 0.0.0.0 --port ${appPort}`,
     url: `${appOrigin}/login`,
-    reuseExistingServer: false,
+    reuseExistingServer: process.env.CODEQUEST_AUTHOR_REUSE_SERVER === '1',
     env: {
       NEXT_PUBLIC_API_URL: 'http://127.0.0.1:3001',
       NEXT_PUBLIC_SUPABASE_URL: 'http://127.0.0.1:54321',

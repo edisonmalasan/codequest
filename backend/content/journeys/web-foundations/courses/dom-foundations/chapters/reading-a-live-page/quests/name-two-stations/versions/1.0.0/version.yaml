@@ -13,9 +13,9 @@ prerequisiteQuestIds:
 difficulty: introductory
 xpAward: 10
 hints:
-  question: "Which two IDs are already in index.html?"
-  concept: "Use getElementById once for each paragraph, then set textContent."
-  nextStep: "Set north.textContent to \"North: fern\" and south.textContent to \"South: moss\"."
+  question: 'Which two IDs are already in index.html?'
+  concept: 'Use getElementById once for each paragraph, then set textContent.'
+  nextStep: 'Set north.textContent to "North: fern" and south.textContent to "South: moss".'
 caseIds:
   - normal-north-name
   - boundary-south-name

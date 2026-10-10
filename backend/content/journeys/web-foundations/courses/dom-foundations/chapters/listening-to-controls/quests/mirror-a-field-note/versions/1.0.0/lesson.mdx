@@ -9,8 +9,10 @@ An `input` event fires as text changes. Read the supplied input node’s `value`
 ## Worked example
 
 ```js
-const input = document.getElementById("name");
-input.addEventListener("input", () => { document.getElementById("message").textContent = input.value || "No name"; });
+const input = document.getElementById('name');
+input.addEventListener('input', () => {
+  document.getElementById('message').textContent = input.value || 'No name';
+});
 ```
 
 ## Your task
@@ -24,7 +26,7 @@ The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an
 - normal: after input on #note with "mint", `#note-preview` reads `Note: mint`.
 - boundary: after input on #note with "", `#note-preview` reads `No note yet`.
 
-Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
 
 ## Reflect (ungraded)
 

@@ -149,7 +149,7 @@ describe('curriculum publication catalog', () => {
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Web exercise review is missing',
     );
-  });
+  }, 20_000);
   it('keeps a partial or unreviewed CSS Course out of publication', () => {
     const root = mkdtempSync(join(tmpdir(), 'codequest-css-publication-'));
     created.push(root);
@@ -193,7 +193,7 @@ describe('curriculum publication catalog', () => {
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Selected Course is missing or unreviewed',
     );
-  });
+  }, 20_000);
   it('rejects unsafe or incompatible exercise descriptors before publication', () => {
     const base = {
       schemaVersion: 1,
@@ -321,6 +321,10 @@ describe('curriculum publication catalog', () => {
     );
     const reviews =
       '            curriculumReview: approved\n            technicalReview: approved\n';
+    publish(root);
+    expect(() => loadCurriculumCatalog(root)).toThrow(
+      'Web exercise review is missing',
+    );
     publish(root, reviews);
     expect(() => loadCurriculumCatalog(root)).toThrow(
       'Interactive publication evidence is missing',

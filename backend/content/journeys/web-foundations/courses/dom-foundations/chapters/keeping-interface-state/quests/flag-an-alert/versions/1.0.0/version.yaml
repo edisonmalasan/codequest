@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Select the existing status paragraph."
-  concept: "Inside a click listener, change its classList and textContent."
-  nextStep: "Remove calm, add alerting, then set textContent to \"Reading flagged\"."
+  question: 'Select the existing status paragraph.'
+  concept: 'Inside a click listener, change its classList and textContent.'
+  nextStep: 'Remove calm, add alerting, then set textContent to "Reading flagged".'
 caseIds:
   - normal-flag-message
   - boundary-initial-calm

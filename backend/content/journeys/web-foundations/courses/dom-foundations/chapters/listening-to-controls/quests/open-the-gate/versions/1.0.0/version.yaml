@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: introductory
 xpAward: 10
 hints:
-  question: "Which ID belongs to the button?"
-  concept: "Use addEventListener(\"click\", callback) on gate-button."
-  nextStep: "Inside the callback, set gate-status.textContent to \"Gate open\"."
+  question: 'Which ID belongs to the button?'
+  concept: 'Use addEventListener("click", callback) on gate-button.'
+  nextStep: 'Inside the callback, set gate-status.textContent to "Gate open".'
 caseIds:
   - normal-click-opens
   - boundary-initial-closed

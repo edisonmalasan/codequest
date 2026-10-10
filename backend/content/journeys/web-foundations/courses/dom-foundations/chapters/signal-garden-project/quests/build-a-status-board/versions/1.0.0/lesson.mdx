@@ -9,7 +9,14 @@ A small interface combines a named input, an action, and a status message. Read 
 ## Worked example
 
 ```js
-button.addEventListener("click", () => { status.textContent = field.value ? "Saved: " + field.value : "Nothing to save"; });
+const field = document.getElementById('sample-input');
+const button = document.getElementById('sample-button');
+const status = document.getElementById('sample-status');
+button.addEventListener('click', () => {
+  status.textContent = field.value
+    ? 'Saved: ' + field.value
+    : 'Nothing to save';
+});
 ```
 
 ## Your task
@@ -25,7 +32,7 @@ The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an
 - boundary: after input on #plot-input with "orchard", click on #save-button, input on #plot-input with "grove", click on #save-button, `#board-status` reads `Saved plot: grove`.
 - boundary: after initialization, `#board-status` reads `No plot saved`.
 
-Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
 
 ## Reflect (ungraded)
 

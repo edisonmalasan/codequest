@@ -11,9 +11,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Which class do both paragraphs share?"
-  concept: "Loop over querySelectorAll(\".sensor\") and replace the waiting word."
-  nextStep: "For each sensor, set textContent to sensor.textContent.replace(\"waiting\", \"ready\")."
+  question: 'Which class do both paragraphs share?'
+  concept: 'Loop over querySelectorAll(".sensor") and replace the waiting word.'
+  nextStep: 'For each sensor, set textContent to sensor.textContent.replace("waiting", "ready").'
 caseIds:
   - normal-first-sensor
   - boundary-second-sensor

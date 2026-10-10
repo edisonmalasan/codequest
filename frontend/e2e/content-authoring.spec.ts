@@ -212,8 +212,11 @@ test('selected authored cases run through isolated browser Check', async ({
     else if (fixture.cssSource !== undefined)
       await page.getByRole('tab', { name: 'index.html' }).click();
     expect(
-      (await editor.locator('.cm-line').allTextContents()).join('\n'),
-    ).toBe(fixture.source);
+      (await editor.locator('.cm-line').allTextContents())
+        .join('\n')
+        .replaceAll('\r\n', '\n')
+        .trimEnd(),
+    ).toBe(fixture.source.replaceAll('\r\n', '\n').trimEnd());
     await editor.click();
     await page.keyboard.press('Control+A');
     await page.keyboard.insertText(

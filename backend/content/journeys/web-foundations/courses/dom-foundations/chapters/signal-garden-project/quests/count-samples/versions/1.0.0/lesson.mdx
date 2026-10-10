@@ -9,8 +9,13 @@ A variable can hold state between clicks in one Run. Increment it inside the cli
 ## Worked example
 
 ```js
+const button = document.getElementById('counter-button');
+const status = document.getElementById('counter-status');
 let count = 0;
-button.addEventListener("click", () => { count += 1; status.textContent = "Count: " + count; });
+button.addEventListener('click', () => {
+  count += 1;
+  status.textContent = 'Count: ' + count;
+});
 ```
 
 ## Your task
@@ -24,7 +29,7 @@ The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an
 - normal: after click on #sample-button, `#sample-count` reads `Samples: 1`.
 - boundary: after click on #sample-button, click on #sample-button, click on #sample-button, `#sample-count` reads `Samples: 3`.
 
-Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
 
 ## Reflect (ungraded)
 

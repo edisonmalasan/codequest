@@ -9,8 +9,11 @@ A status board needs a response for missing data as well as valid data. On input
 ## Worked example
 
 ```js
+const field = document.getElementById('sample-field');
+const status = document.getElementById('sample-status');
 const number = Number(field.value);
-status.textContent = field.value === "" ? "Missing" : number > 10 ? "High" : "Ready";
+status.textContent =
+  field.value === '' ? 'Missing' : number > 10 ? 'High' : 'Ready';
 ```
 
 ## Your task
@@ -25,7 +28,7 @@ The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an
 - boundary: after input on #reading-input with "101", `#reading-status` reads `Reading outside range`.
 - boundary: after input on #reading-input with "", `#reading-status` reads `Enter a reading`.
 
-Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
 
 ## Reflect (ungraded)
 

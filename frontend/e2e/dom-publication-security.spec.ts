@@ -1,0 +1,260 @@
+import { expect, test, type Page } from '@playwright/test';
+import solutions from './fixtures/dom-solutions.json';
+
+const application = 'http://127.0.0.1:3400';
+const runner = 'http://127.0.0.2:3400';
+const preview = 'http://localhost:3400';
+const api = 'http://127.0.0.1:3001';
+
+async function showPanel(page: Page, label: 'Code' | 'Results') {
+  if ((page.viewportSize()?.width ?? 1280) <= 1100)
+    await page.getByRole('button', { name: label, exact: true }).click();
+}
+
+async function editJavaScript(page: Page, source: string) {
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'main.js' }).click();
+  const editor = page.getByRole('textbox', {
+    name: 'main.js code editor (javascript)',
+  });
+  await expect(editor).toBeVisible({ timeout: 30_000 });
+  await editor.fill(source);
+  return editor;
+}
+
+test('selected production DOM01 route keeps runner and preview contained through recovery', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(180_000);
+  const detail = await request.get(`${api}/api/v1/quests/name-two-stations`);
+  expect(detail.status()).toBe(200);
+  expect(await detail.json()).toMatchObject({
+    id: 'DOM01',
+    contentVersion: '1.0.0',
+    assessmentVersion: '1.0.0',
+    exercise: { mode: 'interactive-web' },
+  });
+  for (const [origin, denied] of [
+    [application, '/runtime/interactive-worker.js'],
+    [application, '/preview/interactive-bridge.js'],
+    [runner, '/account'],
+    [runner, '/preview/interactive-bridge.js'],
+    [preview, '/account'],
+    [preview, '/runtime/interactive-worker.js'],
+  ])
+    expect((await request.get(`${origin}${denied}`)).status()).toBe(404);
+  const runnerAsset = await request.get(
+    `${runner}/runtime/interactive-worker.js`,
+  );
+  const previewAsset = await request.get(
+    `${preview}/preview/interactive-bridge.js`,
+  );
+  expect(runnerAsset.status()).toBe(200);
+  expect(previewAsset.status()).toBe(200);
+  expect(runnerAsset.headers()['content-security-policy']).toContain(
+    "connect-src 'none'",
+  );
+  expect(previewAsset.headers()['content-security-policy']).toContain(
+    "connect-src 'none'",
+  );
+  expect(previewAsset.headers()['content-security-policy']).toContain(
+    "frame-src 'self'",
+  );
+
+  await page.goto('/quests/name-two-stations', {
+    waitUntil: 'domcontentloaded',
+  });
+  await expect(
+    page.getByRole('region', { name: 'Quest workspace' }),
+  ).toBeVisible({ timeout: 30_000 });
+  const editor = await editJavaScript(page, solutions[0].source);
+  await showPanel(page, 'Results');
+  const panel = page.getByRole('region', { name: 'Interactive result' });
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 10_000,
+  });
+  const shell = page.frameLocator(
+    'iframe[title="Isolated interactive preview"]',
+  );
+  const child = shell.frameLocator('iframe[title="Interactive learner page"]');
+  await expect(shell.locator('iframe')).toHaveAttribute(
+    'sandbox',
+    'allow-scripts',
+  );
+  expect(await child.locator('body').evaluate(() => location.origin)).toBe(
+    'null',
+  );
+  expect(
+    await child.locator('body').evaluate(() => {
+      try {
+        localStorage.setItem('probe', 'blocked');
+        return 'available';
+      } catch {
+        return 'blocked';
+      }
+    }),
+  ).toBe('blocked');
+  await expect(child.getByText('North: fern')).toBeVisible();
+  await panel.getByRole('button', { name: 'Reload interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  await expect(child.getByText('North: fern')).toBeVisible();
+  await page.evaluate(() => {
+    const outer = document.querySelector<HTMLIFrameElement>(
+      'iframe[title="Isolated interactive preview"]',
+    );
+    outer?.contentWindow?.postMessage(
+      {
+        type: 'mutate',
+        generationId: 'forged',
+        stepId: 'fake',
+        mutations: [{ nodeId: 'n1', kind: 'text', value: 'Forged' }],
+      },
+      '*',
+    );
+  });
+  await shell.locator('body').evaluate(() => {
+    window.frames[0]?.postMessage(
+      {
+        type: 'mutate',
+        generationId: 'forged',
+        nonce: 'forged',
+        stepId: 'fake',
+        mutations: [{ nodeId: 'n1', kind: 'text', value: 'Forged' }],
+      },
+      '*',
+    );
+  });
+  await expect(child.getByText('North: fern')).toBeVisible();
+
+  await showPanel(page, 'Code');
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await showPanel(page, 'Results');
+  await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible({
+    timeout: 15_000,
+  });
+
+  for (let cycle = 0; cycle < 3; cycle += 1) {
+    await editJavaScript(page, 'while (true) {}');
+    await showPanel(page, 'Results');
+    await panel.getByRole('button', { name: 'Start interactive' }).click();
+    await expect(panel.getByRole('status')).toContainText('timed out', {
+      timeout: 5_000,
+    });
+    await editJavaScript(page, solutions[0].source);
+    await showPanel(page, 'Results');
+    await panel.getByRole('button', { name: 'Start interactive' }).click();
+    await expect(panel.getByRole('status')).toContainText('ready', {
+      timeout: 5_000,
+    });
+    expect(
+      Number(
+        await panel
+          .locator('[data-interactive-duration-ms]')
+          .getAttribute('data-interactive-duration-ms'),
+      ),
+    ).toBeLessThan(1_000);
+  }
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  await page
+    .getByRole('textbox', { name: 'index.html code editor (html)' })
+    .fill(
+      '<main><button id="loop-button">Trigger</button><p id="north">North: unnamed</p><p id="south">South: unnamed</p></main>',
+    );
+  await editJavaScript(
+    page,
+    'document.getElementById("loop-button").addEventListener("click", () => { while (true) {} });',
+  );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  await child.getByRole('button', { name: 'Trigger' }).click();
+  await expect(panel.getByRole('status')).toContainText('timed out', {
+    timeout: 5_000,
+  });
+  await expect(editor).toContainText('while (true)');
+  await editJavaScript(page, solutions[0].source);
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  expect(
+    Number(
+      await panel
+        .locator('[data-interactive-duration-ms]')
+        .getAttribute('data-interactive-duration-ms'),
+    ),
+  ).toBeLessThan(1_000);
+
+  await editJavaScript(
+    page,
+    'for (let index = 0; index < 257; index++) document.getElementById("north").textContent = String(index);',
+  );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i);
+  await expect(shell.locator('iframe')).toHaveCount(0);
+  await editJavaScript(
+    page,
+    'for (let index = 0; index < 201; index++) console.log(index);',
+  );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i);
+  await editJavaScript(page, solutions[0].source);
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+
+  await editJavaScript(page, 'while (true) {}');
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await panel.getByRole('button', { name: 'Cancel interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('cancelled');
+  await expect(editor).toContainText('while (true)');
+
+  const forbidden: string[] = [];
+  await page.route('**/interactive-forbidden-sink', async (route) => {
+    forbidden.push(route.request().url());
+    await route.fulfill({ status: 204 });
+  });
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  await page
+    .getByRole('textbox', { name: 'index.html code editor (html)' })
+    .fill(
+      '<main><p id="north">Safe</p><script>fetch("/interactive-forbidden-sink")</script><iframe src="/interactive-forbidden-sink"></iframe><img src="/interactive-forbidden-sink" onerror="alert(1)"></main>',
+    );
+  await editJavaScript(
+    page,
+    'console.log(typeof fetch, typeof indexedDB, typeof Worker, typeof window);',
+  );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  await expect(
+    panel.getByText('Active HTML content was removed'),
+  ).toBeVisible();
+  await expect(panel.getByLabel('Interactive console output')).toContainText(
+    'undefined undefined undefined undefined',
+  );
+  expect(forbidden).toEqual([]);
+  await page.goto('/courses', { waitUntil: 'domcontentloaded' });
+  await expect(
+    page.locator('iframe[title="Isolated interactive preview"]'),
+  ).toHaveCount(0);
+  await expect(
+    page.locator('iframe[title="Isolated interactive runner"]'),
+  ).toHaveCount(0);
+});

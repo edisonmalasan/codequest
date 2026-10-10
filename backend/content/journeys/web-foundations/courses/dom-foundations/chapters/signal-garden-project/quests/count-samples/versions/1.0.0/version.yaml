@@ -12,9 +12,9 @@ prerequisiteQuestIds:
 difficulty: developing
 xpAward: 10
 hints:
-  question: "Declare a count variable outside the callback."
-  concept: "Increment it once inside each click callback."
-  nextStep: "Set sample-count.textContent to \"Samples: \" + count after incrementing."
+  question: 'Declare a count variable outside the callback.'
+  concept: 'Increment it once inside each click callback.'
+  nextStep: 'Set sample-count.textContent to "Samples: " + count after incrementing.'
 caseIds:
   - normal-one-sample
   - boundary-three-samples

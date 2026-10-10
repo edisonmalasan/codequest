@@ -14,9 +14,9 @@ xpAward: 10
 explanationPrompt: Explain why the status message changes only after Save and how empty input is handled.
 transferPrompt: Describe how you would adapt this pattern to save a different named field without adding unsupported browser APIs.
 hints:
-  question: "Listen for click on #save-button."
-  concept: "Read plot-input.value each time the button is clicked."
-  nextStep: "Set board-status.textContent to value ? \"Saved plot: \" + value : \"Enter a plot name\"."
+  question: 'Listen for click on #save-button.'
+  concept: 'Read plot-input.value each time the button is clicked.'
+  nextStep: 'Set board-status.textContent to value ? "Saved plot: " + value : "Enter a plot name".'
 caseIds:
   - normal-first-save
   - boundary-empty-save
