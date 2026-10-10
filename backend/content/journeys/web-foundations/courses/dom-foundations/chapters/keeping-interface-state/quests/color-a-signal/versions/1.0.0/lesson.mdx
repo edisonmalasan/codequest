@@ -1,0 +1,36 @@
+## Goal
+
+Pair a bounded style change with an accessible text status.
+
+## Learn
+
+The facade permits a small set of style properties such as `color`. Give the status a supported color after the click, but also describe the result in text. The data-only Checks observe text, so use Run to inspect the style. Color is not independently graded.
+
+## Worked example
+
+```js
+const status = document.getElementById("status");
+status.style.color = "green";
+status.textContent = "Ready";
+```
+
+## Your task
+
+On click, set `#signal-status` color to `green` and its text to `Signal ready`. Before the click, keep `Signal idle`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after click on #signal-button, `#signal-status` reads `Signal ready`.
+- boundary: after initialization, `#signal-status` reads `Signal idle`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+What information would be lost if the signal changed only color?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

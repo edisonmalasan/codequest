@@ -1,0 +1,35 @@
+## Goal
+
+Keep a click count in JavaScript state and render it in a status node.
+
+## Learn
+
+A variable can hold state between clicks in one Run. Increment it inside the click listener and render the current value in the supplied status paragraph. Each Check starts a fresh isolated run, so case sequences test repeated clicks without sharing state across cases.
+
+## Worked example
+
+```js
+let count = 0;
+button.addEventListener("click", () => { count += 1; status.textContent = "Count: " + count; });
+```
+
+## Your task
+
+Render `Samples: 1` after one click and `Samples: 3` after three clicks. Keep the initial `Samples: 0`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after click on #sample-button, `#sample-count` reads `Samples: 1`.
+- boundary: after click on #sample-button, click on #sample-button, click on #sample-button, `#sample-count` reads `Samples: 3`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+What goes wrong if count is reset inside the listener?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

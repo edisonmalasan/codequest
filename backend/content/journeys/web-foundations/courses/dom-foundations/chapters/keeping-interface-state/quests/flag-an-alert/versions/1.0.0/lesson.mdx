@@ -1,0 +1,36 @@
+## Goal
+
+Connect class state to a readable alert message.
+
+## Learn
+
+A class can communicate visual state while text communicates the same state without color. `classList.add` and `classList.remove` are supported on supplied nodes. The current Checks observe the text message; inspect the class change yourself in Run. Class state is not independently graded.
+
+## Worked example
+
+```js
+const message = document.getElementById("message");
+message.classList.add("active");
+message.textContent = "Active";
+```
+
+## Your task
+
+When `#flag-button` is clicked, remove `calm`, add `alerting`, and set the status text to `Reading flagged`. Initially keep `All clear`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after click on #flag-button, `#alert` reads `Reading flagged`.
+- boundary: after initialization, `#alert` reads `All clear`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+Why should the message still explain the state when its color changes?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

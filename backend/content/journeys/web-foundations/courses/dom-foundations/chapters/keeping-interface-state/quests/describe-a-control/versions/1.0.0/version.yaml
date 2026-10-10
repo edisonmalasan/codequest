@@ -1,0 +1,35 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Describe a control
+objective: Update an accessible name and visible feedback together.
+outcomeId: O8
+conceptIds:
+  - dom-state
+  - dom-events
+prerequisiteQuestIds:
+  - DOM07
+difficulty: developing
+xpAward: 10
+hints:
+  question: "Get both the button and status by ID."
+  concept: "In a click listener, call setAttribute on the button and update textContent on status."
+  nextStep: "Use setAttribute(\"aria-label\", \"Disable night mode\") and set the exact status text."
+caseIds:
+  - normal-night-status
+  - boundary-initial-day
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

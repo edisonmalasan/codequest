@@ -1,0 +1,37 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Validate a reading
+objective: Distinguish empty, in-range, and out-of-range text input.
+outcomeId: O8
+conceptIds:
+  - dom-events
+  - dom-state
+  - dom-integration
+prerequisiteQuestIds:
+  - DOM10
+difficulty: integrative
+xpAward: 10
+hints:
+  question: "Listen for input on #reading-input."
+  concept: "Branch on empty first; then use Number and Number.isFinite."
+  nextStep: "For valid finite values between 0 and 100, concatenate the original value after \"Reading accepted: \"."
+caseIds:
+  - normal-reading
+  - boundary-outside
+  - boundary-empty
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

@@ -1,0 +1,35 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Color a signal
+objective: Pair a bounded style change with an accessible text status.
+outcomeId: O8
+conceptIds:
+  - dom-state
+  - dom-text
+prerequisiteQuestIds:
+  - DOM08
+difficulty: developing
+xpAward: 10
+hints:
+  question: "Listen for a click on #signal-button."
+  concept: "Update both style.color and textContent on #signal-status."
+  nextStep: "Set status.style.color to \"green\" and status.textContent to \"Signal ready\" in the listener."
+caseIds:
+  - normal-ready-text
+  - boundary-idle-text
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

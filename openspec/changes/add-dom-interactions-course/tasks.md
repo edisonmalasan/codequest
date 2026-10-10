@@ -2,7 +2,7 @@
 
 ## 1. Draft complete original Course
 
-- [ ] 1.1 Add reviewed-design metadata for `COURSE-DOM-FOUNDATIONS`, four chapters, stable DOM01–DOM12 identities, outcome/concept references, and the HTML12/CSS12/Q24 entry plus preceding-Quest prerequisites; verify `pnpm --dir backend curriculum:validate` accepts the unselected draft and no new Course appears in the public catalog.
+- [x] 1.1 Add reviewed-design metadata for `COURSE-DOM-FOUNDATIONS`, four chapters, stable DOM01–DOM12 identities, outcome/concept references, and the HTML12/CSS12/Q24 entry plus preceding-Quest prerequisites; verify `pnpm --dir backend curriculum:validate` accepts the unselected draft and no new Course appears in the public catalog.
 - [ ] 1.2 Author DOM01–DOM03 with original explanations, HTML/CSS/JavaScript starters, supported selection/text tasks, graduated hints, and normal/boundary `interactive-text` cases; verify curriculum validation and documented reference, alternative, and defect browser Checks for each exact draft version.
 - [ ] 1.3 Author DOM04–DOM06 for click, input, and change listeners with bounded event sequences and feedback; verify curriculum validation and reference, alternative, and defect browser Checks for each Quest, including source-loop and event-handler-loop failure recovery.
 - [ ] 1.4 Author DOM07–DOM09 for class, limited attribute, and style state without unsupported APIs; verify curriculum validation and reference, alternative, and defect browser Checks plus accessible text equivalents.

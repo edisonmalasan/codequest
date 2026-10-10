@@ -1,0 +1,35 @@
+## Goal
+
+Select two supplied paragraphs by ID and give each a distinct name.
+
+## Learn
+
+The supplied page has two paragraph IDs. `document.getElementById("north")` returns the first paragraph. Assign its `textContent` to replace visible text. Do the same for the second ID. The browser facade supports these operations without giving your code a full browser document.
+
+## Worked example
+
+```js
+const heading = document.getElementById("title");
+heading.textContent = "Garden notes";
+```
+
+## Your task
+
+Set `#north` to `North: fern` and `#south` to `South: moss`. Keep both labels distinct.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after initialization, `#north` reads `North: fern`.
+- boundary: after initialization, `#south` reads `South: moss`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+What would happen if you selected `north` twice?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

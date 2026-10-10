@@ -1,0 +1,35 @@
+## Goal
+
+Use one class selection to update multiple supplied sensors.
+
+## Learn
+
+`document.querySelectorAll(".sensor")` finds each matching node. Use a bounded loop over the returned list, reading each existing label and replacing `waiting` with `ready`. This keeps the A and B names that are already present.
+
+## Worked example
+
+```js
+const notes = document.querySelectorAll(".note");
+for (const note of notes) { note.textContent = note.textContent + " checked"; }
+```
+
+## Your task
+
+Make both sensors read `Sensor A: ready` and `Sensor B: ready`. Select by `.sensor` once; preserve their individual names.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after initialization, `#sensor-a` reads `Sensor A: ready`.
+- boundary: after initialization, `#sensor-b` reads `Sensor B: ready`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+How would a single `querySelector` differ when both sensors share a class?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

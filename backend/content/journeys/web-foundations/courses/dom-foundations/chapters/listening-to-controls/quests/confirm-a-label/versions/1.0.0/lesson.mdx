@@ -1,0 +1,35 @@
+## Goal
+
+Respond to a change event with confirmed or empty feedback.
+
+## Learn
+
+The bounded `change` event represents committing a text field value. Read the input’s current `value` in the callback. Keep the confirmation separate from the raw input so the learner receives a clear result.
+
+## Worked example
+
+```js
+const field = document.getElementById("field");
+field.addEventListener("change", () => { document.getElementById("result").textContent = "Saved: " + field.value; });
+```
+
+## Your task
+
+On change, show `Confirmed: <value>` for a nonempty label, and `No label confirmed` for an empty label.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after change on #plot-label with "east plot", `#confirmation` reads `Confirmed: east plot`.
+- boundary: after change on #plot-label with "", `#confirmation` reads `No label confirmed`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+What does a change listener communicate that an immediate input listener would not?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

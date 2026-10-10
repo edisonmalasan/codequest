@@ -1,0 +1,35 @@
+## Goal
+
+Update an accessible name and visible feedback together.
+
+## Learn
+
+The fixed facade allows `setAttribute` for a limited set of attributes, including `aria-label`. A changed accessible name can tell someone what a button will do next. The current Checks observe the visible status text; use Run to inspect the button name. The attribute is not independently graded.
+
+## Worked example
+
+```js
+const button = document.getElementById("button");
+button.setAttribute("aria-label", "Disable night mode");
+```
+
+## Your task
+
+On a click, set the button’s aria-label to `Disable night mode` and set `#mode-status` to `Night mode active`. Initially keep `Day mode active`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after click on #mode-button, `#mode-status` reads `Night mode active`.
+- boundary: after initialization, `#mode-status` reads `Day mode active`.
+
+Check reports local, unverified feedback for the declared text outcomes. Run shows the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+Why does the control name describe the next action rather than repeating the current status?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.
