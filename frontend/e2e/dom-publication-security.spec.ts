@@ -113,6 +113,15 @@ test('selected production DOM01 route keeps runner and preview contained through
       }
     }),
   ).toBe('blocked');
+  expect(
+    await child.locator('body').evaluate(() => {
+      try {
+        return window.top?.location.href ?? 'available';
+      } catch {
+        return 'blocked';
+      }
+    }),
+  ).toBe('blocked');
   await expect(child.getByText('North: fern')).toBeVisible();
   await panel.getByRole('button', { name: 'Reload interactive' }).click();
   await expect(panel.getByRole('status')).toContainText('ready', {
@@ -223,6 +232,10 @@ test('selected production DOM01 route keeps runner and preview contained through
     page,
     'for (let index = 0; index < 201; index++) console.log(index);',
   );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i);
+  await editJavaScript(page, 'a'.repeat(65_537));
   await showPanel(page, 'Results');
   await panel.getByRole('button', { name: 'Start interactive' }).click();
   await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i);
