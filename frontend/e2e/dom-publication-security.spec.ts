@@ -27,7 +27,7 @@ test('selected production DOM01 route keeps runner and preview contained through
   request,
   context,
 }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(300_000);
   const signup = await request.post('https://localhost:54322/auth/v1/signup', {
     data: {
       email: `dom-publication-${Date.now()}@example.test`,
@@ -239,6 +239,43 @@ test('selected production DOM01 route keeps runner and preview contained through
   await showPanel(page, 'Results');
   await panel.getByRole('button', { name: 'Start interactive' }).click();
   await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i);
+  await editJavaScript(page, solutions[0].source);
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  await page
+    .getByRole('textbox', { name: 'index.html code editor (html)' })
+    .fill(
+      '<main><button id="count">Count</button><p id="north">Count: 0</p></main>',
+    );
+  await editJavaScript(
+    page,
+    'let count = 0; document.getElementById("count").addEventListener("click", () => { count++; document.getElementById("north").textContent = "Count: " + count; });',
+  );
+  await showPanel(page, 'Results');
+  await panel.getByRole('button', { name: 'Start interactive' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  for (let count = 1; count <= 64; count += 1) {
+    await child.getByRole('button', { name: 'Count' }).click();
+    await expect(child.getByText(`Count: ${count}`)).toBeVisible();
+  }
+  await child.getByRole('button', { name: 'Count' }).click();
+  await expect(panel.getByRole('status')).toContainText(/limit/i);
+  await expect(shell.locator('iframe')).toHaveCount(0);
+  await showPanel(page, 'Code');
+  await page.getByRole('tab', { name: 'index.html' }).click();
+  await page
+    .getByRole('textbox', { name: 'index.html code editor (html)' })
+    .fill(
+      '<main><p id="north">North: unnamed</p><p id="south">South: unnamed</p></main>',
+    );
   await editJavaScript(page, solutions[0].source);
   await showPanel(page, 'Results');
   await panel.getByRole('button', { name: 'Start interactive' }).click();
