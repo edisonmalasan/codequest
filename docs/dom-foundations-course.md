@@ -1,6 +1,6 @@
 # DOM Foundations authoring and publication review
 
-Review date: 2026-10-10. Content and assessment selection: `DOM01`–`DOM12`, each `1.0.0 / 1.0.0`. Authoring branch: `feat/dom-foundations-course`. The Course is an unpublished draft until the selected production-route record closes every required row. Instructional and technical self-reviewer: Codex, using source inspection and the browser harness. This record does not grant founder acceptance or independent grading.
+Review date: 2026-10-10; publication evidence updated 2026-10-11. Content and assessment selection: `DOM01`–`DOM12`, each `1.0.0 / 1.0.0`. Authoring branch: `feat/dom-foundations-course`. The complete Course is selected on the Apply branch after the [selected production-route gate](dom-foundations-publication-verification.md) passed on candidate `4f2bfba`; it becomes public only when the Apply PR merges. Instructional and technical self-reviewer: Codex, using source inspection and the browser harness. This record does not grant founder acceptance or independent grading.
 
 ## Instructional inventory
 
@@ -42,4 +42,4 @@ The final post-matrix edits changed only lesson wording and worked-example varia
 
 ## Publication gate
 
-The Course requires an exact selected production build, three distinct origins, a dated Chromium/Firefox/WebKit/mobile matrix, repeated source and handler loop recovery, bounded message and mutation probes, lifecycle cleanup, and an isolated PostgreSQL account traversal before the publication record may approve the manifest. An absent, failed, or stale row keeps selection off `main`. Real-provider Auth, physical accessibility, hosted release checks, founder acceptance, and Phase 38 beta readiness remain separate open gates.
+The Course requires an exact selected production build, three distinct origins, a dated Chromium/Firefox/WebKit/mobile matrix, repeated source and handler loop recovery, bounded message and mutation probes, lifecycle cleanup, and an isolated PostgreSQL account traversal before the publication record may approve the manifest. These technical rows passed on candidate `4f2bfba` in CI `38132950251` attempt 2; the existing WebKit HTML learning flow was flaky and passed its retry. The selected manifest remains off `main` until the Apply PR merges. Real-provider Auth, physical accessibility, hosted release checks, founder acceptance, and Phase 38 beta readiness remain separate open gates.
