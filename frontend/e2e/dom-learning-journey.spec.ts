@@ -360,17 +360,18 @@ test('selected DOM Course traverses owner-bound prerequisites, Check, accepted p
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   await showPanel(page, 'Results');
   await expect(page.getByText(/Local check passed.*unverified/)).toBeVisible();
-  await page.route('**/api/v1/learning-sync/DOM12', (route) => route.abort());
+  let abortedDelivery = 0;
+  await page.route('**/api/v1/learning-sync/DOM12', (route) => {
+    abortedDelivery += 1;
+    return route.abort();
+  });
   await page.getByRole('button', { name: 'Submit attempt' }).click();
+  await expect.poll(() => abortedDelivery).toBeGreaterThan(0);
   await expect(
     page.getByText(/delivery is pending or uncertain/),
   ).toBeVisible();
   await page.unroute('**/api/v1/learning-sync/DOM12');
-  await page.goto('/account');
-  await expect(
-    page.getByRole('heading', { name: 'Your account' }),
-  ).toBeVisible();
-  await expect(page.getByText('Player ID')).toBeVisible();
+  await page.evaluate(() => window.dispatchEvent(new Event('online')));
   await expect
     .poll(
       async () =>
