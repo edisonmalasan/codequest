@@ -19,22 +19,6 @@
   const bytes = (value) => encoder.encode(value).byteLength;
   let port;
   let active;
-  let standbyWorker;
-
-  function prepareStandby() {
-    if (standbyWorker) return;
-    try {
-      const candidate = new globalThis.Worker('/runtime/interactive-worker.js');
-      candidate.onerror = () => {
-        if (standbyWorker !== candidate) return;
-        standbyWorker = undefined;
-        candidate.terminate();
-      };
-      standbyWorker = candidate;
-    } catch {
-      // The next start reports the unavailable runner through its normal path.
-    }
-  }
 
   function release() {
     if (!active) return null;
@@ -180,13 +164,9 @@
     let worker;
     let privateChannel;
     try {
-      worker =
-        standbyWorker ??
-        new globalThis.Worker('/runtime/interactive-worker.js');
-      standbyWorker = undefined;
+      worker = new globalThis.Worker('/runtime/interactive-worker.js');
       privateChannel = new globalThis.MessageChannel();
     } catch {
-      worker?.terminate();
       port.postMessage({
         type: 'step',
         sessionId: command.sessionId,
@@ -198,7 +178,6 @@
       });
       return;
     }
-    prepareStandby();
     active = {
       sessionId: command.sessionId,
       stepId: command.stepId,
@@ -286,14 +265,11 @@
         fail('cancelled', 'Interactive session cancelled');
       if (data.type === 'dispose') {
         release();
-        standbyWorker?.terminate();
-        standbyWorker = undefined;
         port.close();
         port = undefined;
       }
     };
     port.start();
-    prepareStandby();
     port.postMessage({ type: 'connected' });
   });
 
