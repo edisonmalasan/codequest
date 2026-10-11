@@ -28,6 +28,39 @@ test('selected production DOM01 route keeps runner and preview contained through
   context,
 }) => {
   test.setTimeout(300_000);
+  await page.addInitScript(
+    ({ referenceSource }) => {
+      if (location.hostname !== '127.0.0.2') return;
+      const starts: { kind: 'loop' | 'reference' | 'other'; length: number }[] =
+        [];
+      Object.defineProperty(globalThis, '__cqSourceAudit', { value: starts });
+      const original = Worker.prototype.postMessage;
+      Object.defineProperty(Worker.prototype, 'postMessage', {
+        value: function (this: Worker, ...args: unknown[]) {
+          const packet = args[0];
+          if (
+            typeof packet === 'object' &&
+            packet !== null &&
+            'type' in packet &&
+            packet.type === 'start' &&
+            'source' in packet &&
+            typeof packet.source === 'string'
+          )
+            starts.push({
+              kind:
+                packet.source === 'while (true) {}'
+                  ? 'loop'
+                  : packet.source === referenceSource
+                    ? 'reference'
+                    : 'other',
+              length: packet.source.length,
+            });
+          return Reflect.apply(original, this, args);
+        },
+      });
+    },
+    { referenceSource: solutions[0].source },
+  );
   const signup = await request.post('https://localhost:54322/auth/v1/signup', {
     data: {
       email: `dom-publication-${Date.now()}@example.test`,
@@ -174,6 +207,25 @@ test('selected production DOM01 route keeps runner and preview contained through
     await showPanel(page, 'Results');
     await expect(panel.getByRole('status')).toContainText('Source changed');
     await panel.getByRole('button', { name: 'Start interactive' }).click();
+    await expect
+      .poll(async () => {
+        const frame = page
+          .frames()
+          .find((item) =>
+            item
+              .url()
+              .startsWith(`${runner}/runtime/interactive-bootstrap.html`),
+          );
+        if (!frame) return null;
+        return frame.evaluate(() => {
+          const records: unknown = Object.getOwnPropertyDescriptor(
+            globalThis,
+            '__cqSourceAudit',
+          )?.value;
+          return Array.isArray(records) ? records.at(-1) : null;
+        });
+      })
+      .toMatchObject({ kind: 'reference', length: solutions[0].source.length });
     await expect(panel.getByRole('status')).toContainText('ready', {
       timeout: 5_000,
     });
