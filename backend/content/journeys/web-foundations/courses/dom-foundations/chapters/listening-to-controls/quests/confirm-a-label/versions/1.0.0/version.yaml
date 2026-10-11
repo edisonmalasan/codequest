@@ -1,0 +1,35 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Confirm a label
+objective: Respond to a change event with confirmed or empty feedback.
+outcomeId: O8
+conceptIds:
+  - dom-events
+  - dom-state
+prerequisiteQuestIds:
+  - DOM05
+difficulty: developing
+xpAward: 10
+hints:
+  question: 'Listen for change on #plot-label.'
+  concept: 'Read plotLabel.value inside the callback.'
+  nextStep: 'Set confirmation.textContent using a nonempty branch and the exact empty fallback.'
+caseIds:
+  - normal-confirm
+  - boundary-empty-confirm
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

@@ -65,13 +65,18 @@ const ready: InteractiveResult = {
 describe('interactive review panel', () => {
   it('runs the current identified files and marks the old result stale on edit', async () => {
     const adapter = new ReviewAdapter(ready);
+    let currentSources = {
+      page: '<h1>Current</h1>',
+      logic: 'console.log("finite")',
+    };
     const view = render(
       <InteractivePreviewPanel
         adapter={adapter}
         ownerId="guest"
         workspaceId="review"
         files={files}
-        sources={{ page: '<h1>Current</h1>', logic: 'console.log("finite")' }}
+        sources={currentSources}
+        readSources={() => currentSources}
       />,
     );
     fireEvent.click(screen.getByRole('button', { name: 'Start interactive' }));
@@ -82,13 +87,18 @@ describe('interactive review panel', () => {
     expect(
       screen.getByLabelText('Interactive console output').textContent,
     ).toContain('finite');
+    currentSources = {
+      page: '<h1>Edited</h1>',
+      logic: 'console.log("finite")',
+    };
     view.rerender(
       <InteractivePreviewPanel
         adapter={adapter}
         ownerId="guest"
         workspaceId="review"
         files={files}
-        sources={{ page: '<h1>Edited</h1>', logic: 'console.log("finite")' }}
+        sources={currentSources}
+        readSources={() => currentSources}
       />,
     );
     await waitFor(() =>
@@ -118,6 +128,7 @@ describe('interactive review panel', () => {
         workspaceId="review"
         files={files}
         sources={{ page: '<h1>Hi</h1>', logic: '' }}
+        readSources={() => ({ page: '<h1>Hi</h1>', logic: '' })}
       />,
     );
     fireEvent.click(screen.getByRole('button', { name: 'Start interactive' }));
@@ -126,6 +137,42 @@ describe('interactive review panel', () => {
     );
     expect(screen.queryByRole('button', { name: 'Check' })).toBeNull();
     expect(screen.queryByText(/completed/i)).toBeNull();
+  });
+
+  it('starts from the latest editor snapshot without cancelling it when props catch up', async () => {
+    const adapter = new ReviewAdapter(ready);
+    const initial = { page: '<h1>Hi</h1>', logic: 'while (true) {}' };
+    const finite = { page: '<h1>Hi</h1>', logic: 'console.log("finite")' };
+    let currentSources = initial;
+    const view = render(
+      <InteractivePreviewPanel
+        adapter={adapter}
+        ownerId="guest"
+        workspaceId="review"
+        files={files}
+        sources={initial}
+        readSources={() => currentSources}
+      />,
+    );
+    currentSources = finite;
+    fireEvent.click(screen.getByRole('button', { name: 'Start interactive' }));
+    await waitFor(() =>
+      expect(screen.getByRole('status').textContent).toContain('ready'),
+    );
+    expect(adapter.lastSnapshot?.files[1]?.source).toBe(finite.logic);
+    const cancels = adapter.cancel.mock.calls.length;
+    view.rerender(
+      <InteractivePreviewPanel
+        adapter={adapter}
+        ownerId="guest"
+        workspaceId="review"
+        files={files}
+        sources={finite}
+        readSources={() => currentSources}
+      />,
+    );
+    expect(screen.getByRole('status').textContent).toContain('ready');
+    expect(adapter.cancel.mock.calls.length).toBe(cancels);
   });
 
   it('cancels the prior session when workspace ownership changes', async () => {
@@ -138,6 +185,7 @@ describe('interactive review panel', () => {
         workspaceId="review"
         files={files}
         sources={sources}
+        readSources={() => sources}
       />,
     );
     fireEvent.click(screen.getByRole('button', { name: 'Start interactive' }));
@@ -152,6 +200,7 @@ describe('interactive review panel', () => {
         workspaceId="review"
         files={files}
         sources={sources}
+        readSources={() => sources}
       />,
     );
     await waitFor(() =>

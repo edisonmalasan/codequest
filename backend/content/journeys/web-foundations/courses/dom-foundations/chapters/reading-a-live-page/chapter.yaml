@@ -1,0 +1,10 @@
+id: DOM-CH01
+courseId: COURSE-DOM-FOUNDATIONS
+slug: reading-a-live-page
+title: Read a live page
+position: 1
+objectiveSummary: Select supplied nodes and replace text.
+questIds:
+  - DOM01
+  - DOM02
+  - DOM03

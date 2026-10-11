@@ -1,0 +1,47 @@
+# DOM Foundations selected-route candidate verification
+
+Date: 2026-10-10, updated 2026-10-11. Candidate code and content base recorded in the manifest: `1f0160f`. Final executable and selected-content candidate: `4f2bfba`; [CI run 38132950251, attempt 2](https://github.com/edisonmalasan/codequest/actions/runs/38132950251/attempts/2) passed the required checks on 2026-10-11. Evidence-only head `191028c` then passed [CI run 38140968755](https://github.com/edisonmalasan/codequest/actions/runs/38140968755), including a clean 24/24 learning suite. The manifest selects the complete Course on the Apply branch; publication takes effect only after the reviewed Apply PR merges. Evidence/task follow-up commits change no executable, selected content, assessment, or origin policy. The final PR head and its CI result must be checked again before merge.
+
+Selected content and assessment: DOM01–DOM12, all `1.0.0 / 1.0.0`. Instructional/technical self-reviewer: Codex; [DOM Foundations authoring review](dom-foundations-course.md). Application origin: `http://127.0.0.1:3400`; runner: `http://127.0.0.2:3400`; preview: `http://localhost:3400`. All are local, distinct browser origins. CI attempt 2 installed Playwright Chromium `153.0.8010.12`, Firefox `155.0`, WebKit `26.6`, and Pixel 7 emulation on that Chromium build, as recorded in its browser-install log. These are synthetic local/CI results, not hosted or physical-device evidence.
+
+| Blocking selected-route row                                                            | Chromium | Firefox | WebKit | Mobile Chromium | Evidence / retest |
+| -------------------------------------------------------------------------------------- | -------- | ------- | ------ | --------------- | ----------------- |
+| Real catalog and DOM01 lesson route from compiled backend                              | Pass | Pass | Pass | Pass | CI `38132950251` attempt 2, candidate `4f2bfba`. |
+| Effective application, runner, preview host allowlists and CSP                         | Pass | Pass | Pass | Pass | Same selected production-route matrix. |
+| Opaque child sandbox, storage/top-frame denial, active markup and external sink denial | Pass | Pass | Pass | Pass | Same matrix; a deliberate preview CSP weakening failed its assertion and was reverted before the final candidate. |
+| Correlated message rejection and finite Run/Check                                      | Pass | Pass | Pass | Pass | Same matrix, including forged message rejection. |
+| Source, output, event, and mutation bounds; unsupported APIs                           | Pass | Pass | Pass | Pass | Same matrix, including the oversized source and event/mutation limits. |
+| Repeated source and handler loops, termination and fresh-run recovery                  | Pass | Pass | Pass | Pass | Same matrix; three source-loop cycles, handler-loop timeout, and eligible finite recovery below 1,000 ms. |
+| Cancellation, reload, edit invalidation, owner switch, navigation cleanup              | Pass | Pass | Pass | Pass | Same matrix, including source retention and separate owner draft. |
+| Complete Course catalog-to-DOM12 account traversal with isolated PostgreSQL            | Pass | Pass | Pass | Pass | CI `38140968755` on evidence-only head `191028c`: all four DOM traversals passed; learning 24/24 clean. |
+| Frontend/backend/OpenAPI/OpenSpec quality gates                                        | Pass | Pass | Pass | Pass | CI `38140968755`: curriculum/history, API drift, root lint/typecheck/test, frontend/backend build, security 4/4, learning 24/24, accessibility 16/16; strict OpenSpec validation and root `pnpm build` passed locally. |
+
+The first CI attempt on `4f2bfba` passed the four-browser security matrix but failed an existing WebKit HTML learning flow: WebKit reported internal resource errors, and the retry did not load the editor. Attempt 2 reran the identical commit. Its security matrix passed again; the HTML flow failed once and passed its configured fresh-browser retry, and the full job succeeded. This flaky development-server/WebKit behavior remains a test-harness limitation, not a claimed clean first-attempt result. CI `38140968755` on evidence-only head `191028c` passed all 24 learning scenarios without a retry. Every selected DOM row passed on both successful full jobs. A code, selected-content, origin, or policy change invalidates affected results until retested against the new exact build. The catalog metadata points to this record and exact selected versions; it does not independently certify the browser result.
+
+## Reproduce the selected-build gate
+
+With `DATABASE_URL` and `DATABASE_TEST_URL` both pointing to an isolated local PostgreSQL test database, installed Playwright Chromium/Firefox/WebKit, and no real learner credentials, run:
+
+```text
+pnpm --dir backend db:check
+pnpm --dir backend db:drift
+pnpm --dir backend db:migrate
+pnpm --dir frontend test:dom-publication
+pnpm --dir frontend test:learning
+openspec validate add-dom-interactions-course --strict
+```
+
+The first browser command builds and starts the selected production frontend/backend with synthetic Auth and the three origins above. The second exercises account facts with isolated PostgreSQL. The CI workflow also runs root lint, typecheck, test, build, curriculum/history validation, API drift, and accessibility. A missing database, browser, or certificate fixture cannot be replaced by a mocked result.
+
+## Failed candidate probes on 2026-10-10
+
+- The production selected-route matrix on `eb9b1c1` passed desktop Chromium, Firefox, and WebKit but failed emulated mobile Chromium. After a source tight loop timed out, a subsequent finite Run timed out instead of becoming ready within the approved two-second execution and one-second recovery bounds. A dedicated mobile retest repeated the failure after waiting for the workspace's updated-source state. A trial runner-frame reset produced a ready Run at 1,844 ms in one attempt and another timeout in the next. A trial idle spare Worker also timed out on the finite retry. Both unproven runtime changes were reverted. The mobile recovery row is **failed**, not untested or passed.
+- A local diagnostic on 2026-10-11 reduced the mobile probe to one source loop and a one-line finite source. That finite retry became ready, but a later finite Run after explicit cancellation timed out. The diagnostic simplification was reverted. This narrows the finding to recovery/lifecycle under repeated mobile interactions; it does not clear either required probe.
+- An effective-CSP sensitivity probe temporarily allowed preview `connect-src 'self'`; the selected-route test failed at its CSP assertion as intended. The policy mutation was restored. The first sensitivity attempt did not reach the assertion because its local production build exceeded the startup allowance; the second completed the deliberate failure.
+- CI run `38056253652` on `c741ffd` passed root quality checks and reached the isolated PostgreSQL learning suite, but the new DOM Course traversal failed in Firefox and WebKit at the local Check result. Chromium and emulated mobile traversal passed. The WebKit retry also encountered an account-navigation interruption; an existing guest test was flaky on WebKit. The PostgreSQL Course traversal row remains **failed** pending a corrected exact-build rerun.
+- CI run `38056979675` on `eb9b1c1` passed root quality checks and 22 of 24 isolated PostgreSQL browser tests, with one WebKit retry passing. The new DOM traversal's Check passed in this run, but Firefox failed when navigation to the Course map was interrupted after the uncertain-response replay; WebKit's first attempt saw the same interruption. The selected production-route suite did not run in the failed CI job. No earlier pass substitutes for a failed final-candidate row.
+- CI run `38120119547` on `7d9bc4b` passed the selected DOM traversal on Chromium, Firefox, WebKit, and emulated mobile Chromium against isolated PostgreSQL. The test confirmed that the deliberately aborted DOM12 delivery reached the transport, then replayed the same pending event on reconnect without an account-page navigation race. The overall learning step still failed in the existing JavaScript capstone draft-retention test on Firefox; its WebKit run was flaky. The selected production-route suite was skipped because CI stops after a failed step. This does not close the final quality or mobile containment rows.
+- CI run `38121116518` on `a4f73f7` passed lint, typecheck, root tests, build, curriculum, analytics, and the selected production-route security suite on desktop Chromium, Firefox, and WebKit. Emulated mobile Chromium again timed out on a finite Run after a source loop; the approved recovery row remains **failed**. The security-suite failure stopped later learning and accessibility steps.
+- CI run `38121857652` on `7fdaedf` tested a bounded spare Worker prepared before the next session. Desktop Chromium, Firefox, and WebKit passed, but emulated mobile Chromium again timed out on the finite Run after a source loop. The unproven spare-Worker code was removed. This failed trial cannot close the recovery row, and the reverted runtime returns to the previously failed behavior.
+
+R04 real-provider authentication, founder acceptance, hosted origin checks, physical-device/assistive-technology evidence, unresolved F06 policy, and Phase 38 beta readiness remain open. No beta GO, independent grading, competitive score, or verified mastery is claimed.

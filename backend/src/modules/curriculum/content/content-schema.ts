@@ -358,6 +358,8 @@ const publicationQuestSchema = z
         build: z.string().regex(/^[a-f0-9]{7,40}$/),
         date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         record: z.string().regex(/^docs\/[a-z0-9-/]+\.md$/),
+        contentVersion: version,
+        assessmentVersion: version,
       })
       .strict()
       .optional(),

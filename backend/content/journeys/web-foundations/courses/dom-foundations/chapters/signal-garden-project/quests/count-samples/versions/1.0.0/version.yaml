@@ -1,0 +1,36 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Count samples
+objective: Keep a click count in JavaScript state and render it in a status node.
+outcomeId: O8
+conceptIds:
+  - dom-events
+  - dom-state
+  - dom-integration
+prerequisiteQuestIds:
+  - DOM09
+difficulty: developing
+xpAward: 10
+hints:
+  question: 'Declare a count variable outside the callback.'
+  concept: 'Increment it once inside each click callback.'
+  nextStep: 'Set sample-count.textContent to "Samples: " + count after incrementing.'
+caseIds:
+  - normal-one-sample
+  - boundary-three-samples
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

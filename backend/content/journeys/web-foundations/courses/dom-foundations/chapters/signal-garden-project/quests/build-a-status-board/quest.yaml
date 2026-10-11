@@ -1,0 +1,8 @@
+id: DOM12
+chapterId: DOM-CH04
+slug: build-a-status-board
+position: 3
+kind: capstone
+guestEligible: false
+currentVersion: 1.0.0
+transitions: []

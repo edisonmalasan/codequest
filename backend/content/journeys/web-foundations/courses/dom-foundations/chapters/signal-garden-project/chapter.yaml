@@ -1,0 +1,10 @@
+id: DOM-CH04
+courseId: COURSE-DOM-FOUNDATIONS
+slug: signal-garden-project
+title: Signal Garden project
+position: 4
+objectiveSummary: Build a small, accessible status board from supplied controls.
+questIds:
+  - DOM10
+  - DOM11
+  - DOM12

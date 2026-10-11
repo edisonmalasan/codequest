@@ -1,0 +1,39 @@
+## Goal
+
+Distinguish empty, in-range, and out-of-range text input.
+
+## Learn
+
+A status board needs a response for missing data as well as valid data. On input, read the field value. Treat empty text as missing. Convert nonempty text with `Number` and classify finite values from 0 through 100 as in range. The supported facade exposes the input value and text status, not a full form API.
+
+## Worked example
+
+```js
+const field = document.getElementById('sample-field');
+const status = document.getElementById('sample-status');
+const number = Number(field.value);
+status.textContent =
+  field.value === '' ? 'Missing' : number > 10 ? 'High' : 'Ready';
+```
+
+## Your task
+
+On input show `Reading accepted: <value>` for 0–100, `Reading outside range` otherwise, and `Enter a reading` for empty text.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after input on #reading-input with "42", `#reading-status` reads `Reading accepted: 42`.
+- boundary: after input on #reading-input with "101", `#reading-status` reads `Reading outside range`.
+- boundary: after input on #reading-input with "", `#reading-status` reads `Enter a reading`.
+
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+Why must empty text be checked before converting it to a number?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

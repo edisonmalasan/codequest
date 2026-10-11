@@ -41,7 +41,7 @@ export interface RunnerStep {
 
 export type DisplayPacket =
   | {
-      readonly type: 'rendered' | 'error' | 'invalid';
+      readonly type: 'rendered' | 'error' | 'invalid' | 'event-limit';
       readonly generationId: string;
     }
   | {
@@ -76,8 +76,13 @@ function interactionType(
 
 function displayStatus(
   value: unknown,
-): value is 'rendered' | 'error' | 'invalid' {
-  return value === 'rendered' || value === 'error' || value === 'invalid';
+): value is 'rendered' | 'error' | 'invalid' | 'event-limit' {
+  return (
+    value === 'rendered' ||
+    value === 'error' ||
+    value === 'invalid' ||
+    value === 'event-limit'
+  );
 }
 
 function stringArray(value: unknown): value is string[] {

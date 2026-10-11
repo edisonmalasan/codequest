@@ -1,0 +1,50 @@
+[
+  {
+    "id": "DOM01",
+    "source": "document.getElementById(\"north\").textContent = \"North: fern\";\ndocument.getElementById(\"south\").textContent = \"South: moss\";"
+  },
+  {
+    "id": "DOM02",
+    "source": "const reading = document.getElementById(\"reading\");\ndocument.getElementById(\"summary\").textContent = \"Current reading: \" + reading.textContent;"
+  },
+  {
+    "id": "DOM03",
+    "source": "for (const sensor of document.querySelectorAll(\".sensor\")) { sensor.textContent = sensor.textContent.replace(\"waiting\", \"ready\"); }"
+  },
+  {
+    "id": "DOM04",
+    "source": "document.getElementById(\"gate-button\").addEventListener(\"click\", () => { document.getElementById(\"gate-status\").textContent = \"Gate open\"; });"
+  },
+  {
+    "id": "DOM05",
+    "source": "const note = document.getElementById(\"note\");\nnote.addEventListener(\"input\", () => { document.getElementById(\"note-preview\").textContent = note.value ? \"Note: \" + note.value : \"No note yet\"; });"
+  },
+  {
+    "id": "DOM06",
+    "source": "const plotLabel = document.getElementById(\"plot-label\");\nplotLabel.addEventListener(\"change\", () => { document.getElementById(\"confirmation\").textContent = plotLabel.value ? \"Confirmed: \" + plotLabel.value : \"No label confirmed\"; });"
+  },
+  {
+    "id": "DOM07",
+    "source": "const alert = document.getElementById(\"alert\");\ndocument.getElementById(\"flag-button\").addEventListener(\"click\", () => { alert.classList.remove(\"calm\"); alert.classList.add(\"alerting\"); alert.textContent = \"Reading flagged\"; });"
+  },
+  {
+    "id": "DOM08",
+    "source": "const modeButton = document.getElementById(\"mode-button\");\nmodeButton.addEventListener(\"click\", () => { modeButton.setAttribute(\"aria-label\", \"Disable night mode\"); document.getElementById(\"mode-status\").textContent = \"Night mode active\"; });"
+  },
+  {
+    "id": "DOM09",
+    "source": "const status = document.getElementById(\"signal-status\");\ndocument.getElementById(\"signal-button\").addEventListener(\"click\", () => { status.style.color = \"green\"; status.textContent = \"Signal ready\"; });"
+  },
+  {
+    "id": "DOM10",
+    "source": "let count = 0;\ndocument.getElementById(\"sample-button\").addEventListener(\"click\", () => { count += 1; document.getElementById(\"sample-count\").textContent = \"Samples: \" + count; });"
+  },
+  {
+    "id": "DOM11",
+    "source": "const readingInput = document.getElementById(\"reading-input\");\nreadingInput.addEventListener(\"input\", () => { const raw = readingInput.value; const number = Number(raw); document.getElementById(\"reading-status\").textContent = raw === \"\" ? \"Enter a reading\" : Number.isFinite(number) && number >= 0 && number <= 100 ? \"Reading accepted: \" + raw : \"Reading outside range\"; });"
+  },
+  {
+    "id": "DOM12",
+    "source": "const plotInput = document.getElementById(\"plot-input\");\ndocument.getElementById(\"save-button\").addEventListener(\"click\", () => { document.getElementById(\"board-status\").textContent = plotInput.value ? \"Saved plot: \" + plotInput.value : \"Enter a plot name\"; });"
+  }
+]

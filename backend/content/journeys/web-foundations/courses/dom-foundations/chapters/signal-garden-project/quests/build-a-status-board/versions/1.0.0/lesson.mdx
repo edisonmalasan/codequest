@@ -1,0 +1,43 @@
+## Goal
+
+Combine input, click state, and accessible feedback in one status board.
+
+## Learn
+
+A small interface combines a named input, an action, and a status message. Read the input on each click instead of remembering a previous value. Keep the empty case useful and make repeated saves replace the previous message. The supplied `role="status"` makes feedback available without relying on color.
+
+## Worked example
+
+```js
+const field = document.getElementById('sample-input');
+const button = document.getElementById('sample-button');
+const status = document.getElementById('sample-status');
+button.addEventListener('click', () => {
+  status.textContent = field.value
+    ? 'Saved: ' + field.value
+    : 'Nothing to save';
+});
+```
+
+## Your task
+
+On Save, show `Saved plot: <value>` for a nonempty name or `Enter a plot name` for empty input. A later Save must show the latest name. Do not change the initial `No plot saved` before any click.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after input on #plot-input with "orchard", click on #save-button, `#board-status` reads `Saved plot: orchard`.
+- boundary: after click on #save-button, `#board-status` reads `Enter a plot name`.
+- boundary: after input on #plot-input with "orchard", click on #save-button, input on #plot-input with "grove", click on #save-button, `#board-status` reads `Saved plot: grove`.
+- boundary: after initialization, `#board-status` reads `No plot saved`.
+
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+If the learner changes the input after saving, when should the saved message change?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

@@ -1,0 +1,40 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Build a status board
+objective: Combine input, click state, and accessible feedback in one status board.
+outcomeId: O8
+conceptIds:
+  - dom-events
+  - dom-state
+  - dom-integration
+prerequisiteQuestIds:
+  - DOM11
+difficulty: integrative
+xpAward: 10
+explanationPrompt: Explain why the status message changes only after Save and how empty input is handled.
+transferPrompt: Describe how you would adapt this pattern to save a different named field without adding unsupported browser APIs.
+hints:
+  question: 'Listen for click on #save-button.'
+  concept: 'Read plot-input.value each time the button is clicked.'
+  nextStep: 'Set board-status.textContent to value ? "Saved plot: " + value : "Enter a plot name".'
+caseIds:
+  - normal-first-save
+  - boundary-empty-save
+  - boundary-latest-save
+  - boundary-initial
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js

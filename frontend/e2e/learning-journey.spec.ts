@@ -130,6 +130,9 @@ test('selected JavaScript course reaches accepted capstone without losing local 
   await page.goto('/quests/inventory-manager');
   await showLearningPanel(page, 'Code');
   await edit(page, capstoneSolutions.reference);
+  await expect(page.getByText('Saved on this device')).toBeVisible({
+    timeout: 15_000,
+  });
   await page
     .getByRole('textbox', { name: 'Debug explanation' })
     .fill(

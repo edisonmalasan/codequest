@@ -1,0 +1,37 @@
+## Goal
+
+Read text input during an input event and show an empty-state message.
+
+## Learn
+
+An `input` event fires as text changes. Read the supplied input node’s `value` inside the listener. When it is empty, keep a meaningful fallback in the status paragraph. A label wraps the input so its purpose remains available to assistive technology.
+
+## Worked example
+
+```js
+const input = document.getElementById('name');
+input.addEventListener('input', () => {
+  document.getElementById('message').textContent = input.value || 'No name';
+});
+```
+
+## Your task
+
+Mirror a nonempty note as `Note: <value>` in `#note-preview`; for empty input show `No note yet`.
+
+The preview displays sanitized supplied HTML and CSS. Your JavaScript runs in an isolated Worker through a limited page facade. It cannot use a full DOM, network, browser storage, or an arbitrary script-capable preview. Keep your source below the run limit; the project is local to this exercise.
+
+## Check contract
+
+- normal: after input on #note with "mint", `#note-preview` reads `Note: mint`.
+- boundary: after input on #note with "", `#note-preview` reads `No note yet`.
+
+Check reports local, unverified feedback for the declared text outcomes. Start interactive renders the supplied preview. Signed-in Submit requests backend acceptance; retries and hints do not award extra XP. This personal-learning Check is not an independent skill assessment.
+
+## Reflect (ungraded)
+
+Why does the callback read the input value when the event happens?
+
+## If you get stuck
+
+Use the graduated hints one at a time. If a source or event-handler loop times out, the runner stops it and keeps your code so you can edit and run again.

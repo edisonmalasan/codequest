@@ -20,6 +20,9 @@ outcomes:
     description: Compose type, spacing, boxes, and static page layout.
   - id: O7
     description: Adapt a static page with bounded responsive CSS rules.
+  - id: O8
+    description: Update supplied page elements through bounded browser interactions.
 courseIds:
   - COURSE-HTML-FOUNDATIONS
   - COURSE-CSS-FOUNDATIONS
+  - COURSE-DOM-FOUNDATIONS

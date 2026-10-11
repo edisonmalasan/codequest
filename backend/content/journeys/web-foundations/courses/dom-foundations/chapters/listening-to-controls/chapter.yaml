@@ -1,0 +1,10 @@
+id: DOM-CH02
+courseId: COURSE-DOM-FOUNDATIONS
+slug: listening-to-controls
+title: Listen to controls
+position: 2
+objectiveSummary: Connect click, input, and change events to text updates.
+questIds:
+  - DOM04
+  - DOM05
+  - DOM06

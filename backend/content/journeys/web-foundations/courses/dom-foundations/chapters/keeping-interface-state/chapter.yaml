@@ -1,0 +1,10 @@
+id: DOM-CH03
+courseId: COURSE-DOM-FOUNDATIONS
+slug: keeping-interface-state
+title: Keep interface state
+position: 3
+objectiveSummary: Connect visual state and accessible text feedback.
+questIds:
+  - DOM07
+  - DOM08
+  - DOM09

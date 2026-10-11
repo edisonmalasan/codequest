@@ -75,6 +75,28 @@ describe('loadJourneyCurriculumGraph', () => {
     );
   });
 
+  it('keeps a published prerequisite from another Journey without hiding navigation', async () => {
+    const api = apiFixture();
+    const original = api.getQuest;
+    api.getQuest = vi.fn(async (slug, signal) => {
+      const response = await original(slug, signal);
+      if (!response.ok || response.data.id !== 'Q01') return response;
+      return success({
+        ...response.data,
+        prerequisites: [
+          { id: 'EXTERNAL01', slug: 'external-first', title: 'Earlier lesson' },
+        ],
+      });
+    });
+
+    const graph = await loadJourneyCurriculumGraph(api, journeyFixture.slug);
+    expect(
+      graph.chapters
+        .flatMap(({ quests }) => quests)
+        .find(({ id }) => id === 'Q01')?.prerequisites[0]?.id,
+    ).toBe('EXTERNAL01');
+  });
+
   it('maps the root not-found response without revealing draft state', async () => {
     const api = apiFixture();
     const result: Awaited<ReturnType<CurriculumApi['getJourney']>> = {

@@ -1,0 +1,35 @@
+contentVersion: 1.0.0
+assessmentVersion: 1.0.0
+title: Mirror a field note
+objective: Read text input during an input event and show an empty-state message.
+outcomeId: O8
+conceptIds:
+  - dom-events
+  - dom-state
+prerequisiteQuestIds:
+  - DOM04
+difficulty: developing
+xpAward: 10
+hints:
+  question: 'Listen for input on #note.'
+  concept: 'Read note.value in the callback and branch on whether it is empty.'
+  nextStep: 'Use note.value ? "Note: " + note.value : "No note yet".'
+caseIds:
+  - normal-note
+  - boundary-empty-note
+exercise:
+  schemaVersion: 1
+  mode: interactive-web
+  files:
+    - id: page
+      name: index.html
+      language: html
+      starterFile: starter.html
+    - id: style
+      name: style.css
+      language: css
+      starterFile: starter.css
+    - id: logic
+      name: main.js
+      language: javascript
+      starterFile: starter.js
