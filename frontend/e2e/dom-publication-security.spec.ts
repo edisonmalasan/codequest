@@ -21,11 +21,18 @@ async function editJavaScript(page: Page, source: string) {
   await editor.click();
   await editor.press('ControlOrMeta+A');
   await page.keyboard.insertText(source);
-  await expect
-    .poll(async () =>
-      (await editor.locator('.cm-line').allTextContents()).join('\n'),
-    )
-    .toBe(source);
+  if (source.length > 10_000) {
+    // CodeMirror draws only the visible portion of an exceptionally long line.
+    await expect(editor.locator('.cm-line').first()).toContainText(
+      source.slice(0, 1_000),
+    );
+  } else {
+    await expect
+      .poll(async () =>
+        (await editor.locator('.cm-line').allTextContents()).join('\n'),
+      )
+      .toBe(source);
+  }
   return editor;
 }
 
