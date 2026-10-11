@@ -15,6 +15,7 @@ export function InteractivePreviewPanel({
   workspaceId,
   files,
   sources,
+  readSources,
 }: {
   adapter: InteractiveWebAdapter;
   contentVersion?: string;
@@ -22,6 +23,7 @@ export function InteractivePreviewPanel({
   workspaceId: string;
   files: readonly WorkspaceFile[];
   sources: Readonly<Record<string, string>>;
+  readSources: () => Readonly<Record<string, string>>;
 }): React.JSX.Element {
   const host = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<InteractiveResult>();
@@ -29,6 +31,7 @@ export function InteractivePreviewPanel({
   const [stale, setStale] = useState(false);
   const [revision, setRevision] = useState(0);
   const token = useRef(0);
+  const observedSources = useRef(sources);
 
   useEffect(() => {
     if (!host.current) return;
@@ -54,6 +57,8 @@ export function InteractivePreviewPanel({
   }, [adapter, ownerId, workspaceId]);
 
   useEffect(() => {
+    if (observedSources.current === sources) return;
+    observedSources.current = sources;
     token.current += 1;
     void adapter.cancel();
     setValue(undefined);
@@ -62,18 +67,21 @@ export function InteractivePreviewPanel({
   }, [adapter, sources]);
 
   function start(reload: boolean): void {
+    const currentSources = readSources();
+    const canReload = reload && observedSources.current === currentSources;
+    observedSources.current = currentSources;
     const current = ++token.current;
     setRunning(true);
     setValue(undefined);
     setStale(false);
-    const operation = reload
+    const operation = canReload
       ? adapter.reload()
       : adapter.start({
           contentVersion: contentVersion ?? `review-${revision}`,
           files: files.map((file) => ({
             id: file.id,
             language: file.language,
-            source: sources[file.id] ?? file.starterSource,
+            source: currentSources[file.id] ?? file.starterSource,
           })),
         });
     void operation.then(

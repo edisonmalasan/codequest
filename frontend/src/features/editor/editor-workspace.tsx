@@ -945,6 +945,7 @@ export function EditorWorkspace({
                 workspaceId={workspaceId}
                 files={files}
                 sources={sources}
+                readSources={() => sourcesRef.current}
               />
             </div>
           )}
@@ -978,6 +979,7 @@ export function EditorWorkspace({
               workspaceId={workspaceId}
               files={files}
               sources={sources}
+              readSources={() => sourcesRef.current}
             />
           )}
           <RuntimeStatus
