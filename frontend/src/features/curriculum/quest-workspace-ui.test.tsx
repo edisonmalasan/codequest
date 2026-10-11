@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { questFixtures } from './journey-course-test-data';
@@ -10,6 +10,9 @@ const sync = vi.hoisted(() => ({
   save: vi.fn(),
   replay: vi.fn(),
   list: vi.fn(),
+}));
+const authEvents = vi.hoisted(() => ({
+  emit: undefined as ((ownerId: string | null) => void) | undefined,
 }));
 const analytics = vi.hoisted(() => ({
   captureObserved: vi.fn(),
@@ -42,9 +45,19 @@ vi.mock('@/features/auth/supabase-browser', () => ({
         data: { session: sync.owner ? { user: { id: sync.owner } } : null },
         error: null,
       }),
-      onAuthStateChange: () => ({
-        data: { subscription: { unsubscribe: vi.fn() } },
-      }),
+      onAuthStateChange: (
+        callback: (
+          event: string,
+          session: { user: { id: string } } | null,
+        ) => void,
+      ) => {
+        authEvents.emit = (ownerId) =>
+          callback(
+            'TOKEN_REFRESHED',
+            ownerId === null ? null : { user: { id: ownerId } },
+          );
+        return { data: { subscription: { unsubscribe: vi.fn() } } };
+      },
     },
   }),
 }));
@@ -192,6 +205,7 @@ describe('guest quest presentation', () => {
   afterEach(() => vi.restoreAllMocks());
   beforeEach(() => {
     vi.clearAllMocks();
+    authEvents.emit = undefined;
     sync.owner = null;
     sync.save.mockResolvedValue(undefined);
     sync.replay.mockResolvedValue({ confirmed: 0, pending: true });
@@ -223,6 +237,51 @@ describe('guest quest presentation', () => {
     expect(sync.save.mock.invocationCallOrder[0]).toBeLessThan(
       sync.replay.mock.invocationCallOrder[0],
     );
+  });
+
+  it('keeps a pending submission active through a same-account token refresh', async () => {
+    sync.owner = 'A';
+    let finishReplay:
+      ((value: { confirmed: number; pending: boolean }) => void) | undefined;
+    sync.replay.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finishReplay = resolve;
+        }),
+    );
+    sync.list.mockImplementation(async () => [
+      {
+        eventId: sync.save.mock.calls[0][2].clientEventId,
+        delivery: { status: 'confirmed' },
+      },
+    ]);
+    render(<QuestWorkspace quest={questFixtures.Q02} />);
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Mock Submit' }),
+    );
+    await screen.findByText(/Submission saved on this device/);
+
+    act(() => authEvents.emit?.('A'));
+    await act(async () => finishReplay?.({ confirmed: 1, pending: false }));
+
+    expect(
+      await screen.findByText(/Submission delivery confirmed/),
+    ).toBeDefined();
+  });
+
+  it('clears pending submission feedback when the account changes', async () => {
+    sync.owner = 'A';
+    sync.replay.mockImplementationOnce(() => new Promise(() => undefined));
+    render(<QuestWorkspace quest={questFixtures.Q02} />);
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Mock Submit' }),
+    );
+    await screen.findByText(/Submission saved on this device/);
+
+    act(() => authEvents.emit?.('B'));
+
+    expect(screen.queryByText(/Submission saved on this device/)).toBeNull();
+    expect(screen.queryByText(/Submission delivery confirmed/)).toBeNull();
   });
 
   it('does not send a submission when durable storage fails', async () => {
