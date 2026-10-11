@@ -20,7 +20,7 @@
 - [x] 3.1 Select the full reviewed DOM Course atomically in `publication.yaml` with Quest-level approval and exact evidence references; verify draft/partial/stale selections still fail curriculum validation and existing selected Courses remain byte-identical.
 - [x] 3.2 Run the selected production route through Chromium, Firefox, WebKit, and emulated mobile Chromium with the exact application/runner/preview origin topology; record dated build, browser versions, content/assessment versions, reviewers, every pass/fail/untested gate row, and affected retests. Verify no required row is failed or missing before treating publication as eligible.
 - [x] 3.3 Traverse catalog to DOM12 with synthetic learner flows: locked prerequisites, Run/Check/Submit/Next, edit invalidation, owner-scoped drafts, failed and uncertain responses, replay, backend-accepted progress/XP/unlocks, refresh and revisit; verify isolated PostgreSQL browser tests and preserve the personal-learning trust label.
-- [ ] 3.4 Run `pnpm --dir backend curriculum:validate`, `pnpm api:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, relevant browser suites, and strict OpenSpec validation on the final candidate; review the final diff and evidence binding. If any required selected-build gate remains failed or untested, leave publication disabled and this task open.
+- [x] 3.4 Run `pnpm --dir backend curriculum:validate`, `pnpm api:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, relevant browser suites, and strict OpenSpec validation on the final candidate; review the final diff and evidence binding. If any required selected-build gate remains failed or untested, leave publication disabled and this task open.
 
 ## 4. Record product state
 
