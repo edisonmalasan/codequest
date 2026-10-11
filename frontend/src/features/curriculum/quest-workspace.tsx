@@ -210,6 +210,7 @@ export function QuestWorkspace({
   const guestAllowed = quest.guestEligible && isGuestQuestId(quest.id);
   const pendingEventRef = useRef<{ key: string; id: string } | null>(null);
   const sessionGeneration = useRef(0);
+  const sessionOwner = useRef<string | null | undefined>(undefined);
   const definition = useMemo(() => questValidationDefinition(quest), [quest]);
   const responseFields = useMemo(
     () =>
@@ -426,6 +427,8 @@ export function QuestWorkspace({
       const auth = getBrowserSupabaseClient().auth;
       const initial = sessionGeneration.current;
       const update = (next: string | null) => {
+        if (sessionOwner.current === next) return;
+        sessionOwner.current = next;
         updateObservedOwner(next);
         sessionGeneration.current++;
         setOwnerId(next);
