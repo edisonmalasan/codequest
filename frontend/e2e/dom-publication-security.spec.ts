@@ -18,7 +18,14 @@ async function editJavaScript(page: Page, source: string) {
     name: 'main.js code editor (javascript)',
   });
   await expect(editor).toBeVisible({ timeout: 30_000 });
-  await editor.fill(source);
+  await editor.click();
+  await editor.press('ControlOrMeta+A');
+  await page.keyboard.insertText(source);
+  await expect
+    .poll(async () =>
+      (await editor.locator('.cm-line').allTextContents()).join('\n'),
+    )
+    .toBe(source);
   return editor;
 }
 
@@ -171,11 +178,6 @@ test('selected production DOM01 route keeps runner and preview contained through
       timeout: 5_000,
     });
     await editJavaScript(page, solutions[0].source);
-    await expect
-      .poll(async () =>
-        (await editor.locator('.cm-line').allTextContents()).join('\n'),
-      )
-      .toBe(solutions[0].source);
     await showPanel(page, 'Results');
     await expect(panel.getByRole('status')).toContainText('Source changed');
     await panel.getByRole('button', { name: 'Start interactive' }).click();
