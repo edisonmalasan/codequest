@@ -141,6 +141,10 @@ test('selected JavaScript course reaches accepted capstone without losing local 
   await page
     .getByRole('textbox', { name: 'Transfer response' })
     .fill('An inclusive threshold retains records equal to the boundary.');
+  await expect(page.getByText('Unsaved local changes')).toBeVisible();
+  await expect(page.getByText('Saved on this device')).toBeVisible({
+    timeout: 15_000,
+  });
   await page.getByRole('button', { name: 'Check', exact: true }).click();
   await showLearningPanel(page, 'Results');
   await expect(page.getByText(/Local check passed/)).toBeVisible();
