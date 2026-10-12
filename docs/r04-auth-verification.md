@@ -71,3 +71,23 @@ These observations must be repeated against the implementation candidate. R04 re
 | Public Supabase Auth settings | The read-only request failed with DNS `ENOTFOUND` for the configured project host; no settings response was received. | Provider status, email delivery, and redirect configuration were not verified by this probe. Do not infer provider enablement from the earlier record. |
 
 The repository remained unchanged during the smoke apart from this sanitized evidence record. No credentials, project hostname, account identifiers, provider payloads, or response bodies were retained. R04 tasks 3.1–3.4 remain open: synthetic email delivery and account establishment, Google OAuth, GitHub OAuth, recovery/password update, and founder walkthrough all require their specified evidence on the intended environment. The active R09 Apply preflight therefore remains blocked.
+
+## Resumed-project local probe — 2026-10-13
+
+| Field | Value |
+| --- | --- |
+| Application revision | `51c109f` on `fix/auth-callback-recovery`; local Windows development, Node `v26.10.0`, application `http://localhost:3000`, backend `http://127.0.0.1:3001`. This is not a beta release candidate. |
+| Operator and scope | Repository agent; anonymous reachability and synthetic invalid-code callback only. No learner identity, received email, provider consent, protected account read, or founder walkthrough. |
+| Secret handling | Local environment files supplied configuration to the processes. No project reference, access token, publishable key, address, credential, response body, cookie, or authorization code was retained in this record. |
+
+| Probe | Observed result | Meaning |
+| --- | --- | --- |
+| Project reachability | The configured project host resolved. Auth health, public settings, and JWKS initially returned `502`, then returned `200` on retry; the same frontend publishable key was used for the public endpoint checks. | Supabase Auth became reachable after the reported project resume. The first responses were failed probes, not passes. |
+| Public Auth settings | Email enabled, signup allowed, confirmation required; Google and GitHub disabled. | Email configuration shape is usable for a delivered-message test. Neither provider journey is available. |
+| Management access | A read-only `GET /v1/projects` with the stored `SUPABASE_ACCESS_TOKEN` returned `401`; the scoped Auth configuration read also returned `401`. | The stored token cannot currently be used for Management API changes or private configuration inspection. A project resume does not establish token validity. |
+| Local application | `pnpm dev` reached a ready frontend; `/login`, `/register`, `/recover` returned `200` and anonymous `/account` returned `307` to login. The backend watch repeatedly restarted after detecting installed dependency files, so this run did not establish steady backend health. Separate non-watch `pnpm --dir backend start` eventually served `/api/v1/health` with `200`. | The frontend routes and non-watch backend start are available. Root development startup reliability remains an observed issue; this is not an authenticated account journey. |
+| Invalid callback | `/auth/callback` with a synthetic invalid code and safe `/journeys` return path returned `307` to `/login?error=callback&next=%2Fjourneys`; the code was absent from the destination. | The handled-error path is safe on this local build. The new regression also covers a thrown exchange failure, which would otherwise become a `500`. |
+
+The founder directed on 2026-10-13 that work focus on email for now and Google/GitHub verification pause. The provider methods remain open R04 and V1 requirements; this is not acceptance or removal of those paths. No controlled inbox or approved delivery configuration was available to this probe, so signup, delivered confirmation, login/logout, refresh/relogin, recovery/password change, and a verified backend account remain **untested**. No synthetic account was created solely to produce an undeliverable confirmation.
+
+The callback regression passed 6/6 focused tests. Root `pnpm lint`, `pnpm typecheck`, `pnpm api:check`, `pnpm build`, and `openspec validate stabilize-real-authentication --strict` passed on the branch. The frontend portion of root `pnpm test` passed 478/478; the backend `author-cli.spec.ts` preview test failed locally when its child process returned no exit status under concurrent local workload, so the root command did **not** pass. The local run was stopped after that failure. Required PR CI must independently pass before this repair merges; the failed local result is not relabeled as a pass.
