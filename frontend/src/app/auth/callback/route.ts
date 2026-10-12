@@ -17,12 +17,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(failureDestination);
   }
 
-  const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
-  return NextResponse.redirect(
-    new URL(
-      error === null ? destination : failureDestination,
-      applicationOrigin,
-    ),
-  );
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error !== null) return NextResponse.redirect(failureDestination);
+  } catch {
+    return NextResponse.redirect(failureDestination);
+  }
+  return NextResponse.redirect(new URL(destination, applicationOrigin));
 }

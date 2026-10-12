@@ -72,6 +72,21 @@ describe('authentication callback', () => {
     );
   });
 
+  it('recovers safely when the code exchange throws', async () => {
+    exchangeCodeForSession.mockRejectedValueOnce(
+      new Error('private provider response'),
+    );
+    const response = await GET(
+      new NextRequest(
+        'http://localhost:3000/auth/callback?code=private-code&next=%2Fjourneys&error_description=private-provider-response',
+      ),
+    );
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/login?error=callback&next=%2Fjourneys',
+    );
+    expect(response.headers.get('location')).not.toContain('private');
+  });
+
   it('redirects to the configured app origin when the request URL uses the runner host', async () => {
     const response = await GET(
       new NextRequest('http://localhost:3100/auth/callback'),
