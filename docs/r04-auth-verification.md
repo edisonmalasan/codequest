@@ -52,3 +52,22 @@ The public Auth settings endpoint does not expose the redirect allowlist, email 
 | Founder walkthrough | Not requested or performed for this build. | Separate dated review of each required method on the intended environment, with defects and retests. |
 
 These observations must be repeated against the implementation candidate. R04 remains below integrated and founder accepted; Phase 38 remains PAUSED and NO GO.
+
+## Current-main local smoke — 2026-10-12
+
+| Field | Value |
+| --- | --- |
+| Tested commit | `8632ea1a8bf35b8c87fb4dd2396e5324b924083e` |
+| Environment | Local Windows development; Node `v26.10.0`; root `pnpm dev`; frontend `http://localhost:3000`; backend `http://127.0.0.1:3001`; local environment files were used and no values were recorded. |
+| Operator | Repository agent; anonymous routes and health only. |
+| Scope | Startup, anonymous route behavior, backend health recovery, and a read-only public Auth settings reachability probe. No account creation, delivered email, OAuth, recovery, protected account read, database write, or founder review. |
+
+| Probe | Observed result | Conclusion |
+| --- | --- | --- |
+| `pnpm dev` | Next.js became ready. The backend watch restarted twice after detecting changes under installed Fastify files in `node_modules`; it subsequently served health requests. | Frontend and backend start. The dependency-file watch restarts are observable, but did not prevent the later health pass; no startup repair is justified by this smoke alone. |
+| `/login`, `/register`, `/recover` | HTTP 200 for all three routes. | Anonymous Auth pages render at the HTTP level; this does not establish working Supabase integration or prove all page configuration states. |
+| Anonymous `/account` | HTTP 307 to `/login?next=%2Faccount`. | The anonymous account route redirects as expected. |
+| `/api/v1/health` | The first request during startup failed; three subsequent requests returned HTTP 200. | Backend health recovered after startup. The initial failure is not a sustained outage. |
+| Public Supabase Auth settings | The read-only request failed with DNS `ENOTFOUND` for the configured project host; no settings response was received. | Provider status, email delivery, and redirect configuration were not verified by this probe. Do not infer provider enablement from the earlier record. |
+
+The repository remained unchanged during the smoke apart from this sanitized evidence record. No credentials, project hostname, account identifiers, provider payloads, or response bodies were retained. R04 tasks 3.1–3.4 remain open: synthetic email delivery and account establishment, Google OAuth, GitHub OAuth, recovery/password update, and founder walkthrough all require their specified evidence on the intended environment. The active R09 Apply preflight therefore remains blocked.
