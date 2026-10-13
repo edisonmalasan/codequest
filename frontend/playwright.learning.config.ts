@@ -44,10 +44,12 @@ export default defineConfig({
       },
     },
     {
-      command: 'pnpm exec next dev --hostname 0.0.0.0 --port 3200',
+      // Keep the long learning journey off Next's HMR connection in WebKit.
+      command:
+        'pnpm build && pnpm exec next start --hostname 0.0.0.0 --port 3200',
       url: `${appOrigin}/register`,
       reuseExistingServer: false,
-      timeout: 180_000,
+      timeout: 240_000,
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
         NEXT_PUBLIC_SUPABASE_URL: authOrigin,
@@ -64,7 +66,7 @@ export default defineConfig({
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     {
       name: 'webkit',
-      // CI WebKit can lose its network process while Next serves dev chunks.
+      // CI WebKit can lose its network process during long browser journeys.
       // A retry starts a fresh browser process; persistent product failures still fail.
       retries: process.env.CI ? 1 : 0,
       use: { ...devices['Desktop Safari'] },
