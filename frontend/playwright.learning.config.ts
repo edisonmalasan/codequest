@@ -16,6 +16,9 @@ export default defineConfig({
     trace: 'retain-on-failure',
     actionTimeout: 10_000,
     ignoreHTTPSErrors: true,
+    // PWA caching is verified separately; these journeys must observe each
+    // backend request and deterministically intercept uncertain delivery.
+    serviceWorkers: 'block',
   },
   webServer: [
     {
