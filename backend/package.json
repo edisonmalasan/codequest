@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsc -p tsconfig.build.json && node --import ./scripts/load-local-env.mjs --watch dist/main.js",
+    "dev": "tsc -p tsconfig.build.json && node scripts/watch-dev.mjs",
     "build": "tsc -p tsconfig.build.json && node scripts/copy-curriculum-content.mjs",
     "start": "node --import ./scripts/load-local-env.mjs dist/main.js",
     "test": "vitest run --no-file-parallelism && node --test scripts/*.spec.mjs",
