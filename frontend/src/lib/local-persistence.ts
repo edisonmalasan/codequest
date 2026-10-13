@@ -762,6 +762,7 @@ export async function removeLocalOwnerData(
         database.lessonAssets,
         database.acceptedProgress,
         database.guestState,
+        database.builds,
       ],
       async () => {
         await database.drafts.where('ownerId').equals(ownerId).delete();
@@ -776,6 +777,7 @@ export async function removeLocalOwnerData(
           .where('ownerId')
           .equals(ownerId)
           .delete();
+        await database.builds.where('ownerId').equals(ownerId).delete();
         if (ownerId === 'guest')
           await database.guestState.where('ownerId').equals('guest').delete();
       },

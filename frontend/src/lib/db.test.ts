@@ -204,4 +204,49 @@ describe('local persistence skeleton', () => {
     expect(await database.lessonSnapshots.count()).toBe(0);
     expect(await database.guestState.count()).toBe(0);
   });
+
+  it('adds the Build index to version four without changing drafts or pending operations', async () => {
+    const name = `version-four-${Date.now()}`;
+    const old = new Dexie(name);
+    old.version(4).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId, [ownerId+createdAt]',
+      preferences: 'id, [ownerId+workspaceId], ownerId',
+      lessonSnapshots:
+        'id, ownerId, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      lessonAssets:
+        'id, ownerId, [ownerId+questId+contentVersion+assessmentVersion]',
+      acceptedProgress: 'id, ownerId',
+      guestState: 'id, [ownerId+key]',
+    });
+    const draft = {
+      id: 'original',
+      ownerId: 'owner-a',
+      workspaceId: 'Q01',
+      fileId: 'main',
+      source: 'keep original source',
+      updatedAt: 5,
+    };
+    const pending = {
+      eventId: 'original-event',
+      ownerId: 'owner-a',
+      questId: 'Q01',
+      schemaVersion: 1,
+      operationType: 'attempt-submit',
+      contentVersion: '1.0.0',
+      assessmentVersion: '1.0.0',
+      payload: '{}',
+      createdAt: 6,
+    };
+    await old.table('drafts').put(draft);
+    await old.table('outbox').put(pending);
+    old.close();
+
+    const database = new CodeQuestDatabase(name);
+    databases.push(database);
+    expect(await database.drafts.get(draft.id)).toEqual(draft);
+    expect(await database.outbox.get(pending.eventId)).toEqual(pending);
+    expect(await database.builds.count()).toBe(0);
+  });
 });

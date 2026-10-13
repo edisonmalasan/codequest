@@ -36,7 +36,10 @@ import { ConsolePanel } from './console-panel';
 import { EditorToolbar } from './editor-toolbar';
 import { FileTabs } from './file-tabs';
 import { PreviewPanel } from './preview-panel';
-import { InteractivePreviewPanel } from './interactive-preview-panel';
+import {
+  InteractivePreviewPanel,
+  type InteractivePreviewLabels,
+} from './interactive-preview-panel';
 import { RuntimeStatus } from './runtime-status';
 import { TestResults } from './test-results';
 import type {
@@ -99,6 +102,9 @@ export interface EditorWorkspaceProps {
   submitting?: boolean;
   presentation?: 'standalone' | 'integrated';
   activePanel?: 'lesson' | 'code' | 'results';
+  workspaceTitle?: string;
+  interactiveLabels?: InteractivePreviewLabels;
+  showTestResults?: boolean;
 }
 
 interface ExecutionPresentation {
@@ -210,6 +216,9 @@ export function EditorWorkspace({
   submitting,
   presentation = 'standalone',
   activePanel,
+  workspaceTitle = 'Editor Workspace',
+  interactiveLabels,
+  showTestResults = true,
 }: EditorWorkspaceProps): React.JSX.Element {
   const fileDefinitionKey = JSON.stringify([
     files.map(({ id, name, language, starterSource }) => ({
@@ -734,7 +743,7 @@ export function EditorWorkspace({
         className="rounded-lg border border-line bg-surface-raised p-6 text-ink"
       >
         <h2 id={titleId} className="font-display text-2xl font-bold">
-          Editor Workspace
+          {workspaceTitle}
         </h2>
         <p className="mt-3 text-muted">No editable files are available.</p>
       </section>
@@ -827,7 +836,7 @@ export function EditorWorkspace({
       <div className="border-b border-line bg-surface-raised px-4 py-4 sm:px-5">
         <p className="game-label text-xs text-discovery">Local coding space</p>
         <h2 id={titleId} className="mt-1 font-display text-2xl font-bold">
-          Editor Workspace
+          {workspaceTitle}
         </h2>
       </div>
       <EditorToolbar
@@ -946,6 +955,7 @@ export function EditorWorkspace({
                 files={files}
                 sources={sources}
                 readSources={() => sourcesRef.current}
+                labels={interactiveLabels}
               />
             </div>
           )}
@@ -980,18 +990,21 @@ export function EditorWorkspace({
               files={files}
               sources={sources}
               readSources={() => sourcesRef.current}
+              labels={interactiveLabels}
             />
           )}
           <RuntimeStatus
             state={executionAdapter ? execution.state : runtimeState}
           />
-          <TestResults
-            results={
-              validationStrategy && validationDefinition ? [] : testResults
-            }
-            validation={validationResult}
-            checking={checking}
-          />
+          {showTestResults && (
+            <TestResults
+              results={
+                validationStrategy && validationDefinition ? [] : testResults
+              }
+              validation={validationResult}
+              checking={checking}
+            />
+          )}
           {presentation === 'standalone' && actionBar}
           <p className="text-xs leading-5 text-muted">
             Drafts stay in this browser. They are not cloud backups and do not

@@ -58,6 +58,8 @@ jobs:
       - run: pnpm --dir frontend test:curriculum
       - run: pnpm --dir frontend test:analytics
       - run: pnpm --dir frontend test:dom-publication
+      - run: pnpm --dir frontend test:builds
+      - run: pnpm --dir frontend test:builds:collision
       - run: pnpm --dir frontend test:learning
       - run: pnpm --dir frontend test:accessibility
       - if: failure()
