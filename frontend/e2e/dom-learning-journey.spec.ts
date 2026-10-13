@@ -8,7 +8,7 @@ import {
 import solutions from './fixtures/dom-solutions.json';
 
 const apiOrigin = 'http://127.0.0.1:3001';
-const authOrigin = 'http://127.0.0.1:54321';
+const authOrigin = 'https://127.0.0.1:54321';
 const appOrigin = 'http://127.0.0.1:3200';
 
 interface QuestDetail {
