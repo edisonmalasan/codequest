@@ -39,7 +39,9 @@ export default defineConfig({
         NODE_ENV: 'test',
         HOST: '127.0.0.1',
         PORT: '3001',
-        RATE_LIMIT_MAX: '1000',
+        // The 24 synthetic journeys share one loopback IP and exercise the
+        // full prerequisite chain repeatedly; rate limiting is tested elsewhere.
+        RATE_LIMIT_MAX: '10000',
         CORS_ORIGINS: appOrigin,
         DATABASE_URL: process.env.DATABASE_TEST_URL ?? '',
         DATABASE_TEST_URL: process.env.DATABASE_TEST_URL ?? '',
