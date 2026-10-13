@@ -52,7 +52,9 @@ export default defineConfig({
       timeout: 240_000,
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
-        NEXT_PUBLIC_SUPABASE_URL: authOrigin,
+        // The production build requires HTTPS. Browser tests forward this
+        // synthetic origin to the local HTTP fixture before any request exits.
+        NEXT_PUBLIC_SUPABASE_URL: 'https://127.0.0.1:54321',
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
           'publishable-local-browser-fixture',
         NEXT_PUBLIC_SITE_URL: appOrigin,
