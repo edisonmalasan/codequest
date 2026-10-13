@@ -45,12 +45,22 @@ test('production Build creates, runs, saves and reopens without learning authori
   request,
 }) => {
   test.setTimeout(120_000);
+  const applicationWrites: string[] = [];
+  page.on('request', (outgoing) => {
+    if (
+      outgoing.url().startsWith('http://127.0.0.1:3001/api/v1/') &&
+      outgoing.method() !== 'GET'
+    )
+      applicationWrites.push(outgoing.url());
+  });
   for (const [origin, denied] of [
     [app, '/runtime/interactive-worker.js'],
     [app, '/preview/interactive-bridge.js'],
     [runner, '/account'],
+    [runner, '/builds'],
     [runner, '/preview/interactive-bridge.js'],
     [preview, '/account'],
+    [preview, '/builds'],
     [preview, '/runtime/interactive-worker.js'],
   ])
     expect((await request.get(`${origin}${denied}`)).status()).toBe(404);
@@ -117,6 +127,7 @@ test('production Build creates, runs, saves and reopens without learning authori
   await expect(
     page.locator('iframe[title="Isolated interactive preview"]'),
   ).toHaveCount(0);
+  expect(applicationWrites).toEqual([]);
 });
 
 test('hostile Build loops and forbidden sinks recover without losing source', async ({
@@ -273,6 +284,22 @@ test('Build output flood is bounded and a later run recovers', async ({
     .frameLocator('iframe[title="Isolated interactive preview"]')
     .frameLocator('iframe[title="Interactive learner page"]');
   await expect(child.getByRole('heading', { name: 'Fresh' })).toBeVisible();
+  await editor.fill('for (let i = 0; i < 201; i++) console.log("line", i);');
+  await panel.getByRole('button', { name: 'Run Build' }).click();
+  await expect(panel.getByRole('status')).toContainText(/limit|unavailable/i, {
+    timeout: 10_000,
+  });
+  await expect(editor).toContainText('201');
+  await editor.fill(
+    'document.querySelector("h1").textContent = "After output";',
+  );
+  await panel.getByRole('button', { name: 'Run Build' }).click();
+  await expect(panel.getByRole('status')).toContainText('ready', {
+    timeout: 5_000,
+  });
+  await expect(
+    child.getByRole('heading', { name: 'After output' }),
+  ).toBeVisible();
 });
 
 test('cancelled Build Run leaves the draft intact for a fresh run', async ({

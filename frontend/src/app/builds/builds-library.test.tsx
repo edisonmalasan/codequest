@@ -43,6 +43,34 @@ afterEach(() => {
 });
 
 describe('BuildsLibrary', () => {
+  it('keeps creation disabled while loading and lets the learner retry a storage read', async () => {
+    const user = userEvent.setup();
+    harness.list.mockRejectedValueOnce(new Error('IndexedDB unavailable'));
+    harness.list.mockResolvedValueOnce([]);
+    render(<BuildsLibrary />);
+    expect(
+      screen
+        .getByRole('button', { name: 'New Build' })
+        .hasAttribute('disabled'),
+    ).toBe(true);
+    expect(
+      await screen.findByText(
+        'Your local Builds could not be read. Existing files were not removed.',
+      ),
+    ).toBeTruthy();
+    await user.click(
+      screen.getByRole('button', { name: 'Retry local storage' }),
+    );
+    expect(
+      await screen.findByText('No Builds on this device yet.'),
+    ).toBeTruthy();
+    expect(
+      screen
+        .getByRole('button', { name: 'New Build' })
+        .hasAttribute('disabled'),
+    ).toBe(false);
+  });
+
   it('shows the device-only boundary and creates a guest Build without a learning action', async () => {
     const user = userEvent.setup();
     harness.list.mockResolvedValue([]);
