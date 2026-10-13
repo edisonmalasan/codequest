@@ -7,16 +7,11 @@ import {
 } from '@playwright/test';
 import solutions from './fixtures/foundations-solutions.json';
 import capstoneSolutions from './fixtures/capstone-solutions.json';
-import { routeSyntheticAuthToLocalFixture } from './fixtures/learning-auth-route';
 
 const apiOrigin = 'http://127.0.0.1:3001';
-const authOrigin = 'http://127.0.0.1:54321';
+const authOrigin = 'https://127.0.0.1:54321';
 const q01 = solutions[0];
 const q02 = solutions[1];
-
-test.beforeEach(async ({ page }) => {
-  await routeSyntheticAuthToLocalFixture(page);
-});
 
 test('selected JavaScript course reaches accepted capstone without losing local source', async ({
   page,

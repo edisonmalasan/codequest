@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const appOrigin = 'http://127.0.0.1:3200';
 const apiOrigin = 'http://127.0.0.1:3001';
-const authOrigin = 'http://127.0.0.1:54321';
+const authOrigin = 'https://127.0.0.1:54321';
 
 export default defineConfig({
   testDir: './e2e',
@@ -15,14 +15,19 @@ export default defineConfig({
     baseURL: appOrigin,
     trace: 'retain-on-failure',
     actionTimeout: 10_000,
+    ignoreHTTPSErrors: true,
   },
   webServer: [
     {
       command: 'node scripts/learning-auth-fixture.mjs',
       cwd: '../backend',
       url: `${authOrigin}/auth/v1/.well-known/jwks.json`,
+      ignoreHTTPSErrors: true,
       reuseExistingServer: false,
       timeout: 30_000,
+      env: {
+        CODEQUEST_AUTH_ISSUER: `${authOrigin}/auth/v1`,
+      },
     },
     {
       command: 'pnpm build && node dist/test/learning-web-server.js',
@@ -52,9 +57,7 @@ export default defineConfig({
       timeout: 240_000,
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
-        // The production build requires HTTPS. Browser tests forward this
-        // synthetic origin to the local HTTP fixture before any request exits.
-        NEXT_PUBLIC_SUPABASE_URL: 'https://127.0.0.1:54321',
+        NEXT_PUBLIC_SUPABASE_URL: authOrigin,
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
           'publishable-local-browser-fixture',
         // Email callbacks are outside this learning-journey suite. The

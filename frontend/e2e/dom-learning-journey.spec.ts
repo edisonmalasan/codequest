@@ -6,15 +6,10 @@ import {
   type Page,
 } from '@playwright/test';
 import solutions from './fixtures/dom-solutions.json';
-import { routeSyntheticAuthToLocalFixture } from './fixtures/learning-auth-route';
 
 const apiOrigin = 'http://127.0.0.1:3001';
-const authOrigin = 'http://127.0.0.1:54321';
+const authOrigin = 'https://127.0.0.1:54321';
 const appOrigin = 'http://127.0.0.1:3200';
-
-test.beforeEach(async ({ page }) => {
-  await routeSyntheticAuthToLocalFixture(page);
-});
 
 interface QuestDetail {
   id: string;
