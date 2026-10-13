@@ -57,7 +57,9 @@ export default defineConfig({
         NEXT_PUBLIC_SUPABASE_URL: 'https://127.0.0.1:54321',
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
           'publishable-local-browser-fixture',
-        NEXT_PUBLIC_SITE_URL: appOrigin,
+        // Email callbacks are outside this learning-journey suite. The
+        // production build still validates their configured HTTPS origin.
+        NEXT_PUBLIC_SITE_URL: 'https://127.0.0.1:3200',
         NEXT_PUBLIC_RUNTIME_ORIGIN: 'http://127.0.0.2:3200',
         NEXT_PUBLIC_PREVIEW_ORIGIN: 'http://localhost:3200',
       },
