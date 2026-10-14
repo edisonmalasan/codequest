@@ -671,7 +671,7 @@ export function EditorWorkspace({
   }, [hydrated, saveCurrent, saveStatus, sources]);
 
   const updateSource = (source: string): void => {
-    if (activeFile === undefined) return;
+    if (!hydrated || activeFile === undefined) return;
     invalidateCheck();
     revisionRef.current += 1;
     const next = { ...sourcesRef.current, [activeFile.id]: source };
@@ -882,13 +882,19 @@ export function EditorWorkspace({
             Tab indents code. Press Ctrl+M to let Tab move focus out of the
             editor (Option+Shift+M on Mac).
           </p>
-          <DeferredCodeEditor
-            value={sources[activeFile.id] ?? activeFile.starterSource}
-            language={activeFile.language}
-            label={`${activeFile.name} code editor`}
-            descriptionId={editorHelpId}
-            onChange={updateSource}
-          />
+          {hydrated ? (
+            <DeferredCodeEditor
+              value={sources[activeFile.id] ?? activeFile.starterSource}
+              language={activeFile.language}
+              label={`${activeFile.name} code editor`}
+              descriptionId={editorHelpId}
+              onChange={updateSource}
+            />
+          ) : (
+            <p role="status" className="min-h-[22rem] p-4 text-sm text-muted">
+              Loading local source before editing…
+            </p>
+          )}
           {presentation === 'standalone' && (
             <div className="mt-4">
               <ConsolePanel
