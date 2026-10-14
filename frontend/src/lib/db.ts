@@ -93,6 +93,18 @@ export interface GuestStateRecord {
   updatedAt: number;
 }
 
+export interface BuildRecord {
+  id: string;
+  ownerId: string;
+  workspaceId: string;
+  schemaVersion: 1;
+  manifestVersion: 1;
+  templateVersion: 1;
+  fileIds: ['index.html', 'style.css', 'main.js'];
+  createdAt: number;
+  updatedAt: number;
+}
+
 // Legacy outbox
 // rows have no schemaVersion and are never treated as replay-ready envelopes.
 export class CodeQuestDatabase extends Dexie {
@@ -103,6 +115,7 @@ export class CodeQuestDatabase extends Dexie {
   lessonAssets!: Table<LessonAssetRecord, string>;
   acceptedProgress!: Table<AcceptedProgressRecord, string>;
   guestState!: Table<GuestStateRecord, string>;
+  builds!: Table<BuildRecord, string>;
 
   constructor(name = 'codequest') {
     super(name);
@@ -148,6 +161,19 @@ export class CodeQuestDatabase extends Dexie {
         'id, ownerId, [ownerId+questId+contentVersion+assessmentVersion]',
       acceptedProgress: 'id, ownerId',
       guestState: 'id, [ownerId+key]',
+    });
+    this.version(5).stores({
+      drafts:
+        'id, [ownerId+workspaceId+fileId], [ownerId+workspaceId], updatedAt',
+      outbox: 'eventId, ownerId, [ownerId+createdAt]',
+      preferences: 'id, [ownerId+workspaceId], ownerId',
+      lessonSnapshots:
+        'id, ownerId, [ownerId+questId], [ownerId+questId+contentVersion+assessmentVersion]',
+      lessonAssets:
+        'id, ownerId, [ownerId+questId+contentVersion+assessmentVersion]',
+      acceptedProgress: 'id, ownerId',
+      guestState: 'id, [ownerId+key]',
+      builds: 'id, ownerId, [ownerId+createdAt]',
     });
   }
 }

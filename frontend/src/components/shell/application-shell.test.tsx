@@ -41,6 +41,11 @@ describe('ApplicationShell', () => {
     ).toBe('/courses');
     expect(
       within(navigation)
+        .getByRole('link', { name: 'Builds' })
+        .getAttribute('href'),
+    ).toBe('/builds');
+    expect(
+      within(navigation)
         .getByRole('link', { name: 'How it works' })
         .getAttribute('href'),
     ).toBe('/onboarding');
@@ -83,6 +88,23 @@ describe('ApplicationShell', () => {
     await user.keyboard('{Escape}');
     expect(button.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement).toBe(button);
+  });
+
+  it('marks the Builds destination current on the local project list', () => {
+    pathnameState.value = '/builds';
+    render(
+      <ApplicationShell>
+        <main>Builds content</main>
+      </ApplicationShell>,
+    );
+    const navigation = screen.getByRole('navigation', {
+      name: 'Main navigation',
+    });
+    expect(
+      within(navigation)
+        .getByRole('link', { name: 'Builds' })
+        .getAttribute('aria-current'),
+    ).toBe('page');
   });
 
   it('leaves full-screen learning and development routes untouched', () => {

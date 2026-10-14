@@ -8,6 +8,20 @@ import type {
 } from '@/features/interactive';
 import type { WorkspaceFile } from './editor-workspace-types';
 
+export interface InteractivePreviewLabels {
+  readonly title: string;
+  readonly run: string;
+  readonly reload: string;
+  readonly cancel: string;
+}
+
+const defaultLabels: InteractivePreviewLabels = {
+  title: 'Interactive web preview',
+  run: 'Start interactive',
+  reload: 'Reload interactive',
+  cancel: 'Cancel interactive',
+};
+
 export function InteractivePreviewPanel({
   adapter,
   contentVersion,
@@ -16,6 +30,7 @@ export function InteractivePreviewPanel({
   files,
   sources,
   readSources,
+  labels = defaultLabels,
 }: {
   adapter: InteractiveWebAdapter;
   contentVersion?: string;
@@ -24,6 +39,7 @@ export function InteractivePreviewPanel({
   files: readonly WorkspaceFile[];
   sources: Readonly<Record<string, string>>;
   readSources: () => Readonly<Record<string, string>>;
+  labels?: InteractivePreviewLabels;
 }): React.JSX.Element {
   const host = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<InteractiveResult>();
@@ -113,14 +129,14 @@ export function InteractivePreviewPanel({
       className="min-w-0 overflow-hidden rounded-md border border-line bg-surface-raised"
     >
       <div className="border-b border-line px-4 py-3">
-        <h2 className="font-sans text-sm font-bold">Interactive web preview</h2>
+        <h2 className="font-sans text-sm font-bold">{labels.title}</h2>
         <p className="mt-1 text-xs text-muted">
           Start the page to try its supported interactions. Your latest edits
           appear after you start it again.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <Button type="button" onClick={() => start(false)} disabled={running}>
-            Start interactive
+            {labels.run}
           </Button>
           <Button
             type="button"
@@ -128,7 +144,7 @@ export function InteractivePreviewPanel({
             onClick={() => start(true)}
             disabled={running || !value || stale}
           >
-            Reload interactive
+            {labels.reload}
           </Button>
           {running && (
             <Button
@@ -149,7 +165,7 @@ export function InteractivePreviewPanel({
                 });
               }}
             >
-              Cancel interactive
+              {labels.cancel}
             </Button>
           )}
         </div>
@@ -159,7 +175,7 @@ export function InteractivePreviewPanel({
             : stale
               ? 'Source changed. Start interactive again to update the preview.'
               : (value?.message ??
-                'Select Start interactive to render the current files.')}
+                `Select ${labels.run} to render the current files.`)}
         </p>
         {value?.filteredActiveContent && (
           <p className="mt-1 text-xs text-muted">

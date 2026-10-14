@@ -2,6 +2,7 @@ import 'fake-indexeddb/auto';
 import Dexie from 'dexie';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { questFixtures } from '@/features/curriculum/journey-course-test-data';
+import { IndexedDbBuildRepository } from '@/features/builds/build-repository';
 import { CodeQuestDatabase } from './db';
 import {
   IndexedDbGuestStateRepository,
@@ -214,11 +215,16 @@ describe('Phase 23 local repositories', () => {
     const reopened = new CodeQuestDatabase(name);
     databases.push(reopened);
     const read = new IndexedDbWorkspacePreferenceRepository(reopened);
+    const builds = new IndexedDbBuildRepository(reopened);
+    const ownBuild = await builds.create('owner-a');
+    const otherBuild = await builds.create('owner-b');
     expect(await read.load('owner-a', 'Q01')).toBe('main');
     expect(await read.load('owner-b', 'Q01')).toBe('helper');
     await removeLocalOwnerData('owner-a', reopened);
     expect(await read.load('owner-a', 'Q01')).toBeNull();
     expect(await read.load('owner-b', 'Q01')).toBe('helper');
+    expect(await builds.load('owner-a', ownBuild.id)).toBeNull();
+    expect(await builds.load('owner-b', otherBuild.id)).toEqual(otherBuild);
   });
 
   it('stores only public exact-version lessons and preserves a good record on oversize rejection', async () => {

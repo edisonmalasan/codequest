@@ -1,0 +1,328 @@
+.page {
+  min-height: calc(100dvh - 72px);
+  min-width: 0;
+  background: var(--color-world-night);
+  color: var(--color-ink);
+}
+
+.inner {
+  width: min(100% - 2.5rem, 80rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4.5rem) 6rem;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(15rem, 0.8fr);
+  align-items: center;
+  gap: clamp(2rem, 7vw, 7rem);
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  border-bottom: 1px solid var(--color-line-strong);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-ascent);
+  font: 700 0.75rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  max-width: 13ch;
+  margin: 1rem 0 1.2rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2.7rem, 6vw, 5.5rem);
+  font-weight: 850;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.lede {
+  max-width: 37rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.65;
+}
+
+.introActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.courseLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-discovery);
+  font-size: 0.88rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.courseLink:hover,
+.buildLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.fileIllustration {
+  position: relative;
+  display: grid;
+  min-height: 18rem;
+  align-content: start;
+  gap: 0.65rem;
+  overflow: hidden;
+  padding: 2rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgb(25 66 86 / 75%), transparent 57%),
+    var(--color-world-panel);
+  box-shadow: 0.8rem 0.8rem 0 rgb(7 14 29 / 75%);
+}
+
+.fileIllustration::before {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgb(255 255 255 / 5%) 1px, transparent 1px);
+  background-size: 100% 2rem;
+  content: '';
+  pointer-events: none;
+}
+
+.fileIllustration > span {
+  position: relative;
+  width: fit-content;
+  min-width: 9rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-world-night);
+  color: var(--color-ink);
+  font: 700 0.85rem var(--font-mono);
+}
+
+.fileIllustration > span:nth-child(2) {
+  margin-left: 1.5rem;
+  color: var(--color-discovery);
+}
+
+.fileIllustration > span:nth-child(3) {
+  margin-left: 3rem;
+  color: var(--color-reward);
+}
+
+.previewGlyph {
+  position: absolute;
+  right: 1.75rem;
+  bottom: 1.5rem;
+  display: flex;
+  align-items: end;
+  gap: 0.3rem;
+  height: 3.5rem;
+}
+
+.previewGlyph i {
+  width: 0.65rem;
+  height: 45%;
+  border-radius: 2px;
+  background: var(--color-ascent);
+}
+
+.previewGlyph i:nth-child(2) {
+  height: 100%;
+  background: var(--color-discovery);
+}
+
+.previewGlyph i:nth-child(3) {
+  height: 70%;
+  background: var(--color-reward);
+}
+
+.boundary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  max-width: 50rem;
+  padding-block: 1.5rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.boundary p {
+  margin: 0;
+}
+
+.boundaryMarker {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: none;
+  margin-top: 0.43rem;
+  border-radius: 50%;
+  background: var(--color-reward);
+}
+
+.library {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.sectionHead h2 {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  letter-spacing: -0.04em;
+}
+
+.ownerScope {
+  color: var(--color-muted);
+  font: 700 0.72rem var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.message:empty {
+  display: none;
+}
+
+.message:not(:empty) {
+  margin: 0 0 1rem;
+  color: var(--color-reward);
+  font-size: 0.9rem;
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-line-strong);
+  color: var(--color-muted);
+}
+
+.empty p {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 750;
+}
+
+.buildList {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-line-strong);
+  list-style: none;
+}
+
+.buildRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--color-line-strong);
+}
+
+.rowNumber {
+  align-self: start;
+  padding-top: 0.2rem;
+  color: var(--color-ascent);
+  font: 700 0.8rem var(--font-mono);
+}
+
+.rowMain {
+  min-width: 0;
+  flex: 1;
+}
+
+.buildLink {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.rowMain p {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.dialogActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.page :is(a, button):focus-visible {
+  outline: 3px solid var(--color-reward);
+  outline-offset: 3px;
+}
+
+@media (max-width: 740px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fileIllustration {
+    min-height: 12rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .inner {
+    width: min(100% - 1.5rem, 80rem);
+  }
+
+  .intro h1 {
+    font-size: clamp(2.4rem, 12vw, 3.2rem);
+  }
+
+  .fileIllustration {
+    padding: 1.2rem;
+  }
+
+  .fileIllustration > span:nth-child(2) {
+    margin-left: 0.75rem;
+  }
+
+  .fileIllustration > span:nth-child(3) {
+    margin-left: 1.5rem;
+  }
+
+  .sectionHead,
+  .buildRow {
+    align-items: flex-start;
+  }
+
+  .sectionHead {
+    flex-direction: column;
+  }
+
+  .buildRow {
+    flex-wrap: wrap;
+  }
+
+  .buildRow > button {
+    margin-left: 2rem;
+  }
+}

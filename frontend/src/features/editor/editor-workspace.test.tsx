@@ -200,6 +200,35 @@ describe('workspace presentation components', () => {
 });
 
 describe('EditorWorkspace', () => {
+  it('waits for stored source before allowing edits', async () => {
+    let finishLoad: ((drafts: DraftSource[]) => void) | undefined;
+    const repository = new MemoryDraftRepository();
+    repository.load = () =>
+      new Promise<DraftSource[]>((resolve) => {
+        finishLoad = resolve;
+      });
+    render(
+      <EditorWorkspace
+        ownerId="owner-a"
+        workspaceId="pending-hydration"
+        files={files}
+        draftRepository={repository}
+      />,
+    );
+
+    expect(screen.queryByRole('textbox')).toBeNull();
+    expect(
+      screen.getByText('Loading local source before editing…'),
+    ).toBeDefined();
+
+    await act(async () => {
+      finishLoad?.([{ fileId: 'main', source: 'const restored = true;' }]);
+    });
+    expect(screen.getByRole('textbox').textContent).toContain(
+      'const restored = true;',
+    );
+  });
+
   it('keeps source and result state while integrated regions change', async () => {
     const repository = new MemoryDraftRepository();
     const { rerender } = render(
@@ -215,7 +244,7 @@ describe('EditorWorkspace', () => {
         activePanel="code"
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox');
     editActiveSource("console.log('kept');");
     rerender(
       <EditorWorkspace
@@ -395,7 +424,7 @@ describe('EditorWorkspace', () => {
         draftRepository={repository}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource("const message = 'kept';");
     await user.click(screen.getByRole('button', { name: /Save locally/ }));
     await screen.findByText(/Local save failed/);
@@ -418,7 +447,7 @@ describe('EditorWorkspace', () => {
         preferenceRepository={new MemoryPreferenceRepository()}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource("const message = 'recoverable';");
     await user.click(screen.getByRole('button', { name: /Save locally/ }));
     await screen.findByText(/Local save failed/);
@@ -447,7 +476,7 @@ describe('EditorWorkspace', () => {
         draftRepository={repository}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     vi.useFakeTimers();
     try {
       act(() => editActiveSource("const message = 'first revision';"));
@@ -494,7 +523,7 @@ describe('EditorWorkspace', () => {
         preferenceRepository={new MemoryPreferenceRepository()}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource("const message = 'first';");
     await user.click(screen.getByRole('button', { name: /Save locally/ }));
     expect(save).toHaveBeenCalledTimes(1);
@@ -594,7 +623,7 @@ describe('EditorWorkspace', () => {
         preferenceRepository={preferences}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     expect(
       screen
         .getByRole('tab', { name: 'main.js' })
@@ -620,7 +649,7 @@ describe('EditorWorkspace', () => {
         draftRepository={repository}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource("const message = 'changed';");
     const reset = screen.getByRole('button', { name: /Reset file/ });
     await user.click(reset);
@@ -660,7 +689,7 @@ describe('EditorWorkspace', () => {
         />
       </>,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     const outside = screen.getByRole('button', { name: 'Outside' });
     const outsideEvent = new KeyboardEvent('keydown', {
       key: 's',
@@ -672,7 +701,7 @@ describe('EditorWorkspace', () => {
     expect(outsideEvent.defaultPrevented).toBe(false);
     expect(repository.save).not.toHaveBeenCalled();
 
-    const textbox = screen.getByRole('textbox');
+    const textbox = await screen.findByRole('textbox');
     textbox.focus();
     fireEvent.keyDown(textbox, { key: 's', ctrlKey: true });
     await waitFor(() => expect(repository.save).toHaveBeenCalledTimes(1));
@@ -704,7 +733,7 @@ describe('EditorWorkspace', () => {
         onRunComplete={onRunComplete}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource("console.log('snapshot'); return 42;");
     await user.click(screen.getByRole('button', { name: 'Run' }));
     expect(adapter.execute).toHaveBeenCalledWith(
@@ -746,7 +775,7 @@ describe('EditorWorkspace', () => {
         executionAdapter={adapter}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     const textbox = screen.getByRole('textbox');
     fireEvent.keyDown(textbox, { key: 'Enter', ctrlKey: true });
     await screen.findByRole('button', { name: 'Cancel' });
@@ -778,7 +807,7 @@ describe('EditorWorkspace', () => {
         executionAdapter={adapter}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     editActiveSource('return 1;');
     await user.click(screen.getByRole('button', { name: 'Run' }));
     editActiveSource('return 2;');
@@ -830,7 +859,7 @@ describe('EditorWorkspace', () => {
           executionAdapter={adapter}
         />,
       );
-      await screen.findByText('Starter source ready');
+      await screen.findByRole('textbox', { name: /code editor/ });
       await user.click(screen.getByRole('button', { name: 'Run' }));
       expect(await screen.findByText(`${status} detail`)).toBeDefined();
       expect(
@@ -855,7 +884,7 @@ describe('EditorWorkspace', () => {
         draftRepository={repository}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     rerender(
       <EditorWorkspace
         ownerId="owner-a"
@@ -919,7 +948,7 @@ describe('EditorWorkspace', () => {
         onCheckComplete={onCheckComplete}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     await user.click(screen.getByRole('button', { name: 'Check' }));
     expect(strategy.validate).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -1007,7 +1036,7 @@ describe('EditorWorkspace', () => {
         onSubmit={onSubmit}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     expect(screen.queryByRole('button', { name: 'Submit attempt' })).toBeNull();
     await user.click(screen.getByRole('button', { name: 'Check' }));
     await screen.findByText(/Local check passed/);
@@ -1098,7 +1127,7 @@ describe('EditorWorkspace', () => {
         onSubmit={onSubmit}
       />,
     );
-    await screen.findByText('Starter source ready');
+    await screen.findByRole('textbox', { name: /code editor/ });
     await user.click(screen.getByRole('button', { name: 'Check' }));
     await screen.findByText(/Local check passed/);
     await user.click(screen.getByRole('button', { name: 'Submit attempt' }));
