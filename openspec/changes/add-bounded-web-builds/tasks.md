@@ -20,5 +20,5 @@
 
 ## 4. Repository and product review
 
-- [ ] 4.1 Run `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm api:check`, relevant production browser suites, and `openspec validate add-bounded-web-builds --strict`; record exact results and leave any failing gate open.
+- [x] 4.1 Run `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm api:check`, relevant production browser suites, and `openspec validate add-bounded-web-builds --strict`; record exact results and leave any failing gate open.
 - [x] 4.2 Record the founder's exact-build create/edit/run/reopen review or explicitly mark it untested with required retest details; verify R11A readiness and the roadmap distinguish technical integration from founder acceptance and keep R11B–R11E and Phase 38 open.

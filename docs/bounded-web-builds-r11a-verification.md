@@ -1,6 +1,6 @@
 # R11A bounded web Builds verification
 
-Status: **local technical integration verified; founder review and release evidence open**. This record covers the production `/builds` list and `/builds/[id]` workbench in the R11A Apply candidate. CI and founder results remain distinct from local automation.
+Status: **local and PR CI technical integration verified; founder review and release evidence open**. This record covers the production `/builds` list and `/builds/[id]` workbench in the R11A Apply candidate. CI and founder results remain distinct from local automation.
 
 ## Supported Build
 
@@ -23,11 +23,11 @@ Run and save do not Check or Submit a Quest and do not award progress or rewards
 | Origin collision | `pnpm --dir frontend test:builds:collision`: 1/1 passed. With app and runner configured on the same origin, middleware denies `/builds` rather than serving an executable app workbench. |
 | Unit and migration checks | Build manifest, adapter wrapper, owner-scoped repository and Dexie upgrade tests passed, including preservation of old drafts/outbox data and transaction rollback. |
 | Existing interactive lesson regression | `pnpm --dir frontend exec playwright test e2e/interactive-web.spec.ts --project=chromium --grep-invert "100 hostile loops"`: 10/10 passed. The separately rerun 100 hostile loops and fresh-run recovery case passed 1/1 in 4.7 minutes. |
-| Repository checks | Post-fix `pnpm lint`, `pnpm typecheck`, `pnpm api:check`, and `openspec validate add-bounded-web-builds --strict` passed locally. The production browser suite rebuilt Next.js successfully. Frontend Vitest passed 494/494 in an isolated run. The concurrent lint/Vitest run timed out once in the unchanged review workspace test; the isolated rerun passed. The local root `pnpm test` run passed frontend 494/494 but hit two unchanged backend author CLI subprocess timing assertions on Windows Node 26. Required PR CI on Node 24 remains pending. |
+| Repository checks | Post-fix `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm api:check`, and `openspec validate add-bounded-web-builds --strict` passed locally. Frontend Vitest passed 494/494 in an isolated run. The concurrent lint/Vitest run timed out once in the unchanged review workspace test; the isolated rerun passed. The local root `pnpm test` run passed frontend 494/494 but failed two unchanged backend author CLI subprocess timing assertions and a Vitest worker RPC timeout on Windows Node 26. PR CI on Node 24 passed the root tests and all required checks in run `38505663139` for commit `29d56d4`. |
 
 The first existing interactive lesson Chromium run passed 10/11 checks, then its 100-loop case lost Next.js development artifacts when a separate production build was accidentally started against the same `.next` directory. The competing build failed too. That run is invalid as a product regression result. Sequential retests passed 10/10 other interactive checks and 1/1 for the 100-loop endurance case. A change to runner/preview policy, Build manifest, source bounds, or the exact implementation candidate requires the affected checks to be rerun.
 
-PR #247's first CI run (`38458750051`) passed its preceding checks but failed 2 of 36 Build browser cases: Chromium and mobile Chromium started the hostile test with a stale HTML snapshot. The Editor Workspace had allowed an edit while IndexedDB draft hydration was pending; hydration could then overwrite it. Commit `71d7226` withholds the editor until the draft load settles, with a focused regression test. The post-fix local repeats and full matrix above passed. The first CI result remains a recorded failure; a new CI run must pass before merge.
+PR #247's first CI run (`38458750051`) passed its preceding checks but failed 2 of 36 Build browser cases: Chromium and mobile Chromium started the hostile test with a stale HTML snapshot. The Editor Workspace had allowed an edit while IndexedDB draft hydration was pending; hydration could then overwrite it. Commit `71d7226` withholds the editor until the draft load settles, with a focused regression test. The post-fix local repeats and full matrix above passed. The first CI result remains a recorded failure; PR CI run `38505663139` passed every required step, including the Build production and origin-collision browser suites.
 
 ## Open gates
 
