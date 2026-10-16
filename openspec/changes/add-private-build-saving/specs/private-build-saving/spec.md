@@ -22,12 +22,17 @@ The backend SHALL expose versioned private Build create/save, list, read, and de
 
 ### Requirement: Cloud snapshots have bounded compatible content
 
-The backend SHALL accept only the reviewed Build manifest and supported version with exactly the identified HTML, CSS, and JavaScript files, bounded source and metadata, and a valid stable Build ID. It SHALL reject malformed, oversized, or unsupported snapshots without replacing a previously saved version. Saving or reading a Build SHALL NOT execute its code.
+The backend SHALL accept only the reviewed Build manifest and supported version with exactly the identified HTML, CSS, and JavaScript files, bounded source and metadata, a bounded private title, and a valid stable Build ID. It SHALL reject malformed, oversized, or unsupported snapshots without replacing a previously saved version. Saving or reading a Build SHALL NOT execute its code. The owner SHALL be able to rename a Build, and owner-only list results SHALL include enough safe title, revision, and update metadata to distinguish saved Builds without returning source.
 
 #### Scenario: Unsupported project is saved
 
 - **WHEN** a client submits an extra file, an unsupported manifest version, or source beyond the reviewed bound
 - **THEN** the backend rejects the write and preserves the last accepted snapshot
+
+#### Scenario: Owner renames a private Build
+
+- **WHEN** the owner saves a valid new title for an existing Build
+- **THEN** only that owner's list and snapshot use the new title and the revision changes under the same conflict rules as source edits
 
 ### Requirement: Save conflicts and uncertain responses preserve source
 

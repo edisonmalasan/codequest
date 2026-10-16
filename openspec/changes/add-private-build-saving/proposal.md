@@ -6,7 +6,7 @@ R11A lets a learner create and reopen a bounded web Build on one device, but cle
 
 ## What Changes
 
-- Add owner-bound private Build records and versioned REST/OpenAPI operations to save, list, read, update, and delete a bounded HTML/CSS/JavaScript snapshot. NestJS derives ownership from the verified principal and stores no execution result as authority.
+- Add owner-bound private Build records and versioned REST/OpenAPI operations to save, list, read, update, and delete a bounded, titled HTML/CSS/JavaScript snapshot. NestJS derives ownership from the verified principal and stores no execution result as authority.
 - Add explicit account Save and cloud Open actions to the Builds UI. Local autosave remains device-only; a successful backend response is required before the UI calls a snapshot cloud saved. Guest work stays in its guest bucket until the learner explicitly copies it into the signed-in account.
 - Resolve uncertain responses and competing device edits without silent last-write-wins: preserve local source, compare server revisions, and require an explicit choice before replacing a local snapshot. Backend writes use conditional revisions and exact-snapshot idempotency.
 - Keep project records private. No public page, publishing, sharing, grading, XP, cloud synchronization of lesson drafts, arbitrary file support, or broader execution authority is introduced.
